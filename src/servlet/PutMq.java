@@ -13,12 +13,12 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 @SuppressWarnings("serial")
-public class SendServlet extends HttpServlet {
+public class PutMq extends HttpServlet {
     private final static String QUEUE_NAME = "queue1";
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	PrintWriter out = response.getWriter();
-	out.println("Send Servlet");
+	out.println("Put MQ");
 	ConnectionFactory connectionFactory = new ConnectionFactory();
 	connectionFactory.setUsername("devtest1");
 	connectionFactory.setPassword("devtest1");

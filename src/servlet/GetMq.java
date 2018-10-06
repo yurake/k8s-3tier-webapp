@@ -14,12 +14,12 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.GetResponse;
 
 @SuppressWarnings("serial")
-public class ReceiveServlet extends HttpServlet {
+public class GetMq extends HttpServlet {
     private final static String QUEUE_NAME = "queue1";
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	PrintWriter out = response.getWriter();
-	out.println("Receive Servlet");
+	out.println("Get MQ");
 	ConnectionFactory connectionFactory = new ConnectionFactory();
 	connectionFactory.setUsername("rabbitmq");
 	connectionFactory.setPassword("rabbitmq");
@@ -46,7 +46,7 @@ public class ReceiveServlet extends HttpServlet {
 	     */
 	    GetResponse body = channel.basicGet(QUEUE_NAME, true);
 	    String message = new String(body.getBody(), "UTF-8");
-	    out.println("Received '" + message + "'");
+	    out.println("Received Msg: '" + message + "'");
 
 	    channel.close();
 	    connection.close();

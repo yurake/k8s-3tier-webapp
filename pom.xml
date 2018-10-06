@@ -45,6 +45,12 @@
   		<artifactId>javax.servlet-api</artifactId>
   		<scope>test</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>com.meetup.memcached</groupId>
+  		<artifactId>Memcached-Java-Client</artifactId>
+  		<scope>test</scope>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
   <dependencyManagement>
   	<dependencies>

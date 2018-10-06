@@ -11,21 +11,37 @@
     </description>
 
     <servlet>
-        <servlet-name>SendServlet</servlet-name>
-        <servlet-class>servlet.SendServlet</servlet-class>
+        <servlet-name>SetCacheServlet</servlet-name>
+        <servlet-class>servlet.SetCache</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ReceiveServlet</servlet-name>
-        <servlet-class>servlet.ReceiveServlet</servlet-class>
+        <servlet-name>GetCacheServlet</servlet-name>
+        <servlet-class>servlet.GetCache</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PutMQServlet</servlet-name>
+        <servlet-class>servlet.PutMq</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetMQServlet</servlet-name>
+        <servlet-class>servlet.GetMq</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>SendServlet</servlet-name>
-        <url-pattern>/SendServlet</url-pattern>
+        <servlet-name>SetCacheServlet</servlet-name>
+        <url-pattern>/SetCache</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ReceiveServlet</servlet-name>
-        <url-pattern>/ReceiveServlet</url-pattern>
+        <servlet-name>GetCacheServlet</servlet-name>
+        <url-pattern>/GetCache</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PutMQServlet</servlet-name>
+        <url-pattern>/PutMQ</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetMQServlet</servlet-name>
+        <url-pattern>/GetMQ</url-pattern>
     </servlet-mapping>
 
 </web-app>
