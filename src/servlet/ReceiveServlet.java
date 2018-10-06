@@ -8,13 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
-import com.rabbitmq.client.Envelope;
+import com.rabbitmq.client.GetResponse;
 
 @SuppressWarnings("serial")
 public class ReceiveServlet extends HttpServlet {
@@ -34,15 +31,23 @@ public class ReceiveServlet extends HttpServlet {
 	    boolean durable = true;
 	    channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
 
-	    Consumer consumer = new DefaultConsumer(channel) {
-		@Override
-		public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
-			byte[] body) throws IOException {
-		    String message = new String(body, "UTF-8");
-		    out.println("Received '" + message + "'");
-		}
-	    };
-	    channel.basicConsume(QUEUE_NAME, true, consumer);
+	    /**
+	     * 受信を常駐して監視する場合 Consumer consumer = new DefaultConsumer(channel) {
+	     * 
+	     * @Override public void handleDelivery(String consumerTag, Envelope envelope,
+	     *           AMQP.BasicProperties properties, byte[] body) throws IOException {
+	     *           String message = new String(body, "UTF-8"); out.println("Received
+	     *           '" + message + "'"); } }; channel.basicConsume(QUEUE_NAME, true,
+	     *           consumer);
+	     */
+
+	    /**
+	     * 1度受信する場合
+	     */
+	    GetResponse body = channel.basicGet(QUEUE_NAME, true);
+	    String message = new String(body.getBody(), "UTF-8");
+	    out.println("Received '" + message + "'");
+
 	    channel.close();
 	    connection.close();
 	} catch (Exception e) {
