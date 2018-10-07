@@ -10,6 +10,12 @@
 	based on the recommendations of the Application Developer's Guide.
     </description>
 
+    <resource-ref>
+        <res-ref-name>jdbc/OssaplDS</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref> 
+
     <servlet>
         <servlet-name>SetCacheServlet</servlet-name>
         <servlet-class>servlet.SetCache</servlet-class>
@@ -25,6 +31,14 @@
     <servlet>
         <servlet-name>GetMQServlet</servlet-name>
         <servlet-class>servlet.GetMq</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertDBServlet</servlet-name>
+        <servlet-class>servlet.InsertDb</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SelectDBServlet</servlet-name>
+        <servlet-class>servlet.SelectDb</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -43,5 +57,12 @@
         <servlet-name>GetMQServlet</servlet-name>
         <url-pattern>/GetMQ</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>InsertDBServlet</servlet-name>
+        <url-pattern>/InsertDB</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SelectDBServlet</servlet-name>
+        <url-pattern>/SelectDB</url-pattern>
+    </servlet-mapping>
 </web-app>
