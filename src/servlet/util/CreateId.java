@@ -9,7 +9,11 @@ public class CreateId {
      */
     public static int createid() {
 	Random rand = new Random();
-	return rand.nextInt(99999);
+	int id = 0;
+	while (id < 10000) {
+	    id = rand.nextInt(99999);
+	}
+	return id;
     }
 
     /**
