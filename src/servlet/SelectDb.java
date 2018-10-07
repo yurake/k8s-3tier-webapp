@@ -15,9 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import servlet.util.GetConfig;
+
 @SuppressWarnings("serial")
 public class SelectDb extends HttpServlet {
-    private final static String JNDI_NAME = "java:comp/env/jdbc/OssaplDS";
+    private static String jndiname = GetConfig.getResourceBundle("jndi.name");
+    private static String sql = GetConfig.getResourceBundle("select.msg.all");
     private DataSource ds;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -27,18 +30,22 @@ public class SelectDb extends HttpServlet {
 	Connection con = null;
 	String id = null;
 	String msg = null;
+
 	try {
 	    InitialContext ctx = new InitialContext();
-	    ds = (DataSource) ctx.lookup(JNDI_NAME);
+	    ds = (DataSource) ctx.lookup(jndiname);
 	    con = ds.getConnection();
 	    Statement stmt = con.createStatement();
 
-	    String sql = "select * from msg"; // TODO SQLベタガキ
+	    System.out.println("Execute SQL: " + sql);
 	    ResultSet rs = stmt.executeQuery(sql);
+
 	    while (rs.next()) {
 		id = rs.getString("id");
 		msg = rs.getString("msg");
-		out.println("id: " + id + ", message: " + msg);
+		out.println("id: " + id);
+		out.println("msg: " + msg);
+		System.out.println("Selected Msg: id: " + id + ", message: " + msg);
 	    }
 	} catch (NamingException | SQLException e) {
 	    e.printStackTrace();

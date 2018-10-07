@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.meetup.memcached.MemcachedClient;
 import com.meetup.memcached.SockIOPool;
 
+import servlet.util.GetConfig;
+
 @SuppressWarnings("serial")
 public class GetCache extends HttpServlet {
+    private static String serverconf = GetConfig.getResourceBundle("cache.server.conf");
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	PrintWriter out = response.getWriter();
@@ -20,15 +23,17 @@ public class GetCache extends HttpServlet {
 
 	// コネクションプールの初期化
 	SockIOPool pool = SockIOPool.getInstance();
-	pool.setServers(new String[] { "memcached:11211" });
+	pool.setServers(new String[] { serverconf });
 	pool.initialize();
 
 	MemcachedClient mcc = new MemcachedClient();
 
 	try {
-	    // 値を取得して表示
+	    String id = (String) mcc.get("id");
 	    String message = (String) mcc.get("msg");
-	    out.println("Received Msg: '" + message + "'");
+	    out.println("id: " + id);
+	    out.println("msg: " + message);
+	    System.out.println("Received: id: " + id + ", msg:" + message);
 	} catch (Exception e) {
 	    System.out.println(e.getMessage());
 	}
