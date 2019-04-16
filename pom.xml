@@ -28,32 +28,22 @@
   	<dependency>
   		<groupId>com.rabbitmq</groupId>
   		<artifactId>amqp-client</artifactId>
-  		<scope>test</scope>
   	</dependency>
   	<dependency>
   		<groupId>com.rabbitmq.jms</groupId>
   		<artifactId>rabbitmq-jms</artifactId>
-  		<scope>test</scope>
   	</dependency>
   	<dependency>
   		<groupId>org.apache.geronimo.specs</groupId>
   		<artifactId>geronimo-jms_1.1_spec</artifactId>
-  		<scope>test</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>javax.servlet</groupId>
-  		<artifactId>javax.servlet-api</artifactId>
-  		<scope>test</scope>
   	</dependency>
   	<dependency>
   		<groupId>com.meetup.memcached</groupId>
   		<artifactId>Memcached-Java-Client</artifactId>
-  		<scope>test</scope>
   	</dependency>
   	<dependency>
   		<groupId>mysql</groupId>
   		<artifactId>mysql-connector-java</artifactId>
-  		<scope>test</scope>
   	</dependency>
   </dependencies>
   <dependencyManagement>
@@ -67,11 +57,6 @@
   			<groupId>org.apache.geronimo.specs</groupId>
   			<artifactId>geronimo-jms_1.1_spec</artifactId>
   			<version>1.1.1</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>javax.servlet</groupId>
-  			<artifactId>javax.servlet-api</artifactId>
-  			<version>3.1.0</version>
   		</dependency>
   		<dependency>
   			<groupId>com.rabbitmq</groupId>
