@@ -17,7 +17,6 @@ import javax.sql.DataSource;
 
 import servlet.util.GetConfig;
 
-@SuppressWarnings("serial")
 public class SelectDb extends HttpServlet {
     private static String jndiname = GetConfig.getResourceBundle("jndi.name");
     private static String sql = GetConfig.getResourceBundle("select.msg.all");

@@ -13,7 +13,6 @@ import com.meetup.memcached.SockIOPool;
 
 import servlet.util.GetConfig;
 
-@SuppressWarnings("serial")
 public class GetCache extends HttpServlet {
     private static String serverconf = GetConfig.getResourceBundle("cache.server.conf");
 

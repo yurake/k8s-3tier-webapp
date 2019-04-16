@@ -17,7 +17,6 @@ import javax.sql.DataSource;
 import servlet.util.CreateId;
 import servlet.util.GetConfig;
 
-@SuppressWarnings("serial")
 public class InsertDb extends HttpServlet {
     private static String jndiname = GetConfig.getResourceBundle("jndi.name");
     private static String sqlkey = GetConfig.getResourceBundle("insert.msg.id");

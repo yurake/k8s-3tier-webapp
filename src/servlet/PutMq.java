@@ -15,7 +15,6 @@ import com.rabbitmq.client.ConnectionFactory;
 import servlet.util.CreateId;
 import servlet.util.GetConfig;
 
-@SuppressWarnings("serial")
 public class PutMq extends HttpServlet {
     private static String queuename = GetConfig.getResourceBundle("queue.name");
     private static String username = GetConfig.getResourceBundle("jms.username");

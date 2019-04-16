@@ -15,7 +15,6 @@ import com.rabbitmq.client.GetResponse;
 
 import servlet.util.GetConfig;
 
-@SuppressWarnings("serial")
 public class GetMq extends HttpServlet {
     private static String queuename = GetConfig.getResourceBundle("queue.name");
     private static String username = GetConfig.getResourceBundle("jms.username");
@@ -41,7 +40,7 @@ public class GetMq extends HttpServlet {
 
 	    /**
 	     * 受信を常駐して監視する場合 Consumer consumer = new DefaultConsumer(channel) {
-	     * 
+	     *
 	     * @Override public void handleDelivery(String consumerTag, Envelope envelope,
 	     *           AMQP.BasicProperties properties, byte[] body) throws IOException {
 	     *           String message = new String(body, "UTF-8"); out.println("Received
