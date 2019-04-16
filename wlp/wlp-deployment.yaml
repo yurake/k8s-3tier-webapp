@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wlp
+spec:
+  selector:
+    matchLabels:
+      app: wlp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: wlp
+    spec:
+      containers:
+      - name: wlp
+        image: mycluster.icp:8500/default/docker_hub_id/wlp:v0.0.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9080
