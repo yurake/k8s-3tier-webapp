@@ -37,3 +37,4 @@ bin
 *.log
 *.swp
 *.bak
+/.factorypath
