@@ -51,6 +51,8 @@ public class PutMq extends HttpServlet {
 
 	    channel.close();
 	    connection.close();
+
+	    System.out.println("Set: id: " + id + ", msg:" + message);
 	} catch (Exception e) {
 	    System.out.println(e.getMessage());
 	}

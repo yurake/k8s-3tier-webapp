@@ -41,6 +41,8 @@ public class InsertDb extends HttpServlet {
 	    Statement stmt = con.createStatement();
 
 	    stmt.executeUpdate(sql);
+
+		System.out.println("Selected Msg: id: " + id + ", sql: " + sql);
 	} catch (NamingException | SQLException e) {
 	    e.printStackTrace();
 	} finally {

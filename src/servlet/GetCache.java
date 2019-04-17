@@ -16,14 +16,16 @@ import servlet.util.GetConfig;
 public class GetCache extends HttpServlet {
     private static String serverconf = GetConfig.getResourceBundle("cache.server.conf");
 
+	// コネクションプールの初期化
+	static {
+		SockIOPool pool = SockIOPool.getInstance();
+		pool.setServers(new String[] { serverconf });
+		pool.initialize();
+	}
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	PrintWriter out = response.getWriter();
 	out.println("Get Cache");
-
-	// コネクションプールの初期化
-	SockIOPool pool = SockIOPool.getInstance();
-	pool.setServers(new String[] { serverconf });
-	pool.initialize();
 
 	MemcachedClient mcc = new MemcachedClient();
 
