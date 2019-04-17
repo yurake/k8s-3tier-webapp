@@ -9,7 +9,7 @@ spec:
   - host:
     http:
       paths:
-      - path: /rabbitmq
+      - path: /rabbitmq/
         backend:
           serviceName: rabbitmq
           servicePort: 15672
