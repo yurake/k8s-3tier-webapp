@@ -10,4 +10,14 @@
   <!-- Automatically expand WAR files and EAR files -->
   <applicationManager autoExpand="true" />
   <applicationMonitor updateTrigger="mbean" />
+  
+  <library id="MySQLLib">
+    <fileset dir="${server.config.dir}/resources/mysql" includes="*.jar" />
+  </library>
+  <dataSource jndiName="jdbc/webapp" transactional="false">
+    <jdbcDriver libraryRef="MySQLLib" />
+    <!--
+    <properties databaseName="mydb" serverName="${env.MYSQL_SERVERNAME}" portNumber="${env.MYSQL_PORTNUMBER}" user="${env.MYSQL_USER}" password="${env.MYSQL_PASSWORD}" />
+    -->
+  </dataSource>
 </server>
