@@ -16,8 +16,6 @@
   </library>
   <dataSource jndiName="jdbc/webapp" transactional="false">
     <jdbcDriver libraryRef="MySQLLib" />
-    <!--
-    <properties databaseName="mydb" serverName="${env.MYSQL_SERVERNAME}" portNumber="${env.MYSQL_PORTNUMBER}" user="${env.MYSQL_USER}" password="${env.MYSQL_PASSWORD}" />
-    -->
+    <properties databaseName="webapp" serverName="mysql" portNumber="3306" user="root" password="supersecret" useSSL="false" />
   </dataSource>
 </server>
