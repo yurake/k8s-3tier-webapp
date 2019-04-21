@@ -23,12 +23,12 @@ spec:
         - name: RABBITMQ_DEFAULT_VHOST
           valueFrom:
             configMapKeyRef:
-              name: rabbitmq-config
+              name: rabbitmq-configmap
               key: rabbitmq-default-vhost
         - name: RABBITMQ_DEFAULT_USER
           valueFrom:
             configMapKeyRef:
-              name: rabbitmq-config
+              name: rabbitmq-configmap
               key: rabbitmq-default-user
         - name: RABBITMQ_DEFAULT_PASS
           valueFrom:

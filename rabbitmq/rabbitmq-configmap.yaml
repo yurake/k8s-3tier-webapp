@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: rabbitmq-config
+  name: rabbitmq-configmap
 data:
   rabbitmq-default-vhost: "vhost1"
   rabbitmq-default-user: "rabbitmq"
