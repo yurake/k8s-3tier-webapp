@@ -3,10 +3,12 @@ kind: Deployment
 metadata:
   name: mysql
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: mysql
-  replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -15,6 +17,37 @@ spec:
       containers:
       - name: mysql
         image: mycluster.icp:8500/default/docker_hub_id/mysql:v0.0.1
-        imagePullPolicy: Always
+        args:
+        - --character-set-server=utf8mb4
+        - --collation-server=utf8mb4_unicode_ci
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-password
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-password
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: tz
         ports:
-        - containerPort: 3306
+        - name: mysql
+          containerPort: 3306
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
