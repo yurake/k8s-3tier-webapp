@@ -14,7 +14,7 @@
         <res-ref-name>jdbc/OssaplDS</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
-    </resource-ref> 
+    </resource-ref>
 
     <servlet>
         <servlet-name>SetCacheServlet</servlet-name>
@@ -40,6 +40,10 @@
         <servlet-name>SelectDBServlet</servlet-name>
         <servlet-class>servlet.SelectDb</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteDBServlet</servlet-name>
+        <servlet-class>servlet.DeleteDb</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>SetCacheServlet</servlet-name>
@@ -64,5 +68,9 @@
     <servlet-mapping>
         <servlet-name>SelectDBServlet</servlet-name>
         <url-pattern>/SelectDB</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteDBServlet</servlet-name>
+        <url-pattern>/DeleteDB</url-pattern>
     </servlet-mapping>
 </web-app>
