@@ -17,7 +17,7 @@ public class GetMq implements Runnable {
 	private static String password = GetConfig.getResourceBundle("jms.password");
 	private static String host = GetConfig.getResourceBundle("jms.host");
 	private static String vhost = GetConfig.getResourceBundle("jms.vhost");
-    private static String splitkey = GetConfig.getResourceBundle("jms.split.key");
+	private static String splitkey = GetConfig.getResourceBundle("jms.split.key");
 
 	@Override
 	public void run() {
@@ -42,6 +42,10 @@ public class GetMq implements Runnable {
 				    String id = value[0];
 				    String message = value[1];
 					System.out.println("Received: id: " + id + ", msg:" + message);
+
+					InsertDb insdb = new InsertDb();
+					System.out.println("insertMsg: id: " + id + ", msg:" + message);
+					insdb.insertMsg(id, message);
 				}
 			};
 			channel.basicConsume(queuename, true, consumer);
