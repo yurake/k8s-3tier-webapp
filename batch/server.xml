@@ -1,0 +1,17 @@
+<server description="batch server">
+  <featureManager>
+    <feature>concurrent-1.0</feature>
+  </featureManager>
+  <managedExecutorService jndiName="concurrent/executors">
+    <contextService>
+      <jeeMetadataContext />
+    </contextService>
+  </managedExecutorService>
+  <library id="MySQLLib">
+    <fileset dir="${server.config.dir}/resources/mysql" includes="*.jar" />
+  </library>
+  <dataSource jndiName="jdbc/webapp" transactional="false">
+    <jdbcDriver libraryRef="MySQLLib" />
+    <properties databaseName="webapp" serverName="mysql" portNumber="3306" user="root" password="supersecret" useSSL="false" allowPublicKeyRetrieval="true"/>
+  </dataSource>
+</server>

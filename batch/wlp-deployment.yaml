@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: batch
+spec:
+  selector:
+    matchLabels:
+      app: batch
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: batch
+    spec:
+      containers:
+      - name: batch
+        image: mycluster.icp:8500/default/docker_hub_id/batch:v0.0.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9080
