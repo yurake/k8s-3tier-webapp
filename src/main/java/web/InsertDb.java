@@ -20,6 +20,8 @@ import web.util.GetConfig;
 public class InsertDb extends HttpServlet {
     private static String jndiname = GetConfig.getResourceBundle("jndi.name");
     private static String sqlkey = GetConfig.getResourceBundle("insert.msg.id");
+	private static String sqlbody = GetConfig.getResourceBundle("insert.msg.body");
+    private static String message = GetConfig.getResourceBundle("common.message");
     private DataSource ds;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -32,6 +34,7 @@ public class InsertDb extends HttpServlet {
 
 	try {
 	    sql = sql.replace(sqlkey, id);
+		sql = sql.replace(sqlbody, message);
 	    System.out.println("Execute SQL: " + sql);
 	    out.println("Execute SQL: " + sql);
 
