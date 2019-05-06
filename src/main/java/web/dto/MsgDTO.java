@@ -1,4 +1,4 @@
-package servlet.dto;
+package web.dto;
 
 /**
  * Message DB用のDTOクラス

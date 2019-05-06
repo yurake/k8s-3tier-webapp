@@ -1,4 +1,4 @@
-package servlet;
+package web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import servlet.util.GetConfig;
+import web.util.GetConfig;
 
 public class SelectDb extends HttpServlet {
     private static String jndiname = GetConfig.getResourceBundle("jndi.name");

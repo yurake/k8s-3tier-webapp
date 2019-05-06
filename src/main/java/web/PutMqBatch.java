@@ -1,4 +1,4 @@
-package servlet;
+package web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,16 +12,16 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-import servlet.util.CreateId;
-import servlet.util.GetConfig;
+import web.util.CreateId;
+import web.util.GetConfig;
 
-public class PutMq extends HttpServlet {
-    private static String queuename = GetConfig.getResourceBundle("queue.name");
+public class PutMqBatch extends HttpServlet {
+    private static String queuename = GetConfig.getResourceBundle("batch.queue.name");
     private static String username = GetConfig.getResourceBundle("jms.username");
     private static String password = GetConfig.getResourceBundle("jms.password");
     private static String host = GetConfig.getResourceBundle("jms.host");
     private static String vhost = GetConfig.getResourceBundle("jms.vhost");
-    private static String message = GetConfig.getResourceBundle("common.message");
+    private static String message = GetConfig.getResourceBundle("batch.message");
     private static String splitkey = GetConfig.getResourceBundle("jms.split.key");
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

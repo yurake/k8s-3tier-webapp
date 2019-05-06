@@ -1,4 +1,4 @@
-package servlet;
+package web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.meetup.memcached.MemcachedClient;
 import com.meetup.memcached.SockIOPool;
 
-import servlet.util.GetConfig;
+import web.util.CreateId;
+import web.util.GetConfig;
 
-public class GetCache extends HttpServlet {
+public class SetCache extends HttpServlet {
     private static String serverconf = GetConfig.getResourceBundle("cache.server.conf");
+    private static String message = GetConfig.getResourceBundle("common.message");
 
 	// コネクションプールの初期化
 	static {
@@ -25,16 +27,18 @@ public class GetCache extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	PrintWriter out = response.getWriter();
-	out.println("Get Cache");
+	out.println("Set Cache");
+
+	String id = String.valueOf(CreateId.createid());
+	out.println("id: " + id);
+	out.println("msg: " + message);
 
 	MemcachedClient mcc = new MemcachedClient();
-
 	try {
-	    String id = (String) mcc.get("id");
-	    String message = (String) mcc.get("msg");
-	    out.println("id: " + id);
-	    out.println("msg: " + message);
-	    System.out.println("Received: id: " + id + ", msg:" + message);
+	    mcc.set("id", id);
+	    mcc.set("msg", message);
+
+	    System.out.println("Set: id: " + id + ", msg:" + message);
 	} catch (Exception e) {
 	    System.out.println(e.getMessage());
 	}

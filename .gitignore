@@ -38,3 +38,4 @@ bin
 *.swp
 *.bak
 /.factorypath
+/.apt_generated_tests/
