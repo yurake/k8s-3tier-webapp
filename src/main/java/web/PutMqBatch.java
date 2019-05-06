@@ -26,7 +26,7 @@ public class PutMqBatch extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	PrintWriter out = response.getWriter();
-	out.println("Put MQ");
+	out.println("Put MQ Batch");
 	ConnectionFactory connectionFactory = new ConnectionFactory();
 	connectionFactory.setUsername(username);
 	connectionFactory.setPassword(password);
