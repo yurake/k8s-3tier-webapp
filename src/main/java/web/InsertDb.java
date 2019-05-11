@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import web.util.CreateId;
 import web.util.GetConfig;
 
-@RequestMapping("/")
 @Controller
 public class InsertDb {
 	private static String jndiname = GetConfig.getResourceBundle("jndi.name");

@@ -19,18 +19,20 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</listener>
 
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
+		<!--  <welcome-file>index.jsp</welcome-file> -->
 	</welcome-file-list>
 
+<!--
 	<error-page>
 		<error-code>404</error-code>
-		<location>/index.html</location>
+		<location>/index.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/index.html</location>
+		<location>/index.jsp</location>
 	</error-page>
+ -->
 
 	<!-- - Servlet that dispatches request to registered handlers (Controller
 		implementations). -->
