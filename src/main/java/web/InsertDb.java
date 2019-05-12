@@ -9,13 +9,10 @@ public class InsertDb {
 	@RequestMapping("InsertDb")
 	public String dbAccessInsertDb() {
 
-		/**
-		String result = null;
 		System.out.println("InsertDB");
 
 		InsertMessage insmsg = new InsertMessage();
-		result = insmsg.doGet();
-		**/
+		insmsg.insertMsg();
 
 		return "insertdb";
 	}

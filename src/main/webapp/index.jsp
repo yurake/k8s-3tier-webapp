@@ -49,8 +49,7 @@
 		</tr>
 		<tr>
 			<td>MySQL</td>
-			<c:url value="/InsertDb" var="InsertDb" />
-			<td><a href="${InsertDb}">Insert DB</a></td>
+			<td><a href="InsertDb">Insert DB</a></td>
 			<td><a href="SelectDB">Select DB</a></td>
 			<td><a href="DeleteDB">Delete DB</a></td>
 		</tr>

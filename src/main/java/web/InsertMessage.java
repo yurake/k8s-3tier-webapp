@@ -19,7 +19,7 @@ public class InsertMessage {
 	private static String message = GetConfig.getResourceBundle("common.message");
 	private DataSource ds;
 
-	public String doGet() {
+	public String insertMsg() {
 		Connection con = null;
 		String id = String.valueOf(CreateId.createid());
 		String sql = GetConfig.getResourceBundle("insert.msg");
@@ -47,7 +47,6 @@ public class InsertMessage {
 				}
 			}
 		}
-		return "Insert DB";
+		return sql;
 	}
-
 }
