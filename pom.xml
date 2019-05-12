@@ -44,7 +44,7 @@
 
 
 	<build>
-		<finalName>web</finalName>
+		<finalName>spring</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
