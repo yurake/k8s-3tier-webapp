@@ -15,7 +15,7 @@
 	<table>
 		<tr>
 			<td>
-				<h1>insertdb</h1>
+				<h1>selectdb</h1>
 			</td>
 		</tr>
 	</table>

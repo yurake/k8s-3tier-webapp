@@ -49,7 +49,7 @@
 		</tr>
 		<tr>
 			<td>MySQL</td>
-			<td><a href="InsertDb">Insert DB</a></td>
+			<td><a href="InsertDB">Insert DB</a></td>
 			<td><a href="SelectDB">Select DB</a></td>
 			<td><a href="DeleteDB">Delete DB</a></td>
 		</tr>

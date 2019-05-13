@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class InsertDb {
 
-	@RequestMapping("InsertDb")
+	@RequestMapping("InsertDB")
 	public String dbAccessInsertDb() {
 
 		System.out.println("InsertDB");
