@@ -8,7 +8,7 @@
 
 <html>
 <head>
-<title>Sample "Hello, World" Application</title>
+<title>Hello k8s-3tier-webapp</title>
 </head>
 <body bgcolor=white>
 

@@ -8,14 +8,14 @@
 
 <html>
 <head>
-<title>Sample "Hello, World" Application</title>
+<title>Hello k8s-3tier-webapp</title>
 </head>
 <body bgcolor=white>
 
 	<table>
 		<tr>
 			<td>
-				<h1>Sample "Hello, World" Application</h1>
+				<h1>Hello k8s-3tier-webapp</h1>
 			</td>
 		</tr>
 	</table>
