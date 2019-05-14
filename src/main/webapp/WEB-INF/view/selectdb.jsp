@@ -8,7 +8,7 @@
 
 <html>
 <head>
-<title>Sample "Hello, World" Application</title>
+<title>Hello k8s-3tier-webapp</title>
 </head>
 <body bgcolor=white>
 
@@ -18,6 +18,11 @@
 				<h1>selectdb</h1>
 			</td>
 		</tr>
+		<c:forEach var="allMessage" items="${allMessageList}">
+			<tr>
+				<td><c:out value="${allMessage}" /></td>
+			</tr>
+		</c:forEach>
 	</table>
 </body>
 </html>
