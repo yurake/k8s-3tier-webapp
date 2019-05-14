@@ -1,4 +1,4 @@
-package web;
+package web.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,6 +33,7 @@ public class InsertMessage {
 			con = ds.getConnection();
 			Statement stmt = con.createStatement();
 
+			System.out.println("Execute SQL: " + sql);
 			stmt.executeUpdate(sql);
 
 			System.out.println("Selected Msg: id: " + id + ", sql: " + sql);
