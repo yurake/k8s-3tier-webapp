@@ -1,4 +1,6 @@
 CREATE DATABASE webapp;
+create user 'mysql' identified by 'mysql';
+grant all privileges on webapp.* to 'mysql';
 use webapp;
 
 CREATE TABLE msg (
