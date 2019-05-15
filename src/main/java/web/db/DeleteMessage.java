@@ -16,7 +16,7 @@ public class DeleteMessage extends HttpServlet {
 	private static String sql = GetConfig.getResourceBundle("delete.msg.all");
 	private DataSource ds;
 
-	public String deleteMsg() {
+	public void deleteMsg() {
 		Connection con = null;
 
 		try {
@@ -39,6 +39,5 @@ public class DeleteMessage extends HttpServlet {
 				}
 			}
 		}
-		return "deletedb";
 	}
 }

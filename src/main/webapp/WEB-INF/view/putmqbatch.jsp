@@ -15,8 +15,8 @@
 	<table>
 		<tr>
 			<td>
-				<h1>insertdb</h1>
-				<p>${insertMsg}</p>
+				<h1>putmqbatch</h1>
+				<p>${putMsgQueueBatch}</p>
 			</td>
 		</tr>
 	</table>
