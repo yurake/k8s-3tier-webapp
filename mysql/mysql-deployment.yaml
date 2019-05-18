@@ -17,6 +17,7 @@ spec:
       containers:
       - name: mysql
         image: mycluster.icp:8500/default/docker_hub_id/mysql:v0.0.1
+        imagePullPolicy: Always
         args:
         - --character-set-server=utf8mb4
         - --collation-server=utf8mb4_unicode_ci
@@ -26,16 +27,6 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: mysql-root-password
-        - name: MYSQL_USER
-          valueFrom:
-            configMapKeyRef:
-              name: mysql-configmap
-              key: mysql-user
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-password
         - name: TZ
           valueFrom:
             configMapKeyRef:

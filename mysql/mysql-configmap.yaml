@@ -3,5 +3,4 @@ kind: ConfigMap
 metadata:
   name: mysql-configmap
 data:
-  mysql-user: "mysql"
   tz: "Asia/Tokyo"
