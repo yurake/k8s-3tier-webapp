@@ -107,7 +107,7 @@ public class ApplicationController {
 	@RequestMapping("SetCache")
 	public String setCache(Model model) {
 
-		System.out.println("PutCache");
+		System.out.println("SetCache");
 		SetCache setcache = new SetCache();
 		String cache = setcache.setCache();
 
