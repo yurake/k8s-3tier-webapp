@@ -15,14 +15,15 @@
 	<table>
 		<tr>
 			<td>
-				<h1>selectdb</h1>
+				<h1>putmqbatch</h1>
+				<p>${putMsgQueueBatch}</p>
 			</td>
 		</tr>
-		<c:forEach var="allMessage" items="${allMessageList}">
-			<tr>
-				<td><c:out value="${allMessage}" /></td>
-			</tr>
-		</c:forEach>
 	</table>
+
+	<hr />
+
+	<img alt="boraji.com" src="<spring:url value="/images/deer.png"/>"
+		width="200">
 </body>
 </html>

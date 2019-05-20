@@ -1,4 +1,4 @@
-package web.util;
+package spring.web.util;
 
 import java.util.ResourceBundle;
 

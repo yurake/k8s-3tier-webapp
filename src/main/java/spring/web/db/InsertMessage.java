@@ -1,42 +1,40 @@
-package web.db;
+package spring.web.db;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.http.HttpServlet;
 import javax.sql.DataSource;
 
-import web.util.GetConfig;
+import spring.web.util.CreateId;
+import spring.web.util.GetConfig;
 
-public class SelectMessage extends HttpServlet {
+public class InsertMessage {
+
 	private static String jndiname = GetConfig.getResourceBundle("jndi.name");
-	private static String sql = GetConfig.getResourceBundle("select.msg.all");
+	private static String sqlkey = GetConfig.getResourceBundle("insert.msg.id");
+	private static String sqlbody = GetConfig.getResourceBundle("insert.msg.body");
+	private static String message = GetConfig.getResourceBundle("common.message");
 	private DataSource ds;
 
-	public List<String> selectMsg() {
+	public String insertMsg() {
 		Connection con = null;
-		List<String> allmsg = new ArrayList<>();
+		String id = String.valueOf(CreateId.createid());
+		String sql = GetConfig.getResourceBundle("insert.msg");
 
 		try {
+			sql = sql.replace(sqlkey, id);
+			sql = sql.replace(sqlbody, message);
+
 			InitialContext ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup(jndiname);
 			con = ds.getConnection();
 			Statement stmt = con.createStatement();
 
 			System.out.println("Execute SQL: " + sql);
-			ResultSet rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-				String fullmsg = "Selected Msg: id: " + rs.getString("id") + ", message: " + rs.getString("msg");
-				System.out.println(fullmsg);
-				allmsg.add(fullmsg);
-			}
+			stmt.executeUpdate(sql);
 
 		} catch (NamingException | SQLException e) {
 			e.printStackTrace();
@@ -49,6 +47,6 @@ public class SelectMessage extends HttpServlet {
 				}
 			}
 		}
-		return allmsg;
+		return sql;
 	}
 }

@@ -1,4 +1,4 @@
-package web.mq;
+package spring.web.mq;
 
 import javax.servlet.http.HttpServlet;
 
@@ -7,7 +7,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.GetResponse;
 
-import web.util.GetConfig;
+import spring.web.util.GetConfig;
 
 public class GetMq extends HttpServlet {
 	private static String queuename = GetConfig.getResourceBundle("queue.name");

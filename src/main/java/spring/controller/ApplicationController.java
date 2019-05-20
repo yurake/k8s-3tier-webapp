@@ -1,4 +1,4 @@
-package web;
+package spring.controller;
 
 import java.util.List;
 
@@ -6,20 +6,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import web.cache.GetCache;
-import web.cache.SetCache;
-import web.db.DeleteMessage;
-import web.db.InsertMessage;
-import web.db.SelectMessage;
-import web.mq.GetMq;
-import web.mq.PutMq;
-import web.mq.PutMqBatch;
+import spring.web.cache.GetCache;
+import spring.web.cache.SetCache;
+import spring.web.db.DeleteMessage;
+import spring.web.db.InsertMessage;
+import spring.web.db.SelectMessage;
+import spring.web.mq.GetMq;
+import spring.web.mq.PutMq;
+import spring.web.mq.PutMqBatch;
 
 @Controller
 public class ApplicationController {
 
 	@RequestMapping("/")
-	public String index() {
+	public String index(Model model) {
 		return "index";
 	}
 

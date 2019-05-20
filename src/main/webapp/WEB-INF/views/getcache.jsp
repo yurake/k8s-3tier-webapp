@@ -15,10 +15,14 @@
 	<table>
 		<tr>
 			<td>
-				<h1>putmqbatch</h1>
-				<p>${putMsgQueueBatch}</p>
+				<h1>getcache</h1>
+				<p>${getCache}</p>
 			</td>
 		</tr>
 	</table>
+	<hr />
+
+	<img alt="boraji.com" src="<spring:url value="/images/deer.png"/>"
+		width="200">
 </body>
 </html>

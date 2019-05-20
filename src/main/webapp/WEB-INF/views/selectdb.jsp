@@ -15,10 +15,19 @@
 	<table>
 		<tr>
 			<td>
-				<h1>insertdb</h1>
-				<p>${insertMsg}</p>
+				<h1>selectdb</h1>
 			</td>
 		</tr>
+		<c:forEach var="allMessage" items="${allMessageList}">
+			<tr>
+				<td><c:out value="${allMessage}" /></td>
+			</tr>
+		</c:forEach>
 	</table>
+
+	<hr />
+
+	<img alt="boraji.com" src="<spring:url value="/images/deer.png"/>"
+		width="200">
 </body>
 </html>

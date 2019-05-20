@@ -15,10 +15,15 @@
 	<table>
 		<tr>
 			<td>
-				<h1>getmq</h1>
-				<p>${getMsgQueue}</p>
+				<h1>insertdb</h1>
+				<p>${insertMsg}</p>
 			</td>
 		</tr>
 	</table>
+
+	<hr />
+
+	<img alt="boraji.com" src="<spring:url value="/images/deer.png"/>"
+		width="200">
 </body>
 </html>

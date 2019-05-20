@@ -15,10 +15,14 @@
 	<table>
 		<tr>
 			<td>
-				<h1>putmq</h1>
-				<p>${putMsgQueue}</p>
+				<h1>deletedb</h1>
 			</td>
 		</tr>
 	</table>
+
+	<hr />
+
+	<img alt="boraji.com" src="<spring:url value="/images/deer.png"/>"
+		width="200">
 </body>
 </html>

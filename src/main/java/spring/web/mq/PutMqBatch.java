@@ -1,4 +1,4 @@
-package web.mq;
+package spring.web.mq;
 
 import javax.servlet.http.HttpServlet;
 
@@ -6,8 +6,8 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-import web.util.CreateId;
-import web.util.GetConfig;
+import spring.web.util.CreateId;
+import spring.web.util.GetConfig;
 
 public class PutMqBatch extends HttpServlet {
     private static String queuename = GetConfig.getResourceBundle("batch.queue.name");

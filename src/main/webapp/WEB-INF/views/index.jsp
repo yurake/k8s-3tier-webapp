@@ -9,25 +9,27 @@
 <html>
 <head>
 <title>Hello k8s-3tier-webapp</title>
+<link rel="icon" type="image/png" sizes="16x16" href="icon-16x16.png?" />
+<link href='<spring:url value="/resources/css/style.css"/>'
+	rel="stylesheet" />
+<script type="text/javascript"
+	src='<spring:url value="/resources/js/app.js"/>'></script>
 </head>
+
 <body bgcolor=white>
 
-	<table>
-		<tr>
-			<td>
-				<h1>Hello k8s-3tier-webapp</h1>
-			</td>
-		</tr>
-	</table>
+	<h1 id="title" class="color1">Hello k8s-3tier-webapp</h1>
+
+	<button onclick="changeColor()">Change Color</button>
 
 	<p>To prove that they work, you can execute either of the following
 		links:
 	<table>
 		<tr>
-			<td>Target</td>
-			<td>CREATE</td>
-			<td>SELECT</td>
-			<td>DELETE</td>
+			<td><b>Target</b></td>
+			<td><b>CREATE</b></td>
+			<td><b>SELECT</b></td>
+			<td><b>DELETE</b></td>
 		</tr>
 		<tr>
 			<td>Memcached</td>
@@ -55,5 +57,9 @@
 		</tr>
 	</table>
 
+	<hr />
+
+	<img alt="boraji.com" src="<spring:url value="/images/deer.png"/>"
+		width="200">
 </body>
 </html>
