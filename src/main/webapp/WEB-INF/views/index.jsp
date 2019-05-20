@@ -9,11 +9,11 @@
 <html>
 <head>
 <title>Hello k8s-3tier-webapp</title>
-<link rel="icon" type="image/png" sizes="16x16" href="icon-16x16.png?" />
-<link href='<spring:url value="/resources/css/style.css"/>'
+<link rel="icon" type="image/png" sizes="16x16" href="./images/icon-16x16.png" />
+<link href='<spring:url value="./resources/css/style.css"/>'
 	rel="stylesheet" />
 <script type="text/javascript"
-	src='<spring:url value="/resources/js/app.js"/>'></script>
+	src='<spring:url value="./resources/js/app.js"/>'></script>
 </head>
 
 <body bgcolor=white>
@@ -59,6 +59,6 @@
 
 	<hr />
 
-	<img src="<spring:url value="/images/deer.png"/>" width="200">
+	<img src="<spring:url value="./images/deer.png"/>" width="200">
 </body>
 </html>

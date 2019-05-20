@@ -27,6 +27,6 @@
 
 	<hr />
 
-	<img src="<spring:url value="/images/deer.png"/>" width="200">
+	<img src="<spring:url value="./images/deer.png"/>" width="200">
 </body>
 </html>
