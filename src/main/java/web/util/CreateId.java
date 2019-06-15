@@ -1,4 +1,4 @@
-package servlet.util;
+package web.util;
 
 import java.util.Random;
 

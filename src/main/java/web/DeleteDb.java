@@ -1,4 +1,4 @@
-package servlet;
+package web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,25 +14,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import servlet.util.CreateId;
-import servlet.util.GetConfig;
+import web.util.GetConfig;
 
-@SuppressWarnings("serial")
-public class InsertDb extends HttpServlet {
+public class DeleteDb extends HttpServlet {
     private static String jndiname = GetConfig.getResourceBundle("jndi.name");
-    private static String sqlkey = GetConfig.getResourceBundle("insert.msg.id");
+    private static String sql = GetConfig.getResourceBundle("delete.msg.all");
     private DataSource ds;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-	Connection con = null;
-	String id = String.valueOf(CreateId.createid());
-	String sql = GetConfig.getResourceBundle("insert.msg");
-
 	PrintWriter out = response.getWriter();
-	out.println("Insert DB");
+	out.println("Delete DB");
+
+	Connection con = null;
 
 	try {
-	    sql = sql.replace(sqlkey, id);
 	    System.out.println("Execute SQL: " + sql);
 	    out.println("Execute SQL: " + sql);
 
@@ -42,6 +37,7 @@ public class InsertDb extends HttpServlet {
 	    Statement stmt = con.createStatement();
 
 	    stmt.executeUpdate(sql);
+
 	} catch (NamingException | SQLException e) {
 	    e.printStackTrace();
 	} finally {

@@ -5,7 +5,8 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <build>
-    <sourceDirectory>src</sourceDirectory>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <finalName>web</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
@@ -33,7 +34,6 @@
   	<dependency>
   		<groupId>com.rabbitmq.jms</groupId>
   		<artifactId>rabbitmq-jms</artifactId>
-  		<scope>test</scope>
   	</dependency>
   	<dependency>
   		<groupId>org.apache.geronimo.specs</groupId>
@@ -53,8 +53,11 @@
   	<dependency>
   		<groupId>mysql</groupId>
   		<artifactId>mysql-connector-java</artifactId>
-  		<scope>test</scope>
   	</dependency>
+  	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+	</dependency>
   </dependencies>
   <dependencyManagement>
   	<dependencies>
@@ -67,11 +70,6 @@
   			<groupId>org.apache.geronimo.specs</groupId>
   			<artifactId>geronimo-jms_1.1_spec</artifactId>
   			<version>1.1.1</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>javax.servlet</groupId>
-  			<artifactId>javax.servlet-api</artifactId>
-  			<version>3.1.0</version>
   		</dependency>
   		<dependency>
   			<groupId>com.rabbitmq</groupId>
@@ -88,6 +86,11 @@
   			<artifactId>Memcached-Java-Client</artifactId>
   			<version>0.0.1-SNAPSHOT</version>
   		</dependency>
+  		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.25</version>
+		</dependency>
   	</dependencies>
   </dependencyManagement>
 </project>
