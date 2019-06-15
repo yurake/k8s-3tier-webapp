@@ -28,7 +28,7 @@
   	<dependency>
   		<groupId>com.rabbitmq</groupId>
   		<artifactId>amqp-client</artifactId>
-  		<scope>test</scope>
+  		<scope>compile</scope>
   	</dependency>
   	<dependency>
   		<groupId>com.rabbitmq.jms</groupId>
@@ -43,12 +43,12 @@
   	<dependency>
   		<groupId>javax.servlet</groupId>
   		<artifactId>javax.servlet-api</artifactId>
-  		<scope>test</scope>
+  		<scope>compile</scope>
   	</dependency>
   	<dependency>
   		<groupId>com.meetup.memcached</groupId>
   		<artifactId>Memcached-Java-Client</artifactId>
-  		<scope>test</scope>
+  		<scope>compile</scope>
   	</dependency>
   	<dependency>
   		<groupId>mysql</groupId>
