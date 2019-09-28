@@ -1,38 +1,69 @@
 # k8s-3tier-webapp
 
 ## About
-Kubernetesでアプリが稼働するための定義
+Sample web application based on k8s.
+Use some docker images below:
+* websphere-liberty:webProfile8
+* memcached:1.5
+* mysql:8.0
+* rabbitmq:3.7.7-management
+* openjdk:8-alpine
 
-## 前提
-以下CLIが導入されていること
+## Requirements
+Installed CLI commands.
 * docker
 * kubectl
+* minikube
 
-## 稼働確認
-### dockerイメージをビルド
-`docker build`で実行する
+## Build
+`docker build`
 
+* websphere-liberty
 ```
-docker build -t mycluster.icp:8500/default/docker_hub_id/wlp:v0.0.1 ./
-```
-
-### ビルドしたイメージをDocker Registryへプッシュ
-`docker push`で実行する
-
-```
-docker push mycluster.icp:8500/default/docker_hub_id/wlp:v0.0.1
+cd wlp
+docker build -t default/wlp:v0.0.1 .
 ```
 
-### ローカルでコンテナ起動
-`docker run`で実行する
+* mysql
+```
+cd mysql
+docker build -t default/mysql:v0.0.1 .
+```
 
+* rabbitmq
 ```
-docker run --rm -d --name wlp -p 80:9080 -p 443:9443 --network oss-3tier-webapp mycluster.icp:8500/default/docker_hub_id/wlp:v0.0.1
+cd rabbitmq
+docker build -t default/rabbitmq:v0.0.1 .
 ```
 
-### Kubernetes上でコンテナ稼働
-`kubectl apply`で実行する
+* openjdk
+```
+cd batch
+docker build -t default/batch:v0.0.1 .
+```
 
+## Apply
+`kubectl apply`
 ```
-kubectl apply -f wlp-deployment.yaml
+find . -name "*.yaml"|xargs -I {} kubectl apply -f {}
 ```
+
+### Run on Minikube
+```bash
+eval $(minikube docker-env)
+
+minikube addons enable ingress
+
+minikube config set memory 8192
+minikube config set cpus 4
+minikube config set disk-size 40g
+minikube start
+```
+
+### Web Console
+Add IP, domain in /etc/hosts
+```
+echo `minikube ip` k8s.3tier.webapp >> /etc/hosts
+```
+`http://k8s.3tier.webapp/`  
+![top.png](./docs/top.png)

@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mycluster.icp:8500/default/docker_hub_id/mysql:v0.0.1
-        imagePullPolicy: Always
+        image: default/mysql:v0.0.1
+        imagePullPolicy: IfNotPresent
         args:
         - --character-set-server=utf8mb4
         - --collation-server=utf8mb4_unicode_ci

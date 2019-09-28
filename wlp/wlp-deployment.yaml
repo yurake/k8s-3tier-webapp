@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: wlp
-        image: mycluster.icp:8500/default/docker_hub_id/wlp:v0.0.1
-        imagePullPolicy: Always
+        image: default/wlp:v0.0.1
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080

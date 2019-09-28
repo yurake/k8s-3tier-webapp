@@ -3,13 +3,13 @@ kind: Ingress
 metadata:
   name: wlp
   annotations:
-    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host:
+  - host: k8s.3tier.webapp
     http:
       paths:
-      - path: /wlp
+      - path:
         backend:
           serviceName: wlp
           servicePort: 9080

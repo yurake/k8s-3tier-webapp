@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: batch
-        image: mycluster.icp:8500/default/docker_hub_id/batch:v0.0.1
-        imagePullPolicy: Always
+        image: default/batch:v0.0.1
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080

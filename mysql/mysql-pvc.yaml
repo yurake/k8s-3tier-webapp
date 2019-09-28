@@ -8,6 +8,7 @@ spec:
   resources:
     requests:
       storage: 15Gi
+  storageClassName: mysql
   selector:
     matchLabels:
-      name: mysql-nfs
+      name: mysql-hostpath
