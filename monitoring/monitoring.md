@@ -17,7 +17,13 @@ find . -name "*.yaml"|xargs -I {} kubectl apply -f {}
 ```
 
 ## Web Console
-* prometheus, grafana
+* prometheus
 http://prometheus.minikube/
+* grafana  
 http://grafana.minikube/
 
+## Prometheus Dashboard
+* Custom  
+[grafana-minikube-dashboard.json](grafana/grafana-minikube-dashboard.json)
+* Public
+https://grafana.com/grafana/dashboards/8685
