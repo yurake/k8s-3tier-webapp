@@ -63,7 +63,7 @@ minikube start
 ### Web Console
 Add IP, domain in /etc/hosts
 ```
-echo `minikube ip` k8s.3tier.webapp >> /etc/hosts
+echo `minikube ip` k8s.3tier.webapp alertmanager.minikube prometheus.minikube grafana.minikube >> /etc/hosts
 ```
 `http://k8s.3tier.webapp/`  
 ![top.png](./docs/top.png)
