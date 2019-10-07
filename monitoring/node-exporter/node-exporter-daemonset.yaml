@@ -4,21 +4,21 @@ metadata:
   name: node-exporter
   namespace: monitoring
   labels:
-    k8s-app: node-exporter
+    k8s-3tier-webapp: node-exporter
     kubernetes.io/cluster-service: "true"
     addonmanager.kubernetes.io/mode: Reconcile
     version: v0.15.2
 spec:
   selector:
     matchLabels:
-      k8s-app: node-exporter
+      k8s-3tier-webapp: node-exporter
       version: v0.15.2
   updateStrategy:
     type: OnDelete
   template:
     metadata:
       labels:
-        k8s-app: node-exporter
+        k8s-3tier-webapp: node-exporter
         version: v0.15.2
     spec:
       containers:
@@ -33,10 +33,10 @@ spec:
               containerPort: 9100
               hostPort: 9100
           volumeMounts:
-            - name: proc
+            - name: node-exporter-persistent-storage-proc
               mountPath: /host/proc
               readOnly:  true
-            - name: sys
+            - name: node-exporter-persistent-storage-sys
               mountPath: /host/sys
               readOnly: true
           resources:
@@ -48,10 +48,9 @@ spec:
       hostNetwork: true
       hostPID: true
       volumes:
-        - name: proc
-          hostPath:
-            path: /proc
-        - name: sys
-          hostPath:
-            path: /sys
-
+      - name: node-exporter-persistent-storage-proc
+        persistentVolumeClaim:
+          claimName: node-exporter-pvc-proc
+      - name: node-exporter-persistent-storage-sys
+        persistentVolumeClaim:
+          claimName: node-exporter-pvc-sys
