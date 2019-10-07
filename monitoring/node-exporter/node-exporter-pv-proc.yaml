@@ -1,0 +1,17 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: node-exporter-pv-proc
+  namespace: monitoring
+  labels:
+    k8s-3tier-webapp: node-exporter
+    name: node-exporter-hostpath-proc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: node-exporter-proc
+  hostPath:
+    path: /data/pv003
