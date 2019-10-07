@@ -7,6 +7,13 @@ Use some docker images below:
 * prom/node-exporter:v0.15.2
 * quay.io/coreos/kube-state-metrics:v1.8.0
 
+## Before you start
+Please restart minikube, and add configs when start minikube.
+```
+minikube stop
+minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook
+```
+
 ## Build
 No need to do.
 
