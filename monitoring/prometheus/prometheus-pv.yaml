@@ -1,0 +1,15 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: prometheus-pv
+  labels:
+    k8s-3tier-webapp: prometheus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: prometheus
+  hostPath:
+    path: /data/pv002
