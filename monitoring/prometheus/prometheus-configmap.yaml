@@ -5,6 +5,7 @@ metadata:
   name: prometheus-config
   namespace: monitoring
   labels:
+    k8s-3tier-webapp: prometheus
     kubernetes.io/cluster-service: "true"
     addonmanager.kubernetes.io/mode: EnsureExists
 data:
@@ -21,7 +22,7 @@ data:
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       kubernetes_sd_configs:
       - role: endpoints
-        api_server: https://192.168.99.101:8443
+        api_server: https://192.168.99.100:8443
         tls_config:
           ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -41,7 +42,7 @@ data:
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       kubernetes_sd_configs:
       - role: node
-        api_server: https://192.168.99.101:8443
+        api_server: https://192.168.99.100:8443
         tls_config:
           ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -57,7 +58,7 @@ data:
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       kubernetes_sd_configs:
       - role: node
-        api_server: https://192.168.99.101:8443
+        api_server: https://192.168.99.100:8443
         tls_config:
           ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -167,7 +168,7 @@ data:
       alertmanagers:
       - kubernetes_sd_configs:
         - role: pod
-          api_server: https://192.168.99.101:8443
+          api_server: https://192.168.99.100:8443
           tls_config:
             ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
           bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
