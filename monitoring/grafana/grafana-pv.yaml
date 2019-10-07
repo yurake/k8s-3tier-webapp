@@ -1,0 +1,17 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: grafana-pv
+  namespace: monitoring
+  labels:
+    k8s-3tier-webapp: grafana
+    name: grafana-hostpath
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 20Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: grafana
+  hostPath:
+    path: /data/pv005

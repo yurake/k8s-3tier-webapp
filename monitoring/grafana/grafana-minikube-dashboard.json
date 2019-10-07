@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 10219,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 3,
   "links": [],
   "panels": [
     {
@@ -148,14 +148,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(container_network_receive_bytes_total{namespace=\"default\"}[5m])) by (pod)",
+          "expr": "sum(rate(container_network_receive_bytes_total{pod!~\"\"}[5m])) by (pod)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{pod}}",
           "refId": "A"
         },
         {
-          "expr": "sum(rate(container_network_transmit_bytes_total{namespace=\"default\"}[5m])) by (pod)",
+          "expr": "sum(rate(container_network_transmit_bytes_total{pod!~\"\"}[5m])) by (pod)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{pod}}",
@@ -330,7 +330,7 @@
     ]
   },
   "timezone": "",
-  "title": "grafana-minikube",
-  "uid": "UVpAP-hWk",
+  "title": "grafana-minikube Copy",
+  "uid": "YU1P7P2Zk",
   "version": 1
 }

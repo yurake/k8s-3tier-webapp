@@ -1,0 +1,17 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: grafana-pvc
+  namespace: monitoring
+  labels:
+    k8s-3tier-webapp: grafana
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: grafana
+  selector:
+    matchLabels:
+      name: grafana-hostpath

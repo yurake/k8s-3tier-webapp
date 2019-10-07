@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: grafana
   namespace: monitoring
+  labels:
+    k8s-3tier-webapp: grafana
 spec:
   selector:
     matchLabels:
@@ -19,3 +21,12 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
+        volumeMounts:
+        - name: grafana-persistent-storage
+          mountPath: /var/lib/grafana
+        securityContext:
+          runAsUser: 0
+      volumes:
+      - name: grafana-persistent-storage
+        persistentVolumeClaim:
+          claimName: grafana-pvc
