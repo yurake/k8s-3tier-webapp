@@ -17,4 +17,4 @@ spec:
         image: default/batch:v0.0.1
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 9080
+        - containerPort: 9081
