@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: batch
+  name: rabbitmq-consumer
 spec:
   selector:
     matchLabels:
-      app: batch
+      app: rabbitmq-consumer
   replicas: 1
   template:
     metadata:
       labels:
-        app: batch
+        app: rabbitmq-consumer
     spec:
       containers:
-      - name: batch
-        image: default/batch:v0.0.1
+      - name: rabbitmq-consumer
+        image: default/rabbitmq-consumer:v0.0.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9081

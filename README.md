@@ -38,8 +38,8 @@ docker build -t default/rabbitmq:v0.0.1 .
 
 * openjdk
 ```
-cd batch
-docker build -t default/batch:v0.0.1 .
+cd rabbitmq-consumer
+docker build -t default/rabbitmq-consumer:v0.0.1 .
 ```
 
 ## Apply
@@ -50,14 +50,14 @@ find . -name "*.yaml"|xargs -I {} kubectl apply -f {}
 
 ### Run on Minikube
 ```bash
-eval $(minikube docker-env)
-
-minikube addons enable ingress
-
 minikube config set memory 8192
 minikube config set cpus 4
 minikube config set disk-size 40g
 minikube start
+
+minikube addons enable ingress
+
+eval $(minikube docker-env)
 ```
 
 ### Web Console
