@@ -15,6 +15,18 @@ Installed CLI commands.
 * kubectl
 * minikube
 
+## Run on Minikube
+```bash
+minikube config set memory 8192
+minikube config set cpus 4
+minikube config set disk-size 40g
+minikube start
+
+minikube addons enable ingress
+
+eval $(minikube docker-env)
+```
+
 ## Build
 `docker build`
 
@@ -48,22 +60,17 @@ docker build -t default/rabbitmq-consumer:v0.0.1 .
 find . -name "*.yaml"|xargs -I {} kubectl apply -f {}
 ```
 
-### Run on Minikube
-```bash
-minikube config set memory 8192
-minikube config set cpus 4
-minikube config set disk-size 40g
-minikube start
+## Web Console Access
 
-minikube addons enable ingress
-
-eval $(minikube docker-env)
-```
-
-### Web Console
+### Add hosts
 Add IP, domain in /etc/hosts
 ```
 echo `minikube ip` k8s.3tier.webapp alertmanager.minikube prometheus.minikube grafana.minikube >> /etc/hosts
 ```
+
+#### Web Application
 `http://k8s.3tier.webapp/`  
 ![top.png](./docs/top.png)
+
+#### RabbitMQ Management
+`http://rabbitmq.management.minikube/`  

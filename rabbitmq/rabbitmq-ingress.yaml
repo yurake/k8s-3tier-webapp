@@ -6,10 +6,10 @@ metadata:
     ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host:
+  - host: rabbitmq.management.minikube
     http:
       paths:
-      - path: /rabbitmq/
+      - path:
         backend:
           serviceName: rabbitmq
           servicePort: 15672
