@@ -15,12 +15,11 @@
 	<table>
 		<tr>
 			<td>
-				<h1>getmq</h1>
-				<p>${getMsgQueue}</p>
+				<h1>Get Memcached</h1>
+				<p>${getMemcached}</p>
 			</td>
 		</tr>
 	</table>
-
 	<hr />
 
 	<img src="<spring:url value="./images/deer.png"/>" width="200">

@@ -1,4 +1,4 @@
-package spring.web.db;
+package spring.web.db.mysql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 import spring.web.util.CreateId;
 import spring.web.util.GetConfig;
 
-public class InsertMessage {
+public class InsertMysql {
 
 	private static String jndiname = GetConfig.getResourceBundle("jndi.name");
 	private static String sqlkey = GetConfig.getResourceBundle("insert.msg.id");
@@ -19,7 +19,7 @@ public class InsertMessage {
 	private static String message = GetConfig.getResourceBundle("common.message");
 	private DataSource ds;
 
-	public String insertMsg() {
+	public String insertMysql() {
 		Connection con = null;
 		String id = String.valueOf(CreateId.createid());
 		String sql = GetConfig.getResourceBundle("insert.msg");

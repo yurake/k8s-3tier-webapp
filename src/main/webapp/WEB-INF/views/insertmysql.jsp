@@ -15,7 +15,8 @@
 	<table>
 		<tr>
 			<td>
-				<h1>deletedb</h1>
+				<h1>Insert Mysql</h1>
+				<p>${insertMysql}</p>
 			</td>
 		</tr>
 	</table>

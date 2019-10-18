@@ -15,10 +15,14 @@
 	<table>
 		<tr>
 			<td>
-				<h1>setcache</h1>
-				<p>${setCache}</p>
+				<h1>Select Mysql</h1>
 			</td>
 		</tr>
+		<c:forEach var="allMessage" items="${allMessageList}">
+			<tr>
+				<td><c:out value="${allMessage}" /></td>
+			</tr>
+		</c:forEach>
 	</table>
 
 	<hr />

@@ -6,14 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import spring.web.cache.GetCache;
-import spring.web.cache.SetCache;
-import spring.web.db.DeleteMessage;
-import spring.web.db.InsertMessage;
-import spring.web.db.SelectMessage;
-import spring.web.mq.GetMq;
-import spring.web.mq.PutMq;
-import spring.web.mq.PutMqBatch;
+import spring.web.cache.memcached.GetMemcached;
+import spring.web.cache.memcached.SetMemcached;
+import spring.web.db.mysql.DeleteMysql;
+import spring.web.db.mysql.InsertMysql;
+import spring.web.db.mysql.SelectMysql;
+import spring.web.mq.rabbitmq.GetRabbitmq;
+import spring.web.mq.rabbitmq.PutRabbitmq;
+import spring.web.mq.rabbitmq.PutRabbitmqConsumer;
 
 @Controller
 public class ApplicationController {
@@ -23,96 +23,97 @@ public class ApplicationController {
 		return "index";
 	}
 
-	@RequestMapping("InsertDB")
+	@RequestMapping("InsertMysql")
 	public String insertDb(Model model) {
 
-		System.out.println("InsertDB");
-		InsertMessage insmsg = new InsertMessage();
-		String msg = insmsg.insertMsg();
+		System.out.println("InsertMysql");
+		InsertMysql insmsg = new InsertMysql();
+		String msg = insmsg.insertMysql();
 
-		model.addAttribute("insertMsg", msg);
+		model.addAttribute("insertMysql", msg);
 
-		return "insertdb";
+		return "insertmysql";
 	}
 
-	@RequestMapping("SelectDB")
-	public String selectDb(Model model) {
+	@RequestMapping("SelectMysql")
+	public String selectMysql(Model model) {
 
-		System.out.println("SelectDB");
-		SelectMessage insmsg = new SelectMessage();
+		System.out.println("SelectMysql");
+		SelectMysql insmsg = new SelectMysql();
 		List<String> allMessage = insmsg.selectMsg();
 
 		model.addAttribute("allMessageList", allMessage);
-		return "selectdb";
+
+		return "selectmysql";
 	}
 
-	@RequestMapping("DeleteDB")
-	public String deleteDb() {
+	@RequestMapping("DeleteMysql")
+	public String deleteMysql() {
 
-		System.out.println("DeleteDB");
-		DeleteMessage insmsg = new DeleteMessage();
+		System.out.println("DeleteMysql");
+		DeleteMysql insmsg = new DeleteMysql();
 		insmsg.deleteMsg();
 
-		return "deletedb";
+		return "deletemysql";
 	}
 
-	@RequestMapping("GetMQ")
+	@RequestMapping("GetRabbitmq")
 	public String getMq(Model model) {
 
-		System.out.println("GetMQ");
-		GetMq getmq = new GetMq();
+		System.out.println("GetRabbitmq");
+		GetRabbitmq getmq = new GetRabbitmq();
 		String telegram = getmq.getMessageQueue();
 
-		model.addAttribute("getMsgQueue", telegram);
+		model.addAttribute("getRabbitmq", telegram);
 
-		return "getmq";
+		return "getrabbitmq";
 	}
 
-	@RequestMapping("PutMQ")
+	@RequestMapping("PutRabbitmq")
 	public String putMq(Model model) {
 
-		System.out.println("PutMQ");
-		PutMq putmq = new PutMq();
+		System.out.println("PutRabbitmq");
+		PutRabbitmq putmq = new PutRabbitmq();
 		String telegram = putmq.putMessageQueue();
 
-		model.addAttribute("putMsgQueue", telegram);
+		model.addAttribute("putRabbitmq", telegram);
 
-		return "putmq";
+		return "putrabbitmq";
 	}
 
-	@RequestMapping("PutMQBatch")
+	@RequestMapping("PutRabbitmqConsumer")
 	public String putMqBatch(Model model) {
 
-		System.out.println("PutMQBatch");
-		PutMqBatch putmqb = new PutMqBatch();
-		String telegram = putmqb.putMessageQueueBatch();
+		System.out.println("PutRabbitmqConsumer");
+		PutRabbitmqConsumer putmqb = new PutRabbitmqConsumer();
+		String telegram = putmqb.putMessageQueueConsumer();
 
-		model.addAttribute("putMsgQueueBatch", telegram);
+		model.addAttribute("putRabbitmqConsumer", telegram);
 
-		return "putmqbatch";
+		return "putrabbitmqconsumer";
 	}
 
-	@RequestMapping("GetCache")
-	public String getCache(Model model) {
+	@RequestMapping("GetMemcached")
+	public String getMemcached(Model model) {
 
-		System.out.println("GetCache");
-		GetCache getcache = new GetCache();
-		String cache = getcache.getCache();
+		System.out.println("GetMemcached");
+		GetMemcached getcache = new GetMemcached();
+		String cache = getcache.getMemcached();
 
-		model.addAttribute("getCache", cache);
+		model.addAttribute("getMemcached", cache);
 
-		return "getcache";
+		return "getmemcached";
 	}
 
-	@RequestMapping("SetCache")
-	public String setCache(Model model) {
+	@RequestMapping("SetMemcached")
+	public String setMemcached(Model model) {
 
-		System.out.println("SetCache");
-		SetCache setcache = new SetCache();
-		String cache = setcache.setCache();
+		System.out.println("SetMemcached");
+		SetMemcached setcache = new SetMemcached();
+		String cache = setcache.setMemcached();
 
-		model.addAttribute("setCache", cache);
+		model.addAttribute("setMemcached", cache);
 
-		return "setcache";
+		return "setmemcached";
 	}
 }

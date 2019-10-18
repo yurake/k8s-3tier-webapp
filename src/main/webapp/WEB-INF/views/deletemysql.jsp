@@ -15,8 +15,7 @@
 	<table>
 		<tr>
 			<td>
-				<h1>insertdb</h1>
-				<p>${insertMsg}</p>
+				<h1>Delete Mysql</h1>
 			</td>
 		</tr>
 	</table>

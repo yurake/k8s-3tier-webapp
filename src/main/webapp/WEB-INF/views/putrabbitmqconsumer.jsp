@@ -15,11 +15,12 @@
 	<table>
 		<tr>
 			<td>
-				<h1>getcache</h1>
-				<p>${getCache}</p>
+				<h1>Put Rabbitmq Consumer</h1>
+				<p>${putRabbitmqConsumer}</p>
 			</td>
 		</tr>
 	</table>
+
 	<hr />
 
 	<img src="<spring:url value="./images/deer.png"/>" width="200">

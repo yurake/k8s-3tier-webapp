@@ -15,14 +15,10 @@
 	<table>
 		<tr>
 			<td>
-				<h1>selectdb</h1>
+				<h1>Set Memcached</h1>
+				<p>${setMemcached}</p>
 			</td>
 		</tr>
-		<c:forEach var="allMessage" items="${allMessageList}">
-			<tr>
-				<td><c:out value="${allMessage}" /></td>
-			</tr>
-		</c:forEach>
 	</table>
 
 	<hr />

@@ -1,8 +1,11 @@
-package spring.web.db;
+package spring.web.db.mysql;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -11,13 +14,14 @@ import javax.sql.DataSource;
 
 import spring.web.util.GetConfig;
 
-public class DeleteMessage extends HttpServlet {
+public class SelectMysql extends HttpServlet {
 	private static String jndiname = GetConfig.getResourceBundle("jndi.name");
-	private static String sql = GetConfig.getResourceBundle("delete.msg.all");
+	private static String sql = GetConfig.getResourceBundle("select.msg.all");
 	private DataSource ds;
 
-	public void deleteMsg() {
+	public List<String> selectMsg() {
 		Connection con = null;
+		List<String> allmsg = new ArrayList<>();
 
 		try {
 			InitialContext ctx = new InitialContext();
@@ -26,7 +30,13 @@ public class DeleteMessage extends HttpServlet {
 			Statement stmt = con.createStatement();
 
 			System.out.println("Execute SQL: " + sql);
-			stmt.executeUpdate(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				String fullmsg = "Selected Msg: id: " + rs.getString("id") + ", message: " + rs.getString("msg");
+				System.out.println(fullmsg);
+				allmsg.add(fullmsg);
+			}
 
 		} catch (NamingException | SQLException e) {
 			e.printStackTrace();
@@ -39,5 +49,6 @@ public class DeleteMessage extends HttpServlet {
 				}
 			}
 		}
+		return allmsg;
 	}
 }

@@ -15,8 +15,8 @@
 	<table>
 		<tr>
 			<td>
-				<h1>putmq</h1>
-				<p>${putMsgQueue}</p>
+				<h1>Put Rabbitmq</h1>
+				<p>${putRabbitmq}</p>
 			</td>
 		</tr>
 	</table>

@@ -1,4 +1,4 @@
-package spring.web.mq;
+package spring.web.mq.rabbitmq;
 
 import javax.servlet.http.HttpServlet;
 
@@ -9,7 +9,7 @@ import com.rabbitmq.client.GetResponse;
 
 import spring.web.util.GetConfig;
 
-public class GetMq extends HttpServlet {
+public class GetRabbitmq extends HttpServlet {
 	private static String queuename = GetConfig.getResourceBundle("queue.name");
 	private static String username = GetConfig.getResourceBundle("jms.username");
 	private static String password = GetConfig.getResourceBundle("jms.password");

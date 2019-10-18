@@ -33,27 +33,27 @@
 		</tr>
 		<tr>
 			<td>Memcached</td>
-			<td><a href="SetCache">Set Cache</a></td>
-			<td><a href="GetCache">Get Cache</a></td>
+			<td><a href="SetMemcached">Set Memcached</a></td>
+			<td><a href="GetMemcached">Get Memcached</a></td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>RabbitMQ</td>
-			<td><a href="PutMQ">Put MQ</a></td>
-			<td><a href="GetMQ">Get MQ</a></td>
+			<td><a href="PutRabbitmq">Put RabbitMQ</a></td>
+			<td><a href="GetRabbitmq">Get RabbitMQ</a></td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>RabbitMQ Batch</td>
-			<td><a href="PutMQBatch">Put MQ</a></td>
+			<td>RabbitMQ Consumer</td>
+			<td><a href="PutRabbitmqConsumer">Put RabbitMQ Consumer</a></td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>MySQL</td>
-			<td><a href="InsertDB">Insert DB</a></td>
-			<td><a href="SelectDB">Select DB</a></td>
-			<td><a href="DeleteDB">Delete DB</a></td>
+			<td><a href="InsertMysql">Insert MySQL</a></td>
+			<td><a href="SelectMysql">Select MySQL</a></td>
+			<td><a href="DeleteMysql">Delete MySQL</a></td>
 		</tr>
 	</table>
 

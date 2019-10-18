@@ -1,4 +1,4 @@
-package spring.web.mq;
+package spring.web.mq.rabbitmq;
 
 import javax.servlet.http.HttpServlet;
 
@@ -9,7 +9,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import spring.web.util.CreateId;
 import spring.web.util.GetConfig;
 
-public class PutMqBatch extends HttpServlet {
+public class PutRabbitmqConsumer extends HttpServlet {
     private static String queuename = GetConfig.getResourceBundle("batch.queue.name");
     private static String username = GetConfig.getResourceBundle("jms.username");
     private static String password = GetConfig.getResourceBundle("jms.password");
@@ -18,7 +18,7 @@ public class PutMqBatch extends HttpServlet {
     private static String message = GetConfig.getResourceBundle("batch.message");
     private static String splitkey = GetConfig.getResourceBundle("jms.split.key");
 
-    public String putMessageQueueBatch() {
+    public String putMessageQueueConsumer() {
 	ConnectionFactory connectionFactory = new ConnectionFactory();
 	connectionFactory.setUsername(username);
 	connectionFactory.setPassword(password);
