@@ -21,18 +21,44 @@ Installed CLI commands.
 minikube config set memory 8192
 minikube config set cpus 4
 minikube config set disk-size 40g
-minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --kubernetes-version=v1.15.4
+minikube start
 
 minikube addons enable ingress
 
 eval $(minikube docker-env)
 ```
 
-## Build & Apply
-`docker build`  
+## Build
+`docker build`
+
+* websphere-liberty
+```
+cd wlp
+docker build -t default/wlp:v0.0.1 .
+```
+
+* mysql
+```
+cd mysql
+docker build -t default/mysql:v0.0.1 .
+```
+
+* rabbitmq
+```
+cd rabbitmq
+docker build -t default/rabbitmq:v0.0.1 .
+```
+
+* openjdk
+```
+cd rabbitmq-consumer
+docker build -t default/rabbitmq-consumer:v0.0.1 .
+```
+
+## Apply
 `kubectl apply`
 ```
-./apply.sh
+find . -name "*.yaml"|xargs -I {} kubectl apply -f {}
 ```
 
 ## Web Console Access
@@ -44,14 +70,8 @@ echo `minikube ip` k8s.3tier.webapp alertmanager.minikube prometheus.minikube gr
 ```
 
 #### Web Application
-http://k8s.3tier.webapp/
+`http://k8s.3tier.webapp/`  
 ![top.png](./docs/top.png)
 
 #### RabbitMQ Management
-http://rabbitmq.management.minikube/
-
-#### Jenkins
-http://jenkins.minikube/
-
-## See Also
-Set up [monitoring](monitoring/README.md)
+`http://rabbitmq.management.minikube/`  

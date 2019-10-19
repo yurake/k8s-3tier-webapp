@@ -7,8 +7,21 @@ Use some docker images below:
 * prom/node-exporter:v0.15.2
 * quay.io/coreos/kube-state-metrics:v1.8.0
 
-## Build & Apply
+## Before you start
+Please restart minikube, and add configs when start minikube.
+```
+minikube stop
+minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook
+```
+
+## Build
 No need to do.
+
+## Apply
+`kubectl apply`
+```
+find . -name "*.yaml"|xargs -I {} kubectl apply -f {}
+```
 
 ## Web Console
 * prometheus  
@@ -21,5 +34,3 @@ http://grafana.minikube/
 [grafana-minikube-dashboard.json](grafana/grafana-minikube-dashboard.json)
 * Public  
 https://grafana.com/grafana/dashboards/8685
-* For Web Application
-https://github.com/IBM/charts/blob/master/stable/ibm-websphere-liberty/ibm_cloud_pak/pak_extensions/dashboards/ibm-websphere-liberty-grafana-dashboard.json
