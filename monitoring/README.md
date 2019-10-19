@@ -21,5 +21,5 @@ http://grafana.minikube/
 [grafana-minikube-dashboard.json](grafana/grafana-minikube-dashboard.json)
 * Public  
 https://grafana.com/grafana/dashboards/8685
-* For Web Application
+* For Web Application  
 https://github.com/IBM/charts/blob/master/stable/ibm-websphere-liberty/ibm_cloud_pak/pak_extensions/dashboards/ibm-websphere-liberty-grafana-dashboard.json
