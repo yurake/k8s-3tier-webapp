@@ -3,7 +3,7 @@
 ## About
 Sample web application based on k8s.
 Use some docker images below:
-* websphere-liberty:webProfile8
+* websphere-liberty:19.0.0.6-webProfile8
 * memcached:1.5
 * mysql:8.0
 * rabbitmq:3.7.7-management
