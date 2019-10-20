@@ -22,8 +22,8 @@
 
 	<button onclick="changeColor()">Change Color</button>
 
-	<p>To prove that they work, you can execute either of the following
-		links:
+	<p>To prove that they work, you can execute either of the following links:</p>
+
 	<table>
 		<tr>
 			<td><b>Target</b></td>
@@ -58,6 +58,8 @@
 	</table>
 
 	<hr />
+
+	<p><a href="docs">About k8s-3tier-webapp</a></p>
 
 	<img src="<spring:url value="./images/deer.png"/>" width="200">
 </body>
