@@ -8,6 +8,7 @@ Use some docker images below:
 * mysql:8.0
 * rabbitmq:3.7.7-management
 * openjdk:8-alpine
+* nginx:1.17.4
 * jenkins/jenkins:lts
 
 ## Requirements
