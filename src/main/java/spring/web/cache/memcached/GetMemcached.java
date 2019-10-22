@@ -8,7 +8,7 @@ import com.meetup.memcached.SockIOPool;
 import spring.web.util.GetConfig;
 
 public class GetMemcached extends HttpServlet {
-	private static String serverconf = GetConfig.getResourceBundle("cache.server.conf");
+	private static String serverconf = GetConfig.getResourceBundle("memcached.server.conf");
 
 	// コネクションプールの初期化
 	static {
@@ -28,7 +28,7 @@ public class GetMemcached extends HttpServlet {
 			fullmsg = "Received id: " + id + ", msg: " + message;
 			System.out.println(fullmsg);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return fullmsg;
 	}

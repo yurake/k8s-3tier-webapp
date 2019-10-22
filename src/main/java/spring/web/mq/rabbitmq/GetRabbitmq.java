@@ -40,7 +40,7 @@ public class GetRabbitmq extends HttpServlet {
 			channel.close();
 			connection.close();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return fullmsg;
 	}
