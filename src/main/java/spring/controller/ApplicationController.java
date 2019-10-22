@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import spring.web.cache.memcached.GetMemcached;
 import spring.web.cache.memcached.SetMemcached;
+import spring.web.cache.redis.GetRedis;
+import spring.web.cache.redis.SetRedis;
 import spring.web.db.mysql.DeleteMysql;
 import spring.web.db.mysql.InsertMysql;
 import spring.web.db.mysql.SelectMysql;
@@ -115,5 +117,29 @@ public class ApplicationController {
 		model.addAttribute("setMemcached", cache);
 
 		return "setmemcached";
+	}
+
+	@RequestMapping("GetRedis")
+	public String getRedis(Model model) {
+
+		System.out.println("GetRedis");
+		GetRedis getcache = new GetRedis();
+		List<String> cache = getcache.getRedis();
+
+		model.addAttribute("GetRedisList", cache);
+
+		return "getredis";
+	}
+
+	@RequestMapping("SetRedis")
+	public String setRedis(Model model) {
+
+		System.out.println("SetRedis");
+		SetRedis setcache = new SetRedis();
+		String cache = setcache.setRedis();
+
+		model.addAttribute("setRedis", cache);
+
+		return "setredis";
 	}
 }

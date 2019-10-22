@@ -38,6 +38,12 @@
 			<td></td>
 		</tr>
 		<tr>
+			<td>Redis</td>
+			<td><a href="SetRedis">Set Redis</a></td>
+			<td><a href="GetRedis">Get Redis</a></td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>RabbitMQ</td>
 			<td><a href="PutRabbitmq">Put RabbitMQ</a></td>
 			<td><a href="GetRabbitmq">Get RabbitMQ</a></td>
