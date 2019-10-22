@@ -2,12 +2,6 @@
 
 echo "## default"
 
-echo "### wlp"
-docker build -t default/wlp:v0.0.1 ./wlp/.
-kubectl apply -f ./wlp/wlp-deployment.yaml
-kubectl apply -f ./wlp/wlp-service.yaml
-kubectl apply -f ./wlp/wlp-ingress.yaml
-
 echo "### mysql"
 docker build -t default/mysql:v0.0.1 ./mysql/.
 kubectl apply -f ./mysql/mysql-pv.yaml
@@ -16,6 +10,10 @@ kubectl apply -f ./mysql/mysql-configmap.yaml
 kubectl apply -f ./mysql/mysql-secret.yaml
 kubectl apply -f ./mysql/mysql-deployment.yaml
 kubectl apply -f ./mysql/mysql-service.yaml
+
+echo "### redis"
+kubectl apply -f ./redis/redis-deployment.yaml
+kubectl apply -f ./redis/redis-service.yaml
 
 echo "### rabbitmq"
 docker build -t default/rabbitmq:v0.0.1 ./rabbitmq/.
@@ -29,15 +27,21 @@ echo "### memcached"
 kubectl apply -f ./memcached/memcached-deployment.yaml
 kubectl apply -f ./memcached/memcached-service.yaml
 
-echo "### rabbitmq-consumer"
-docker build -t default/rabbitmq-consumer:v0.0.1 ./rabbitmq-consumer/.
-kubectl apply -f ./rabbitmq-consumer/rabbitmq-consumer-deployment.yaml
-
 echo "### nginx"
 docker build -t default/nginx:v0.0.1 ./nginx/.
 kubectl apply -f ./nginx/nginx-deployment.yaml
 kubectl apply -f ./nginx/nginx-service.yaml
 kubectl apply -f ./nginx/nginx-ingress.yaml
+
+echo "### rabbitmq-consumer"
+docker build -t default/rabbitmq-consumer:v0.0.1 ./rabbitmq-consumer/.
+kubectl apply -f ./rabbitmq-consumer/rabbitmq-consumer-deployment.yaml
+
+echo "### wlp"
+docker build -t default/wlp:v0.0.1 ./wlp/.
+kubectl apply -f ./wlp/wlp-deployment.yaml
+kubectl apply -f ./wlp/wlp-service.yaml
+kubectl apply -f ./wlp/wlp-ingress.yaml
 
 echo "### jenkins"
 kubectl apply -f ./jenkins/jenkins-pv.yaml
