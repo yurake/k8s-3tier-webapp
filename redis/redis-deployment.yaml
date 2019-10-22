@@ -14,7 +14,7 @@ spec:
         role: master
     spec:
       containers:
-      - name: master
+      - name: redis-master
         image: redis:5.0.6
         ports:
         - containerPort: 6379
