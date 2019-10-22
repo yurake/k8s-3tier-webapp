@@ -15,7 +15,7 @@ public class PutRabbitmqConsumer extends HttpServlet {
     private static String password = GetConfig.getResourceBundle("jms.password");
     private static String host = GetConfig.getResourceBundle("jms.host");
     private static String vhost = GetConfig.getResourceBundle("jms.vhost");
-    private static String message = GetConfig.getResourceBundle("batch.message");
+    private static String message = GetConfig.getResourceBundle("rabbitmq.consumer.message");
     private static String splitkey = GetConfig.getResourceBundle("jms.split.key");
 
     public String putMessageQueueConsumer() {
