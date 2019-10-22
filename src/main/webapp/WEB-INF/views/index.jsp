@@ -44,13 +44,19 @@
 			<td></td>
 		</tr>
 		<tr>
+			<td>Redis PubSub</td>
+			<td><a href="PublishRedis">Publish Redis</a></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>RabbitMQ</td>
 			<td><a href="PutRabbitmq">Put RabbitMQ</a></td>
 			<td><a href="GetRabbitmq">Get RabbitMQ</a></td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>RabbitMQ Consumer</td>
+			<td>RabbitMQ ProCon</td>
 			<td><a href="PutRabbitmqConsumer">Put RabbitMQ Consumer</a></td>
 			<td></td>
 			<td></td>
