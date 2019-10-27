@@ -1,14 +1,14 @@
 package org.acme.util.json;
 
-public class FullMassage {
+public class FullMessage {
 
 	public String id;
 	public String msg;
 
-	public FullMassage() {
+	public FullMessage() {
 	}
 
-	public FullMassage(String id, String msg) {
+	public FullMessage(String id, String msg) {
 		super();
 		this.id = id;
 		this.msg = msg;

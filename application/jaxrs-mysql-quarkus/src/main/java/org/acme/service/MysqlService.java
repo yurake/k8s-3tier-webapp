@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 import org.acme.configuration.MysqlConfiguration;
 import org.acme.util.CreateId;
-import org.acme.util.json.FullMassage;
+import org.acme.util.json.FullMessage;
 import org.eclipse.microprofile.config.Config;
 
 @ApplicationScoped
@@ -61,10 +61,10 @@ public class MysqlService {
 		return sql;
 	}
 
-	public Set<FullMassage> selectMysql() {
+	public Set<FullMessage> selectMysql() {
 
 		Connection con = null;
-		Set<FullMassage> returnmsg = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
+		Set<FullMessage> returnmsg = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
 		String url = config.getValue("mysql.url", String.class);
 		String sql = config.getValue("select.msg.all", String.class);
 
@@ -78,7 +78,7 @@ public class MysqlService {
 			while (rs.next()) {
 				String id = rs.getString("id");
 				String msg = rs.getString("msg");
-				returnmsg.add(new FullMassage(id, msg));
+				returnmsg.add(new FullMessage(id, msg));
 
 				System.out.println("Selected Msg: id: " + id + ", message: " + msg);
 			}
