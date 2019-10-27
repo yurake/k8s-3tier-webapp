@@ -1,5 +1,7 @@
 #!/bin/sh
 
+ROOT_DIR=$(cd $(dirname -- $0); pwd)
+
 echo "## default"
 
 echo "### mysql"
@@ -54,6 +56,13 @@ docker build -t default/wlp:v0.0.1 ./wlp/.
 kubectl apply -f ./wlp/wlp-deployment.yaml
 kubectl apply -f ./wlp/wlp-service.yaml
 kubectl apply -f ./wlp/wlp-ingress.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-mysql-quarkus"
+cd ../application/jaxrs-mysql-quarkus
+docker build -t default/jaxrs-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
+cd ${ROOT_DIR}
 echo "###"
 echo ""
 
