@@ -1,6 +1,7 @@
 # msg
 common.message = Hello k8s-3tier-webapp!
-batch.message = Hello k8s-3tier-webapp via batch!
+rabbitmq.consumer.message = Hello k8s-3tier-webapp via rabbitmq-consumer!
+redis.publisher.message = Hello k8s-3tier-webapp via redis-subscriber!
 
 # JDBC Client
 jndi.name = jdbc/webapp
@@ -19,5 +20,10 @@ jms.host = rabbitmq
 jms.vhost = vhost1
 jms.split.key = ,
 
-# Cache Client
-cache.server.conf = memcached:11211
+# Memcached Client
+memcached.server.conf = memcached:11211
+
+# Redis Client
+redis.server.name = redis
+redis.server.port = 6379
+redis.set.expire = 3600
