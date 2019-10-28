@@ -7,13 +7,16 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
 <script type="text/javascript">
+	root = location.href;
+	url = root + 'mysql';
+
 	$(function() {
 		$("#response").html("Response Values");
 
 		$("#insert").click(function() {
 			$.ajax({
 				type : 'post',
-				url : "http://localhost:8080/mysql",
+				url : url,
 				contentType : 'application/JSON',
 				dataType : 'JSON',
 				scriptCharset : 'utf-8',
@@ -29,7 +32,7 @@
 		$("#select").click(function() {
 			$.ajax({
 				type : 'get',
-				url : "http://localhost:8080/mysql",
+				url : url,
 				contentType : 'application/JSON',
 				dataType : 'JSON',
 				scriptCharset : 'utf-8',
