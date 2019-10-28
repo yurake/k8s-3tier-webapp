@@ -6,10 +6,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: k8s.3tier.webapp
+  - host: nginx.minikube
     http:
       paths:
-      - path: /docs
+      - path:
         backend:
           serviceName: nginx
           servicePort: 80

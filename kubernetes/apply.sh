@@ -46,12 +46,14 @@ echo "###"
 echo ""
 
 echo "### rabbitmq-consumer"
+cp -p ../application/rabbitmq-consumer/target/rabbitmq-consumer.jar ./rabbitmq-consumer/.
 docker build -t default/rabbitmq-consumer:v0.0.1 ./rabbitmq-consumer/.
 kubectl apply -f ./rabbitmq-consumer/rabbitmq-consumer-deployment.yaml
 echo "###"
 echo ""
 
 echo "### wlp"
+cp -p ../application/wlp-web-java-spring/target/spring.war ./wlp/.
 docker build -t default/wlp:v0.0.1 ./wlp/.
 kubectl apply -f ./wlp/wlp-deployment.yaml
 kubectl apply -f ./wlp/wlp-service.yaml
@@ -63,6 +65,9 @@ echo "### jaxrs-mysql-quarkus"
 cd ../application/jaxrs-mysql-quarkus
 docker build -t default/jaxrs-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
 cd ${ROOT_DIR}
+kubectl apply -f ./jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-service.yaml
+kubectl apply -f ./jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-ingress.yaml
 echo "###"
 echo ""
 
@@ -120,3 +125,8 @@ echo "### docker rmi tag:none"
 docker image prune -f
 echo "###"
 echo ""
+
+echo "### restart all pods"
+# kubectl get pods | awk '{print $1}' | grep -v NAME | xargs kubectl delete pods
+# kubectl get pods -n monitoring | awk '{print $1}' | grep -v NAME | xargs kubectl delete pods -n monitoring
+echo "###"

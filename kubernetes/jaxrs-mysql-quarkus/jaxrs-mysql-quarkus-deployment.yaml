@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaxrs-mysql-quarkus
+spec:
+  selector:
+    matchLabels:
+      app: jaxrs-mysql-quarkus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jaxrs-mysql-quarkus
+    spec:
+      containers:
+      - name: jaxrs-mysql-quarkus
+        image: default/jaxrs-mysql-quarkus:v0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080

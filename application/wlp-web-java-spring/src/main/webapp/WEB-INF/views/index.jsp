@@ -71,7 +71,8 @@
 
 	<hr />
 
-	<p><a href="docs">About k8s-3tier-webapp</a></p>
+	<p><a href="http://nginx.minikube/">About k8s-3tier-webapp</a></p>
+	<p><a href="http://quarkus.minikube/">(Beta) Quarkus Application</a></p>
 
 	<img src="<spring:url value="./images/deer.png"/>" width="200">
 </body>

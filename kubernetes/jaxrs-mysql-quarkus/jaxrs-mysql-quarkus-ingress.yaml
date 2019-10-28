@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jaxrs-mysql-quarkus
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: quarkus.minikube
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: jaxrs-mysql-quarkus
+          servicePort: 8080
