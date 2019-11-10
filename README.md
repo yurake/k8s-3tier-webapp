@@ -11,6 +11,15 @@ Use some docker images below:
 * nginx:1.17.4
 * jenkins/jenkins:lts
 
+
+| Tier | Name | Description |
+|:-:|:-:|:-:|
+| 1 | Frontend | Web page, Application logic, Static file
+| 2 | Backend | Database, Cache, Messaging
+| 3 | Management | Monitoring, CI/CD, Tracing
+
+![LayardArchitecturalOverview.png](./docs/LayardArchitecturalOverview.png)
+
 ## Requirements
 Installed CLI commands.
 * docker
