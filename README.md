@@ -55,4 +55,4 @@ http://rabbitmq.management.minikube/
 http://jenkins.minikube/
 
 ## See Also
-Set up [monitoring](monitoring/README.md)
+Set up [monitoring](kubernetes/monitoring/README.md)
