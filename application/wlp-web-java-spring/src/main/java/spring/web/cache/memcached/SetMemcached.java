@@ -2,8 +2,8 @@ package spring.web.cache.memcached;
 
 import javax.servlet.http.HttpServlet;
 
-import com.meetup.memcached.MemcachedClient;
-import com.meetup.memcached.SockIOPool;
+import com.whalin.MemCached.MemCachedClient;
+import com.whalin.MemCached.SockIOPool;
 
 import spring.web.util.CreateId;
 import spring.web.util.GetConfig;
@@ -23,7 +23,7 @@ public class SetMemcached extends HttpServlet {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
 
-		MemcachedClient mcc = new MemcachedClient();
+		MemCachedClient mcc = new MemCachedClient();
 		try {
 			mcc.set("id", id);
 			mcc.set("msg", message);
