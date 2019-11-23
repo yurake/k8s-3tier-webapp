@@ -1,6 +1,7 @@
 #!/bin/sh
 
-ROOT_DIR=$(cd $(dirname -- $0); pwd)
+ROOT_DIR=$(dirname $(greadlink -f $0))
+set -eu
 
 echo "## default"
 
