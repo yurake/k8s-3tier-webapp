@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jupyter
+  namespace: monitoring
+  labels:
+    k8s-3tier-webapp: jupyter
+spec:
+  selector:
+    matchLabels:
+      app: jupyter
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jupyter
+    spec:
+      containers:
+      - name: jupyter
+        image: jupyter/datascience-notebook:ad3574d3c5c7
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: JUPYTER_ENABLE_LAB
+          valueFrom:
+            configMapKeyRef:
+              name: jupyter-configmap
+              key: jupyter-lab
+        ports:
+        - containerPort: 8888
+        volumeMounts:
+        - name: jupyter-persistent-storage
+          mountPath: /home/jovyan/work
+      volumes:
+      - name: jupyter-persistent-storage
+        persistentVolumeClaim:
+          claimName: jupyter-pvc

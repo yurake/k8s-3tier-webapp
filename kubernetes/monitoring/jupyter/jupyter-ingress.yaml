@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jupyter
+  namespace: monitoring
+  labels:
+    k8s-3tier-webapp: jupyter
+spec:
+  rules:
+  - host: jupyter.minikube
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: jupyter
+          servicePort: 8888
