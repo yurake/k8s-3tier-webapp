@@ -1,9 +1,11 @@
-package org.acme;
-
+package org.acme.events;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class TaskManager {
 
 	static private TaskManager instace = null;
