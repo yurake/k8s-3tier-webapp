@@ -9,6 +9,7 @@
 <html>
 <head>
 <title>Hello k8s-3tier-webapp</title>
+<link rel="icon" type="image/png" sizes="16x16" href="./images/icon-16x16.png" />
 </head>
 <body bgcolor=white>
 
