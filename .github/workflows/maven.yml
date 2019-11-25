@@ -19,3 +19,5 @@ jobs:
       run: mvn -B package --file application/jaxrs-mysql-quarkus/pom.xml
     - name: Build with Maven - wlp-web-java-spring
       run: mvn -B package --file application/wlp-web-java-spring/pom.xml
+    - name: Build with Maven - redis-mysql-quarkus
+      run: mvn -B package --file application/redis-mysql-quarkus/pom.xml
