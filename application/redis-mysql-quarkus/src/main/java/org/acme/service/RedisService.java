@@ -2,27 +2,22 @@ package org.acme.service;
 
 import java.sql.Connection;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
-import org.eclipse.microprofile.config.Config;
+import javax.ws.rs.ext.Provider;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
-@ApplicationScoped
+@Provider
 public class RedisService {
 
-    @Inject
-    Config config;
-
 	Connection con = null;
-	private String servername = config.getValue("redis.server.name", String.class);
-	private int serverport = Integer.parseInt(config.getValue("redis.server.port", String.class));
-	private String channel = config.getValue("redis.channel.name", String.class);
-	private String splitkey = config.getValue("redis.split.key", String.class);
 
 	public void subscribeRedis() {
+
+		String servername = "redis";
+		int serverport = 6379;
+		String channel = "pubsub";
+		String splitkey = ",";
 		Jedis jedis = new Jedis(servername, serverport);
 
 		try {

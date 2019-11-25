@@ -72,6 +72,14 @@ kubectl apply -f ./jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-ingress.yaml
 echo "###"
 echo ""
 
+echo "### redis-mysql-quarkus"
+cd ../application/redis-mysql-quarkus
+docker build -t default/redis-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
+cd ${ROOT_DIR}
+kubectl apply -f ./redis-mysql-quarkus/redis-mysql-quarkus-deployment.yaml
+echo "###"
+echo ""
+
 echo "### jenkins"
 kubectl apply -f ./jenkins/jenkins-pv.yaml
 kubectl apply -f ./jenkins/jenkins-pvc.yaml

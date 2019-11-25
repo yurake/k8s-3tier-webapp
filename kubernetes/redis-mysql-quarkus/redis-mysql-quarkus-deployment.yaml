@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-mysql-quarkus
+spec:
+  selector:
+    matchLabels:
+      app: redis-mysql-quarkus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-mysql-quarkus
+    spec:
+      containers:
+      - name: redis-mysql-quarkus
+        image: default/redis-mysql-quarkus:v0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
