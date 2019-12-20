@@ -138,6 +138,16 @@ kubectl apply -f ./monitoring/grafana/grafana-ingress.yaml
 echo "###"
 echo ""
 
+echo "### jupyter"
+kubectl apply -f ./monitoring/jupyter/jupyter-pv.yaml
+kubectl apply -f ./monitoring/jupyter/jupyter-pvc.yaml
+kubectl apply -f ./monitoring/jupyter/jupyter-configmap.yaml
+kubectl apply -f ./monitoring/jupyter/jupyter-deployment.yaml
+kubectl apply -f ./monitoring/jupyter/jupyter-service.yaml
+kubectl apply -f ./monitoring/jupyter/jupyter-ingress.yaml
+echo "###"
+echo ""
+
 echo "### docker rmi tag:none"
 docker image prune -f
 echo "###"
