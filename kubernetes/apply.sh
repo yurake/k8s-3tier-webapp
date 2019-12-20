@@ -80,6 +80,14 @@ kubectl apply -f ./redis-mysql-quarkus/redis-mysql-quarkus-deployment.yaml
 echo "###"
 echo ""
 
+echo "### redis-mysql-helidon"
+cd ../application/redis-mysql-helidon
+docker build -t default/redis-mysql-helidon:v0.0.1 .
+cd ${ROOT_DIR}
+kubectl apply -f ./redis-mysql-helidon/redis-mysql-helidon-deployment.yaml
+echo "###"
+echo ""
+
 echo "### jenkins"
 kubectl apply -f ./jenkins/jenkins-pv.yaml
 kubectl apply -f ./jenkins/jenkins-pvc.yaml
