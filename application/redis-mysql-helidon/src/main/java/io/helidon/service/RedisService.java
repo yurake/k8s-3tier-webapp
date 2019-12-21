@@ -2,22 +2,24 @@ package io.helidon.service;
 
 import java.sql.Connection;
 
-import javax.ws.rs.ext.Provider;
+import javax.enterprise.context.ApplicationScoped;
 
+import io.helidon.util.GetConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
-@Provider
+@ApplicationScoped
 public class RedisService {
 
 	Connection con = null;
 
+	private static String servername = GetConfig.getResourceBundle("redis.server");
+	private static int serverport = Integer.parseInt(GetConfig.getResourceBundle("redis.port"));
+	private static String channel = GetConfig.getResourceBundle("redis.channel");
+	private static String splitkey = GetConfig.getResourceBundle("redis.splitkey");
+
 	public void subscribeRedis() {
 
-		String servername = "redis";
-		int serverport = 6379;
-		String channel = "pubsub";
-		String splitkey = ",";
 		Jedis jedis = new Jedis(servername, serverport);
 
 		try {

@@ -7,21 +7,26 @@ import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.acme.util.GetConfig;
+
 @ApplicationScoped
 public class MysqlService {
+
+	private static String url = GetConfig.getResourceBundle("mysql.url");
+	private static String instersql = GetConfig.getResourceBundle("mysql.sql");
+	private static String sqlkey = GetConfig.getResourceBundle("mysql.id");
+	private static String sqlbody = GetConfig.getResourceBundle("mysql.body");
+	private static String addonmsg = GetConfig.getResourceBundle("mysql.msg.quarkus");
 
 	public String insertMysql(String[] receivedbody) {
 
 		Connection con = null;
 		String id = receivedbody[0];
-		String url = "jdbc:mysql://mysql:3306/webapp?user=mysql&password=mysql&autoReconnect=true&useSSL=false&serverTimezone=UTC";
-		String instersql = "INSERT INTO msg (id, msg) VALUES (msgid, 'msgbody')";
-		String sqlkey = "msgid";
-		String sqlbody = "msgbody";
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(receivedbody[1]);
-		builder.append(" throuth quarkus");
+		builder.append(" ");
+		builder.append(addonmsg);
 		String message = builder.toString();
 
 		String sql = instersql;

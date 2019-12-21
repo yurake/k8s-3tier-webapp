@@ -1,6 +1,8 @@
 package io.helidon.events;
 
+import javax.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class TaskServiceMain {
 
 	public static void main(String[] args) {
