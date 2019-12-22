@@ -37,7 +37,7 @@ public class MysqlService {
 				con = DriverManager.getConnection(url);
 			} catch (SQLException ex) {
 				ex.printStackTrace();
-				System.exit(0);
+//				System.exit(0);
 			}
 
 		try {
