@@ -1,4 +1,4 @@
-package org.acme.util.json;
+package org.acme.util;
 
 public class FullMessage {
 

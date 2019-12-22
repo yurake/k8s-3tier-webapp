@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.acme.service.MysqlService;
-import org.acme.util.json.FullMessage;
+import org.acme.util.FullMessage;
 
 @Path("/mysql")
 @Produces(MediaType.APPLICATION_JSON)

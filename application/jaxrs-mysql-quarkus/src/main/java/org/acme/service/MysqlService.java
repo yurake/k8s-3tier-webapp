@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 import org.acme.configuration.MysqlConfiguration;
 import org.acme.util.CreateId;
-import org.acme.util.json.FullMessage;
+import org.acme.util.FullMessage;
 import org.eclipse.microprofile.config.Config;
 
 @ApplicationScoped
