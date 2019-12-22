@@ -35,6 +35,12 @@ public class MysqlService {
 
 		try {
 			con = DriverManager.getConnection(url);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			System.exit(0);
+		}
+
+		try {
 			Statement stmt = con.createStatement();
 
 			System.out.println("Execute SQL: " + sql);

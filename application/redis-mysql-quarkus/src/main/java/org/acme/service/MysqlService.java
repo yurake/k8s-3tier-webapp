@@ -33,8 +33,14 @@ public class MysqlService {
 		sql = sql.replace(sqlkey, id);
 		sql = sql.replace(sqlbody, message);
 
+			try {
+				con = DriverManager.getConnection(url);
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+				System.exit(0);
+			}
+
 		try {
-			con = DriverManager.getConnection(url);
 			Statement stmt = con.createStatement();
 
 			System.out.println("Execute SQL: " + sql);

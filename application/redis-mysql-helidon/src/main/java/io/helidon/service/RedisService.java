@@ -37,6 +37,7 @@ public class RedisService {
 			}, channel);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.exit(0);
 		} finally {
 			jedis.close();
 		}

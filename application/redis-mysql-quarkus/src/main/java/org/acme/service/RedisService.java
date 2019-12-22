@@ -22,6 +22,7 @@ public class RedisService {
 	public void subscribeRedis() {
 
 		Jedis jedis = new Jedis(servername, serverport);
+		MysqlService mysqlsvc = new MysqlService();
 
 		try {
 			jedis.subscribe(new JedisPubSub() {
@@ -31,13 +32,12 @@ public class RedisService {
 					String[] body = message.split(splitkey, 0);
 					fullmsg = "Received channel:" + channel + ", id: " + body[0]+ ", msg: " + body[1];
 					System.out.println(fullmsg);
-
-					MysqlService mysqlsvc = new MysqlService();
 					mysqlsvc.insertMysql(body);
 				}
 			}, channel);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.exit(0);
 		} finally {
 			jedis.close();
 		}
