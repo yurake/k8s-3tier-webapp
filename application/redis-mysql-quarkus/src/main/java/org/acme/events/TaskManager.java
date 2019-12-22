@@ -26,7 +26,11 @@ public class TaskManager {
 		Runnable runnable = new Runnable() {
 
 			public void run() {
-				executor.execute(new TaskExecute());
+				try {
+					executor.execute(new TaskExecute());
+				} catch (Exception e) {
+					executor.shutdownNow();
+				}
 			}
 		};
 		executor.execute(runnable);
