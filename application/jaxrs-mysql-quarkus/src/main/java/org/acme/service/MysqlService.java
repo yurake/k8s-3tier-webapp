@@ -66,7 +66,6 @@ public class MysqlService {
 		Connection con = null;
 		Set<FullMessage> returnmsg = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
 		String url = config.getValue("mysql.url", String.class);
-		String sql = config.getValue("select.msg.all", String.class);
 
 		try {
 			con = DriverManager.getConnection(url);
