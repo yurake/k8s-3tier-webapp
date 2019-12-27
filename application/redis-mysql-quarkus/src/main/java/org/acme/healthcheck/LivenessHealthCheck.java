@@ -12,6 +12,7 @@ public class LivenessHealthCheck implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
+        System.out.println("Liveness health check: UP");
 		return HealthCheckResponse.up("Simple health check");
 	}
 

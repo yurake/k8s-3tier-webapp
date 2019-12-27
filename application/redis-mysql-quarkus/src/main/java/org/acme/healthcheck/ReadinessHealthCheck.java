@@ -12,6 +12,7 @@ public class ReadinessHealthCheck implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
+        System.out.println("Readiness health check: UP");
 		return HealthCheckResponse.up("Database connection health check");
 	}
 
