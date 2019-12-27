@@ -26,7 +26,6 @@ public class MysqlService {
 	}
 
 	public boolean connectionStatus() {
-		Connection con = null;
 		boolean status = false;
 		try {
 			con = getConnection();
