@@ -7,16 +7,14 @@ $(function () {
 	$("#insert").click(function () {
 		$.ajax({
 			type: 'post',
-			url: url,
+			url: url + '/insert',
 			contentType: 'application/JSON',
 			dataType: 'JSON',
 			scriptCharset: 'utf-8',
 			success: function (data) {
-				console.log(data);
-				// $("#response").html(JSON.stringify(data));
-				for (var i in data) {
-					$("#response").html("<li>" + data[i].success.responseText + "</li>");
-				}
+				const resp = JSON.stringify(data, null, 4)
+				console.log(resp);
+				$("#response").html(resp);
 			},
 			error: function (data) {
 				console.log(data);
@@ -27,17 +25,15 @@ $(function () {
 
 	$("#select").click(function () {
 		$.ajax({
-			type: 'get',
-			url: url,
+			type: 'post',
+			url: url + '/select',
 			contentType: 'application/JSON',
 			dataType: 'JSON',
 			scriptCharset: 'utf-8',
 			success: function (data) {
-				console.log(data);
-				// $("#response").html(JSON.stringify(data));
-								for (var i in data) {
-					$("#response").html("<li>" + data[i].success.responseText + "</li>");
-				}
+				const resp = JSON.stringify(data, null, 4)
+				console.log(resp);
+				$("#response").html(resp);
 			},
 			error: function (data) {
 				console.log(data);

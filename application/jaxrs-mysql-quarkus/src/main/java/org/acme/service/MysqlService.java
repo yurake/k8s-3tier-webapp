@@ -65,6 +65,7 @@ public class MysqlService {
 
 			LOG.info("Execute SQL: " + sql);
 			stmt.executeUpdate(sql);
+			return sql;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -98,6 +99,7 @@ public class MysqlService {
 
 				LOG.info("Selected Msg: id: " + id + ", message: " + msg);
 			}
+			return returnmsg;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -110,6 +112,6 @@ public class MysqlService {
 				}
 			}
 		}
-	return returnmsg;
+		return returnmsg;
 	}
 }

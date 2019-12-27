@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -22,12 +21,14 @@ public class MysqlResource {
 	MysqlService mysqlsvc;
 
 	@POST
-    public String insert() {
+	@Path("/insert")
+	public String insert() {
 		return mysqlsvc.insertMysql();
-    }
+	}
 
-	@GET
-    public Set<FullMessage> select() {
+	@POST
+	@Path("/select")
+	public Set<FullMessage> select() {
 		return mysqlsvc.selectMysql();
-    }
+	}
 }
