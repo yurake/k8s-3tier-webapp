@@ -19,10 +19,34 @@ public class MysqlService {
 	private static String sqlkey = GetConfig.getResourceBundle("mysql.id");
 	private static String sqlbody = GetConfig.getResourceBundle("mysql.body");
 	private static String addonmsg = GetConfig.getResourceBundle("mysql.msg.quarkus");
+	Connection con = null;
+
+	public Connection getConnection() throws SQLException {
+		return DriverManager.getConnection(url);
+	}
+
+	public boolean connectionStatus() {
+		Connection con = null;
+		boolean status = false;
+		try {
+			con = getConnection();
+			status = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return status;
+	}
 
 	public String insertMysql(String[] receivedbody) {
 
-		Connection con = null;
 		String id = receivedbody[0];
 
 		StringBuilder builder = new StringBuilder();
@@ -35,13 +59,8 @@ public class MysqlService {
 		sql = sql.replace(sqlkey, id);
 		sql = sql.replace(sqlbody, message);
 
-			try {
-				con = DriverManager.getConnection(url);
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
-
 		try {
+			 con = getConnection();
 			Statement stmt = con.createStatement();
 
 			LOG.info("Execute SQL: " + sql);

@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.acme.service.MysqlService;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
@@ -14,10 +15,18 @@ public class ReadinessHealthCheck implements HealthCheck {
 
 	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheck.class.getSimpleName());
 
+	MysqlService mysqlsvc = new MysqlService();
+
 	@Override
 	public HealthCheckResponse call() {
-		LOG.info("Readiness: UP");
-		return HealthCheckResponse.up("Database connection health check");
-	}
+		MysqlService mysqlsvc = new MysqlService();
 
+		if (mysqlsvc.connectionStatus()) {
+			LOG.info("Readiness: UP");
+			return HealthCheckResponse.up("Database connection health check");
+		} else {
+			LOG.warning("Readiness: DOWN");
+			return HealthCheckResponse.down("Database connection health check");
+		}
+	}
 }

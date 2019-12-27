@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.acme.service.RedisService;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
@@ -16,8 +17,14 @@ public class LivenessHealthCheck implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		LOG.info("Liveness: UP");
-		return HealthCheckResponse.up("Simple health check");
+		RedisService redissvc = new RedisService();
+		if (redissvc.ping()) {
+			LOG.info("Liveness: UP");
+			return HealthCheckResponse.up("Cache Server connection health check");
+		} else {
+			LOG.warning("Liveness: DOWN");
+			return HealthCheckResponse.down("Cache Server connection health check");
+		}
 	}
 
 }

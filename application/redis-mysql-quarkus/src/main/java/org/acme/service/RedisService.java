@@ -9,6 +9,7 @@ import org.acme.util.GetConfig;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 @Provider
 public class RedisService {
@@ -21,11 +22,24 @@ public class RedisService {
 	private static String channel = GetConfig.getResourceBundle("redis.channel");
 	private static String splitkey = GetConfig.getResourceBundle("redis.splitkey");
 
+	public boolean ping() {
+		Jedis jedis = new Jedis(servername, serverport);
+		try {
+			if (jedis.ping().equalsIgnoreCase("PONG")) {
+				return true;
+			}
+		} catch (JedisConnectionException e) {
+			e.printStackTrace();
+		} finally {
+			jedis.close();
+		}
+		return false;
+	}
+
 	public void subscribeRedis() {
 
-		Jedis jedis = new Jedis(servername, serverport);
 		MysqlService mysqlsvc = new MysqlService();
-
+		Jedis jedis = new Jedis(servername, serverport);
 		try {
 			jedis.subscribe(new JedisPubSub() {
 				@Override
@@ -39,7 +53,6 @@ public class RedisService {
 			}, channel);
 		} catch (Exception e) {
 			e.printStackTrace();
-//			System.exit(0);
 		} finally {
 			jedis.close();
 		}
