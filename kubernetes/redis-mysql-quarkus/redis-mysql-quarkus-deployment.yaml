@@ -18,3 +18,16 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /health/live
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /health/ready
+          initialDelaySeconds: 3
+          periodSeconds: 3
