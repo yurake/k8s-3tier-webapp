@@ -8,43 +8,62 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
-import org.acme.configuration.MysqlConfiguration;
 import org.acme.util.CreateId;
 import org.acme.util.FullMessage;
-import org.eclipse.microprofile.config.Config;
+import org.acme.util.GetConfig;
 
 @ApplicationScoped
 public class MysqlService {
 
-    @Inject
-    MysqlConfiguration mysqlconfig;
+	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
+	private static String url = GetConfig.getResourceBundle("mysql.url");
+	private static String instersql = GetConfig.getResourceBundle("insert.msg");
+	private static String sqlkey = GetConfig.getResourceBundle("mysql.id");
+	private static String sqlbody = GetConfig.getResourceBundle("mysql.body");
+	private static String message = GetConfig.getResourceBundle("common.message");
+	private static String sql = GetConfig.getResourceBundle("select.msg.all");
+	Connection con = null;
 
-    @Inject
-    Config config;
+	public Connection getConnection() throws SQLException {
+		return DriverManager.getConnection(url);
+	}
+
+	public boolean connectionStatus() {
+		boolean status = false;
+		try {
+			con = getConnection();
+			status = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return status;
+	}
 
 	public String insertMysql() {
 
-		Connection con = null;
 		String id = String.valueOf(CreateId.createid());
-		String url = config.getValue("mysql.url", String.class);
-		String instersql = config.getValue("insert.msg", String.class);
-		String sqlkey = config.getValue("insert.msg.id", String.class);
-		String sqlbody = config.getValue("insert.msg.body", String.class);
-		String message = config.getValue("common.message", String.class);
 
 		String sql = instersql;
 		sql = sql.replace(sqlkey, id);
 		sql = sql.replace(sqlbody, message);
 
 		try {
-			con = DriverManager.getConnection(url);
+			con = getConnection();
 			Statement stmt = con.createStatement();
 
-			System.out.println("Execute SQL: " + sql);
+			LOG.info("Execute SQL: " + sql);
 			stmt.executeUpdate(sql);
 
 		} catch (SQLException e) {
@@ -63,15 +82,13 @@ public class MysqlService {
 
 	public Set<FullMessage> selectMysql() {
 
-		Connection con = null;
 		Set<FullMessage> returnmsg = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
-		String url = config.getValue("mysql.url", String.class);
 
 		try {
-			con = DriverManager.getConnection(url);
+			con = getConnection();
 			Statement stmt = con.createStatement();
 
-			System.out.println("Execute SQL: " + sql);
+			LOG.info("Execute SQL: " + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -79,7 +96,7 @@ public class MysqlService {
 				String msg = rs.getString("msg");
 				returnmsg.add(new FullMessage(id, msg));
 
-				System.out.println("Selected Msg: id: " + id + ", message: " + msg);
+				LOG.info("Selected Msg: id: " + id + ", message: " + msg);
 			}
 
 		} catch (SQLException e) {
