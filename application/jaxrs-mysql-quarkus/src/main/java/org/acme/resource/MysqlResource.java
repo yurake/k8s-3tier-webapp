@@ -21,7 +21,6 @@ public class MysqlResource {
 	@Inject
 	MysqlService mysqlsvc;
 
-
 	@POST
     public String insert() {
 		return mysqlsvc.insertMysql();
