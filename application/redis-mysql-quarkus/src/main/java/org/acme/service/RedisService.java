@@ -1,6 +1,7 @@
 package org.acme.service;
 
 import java.sql.Connection;
+import java.util.logging.Logger;
 
 import javax.ws.rs.ext.Provider;
 
@@ -14,6 +15,7 @@ public class RedisService {
 
 	Connection con = null;
 
+	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
 	private static String servername = GetConfig.getResourceBundle("redis.server");
 	private static int serverport = Integer.parseInt(GetConfig.getResourceBundle("redis.port"));
 	private static String channel = GetConfig.getResourceBundle("redis.channel");
@@ -31,7 +33,7 @@ public class RedisService {
 					String fullmsg = null;
 					String[] body = message.split(splitkey, 0);
 					fullmsg = "Received channel:" + channel + ", id: " + body[0]+ ", msg: " + body[1];
-					System.out.println(fullmsg);
+					LOG.info(fullmsg);
 					mysqlsvc.insertMysql(body);
 				}
 			}, channel);

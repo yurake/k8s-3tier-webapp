@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -12,6 +13,7 @@ import org.acme.util.GetConfig;
 @ApplicationScoped
 public class MysqlService {
 
+	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
 	private static String url = GetConfig.getResourceBundle("mysql.url");
 	private static String instersql = GetConfig.getResourceBundle("mysql.sql");
 	private static String sqlkey = GetConfig.getResourceBundle("mysql.id");
@@ -37,13 +39,12 @@ public class MysqlService {
 				con = DriverManager.getConnection(url);
 			} catch (SQLException ex) {
 				ex.printStackTrace();
-//				System.exit(0);
 			}
 
 		try {
 			Statement stmt = con.createStatement();
 
-			System.out.println("Execute SQL: " + sql);
+			LOG.info("Execute SQL: " + sql);
 			stmt.executeUpdate(sql);
 
 		} catch (SQLException e) {

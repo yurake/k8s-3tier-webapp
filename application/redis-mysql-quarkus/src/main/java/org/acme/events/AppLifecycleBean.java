@@ -1,5 +1,7 @@
 package org.acme.events;
 
+import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 
@@ -9,14 +11,16 @@ import io.quarkus.runtime.StartupEvent;
 @ApplicationScoped
 public class AppLifecycleBean {
 
+	private static final Logger LOG = Logger.getLogger(AppLifecycleBean.class.getSimpleName());
+
     void onStart(@Observes StartupEvent ev) {
         TaskManager timer = TaskManager.getInstance();
         timer.exec();
-        System.out.println("The application is starting...");
+        LOG.info("The application is starting...");
     }
 
     void onStop(@Observes ShutdownEvent ev) {
-    	System.out.println("The application is stopping...");
+    	LOG.info("The application is stopping...");
     }
 
 }
