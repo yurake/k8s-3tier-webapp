@@ -8,37 +8,33 @@ $(function () {
 		$.ajax({
 			type: 'post',
 			url: url + '/insert',
-			contentType: 'application/JSON',
-			dataType: 'JSON',
+			contentType: 'application/json',
 			scriptCharset: 'utf-8',
-			success: function (data) {
-				const resp = JSON.stringify(data, null, 4)
-				console.log(resp);
-				$("#response").html(resp);
-			},
-			error: function (data) {
-				console.log(data);
-				alert("Server Error. Pleasy try again.");
-			}
-		});
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
 	})
 
 	$("#select").click(function () {
 		$.ajax({
-			type: 'post',
+			type: 'get',
 			url: url + '/select',
-			contentType: 'application/JSON',
-			dataType: 'JSON',
+			contentType: 'application/json',
 			scriptCharset: 'utf-8',
-			success: function (data) {
-				const resp = JSON.stringify(data, null, 4)
-				console.log(resp);
-				$("#response").html(resp);
-			},
-			error: function (data) {
-				console.log(data);
-				alert("Server Error. Pleasy try again.");
-			}
-		});
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
 	})
 })

@@ -1,16 +1,17 @@
 package org.acme.resource;
 
-import java.util.Set;
+import java.sql.SQLException;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.acme.service.MysqlService;
-import org.acme.util.FullMessage;
 
 @Path("/mysql")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,13 +23,23 @@ public class MysqlResource {
 
 	@POST
 	@Path("/insert")
-	public String insert() {
-		return mysqlsvc.insertMysql();
+	public Response insert() {
+		try {
+			return Response.ok().entity(mysqlsvc.insertMysql()).build();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return Response.status(500).build();
+		}
 	}
 
-	@POST
+	@GET
 	@Path("/select")
-	public Set<FullMessage> select() {
-		return mysqlsvc.selectMysql();
+	public Response select() {
+		try {
+			return Response.ok().entity(mysqlsvc.selectMysql()).build();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return Response.status(500).build();
+		}
 	}
 }

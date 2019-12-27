@@ -5,15 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.acme.util.CreateId;
-import org.acme.util.FullMessage;
 import org.acme.util.GetConfig;
 
 @ApplicationScoped
@@ -51,7 +49,7 @@ public class MysqlService {
 		return status;
 	}
 
-	public String insertMysql() {
+	public String insertMysql() throws SQLException {
 
 		String id = String.valueOf(CreateId.createid());
 
@@ -69,6 +67,7 @@ public class MysqlService {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new SQLException();
 		} finally {
 			if (con != null) {
 				try {
@@ -78,12 +77,12 @@ public class MysqlService {
 				}
 			}
 		}
-		return sql;
 	}
 
-	public Set<FullMessage> selectMysql() {
+	public Map<String, String> selectMysql() throws SQLException {
 
-		Set<FullMessage> returnmsg = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
+//		Set<FullMessage> returnmsg = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
+		Map<String, String> returnmsg = new HashMap<>();
 
 		try {
 			con = getConnection();
@@ -95,7 +94,8 @@ public class MysqlService {
 			while (rs.next()) {
 				String id = rs.getString("id");
 				String msg = rs.getString("msg");
-				returnmsg.add(new FullMessage(id, msg));
+//				returnmsg.add(new FullMessage(id, msg));
+				returnmsg.put(id, msg);
 
 				LOG.info("Selected Msg: id: " + id + ", message: " + msg);
 			}
@@ -103,6 +103,7 @@ public class MysqlService {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new SQLException();
 		} finally {
 			if (con != null) {
 				try {
@@ -112,6 +113,5 @@ public class MysqlService {
 				}
 			}
 		}
-		return returnmsg;
 	}
 }
