@@ -8,21 +8,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import spring.web.cache.redis.GetRedis;
-import spring.web.cache.redis.PublishRedis;
-import spring.web.cache.redis.SetRedis;
+import spring.web.mq.rabbitmq.GetRabbitmq;
+import spring.web.mq.rabbitmq.PutRabbitmq;
+import spring.web.mq.rabbitmq.PutRabbitmqConsumer;
 
-@Path("/redis")
+@Path("/rabbitmq")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RedisResource {
+public class RabbitmqResource {
 
 	@POST
-	@Path("/set")
+	@Path("/put")
 	public Response set() {
-		SetRedis svc = new SetRedis();
+		PutRabbitmq svc = new PutRabbitmq();
 		try {
-			return Response.ok().entity(svc.setRedis()).build();
+			return Response.ok().entity(svc.putMessageQueue()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -32,9 +32,9 @@ public class RedisResource {
 	@GET
 	@Path("/get")
 	public Response get() {
-		GetRedis svc = new GetRedis();
+		GetRabbitmq svc = new GetRabbitmq();
 		try {
-			return Response.ok().entity(svc.getRedis()).build();
+			return Response.ok().entity(svc.getMessageQueue()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -44,9 +44,9 @@ public class RedisResource {
 	@POST
 	@Path("/publish")
 	public Response publish() {
-		PublishRedis svc = new PublishRedis();
+		PutRabbitmqConsumer svc = new PutRabbitmqConsumer();
 		try {
-			return Response.ok().entity(svc.publishRedis()).build();
+			return Response.ok().entity(svc.putMessageQueueConsumer()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();

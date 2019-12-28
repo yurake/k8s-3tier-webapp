@@ -8,21 +8,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import spring.web.cache.redis.GetRedis;
-import spring.web.cache.redis.PublishRedis;
-import spring.web.cache.redis.SetRedis;
+import spring.web.cache.memcached.GetMemcached;
+import spring.web.cache.memcached.SetMemcached;
 
-@Path("/redis")
+@Path("/memcached")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RedisResource {
+public class MemcachedResource {
 
 	@POST
 	@Path("/set")
 	public Response set() {
-		SetRedis svc = new SetRedis();
+		SetMemcached svc = new SetMemcached();
 		try {
-			return Response.ok().entity(svc.setRedis()).build();
+			return Response.ok().entity(svc.setMemcached()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -32,21 +31,9 @@ public class RedisResource {
 	@GET
 	@Path("/get")
 	public Response get() {
-		GetRedis svc = new GetRedis();
+		GetMemcached svc = new GetMemcached();
 		try {
-			return Response.ok().entity(svc.getRedis()).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(500).build();
-		}
-	}
-
-	@POST
-	@Path("/publish")
-	public Response publish() {
-		PublishRedis svc = new PublishRedis();
-		try {
-			return Response.ok().entity(svc.publishRedis()).build();
+			return Response.ok().entity(svc.getMemcached()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();

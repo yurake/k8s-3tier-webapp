@@ -28,15 +28,11 @@ public class SetMemcached extends HttpServlet {
 		String id = String.valueOf(CreateId.createid());
 
 		MemCachedClient mcc = new MemCachedClient();
-		try {
-			mcc.set("id", id);
-			mcc.set("msg", message);
+		mcc.set("id", id);
+		mcc.set("msg", message);
 
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		fullmsg = "Set id: " + id + ", msg: " + message;
+		logger.info(fullmsg);
 		return fullmsg;
 	}
 }

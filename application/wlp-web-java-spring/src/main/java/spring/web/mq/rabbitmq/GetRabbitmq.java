@@ -1,5 +1,8 @@
 package spring.web.mq.rabbitmq;
 
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+
 import javax.servlet.http.HttpServlet;
 
 import org.slf4j.Logger;
@@ -21,7 +24,7 @@ public class GetRabbitmq extends HttpServlet {
 	private static String vhost = GetConfig.getResourceBundle("jms.vhost");
 	private static String splitkey = GetConfig.getResourceBundle("jms.split.key");
 
-	public String getMessageQueue() {
+	public String getMessageQueue() throws IOException, TimeoutException {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
 		connectionFactory.setPassword(password);
@@ -29,23 +32,19 @@ public class GetRabbitmq extends HttpServlet {
 		connectionFactory.setVirtualHost(vhost);
 		String fullmsg = null;
 
-		try {
-			Connection connection = connectionFactory.newConnection();
-			Channel channel = connection.createChannel();
-			boolean durable = true;
-			channel.queueDeclare(queuename, durable, false, false, null);
+		Connection connection = connectionFactory.newConnection();
+		Channel channel = connection.createChannel();
+		boolean durable = true;
+		channel.queueDeclare(queuename, durable, false, false, null);
 
-			GetResponse resp = channel.basicGet(queuename, true);
-			String jmsbody = new String(resp.getBody(), "UTF-8");
-			String[] body = jmsbody.split(splitkey, 0);
-			fullmsg = "Received id: " + body[0]+ ", msg: " + body[1];
-			logger.info(fullmsg);
+		GetResponse resp = channel.basicGet(queuename, true);
+		String jmsbody = new String(resp.getBody(), "UTF-8");
+		String[] body = jmsbody.split(splitkey, 0);
+		fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
+		logger.info(fullmsg);
 
-			channel.close();
-			connection.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		channel.close();
+		connection.close();
 		return fullmsg;
 	}
 }

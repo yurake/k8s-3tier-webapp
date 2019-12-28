@@ -1,7 +1,9 @@
 package spring.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import javax.naming.NamingException;
 
@@ -67,7 +69,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("GetRabbitmq")
-	public String getMq(Model model) {
+	public String getMq(Model model) throws IOException, TimeoutException {
 
 		logger.info("GetRabbitmq");
 		GetRabbitmq getmq = new GetRabbitmq();
@@ -79,7 +81,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("PutRabbitmq")
-	public String putMq(Model model) {
+	public String putMq(Model model) throws IOException, TimeoutException {
 
 		logger.info("PutRabbitmq");
 		PutRabbitmq putmq = new PutRabbitmq();
@@ -91,7 +93,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("PutRabbitmqConsumer")
-	public String putMqBatch(Model model) {
+	public String putMqBatch(Model model) throws IOException, TimeoutException {
 
 		logger.info("PutRabbitmqConsumer");
 		PutRabbitmqConsumer putmqb = new PutRabbitmqConsumer();

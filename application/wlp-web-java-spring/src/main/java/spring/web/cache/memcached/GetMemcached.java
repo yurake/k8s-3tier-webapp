@@ -25,15 +25,11 @@ public class GetMemcached extends HttpServlet {
 		String fullmsg = null;
 		MemCachedClient mcc = new MemCachedClient();
 
-		try {
-			String id = (String) mcc.get("id");
-			String message = (String) mcc.get("msg");
+		String id = (String) mcc.get("id");
+		String message = (String) mcc.get("msg");
 
-			fullmsg = "Received id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		fullmsg = "Received id: " + id + ", msg: " + message;
+		logger.info(fullmsg);
 		return fullmsg;
 	}
 }
