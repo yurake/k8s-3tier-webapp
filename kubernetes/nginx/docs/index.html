@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Hello k8s-3tier-webapp</title>
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="./js/quarkus.js"/></script>
+<link rel="icon" type="image/png" sizes="16x16" href="./images/icon-16x16.png" />
+</head>
+
+<body bgcolor=white>
+
+	<h1 id="title">Hello k8s-3tier-webapp</h1>
+
+	<p>To prove that they work, you can execute either of the following links:</p>
+
+	<table>
+		<tr>
+			<td><b>TARGET</b></td>
+			<td><b>CREATE</b></td>
+			<td><b>SELECT</b></td>
+			<td><b>DELETE</b></td>
+		</tr>
+		<tr>
+			<td>jaxrs-mysql-quarkus</td>
+			<td>
+				<button id="insert" type="button">Insert</button>
+			</td>
+			<td>
+				<button id="select" type="button">Select</button>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	<textarea id="response" cols=120 rows=50 disabled></textarea>
+	<img src="./images/deer.png" width="200">
+</body>
+</html>
