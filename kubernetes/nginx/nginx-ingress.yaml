@@ -2,14 +2,20 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: nginx.minikube
+  - host: k8s.3tier.webapp
     http:
       paths:
       - path:
         backend:
           serviceName: nginx
           servicePort: 80
+      - path: /api
+        backend:
+          serviceName: wlp
+          servicePort: 9080
+      - path: /quarkus
+        backend:
+          serviceName: jaxrs-mysql-quarkus
+          servicePort: 8080

@@ -2,14 +2,12 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: wlp
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: k8s.3tier.webapp
+  - host: wlp.minikube
     http:
       paths:
-      - path:
+      - path: /
         backend:
           serviceName: wlp
           servicePort: 9080
