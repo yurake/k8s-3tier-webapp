@@ -1,5 +1,5 @@
 root = location.href;
-url = root + 'mysql';
+url = root + 'quarkus/mysql';
 
 $(function () {
 	$("#response").html("Response Values");

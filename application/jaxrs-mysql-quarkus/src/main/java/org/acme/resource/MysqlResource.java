@@ -16,7 +16,7 @@ import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
-@Path("/mysql")
+@Path("/quarkus/mysql")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Counted(name = "performedChecks", description = "How many primality checks have been performed.")
