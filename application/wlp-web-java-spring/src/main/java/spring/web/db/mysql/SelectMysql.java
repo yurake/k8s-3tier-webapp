@@ -7,26 +7,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServlet;
-import javax.sql.DataSource;
 
 import spring.web.util.GetConfig;
 
 public class SelectMysql extends HttpServlet {
-	private static String jndiname = GetConfig.getResourceBundle("jndi.name");
-	private static String sql = GetConfig.getResourceBundle("select.msg.all");
-	private DataSource ds;
 
-	public List<String> selectMsg() {
+	private static String sql = GetConfig.getResourceBundle("select.msg.all");
+
+	public List<String> selectMsg() throws SQLException, NamingException {
 		Connection con = null;
 		List<String> allmsg = new ArrayList<>();
 
 		try {
-			InitialContext ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup(jndiname);
-			con = ds.getConnection();
+			ConnectMysql conmysql = new ConnectMysql();
+			con = conmysql.getConnection();
 			Statement stmt = con.createStatement();
 
 			System.out.println("Execute SQL: " + sql);
@@ -37,9 +33,6 @@ public class SelectMysql extends HttpServlet {
 				System.out.println(fullmsg);
 				allmsg.add(fullmsg);
 			}
-
-		} catch (NamingException | SQLException e) {
-			e.printStackTrace();
 		} finally {
 			if (con != null) {
 				try {

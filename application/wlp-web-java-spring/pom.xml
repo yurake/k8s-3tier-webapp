@@ -26,6 +26,7 @@
 		<mysql-connector-java.version>8.0.12</mysql-connector-java.version>
 		<jedis.version>3.1.0</jedis.version>
 
+		<javaee-api.version>7.0</javaee-api.version>
 
 		<!-- Spring -->
 		<spring-framework.version>5.1.7.RELEASE</spring-framework.version>
@@ -156,6 +157,13 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>${javaee-api.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>

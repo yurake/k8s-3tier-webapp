@@ -1,6 +1,9 @@
 package spring.controller;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import javax.naming.NamingException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +30,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("InsertMysql")
-	public String insertDb(Model model) {
+	public String insertDb(Model model) throws NamingException, SQLException {
 
 		System.out.println("InsertMysql");
 		InsertMysql insmsg = new InsertMysql();
@@ -39,7 +42,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("SelectMysql")
-	public String selectMysql(Model model) {
+	public String selectMysql(Model model) throws SQLException, NamingException {
 
 		System.out.println("SelectMysql");
 		SelectMysql insmsg = new SelectMysql();
@@ -51,7 +54,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("DeleteMysql")
-	public String deleteMysql() {
+	public String deleteMysql() throws SQLException, NamingException {
 
 		System.out.println("DeleteMysql");
 		DeleteMysql insmsg = new DeleteMysql();
