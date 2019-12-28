@@ -20,8 +20,6 @@ public class SetRedis {
 			jedis.expire(id, setexpire);
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			System.out.println(fullmsg);
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			jedis.close();
 		}

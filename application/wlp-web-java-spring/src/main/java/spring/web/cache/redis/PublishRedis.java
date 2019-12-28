@@ -29,8 +29,6 @@ public class PublishRedis {
 			jedis.expire(id, setexpire);
 			fullmsg = "Set channel:" + channel + ", id: " + id + ", msg: " + message;
 			System.out.println(fullmsg);
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			jedis.close();
 		}
