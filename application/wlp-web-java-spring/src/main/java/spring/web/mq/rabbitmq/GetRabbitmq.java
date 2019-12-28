@@ -2,6 +2,9 @@ package spring.web.mq.rabbitmq;
 
 import javax.servlet.http.HttpServlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -10,6 +13,7 @@ import com.rabbitmq.client.GetResponse;
 import spring.web.util.GetConfig;
 
 public class GetRabbitmq extends HttpServlet {
+	Logger logger = LoggerFactory.getLogger(GetRabbitmq.class);
 	private static String queuename = GetConfig.getResourceBundle("queue.name");
 	private static String username = GetConfig.getResourceBundle("jms.username");
 	private static String password = GetConfig.getResourceBundle("jms.password");
@@ -35,7 +39,7 @@ public class GetRabbitmq extends HttpServlet {
 			String jmsbody = new String(resp.getBody(), "UTF-8");
 			String[] body = jmsbody.split(splitkey, 0);
 			fullmsg = "Received id: " + body[0]+ ", msg: " + body[1];
-			System.out.println(fullmsg);
+			logger.info(fullmsg);
 
 			channel.close();
 			connection.close();

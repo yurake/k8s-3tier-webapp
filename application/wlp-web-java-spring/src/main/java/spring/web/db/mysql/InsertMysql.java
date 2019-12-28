@@ -6,11 +6,15 @@ import java.sql.Statement;
 
 import javax.naming.NamingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import spring.web.util.CreateId;
 import spring.web.util.GetConfig;
 
 public class InsertMysql {
 
+	Logger logger = LoggerFactory.getLogger(InsertMysql.class);
 	private static String sqlkey = GetConfig.getResourceBundle("insert.msg.id");
 	private static String sqlbody = GetConfig.getResourceBundle("insert.msg.body");
 	private static String message = GetConfig.getResourceBundle("common.message");
@@ -28,7 +32,7 @@ public class InsertMysql {
 			con = conmysql.getConnection();
 			Statement stmt = con.createStatement();
 
-			System.out.println("Execute SQL: " + sql);
+			logger.info("Execute SQL: " + sql);
 			stmt.executeUpdate(sql);
 
 		}  finally {

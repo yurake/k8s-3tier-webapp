@@ -2,6 +2,9 @@ package spring.web.cache.memcached;
 
 import javax.servlet.http.HttpServlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
@@ -9,6 +12,7 @@ import spring.web.util.CreateId;
 import spring.web.util.GetConfig;
 
 public class SetMemcached extends HttpServlet {
+	Logger logger = LoggerFactory.getLogger(SetMemcached.class);
 	private static String serverconf = GetConfig.getResourceBundle("memcached.server.conf");
 	private static String message = GetConfig.getResourceBundle("common.message");
 
@@ -29,7 +33,7 @@ public class SetMemcached extends HttpServlet {
 			mcc.set("msg", message);
 
 			fullmsg = "Set id: " + id + ", msg: " + message;
-			System.out.println(fullmsg);
+			logger.info(fullmsg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import spring.web.mq.rabbitmq.PutRabbitmqConsumer;
 
 @Controller
 public class ApplicationController {
+	Logger logger = LoggerFactory.getLogger(ApplicationController.class);
 
 	@RequestMapping("/")
 	public String index(Model model) {
@@ -32,7 +35,7 @@ public class ApplicationController {
 	@RequestMapping("InsertMysql")
 	public String insertDb(Model model) throws NamingException, SQLException {
 
-		System.out.println("InsertMysql");
+		logger.info("InsertMysql");
 		InsertMysql insmsg = new InsertMysql();
 		String msg = insmsg.insertMysql();
 
@@ -44,7 +47,7 @@ public class ApplicationController {
 	@RequestMapping("SelectMysql")
 	public String selectMysql(Model model) throws SQLException, NamingException {
 
-		System.out.println("SelectMysql");
+		logger.info("SelectMysql");
 		SelectMysql insmsg = new SelectMysql();
 		List<String> allMessage = insmsg.selectMsg();
 
@@ -56,7 +59,7 @@ public class ApplicationController {
 	@RequestMapping("DeleteMysql")
 	public String deleteMysql() throws SQLException, NamingException {
 
-		System.out.println("DeleteMysql");
+		logger.info("DeleteMysql");
 		DeleteMysql insmsg = new DeleteMysql();
 		insmsg.deleteMsg();
 
@@ -66,7 +69,7 @@ public class ApplicationController {
 	@RequestMapping("GetRabbitmq")
 	public String getMq(Model model) {
 
-		System.out.println("GetRabbitmq");
+		logger.info("GetRabbitmq");
 		GetRabbitmq getmq = new GetRabbitmq();
 		String telegram = getmq.getMessageQueue();
 
@@ -78,7 +81,7 @@ public class ApplicationController {
 	@RequestMapping("PutRabbitmq")
 	public String putMq(Model model) {
 
-		System.out.println("PutRabbitmq");
+		logger.info("PutRabbitmq");
 		PutRabbitmq putmq = new PutRabbitmq();
 		String telegram = putmq.putMessageQueue();
 
@@ -90,7 +93,7 @@ public class ApplicationController {
 	@RequestMapping("PutRabbitmqConsumer")
 	public String putMqBatch(Model model) {
 
-		System.out.println("PutRabbitmqConsumer");
+		logger.info("PutRabbitmqConsumer");
 		PutRabbitmqConsumer putmqb = new PutRabbitmqConsumer();
 		String telegram = putmqb.putMessageQueueConsumer();
 
@@ -102,7 +105,7 @@ public class ApplicationController {
 	@RequestMapping("GetMemcached")
 	public String getMemcached(Model model) {
 
-		System.out.println("GetMemcached");
+		logger.info("GetMemcached");
 		GetMemcached getcache = new GetMemcached();
 		String cache = getcache.getMemcached();
 
@@ -114,7 +117,7 @@ public class ApplicationController {
 	@RequestMapping("SetMemcached")
 	public String setMemcached(Model model) {
 
-		System.out.println("SetMemcached");
+		logger.info("SetMemcached");
 		SetMemcached setcache = new SetMemcached();
 		String cache = setcache.setMemcached();
 
@@ -126,7 +129,7 @@ public class ApplicationController {
 	@RequestMapping("GetRedis")
 	public String getRedis(Model model) {
 
-		System.out.println("GetRedis");
+		logger.info("GetRedis");
 		GetRedis getcache = new GetRedis();
 		List<String> cache = getcache.getRedis();
 
@@ -138,7 +141,7 @@ public class ApplicationController {
 	@RequestMapping("SetRedis")
 	public String setRedis(Model model) {
 
-		System.out.println("SetRedis");
+		logger.info("SetRedis");
 		SetRedis setcache = new SetRedis();
 		String cache = setcache.setRedis();
 
@@ -150,7 +153,7 @@ public class ApplicationController {
 	@RequestMapping("PublishRedis")
 	public String publishRedis(Model model) {
 
-		System.out.println("PublishRedis");
+		logger.info("PublishRedis");
 		PublishRedis publishcache = new PublishRedis();
 		String cache = publishcache.publishRedis();
 
