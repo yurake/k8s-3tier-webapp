@@ -1,39 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Hello k8s-3tier-webapp</title>
+<html lang="ja">
 
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script type="text/javascript" src="./js/jaxrs.js"/></script>
-<link rel="stylesheet" href="./css/style.css" />
-<link rel="icon" type="image/png" sizes="16x16" href="./images/icon-16x16.png" />
+<head>
+	<title>k8s-3tier-webapp</title>
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/jaxrs.js"></script>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="./css/style.css" />
+	<link rel="icon" type="image/png" sizes="16x16" href="./images/icon-16x16.png" />
 </head>
 
 <body bgcolor=white>
 	<p>To prove that they work, you can execute either of the following links:</p>
 	<table>
 		<tr>
-			<td><b>TARGET</b></td>
-			<td><b>CREATE</b></td>
-			<td><b>SELECT</b></td>
-			<td><b>DELETE</b></td>
+			<th>TARGET</th>
+			<th>CREATE</th>
+			<th>SELECT</th>
+			<th>PUBLISH</th>
+			<th>DELETE</th>
+		</tr>
+		<tr>
+			<td>Memcached</td>
+			<td>
+				<button id="setmemcached" type="button">Set</button>
+			</td>
+			<td>
+				<button id="getmemcached" type="button">Get</button>
+			</td>
+			<td>-</td>
+			<td>-</td>
+		</tr>
+		<tr>
+			<td>Redis</td>
+			<td>
+				<button id="setredis" type="button">Set</button>
+			</td>
+			<td>
+				<button id="getredis" type="button">Get</button>
+			</td>
+			<td>
+				<button id="publishredis" type="button">Publish</button>
+			</td>
+			<td>-</td>
+		</tr>
+		<tr>
+			<td>RabbitMQ</td>
+			<td>
+				<button id="putrabbitmq" type="button">Put</button>
+			</td>
+			<td>
+				<button id="getrabbitmq" type="button">Get</button>
+			</td>
+			<td>
+				<button id="publishrabbitmq" type="button">Publish</button>
+			</td>
+			<td>-</td>
+		</tr>
+		<tr>
+			<td>Mysql</td>
+			<td>
+				<button id="insertmysql" type="button">Insert</button>
+			</td>
+			<td>
+				<button id="selectmysql" type="button">Select</button>
+			</td>
+			<td>-</td>
+			<td>
+				<button id="deletemysql" type="button">Delete</button>
+			</td>
 		</tr>
 		<tr>
 			<td>jaxrs-mysql-quarkus</td>
 			<td>
-				<button id="insert" type="button">Insert</button>
+				<button id="insertquarkus" type="button">Insert</button>
 			</td>
 			<td>
-				<button id="select" type="button">Select</button>
+				<button id="selectquarkus" type="button">Select</button>
 			</td>
-			<td></td>
+			<td>-</td>
+			<td>-</td>
 		</tr>
 	</table>
-	<textarea id="response" cols=120 rows=30 disabled></textarea>
+	<textarea id="response" cols=130 rows=10 disabled></textarea>
 	<hr />
 	<p><a href="http://wlp.minikube/" target="_blank">Traditional Web Application</a></p>
 	<p><a href="http://quarkus.minikube/" target="_blank">Quarkus Web Application</a></p>
 	<img src="./images/deer.png" width="200">
 </body>
+
 </html>
