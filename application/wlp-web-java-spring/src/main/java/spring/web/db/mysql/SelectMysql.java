@@ -37,6 +37,11 @@ public class SelectMysql extends HttpServlet {
 				logger.info(fullmsg);
 				allmsg.add(fullmsg);
 			}
+
+			if(allmsg.isEmpty()){
+				allmsg.add("No Data");
+			}
+
 		} finally {
 			if (con != null) {
 				try {
