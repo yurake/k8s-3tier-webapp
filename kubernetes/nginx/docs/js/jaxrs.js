@@ -3,7 +3,7 @@ url = root + 'api';
 memcachedurl = url + '/memcached';
 redisurl = url + '/redis';
 rabbitmqurl = url + '/rabbitmq';
-mysqlurl = url + '/mysqlurl';
+mysqlurl = url + '/mysql';
 quarkusurl = root + 'quarkus/mysql';
 
 $(function () {
