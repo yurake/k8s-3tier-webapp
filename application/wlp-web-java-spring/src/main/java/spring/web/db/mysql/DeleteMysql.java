@@ -17,7 +17,7 @@ public class DeleteMysql extends HttpServlet {
 	Logger logger = LoggerFactory.getLogger(DeleteMysql.class);
 	private static String sql = GetConfig.getResourceBundle("delete.msg.all");
 
-	public void deleteMsg() throws SQLException, NamingException {
+	public String deleteMsg() throws SQLException, NamingException {
 		Connection con = null;
 
 		try {
@@ -25,7 +25,7 @@ public class DeleteMysql extends HttpServlet {
 			con = conmysql.getConnection();
 			Statement stmt = con.createStatement();
 
-			logger.info("Execute SQL: " + sql);
+			logger.info("Delete SQL: " + sql);
 			stmt.executeUpdate(sql);
 
 		} finally {
@@ -37,5 +37,6 @@ public class DeleteMysql extends HttpServlet {
 				}
 			}
 		}
+		return "Deleted";
 	}
 }

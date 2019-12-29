@@ -49,8 +49,7 @@ public class MysqlResource {
 	public Response delete() {
 		DeleteMysql delmysql = new DeleteMysql();
 		try {
-			delmysql.deleteMsg();
-			return Response.ok().build();
+			return Response.ok(delmysql.deleteMsg()).build();
 		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
 			return Response.status(500).build();
