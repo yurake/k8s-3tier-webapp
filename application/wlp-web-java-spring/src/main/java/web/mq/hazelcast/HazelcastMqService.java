@@ -19,7 +19,7 @@ public class HazelcastMqService {
 	private static String message = GetConfig.getResourceBundle("common.message");
 	private static String queuename = GetConfig.getResourceBundle("hazelcast.queue.name");
 	private static String topicname = GetConfig.getResourceBundle("hazelcast.topic.name");
-	private static String splitkey = GetConfig.getResourceBundle("jms.split.key");
+	private static String splitkey = GetConfig.getResourceBundle("hazelcast.split.key");
 
 	public String putQueueHazelcast() throws Exception {
 		String fullmsg = null;

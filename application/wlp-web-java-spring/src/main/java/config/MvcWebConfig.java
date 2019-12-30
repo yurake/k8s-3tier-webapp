@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("spring.controller")
+@ComponentScan("controller")
 public class MvcWebConfig implements WebMvcConfigurer {
 
 	@Override
