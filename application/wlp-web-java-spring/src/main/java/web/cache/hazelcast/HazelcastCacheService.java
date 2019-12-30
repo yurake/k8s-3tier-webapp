@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.BlockingQueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.RestApiConfig;
@@ -20,15 +18,20 @@ import web.cache.memcached.GetMemcached;
 import web.util.CreateId;
 import web.util.GetConfig;
 
-public class HazelcastService {
+public class HazelcastCacheService {
 	Logger logger = LoggerFactory.getLogger(GetMemcached.class);
 	private static String message = GetConfig.getResourceBundle("common.message");
 	private static String cachename = GetConfig.getResourceBundle("hazelcast.cache.name");
-	private static String queuename = GetConfig.getResourceBundle("hazelcast.queue.name");
-	private static String splitkey = GetConfig.getResourceBundle("jms.split.key");
+	private static HazelcastInstance instance = null;
 
-	public static HazelcastInstance getInstance() throws Exception {
+	synchronized static public HazelcastInstance getInstance() throws Exception {
+		if (instance == null) {
+			instance = createInstance();
+		}
+		return instance;
+	}
 
+	public static HazelcastInstance createInstance() throws Exception {
 		Config config = new Config();
 		RestApiConfig restApiConfig = new RestApiConfig().setEnabled(true).disableAllGroups()
 				.enableGroups(RestEndpointGroup.DATA);
@@ -40,7 +43,7 @@ public class HazelcastService {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
 
-		HazelcastInstance client = HazelcastService.getInstance();
+		HazelcastInstance client = HazelcastCacheService.getInstance();
 		Map<String, String> map = client.getMap(cachename);
 
 		try {
@@ -55,7 +58,7 @@ public class HazelcastService {
 
 	public List<String> getMapHazelcast() throws Exception {
 		List<String> allmsg = new ArrayList<>();
-		HazelcastInstance client = HazelcastService.getInstance();
+		HazelcastInstance client = HazelcastCacheService.getInstance();
 		Map<String, String> map = client.getMap(cachename);
 
 		try {
@@ -73,55 +76,5 @@ public class HazelcastService {
 			client.shutdown();
 		}
 		return allmsg;
-	}
-
-	public String putQueueHazelcast() throws Exception {
-		String fullmsg = null;
-		String id = String.valueOf(CreateId.createid());
-
-		HazelcastInstance client = HazelcastService.getInstance();
-		BlockingQueue<Object> queue = client.getQueue(queuename);
-
-		StringBuilder buf = new StringBuilder();
-		buf.append(id);
-		buf.append(splitkey);
-		buf.append(message);
-		String body = buf.toString();
-
-		try {
-			queue.put(body);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
-		} finally {
-			client.shutdown();
-		}
-		return fullmsg;
-	}
-
-	public String getQueueHazelcast() throws Exception {
-		HazelcastInstance client = HazelcastService.getInstance();
-		BlockingQueue<Object> queue = client.getQueue(queuename);
-		String fullmsg = null;
-
-		try {
-			Object resp = queue.poll();
-
-			if (StringUtils.isEmpty(resp)) {
-				return "No Data";
-			}
-
-			String jmsbody = resp.toString();
-			String[] body = jmsbody.split(splitkey, 0);
-			fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
-			logger.info(fullmsg);
-
-		} finally {
-			client.shutdown();
-		}
-		return fullmsg;
-	}
-
-	public String publishHazelcast() {
-		return null;
 	}
 }
