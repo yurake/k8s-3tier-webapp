@@ -27,6 +27,11 @@ public class GetRedis {
 				logger.info(fullmsg);
 				allmsg.add(fullmsg);
 			}
+
+			if (allmsg.isEmpty()) {
+				allmsg.add("No Data");
+			}
+
 		} finally {
 			jedis.close();
 		}

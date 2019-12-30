@@ -17,13 +17,13 @@ import spring.web.util.GetConfig;
 
 public class PutRabbitmqConsumer extends HttpServlet {
 	Logger logger = LoggerFactory.getLogger(PutRabbitmqConsumer.class);
-	private static String queuename = GetConfig.getResourceBundle("batch.queue.name");
-	private static String username = GetConfig.getResourceBundle("jms.username");
-	private static String password = GetConfig.getResourceBundle("jms.password");
-	private static String host = GetConfig.getResourceBundle("jms.host");
-	private static String vhost = GetConfig.getResourceBundle("jms.vhost");
+	private static String queuename = GetConfig.getResourceBundle("rabbitmq.batch.queue.name");
+	private static String username = GetConfig.getResourceBundle("rabbitmq.username");
+	private static String password = GetConfig.getResourceBundle("rabbitmq.password");
+	private static String host = GetConfig.getResourceBundle("rabbitmq.host");
+	private static String vhost = GetConfig.getResourceBundle("rabbitmq.vhost");
 	private static String message = GetConfig.getResourceBundle("rabbitmq.consumer.message");
-	private static String splitkey = GetConfig.getResourceBundle("jms.split.key");
+	private static String splitkey = GetConfig.getResourceBundle("rabbitmq.split.key");
 
 	public String putMessageQueueConsumer() throws IOException, TimeoutException {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
