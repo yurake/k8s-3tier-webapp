@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
-import webapp.util.GetConfig;
+import webapp.tier.util.GetConfig;
 
 public class GetRedis {
 	Logger logger = LoggerFactory.getLogger(GetRedis.class);

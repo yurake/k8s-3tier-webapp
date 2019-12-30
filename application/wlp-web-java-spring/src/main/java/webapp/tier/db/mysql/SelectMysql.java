@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import webapp.util.GetConfig;
+import webapp.tier.util.GetConfig;
 
 public class SelectMysql extends HttpServlet {
 

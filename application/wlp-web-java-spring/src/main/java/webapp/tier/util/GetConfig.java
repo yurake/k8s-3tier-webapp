@@ -1,4 +1,4 @@
-package webapp.util;
+package webapp.tier.util;
 
 import java.util.ResourceBundle;
 

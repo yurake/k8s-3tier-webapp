@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
-import webapp.util.CreateId;
-import webapp.util.GetConfig;
+import webapp.tier.util.CreateId;
+import webapp.tier.util.GetConfig;
 
 public class SetRedis {
 	Logger logger = LoggerFactory.getLogger(SetRedis.class);

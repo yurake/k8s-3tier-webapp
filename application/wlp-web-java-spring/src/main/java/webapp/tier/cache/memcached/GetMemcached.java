@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
-import webapp.util.GetConfig;
+import webapp.tier.util.GetConfig;
 
 public class GetMemcached extends HttpServlet {
 	Logger logger = LoggerFactory.getLogger(GetMemcached.class);

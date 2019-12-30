@@ -7,7 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import webapp.util.GetConfig;
+import webapp.tier.util.GetConfig;
 
 public class ConnectMysql {
 

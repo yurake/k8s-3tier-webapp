@@ -15,8 +15,8 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
 import webapp.tier.cache.memcached.GetMemcached;
-import webapp.util.CreateId;
-import webapp.util.GetConfig;
+import webapp.tier.util.CreateId;
+import webapp.tier.util.GetConfig;
 
 public class HazelcastCacheService {
 	Logger logger = LoggerFactory.getLogger(GetMemcached.class);

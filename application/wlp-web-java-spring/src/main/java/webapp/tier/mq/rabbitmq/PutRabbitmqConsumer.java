@@ -12,8 +12,8 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-import webapp.util.CreateId;
-import webapp.util.GetConfig;
+import webapp.tier.util.CreateId;
+import webapp.tier.util.GetConfig;
 
 public class PutRabbitmqConsumer extends HttpServlet {
 	Logger logger = LoggerFactory.getLogger(PutRabbitmqConsumer.class);
