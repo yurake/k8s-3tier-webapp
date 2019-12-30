@@ -46,7 +46,7 @@ public class PutRabbitmqConsumer extends HttpServlet {
 
 		channel.basicPublish("", queuename, null, body.getBytes());
 
-		fullmsg = "Set id: " + id + ", msg: " + message;
+		fullmsg = "Publish id: " + id + ", msg: " + message;
 		logger.info(fullmsg);
 
 		channel.close();
