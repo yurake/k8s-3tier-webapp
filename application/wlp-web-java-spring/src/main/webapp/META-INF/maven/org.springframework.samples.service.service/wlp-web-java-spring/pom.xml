@@ -27,6 +27,7 @@
 		<jedis.version>3.1.0</jedis.version>
 		<hazelcast-client.version>3.12.5</hazelcast-client.version>
 		<hazelcast.version>3.12.5</hazelcast.version>
+		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
 
 		<javaee-api.version>7.0</javaee-api.version>
 
@@ -169,6 +170,11 @@
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
 			<version>${hazelcast.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast-kubernetes</artifactId>
+			<version>${hazelcast-kubernetes.version}</version>
 		</dependency>
 
 		<dependency>

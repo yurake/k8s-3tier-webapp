@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hazelcast-client
+	xmlns="http://www.hazelcast.com/schema/client-config"
+	xsi:schemaLocation="http://www.hazelcast.com/schema/client-config
+	                    http://www.hazelcast.com/schema/client-config/hazelcast-client-config-3.12.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- properties will be passed via -D... JAVA_OPTS -->
+	<group>
+		<name>dev</name>
+		<password />
+	</group>
+</hazelcast-client>
