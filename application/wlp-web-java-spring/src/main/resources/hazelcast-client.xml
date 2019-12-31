@@ -5,9 +5,9 @@
 	                    http://www.hazelcast.com/schema/client-config/hazelcast-client-config-3.12.xsd"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-	<!-- properties will be passed via -D... JAVA_OPTS -->
-	<group>
-		<name>dev</name>
-		<password />
-	</group>
+	<network>
+		<cluster-members>
+			<address>hazelcast:5701</address>
+		</cluster-members>
+	</network>
 </hazelcast-client>

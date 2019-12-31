@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
 
-import webapp.tier.cache.hazelcast.HazelcastCacheService;
+import webapp.tier.cache.hazelcast.ConnectHazelcast;
 import webapp.tier.cache.memcached.GetMemcached;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
@@ -25,7 +25,7 @@ public class HazelcastMqService {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
 
-		HazelcastInstance client = HazelcastCacheService.getInstance();
+		HazelcastInstance client = ConnectHazelcast.getInstance();
 		BlockingQueue<Object> queue = client.getQueue(queuename);
 
 		StringBuilder buf = new StringBuilder();
@@ -45,7 +45,7 @@ public class HazelcastMqService {
 	}
 
 	public String getQueueHazelcast() throws Exception {
-		HazelcastInstance client = HazelcastCacheService.getInstance();
+		HazelcastInstance client = ConnectHazelcast.getInstance();
 		BlockingQueue<String> queue = client.getQueue(queuename);
 		String fullmsg = null;
 
@@ -53,7 +53,9 @@ public class HazelcastMqService {
 			Object resp = queue.poll();
 
 			if (StringUtils.isEmpty(resp)) {
-				return "No Data";
+				fullmsg = "No Data";
+				logger.info(fullmsg);
+				return fullmsg;
 			}
 
 			String jmsbody = resp.toString();
@@ -71,7 +73,7 @@ public class HazelcastMqService {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
 
-		HazelcastInstance client = HazelcastCacheService.getInstance();
+		HazelcastInstance client = ConnectHazelcast.getInstance();
 		ITopic<Object> topic = client.getTopic(topicname);
 
 		StringBuilder buf = new StringBuilder();
