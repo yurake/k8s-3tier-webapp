@@ -33,11 +33,10 @@ echo "###"
 echo ""
 
 echo "### hazelcast"
-kubectl apply -f ./hazelcast/hazelcast-deployment.yaml
+kubectl apply -f ./hazelcast/hazelcast-rbac.yaml
+kubectl apply -f ./hazelcast/hazelcast-configmap.yaml
+kubectl apply -f ./hazelcast/hazelcast-statefulset.yaml
 kubectl apply -f ./hazelcast/hazelcast-service.yaml
-kubectl apply -f ./hazelcast/hazelcast-manager-deployment.yaml
-kubectl apply -f ./hazelcast/hazelcast-manager-service.yaml
-kubectl apply -f ./hazelcast/hazelcast-manager-ingress.yaml
 echo "###"
 echo ""
 
