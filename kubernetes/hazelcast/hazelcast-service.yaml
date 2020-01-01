@@ -4,8 +4,9 @@ metadata:
   name: hazelcast
 spec:
   type: ClusterIP
+  clusterIP: None
   selector:
     app: hazelcast
   ports:
-  - protocol: TCP
+  - name: hazelcast
     port: 5701
