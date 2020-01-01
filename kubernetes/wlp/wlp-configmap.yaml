@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: wlp-configmap
 data:
-  jvm.options: -Dk8s=true
+  jvm.options: -Disk8s=true
