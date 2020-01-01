@@ -18,3 +18,11 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
+        volumeMounts:
+        - name: wlp-config-volume
+          mountPath: /config/jvm.options
+          subPath: jvm.options
+      volumes:
+      - name: wlp-config-volume
+        configMap:
+          name: wlp-configmap

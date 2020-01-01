@@ -39,11 +39,10 @@ public class ConnectHazelcast {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getGroupConfig().setName(HAZELCAST_GROUP_NAME);
 
-		logger.info(System.getProperty("k8s"));
-		boolean isk8s = System.getProperty("k8s", DEFAULT_FALSE).equalsIgnoreCase("true");
+		boolean isk8s = System.getProperty("isk8s", DEFAULT_FALSE).equalsIgnoreCase("true");
 
 		if (isk8s) {
-			logger.info("k8s is true");
+			logger.info("Service on k8s");
 			HazelcastKubernetesDiscoveryStrategyFactory hazelcastKubernetesDiscoveryStrategyFactory = new HazelcastKubernetesDiscoveryStrategyFactory();
 			DiscoveryStrategyConfig discoveryStrategyConfig = new DiscoveryStrategyConfig(
 					hazelcastKubernetesDiscoveryStrategyFactory);
@@ -56,7 +55,7 @@ public class ConnectHazelcast {
 					.addDiscoveryStrategyConfig(discoveryStrategyConfig);
 
 		} else {
-			logger.info("k8s is false");
+			logger.info("Not service in k8s");
 			clientConfig = new XmlClientConfigBuilder(clientxml).build();
 			return HazelcastClient.newHazelcastClient(clientConfig);
 

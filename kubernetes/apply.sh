@@ -56,6 +56,7 @@ echo ""
 echo "### wlp"
 cp -p ../application/wlp-web-java-spring/target/spring.war ./wlp/.
 docker build -t default/wlp:v0.0.1 ./wlp/.
+kubectl apply -f ./wlp/wlp-configmap.yaml
 kubectl apply -f ./wlp/wlp-deployment.yaml
 kubectl apply -f ./wlp/wlp-service.yaml
 kubectl apply -f ./wlp/wlp-ingress.yaml
