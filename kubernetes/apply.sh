@@ -32,6 +32,15 @@ kubectl apply -f ./rabbitmq/rabbitmq-ingress.yaml
 echo "###"
 echo ""
 
+echo "### hazelcast"
+kubectl apply -f ./hazelcast/hazelcast-deployment.yaml
+kubectl apply -f ./hazelcast/hazelcast-service.yaml
+kubectl apply -f ./hazelcast/hazelcast-manager-deployment.yaml
+kubectl apply -f ./hazelcast/hazelcast-manager-service.yaml
+kubectl apply -f ./hazelcast/hazelcast-manager-ingress.yaml
+echo "###"
+echo ""
+
 echo "### memcached"
 kubectl apply -f ./memcached/memcached-deployment.yaml
 kubectl apply -f ./memcached/memcached-service.yaml

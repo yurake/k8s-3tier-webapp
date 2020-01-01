@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hazelcast-manager
+spec:
+  rules:
+  - host: hazelcast.manager.minikube
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: hazelcast-manager
+          servicePort: 8080

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hazelcast
+spec:
+  type: ClusterIP
+  selector:
+    app: hazelcast
+  ports:
+  - protocol: TCP
+    port: 5701
