@@ -3,6 +3,7 @@ url = root + 'api';
 memcachedurl = url + '/memcached';
 redisurl = url + '/redis';
 rabbitmqurl = url + '/rabbitmq';
+hazelcasturl = url + '/hazelcast';
 mysqlurl = url + '/mysql';
 quarkusurl = root + 'quarkus/mysql';
 
@@ -144,6 +145,92 @@ $(function () {
 			$("#response").html(resp);
 		})
 	})
+
+	$("#putcachehazelcast").click(function () {
+		$.ajax({
+			type: 'post',
+			url: hazelcasturl + '/putcache',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
+	})
+
+	$("#getcachehazelcast").click(function () {
+		$.ajax({
+			type: 'get',
+			url: hazelcasturl + '/getcache',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
+	})
+
+	$("#publishhazelcast").click(function () {
+		$.ajax({
+			type: 'post',
+			url: hazelcasturl + '/publish',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
+	})
+
+	$("#putqueuehazelcast").click(function () {
+		$.ajax({
+			type: 'post',
+			url: hazelcasturl + '/putqueue',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
+	})
+
+	$("#getqueuehazelcast").click(function () {
+		$.ajax({
+			type: 'get',
+			url: hazelcasturl + '/getqueue',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
+	})
+
 	$("#insertmysql").click(function () {
 		$.ajax({
 			type: 'post',
