@@ -18,7 +18,7 @@ import webapp.tier.util.GetConfig;
 public class PutRabbitmq extends HttpServlet {
 	Logger logger = LoggerFactory.getLogger(PutRabbitmq.class);
 	private static String queuename = GetConfig.getResourceBundle("rabbitmq.queue.name");
-	private static String username = GetConfig.getResourceBundle("jms.username");
+	private static String username = GetConfig.getResourceBundle("rabbitmq.username");
 	private static String password = GetConfig.getResourceBundle("rabbitmq.password");
 	private static String host = GetConfig.getResourceBundle("rabbitmq.host");
 	private static String vhost = GetConfig.getResourceBundle("rabbitmq.vhost");
