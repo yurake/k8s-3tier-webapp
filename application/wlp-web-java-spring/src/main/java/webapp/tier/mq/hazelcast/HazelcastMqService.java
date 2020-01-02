@@ -17,6 +17,7 @@ import webapp.tier.util.GetConfig;
 public class HazelcastMqService {
 	Logger logger = LoggerFactory.getLogger(GetMemcached.class);
 	private static String message = GetConfig.getResourceBundle("common.message");
+	private static String pubmessage = GetConfig.getResourceBundle("hazelcast.publisher.message");
 	private static String queuename = GetConfig.getResourceBundle("hazelcast.queue.name");
 	private static String topicname = GetConfig.getResourceBundle("hazelcast.topic.name");
 	private static String splitkey = GetConfig.getResourceBundle("hazelcast.split.key");
@@ -79,12 +80,12 @@ public class HazelcastMqService {
 		StringBuilder buf = new StringBuilder();
 		buf.append(id);
 		buf.append(splitkey);
-		buf.append(message);
+		buf.append(pubmessage);
 		String body = buf.toString();
 
 		try {
 			topic.publish(body);
-			fullmsg = "Publish id: " + id + ", msg: " + message;
+			fullmsg = "Publish id: " + id + ", msg: " + pubmessage;
 			logger.info(fullmsg);
 		} finally {
 			client.shutdown();
