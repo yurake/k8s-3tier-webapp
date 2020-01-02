@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hazelcast-mysql-quarkus
+spec:
+  selector:
+    matchLabels:
+      app: hazelcast-mysql-quarkus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hazelcast-mysql-quarkus
+    spec:
+      containers:
+      - name: hazelcast-mysql-quarkus
+        image: default/hazelcast-mysql-quarkus:v0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /health/live
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /health/ready
+          initialDelaySeconds: 3
+          periodSeconds: 3

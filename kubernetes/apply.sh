@@ -97,6 +97,14 @@ kubectl apply -f ./redis-mysql-helidon/redis-mysql-helidon-deployment.yaml
 echo "###"
 echo ""
 
+echo "### hazelcast-mysql-quarkus"
+cd ../application/hazelcast-mysql-quarkus
+docker build -t default/hazelcast-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
+cd ${ROOT_DIR}
+kubectl apply -f ./hazelcast-mysql-quarkus/hazelcast-mysql-quarkus-deployment.yaml
+echo "###"
+echo ""
+
 echo "### jenkins"
 kubectl apply -f ./jenkins/jenkins-pv.yaml
 kubectl apply -f ./jenkins/jenkins-pvc.yaml
