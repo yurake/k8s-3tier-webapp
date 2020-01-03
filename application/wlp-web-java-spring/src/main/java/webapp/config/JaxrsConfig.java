@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import webapp.resource.ActiveMqResource;
 import webapp.resource.HazelcastResource;
 import webapp.resource.MemcachedResource;
 import webapp.resource.MysqlResource;
@@ -23,6 +24,7 @@ public class JaxrsConfig extends Application {
 		classes.add(RabbitmqResource.class);
 		classes.add(RedisResource.class);
 		classes.add(HazelcastResource.class);
+		classes.add(ActiveMqResource.class);
 		return classes;
 	}
 }
