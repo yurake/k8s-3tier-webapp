@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native -t quarkus/redis-mysql-quarkus .
+# docker build -f src/main/docker/Dockerfile.native -t quarkus/activemq-mysql-quarkus .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/redis-mysql-quarkus
+# docker run -i --rm -p 8080:8080 quarkus/activemq-mysql-quarkus
 #
 ###
 FROM registry.access.redhat.com/ubi8/ubi-minimal
