@@ -32,6 +32,13 @@ kubectl apply -f ./rabbitmq/rabbitmq-ingress.yaml
 echo "###"
 echo ""
 
+echo "### activemq"
+kubectl apply -f ./activemq/activemq-deployment.yaml
+kubectl apply -f ./activemq/activemq-service.yaml
+kubectl apply -f ./activemq/activemq-ingress.yaml
+echo "###"
+echo ""
+
 echo "### hazelcast"
 kubectl apply -f ./hazelcast/hazelcast-rbac.yaml
 kubectl apply -f ./hazelcast/hazelcast-configmap.yaml
@@ -102,6 +109,14 @@ cd ../application/hazelcast-mysql-quarkus
 docker build -t default/hazelcast-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
 cd ${ROOT_DIR}
 kubectl apply -f ./hazelcast-mysql-quarkus/hazelcast-mysql-quarkus-deployment.yaml
+echo "###"
+echo ""
+
+echo "### activemq-mysql-quarkus"
+cd ../application/activemq-mysql-quarkus
+docker build -t default/activemq-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
+cd ${ROOT_DIR}
+kubectl apply -f ./activemq-mysql-quarkus/activemq-mysql-quarkus-deployment.yaml
 echo "###"
 echo ""
 
