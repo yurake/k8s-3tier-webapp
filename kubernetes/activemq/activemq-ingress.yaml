@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: activemq
+spec:
+  rules:
+  - host: activemq.management.minikube
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: activemq
+          servicePort: 8161

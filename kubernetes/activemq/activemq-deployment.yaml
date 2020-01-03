@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: activemq
+spec:
+  selector:
+    matchLabels:
+      app: activemq
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: activemq
+    spec:
+      containers:
+      - name: activemq
+        image: vromero/activemq-artemis:2.10.1-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8161
+        - containerPort: 61616
