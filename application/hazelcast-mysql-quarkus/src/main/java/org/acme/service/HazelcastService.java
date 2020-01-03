@@ -16,16 +16,16 @@ public class HazelcastService {
 
 	public boolean isActive() {
 		HazelcastInstance client = null;
-		boolean state = false;
+		boolean status = false;
 		try {
 			client = ConnectHazelcast.getInstance();
-			state = client.getLifecycleService().isRunning();
+			status = client.getLifecycleService().isRunning();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			client.shutdown();
 		}
-		return state;
+		return status;
 	}
 
 	public String subscribeHazelcast() {
