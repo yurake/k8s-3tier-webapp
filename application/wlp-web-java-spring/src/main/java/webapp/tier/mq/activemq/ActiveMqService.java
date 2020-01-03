@@ -46,6 +46,11 @@ public class ActiveMqService {
 		return (Queue) ic.lookup("jms/ActiveMQueue");
 	}
 
+	public Queue getTopic() throws Exception {
+		InitialContext ic = new InitialContext();
+		return (Queue) ic.lookup("jms/ActiveMQTopic");
+	}
+
 	public String putActiveMq() throws Exception {
 		String fullmsg = null;
 		QueueSession qsession = null;
@@ -174,7 +179,7 @@ public class ActiveMqService {
 			con = getConnection();
 			Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			TextMessage message = session.createTextMessage(body);
-			session.createProducer(getQueue()).send(message);
+			session.createProducer(getTopic()).send(message);
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
 
