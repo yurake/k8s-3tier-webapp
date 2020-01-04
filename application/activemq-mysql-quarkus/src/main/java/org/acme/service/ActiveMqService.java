@@ -1,6 +1,5 @@
 package org.acme.service;
 
-import java.sql.Connection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -10,8 +9,8 @@ import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
+import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.QueueConnection;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
@@ -28,36 +27,52 @@ public class ActiveMqService implements Runnable {
 	Logger logger = LoggerFactory.getLogger(ActiveMqService.class);
 	private static String splitkey = GetConfig.getResourceBundle("activemq.split.key");
 	private static String topicname = GetConfig.getResourceBundle("activemq.topic.name");
-	Connection con = null;
-	QueueConnection qcon = null;
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
+	private static JMSContext context = null;
+	private static JMSConsumer consumer = null;
 
 	@Inject
 	ConnectionFactory connectionFactory;
 
-    void onStart(@Observes StartupEvent ev) {
-    	scheduler.submit(this);
-    	logger.info("The application is starting...");
-    }
+	void onStart(@Observes StartupEvent ev) {
+		scheduler.submit(this);
+		logger.info("The application is starting...");
+	}
 
-    void onStop(@Observes ShutdownEvent ev) {
-    	scheduler.shutdown();
-    	logger.info("The application is stopping...");
-    }
+	void onStop(@Observes ShutdownEvent ev) {
+		scheduler.shutdown();
+		logger.info("The application is stopping...");
+	}
+
+	private JMSConsumer getJmsConnect() {
+		try {
+			if (context == null) {
+				context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
+			}
+			if (consumer == null) {
+				consumer = context.createConsumer(context.createQueue(topicname));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			consumer.close();
+			context.close();
+		}
+		return consumer;
+	}
 
 	@Override
 	public void run() {
 		String fullmsg = null;
 		MysqlService mysqlsvc = new MysqlService();
-
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			JMSConsumer consumer = context.createConsumer(context.createQueue(topicname));
+		try {
+			JMSConsumer jmsconsumer = getJmsConnect();
 			while (true) {
 				logger.info("Ready for receive message...");
-				Message message = consumer.receive();
+				Message message = jmsconsumer.receive();
 				if (message instanceof TextMessage) {
 					TextMessage textMessage = (TextMessage) message;
-					String[] body = textMessage.getText().split(splitkey, 0);
+					String[] body;
+					body = textMessage.getText().split(splitkey, 0);
 					fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
 					logger.info(fullmsg);
 					mysqlsvc.insertMysql(body);
@@ -66,15 +81,16 @@ public class ActiveMqService implements Runnable {
 					logger.info(fullmsg);
 				}
 			}
-		} catch (Exception e) {
+		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public boolean isActive() {
 		boolean status = false;
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			context.createConsumer(context.createQueue(topicname));
+		try {
+			JMSConsumer jmsconsumer = getJmsConnect();
+			jmsconsumer.getMessageListener();
 			status = true;
 		} catch (Exception e) {
 			e.printStackTrace();

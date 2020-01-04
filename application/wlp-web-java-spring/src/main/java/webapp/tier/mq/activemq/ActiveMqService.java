@@ -25,6 +25,7 @@ public class ActiveMqService {
 
 	Logger logger = LoggerFactory.getLogger(ActiveMqService.class);
 	private static String msg = GetConfig.getResourceBundle("common.message");
+	private static String pubmessage = GetConfig.getResourceBundle("activemq.publisher.message");
 	private static String splitkey = GetConfig.getResourceBundle("activemq.split.key");
 	Connection con = null;
 	QueueConnection qcon = null;
@@ -173,7 +174,7 @@ public class ActiveMqService {
 			StringBuilder buf = new StringBuilder();
 			buf.append(id);
 			buf.append(splitkey);
-			buf.append(msg);
+			buf.append(pubmessage);
 			String body = buf.toString();
 
 			con = getConnection();

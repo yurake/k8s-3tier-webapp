@@ -25,6 +25,10 @@
   <resourceAdapter id="activemq" location="${server.config.dir}/resources/activemq/activemq-rar-5.15.11.rar">
     <properties.activemq userName="artemis" password="simetraehcapa" serverUrl="tcp://activemq:61616" />
   </resourceAdapter>
+  <jmsActivationSpec id="sample/SampleJMS">
+    <properties.activemq destinationRef="ActiveMQueue" destinationType="javax.jms.Queue" />
+    <properties.activemq destinationRef="ActiveMQTopic" destinationType="javax.jms.Queue" />
+  </jmsActivationSpec>
   <jmsQueueConnectionFactory jndiName="jms/QueueConnectionFactory">
     <properties.activemq serverUrl="tcp://activemq:61616" />
   </jmsQueueConnectionFactory>
