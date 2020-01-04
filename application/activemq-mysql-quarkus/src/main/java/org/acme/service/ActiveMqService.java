@@ -11,8 +11,8 @@ import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.jms.TopicSession;
 
 import org.acme.util.GetConfig;
 import org.slf4j.Logger;
@@ -47,10 +47,10 @@ public class ActiveMqService implements Runnable {
 	private JMSConsumer getJmsConnect() {
 		try {
 			if (context == null) {
-				context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
+				context = connectionFactory.createContext(TopicSession.AUTO_ACKNOWLEDGE);
 			}
 			if (consumer == null) {
-				consumer = context.createConsumer(context.createQueue(topicname));
+				consumer = context.createConsumer(context.createTopic(topicname));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

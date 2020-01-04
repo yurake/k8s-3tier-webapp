@@ -2,9 +2,6 @@ package webapp.tier.mq.activemq;
 
 import java.util.Objects;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.Message;
 import javax.jms.Queue;
 import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
@@ -13,6 +10,11 @@ import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicPublisher;
+import javax.jms.TopicSession;
 import javax.naming.InitialContext;
 
 import org.slf4j.Logger;
@@ -27,14 +29,8 @@ public class ActiveMqService {
 	private static String msg = GetConfig.getResourceBundle("common.message");
 	private static String pubmessage = GetConfig.getResourceBundle("activemq.publisher.message");
 	private static String splitkey = GetConfig.getResourceBundle("activemq.split.key");
-	Connection con = null;
 	QueueConnection qcon = null;
-
-	public Connection getConnection() throws Exception {
-		InitialContext ic = new InitialContext();
-		ConnectionFactory cf = (ConnectionFactory) ic.lookup("jms/QueueConnectionFactory");
-		return cf.createConnection();
-	}
+	TopicConnection tcon = null;
 
 	public QueueConnection getQueueConnection() throws Exception {
 		InitialContext ic = new InitialContext();
@@ -42,14 +38,20 @@ public class ActiveMqService {
 		return cf.createQueueConnection();
 	}
 
+	public TopicConnection getTopicConnection() throws Exception {
+		InitialContext ic = new InitialContext();
+		TopicConnectionFactory cf = (TopicConnectionFactory) ic.lookup("jms/QueueConnectionFactory");
+		return cf.createTopicConnection();
+	}
+
 	public Queue getQueue() throws Exception {
 		InitialContext ic = new InitialContext();
 		return (Queue) ic.lookup("jms/ActiveMQueue");
 	}
 
-	public Queue getTopic() throws Exception {
+	public Topic getTopic() throws Exception {
 		InitialContext ic = new InitialContext();
-		return (Queue) ic.lookup("jms/ActiveMQTopic");
+		return (Topic) ic.lookup("jms/ActiveMQTopic");
 	}
 
 	public String putActiveMq() throws Exception {
@@ -118,6 +120,7 @@ public class ActiveMqService {
 		return fullmsg;
 	}
 
+	/**
 	public String putProducerActiveMq() throws Exception {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
@@ -128,7 +131,7 @@ public class ActiveMqService {
 		buf.append(msg);
 		String body = buf.toString();
 
-		con = getConnection();
+		con = getQueueConnection();
 		con.start();
 		Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		TextMessage message = session.createTextMessage(body);
@@ -143,7 +146,7 @@ public class ActiveMqService {
 		String fullmsg = null;
 
 		try {
-			con = getConnection();
+			con = getQueueConnection();
 			con.start();
 			Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			Message message = session.createConsumer(getQueue()).receive();
@@ -165,9 +168,12 @@ public class ActiveMqService {
 		}
 		return fullmsg;
 	}
+	**/
 
 	public String publishActiveMq() throws Exception {
 		String fullmsg = null;
+		TopicSession session = null;
+		TopicPublisher publisher = null;
 		String id = String.valueOf(CreateId.createid());
 
 		try {
@@ -177,17 +183,27 @@ public class ActiveMqService {
 			buf.append(pubmessage);
 			String body = buf.toString();
 
-			con = getConnection();
-			Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			tcon = getTopicConnection();
+			session = tcon.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+			publisher = session.createPublisher(getTopic());
 			TextMessage message = session.createTextMessage(body);
-			session.createProducer(getTopic()).send(message);
+			publisher.publish(message);
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			con.close();
+			try {
+				if (publisher != null)
+					publisher.close();
+				if (session != null)
+					session.close();
+				if (tcon != null)
+					tcon.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return fullmsg;
 	}

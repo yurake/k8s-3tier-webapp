@@ -35,7 +35,7 @@
   <jmsQueue id="ActiveMQueue" jndiName="jms/ActiveMQueue">
     <properties.activemq PhysicalName="ActiveMQueue" />
   </jmsQueue>
-  <jmsQueue id="ActiveMQTopic" jndiName="jms/ActiveMQTopic">
+  <jmsTopic id="ActiveMQTopic" jndiName="jms/ActiveMQTopic">
     <properties.activemq PhysicalName="ActiveMQTopic" />
-  </jmsQueue>
+  </jmsTopic>
 </server>
