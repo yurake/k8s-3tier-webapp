@@ -5,8 +5,8 @@
     <feature>localConnector-1.0</feature>
     <feature>mpMetrics-1.1</feature>
     <feature>monitor-1.0</feature>
-		<feature>jndi-1.0</feature>
-		<feature>jms-2.0</feature>
+    <feature>jndi-1.0</feature>
+    <feature>jms-2.0</feature>
   </featureManager>
   <mpMetrics authentication="false" />
   <!-- To access this server from a remote client add a host attribute to 
@@ -20,18 +20,18 @@
   </library>
   <dataSource jndiName="jdbc/webapp" transactional="false">
     <jdbcDriver libraryRef="MySQLLib" />
-    <properties databaseName="webapp" serverName="mysql" portNumber="3306" user="mysql" password="mysql" useSSL="false" allowPublicKeyRetrieval="true"/>
+    <properties databaseName="webapp" serverName="mysql" portNumber="3306" user="mysql" password="mysql" useSSL="false" allowPublicKeyRetrieval="true" />
   </dataSource>
   <resourceAdapter id="activemq" location="${server.config.dir}/resources/activemq/activemq-rar-5.15.11.rar">
-		<properties.activemq userName="artemis" password="simetraehcapa" serverUrl="tcp://activemq:61616" />
-	</resourceAdapter>
-	<jmsQueueConnectionFactory jndiName="jms/QueueConnectionFactory">
-		<properties.activemq serverUrl="tcp://activemq:61616"/>
-	</jmsQueueConnectionFactory>
-	<jmsQueue id="ActiveMQueue" jndiName="jms/ActiveMQueue">
-		<properties.activemq PhysicalName="ActiveMQueue"/>
-	</jmsQueue>
-	<jmsQueue id="ActiveMQTopic" jndiName="jms/ActiveMQTopic">
-		<properties.activemq PhysicalName="ActiveMQTopic"/>
-	</jmsQueue>
+    <properties.activemq userName="artemis" password="simetraehcapa" serverUrl="tcp://activemq:61616" />
+  </resourceAdapter>
+  <jmsQueueConnectionFactory jndiName="jms/QueueConnectionFactory">
+    <properties.activemq serverUrl="tcp://activemq:61616" />
+  </jmsQueueConnectionFactory>
+  <jmsQueue id="ActiveMQueue" jndiName="jms/ActiveMQueue">
+    <properties.activemq PhysicalName="ActiveMQueue" />
+  </jmsQueue>
+  <jmsQueue id="ActiveMQTopic" jndiName="jms/ActiveMQTopic">
+    <properties.activemq PhysicalName="ActiveMQTopic" />
+  </jmsQueue>
 </server>
