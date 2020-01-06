@@ -1,16 +1,9 @@
 # k8s-3tier-webapp
 
 ## About
-Sample web application based on k8s.
-Use some docker images below:
-* websphere-liberty:19.0.0.6-webProfile8
-* memcached:1.5
-* mysql:8.0
-* rabbitmq:3.7.7-management
-* openjdk:8-alpine
-* nginx:1.17.4
-* jenkins/jenkins:lts
-
+Sample web application based on k8s.  
+Focus on connecting components, setting k8s resources, and aiming to microservices.  
+The k8s-3tier-webapp service is for PoC, not production ready.
 
 | Tier | Name | Description |
 |:-:|:-:|:-:|
@@ -39,8 +32,8 @@ eval $(minikube docker-env)
 ```
 
 ## Build & Apply
-`docker build`  
-`kubectl apply`
+
+`apply.sh` supports `docker build`, `kubectl apply` to k8s clusters.
 ```
 ./apply.sh
 ```
@@ -53,15 +46,9 @@ Add IP, domain in /etc/hosts
 echo `minikube ip` k8s.3tier.webapp wlp.minikube quarkus.minikube api.server.minikube rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube grafana.minikube jupyter.minikube rocketchat.minikube >> /etc/hosts
 ```
 
-#### Web Application
+#### Top Page
 http://k8s.3tier.webapp/
 ![top.png](./docs/top.png)
-
-#### RabbitMQ Management
-http://rabbitmq.management.minikube/
-
-#### Jenkins
-http://jenkins.minikube/
 
 ## See Also
 Set up [monitoring](kubernetes/monitoring/README.md)
