@@ -15,7 +15,7 @@ import webapp.tier.util.GetConfig;
 public class DeleteMysql extends HttpServlet {
 
 	Logger logger = LoggerFactory.getLogger(DeleteMysql.class);
-	private static String sql = GetConfig.getResourceBundle("delete.msg.all");
+	private static String sql = GetConfig.getResourceBundle("mysql.delete.msg.all");
 
 	public String deleteMsg() throws SQLException, NamingException {
 		Connection con = null;

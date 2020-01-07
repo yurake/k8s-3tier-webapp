@@ -11,7 +11,7 @@ import webapp.tier.util.GetConfig;
 
 public class ConnectMysql {
 
-	private static String jndiname = GetConfig.getResourceBundle("jndi.name");
+	private static String jndiname = GetConfig.getResourceBundle("mysql.jndi.name");
 	private DataSource ds;
 	private Connection con = null;
 

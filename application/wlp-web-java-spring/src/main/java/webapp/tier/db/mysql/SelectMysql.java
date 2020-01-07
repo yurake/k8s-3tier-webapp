@@ -18,7 +18,7 @@ import webapp.tier.util.GetConfig;
 public class SelectMysql extends HttpServlet {
 
 	Logger logger = LoggerFactory.getLogger(SelectMysql.class);
-	private static String sql = GetConfig.getResourceBundle("select.msg.all");
+	private static String sql = GetConfig.getResourceBundle("mysql.select.msg.all");
 
 	public List<String> selectMsg() throws SQLException, NamingException {
 		Connection con = null;

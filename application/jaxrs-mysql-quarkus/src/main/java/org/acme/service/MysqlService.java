@@ -19,11 +19,11 @@ public class MysqlService {
 
 	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
 	private static String url = GetConfig.getResourceBundle("mysql.url");
-	private static String instersql = GetConfig.getResourceBundle("insert.msg");
+	private static String instersql = GetConfig.getResourceBundle("mysql.insert.msg");
 	private static String sqlkey = GetConfig.getResourceBundle("mysql.id");
 	private static String sqlbody = GetConfig.getResourceBundle("mysql.body");
 	private static String message = GetConfig.getResourceBundle("common.message");
-	private static String sql = GetConfig.getResourceBundle("select.msg.all");
+	private static String sql = GetConfig.getResourceBundle("mysql.select.msg.all");
 	Connection con = null;
 
 	public Connection getConnection() throws SQLException {
