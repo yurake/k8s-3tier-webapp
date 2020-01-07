@@ -1,6 +1,6 @@
 CREATE ROLE "postgresdba" NOLOGIN;
-CREATE ROLE "postgreswebapp" PASSWORD 'supersecret' LOGIN;
-GRANT "postgresdba" TO "postgreswebapp";
+CREATE ROLE "webapp" PASSWORD 'webapp' LOGIN;
+GRANT "postgresdba" TO "webapp";
 
 CREATE DATABASE webapp OWNER "postgresdba" ENCODING 'UTF8';
 

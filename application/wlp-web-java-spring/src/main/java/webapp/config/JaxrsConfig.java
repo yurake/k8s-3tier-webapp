@@ -10,6 +10,7 @@ import webapp.resource.ActiveMqResource;
 import webapp.resource.HazelcastResource;
 import webapp.resource.MemcachedResource;
 import webapp.resource.MysqlResource;
+import webapp.resource.PostgresResource;
 import webapp.resource.RabbitmqResource;
 import webapp.resource.RedisResource;
 
@@ -25,6 +26,7 @@ public class JaxrsConfig extends Application {
 		classes.add(RedisResource.class);
 		classes.add(HazelcastResource.class);
 		classes.add(ActiveMqResource.class);
+		classes.add(PostgresResource.class);
 		return classes;
 	}
 }
