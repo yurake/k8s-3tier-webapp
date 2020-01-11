@@ -1,6 +1,6 @@
 CREATE DATABASE webapp;
-CREATE user 'mysql' identified by 'mysql';
-GRANT all privileges on webapp.* to 'mysql';
+CREATE user 'webapp' identified by 'webapp';
+GRANT all privileges on webapp.* to 'webapp';
 use webapp;
 
 CREATE TABLE msg (
