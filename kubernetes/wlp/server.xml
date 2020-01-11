@@ -1,5 +1,4 @@
 <server description="new server">
-  <!-- Enable features -->
   <featureManager>
     <feature>webProfile-8.0</feature>
     <feature>localConnector-1.0</feature>
@@ -8,23 +7,23 @@
     <feature>jndi-1.0</feature>
     <feature>jms-2.0</feature>
   </featureManager>
+
   <mpMetrics authentication="false" />
-  <!-- To access this server from a remote client add a host attribute to 
-        the following element, e.g. host="*" -->
   <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint" />
-  <!-- Automatically expand WAR files and EAR files -->
   <applicationManager autoExpand="true" />
   <applicationMonitor updateTrigger="mbean" />
+  
   <library id="MySQLLib">
     <fileset dir="${server.config.dir}/resources/mysql" includes="*.jar" />
   </library>
   <dataSource jndiName="jdbc/webapp" transactional="false">
     <jdbcDriver libraryRef="MySQLLib" />
-    <properties databaseName="webapp" serverName="mysql" portNumber="3306" user="mysql" password="mysql" useSSL="false" allowPublicKeyRetrieval="true" />
+    <properties databaseName="webapp" serverName="mysql" portNumber="3306" user="webapp" password="webapp" useSSL="false" allowPublicKeyRetrieval="true" />
   </dataSource>
   <resourceAdapter id="activemq" location="${server.config.dir}/resources/activemq/activemq-rar-5.15.11.rar">
     <properties.activemq userName="artemis" password="simetraehcapa" serverUrl="tcp://activemq:61616" />
   </resourceAdapter>
+
   <jmsActivationSpec id="sample/SampleJMS">
     <properties.activemq destinationRef="ActiveMQueue" destinationType="javax.jms.Queue" />
     <properties.activemq destinationRef="ActiveMQTopic" destinationType="javax.jms.Queue" />
