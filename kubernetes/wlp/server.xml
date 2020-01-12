@@ -15,7 +15,7 @@
   
   <dataSource jndiName="jdbc/mysql" transactional="false">
 		<jdbcDriver libraryRef="mysqllib" />
-		<properties allowPublicKeyRetrieval="true" databaseName="webapp" user="webapp" password="webapp" portNumber="3306" serverName="localhost" useSSL="false" />
+		<properties databaseName="webapp" user="webapp" password="webapp" portNumber="3306" serverName="mysql" allowPublicKeyRetrieval="true" useSSL="false" />
 	</dataSource>
 	<library id="mysqllib">
 		<fileset dir="${server.config.dir}/resources/mysql" includes="*.jar" />
@@ -23,7 +23,7 @@
 
 	<dataSource jndiName="jdbc/postgres" transactional="false">
 		<jdbcDriver libraryRef="postgreslib" />
-		<properties allowPublicKeyRetrieval="true" databaseName="webapp" user="webapp" password="webapp" portNumber="5432" serverName="localhost" useSSL="false" />
+		<properties databaseName="webapp" user="webapp" password="webapp" portNumber="5432" serverName="postgres" />
 	</dataSource>
 	<library id="postgreslib">
 		<fileset dir="${server.config.dir}/resources/postgres" includes="*.jar" />
