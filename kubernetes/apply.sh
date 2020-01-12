@@ -16,6 +16,17 @@ kubectl apply -f ./mysql/mysql-service.yaml
 echo "###"
 echo ""
 
+echo "### postgres"
+docker build -t default/postgres:v0.0.1 ./postgres/.
+kubectl apply -f ./postgres/postgres-pv.yaml
+kubectl apply -f ./postgres/postgres-pvc.yaml
+kubectl apply -f ./postgres/postgres-configmap.yaml
+kubectl apply -f ./postgres/postgres-secret.yaml
+kubectl apply -f ./postgres/postgres-deployment.yaml
+kubectl apply -f ./postgres/postgres-service.yaml
+echo "###"
+echo ""
+
 echo "### redis"
 kubectl apply -f ./redis/redis-deployment.yaml
 kubectl apply -f ./redis/redis-service.yaml
