@@ -18,7 +18,7 @@
 		<version>1.4.0</version>
 		<relativePath />
 	</parent>
-	<groupId>io.helidon</groupId>
+	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>redis-mysql-helidon</artifactId>
 	<name>${project.artifactId}</name>
 

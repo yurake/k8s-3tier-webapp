@@ -109,7 +109,7 @@ echo ""
 
 echo "### redis-mysql-helidon"
 cd ../application/redis-mysql-helidon
-# docker build -t default/redis-mysql-helidon:v0.0.1 .
+docker build -t default/redis-mysql-helidon:v0.0.1 .
 cd ${ROOT_DIR}
 kubectl apply -f ./redis-mysql-helidon/redis-mysql-helidon-deployment.yaml
 echo "###"
