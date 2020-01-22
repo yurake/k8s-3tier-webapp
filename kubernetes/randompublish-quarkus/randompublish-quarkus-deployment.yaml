@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: randompublish-quarkus
+spec:
+  selector:
+    matchLabels:
+      app: randompublish-quarkus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: randompublish-quarkus
+    spec:
+      containers:
+      - name: randompublish-quarkus
+        image: default/randompublish-quarkus:v0.0.1
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /health/live
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /health/ready
+          initialDelaySeconds: 3
+          periodSeconds: 3

@@ -109,7 +109,7 @@ echo ""
 
 echo "### redis-mysql-helidon"
 cd ../application/redis-mysql-helidon
-docker build -t default/redis-mysql-helidon:v0.0.1 .
+# docker build -t default/redis-mysql-helidon:v0.0.1 .
 cd ${ROOT_DIR}
 kubectl apply -f ./redis-mysql-helidon/redis-mysql-helidon-deployment.yaml
 echo "###"
@@ -128,6 +128,16 @@ cd ../application/activemq-mysql-quarkus
 docker build -t default/activemq-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
 cd ${ROOT_DIR}
 kubectl apply -f ./activemq-mysql-quarkus/activemq-mysql-quarkus-deployment.yaml
+echo "###"
+echo ""
+
+echo "### randompublish-quarkus"
+cd ../application/randompublish-quarkus
+docker build -t default/randompublish-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
+cd ${ROOT_DIR}
+kubectl apply -f ./randompublish-quarkus/randompublish-quarkus-deployment.yaml
+kubectl apply -f ./randompublish-quarkus/randompublish-quarkus-service.yaml
+kubectl apply -f ./randompublish-quarkus/randompublish-quarkus-ingress.yaml
 echo "###"
 echo ""
 

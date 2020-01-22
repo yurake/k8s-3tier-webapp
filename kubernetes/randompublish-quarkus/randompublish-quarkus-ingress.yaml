@@ -1,16 +1,12 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: jaxrs-mysql-quarkus
+  name: randompublish-quarkus
 spec:
   rules:
   - host: quarkus.minikube
     http:
       paths:
-      - path:
-        backend:
-          serviceName: jaxrs-mysql-quarkus
-          servicePort: 8080
       - path: /random
         backend:
           serviceName: randompublish-quarkus
