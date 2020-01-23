@@ -141,6 +141,14 @@ kubectl apply -f ./randompublish-quarkus/randompublish-quarkus-ingress.yaml
 echo "###"
 echo ""
 
+echo "### scheduled-quarkus"
+cd ../application/scheduled-quarkus
+docker build -t default/scheduled-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
+cd ${ROOT_DIR}
+kubectl apply -f ./scheduled-quarkus/scheduled-quarkus-deployment.yaml
+echo "###"
+echo ""
+
 echo "### jenkins"
 kubectl apply -f ./jenkins/jenkins-pv.yaml
 kubectl apply -f ./jenkins/jenkins-pvc.yaml
