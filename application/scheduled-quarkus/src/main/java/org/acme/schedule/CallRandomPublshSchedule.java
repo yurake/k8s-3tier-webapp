@@ -32,7 +32,7 @@ public class CallRandomPublshSchedule {
 	@Scheduled(every = "10s")
 	void callRandomPublsh() {
 		String response;
-		logger.info("Call: Random Publish");
+		logger.debug("Call: Random Publish");
 		response = deliversvc.random();
 		logger.info(response);
 	}
@@ -40,7 +40,7 @@ public class CallRandomPublshSchedule {
 	@Scheduled(cron = "0 0 0 * * ?")
 	void callDeleteDbs() {
 		String response;
-		logger.info("Call: Delete Postgres");
+		logger.debug("Call: Delete Postgres");
 		response = postgresrsvc.delete();
 		logger.info(response);
 		response = mysqlrsvc.delete();
