@@ -2,7 +2,7 @@
   <featureManager>
     <feature>webProfile-8.0</feature>
     <feature>localConnector-1.0</feature>
-    <feature>mpMetrics-1.1</feature>
+    <feature>mpMetrics-2.2</feature>
     <feature>monitor-1.0</feature>
     <feature>jndi-1.0</feature>
     <feature>jms-2.0</feature>
