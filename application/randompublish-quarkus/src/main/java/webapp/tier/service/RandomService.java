@@ -7,12 +7,14 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import webapp.tier.resource.DeliverResource;
+
 @ApplicationScoped
 public class RandomService {
 
 	@Inject
 	@RestClient
-	DeliverService deliversvc;
+	DeliverResource deliverresource;
 
 	Logger logger = LoggerFactory.getLogger(RandomService.class);
 
@@ -22,19 +24,19 @@ public class RandomService {
 		switch (id) {
 		case 0:
 			logger.info("Call: ActiveMQ Publish");
-			response = deliversvc.activemq();
+			response = deliverresource.activemq();
 			break;
 		case 1:
 			logger.info("Call: RabbitMQ Publish");
-			response = deliversvc.rabbitmq();
+			response = deliverresource.rabbitmq();
 			break;
 		case 2:
 			logger.info("Call: Redis Publish");
-			response = deliversvc.redis();
+			response = deliverresource.redis();
 			break;
 		case 3:
 			logger.info("Call: Postgres Insert");
-			response = deliversvc.postgres();
+			response = deliverresource.postgres();
 			break;
 		default:
 			throw new Exception();
