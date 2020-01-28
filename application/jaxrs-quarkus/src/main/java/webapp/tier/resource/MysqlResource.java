@@ -2,7 +2,6 @@ package webapp.tier.resource;
 
 import java.sql.SQLException;
 
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,8 +23,7 @@ import webapp.tier.service.MysqlService;
 @Timed(name = "checksTimer", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 public class MysqlResource {
 
-	@Inject
-	MysqlService mysqlsvc;
+	MysqlService mysqlsvc = new MysqlService();
 
 	@POST
 	@Path("/insert")
