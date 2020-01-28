@@ -35,7 +35,7 @@ public class RedisService {
 		return false;
 	}
 
-	public void subscribeRedis() {
+	public void subscribeRedistoMysql() {
 
 		MysqlService mysqlsvc = new MysqlService();
 		Jedis jedis = new Jedis(servername, serverport);
