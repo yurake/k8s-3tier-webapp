@@ -5,6 +5,9 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>rabbitmq-consumer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<webapp-service.version>1.0.0-SNAPSHOT</webapp-service.version>
+	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<finalName>rabbitmq-consumer</finalName>
@@ -54,6 +57,12 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>webapp-service</artifactId>
+			<version>${webapp-service.version}</version>
+		</dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

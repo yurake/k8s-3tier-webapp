@@ -20,6 +20,7 @@
 		<quarkus.platform.version>1.0.1.Final</quarkus.platform.version>
 		<surefire-plugin.version>2.22.1</surefire-plugin.version>
 		<jedis.version>3.1.0</jedis.version>
+		<webapp-service.version>1.0.0-SNAPSHOT</webapp-service.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -49,16 +50,17 @@
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-jdbc-mysql</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-smallrye-health</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>webapp-service</artifactId>
+			<version>${webapp-service.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
