@@ -1,5 +1,7 @@
 # k8s-3tier-webapp
 
+https://github.com/yurake/k8s-3tier-webapp/workflows/Java CI/badge.svg
+
 ## About
 Sample web application based on k8s.  
 Focus on connecting components, setting k8s resources, and aiming to microservices.  

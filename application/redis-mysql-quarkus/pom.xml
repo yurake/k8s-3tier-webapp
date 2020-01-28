@@ -20,7 +20,7 @@
 		<quarkus.platform.version>1.0.1.Final</quarkus.platform.version>
 		<surefire-plugin.version>2.22.1</surefire-plugin.version>
 		<jedis.version>3.1.0</jedis.version>
-		<webapp-service.version>1.0.0</webapp-service.version>
+		<webapp-service.version>1.0.1-SNAPSHOT</webapp-service.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>

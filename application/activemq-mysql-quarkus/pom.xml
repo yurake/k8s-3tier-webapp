@@ -19,7 +19,7 @@
 		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
 		<quarkus.platform.version>1.0.1.Final</quarkus.platform.version>
 		<surefire-plugin.version>2.22.1</surefire-plugin.version>
-		<webapp-service.version>1.0.0</webapp-service.version>
+		<webapp-service.version>1.0.1-SNAPSHOT</webapp-service.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
