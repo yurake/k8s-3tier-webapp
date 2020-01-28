@@ -18,7 +18,7 @@ jobs:
     
     - name: Build with Maven - webapp-service
       run: mvn -B package --file application/webapp-service/pom.xml
-    - name: Deploy to Github Package Registry
+    - name: Deploy to Github Package Registry - webapp-service
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
@@ -26,7 +26,7 @@ jobs:
         mvn deploy --settings settings.xml --file application/webapp-service/pom.xml
 
     - name: Build with Maven - activemq-mysql-quarkus
-      run: mvn -B package --settings settings.xml --file application/activemq-mysql-quarkus/pom.xml
+      run: mvn -B package --file application/activemq-mysql-quarkus/pom.xml
     - name: Build with Maven - hazelcast-mysql-quarkus
       run: mvn -B package --file application/hazelcast-mysql-quarkus/pom.xml
     - name: Build with Maven - jaxrs-quarkus
