@@ -6,7 +6,7 @@
 	<artifactId>rabbitmq-consumer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<webapp-service.version>1.0.0-SNAPSHOT</webapp-service.version>
+		<webapp-service.version>1.0.0</webapp-service.version>
 	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>

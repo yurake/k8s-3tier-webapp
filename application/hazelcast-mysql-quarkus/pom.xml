@@ -22,7 +22,7 @@
 		<hazelcast-client.version>3.12.5</hazelcast-client.version>
 		<hazelcast.version>3.12.5</hazelcast.version>
 		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
-		<webapp-service.version>1.0.0-SNAPSHOT</webapp-service.version>
+		<webapp-service.version>1.0.0</webapp-service.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
