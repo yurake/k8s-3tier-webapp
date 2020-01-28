@@ -18,6 +18,9 @@ jobs:
     
     - name: Build with Maven - webapp-service
       run: mvn -B package --file application/webapp-service/pom.xml
+    - name: Deploy to Github Package Registry
+      run: mvn deploy --file application/webapp-service/pom.xml
+
     - name: Build with Maven - activemq-mysql-quarkus
       run: mvn -B package --file application/activemq-mysql-quarkus/pom.xml
     - name: Build with Maven - hazelcast-mysql-quarkus
