@@ -91,7 +91,7 @@ echo ""
 
 echo "### jaxrs-quarkus"
 cd ../application/jaxrs-quarkus
-docker build -t default/jaxrs-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
+docker build -t default/jaxrs-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
 cd ${ROOT_DIR}
 kubectl apply -f ./jaxrs-quarkus/jaxrs-quarkus-deployment.yaml
 kubectl apply -f ./jaxrs-quarkus/jaxrs-quarkus-service.yaml
@@ -125,7 +125,7 @@ echo ""
 
 echo "### activemq-mysql-quarkus"
 cd ../application/activemq-mysql-quarkus
-docker build -t default/activemq-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
+docker build -t default/activemq-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
 cd ${ROOT_DIR}
 kubectl apply -f ./activemq-mysql-quarkus/activemq-mysql-quarkus-deployment.yaml
 echo "###"
@@ -133,7 +133,7 @@ echo ""
 
 echo "### randompublish-quarkus"
 cd ../application/randompublish-quarkus
-docker build -t default/randompublish-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
+docker build -t default/randompublish-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
 cd ${ROOT_DIR}
 kubectl apply -f ./randompublish-quarkus/randompublish-quarkus-deployment.yaml
 kubectl apply -f ./randompublish-quarkus/randompublish-quarkus-service.yaml
@@ -143,7 +143,7 @@ echo ""
 
 echo "### scheduled-quarkus"
 cd ../application/scheduled-quarkus
-docker build -t default/scheduled-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
+docker build -t default/scheduled-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
 cd ${ROOT_DIR}
 kubectl apply -f ./scheduled-quarkus/scheduled-quarkus-deployment.yaml
 echo "###"
