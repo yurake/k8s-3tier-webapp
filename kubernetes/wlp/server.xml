@@ -2,10 +2,13 @@
   <featureManager>
     <feature>webProfile-8.0</feature>
     <feature>localConnector-1.0</feature>
-    <feature>mpMetrics-2.2</feature>
     <feature>monitor-1.0</feature>
     <feature>jndi-1.0</feature>
     <feature>jms-2.0</feature>
+    <feature>microProfile-3.2</feature>
+    <feature>mpMetrics-2.2</feature>
+    <feature>mpOpenTracing-1.3</feature>
+    <feature>usr:opentracingZipkin-0.31</feature>
   </featureManager>
 
   <mpMetrics authentication="false" />
@@ -45,4 +48,6 @@
   <jmsTopic id="ActiveMQTopic" jndiName="jms/ActiveMQTopic">
     <properties.activemq PhysicalName="ActiveMQTopic" />
   </jmsTopic>
+
+  <opentracingZipkin />
 </server>
