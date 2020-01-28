@@ -22,6 +22,7 @@
 		<hazelcast-client.version>3.12.5</hazelcast-client.version>
 		<hazelcast.version>3.12.5</hazelcast.version>
 		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
+		<webapp-service.version>1.0.0-SNAPSHOT</webapp-service.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -71,6 +72,11 @@
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast-kubernetes</artifactId>
 			<version>${hazelcast-kubernetes.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>webapp-service</artifactId>
+			<version>${webapp-service.version}</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -89,13 +89,13 @@ kubectl apply -f ./wlp/wlp-ingress.yaml
 echo "###"
 echo ""
 
-echo "### jaxrs-mysql-quarkus"
-cd ../application/jaxrs-mysql-quarkus
-docker build -t default/jaxrs-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
+echo "### jaxrs-quarkus"
+cd ../application/jaxrs-quarkus
+docker build -t default/jaxrs-quarkus:v0.0.1 -f src/main/docker/Dockerfile.native .
 cd ${ROOT_DIR}
-kubectl apply -f ./jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-deployment.yaml
-kubectl apply -f ./jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-service.yaml
-kubectl apply -f ./jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-ingress.yaml
+kubectl apply -f ./jaxrs-quarkus/jaxrs-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-quarkus/jaxrs-quarkus-service.yaml
+kubectl apply -f ./jaxrs-quarkus/jaxrs-quarkus-ingress.yaml
 echo "###"
 echo ""
 
