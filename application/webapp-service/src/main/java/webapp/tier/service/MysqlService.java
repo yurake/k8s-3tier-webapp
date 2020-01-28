@@ -19,11 +19,11 @@ public class MysqlService {
 
 	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
 	private static String url = GetConfig.getResourceBundle("mysql.url");
-	private static String instersql = GetConfig.getResourceBundle("mysql.sql");
+	private static String instersql = GetConfig.getResourceBundle("mysql.insert.msg");
+	private static String selectsql = GetConfig.getResourceBundle("mysql.select.msg.all");
 	private static String sqlkey = GetConfig.getResourceBundle("mysql.id");
 	private static String sqlbody = GetConfig.getResourceBundle("mysql.body");
 	private static String addonmsg = GetConfig.getResourceBundle("mysql.msg.quarkus");
-	private static String sql = GetConfig.getResourceBundle("mysql.select.msg.all");
 	private static String message = GetConfig.getResourceBundle("common.message");
 	Connection con = null;
 
@@ -123,8 +123,8 @@ public class MysqlService {
 			con = getConnection();
 			Statement stmt = con.createStatement();
 
-			LOG.info("Execute SQL: " + sql);
-			ResultSet rs = stmt.executeQuery(sql);
+			LOG.info("Execute SQL: " + selectsql);
+			ResultSet rs = stmt.executeQuery(selectsql);
 
 			while (rs.next()) {
 				String id = rs.getString("id");
