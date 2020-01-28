@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jaxrs-mysql-quarkus
+  name: jaxrs-quarkus
 spec:
   selector:
     matchLabels:
-      app: jaxrs-mysql-quarkus
+      app: jaxrs-quarkus
   replicas: 1
   template:
     metadata:
       labels:
-        app: jaxrs-mysql-quarkus
+        app: jaxrs-quarkus
     spec:
       containers:
-      - name: jaxrs-mysql-quarkus
-        image: default/jaxrs-mysql-quarkus:v0.0.1
+      - name: jaxrs-quarkus
+        image: default/jaxrs-quarkus:v0.0.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:

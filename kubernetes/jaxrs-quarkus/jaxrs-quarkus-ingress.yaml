@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: jaxrs-mysql-quarkus
+  name: jaxrs-quarkus
 spec:
   rules:
   - host: quarkus.minikube
@@ -9,7 +9,7 @@ spec:
       paths:
       - path:
         backend:
-          serviceName: jaxrs-mysql-quarkus
+          serviceName: jaxrs-quarkus
           servicePort: 8080
       - path: /random
         backend:
