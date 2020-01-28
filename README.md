@@ -1,6 +1,6 @@
 # k8s-3tier-webapp
 
-https://github.com/yurake/k8s-3tier-webapp/workflows/Java CI/badge.svg
+https://github.com/yurake/k8s-3tier-webapp/workflows/Java%20CI/badge.svg
 
 ## About
 Sample web application based on k8s.  
