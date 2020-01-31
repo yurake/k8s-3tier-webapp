@@ -1,14 +1,52 @@
-<project>
-  <modules>
-    <module>application/activemq-mysql-quarkus/</module>
-    <module>application/hazelcast-mysql-quarkus/</module>
-    <module>application/jaxrs-quarkus/</module>
-    <module>application/rabbitmq-consumer/</module>
-    <module>application/randompublish-quarkus/</module>
-    <module>application/redis-mysql-quarkus/</module>
-    <module>application/scheduled-quarkus/</module>
-    <module>application/webapp-service/</module>
-    <module>application/wlp-web-java-spring/</module>
-  </modules>
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>webapp.3tier.k8s</groupId>
+	<artifactId>parent-pom</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>application/activemq-mysql-quarkus/</module>
+		<module>application/hazelcast-mysql-quarkus/</module>
+		<module>application/jaxrs-quarkus/</module>
+		<module>application/rabbitmq-consumer/</module>
+		<module>application/randompublish-quarkus/</module>
+		<module>application/redis-mysql-quarkus/</module>
+		<module>application/scheduled-quarkus/</module>
+		<module>application/webapp-service/</module>
+		<module>application/wlp-web-java-spring/</module>
+	</modules>
+
+	<properties>
+		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
 
