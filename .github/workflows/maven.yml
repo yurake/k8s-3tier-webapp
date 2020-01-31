@@ -45,11 +45,9 @@ jobs:
       run: mvn -B package --file application/wlp-web-java-spring/pom.xml
     - name: Build with Maven - redis-mysql-quarkus
       run: mvn -B package --file application/redis-mysql-quarkus/pom.xml
-    
-    - uses: actions/checkout@master
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./application/randompublish-quarkus/target/site/jacoco/jacoco.xml ./application/webapp-service/target/site/jacoco/jacoco.xml
         
