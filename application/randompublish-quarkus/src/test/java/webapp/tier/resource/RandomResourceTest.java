@@ -3,21 +3,24 @@ package webapp.tier.resource;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import javax.ws.rs.core.MediaType;
+
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class DeliverResourceTest {
+class RandomResourceTest {
 
 	@Test
-	void testactivemq404() {
+	void testrandom() {
 		given()
-				.when().get("/error/path")
+				.when().get("/random")
 				.then()
-				.statusCode(404)
-				.body("$.size()", is(1));
+				.statusCode(200)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(is("delivered"));
+		;
 	}
-
 
 }
