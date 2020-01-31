@@ -51,3 +51,5 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./application/randompublish-quarkus/target/site/jacoco/jacoco.xml ./application/webapp-service/target/site/jacoco/jacoco.xml
+        
