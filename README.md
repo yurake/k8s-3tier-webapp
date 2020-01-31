@@ -2,6 +2,7 @@
 
 ![](https://github.com/yurake/k8s-3tier-webapp/workflows/Java%20CI/badge.svg)
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 ## About
 Sample web application based on k8s.  
