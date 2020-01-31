@@ -23,6 +23,7 @@
 		<hazelcast.version>3.12.5</hazelcast.version>
 		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
 		<webapp-service.version>1.0.1-SNAPSHOT</webapp-service.version>
+		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -81,6 +82,25 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>io.quarkus</groupId>
 				<artifactId>quarkus-maven-plugin</artifactId>
