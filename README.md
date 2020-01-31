@@ -1,6 +1,7 @@
 # k8s-3tier-webapp
 
 ![](https://github.com/yurake/k8s-3tier-webapp/workflows/Java%20CI/badge.svg)
+[![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
 
 ## About
 Sample web application based on k8s.  
