@@ -1,0 +1,14 @@
+<project>
+  <modules>
+    <module>application/activemq-mysql-quarkus/</module>
+    <module>application/hazelcast-mysql-quarkus/</module>
+    <module>application/jaxrs-quarkus/</module>
+    <module>application/rabbitmq-consumer/</module>
+    <module>application/randompublish-quarkus/</module>
+    <module>application/redis-mysql-quarkus/</module>
+    <module>application/scheduled-quarkus/</module>
+    <module>application/webapp-service/</module>
+    <module>application/wlp-web-java-spring/</module>
+  </modules>
+</project>
+
