@@ -14,19 +14,19 @@ import javax.jms.Message;
 import javax.jms.TextMessage;
 import javax.jms.TopicSession;
 
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
-import webapp.tier.util.GetConfig;
 
 @ApplicationScoped
 public class ActiveMqService implements Runnable {
 
 	Logger logger = LoggerFactory.getLogger(ActiveMqService.class);
-	private static String splitkey = GetConfig.getResourceBundle("activemq.split.key");
-	private static String topicname = GetConfig.getResourceBundle("activemq.topic.name");
+	private static String topicname = ConfigProvider.getConfig().getValue("activemq.topic.name", String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue("activemq.split.key", String.class);
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	private static JMSContext context = null;
 	private static JMSConsumer consumer = null;

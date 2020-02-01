@@ -8,7 +8,7 @@ import javax.ws.rs.ext.Provider;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 import redis.clients.jedis.exceptions.JedisConnectionException;
-import webapp.tier.util.GetConfig;
+import webapp.tier.constant.EnumService;
 
 @Provider
 public class RedisService {
@@ -16,10 +16,10 @@ public class RedisService {
 	Connection con = null;
 
 	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
-	private static String servername = GetConfig.getResourceBundle("redis.server");
-	private static int serverport = Integer.parseInt(GetConfig.getResourceBundle("redis.port"));
-	private static String channel = GetConfig.getResourceBundle("redis.channel");
-	private static String splitkey = GetConfig.getResourceBundle("redis.splitkey");
+	private static String servername = EnumService.redis_server.getString();
+	private static int serverport = Integer.parseInt(EnumService.redis_port.getString());
+	private static String channel = EnumService.redis_channel.getString();
+	private static String splitkey = EnumService.redis_splitkey.getString();
 
 	public boolean ping() {
 		Jedis jedis = new Jedis(servername, serverport);

@@ -11,20 +11,20 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.GetConfig;
 
 @ApplicationScoped
 public class MysqlService {
 
 	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
-	private static String url = GetConfig.getResourceBundle("mysql.url");
-	private static String instersql = GetConfig.getResourceBundle("mysql.insert.msg");
-	private static String selectsql = GetConfig.getResourceBundle("mysql.select.msg.all");
-	private static String sqlkey = GetConfig.getResourceBundle("mysql.id");
-	private static String sqlbody = GetConfig.getResourceBundle("mysql.body");
-	private static String addonmsg = GetConfig.getResourceBundle("mysql.msg.quarkus");
-	private static String message = GetConfig.getResourceBundle("common.message");
+	private static String url = EnumService.mysql_url.getString();
+	private static String instersql = EnumService.mysql_insert_msg.getString();
+	private static String selectsql = EnumService.mysql_select_msg_all.getString();
+	private static String sqlkey = EnumService.mysql_id.getString();
+	private static String sqlbody = EnumService.mysql_body.getString();
+	private static String addonmsg = EnumService.mysql_msg_quarkus.getString();
+	private static String message = EnumService.common_message.getString();
 	Connection con = null;
 
 	public Connection getConnection() throws SQLException {

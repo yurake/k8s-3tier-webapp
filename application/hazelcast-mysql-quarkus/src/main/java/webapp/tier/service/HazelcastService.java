@@ -1,5 +1,8 @@
 package webapp.tier.service;
 
+import javax.enterprise.context.ApplicationScoped;
+
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,12 +11,11 @@ import com.hazelcast.core.ITopic;
 import com.hazelcast.core.Message;
 import com.hazelcast.core.MessageListener;
 
-import webapp.tier.util.GetConfig;
-
+@ApplicationScoped
 public class HazelcastService {
 	Logger logger = LoggerFactory.getLogger(HazelcastService.class);
-	private static String topicname = GetConfig.getResourceBundle("hazelcast.topic.name");
-	private static String splitkey = GetConfig.getResourceBundle("hazelcast.split.key");
+	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topic.name", String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
 	public boolean isActive() {
 		HazelcastInstance client = null;

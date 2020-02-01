@@ -2,6 +2,9 @@ package webapp.tier.service;
 
 import java.io.IOException;
 
+import javax.enterprise.context.ApplicationScoped;
+
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,14 +21,13 @@ import com.hazelcast.kubernetes.HazelcastKubernetesDiscoveryStrategyFactory;
 import com.hazelcast.kubernetes.KubernetesProperties;
 import com.hazelcast.spi.properties.GroupProperty;
 
-import webapp.tier.util.GetConfig;
-
+@ApplicationScoped
 public class ConnectHazelcast {
 	private static Logger logger = LoggerFactory.getLogger(ConnectHazelcast.class);
     private static final String DEFAULT_FALSE = "false";
-	private static String clientxml = GetConfig.getResourceBundle("hazelcast.client.xml");
-	private static String HAZELCAST_GROUP_NAME = GetConfig.getResourceBundle("hazelcast.group.name");
-	private static String HAZELCAST_SERVICE_NAME = GetConfig.getResourceBundle("hazelcast.service.name");
+	private static String CLIENTXML = "hazelcast-client.xml";
+	private static String HAZELCAST_GROUP_NAME = ConfigProvider.getConfig().getValue("hazelcast.group.name", String.class);
+	private static String HAZELCAST_SERVICE_NAME = ConfigProvider.getConfig().getValue("hazelcast.service.name", String.class);
 
 	public HazelcastInstance createNodeInstance() {
 		Config config = new Config();
@@ -56,7 +58,7 @@ public class ConnectHazelcast {
 
 		} else {
 			logger.info("Not service in k8s");
-			clientConfig = new XmlClientConfigBuilder(clientxml).build();
+			clientConfig = new XmlClientConfigBuilder(CLIENTXML).build();
 			return HazelcastClient.newHazelcastClient(clientConfig);
 
 //			clientConfig
