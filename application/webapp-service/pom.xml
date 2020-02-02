@@ -21,6 +21,14 @@
 		<surefire-plugin.version>2.22.1</surefire-plugin.version>
 		<jedis.version>3.1.0</jedis.version>
 		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
+		<hazelcast-client.version>3.12.5</hazelcast-client.version>
+		<hazelcast.version>3.12.5</hazelcast.version>
+		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
+		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
+		<geronimo-jms_1.1_spec.version>1.1.1</geronimo-jms_1.1_spec.version>
+		<rabbitmq-jms.version>1.10.0</rabbitmq-jms.version>
+		<geronimo-jms_1.1_spec.version>1.1.1</geronimo-jms_1.1_spec.version>
+		<amqp-client.version>5.4.2</amqp-client.version>
 	</properties>
 	<distributionManagement>
 		<repository>
@@ -68,6 +76,47 @@
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast-client</artifactId>
+			<version>${hazelcast-client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
+			<version>${hazelcast.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast-kubernetes</artifactId>
+			<version>${hazelcast-kubernetes.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.whalin</groupId>
+			<artifactId>Memcached-Java-Client</artifactId>
+			<version>${memcached-Java-Client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq.jms</groupId>
+			<artifactId>rabbitmq-jms</artifactId>
+			<version>${rabbitmq-jms.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jms_1.1_spec</artifactId>
+			<version>${geronimo-jms_1.1_spec.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>${amqp-client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-all</artifactId>
+			<version>5.15.11</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>

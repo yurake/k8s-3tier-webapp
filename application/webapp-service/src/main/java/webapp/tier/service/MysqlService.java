@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.naming.NamingException;
 
 import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
@@ -18,13 +19,14 @@ import webapp.tier.util.CreateId;
 public class MysqlService {
 
 	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
+	private static String message = EnumService.common_message.getString();
 	private static String url = EnumService.mysql_url.getString();
 	private static String instersql = EnumService.mysql_insert_msg.getString();
 	private static String selectsql = EnumService.mysql_select_msg_all.getString();
+	private static String deletesql = EnumService.mysql_delete_msg_all.getString();
 	private static String sqlkey = EnumService.mysql_id.getString();
 	private static String sqlbody = EnumService.mysql_body.getString();
 	private static String addonmsg = EnumService.mysql_msg_quarkus.getString();
-	private static String message = EnumService.common_message.getString();
 	Connection con = null;
 
 	public Connection getConnection() throws SQLException {
@@ -147,5 +149,25 @@ public class MysqlService {
 				}
 			}
 		}
+	}
+
+	public String deleteMsg() throws SQLException, NamingException {
+		try {
+			con = getConnection();
+			Statement stmt = con.createStatement();
+
+			LOG.info("Delete SQL: " + deletesql);
+			stmt.executeUpdate(deletesql);
+
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return "Deleted";
 	}
 }
