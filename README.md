@@ -47,7 +47,7 @@ eval $(minikube docker-env)
 ### Add hosts
 Add IP, domain in /etc/hosts
 ```
-echo `minikube ip` k8s.3tier.webapp wlp.minikube quarkus.minikube api.server.minikube rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube grafana.minikube jupyter.minikube rocketchat.minikube hazelcast.manager.minikube activemq.management.minikube jaeger.minikube >> /etc/hosts
+echo `minikube ip` k8s.3tier.webapp wlp.minikube api.server.minikube rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube grafana.minikube jupyter.minikube rocketchat.minikube hazelcast.manager.minikube activemq.management.minikube jaeger.minikube >> /etc/hosts
 ```
 
 #### Top Page

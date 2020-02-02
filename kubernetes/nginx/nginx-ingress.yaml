@@ -19,7 +19,3 @@ spec:
         backend:
           serviceName: jaxrs-mysql-quarkus
           servicePort: 8080
-      - path: /random
-        backend:
-          serviceName: randompublish-quarkus
-          servicePort: 8080

@@ -1,5 +1,5 @@
 root = location.href;
-url = root + 'api';
+url = root + 'quarkus';
 memcachedurl = url + '/memcached';
 redisurl = url + '/redis';
 rabbitmqurl = url + '/rabbitmq';
@@ -7,7 +7,6 @@ activemqurl = url + '/activemq';
 hazelcasturl = url + '/hazelcast';
 mysqlurl = url + '/mysql';
 postgresurl = url + '/postgres';
-quarkusurl = root + 'quarkus/mysql';
 
 $(function () {
 	$("#response").html("Response Values");
@@ -373,40 +372,6 @@ $(function () {
 		$.ajax({
 			type: 'post',
 			url: postgresurl + '/delete',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#response").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#response").html(resp);
-		})
-	})
-
-	$("#insertquarkus").click(function () {
-		$.ajax({
-			type: 'post',
-			url: quarkusurl + '/insert',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#response").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#response").html(resp);
-		})
-	})
-
-	$("#selectquarkus").click(function () {
-		$.ajax({
-			type: 'get',
-			url: quarkusurl + '/select',
 			contentType: 'application/json',
 			scriptCharset: 'utf-8',
 		}).done(function (data) {

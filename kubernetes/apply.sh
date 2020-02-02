@@ -95,7 +95,6 @@ docker build -t default/jaxrs-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
 cd ${ROOT_DIR}
 kubectl apply -f ./jaxrs-quarkus/jaxrs-quarkus-deployment.yaml
 kubectl apply -f ./jaxrs-quarkus/jaxrs-quarkus-service.yaml
-kubectl apply -f ./jaxrs-quarkus/jaxrs-quarkus-ingress.yaml
 echo "###"
 echo ""
 
@@ -137,7 +136,6 @@ docker build -t default/randompublish-quarkus:v0.0.1 -f src/main/docker/Dockerfi
 cd ${ROOT_DIR}
 kubectl apply -f ./randompublish-quarkus/randompublish-quarkus-deployment.yaml
 kubectl apply -f ./randompublish-quarkus/randompublish-quarkus-service.yaml
-kubectl apply -f ./randompublish-quarkus/randompublish-quarkus-ingress.yaml
 echo "###"
 echo ""
 
