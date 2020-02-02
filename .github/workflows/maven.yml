@@ -31,8 +31,8 @@ jobs:
       run: mvn -B package --file application/hazelcast-mysql-quarkus/pom.xml
     - name: Build with Maven - jaxrs-quarkus
       run: mvn -B package --file application/jaxrs-quarkus/pom.xml
-    - name: Build with Maven - rabbitmq-consumer
-      run: mvn -B package --file application/rabbitmq-consumer/pom.xml
+    - name: Build with Maven - rabbitmq-mysql-quarkus
+      run: mvn -B package --file application/rabbitmq-mysql-quarkus/pom.xml
     - name: Build with Maven - randompublish-quarkus
       run: mvn -B package --file application/randompublish-quarkus/pom.xml
     - name: Build with Maven - redis-mysql-helidon
