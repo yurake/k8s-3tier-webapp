@@ -8,7 +8,7 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
 
-import webapp.tier.service.RedisService;
+import webapp.tier.service.RabbitMqService;
 
 @Liveness
 @ApplicationScoped
@@ -18,8 +18,8 @@ public class LivenessHealthCheck implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		RedisService redissvc = new RedisService();
-		if (redissvc.ping()) {
+		RabbitMqService rabbitmqsvc = new RabbitMqService();
+		if (rabbitmqsvc.isActive()) {
 			LOG.info("Liveness: UP");
 			return HealthCheckResponse.up("Cache Server connection health check");
 		} else {
