@@ -17,6 +17,13 @@ cd ${ROOT_DIR}
 echo "###"
 echo ""
 
+echo "### rabbitmq-mysql-quarkus"
+cd rabbitmq-mysql-quarkus
+./mvnw clean package
+cd ${ROOT_DIR}
+echo "###"
+echo ""
+
 echo "### redis-mysql-quarkus"
 cd redis-mysql-quarkus
 ./mvnw clean package

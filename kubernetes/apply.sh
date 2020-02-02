@@ -72,10 +72,11 @@ kubectl apply -f ./nginx/nginx-ingress.yaml
 echo "###"
 echo ""
 
-echo "### rabbitmq-consumer"
-cp -p ../application/rabbitmq-consumer/target/rabbitmq-consumer.jar ./rabbitmq-consumer/.
-docker build -t default/rabbitmq-consumer:v0.0.1 ./rabbitmq-consumer/.
-kubectl apply -f ./rabbitmq-consumer/rabbitmq-consumer-deployment.yaml
+echo "### rabbitmq-mysql-quarkus"
+cd ../application/rabbitmq-mysql-quarkus
+docker build -t default/rabbitmq-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
+cd ${ROOT_DIR}
+kubectl apply -f ./rabbitmq-mysql-quarkus/rabbitmq-mysql-quarkus-deployment.yaml
 echo "###"
 echo ""
 

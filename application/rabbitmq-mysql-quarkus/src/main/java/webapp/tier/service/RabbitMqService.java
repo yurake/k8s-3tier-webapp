@@ -8,7 +8,6 @@ import java.util.concurrent.TimeoutException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.slf4j.Logger;
@@ -38,9 +37,6 @@ public class RabbitMqService implements Runnable {
 	private static Connection connection = null;
 	private static Channel channel = null;
 
-	@Inject
-	ConnectionFactory connectionFactory;
-
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
 		logger.info("The application is starting...");
@@ -52,10 +48,13 @@ public class RabbitMqService implements Runnable {
 	}
 
 	private Channel getJmsChannel() throws IOException, TimeoutException {
+
+		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
 		connectionFactory.setPassword(password);
 		connectionFactory.setHost(host);
 		connectionFactory.setVirtualHost(vhost);
+
 		try {
 			if (connection == null) {
 				connection = connectionFactory.newConnection();
@@ -65,8 +64,12 @@ public class RabbitMqService implements Runnable {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			channel.close();
-			connection.close();
+			if (channel != null) {
+				channel.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
 		}
 		return channel;
 	}
