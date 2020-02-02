@@ -1,9 +1,11 @@
-package webapp.tier.batch;
-
+package webapp.tier.events;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class TaskManager {
 
 	static private TaskManager instace = null;
@@ -24,7 +26,11 @@ public class TaskManager {
 		Runnable runnable = new Runnable() {
 
 			public void run() {
-				executor.execute(new GetMq());
+				try {
+					executor.execute(new TaskExecute());
+				} catch (Exception e) {
+					executor.shutdownNow();
+				}
 			}
 		};
 		executor.execute(runnable);
