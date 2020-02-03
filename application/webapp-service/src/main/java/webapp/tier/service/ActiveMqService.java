@@ -1,6 +1,7 @@
 package webapp.tier.service;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import javax.jms.QueueConnection;
 import javax.jms.QueueReceiver;
@@ -13,18 +14,18 @@ import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
 
 public class ActiveMqService {
 
-	Logger logger = LoggerFactory.getLogger(ActiveMqService.class);
+	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
 	private static String message = EnumService.common_message.getString();
 	private static String splitkey = EnumService.activemq_splitkey.getString();
 	private static String url = EnumService.activemq_url.getString();
+	private static String username = EnumService.activemq_username.getString();
+	private static String password = EnumService.activemq_password.getString();
 	private static String queuename = EnumService.activemq_queue_name.getString();
 	private static String topicname = EnumService.activemq_opic_name.getString();
 	QueueConnection qcon = null;
@@ -32,11 +33,15 @@ public class ActiveMqService {
 
 	public QueueConnection getQueueConnection() throws Exception {
 		ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url);
+		cf.setUserName(username);
+		cf.setPassword(password);
 		return cf.createQueueConnection();
 	}
 
 	public TopicConnection getTopicConnection() throws Exception {
 		ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url);
+		cf.setUserName(username);
+		cf.setPassword(password);
 		return cf.createTopicConnection();
 	}
 
@@ -62,7 +67,7 @@ public class ActiveMqService {
 			TextMessage message = qsession.createTextMessage(body);
 			qsender.send(message);
 			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+			LOG.info(fullmsg);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -98,7 +103,7 @@ public class ActiveMqService {
 				String[] body = message.getText().split(splitkey, 0);
 				fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
 			}
-			logger.info(fullmsg);
+			LOG.info(fullmsg);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,7 +138,7 @@ public class ActiveMqService {
 			TextMessage message = session.createTextMessage(body);
 			publisher.publish(message);
 			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+			LOG.info(fullmsg);
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,9 +1,7 @@
 package webapp.tier.service;
 
 import java.util.concurrent.BlockingQueue;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
@@ -12,7 +10,8 @@ import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
 
 public class HazelcastMqService {
-	Logger logger = LoggerFactory.getLogger(HazelcastMqService.class);
+
+	private static final Logger  LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
 	private static String message = EnumService.common_message.getString();
 	private static String queuename = EnumService.hazelcast_queue_name.getString();
 	private static String topicname = EnumService.hazelcast_topicname_name.getString();
@@ -34,7 +33,7 @@ public class HazelcastMqService {
 		try {
 			queue.put(body);
 			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+			LOG.info(fullmsg);
 		} finally {
 			client.shutdown();
 		}
@@ -51,14 +50,14 @@ public class HazelcastMqService {
 
 			if (resp.toString().isEmpty()) {
 				fullmsg = "No Data";
-				logger.info(fullmsg);
+				LOG.info(fullmsg);
 				return fullmsg;
 			}
 
 			String jmsbody = resp.toString();
 			String[] body = jmsbody.split(splitkey, 0);
 			fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
-			logger.info(fullmsg);
+			LOG.info(fullmsg);
 
 		} finally {
 			client.shutdown();
@@ -82,7 +81,7 @@ public class HazelcastMqService {
 		try {
 			topic.publish(body);
 			fullmsg = "Publish id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+			LOG.info(fullmsg);
 		} finally {
 			client.shutdown();
 		}

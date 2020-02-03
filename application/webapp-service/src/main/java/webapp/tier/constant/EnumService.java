@@ -21,6 +21,8 @@ public enum EnumService {
 	postgres_insert_msg_id("msgid"),
 	postgres_insert_msg_body("msgbody"),
 	activemq_url("tcp://activemq:61616"),
+	activemq_username("artemis"),
+	activemq_password("simetraehcapa"),
 	activemq_splitkey(","),
 	activemq_queue_name("ActiveMQueue"),
 	activemq_opic_name("ActiveMQTopic"),
@@ -31,6 +33,13 @@ public enum EnumService {
 	hazelcast_topicname_name("haztopic"),
 	hazelcast_split_key(","),
 	memcached_server_conf("memcached:11211"),
+	rabbitmq_queue_name("queue1"),
+	rabbitmq_pubsub_queue_name("queue2"),
+	rabbitmq_username("ossapl"),
+	rabbitmq_password("ossapl"),
+	rabbitmq_host("rabbitmq"),
+	rabbitmq_vhost("vhost1"),
+	rabbitmq_split_key(","),
 	;
 
     private String config;

@@ -7,23 +7,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.naming.NamingException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
 
+@ApplicationScoped
 public class PostgresService {
 
-	Logger logger = LoggerFactory.getLogger(PostgresService.class);
+	private static final Logger LOG = Logger.getLogger(PostgresService.class.getSimpleName());
+	private static String message = EnumService.common_message.getString();
 	private static String url = EnumService.postgres_url.getString();
 	private static String sqlkey = EnumService.postgres_insert_msg_id.getString();
 	private static String sqlbody = EnumService.postgres_insert_msg_body.getString();
-	private static String message = EnumService.common_message.getString();
-	private static String insertsql = EnumService.postgres_url.getString();
+	private static String insertsql = EnumService.postgres_insert_msg.getString();
 	private static String selectsql = EnumService.postgres_select_msg_all.getString();
 	private static String deletesql = EnumService.postgres_delete_msg_all.getString();
 	private Connection con = null;
@@ -62,7 +62,7 @@ public class PostgresService {
 			con = getConnection();
 			Statement stmt = con.createStatement();
 
-			logger.info("Execute SQL: " + sql);
+			LOG.info("Insert SQL: " + sql);
 			stmt.executeUpdate(sql);
 
 		}  finally {
@@ -85,12 +85,12 @@ public class PostgresService {
 			con = getConnection();
 			Statement stmt = con.createStatement();
 
-			logger.info("Execute SQL: " + selectsql);
+			LOG.info("Select SQL: " + selectsql);
 			ResultSet rs = stmt.executeQuery(selectsql);
 
 			while (rs.next()) {
 				String fullmsg = "Selected Msg: id: " + rs.getString("id") + ", message: " + rs.getString("msg");
-				logger.info(fullmsg);
+				LOG.info(fullmsg);
 				allmsg.add(fullmsg);
 			}
 
@@ -117,7 +117,7 @@ public class PostgresService {
 			con = getConnection();
 			Statement stmt = con.createStatement();
 
-			logger.info("Delete SQL: " + deletesql);
+			LOG.info("Delete SQL: " + deletesql);
 			stmt.executeUpdate(deletesql);
 
 		} finally {

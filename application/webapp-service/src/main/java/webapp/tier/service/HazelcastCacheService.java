@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 
 import com.hazelcast.core.HazelcastInstance;
 
@@ -14,7 +12,8 @@ import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
 
 public class HazelcastCacheService {
-	private static Logger logger = LoggerFactory.getLogger(HazelcastCacheService.class);
+
+	private static Logger LOG = Logger.getLogger(HazelcastCacheService.class.getSimpleName());
 	private static String message = EnumService.common_message.getString();
 	private static String cachename = EnumService.hazelcast_cache_name.getString();
 
@@ -28,7 +27,7 @@ public class HazelcastCacheService {
 		try {
 			map.put(id, message);
 			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+			LOG.info(fullmsg);
 		} finally {
 			client.shutdown();
 		}
@@ -44,13 +43,13 @@ public class HazelcastCacheService {
 		try {
 			for (Entry<String, String> entry : map.entrySet()) {
 				fullmsg = "Selected Msg: id: " + entry.getKey() + ", message: " + entry.getValue();
-				logger.info(fullmsg);
+				LOG.info(fullmsg);
 				allmsg.add(fullmsg);
 			}
 
 			if (allmsg.isEmpty()) {
 				fullmsg = "No Data";
-				logger.info(fullmsg);
+				LOG.info(fullmsg);
 				allmsg.add(fullmsg);
 			}
 

@@ -2,27 +2,27 @@ package webapp.tier.service;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.GetResponse;
 
+import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.GetConfig;
 
 public class RabbitmqService {
-	Logger logger = LoggerFactory.getLogger(RabbitmqService.class);
-	private static String queuename = GetConfig.getResourceBundle("rabbitmq.queue.name");
-	private static String username = GetConfig.getResourceBundle("rabbitmq.username");
-	private static String password = GetConfig.getResourceBundle("rabbitmq.password");
-	private static String host = GetConfig.getResourceBundle("rabbitmq.host");
-	private static String vhost = GetConfig.getResourceBundle("rabbitmq.vhost");
-	private static String splitkey = GetConfig.getResourceBundle("rabbitmq.split.key");
-	private static String message = GetConfig.getResourceBundle("common.message");
+
+	private static final Logger LOG = Logger.getLogger(RabbitmqService.class.getSimpleName());
+	private static String message = EnumService.common_message.getString();
+	private static String queuename = EnumService.rabbitmq_queue_name.getString();
+	private static String pubsubqueuename = EnumService.rabbitmq_pubsub_queue_name.getString();
+	private static String username = EnumService.rabbitmq_username.getString();
+	private static String password = EnumService.rabbitmq_password.getString();
+	private static String host = EnumService.rabbitmq_host.getString();
+	private static String vhost = EnumService.rabbitmq_vhost.getString();
+	private static String splitkey = EnumService.rabbitmq_split_key.getString();
 
 	public String getMessageQueue() throws IOException, TimeoutException {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
@@ -48,7 +48,7 @@ public class RabbitmqService {
 		String jmsbody = new String(resp.getBody(), "UTF-8");
 		String[] body = jmsbody.split(splitkey, 0);
 		fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
-		logger.info(fullmsg);
+		LOG.info(fullmsg);
 
 		return fullmsg;
 	}
@@ -75,7 +75,7 @@ public class RabbitmqService {
 		channel.basicPublish("", queuename, null, body.getBytes());
 
 		fullmsg = "Set id: " + id + ", msg:" + message;
-		logger.info(fullmsg);
+		LOG.info(fullmsg);
 
 		channel.close();
 		connection.close();
@@ -102,10 +102,10 @@ public class RabbitmqService {
 		buf.append(message);
 		String body = buf.toString();
 
-		channel.basicPublish("", queuename, null, body.getBytes());
+		channel.basicPublish("", pubsubqueuename, null, body.getBytes());
 
 		fullmsg = "Publish id: " + id + ", msg: " + message;
-		logger.info(fullmsg);
+		LOG.info(fullmsg);
 
 		channel.close();
 		connection.close();
