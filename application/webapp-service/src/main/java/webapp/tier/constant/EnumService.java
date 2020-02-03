@@ -14,7 +14,7 @@ public enum EnumService {
 	redis_set_expire("3600"),
 	redis_channel("pubsub"),
 	redis_splitkey(","),
-	postgres_url("jdbc:mysql://postgres:5432/webapp?user=webapp&password=webapp"),
+	postgres_url("jdbc:postgresql://postgres:5432/webapp?user=webapp&password=webapp"),
 	postgres_select_msg_all("SELECT * FROM msg"),
 	postgres_delete_msg_all("DELETE FROM msg"),
 	postgres_insert_msg("INSERT INTO msg (id, msg) VALUES (msgid, 'msgbody')"),

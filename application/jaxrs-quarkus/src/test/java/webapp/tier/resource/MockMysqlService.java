@@ -20,7 +20,7 @@ public class MockMysqlService extends MysqlService {
 	}
 
 	@Override
-	public Map<String, String> selectMysql() {
+	public Map<String, String> selectMsg() {
 		Map<String, String> returnmsg = new HashMap<>();
 		returnmsg.put("11111", "selected");
 		return returnmsg;

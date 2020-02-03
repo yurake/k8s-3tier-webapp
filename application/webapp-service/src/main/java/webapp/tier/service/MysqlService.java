@@ -82,7 +82,7 @@ public class MysqlService {
 		}
 	}
 
-	public String insertMysql(String[] receivedbody) {
+	public String insertMsg(String[] receivedbody) {
 
 		String id = receivedbody[0];
 
@@ -117,7 +117,7 @@ public class MysqlService {
 		return sql;
 	}
 
-	public Map<String, String> selectMysql() throws SQLException {
+	public Map<String, String> selectMsg() throws SQLException {
 
 		Map<String, String> returnmsg = new HashMap<>();
 

@@ -2,6 +2,7 @@ package webapp.tier.resource;
 
 import java.sql.SQLException;
 
+import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -40,8 +41,19 @@ public class MysqlResource {
 	@Path("/select")
 	public Response select() {
 		try {
-			return Response.ok().entity(mysqlsvc.selectMysql()).build();
+			return Response.ok().entity(mysqlsvc.selectMsg()).build();
 		} catch (SQLException e) {
+			e.printStackTrace();
+			return Response.status(500).build();
+		}
+	}
+
+	@POST
+	@Path("/delete")
+	public Response delete() {
+		try {
+			return Response.ok().entity(mysqlsvc.deleteMsg()).build();
+		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}

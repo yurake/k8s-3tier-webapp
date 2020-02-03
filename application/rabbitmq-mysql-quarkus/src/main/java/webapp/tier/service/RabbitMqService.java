@@ -92,7 +92,7 @@ public class RabbitMqService implements Runnable {
 				    logger.info("Received: id: " + id + ", msg:" + message);
 
 					MysqlService mysqlsvc = new MysqlService();
-					mysqlsvc.insertMysql(value);
+					mysqlsvc.insertMsg(value);
 				}
 			};
 			channel.basicConsume(queuename, true, consumer);

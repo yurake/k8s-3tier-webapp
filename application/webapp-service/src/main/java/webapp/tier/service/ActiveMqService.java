@@ -67,9 +67,13 @@ public class ActiveMqService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			qsender.close();
-			qsession.close();
-			qcon.close();
+			if (qsender != null) {
+				qsender.close();
+			} else if (qsession != null) {
+				qsession.close();
+			} else if (qcon != null) {
+				qcon.close();
+			}
 		}
 		return fullmsg;
 	}
@@ -99,9 +103,13 @@ public class ActiveMqService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			qreceiver.close();
-			qsession.close();
-			qcon.close();
+			if (qreceiver != null) {
+				qreceiver.close();
+			} else if (qsession != null) {
+				qsession.close();
+			} else if (qcon != null) {
+				qcon.close();
+			}
 		}
 		return fullmsg;
 	}
@@ -131,12 +139,13 @@ public class ActiveMqService {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (publisher != null)
+				if (publisher != null) {
 					publisher.close();
-				if (session != null)
+				} else if (session != null) {
 					session.close();
-				if (tcon != null)
+				} else if (tcon != null) {
 					tcon.close();
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -74,7 +74,7 @@ public class ActiveMqService implements Runnable {
 					body = textMessage.getText().split(splitkey, 0);
 					fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
 					LOG.info(fullmsg);
-					mysqlsvc.insertMysql(body);
+					mysqlsvc.insertMsg(body);
 				} else {
 					fullmsg = "No Data";
 					LOG.info(fullmsg);

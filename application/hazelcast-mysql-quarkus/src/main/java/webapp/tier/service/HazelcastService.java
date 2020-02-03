@@ -47,7 +47,7 @@ public class HazelcastService {
 					String[] body = message.getMessageObject().split(splitkey, 0);
 					fullmsg = "Received id:" + body[0] + ", msg: " + body[1];
 					logger.info(fullmsg);
-					mysqlsvc.insertMysql(body);
+					mysqlsvc.insertMsg(body);
 				}
 			});
 		} catch (Exception e) {
