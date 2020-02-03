@@ -17,5 +17,5 @@ spec:
           servicePort: 9080
       - path: /quarkus
         backend:
-          serviceName: jaxrs-mysql-quarkus
+          serviceName: jaxrs-quarkus
           servicePort: 8080
