@@ -14,10 +14,10 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<quarkus-plugin.version>1.0.1.Final</quarkus-plugin.version>
+		<quarkus-plugin.version>1.2.0.Final</quarkus-plugin.version>
 		<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-		<quarkus.platform.version>1.0.1.Final</quarkus.platform.version>
+		<quarkus.platform.version>1.2.0.Final</quarkus.platform.version>
 		<surefire-plugin.version>2.22.1</surefire-plugin.version>
 		<jedis.version>3.1.0</jedis.version>
 		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
@@ -25,9 +25,7 @@
 		<hazelcast.version>3.12.5</hazelcast.version>
 		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
-		<geronimo-jms_1.1_spec.version>1.1.1</geronimo-jms_1.1_spec.version>
-		<rabbitmq-jms.version>1.10.0</rabbitmq-jms.version>
-		<geronimo-jms_1.1_spec.version>1.1.1</geronimo-jms_1.1_spec.version>
+		<rabbitmq-jms.version>1.14.0</rabbitmq-jms.version>
 		<amqp-client.version>5.4.2</amqp-client.version>
 	</properties>
 	<distributionManagement>
@@ -100,11 +98,6 @@
 			<groupId>com.rabbitmq.jms</groupId>
 			<artifactId>rabbitmq-jms</artifactId>
 			<version>${rabbitmq-jms.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-jms_1.1_spec</artifactId>
-			<version>${geronimo-jms_1.1_spec.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.rabbitmq</groupId>
