@@ -20,7 +20,7 @@ public class LivenessHealthCheck implements HealthCheck {
 	public HealthCheckResponse call() {
 		RedisService redissvc = new RedisService();
 		if (redissvc.ping()) {
-			LOG.info("Liveness: UP");
+			LOG.fine("Liveness: UP");
 			return HealthCheckResponse.up("Cache Server connection health check");
 		} else {
 			LOG.warning("Liveness: DOWN");

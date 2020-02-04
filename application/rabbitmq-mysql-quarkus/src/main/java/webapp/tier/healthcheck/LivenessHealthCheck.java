@@ -20,7 +20,7 @@ public class LivenessHealthCheck implements HealthCheck {
 	public HealthCheckResponse call() {
 		RabbitMqService rabbitmqsvc = new RabbitMqService();
 		if (rabbitmqsvc.isActive()) {
-			LOG.info("Liveness: UP");
+			LOG.fine("Liveness: UP");
 			return HealthCheckResponse.up("Cache Server connection health check");
 		} else {
 			LOG.warning("Liveness: DOWN");

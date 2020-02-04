@@ -20,7 +20,7 @@ public class LivenessHealthCheck implements HealthCheck {
 	public HealthCheckResponse call() {
 		ActiveMqService activemqsvc = new ActiveMqService();
 		if (activemqsvc.isActive()) {
-			LOG.info("Liveness: UP");
+			LOG.fine("Liveness: UP");
 			return HealthCheckResponse.up("Cache Server connection health check");
 		} else {
 			LOG.warning("Liveness: DOWN");

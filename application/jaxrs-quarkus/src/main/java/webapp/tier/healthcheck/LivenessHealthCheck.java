@@ -23,7 +23,7 @@ public class LivenessHealthCheck implements HealthCheck {
 		MysqlService mysqlsvc = new MysqlService();
 
 		if (mysqlsvc.connectionStatus()) {
-			LOG.info("Liveness: UP");
+			LOG.fine("Liveness: UP");
 			return HealthCheckResponse.up("Database connection health check");
 		} else {
 			LOG.warning("Liveness: DOWN");

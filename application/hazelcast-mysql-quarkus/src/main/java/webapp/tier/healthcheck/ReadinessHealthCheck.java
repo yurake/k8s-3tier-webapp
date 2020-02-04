@@ -23,7 +23,7 @@ public class ReadinessHealthCheck implements HealthCheck {
 		MysqlService mysqlsvc = new MysqlService();
 
 		if (mysqlsvc.connectionStatus()) {
-			LOG.info("Readiness: UP");
+			LOG.fine("Readiness: UP");
 			return HealthCheckResponse.up("Database connection health check");
 		} else {
 			LOG.warning("Readiness: DOWN");
