@@ -30,13 +30,21 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
-			<groupId>webapp.3tier.k8s</groupId>
-			<artifactId>webapp-service</artifactId>
-			<version>${webapp-service.version}</version>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-artemis-jms</artifactId>
+			<artifactId>quarkus-rest-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jsonb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>webapp-service</artifactId>
+			<version>${webapp-service.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>

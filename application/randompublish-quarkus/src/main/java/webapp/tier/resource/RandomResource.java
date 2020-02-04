@@ -1,5 +1,6 @@
 package webapp.tier.resource;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,6 +14,7 @@ import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import webapp.tier.service.RandomService;
 
+@ApplicationScoped
 @Path("/random")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

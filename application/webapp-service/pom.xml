@@ -21,7 +21,6 @@
 		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<rabbitmq-jms.version>1.14.0</rabbitmq-jms.version>
-		<amqp-client.version>5.4.2</amqp-client.version>
 		<activemq-all.version>5.15.11</activemq-all.version>
 	</properties>
 	<distributionManagement>
@@ -102,11 +101,6 @@
 			<groupId>com.rabbitmq.jms</groupId>
 			<artifactId>rabbitmq-jms</artifactId>
 			<version>${rabbitmq-jms.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.rabbitmq</groupId>
-			<artifactId>amqp-client</artifactId>
-			<version>${amqp-client.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
