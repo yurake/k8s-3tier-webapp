@@ -48,10 +48,6 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-artemis-jms</artifactId>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
