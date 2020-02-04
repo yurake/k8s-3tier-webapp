@@ -22,6 +22,7 @@
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<rabbitmq-jms.version>1.14.0</rabbitmq-jms.version>
 		<amqp-client.version>5.4.2</amqp-client.version>
+		<activemq-all.version>5.15.11</activemq-all.version>
 	</properties>
 	<distributionManagement>
 		<repository>
@@ -110,7 +111,7 @@
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
-			<version>5.15.11</version>
+			<version>${activemq-all.version}</version>
 		</dependency>
 
 	</dependencies>
