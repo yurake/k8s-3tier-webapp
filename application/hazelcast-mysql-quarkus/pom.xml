@@ -8,29 +8,24 @@
 	<artifactId>hazelcast-mysql-quarkus</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
-		<compiler-plugin.version>3.8.1</compiler-plugin.version>
-		<maven.compiler.parameters>true</maven.compiler.parameters>
-		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<surefire-plugin.version>2.22.0</surefire-plugin.version>
+		<quarkus.version>1.2.0.Final</quarkus.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<quarkus-plugin.version>1.0.1.Final</quarkus-plugin.version>
-		<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
-		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-		<quarkus.platform.version>1.0.1.Final</quarkus.platform.version>
-		<surefire-plugin.version>2.22.1</surefire-plugin.version>
+		<webapp-service.version>1.0.1-SNAPSHOT</webapp-service.version>
+		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
 		<hazelcast-client.version>3.12.5</hazelcast-client.version>
 		<hazelcast.version>3.12.5</hazelcast.version>
 		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
-		<webapp-service.version>1.0.1-SNAPSHOT</webapp-service.version>
-		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>${quarkus.platform.group-id}</groupId>
-				<artifactId>${quarkus.platform.artifact-id}</artifactId>
-				<version>${quarkus.platform.version}</version>
+				<groupId>io.quarkus</groupId>
+				<artifactId>quarkus-bom</artifactId>
+				<version>${quarkus.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -38,26 +33,9 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-resteasy</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-junit5</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-jdbc-mysql</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-smallrye-health</artifactId>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>webapp-service</artifactId>
+			<version>${webapp-service.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.hazelcast</groupId>
@@ -73,11 +51,6 @@
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast-kubernetes</artifactId>
 			<version>${hazelcast-kubernetes.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>webapp.3tier.k8s</groupId>
-			<artifactId>webapp-service</artifactId>
-			<version>${webapp-service.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -104,7 +77,7 @@
 			<plugin>
 				<groupId>io.quarkus</groupId>
 				<artifactId>quarkus-maven-plugin</artifactId>
-				<version>${quarkus-plugin.version}</version>
+				<version>${quarkus.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -112,10 +85,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${compiler-plugin.version}</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -139,6 +108,21 @@
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>io.quarkus</groupId>
+						<artifactId>quarkus-maven-plugin</artifactId>
+						<version>${quarkus.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>native-image</goal>
+								</goals>
+								<configuration>
+									<enableHttpUrlHandler>true</enableHttpUrlHandler>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<version>${surefire-plugin.version}</version>
 						<executions>
@@ -157,9 +141,6 @@
 					</plugin>
 				</plugins>
 			</build>
-			<properties>
-				<quarkus.package.type>native</quarkus.package.type>
-			</properties>
 		</profile>
 	</profiles>
 </project>
