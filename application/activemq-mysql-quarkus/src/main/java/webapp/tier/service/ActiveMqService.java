@@ -53,8 +53,12 @@ public class ActiveMqService implements Runnable {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			consumer.close();
-			context.close();
+			if (consumer != null) {
+				consumer.close();
+			}
+			if (context != null) {
+				context.close();
+			}
 		}
 		return consumer;
 	}

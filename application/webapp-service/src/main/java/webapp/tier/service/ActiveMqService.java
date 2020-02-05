@@ -21,13 +21,13 @@ import webapp.tier.util.CreateId;
 public class ActiveMqService {
 
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
-	private static String message = ConfigProvider.getConfig().getValue("common_message", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("activemq_splitkey", String.class);
-	private static String url = ConfigProvider.getConfig().getValue("activemq_url", String.class);
-	private static String username = ConfigProvider.getConfig().getValue("activemq_username", String.class);
-	private static String password = ConfigProvider.getConfig().getValue("activemq_password", String.class);
-	private static String queuename = ConfigProvider.getConfig().getValue("activemq_queue_name", String.class);
-	private static String topicname = ConfigProvider.getConfig().getValue("activemq_opic_name", String.class);
+	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue("activemq.splitkey", String.class);
+	private static String url = ConfigProvider.getConfig().getValue("activemq.url", String.class);
+	private static String username = ConfigProvider.getConfig().getValue("activemq.username", String.class);
+	private static String password = ConfigProvider.getConfig().getValue("activemq.password", String.class);
+	private static String queuename = ConfigProvider.getConfig().getValue("activemq.queue.name", String.class);
+	private static String topicname = ConfigProvider.getConfig().getValue("activemq.opic.name", String.class);
 	QueueConnection qcon = null;
 	TopicConnection tcon = null;
 
@@ -74,9 +74,11 @@ public class ActiveMqService {
 		} finally {
 			if (qsender != null) {
 				qsender.close();
-			} else if (qsession != null) {
+			}
+			if (qsession != null) {
 				qsession.close();
-			} else if (qcon != null) {
+			}
+			if (qcon != null) {
 				qcon.close();
 			}
 		}
@@ -110,9 +112,11 @@ public class ActiveMqService {
 		} finally {
 			if (qreceiver != null) {
 				qreceiver.close();
-			} else if (qsession != null) {
+			}
+			if (qsession != null) {
 				qsession.close();
-			} else if (qcon != null) {
+			}
+			if (qcon != null) {
 				qcon.close();
 			}
 		}
@@ -146,9 +150,11 @@ public class ActiveMqService {
 			try {
 				if (publisher != null) {
 					publisher.close();
-				} else if (session != null) {
+				}
+				if (session != null) {
 					session.close();
-				} else if (tcon != null) {
+				}
+				if (tcon != null) {
 					tcon.close();
 				}
 			} catch (Exception e) {

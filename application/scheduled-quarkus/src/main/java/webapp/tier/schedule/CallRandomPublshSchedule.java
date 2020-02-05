@@ -1,11 +1,11 @@
 package webapp.tier.schedule;
 
+import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import io.quarkus.scheduler.Scheduled;
 import webapp.tier.service.DeliverService;
@@ -27,24 +27,24 @@ public class CallRandomPublshSchedule {
 	@RestClient
 	MysqlService mysqlrsvc;
 
-	Logger logger = LoggerFactory.getLogger(CallRandomPublshSchedule.class);
+	private static final Logger LOG = Logger.getLogger(CallRandomPublshSchedule.class.getSimpleName());
 
 	@Scheduled(every = "10s")
 	void callRandomPublsh() {
 		String response;
-		logger.info("Call: Random Publish");
+		LOG.info("Call: Random Publish");
 		response = deliversvc.random();
-		logger.info(response);
+		LOG.info(response);
 	}
 
 	@Scheduled(cron = "0 0 0 * * ?")
 	void callDeleteDbs() {
 		String response;
-		logger.info("Call: Delete Postgres");
+		LOG.info("Call: Delete Postgres");
 		response = postgresrsvc.delete();
-		logger.info(response);
+		LOG.info(response);
 		response = mysqlrsvc.delete();
-		logger.info(response);
+		LOG.info(response);
 	}
 
 }

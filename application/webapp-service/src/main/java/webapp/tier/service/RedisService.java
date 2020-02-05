@@ -23,10 +23,10 @@ public class RedisService {
 	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String servername = ConfigProvider.getConfig().getValue("redis.server", String.class);
-	private static int serverport = Integer.parseInt(ConfigProvider.getConfig().getValue("redis.port", String.class));
+	private static int serverport = ConfigProvider.getConfig().getValue("redis.port.num", Integer.class);
 	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
-	private static int setexpire = Integer.parseInt(ConfigProvider.getConfig().getValue("redis.set.expire", String.class));
+	private static int setexpire = ConfigProvider.getConfig().getValue("redis.set.expire", Integer.class);
 
 	public boolean ping() {
 		Jedis jedis = new Jedis(servername, serverport);

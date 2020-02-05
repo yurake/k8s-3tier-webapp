@@ -18,7 +18,8 @@ public class RabbitmqService {
 	private static final Logger LOG = Logger.getLogger(RabbitmqService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String queuename = ConfigProvider.getConfig().getValue("rabbitmq.queue.name", String.class);
-	private static String pubsubqueuename = ConfigProvider.getConfig().getValue("rabbitmq.pubsub.queue.name", String.class);
+	private static String pubsubqueuename = ConfigProvider.getConfig().getValue("rabbitmq.pubsub.queue.name",
+			String.class);
 	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username", String.class);
 	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password", String.class);
 	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
@@ -39,8 +40,12 @@ public class RabbitmqService {
 		channel.queueDeclare(queuename, durable, false, false, null);
 
 		GetResponse resp = channel.basicGet(queuename, true);
-		channel.close();
-		connection.close();
+		if (channel != null) {
+			channel.close();
+		}
+		if (connection != null) {
+			connection.close();
+		}
 
 		if (resp.toString().isEmpty()) {
 			return "No Data";
@@ -78,8 +83,12 @@ public class RabbitmqService {
 		fullmsg = "Set id: " + id + ", msg:" + message;
 		LOG.info(fullmsg);
 
-		channel.close();
-		connection.close();
+		if (channel != null) {
+			channel.close();
+		}
+		if (connection != null) {
+			connection.close();
+		}
 
 		return fullmsg;
 	}
@@ -108,8 +117,12 @@ public class RabbitmqService {
 		fullmsg = "Publish id: " + id + ", msg: " + message;
 		LOG.info(fullmsg);
 
-		channel.close();
-		connection.close();
+		if (channel != null) {
+			channel.close();
+		}
+		if (connection != null) {
+			connection.close();
+		}
 
 		return fullmsg;
 	}
