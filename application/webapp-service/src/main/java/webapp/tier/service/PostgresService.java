@@ -12,20 +12,21 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.naming.NamingException;
 
-import webapp.tier.constant.EnumService;
+import org.eclipse.microprofile.config.ConfigProvider;
+
 import webapp.tier.util.CreateId;
 
 @ApplicationScoped
 public class PostgresService {
 
 	private static final Logger LOG = Logger.getLogger(PostgresService.class.getSimpleName());
-	private static String message = EnumService.common_message.getString();
-	private static String url = EnumService.postgres_url.getString();
-	private static String sqlkey = EnumService.postgres_insert_msg_id.getString();
-	private static String sqlbody = EnumService.postgres_insert_msg_body.getString();
-	private static String insertsql = EnumService.postgres_insert_msg.getString();
-	private static String selectsql = EnumService.postgres_select_msg_all.getString();
-	private static String deletesql = EnumService.postgres_delete_msg_all.getString();
+	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
+	private static String url = ConfigProvider.getConfig().getValue("postgres.url", String.class);
+	private static String sqlkey = ConfigProvider.getConfig().getValue("postgres.insert.msg.id", String.class);
+	private static String sqlbody = ConfigProvider.getConfig().getValue("postgres.insert.msg.body", String.class);
+	private static String insertsql = ConfigProvider.getConfig().getValue("postgres.insert.msg", String.class);
+	private static String selectsql = ConfigProvider.getConfig().getValue("postgres.select.msg.all", String.class);
+	private static String deletesql = ConfigProvider.getConfig().getValue("postgres.delete.msg.all", String.class);
 	private Connection con = null;
 
 	public Connection getConnection() throws SQLException {

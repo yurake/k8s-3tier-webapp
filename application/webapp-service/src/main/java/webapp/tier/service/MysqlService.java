@@ -12,21 +12,22 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.naming.NamingException;
 
-import webapp.tier.constant.EnumService;
+import org.eclipse.microprofile.config.ConfigProvider;
+
 import webapp.tier.util.CreateId;
 
 @ApplicationScoped
 public class MysqlService {
 
 	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
-	private static String message = EnumService.common_message.getString();
-	private static String url = EnumService.mysql_url.getString();
-	private static String instersql = EnumService.mysql_insert_msg.getString();
-	private static String selectsql = EnumService.mysql_select_msg_all.getString();
-	private static String deletesql = EnumService.mysql_delete_msg_all.getString();
-	private static String sqlkey = EnumService.mysql_id.getString();
-	private static String sqlbody = EnumService.mysql_body.getString();
-	private static String addonmsg = EnumService.mysql_msg_quarkus.getString();
+	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
+	private static String url = ConfigProvider.getConfig().getValue("mysql.url", String.class);
+	private static String instersql = ConfigProvider.getConfig().getValue("mysql.insert.msg", String.class);
+	private static String selectsql = ConfigProvider.getConfig().getValue("mysql.select.msg.all", String.class);
+	private static String deletesql = ConfigProvider.getConfig().getValue("mysql.delete.msg.all", String.class);
+	private static String sqlkey = ConfigProvider.getConfig().getValue("mysql.id", String.class);
+	private static String sqlbody = ConfigProvider.getConfig().getValue("mysql.body", String.class);
+	private static String addonmsg = ConfigProvider.getConfig().getValue("mysql.msg.quarkus", String.class);
 	Connection con = null;
 
 	public Connection getConnection() throws SQLException {

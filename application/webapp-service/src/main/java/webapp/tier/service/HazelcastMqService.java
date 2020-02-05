@@ -3,19 +3,20 @@ package webapp.tier.service;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
+import org.eclipse.microprofile.config.ConfigProvider;
+
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
 
-import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
 
 public class HazelcastMqService {
 
 	private static final Logger  LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
-	private static String message = EnumService.common_message.getString();
-	private static String queuename = EnumService.hazelcast_queue_name.getString();
-	private static String topicname = EnumService.hazelcast_topicname_name.getString();
-	private static String splitkey = EnumService.hazelcast_split_key.getString();
+	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
+	private static String queuename = ConfigProvider.getConfig().getValue("hazelcast.queue.name", String.class);
+	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topicname.name", String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
 	public String putQueueHazelcast() throws Exception {
 		String fullmsg = null;

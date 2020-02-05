@@ -8,10 +8,11 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.ext.Provider;
 
+import org.eclipse.microprofile.config.ConfigProvider;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 import redis.clients.jedis.exceptions.JedisConnectionException;
-import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
 
 @Provider
@@ -20,12 +21,12 @@ public class RedisService {
 	Connection con = null;
 
 	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
-	private static String message = EnumService.common_message.getString();
-	private static String servername = EnumService.redis_server.getString();
-	private static int serverport = Integer.parseInt(EnumService.redis_port.getString());
-	private static String channel = EnumService.redis_channel.getString();
-	private static String splitkey = EnumService.redis_splitkey.getString();
-	private static int setexpire = Integer.parseInt(EnumService.redis_set_expire.getString());
+	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
+	private static String servername = ConfigProvider.getConfig().getValue("redis.server", String.class);
+	private static int serverport = Integer.parseInt(ConfigProvider.getConfig().getValue("redis.port", String.class));
+	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
+	private static int setexpire = Integer.parseInt(ConfigProvider.getConfig().getValue("redis.set.expire", String.class));
 
 	public boolean ping() {
 		Jedis jedis = new Jedis(servername, serverport);

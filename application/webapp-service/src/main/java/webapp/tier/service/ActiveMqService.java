@@ -14,20 +14,20 @@ import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.eclipse.microprofile.config.ConfigProvider;
 
-import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
 
 public class ActiveMqService {
 
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
-	private static String message = EnumService.common_message.getString();
-	private static String splitkey = EnumService.activemq_splitkey.getString();
-	private static String url = EnumService.activemq_url.getString();
-	private static String username = EnumService.activemq_username.getString();
-	private static String password = EnumService.activemq_password.getString();
-	private static String queuename = EnumService.activemq_queue_name.getString();
-	private static String topicname = EnumService.activemq_opic_name.getString();
+	private static String message = ConfigProvider.getConfig().getValue("common_message", String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue("activemq_splitkey", String.class);
+	private static String url = ConfigProvider.getConfig().getValue("activemq_url", String.class);
+	private static String username = ConfigProvider.getConfig().getValue("activemq_username", String.class);
+	private static String password = ConfigProvider.getConfig().getValue("activemq_password", String.class);
+	private static String queuename = ConfigProvider.getConfig().getValue("activemq_queue_name", String.class);
+	private static String topicname = ConfigProvider.getConfig().getValue("activemq_opic_name", String.class);
 	QueueConnection qcon = null;
 	TopicConnection tcon = null;
 

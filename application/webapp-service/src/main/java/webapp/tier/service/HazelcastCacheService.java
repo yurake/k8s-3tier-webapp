@@ -6,16 +6,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import org.eclipse.microprofile.config.ConfigProvider;
+
 import com.hazelcast.core.HazelcastInstance;
 
-import webapp.tier.constant.EnumService;
 import webapp.tier.util.CreateId;
 
 public class HazelcastCacheService {
 
 	private static Logger LOG = Logger.getLogger(HazelcastCacheService.class.getSimpleName());
-	private static String message = EnumService.common_message.getString();
-	private static String cachename = EnumService.hazelcast_cache_name.getString();
+	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
+	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 
 	public String putMapHazelcast() throws Exception {
 		String fullmsg = null;
