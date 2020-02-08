@@ -30,8 +30,19 @@ public class MysqlService {
 	private static String addonmsg = ConfigProvider.getConfig().getValue("mysql.msg.quarkus", String.class);
 	Connection con = null;
 
-	public Connection getConnection() throws SQLException {
+	private Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(url);
+	}
+
+	private void closeConnection() throws SQLException {
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new SQLException();
+			}
+		}
 	}
 
 	public boolean connectionStatus() {
@@ -42,12 +53,10 @@ public class MysqlService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+			try {
+				closeConnection();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
 		return status;
@@ -73,13 +82,7 @@ public class MysqlService {
 			e.printStackTrace();
 			throw new SQLException();
 		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			closeConnection();
 		}
 	}
 
@@ -107,12 +110,10 @@ public class MysqlService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+			try {
+				closeConnection();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
 		return sql;
@@ -142,13 +143,7 @@ public class MysqlService {
 			e.printStackTrace();
 			throw new SQLException();
 		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			closeConnection();
 		}
 	}
 
@@ -161,13 +156,7 @@ public class MysqlService {
 			stmt.executeUpdate(deletesql);
 
 		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			closeConnection();
 		}
 		return "Deleted";
 	}
