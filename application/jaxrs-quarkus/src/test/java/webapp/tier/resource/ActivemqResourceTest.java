@@ -1,41 +1,45 @@
 package webapp.tier.resource;
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class MysqlResourceTest {
+class ActivemqResourceTest {
 
 	@Test
-	void testInsertError() {
+	void testPutError() {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/mysql/insert")
+				.post("/quarkus/activemq/put")
 				.then()
-				.statusCode(500);
+				.statusCode(200)
+				.body(is(""));
 	}
 
 	@Test
-	void testSelectError() {
+	void testGetError() {
 		given()
 				.when()
-				.get("/quarkus/mysql/select")
+				.get("/quarkus/activemq/get")
 				.then()
-				.statusCode(500);
+				.statusCode(200)
+				.body(is(""));
 	}
 
 	@Test
-	void testDeleteError() {
+	void testPublishError() {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/mysql/delete")
+				.post("/quarkus/activemq/publish")
 				.then()
-				.statusCode(500);
+				.statusCode(200)
+				.body(is(""));
 	}
 
 }

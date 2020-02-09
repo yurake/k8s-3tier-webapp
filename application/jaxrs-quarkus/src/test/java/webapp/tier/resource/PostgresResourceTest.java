@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class MysqlResourceTest {
+class PostgresResourceTest {
 
 	@Test
 	void testInsertError() {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/mysql/insert")
+				.post("/quarkus/postgres/insert")
 				.then()
 				.statusCode(500);
 	}
@@ -23,7 +23,7 @@ class MysqlResourceTest {
 	void testSelectError() {
 		given()
 				.when()
-				.get("/quarkus/mysql/select")
+				.get("/quarkus/postgres/select")
 				.then()
 				.statusCode(500);
 	}
@@ -33,7 +33,7 @@ class MysqlResourceTest {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/mysql/delete")
+				.post("/quarkus/postgres/delete")
 				.then()
 				.statusCode(500);
 	}

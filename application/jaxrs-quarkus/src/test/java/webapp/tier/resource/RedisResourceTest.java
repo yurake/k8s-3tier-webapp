@@ -7,33 +7,33 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class MysqlResourceTest {
+class RedisResourceTest {
 
 	@Test
-	void testInsertError() {
+	void testSetError() {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/mysql/insert")
+				.post("/quarkus/redis/set")
 				.then()
 				.statusCode(500);
 	}
 
 	@Test
-	void testSelectError() {
+	void testGetError() {
 		given()
 				.when()
-				.get("/quarkus/mysql/select")
+				.get("/quarkus/redis/get")
 				.then()
 				.statusCode(500);
 	}
 
 	@Test
-	void testDeleteError() {
+	void testPublishError() {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/mysql/delete")
+				.post("/quarkus/redis/publish")
 				.then()
 				.statusCode(500);
 	}
