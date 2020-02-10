@@ -9,8 +9,10 @@ class LivenessHealthCheckTest {
 
 	@Test
 	void testCallError() {
-		LivenessHealthCheck lhc = new LivenessHealthCheck();
-		assertEquals(lhc.call().getState(), HealthCheckResponse.State.DOWN);
+		LivenessHealthCheck hc = new LivenessHealthCheck();
+		HealthCheckResponse resp = hc.call();
+		assertEquals(resp.getState(), HealthCheckResponse.State.UP);
+		assertEquals(resp.getName(), "OK");
 	}
 
 }

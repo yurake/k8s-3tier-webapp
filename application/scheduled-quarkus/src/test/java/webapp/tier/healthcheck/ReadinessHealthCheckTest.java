@@ -9,8 +9,10 @@ class ReadinessHealthCheckTest {
 
 	@Test
 	void testCallError() {
-		ReadinessHealthCheck lhc = new ReadinessHealthCheck();
-		assertEquals(lhc.call().getState(), HealthCheckResponse.State.DOWN);
+		ReadinessHealthCheck hc = new ReadinessHealthCheck();
+		HealthCheckResponse resp = hc.call();
+		assertEquals(resp.getState(), HealthCheckResponse.State.UP);
+		assertEquals(resp.getName(), "OK");
 	}
 
 }
