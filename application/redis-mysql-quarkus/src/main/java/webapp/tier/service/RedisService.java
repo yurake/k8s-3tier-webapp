@@ -1,6 +1,7 @@
 package webapp.tier.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import javax.ws.rs.ext.Provider;
@@ -48,7 +49,11 @@ public class RedisService {
 					String[] body = message.split(splitkey, 0);
 					fullmsg = "Received channel:" + channel + ", id: " + body[0]+ ", msg: " + body[1];
 					LOG.info(fullmsg);
-					mysqlsvc.insertMsg(body);
+					try {
+						mysqlsvc.insertMsg(body);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			}, channel);
 		} catch (Exception e) {

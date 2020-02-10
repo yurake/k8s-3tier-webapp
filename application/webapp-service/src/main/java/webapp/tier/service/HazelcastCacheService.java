@@ -19,29 +19,32 @@ public class HazelcastCacheService {
 	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 
 	public String putMapHazelcast() throws Exception {
-		String fullmsg = null;
+		String fullmsg = "Error";
 		String id = String.valueOf(CreateId.createid());
-
-		HazelcastInstance client = ConnectHazelcast.getInstance();
-		Map<String, String> map = client.getMap(cachename);
+		HazelcastInstance client = null;
 
 		try {
+			client = ConnectHazelcast.getInstance();
+			Map<String, String> map = client.getMap(cachename);
 			map.put(id, message);
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			LOG.info(fullmsg);
 		} finally {
-			client.shutdown();
+			if (client != null) {
+				client.shutdown();
+			}
 		}
 		return fullmsg;
 	}
 
 	public List<String> getMapHazelcast() throws Exception {
 		List<String> allmsg = new ArrayList<>();
-		HazelcastInstance client = ConnectHazelcast.getInstance();
-		Map<String, String> map = client.getMap(cachename);
-		String fullmsg = null;
+		String fullmsg = "Error";
+		HazelcastInstance client = null;
 
 		try {
+			client = ConnectHazelcast.getInstance();
+			Map<String, String> map = client.getMap(cachename);
 			for (Entry<String, String> entry : map.entrySet()) {
 				fullmsg = "Selected Msg: id: " + entry.getKey() + ", message: " + entry.getValue();
 				LOG.info(fullmsg);
@@ -55,7 +58,9 @@ public class HazelcastCacheService {
 			}
 
 		} finally {
-			client.shutdown();
+			if (client != null) {
+				client.shutdown();
+			}
 		}
 		return allmsg;
 	}

@@ -1,6 +1,7 @@
 package webapp.tier.service;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -80,7 +81,11 @@ public class RabbitMqService implements Runnable {
 					logger.info("Received: id: " + id + ", msg:" + message);
 
 					MysqlService mysqlsvc = new MysqlService();
-					mysqlsvc.insertMsg(value);
+					try {
+						mysqlsvc.insertMsg(value);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			};
 			channel.basicConsume(queuename, true, consumer);

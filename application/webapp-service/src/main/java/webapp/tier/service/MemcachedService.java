@@ -1,5 +1,6 @@
 package webapp.tier.service;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -25,13 +26,20 @@ public class MemcachedService {
 	public String setMemcached() {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
+		boolean resultid = false;
+		boolean resultmsg = false;
 
 		MemCachedClient mcc = new MemCachedClient();
-		mcc.set("id", id);
-		mcc.set("msg", message);
+		resultid = mcc.set("id", id);
+		resultmsg = mcc.set("msg", message);
 
-		fullmsg = "Set id: " + id + ", msg: " + message;
-		LOG.info(fullmsg);
+		if (resultid && resultmsg) {
+			fullmsg = "Set id: " + id + ", msg: " + message;
+			LOG.info(fullmsg);
+		} else {
+			fullmsg = "Failed set to Memcached";
+			LOG.warning(fullmsg);
+		}
 		return fullmsg;
 	}
 
@@ -42,8 +50,13 @@ public class MemcachedService {
 		String id = (String) mcc.get("id");
 		String message = (String) mcc.get("msg");
 
-		fullmsg = "Received id: " + id + ", msg: " + message;
-		LOG.info(fullmsg);
+		if (Objects.isNull(id) || Objects.isNull(message)) {
+			fullmsg = "Failed get from Memcached";
+			LOG.warning(fullmsg);
+		} else {
+			fullmsg = "Received id: " + id + ", msg: " + message;
+			LOG.info(fullmsg);
+		}
 		return fullmsg;
 	}
 }

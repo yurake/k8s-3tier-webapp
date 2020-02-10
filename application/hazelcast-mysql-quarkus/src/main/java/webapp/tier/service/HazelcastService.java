@@ -1,5 +1,7 @@
 package webapp.tier.service;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -49,7 +51,11 @@ public class HazelcastService {
 					String[] body = message.getMessageObject().split(splitkey, 0);
 					fullmsg = "Received id:" + body[0] + ", msg: " + body[1];
 					logger.info(fullmsg);
-					mysqlsvc.insertMsg(body);
+					try {
+						mysqlsvc.insertMsg(body);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			});
 		} catch (Exception e) {

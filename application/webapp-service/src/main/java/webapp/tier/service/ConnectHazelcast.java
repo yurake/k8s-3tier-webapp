@@ -1,7 +1,5 @@
 package webapp.tier.service;
 
-import java.io.IOException;
-
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +33,7 @@ public class ConnectHazelcast {
 		return Hazelcast.newHazelcastInstance(config);
 	}
 
-	public static HazelcastInstance getInstance() throws IOException {
+	public static HazelcastInstance getInstance() throws Exception {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getGroupConfig().setName(HAZELCAST_GROUP_NAME);
 

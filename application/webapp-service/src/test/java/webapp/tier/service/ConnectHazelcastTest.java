@@ -18,11 +18,11 @@ class ConnectHazelcastTest {
 	}
 
 	@Test
-	void testGetInstanceError() throws IOException {
+	void testGetInstanceError() throws IOException, IllegalStateException {
 		try {
 		ConnectHazelcast.getInstance();
 		fail();
-		} catch (IllegalStateException expected) {
+		} catch (Exception expected) {
 			assertEquals(expected.getMessage(), "Unable to connect to any cluster.");
 		}
 	}

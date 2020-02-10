@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.naming.NamingException;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
@@ -80,13 +79,13 @@ public class MysqlService {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new SQLException();
+			throw new SQLException("Insert Error.");
 		} finally {
 			closeConnection();
 		}
 	}
 
-	public String insertMsg(String[] receivedbody) {
+	public String insertMsg(String[] receivedbody) throws SQLException {
 
 		String id = receivedbody[0];
 
@@ -109,12 +108,9 @@ public class MysqlService {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new SQLException("Insert Error.");
 		} finally {
-			try {
-				closeConnection();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			closeConnection();
 		}
 		return sql;
 	}
@@ -141,13 +137,13 @@ public class MysqlService {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new SQLException();
+			throw new SQLException("Select Error.");
 		} finally {
 			closeConnection();
 		}
 	}
 
-	public String deleteMsg() throws SQLException, NamingException {
+	public String deleteMsg() throws SQLException {
 		try {
 			con = getConnection();
 			Statement stmt = con.createStatement();
@@ -155,6 +151,9 @@ public class MysqlService {
 			LOG.info("Delete SQL: " + deletesql);
 			stmt.executeUpdate(deletesql);
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException("Delete Error.");
 		} finally {
 			closeConnection();
 		}
