@@ -19,7 +19,6 @@
 		<hazelcast-client.version>3.12.5</hazelcast-client.version>
 		<hazelcast.version>3.12.5</hazelcast.version>
 		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
-		<junit.jupiter.version>5.6.0</junit.jupiter.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
