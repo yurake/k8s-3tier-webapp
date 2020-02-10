@@ -55,15 +55,10 @@ public class ConnectHazelcast {
 					.getNetworkConfig()
 					.getDiscoveryConfig()
 					.addDiscoveryStrategyConfig(discoveryStrategyConfig);
-
 		} else {
 			logger.info("Not service in k8s");
 			clientConfig = new XmlClientConfigBuilder(CLIENTXML).build();
 			return HazelcastClient.newHazelcastClient(clientConfig);
-
-//			clientConfig
-//					.getNetworkConfig()
-//					.setAddresses(Collections.singletonList("hazelcast:5701"));
 		}
 		return HazelcastClient.newHazelcastClient(clientConfig);
 	}

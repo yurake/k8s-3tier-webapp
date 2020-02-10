@@ -19,6 +19,7 @@
 		<hazelcast-client.version>3.12.5</hazelcast-client.version>
 		<hazelcast.version>3.12.5</hazelcast.version>
 		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
+		<junit.jupiter.version>5.6.0</junit.jupiter.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -32,6 +33,16 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>webapp.3tier.k8s</groupId>
 			<artifactId>webapp-service</artifactId>

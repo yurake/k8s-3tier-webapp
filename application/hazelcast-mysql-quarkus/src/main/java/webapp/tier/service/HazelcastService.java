@@ -26,7 +26,9 @@ public class HazelcastService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			client.shutdown();
+			if (client != null) {
+				client.shutdown();
+			}
 		}
 		return status;
 	}
