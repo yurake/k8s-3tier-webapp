@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
-import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -84,7 +83,7 @@ public class ActiveMqService implements Runnable {
 					LOG.info(fullmsg);
 				}
 			}
-		} catch (JMSException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

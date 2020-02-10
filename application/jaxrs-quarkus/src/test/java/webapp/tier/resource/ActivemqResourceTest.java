@@ -1,7 +1,6 @@
 package webapp.tier.resource;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +16,7 @@ class ActivemqResourceTest {
 				.contentType("application/json")
 				.post("/quarkus/activemq/put")
 				.then()
-				.statusCode(200)
-				.body(is(""));
+				.statusCode(200);
 	}
 
 	@Test
@@ -27,8 +25,7 @@ class ActivemqResourceTest {
 				.when()
 				.get("/quarkus/activemq/get")
 				.then()
-				.statusCode(200)
-				.body(is(""));
+				.statusCode(200);
 	}
 
 	@Test
@@ -38,8 +35,7 @@ class ActivemqResourceTest {
 				.contentType("application/json")
 				.post("/quarkus/activemq/publish")
 				.then()
-				.statusCode(200)
-				.body(is(""));
+				.statusCode(200);
 	}
 
 }
