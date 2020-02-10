@@ -43,21 +43,11 @@ public class ActiveMqService implements Runnable {
 	}
 
 	private JMSConsumer getJmsConnect() {
-		try {
-			if (context == null) {
-				context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
-			}
-			if (consumer == null) {
-				consumer = context.createConsumer(context.createTopic(topicname));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (consumer != null) {
-				consumer.close();
-			}
-			if (context != null) {
-				context.close();
-			}
+		if (context == null) {
+			context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
+		}
+		if (consumer == null) {
+			consumer = context.createConsumer(context.createTopic(topicname));
 		}
 		return consumer;
 	}
