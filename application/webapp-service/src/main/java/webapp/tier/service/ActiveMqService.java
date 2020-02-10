@@ -46,7 +46,7 @@ public class ActiveMqService {
 	}
 
 	public String putActiveMq() throws Exception {
-		String fullmsg = null;
+		String fullmsg = "Error";
 		QueueSession qsession = null;
 		QueueSender qsender = null;
 		String id = String.valueOf(CreateId.createid());
@@ -86,7 +86,7 @@ public class ActiveMqService {
 	}
 
 	public String getActiveMq() throws Exception {
-		String fullmsg = null;
+		String fullmsg = "Error";
 		QueueSession qsession = null;
 		QueueReceiver qreceiver = null;
 
@@ -124,7 +124,7 @@ public class ActiveMqService {
 	}
 
 	public String publishActiveMq() throws Exception {
-		String fullmsg = null;
+		String fullmsg = "Error";
 		TopicSession session = null;
 		TopicPublisher publisher = null;
 		String id = String.valueOf(CreateId.createid());
