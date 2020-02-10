@@ -1,10 +1,8 @@
 package webapp.tier.service;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeoutException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
@@ -47,7 +45,7 @@ public class RabbitMqService implements Runnable {
 		logger.info("The application is stopping...");
 	}
 
-	private Channel getJmsChannel() throws IOException, TimeoutException {
+	private Channel getJmsChannel() throws Exception {
 
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
@@ -55,21 +53,11 @@ public class RabbitMqService implements Runnable {
 		connectionFactory.setHost(host);
 		connectionFactory.setVirtualHost(vhost);
 
-		try {
-			if (connection == null) {
-				connection = connectionFactory.newConnection();
-				}
-			if (channel == null) {
-				channel = connection.createChannel();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (channel != null) {
-				channel.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
+		if (connection == null) {
+			connection = connectionFactory.newConnection();
+		}
+		if (channel == null) {
+			channel = connection.createChannel();
 		}
 		return channel;
 	}
@@ -86,10 +74,10 @@ public class RabbitMqService implements Runnable {
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws UnsupportedEncodingException {
 					String jmsbody = new String(body, "UTF-8");
-				    String[] value = jmsbody.split(splitkey, 0);
-				    String id = value[0];
-				    String message = value[1];
-				    logger.info("Received: id: " + id + ", msg:" + message);
+					String[] value = jmsbody.split(splitkey, 0);
+					String id = value[0];
+					String message = value[1];
+					logger.info("Received: id: " + id + ", msg:" + message);
 
 					MysqlService mysqlsvc = new MysqlService();
 					mysqlsvc.insertMsg(value);
