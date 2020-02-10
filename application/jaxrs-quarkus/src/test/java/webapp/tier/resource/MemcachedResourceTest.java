@@ -17,7 +17,8 @@ class MemcachedResourceTest {
 				.contentType("application/json")
 				.post("/quarkus/memcached/set")
 				.then()
-				.statusCode(200);
+				.statusCode(200)
+				.body(is("Failed set to Memcached"));
 	}
 
 	@Test
@@ -27,7 +28,7 @@ class MemcachedResourceTest {
 				.get("/quarkus/memcached/get")
 				.then()
 				.statusCode(200)
-				.body(is("Received id: null, msg: null"));
+				.body(is("Failed get from Memcached"));
 	}
 
 }
