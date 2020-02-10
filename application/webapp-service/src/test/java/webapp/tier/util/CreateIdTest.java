@@ -8,9 +8,14 @@ import org.junit.jupiter.api.Test;
 class CreateIdTest {
 
 	@Test
-	void testcreateid() {
-		int testid = CreateId.createid();
-		assertThat(testid, is(notNullValue()));
+	void testCreateid() {
+		int expected = CreateId.createid();
+		assertThat(expected, is(notNullValue()));
 	}
 
+	@Test
+	void testCreatewideid() {
+		int expected = CreateId.createwideid();
+		assertThat(expected, is(notNullValue()));
+	}
 }
