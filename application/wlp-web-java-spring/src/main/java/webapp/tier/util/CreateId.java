@@ -4,6 +4,9 @@ import java.util.Random;
 
 public class CreateId {
 
+	private CreateId() {
+	}
+
     /**
      * 5桁の正の整数を返す
      */
@@ -17,15 +20,15 @@ public class CreateId {
     }
 
     /**
-     * 正負含む5桁の整数を返す
-     * 
-     * @return 正負含む10桁の整数
+     * 5桁の正の整数を返す
+     *
+     * @return 5桁の正の整数
      */
     public static int createwideid() {
-	int length = 5;
+	int length = 4;
 	int id = 0;
 	for (int i = 0; i <= length; i++) {
-	    id = id * 10 + (int) (Math.random() * 10); // 0~9の数値を入れる
+	    id = id * 10 + (int) (Math.random() * 9) + 1;
 	}
 	return id;
     }

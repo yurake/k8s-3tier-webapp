@@ -23,16 +23,24 @@ public class SetMemcached extends HttpServlet {
 		pool.initialize();
 	}
 
-	public String setMemcached() {
-		String fullmsg = null;
+	public String setMemcached() throws Exception {
+		String fullmsg = "Error";
 		String id = String.valueOf(CreateId.createid());
+		boolean resultid = false;
+		boolean resultmsg = false;
 
 		MemCachedClient mcc = new MemCachedClient();
-		mcc.set("id", id);
-		mcc.set("msg", message);
+		resultid = mcc.set("id", id);
+		resultmsg = mcc.set("msg", message);
 
-		fullmsg = "Set id: " + id + ", msg: " + message;
-		logger.info(fullmsg);
+		if (resultid && resultmsg) {
+			fullmsg = "Set id: " + id + ", msg: " + message;
+			logger.info(fullmsg);
+		} else {
+			fullmsg = "Failed set to Memcached";
+			logger.warn(fullmsg);
+			throw new RuntimeException(fullmsg);
+		}
 		return fullmsg;
 	}
 }

@@ -66,23 +66,24 @@ public class ActiveMqService {
 		buf.append(msg);
 		String body = buf.toString();
 
-		try {
-			qcon = getQueueConnection();
-			qcon.start();
+		qcon = getQueueConnection();
+		qcon.start();
 
-			qsession = qcon.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
-			qsender = qsession.createSender(getQueue());
+		qsession = qcon.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+		qsender = qsession.createSender(getQueue());
 
-			TextMessage message = qsession.createTextMessage(body);
-			qsender.send(message);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+		TextMessage message = qsession.createTextMessage(body);
+		qsender.send(message);
+		fullmsg = "Set id: " + id + ", msg: " + message;
+		logger.info(fullmsg);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
+		if (qsender != null) {
 			qsender.close();
+		}
+		if (qsession != null) {
 			qsession.close();
+		}
+		if (qcon != null) {
 			qcon.close();
 		}
 		return fullmsg;
@@ -93,28 +94,29 @@ public class ActiveMqService {
 		QueueSession qsession = null;
 		QueueReceiver qreceiver = null;
 
-		try {
-			qcon = getQueueConnection();
-			qcon.start();
+		qcon = getQueueConnection();
+		qcon.start();
 
-			qsession = qcon.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
-			qreceiver = qsession.createReceiver(getQueue());
+		qsession = qcon.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+		qreceiver = qsession.createReceiver(getQueue());
 
-			TextMessage message = (TextMessage) qreceiver.receive(1000);
+		TextMessage message = (TextMessage) qreceiver.receive(1000);
 
-			if (Objects.isNull(message)) {
-				fullmsg = "No Data";
-			} else {
-				String[] body = message.getText().split(splitkey, 0);
-				fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
-			}
-			logger.info(fullmsg);
+		if (Objects.isNull(message)) {
+			fullmsg = "No Data";
+		} else {
+			String[] body = message.getText().split(splitkey, 0);
+			fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
+		}
+		logger.info(fullmsg);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
+		if (qreceiver != null) {
 			qreceiver.close();
+		}
+		if (qsession != null) {
 			qsession.close();
+		}
+		if (qcon != null) {
 			qcon.close();
 		}
 		return fullmsg;
@@ -171,39 +173,33 @@ public class ActiveMqService {
 	**/
 
 	public String publishActiveMq() throws Exception {
-		String fullmsg = null;
+		String fullmsg = "Error";
 		TopicSession session = null;
 		TopicPublisher publisher = null;
 		String id = String.valueOf(CreateId.createid());
 
-		try {
-			StringBuilder buf = new StringBuilder();
-			buf.append(id);
-			buf.append(splitkey);
-			buf.append(pubmessage);
-			String body = buf.toString();
+		StringBuilder buf = new StringBuilder();
+		buf.append(id);
+		buf.append(splitkey);
+		buf.append(pubmessage);
+		String body = buf.toString();
 
-			tcon = getTopicConnection();
-			session = tcon.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-			publisher = session.createPublisher(getTopic());
-			TextMessage message = session.createTextMessage(body);
-			publisher.publish(message);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+		tcon = getTopicConnection();
+		session = tcon.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+		publisher = session.createPublisher(getTopic());
+		TextMessage message = session.createTextMessage(body);
+		publisher.publish(message);
+		fullmsg = "Set id: " + id + ", msg: " + message;
+		logger.info(fullmsg);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (publisher != null)
-					publisher.close();
-				if (session != null)
-					session.close();
-				if (tcon != null)
-					tcon.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		if (publisher != null) {
+			publisher.close();
+		}
+		if (session != null) {
+			session.close();
+		}
+		if (tcon != null) {
+			tcon.close();
 		}
 		return fullmsg;
 	}

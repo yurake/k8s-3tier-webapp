@@ -24,7 +24,7 @@ public class MemcachedService {
 	}
 
 	public String setMemcached() {
-		String fullmsg = null;
+		String fullmsg = "Error";
 		String id = String.valueOf(CreateId.createid());
 		boolean resultid = false;
 		boolean resultmsg = false;
@@ -39,12 +39,13 @@ public class MemcachedService {
 		} else {
 			fullmsg = "Failed set to Memcached";
 			LOG.warning(fullmsg);
+			throw new RuntimeException(fullmsg);
 		}
 		return fullmsg;
 	}
 
 	public String getMemcached() {
-		String fullmsg = null;
+		String fullmsg = "Error";
 		MemCachedClient mcc = new MemCachedClient();
 
 		String id = (String) mcc.get("id");
@@ -53,6 +54,7 @@ public class MemcachedService {
 		if (Objects.isNull(id) || Objects.isNull(message)) {
 			fullmsg = "Failed get from Memcached";
 			LOG.warning(fullmsg);
+			throw new RuntimeException(fullmsg);
 		} else {
 			fullmsg = "Received id: " + id + ", msg: " + message;
 			LOG.info(fullmsg);

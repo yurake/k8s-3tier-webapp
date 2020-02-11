@@ -1,5 +1,7 @@
 package webapp.tier.cache.memcached;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServlet;
 
 import org.slf4j.Logger;
@@ -22,14 +24,20 @@ public class GetMemcached extends HttpServlet {
 	}
 
 	public String getMemcached() {
-		String fullmsg = null;
+		String fullmsg = "Error";
 		MemCachedClient mcc = new MemCachedClient();
 
 		String id = (String) mcc.get("id");
 		String message = (String) mcc.get("msg");
 
-		fullmsg = "Received id: " + id + ", msg: " + message;
-		logger.info(fullmsg);
+		if (Objects.isNull(id) || Objects.isNull(message)) {
+			fullmsg = "Failed get from Memcached";
+			logger.warn(fullmsg);
+			throw new RuntimeException(fullmsg);
+		} else {
+			fullmsg = "Received id: " + id + ", msg: " + message;
+			logger.info(fullmsg);
+		}
 		return fullmsg;
 	}
 }

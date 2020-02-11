@@ -24,25 +24,18 @@ public class InsertMysql {
 		String id = String.valueOf(CreateId.createid());
 		String sql = GetConfig.getResourceBundle("mysql.insert.msg");
 
-		try {
-			sql = sql.replace(sqlkey, id);
-			sql = sql.replace(sqlbody, message);
+		sql = sql.replace(sqlkey, id);
+		sql = sql.replace(sqlbody, message);
 
-			ConnectMysql conmysql = new ConnectMysql();
-			con = conmysql.getConnection();
-			Statement stmt = con.createStatement();
+		ConnectMysql conmysql = new ConnectMysql();
+		con = conmysql.getConnection();
+		Statement stmt = con.createStatement();
 
-			logger.info("Execute SQL: " + sql);
-			stmt.executeUpdate(sql);
+		logger.info("Execute SQL: " + sql);
+		stmt.executeUpdate(sql);
 
-		}  finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+		if (con != null) {
+			con.close();
 		}
 		return sql;
 	}
