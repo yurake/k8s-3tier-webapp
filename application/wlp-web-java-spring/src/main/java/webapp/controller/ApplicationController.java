@@ -117,7 +117,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("SetMemcached")
-	public String setMemcached(Model model) {
+	public String setMemcached(Model model) throws Exception {
 
 		logger.info("SetMemcached");
 		SetMemcached setcache = new SetMemcached();
