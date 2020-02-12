@@ -54,8 +54,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
-			assertThat(expected.getMessage(), is(
-					"Request processing failed; nested exception is javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial"));
 		}
 	}
 
@@ -66,8 +64,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
-			assertThat(expected.getMessage(), is(
-					"Request processing failed; nested exception is javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial"));
 		}
 	}
 
@@ -78,8 +74,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
-			assertThat(expected.getMessage(), is(
-					"Request processing failed; nested exception is javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial"));
 		}
 	}
 
@@ -90,7 +84,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
-			assertThat(expected.getMessage(), is("rabbitmq"));
 		}
 	}
 
@@ -101,7 +94,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
-			assertThat(expected.getMessage(), is("rabbitmq"));
 		}
 	}
 
@@ -112,7 +104,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
-			assertThat(expected.getMessage(), is("rabbitmq: nodename nor servname provided, or not known"));
 		}
 	}
 
@@ -123,8 +114,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
-			assertThat(expected.getMessage(), is(
-					"Request processing failed; nested exception is java.lang.RuntimeException: Failed get from Memcached"));
 		}
 	}
 
@@ -135,8 +124,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
-			assertThat(expected.getMessage(), is(
-					"Request processing failed; nested exception is java.lang.RuntimeException: Failed set to Memcached"));
 		}
 	}
 
@@ -147,8 +134,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
-			assertThat(expected.getMessage(), is(
-					"Request processing failed; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Failed connecting to host redis:6379"));
 		}
 	}
 
@@ -159,8 +144,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
-			assertThat(expected.getMessage(), is(
-					"Request processing failed; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Failed connecting to host redis:6379"));
 		}
 	}
 
@@ -171,8 +154,6 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
-			assertThat(expected.getMessage(), is(
-					"Request processing failed; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Failed connecting to host redis:6379"));
 		}
 	}
 
