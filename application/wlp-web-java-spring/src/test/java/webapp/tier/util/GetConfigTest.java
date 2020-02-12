@@ -3,7 +3,7 @@ package webapp.tier.util;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GetConfigTest {
 

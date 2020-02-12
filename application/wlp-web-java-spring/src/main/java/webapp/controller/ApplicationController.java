@@ -35,7 +35,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("InsertMysql")
-	public String insertDb(Model model) throws NamingException, SQLException {
+	public String insertDb(Model model) throws Exception {
 
 		logger.info("InsertMysql");
 		InsertMysql insmsg = new InsertMysql();
@@ -69,7 +69,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("GetRabbitmq")
-	public String getMq(Model model) throws IOException, TimeoutException {
+	public String getMq(Model model) throws Exception {
 
 		logger.info("GetRabbitmq");
 		GetRabbitmq getmq = new GetRabbitmq();
