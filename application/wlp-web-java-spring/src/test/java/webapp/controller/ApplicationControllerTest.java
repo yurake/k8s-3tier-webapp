@@ -101,7 +101,7 @@ public class ApplicationControllerTest {
 			fail();
 		} catch (Exception expected) {
 			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
-			assertThat(expected.getMessage(), is("rabbitmq: nodename nor servname provided, or not known"));
+			assertThat(expected.getMessage(), is("rabbitmq"));
 		}
 	}
 
