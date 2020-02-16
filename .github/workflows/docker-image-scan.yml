@@ -6,4 +6,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build -t default/wlp:v0.0.1 -f ./kubernetes/wlp/Dockerfile .
+      working-directory: ./kubernetes/wlp
+      run: docker build -t default/wlp:v0.0.1 .
