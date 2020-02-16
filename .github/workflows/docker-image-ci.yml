@@ -7,7 +7,7 @@ jobs:
     - name: Check out Git repository
       uses: actions/checkout@v1
       
-    - name: Build the Docker image: wlp
+    - name: Build the Docker image - wlp
       working-directory: ./kubernetes/wlp
       run: docker build -t default/wlp:v0.0.1 -f .
     
