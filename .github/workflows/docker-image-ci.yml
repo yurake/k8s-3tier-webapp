@@ -1,4 +1,4 @@
-name: Docker Image Scan
+name: Docker Image CI
 on: [push]
 jobs:
   build:
@@ -7,6 +7,7 @@ jobs:
     - name: Check out Git repository
       uses: actions/checkout@v1
       
-    - name: Build the Docker image
+    - name: Build the Docker image: wlp
       working-directory: ./kubernetes/wlp
-      run: docker build -t default/wlp:v0.0.1 -f ./Dockerfile .
+      run: docker build -t default/wlp:v0.0.1 -f .
+    
