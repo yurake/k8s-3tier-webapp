@@ -5,4 +5,4 @@ jdk:
 
 script:
   # JaCoCo is used to have code coverage, "-Pcoverage" activates the maven profile in the pom.xml
-  - mvn -B package --file application/activemq-mysql-quarkus/pom.xml -Pcoverage 
+  - mvn -B package --file application/activemq-mysql-quarkus/pom.xml
