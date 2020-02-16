@@ -7,4 +7,4 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       working-directory: ./kubernetes/wlp
-      run: docker build -t default/wlp:v0.0.1 .
+      run: docker build -t default/wlp:v0.0.1  -f Dockerfile .
