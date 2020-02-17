@@ -50,4 +50,13 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        
+
+    - name: Copy war file
+      uses: canastro/copy-file-action@master
+      with:
+        source: "application/wlp-web-java-spring/target/spring.war"
+        target: "kubernetes/wlp/spring.war"
+ 
+    - name: Build the Docker image - wlp
+      working-directory: ./kubernetes/wlp
+      run: docker build -t default/wlp:v0.0.1 .
