@@ -35,7 +35,7 @@ items:
           app.kubernetes.io/component: all-in-one
         annotations:
           prometheus.io/scrape: "true"
-          prometheus.io/port: "16686"
+          prometheus.io/port: "14269"
       spec:
           containers:
           -   env:
