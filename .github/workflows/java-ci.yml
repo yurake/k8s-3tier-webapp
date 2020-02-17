@@ -17,7 +17,8 @@ jobs:
         java-version: 1.8
     
     - name: Build with Maven - webapp-service
-      run: mvn -B package --file application/webapp-service/pom.xml
+      working-directory: ./application/webapp-service
+      run: mvn -B package
     - name: Deploy to Github Package Registry - webapp-service
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -26,25 +27,35 @@ jobs:
         mvn deploy --settings settings.xml --file application/webapp-service/pom.xml
 
     - name: Build with Maven - activemq-mysql-quarkus
-      run: mvn -B package --file application/activemq-mysql-quarkus/pom.xml
+      working-directory: ./application/activemq-mysql-quarkus
+      run: mvn -B package
     - name: Build with Maven - hazelcast-mysql-quarkus
-      run: mvn -B package --file application/hazelcast-mysql-quarkus/pom.xml
+      working-directory: ./application/hazelcast-mysql-quarkus
+      run: mvn -B package
     - name: Build with Maven - jaxrs-quarkus
-      run: mvn -B package --file application/jaxrs-quarkus/pom.xml
+      working-directory: ./application/jaxrs-quarkus
+      run: mvn -B package
     - name: Build with Maven - rabbitmq-mysql-quarkus
-      run: mvn -B package --file application/rabbitmq-mysql-quarkus/pom.xml
+      working-directory: ./application/rabbitmq-mysql-quarkus
+      run: mvn -B package
     - name: Build with Maven - randompublish-quarkus
-      run: mvn -B package --file application/randompublish-quarkus/pom.xml
+      working-directory: ./application/randompublish-quarkus
+      run: mvn -B package
     - name: Build with Maven - redis-mysql-helidon
-      run: mvn -B package --file application/redis-mysql-helidon/pom.xml
+      working-directory: ./application/redis-mysql-helidon
+      run: mvn -B package
     - name: Build with Maven - redis-mysql-quarkus
-      run: mvn -B package --file application/redis-mysql-quarkus/pom.xml
+      working-directory: ./application/redis-mysql-quarkus
+      run: mvn -B package
     - name: Build with Maven - scheduled-quarkus
-      run: mvn -B package --file application/scheduled-quarkus/pom.xml
+      working-directory: ./application/scheduled-quarkus
+      run: mvn -B package
     - name: Build with Maven - wlp-web-java-spring
-      run: mvn -B package --file application/wlp-web-java-spring/pom.xml
+      working-directory: ./application/wlp-web-java-spring
+      run: mvn -B package
     - name: Build with Maven - redis-mysql-quarkus
-      run: mvn -B package --file application/redis-mysql-quarkus/pom.xml
+      working-directory: ./application/redis-mysql-quarkus
+      run: mvn -B package
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
