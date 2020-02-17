@@ -5,9 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out Git repository
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       
     - name: Build the Docker image - wlp
       working-directory: ./kubernetes/wlp
-      run: docker build -t default/wlp:v0.0.1 -f .
+      run: docker build -t default/wlp:v0.0.1 .
+    
     
