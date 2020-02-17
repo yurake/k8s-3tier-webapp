@@ -11,6 +11,9 @@ spec:
     metadata:
       labels:
         app: scheduled-quarkus
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
     spec:
       containers:
       - name: scheduled-quarkus

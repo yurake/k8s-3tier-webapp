@@ -73,6 +73,10 @@
 			<artifactId>quarkus-smallrye-opentracing</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-metrics</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>

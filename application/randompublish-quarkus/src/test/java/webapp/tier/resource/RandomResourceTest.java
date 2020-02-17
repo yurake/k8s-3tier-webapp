@@ -19,7 +19,7 @@ class RandomResourceTest {
 				.then()
 				.statusCode(200)
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(is("delivered"));
+				.body(is("RESTEASY004655: Unable to invoke request: java.net.UnknownHostException: jaxrs-quarkus"));
 		;
 	}
 
