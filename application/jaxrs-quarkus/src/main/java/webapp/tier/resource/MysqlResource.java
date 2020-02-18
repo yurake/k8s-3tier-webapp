@@ -17,14 +17,14 @@ import webapp.tier.service.MysqlService;
 @Path("/quarkus/mysql")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Counted(name = "performedChecks", description = "How many primality checks have been performed.")
-@Timed(name = "checksTimer", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 public class MysqlResource {
 
 	MysqlService mysqlsvc = new MysqlService();
 
 	@POST
 	@Path("/insert")
+	@Counted(name = "performedChecks_insert", description = "How many primality checks have been performed.")
+	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response insert() {
 		try {
 			return Response.ok().entity(mysqlsvc.insertMysql()).build();
@@ -36,6 +36,8 @@ public class MysqlResource {
 
 	@GET
 	@Path("/select")
+	@Counted(name = "performedChecks_select", description = "How many primality checks have been performed.")
+	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response select() {
 		try {
 			return Response.ok().entity(mysqlsvc.selectMsg()).build();
@@ -47,6 +49,8 @@ public class MysqlResource {
 
 	@POST
 	@Path("/delete")
+	@Counted(name = "performedChecks_delete", description = "How many primality checks have been performed.")
+	@Timed(name = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response delete() {
 		try {
 			return Response.ok().entity(mysqlsvc.deleteMsg()).build();

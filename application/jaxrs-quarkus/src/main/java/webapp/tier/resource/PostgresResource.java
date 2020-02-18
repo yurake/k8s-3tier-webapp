@@ -11,6 +11,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Timed;
+
 import webapp.tier.service.PostgresService;
 
 @Path("/quarkus/postgres")
@@ -21,6 +25,8 @@ public class PostgresResource {
 
 	@POST
 	@Path("/insert")
+	@Counted(name = "performedChecks_insert", description = "How many primality checks have been performed.")
+	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response insert() {
 		PostgresService postgres = new PostgresService();
 		try {
@@ -33,6 +39,8 @@ public class PostgresResource {
 
 	@GET
 	@Path("/select")
+	@Counted(name = "performedChecks_select", description = "How many primality checks have been performed.")
+	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response select() {
 		PostgresService postgres = new PostgresService();
 		try {
@@ -45,6 +53,8 @@ public class PostgresResource {
 
 	@POST
 	@Path("/delete")
+	@Counted(name = "performedChecks_delete", description = "How many primality checks have been performed.")
+	@Timed(name = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response delete() {
 		PostgresService postgres = new PostgresService();
 		try {
