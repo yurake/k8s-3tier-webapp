@@ -168,16 +168,17 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "application_webapp_tier_resource_RandomResource_checksTimer_seconds_count",
+          "expr": "sum(application_webapp_tier_resource_RandomResource_checksTimer_seconds_count)",
           "format": "time_series",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
       "thresholds": "",
       "timeFrom": null,
       "timeShift": null,
-      "title": "RandomResource Highest So Far",
+      "title": "RandomResource Request Count",
       "type": "singlestat",
       "valueFontSize": "150%",
       "valueMaps": [
@@ -291,6 +292,7 @@
           ],
           "defaults": {
             "max": 10000000000,
+            "min": 0,
             "unit": "short"
           },
           "mappings": [],
@@ -321,7 +323,7 @@
       "pluginVersion": "6.2.5",
       "targets": [
         {
-          "expr": "base_memory_maxHeap_bytes{app=\"randompublish-quarkus\"}",
+          "expr": "sum(base_memory_maxHeap_bytes{app=\"randompublish-quarkus\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ app }}",
@@ -342,7 +344,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -373,5 +375,5 @@
   "timezone": "",
   "title": "Quarkus dashboard",
   "uid": "NDVzGTQWz",
-  "version": 6
+  "version": 8
 }
