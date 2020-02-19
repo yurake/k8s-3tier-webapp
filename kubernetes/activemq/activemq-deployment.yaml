@@ -11,11 +11,18 @@ spec:
     metadata:
       labels:
         app: activemq
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9404"
     spec:
       containers:
       - name: activemq
-        image: vromero/activemq-artemis:2.10.1-alpine
+        image: vromero/activemq-artemis:2.11.0-alpine
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8161
+        - containerPort: 9404
         - containerPort: 61616
+        env:
+        - name: ENABLE_JMX_EXPORTER
+          value: "true"
