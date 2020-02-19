@@ -32,7 +32,7 @@ public class RabbitmqService {
 		connectionFactory.setPassword(password);
 		connectionFactory.setHost(host);
 		connectionFactory.setVirtualHost(vhost);
-		String fullmsg = null;
+		String fullmsg = "Error";
 
 		Connection connection = connectionFactory.newConnection();
 		Channel channel = connection.createChannel();
@@ -47,7 +47,7 @@ public class RabbitmqService {
 			connection.close();
 		}
 
-		if (resp.toString().isEmpty()) {
+		if (resp == null) {
 			return "No Data";
 		}
 
@@ -65,7 +65,7 @@ public class RabbitmqService {
 		connectionFactory.setPassword(password);
 		connectionFactory.setHost(host);
 		connectionFactory.setVirtualHost(vhost);
-		String fullmsg = null;
+		String fullmsg = "Error";
 
 		Connection connection = connectionFactory.newConnection();
 		Channel channel = connection.createChannel();
@@ -99,7 +99,7 @@ public class RabbitmqService {
 		connectionFactory.setPassword(password);
 		connectionFactory.setHost(host);
 		connectionFactory.setVirtualHost(vhost);
-		String fullmsg = null;
+		String fullmsg = "Error";
 
 		Connection connection = connectionFactory.newConnection();
 		Channel channel = connection.createChannel();
