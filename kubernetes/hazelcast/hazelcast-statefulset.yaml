@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: hazelcast
-        image: hazelcast/hazelcast:4.0
+        image: hazelcast/hazelcast:3.12.6
         ports:
         - containerPort: 5701
         - containerPort: 8080

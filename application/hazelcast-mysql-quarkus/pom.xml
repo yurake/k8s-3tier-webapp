@@ -16,9 +16,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<webapp-service.version>1.0.3-SNAPSHOT</webapp-service.version>
 		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
-		<hazelcast-client.version>3.12.5</hazelcast-client.version>
-		<hazelcast.version>3.12.5</hazelcast.version>
-		<hazelcast-kubernetes.version>1.5.2</hazelcast-kubernetes.version>
+		<hazelcast-client.version>3.12.6</hazelcast-client.version>
+		<hazelcast.version>3.12.6</hazelcast.version>
+		<hazelcast-kubernetes.version>2.0.1</hazelcast-kubernetes.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
