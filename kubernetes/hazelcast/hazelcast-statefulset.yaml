@@ -14,19 +14,26 @@ spec:
     metadata:
       labels:
         app: hazelcast
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
       - name: hazelcast
-        image: hazelcast/hazelcast:3.10.3
+        image: hazelcast/hazelcast:4.0
         ports:
-        - name: hazelcast
-          containerPort: 5701
+        - containerPort: 5701
+        - containerPort: 8080
         volumeMounts:
         - name: hazelcast-storage
           mountPath: /data/hazelcast
         env:
         - name: JAVA_OPTS
           value: "-Dhazelcast.rest.enabled=true -Dhazelcast.config=/data/hazelcast/hazelcast.xml"
+        env:
+        - name: PROMETHEUS_PORT
+          value: "8080"
       volumes:
       - name: hazelcast-storage
         configMap:
