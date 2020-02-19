@@ -4,13 +4,14 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
@@ -25,7 +26,11 @@ import io.quarkus.runtime.StartupEvent;
 @ApplicationScoped
 public class RabbitMqService implements Runnable {
 
-	Logger logger = LoggerFactory.getLogger(RabbitMqService.class);
+	@Inject
+	@RestClient
+	DeliverService deliversvc;
+
+	private static final Logger LOG = Logger.getLogger(RabbitMqService.class.getSimpleName());
 	private static String queuename = ConfigProvider.getConfig().getValue("rabbitmq.queue.name", String.class);
 	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username", String.class);
 	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password", String.class);
@@ -38,12 +43,12 @@ public class RabbitMqService implements Runnable {
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
-		logger.info("The application is starting...");
+		LOG.info("The application is starting...");
 	}
 
 	void onStop(@Observes ShutdownEvent ev) {
 		scheduler.shutdown();
-		logger.info("The application is stopping...");
+		LOG.info("The application is stopping...");
 	}
 
 	private Channel getJmsChannel() throws Exception {
@@ -78,7 +83,7 @@ public class RabbitMqService implements Runnable {
 					String[] value = jmsbody.split(splitkey, 0);
 					String id = value[0];
 					String message = value[1];
-					logger.info("Received: id: " + id + ", msg:" + message);
+					LOG.info("Received: id: " + id + ", msg:" + message);
 
 					MysqlService mysqlsvc = new MysqlService();
 					try {
@@ -86,10 +91,15 @@ public class RabbitMqService implements Runnable {
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
+
+					String response;
+					LOG.info("Call: Random Publish");
+					response = deliversvc.random();
+					LOG.info(response);
 				}
 			};
 			channel.basicConsume(queuename, true, consumer);
-			logger.info("Waiting for messages as Consumer...");
+			LOG.info("Waiting for messages as Consumer...");
 
 		} catch (Exception e) {
 			e.printStackTrace();

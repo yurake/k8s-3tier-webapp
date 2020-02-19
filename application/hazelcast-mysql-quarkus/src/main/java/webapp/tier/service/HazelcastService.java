@@ -1,12 +1,12 @@
 package webapp.tier.service;
 
-import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
@@ -15,7 +15,12 @@ import com.hazelcast.core.MessageListener;
 
 @ApplicationScoped
 public class HazelcastService {
-	Logger logger = LoggerFactory.getLogger(HazelcastService.class);
+
+	@Inject
+	@RestClient
+	DeliverService deliversvc;
+
+	private static final Logger LOG = Logger.getLogger(HazelcastService.class.getSimpleName());
 	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topic.name", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
@@ -50,10 +55,15 @@ public class HazelcastService {
 					String fullmsg = null;
 					String[] body = message.getMessageObject().split(splitkey, 0);
 					fullmsg = "Received id:" + body[0] + ", msg: " + body[1];
-					logger.info(fullmsg);
+					LOG.info(fullmsg);
 					try {
 						mysqlsvc.insertMsg(body);
-					} catch (SQLException e) {
+
+						String response;
+						LOG.info("Call: Random Publish");
+						response = deliversvc.random();
+						LOG.info(response);
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}

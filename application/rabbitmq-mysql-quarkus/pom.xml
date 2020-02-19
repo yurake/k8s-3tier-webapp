@@ -40,6 +40,14 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-rest-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jsonb</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>webapp.3tier.k8s</groupId>
 			<artifactId>webapp-service</artifactId>
 			<version>${webapp-service.version}</version>

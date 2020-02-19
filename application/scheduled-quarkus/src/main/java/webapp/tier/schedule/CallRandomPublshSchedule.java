@@ -37,7 +37,7 @@ public class CallRandomPublshSchedule {
 		LOG.info(response);
 	}
 
-	@Scheduled(cron = "0 0 0 * * ?")
+	@Scheduled(every = "10m")
 	void callDeleteDbs() {
 		String response;
 		LOG.info("Call: Delete Postgres");

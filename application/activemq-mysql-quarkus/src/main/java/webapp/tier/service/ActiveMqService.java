@@ -15,12 +15,17 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 
 @ApplicationScoped
 public class ActiveMqService implements Runnable {
+
+	@Inject
+	@RestClient
+	DeliverService deliversvc;
 
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
 	private static String topicname = ConfigProvider.getConfig().getValue("activemq.topic.name", String.class);
@@ -72,6 +77,11 @@ public class ActiveMqService implements Runnable {
 					fullmsg = "No Data";
 					LOG.info(fullmsg);
 				}
+
+				String response;
+				LOG.info("Call: Random Publish");
+				response = deliversvc.random();
+				LOG.info(response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
