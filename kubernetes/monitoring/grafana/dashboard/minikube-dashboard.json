@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 10219,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 11,
   "links": [],
   "panels": [
     {
@@ -330,7 +330,7 @@
     ]
   },
   "timezone": "",
-  "title": "grafana-minikube Copy",
+  "title": "Minikube dashboard",
   "uid": "YU1P7P2Zk",
-  "version": 1
+  "version": 2
 }

@@ -17,7 +17,7 @@
   "gnetId": 3066,
   "graphTooltip": 0,
   "id": 20,
-  "iteration": 1582116437758,
+  "iteration": 1582122561913,
   "links": [],
   "panels": [
     {
@@ -61,7 +61,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_memory_bytes_used{instance=~\"$instance\"}",
+          "expr": "jvm_memory_bytes_used",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 5,
@@ -150,7 +150,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_threads_current{instance=~\"$instance\"}",
+          "expr": "jvm_threads_current",
           "format": "time_series",
           "intervalFactor": 5,
           "legendFormat": "current [{{app}}]",
@@ -159,7 +159,7 @@
           "step": 10
         },
         {
-          "expr": "jvm_threads_daemon{instance=~\"$instance\"}",
+          "expr": "jvm_threads_daemon",
           "format": "time_series",
           "intervalFactor": 5,
           "legendFormat": "daemon [{{app}}]",
@@ -248,7 +248,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_classes_loaded{instance=~\"$instance\"}",
+          "expr": "jvm_classes_loaded",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 5,
@@ -338,7 +338,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(jvm_gc_collection_seconds_sum{instance=~\"$instance\"}[1m])",
+          "expr": "rate(jvm_gc_collection_seconds_sum[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 5,
@@ -427,7 +427,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_gc_collection_seconds_count{instance=~\"$instance\"}",
+          "expr": "jvm_gc_collection_seconds_count",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 5,
@@ -496,14 +496,14 @@
           "value": "$__all"
         },
         "datasource": "Prometheus",
-        "definition": "label_values(instance)",
+        "definition": "label_values(jvm_info, app)",
         "hide": 0,
         "includeAll": true,
         "label": "Instance",
         "multi": true,
         "name": "instance",
         "options": [],
-        "query": "label_values(instance)",
+        "query": "label_values(jvm_info, app)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -546,7 +546,7 @@
     ]
   },
   "timezone": "",
-  "title": "JVM overview - Prometheus",
+  "title": "JVM dashboard",
   "uid": "3UTe21wZk",
-  "version": 4
+  "version": 6
 }
