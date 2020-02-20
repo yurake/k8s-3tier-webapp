@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-exporter
+  name: postgres-exporter
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql-exporter
+      app: postgres-exporter
   template:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "9104"
+        prometheus.io/port: "9187"
       labels:
-        app: mysql-exporter
+        app: postgres-exporter
     spec:
       containers:
-      - name: mysql-exporter
-        image: prom/mysqld-exporter:v0.12.1
+      - name: postgres-exporter
+        image: wrouesnel/postgres_exporter:v0.8.0
         env:
         - name: DATA_SOURCE_NAME
           valueFrom:
             secretKeyRef:
-              name: mysql-exporter-secret
-              key: mysql-exporter-password
+              name: postgres-exporter-secret
+              key: postgres-exporter-password
         ports:
-        - containerPort: 9104
+        - containerPort: 9187
