@@ -4,7 +4,7 @@ metadata:
   name: jupyter
   namespace: monitoring
   labels:
-    k8s-3tier-webapp: jupyter
+    app: jupyter
 spec:
   type: ClusterIP
   selector:

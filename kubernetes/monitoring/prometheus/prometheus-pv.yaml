@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: prometheus-pv
   labels:
-    k8s-3tier-webapp: prometheus
+    app: prometheus
 spec:
   accessModes:
     - ReadWriteOnce

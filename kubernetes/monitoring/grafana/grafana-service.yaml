@@ -4,7 +4,7 @@ metadata:
   name: grafana
   namespace: monitoring
   labels:
-    k8s-3tier-webapp: grafana
+    app: grafana
 spec:
   type: ClusterIP
   selector:

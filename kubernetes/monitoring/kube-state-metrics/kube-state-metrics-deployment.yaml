@@ -4,16 +4,16 @@ metadata:
   name: kube-state-metrics
   namespace: monitoring
   labels:
-    k8s-3tier-webapp: kube-state-metrics
+    app: kube-state-metrics
 spec:
   replicas: 1
   selector:
     matchLabels:
-      k8s-3tier-webapp: kube-state-metrics
+      app: kube-state-metrics
   template:
     metadata:
       labels:
-        k8s-3tier-webapp: kube-state-metrics
+        app: kube-state-metrics
     spec:
       containers:
       - image: quay.io/coreos/kube-state-metrics:v1.8.0

@@ -5,7 +5,7 @@ metadata:
   name: prometheus-config
   namespace: monitoring
   labels:
-    k8s-3tier-webapp: prometheus
+    app: prometheus
     kubernetes.io/cluster-service: "true"
     addonmanager.kubernetes.io/mode: EnsureExists
 data:

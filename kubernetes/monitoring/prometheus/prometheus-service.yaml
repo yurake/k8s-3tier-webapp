@@ -4,11 +4,11 @@ metadata:
   name: prometheus
   namespace: monitoring
   labels:
-    k8s-3tier-webapp: prometheus
+    app: prometheus
 spec:
   type: ClusterIP
   selector:
-    k8s-3tier-webapp: prometheus
+    app: prometheus
   ports:
   - protocol: TCP
     port: 9090

@@ -4,7 +4,7 @@ metadata:
   name: node-exporter-pv-proc
   namespace: monitoring
   labels:
-    k8s-3tier-webapp: node-exporter
+    app: node-exporter
     name: node-exporter-hostpath-proc
 spec:
   accessModes:

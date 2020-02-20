@@ -4,7 +4,7 @@ metadata:
   name: grafana-pv
   namespace: monitoring
   labels:
-    k8s-3tier-webapp: grafana
+    app: grafana
     name: grafana-hostpath
 spec:
   accessModes:

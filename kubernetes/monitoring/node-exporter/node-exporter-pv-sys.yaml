@@ -4,7 +4,7 @@ metadata:
   name: node-exporter-pv-sys
   namespace: monitoring
   labels:
-    k8s-3tier-webapp: node-exporter
+    app: node-exporter
     name: node-exporter-hostpath-sys
 spec:
   accessModes:

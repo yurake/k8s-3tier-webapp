@@ -4,6 +4,6 @@ metadata:
   name: jupyter-configmap
   namespace: monitoring
   labels:
-    k8s-3tier-webapp: jupyter
+    app: jupyter
 data:
   jupyter-lab: "yes"
