@@ -13,6 +13,9 @@ spec:
     metadata:
       labels:
         app: postgres
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9187"
     spec:
       containers:
       - name: postgres
@@ -35,6 +38,16 @@ spec:
         volumeMounts:
         - name: postgres-persistent-storage
           mountPath: /var/lib/postgresql/data
+      - name: postgres-exporter
+        image: wrouesnel/postgres_exporter:v0.8.0
+        env:
+        - name: DATA_SOURCE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-exporter-password
+        ports:
+        - containerPort: 9187
       volumes:
       - name: postgres-persistent-storage
         persistentVolumeClaim:

@@ -13,6 +13,9 @@ spec:
     metadata:
       labels:
         app: mysql
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9104"
     spec:
       containers:
       - name: mysql
@@ -38,6 +41,16 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+      - name: mysql-exporter
+        image: prom/mysqld-exporter:v0.12.1
+        env:
+        - name: DATA_SOURCE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-exporter-password
+        ports:
+        - containerPort: 9104
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
