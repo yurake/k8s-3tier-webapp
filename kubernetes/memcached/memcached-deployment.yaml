@@ -11,6 +11,9 @@ spec:
     metadata:
       labels:
         app: memcached
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9150"
     spec:
       containers:
       - name: memcached
@@ -18,3 +21,7 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 11211
+      - name: memcached-exporter
+        image: prom/memcached-exporter:v0.6.0
+        ports:
+        - containerPort: 9150
