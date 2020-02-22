@@ -2,8 +2,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: jenkins
-  annotations:
-    ingress.kubernetes.io/rewrite-target: /
+  namespace: monitoring
+  labels:
+    app: jenkins
 spec:
   rules:
   - host: jenkins.minikube

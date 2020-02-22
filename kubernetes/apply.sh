@@ -148,17 +148,17 @@ kubectl apply -f ./scheduled-quarkus/scheduled-quarkus-deployment.yaml
 echo "###"
 echo ""
 
-echo "### jenkins"
-kubectl apply -f ./jenkins/jenkins-pv.yaml
-kubectl apply -f ./jenkins/jenkins-pvc.yaml
-kubectl apply -f ./jenkins/jenkins-deployment.yaml
-kubectl apply -f ./jenkins/jenkins-service.yaml
-kubectl apply -f ./jenkins/jenkins-ingress.yaml
+echo "## monitoring"
+kubectl apply -f ./monitoring/monitoring-namespace.yaml
 echo "###"
 echo ""
 
-echo "## monitoring"
-kubectl apply -f ./monitoring/monitoring-namespace.yaml
+echo "### jenkins"
+kubectl apply -f ./monitoring/jenkins/jenkins-pv.yaml
+kubectl apply -f ./monitoring/jenkins/jenkins-pvc.yaml
+kubectl apply -f ./monitoring/jenkins/jenkins-deployment.yaml
+kubectl apply -f ./monitoring/jenkins/jenkins-service.yaml
+kubectl apply -f ./monitoring/jenkins/jenkins-ingress.yaml
 echo "###"
 echo ""
 

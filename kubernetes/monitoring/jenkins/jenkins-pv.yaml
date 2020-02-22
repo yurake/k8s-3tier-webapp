@@ -2,7 +2,9 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: jenkins-pv
+  namespace: monitoring
   labels:
+    app: jenkins
     name: jenkins-hostpath
 spec:
   accessModes:
