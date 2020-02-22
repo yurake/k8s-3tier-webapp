@@ -12,10 +12,16 @@ spec:
       labels:
         app: redis
         role: master
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9121"
     spec:
       containers:
       - name: redis-master
         image: redis:5.0.6
         ports:
         - containerPort: 6379
-
+      - name: redis-exporter
+        image: oliver006/redis_exporter:v1.3.5-alpine
+        ports:
+        - containerPort: 9121
