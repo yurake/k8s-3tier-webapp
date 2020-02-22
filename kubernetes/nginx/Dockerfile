@@ -1,3 +1,3 @@
-FROM nginx:1.17.4
+FROM nginx:1.17.8
 COPY default.conf /etc/nginx/conf.d/default.conf
 COPY docs /etc/nginx/docs

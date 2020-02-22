@@ -11,6 +11,9 @@ spec:
     metadata:
       labels:
         app: nginx
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9113"
     spec:
       containers:
       - name: nginx
@@ -18,3 +21,10 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
+      - name: nginx-exporter
+        image: nginx/nginx-prometheus-exporter:0.6.0
+        ports:
+        - containerPort: 9113
+        env:
+        - name: SCRAPE_URI
+          value: "http://localhost:80/stub_status"
