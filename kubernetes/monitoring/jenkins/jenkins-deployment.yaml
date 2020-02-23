@@ -16,18 +16,25 @@ spec:
     metadata:
       labels:
         app: jenkins
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/prometheus"
     spec:
       securityContext:
         fsGroup: 1000 
         runAsUser: 0
       containers:
       - name: jenkins
-        image: jenkins/jenkins:lts
+        image: jenkins/jenkins:2.221-alpine
         ports:
         - containerPort: 8080
         volumeMounts:
         - name: jenkins-persistent-storage
           mountPath: /var/jenkins_home
+        env:
+        - name: PROMETHEUS_NAMESPACE
+          value: "monitoring"
       volumes:
       - name: jenkins-persistent-storage
         persistentVolumeClaim:
