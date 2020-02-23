@@ -17,7 +17,7 @@
   "gnetId": 9524,
   "graphTooltip": 0,
   "id": 32,
-  "iteration": 1582424222434,
+  "iteration": 1582426414498,
   "links": [],
   "panels": [
     {
@@ -65,7 +65,7 @@
       "nullPointMode": "connected",
       "nullText": null,
       "options": {},
-      "postfix": " jobs/min",
+      "postfix": " jobs",
       "postfixFontSize": "70%",
       "prefix": "",
       "prefixFontSize": "50%",
@@ -85,7 +85,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "rate(jenkins_job_building_duration_count[1m])",
+          "expr": "sum(jenkins_job_building_duration_count)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -240,7 +240,7 @@
       "nullPointMode": "connected",
       "nullText": null,
       "options": {},
-      "postfix": " jobs/min",
+      "postfix": " jobs",
       "postfixFontSize": "70%",
       "prefix": "",
       "prefixFontSize": "50%",
@@ -260,7 +260,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "rate(jenkins_job_queuing_duration_count[1m])",
+          "expr": "sum(jenkins_job_queuing_duration_count)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -345,7 +345,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "(vm_memory_total_max{app=\"jenkins\"} - vm_memory_total_used{app=\"jenkins\"}) / vm_memory_total_max{app=\"jenkins\"} * 100.0",
+          "expr": "sum((vm_memory_total_max{app=\"jenkins\"} - vm_memory_total_used{app=\"jenkins\"}) / vm_memory_total_max{app=\"jenkins\"} * 100.0)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A",
@@ -431,7 +431,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "vm_uptime_milliseconds{app=\"jenkins\"}",
+          "expr": "sum(vm_uptime_milliseconds{app=\"jenkins\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A",
@@ -517,9 +517,10 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "jenkins_health_check_score",
+          "expr": "sum(jenkins_health_check_score)",
           "format": "time_series",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A",
           "textEditor": false
         }
@@ -608,7 +609,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "jenkins_plugins_failed",
+          "expr": "sum(jenkins_plugins_failed)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A",
@@ -694,7 +695,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "jenkins_node_offline_value",
+          "expr": "sum(jenkins_node_offline_value)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A",
@@ -780,7 +781,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "jenkins_queue_size_value",
+          "expr": "sum(jenkins_queue_size_value)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A",
@@ -866,7 +867,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "jenkins_executor_free_value",
+          "expr": "sum(jenkins_executor_free_value)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1046,7 +1047,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "jenkins_executor_in_use_value",
+          "expr": "sum(jenkins_executor_in_use_value)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1214,5 +1215,5 @@
   "timezone": "browser",
   "title": "a Jenkins performance and health overview for jenkinsci/prometheus-plugin",
   "uid": "-y-jaPEmk",
-  "version": 4
+  "version": 5
 }
