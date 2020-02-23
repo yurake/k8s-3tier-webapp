@@ -1,0 +1,186 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 44,
+  "links": [],
+  "panels": [
+    {
+      "colors": [
+        "rgba(50, 172, 45, 0.97)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(245, 54, 54, 0.9)"
+      ],
+      "composites": [],
+      "content": "graph TD\n  Ascrape_duration_seconds_[nginx] --> B[jaxrs-quarkus]\n  B --> C[activemq]\n  C --> D[activemq-mysql-quarkus]\n  B --> E[hazelcast]\n  E --> F[hazelcast-mysql-quarkus]\n  B --> G[memcached]\n  B --> H[mysql]\n  B --> I[postgres]\n  B --> J[rabbitmq]\n  J --> K[rabbitmq-mysql-quarkus]\n  L[randompublish-quarkus] --> B\n  B --> M[redis-master]\n  M --> N[redis-mysql-helidon]\n  M --> O[redis-mysql-quarkus]\n  P[scheduled-quarkus] --> L\n  Q[wlp] --> C\n  Q --> E\n  Q --> G\n  Q --> H\n  Q --> I\n  Q --> J\n  Q --> M\n  D --> H\n  D --> L\n  F --> H\n  F --> L\n  K --> H\n  K --> L\n  O --> H\n  O --> L\n  grafana\n  prometheus\n  jaeger\n  loki\n  jenkins\n  jupyter\n\t\t",
+      "decimals": 2,
+      "format": "none",
+      "graphId": "diagram_2",
+      "gridPos": {
+        "h": 36,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "init": {
+        "arrowMarkerAbsolute": true,
+        "cloneCssStyles": true,
+        "flowchart": {
+          "htmlLabels": true,
+          "useMaxWidth": true
+        },
+        "gantt": {
+          "barGap": 4,
+          "barHeight": 20,
+          "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+          "fontSize": 11,
+          "gridLineStartPadding": 35,
+          "leftPadding": 75,
+          "numberSectionStyles": 3,
+          "titleTopMargin": 25,
+          "topPadding": 50
+        },
+        "logLevel": 3,
+        "sequenceDiagram": {
+          "actorMargin": 50,
+          "bottomMarginAdj": 1,
+          "boxMargin": 10,
+          "boxTextMargin": 5,
+          "diagramMarginX": 50,
+          "diagramMarginY": 10,
+          "height": 65,
+          "messageMargin": 35,
+          "mirrorActors": true,
+          "noteMargin": 10,
+          "useMaxWidth": true,
+          "width": 150
+        },
+        "startOnLoad": false
+      },
+      "legend": {
+        "avg": true,
+        "current": true,
+        "gradient": {
+          "enabled": true,
+          "show": true
+        },
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": true
+      },
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "maxWidth": false,
+      "mermaidServiceUrl": "",
+      "metricCharacterReplacements": [],
+      "moddedSeriesVal": 0,
+      "mode": "content",
+      "nullPointMode": "connected",
+      "options": {},
+      "seriesOverrides": [],
+      "style": "",
+      "targets": [
+        {
+          "expr": "sum(rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^.*$\",namespace=\"default\"}[2m])) by (container_name)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{ container_name }}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^.*$\",namespace=\"monitoring\"}[2m])) by (container_name)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{ container_name }}",
+          "refId": "B"
+        }
+      ],
+      "thresholds": "0,0.1",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Pods CPU usage (2m avg) with diagram",
+      "type": "jdbranham-diagram-panel",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current",
+      "valueOptions": [
+        "avg",
+        "min",
+        "max",
+        "total",
+        "current"
+      ]
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 18,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "k8s-3tiers-webapp diagram",
+  "uid": "AN8_m9wWz",
+  "version": 5
+}

@@ -17,6 +17,7 @@ The k8s-3tier-webapp service is for PoC, not production ready.
 | 3 | Management | Monitoring, CI/CD, Tracing
 
 ![LayardArchitecturalOverview.png](./docs/LayardArchitecturalOverview.png)
+![diagram.png](./docs/diagram.png)
 
 ## Requirements
 Installed CLI commands.
