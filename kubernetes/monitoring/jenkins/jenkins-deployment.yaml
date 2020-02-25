@@ -21,12 +21,13 @@ spec:
         prometheus.io/port: "8080"
         prometheus.io/path: "/prometheus"
     spec:
+      serviceAccountName: jenkins
       securityContext:
         fsGroup: 1000 
         runAsUser: 0
       containers:
       - name: jenkins
-        image: jenkins/jenkins:2.221-alpine
+        image: monitoring/jenkins:v0.0.1
         ports:
         - containerPort: 8080
         volumeMounts:

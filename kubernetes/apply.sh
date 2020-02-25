@@ -154,6 +154,7 @@ echo "###"
 echo ""
 
 echo "### jenkins"
+kubectl apply -f ./monitoring/jenkins/jenkins-rbac.yaml
 kubectl apply -f ./monitoring/jenkins/jenkins-pv.yaml
 kubectl apply -f ./monitoring/jenkins/jenkins-pvc.yaml
 kubectl apply -f ./monitoring/jenkins/jenkins-deployment.yaml
