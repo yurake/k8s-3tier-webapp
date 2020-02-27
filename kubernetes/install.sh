@@ -154,6 +154,7 @@ echo "###"
 echo ""
 
 echo "### jenkins"
+docker build -t monitoring/jenkins:v0.0.1 ./monitoring/jenkins/.
 kubectl apply -f ./monitoring/jenkins/jenkins-rbac.yaml
 kubectl apply -f ./monitoring/jenkins/jenkins-pv.yaml
 kubectl apply -f ./monitoring/jenkins/jenkins-pvc.yaml
