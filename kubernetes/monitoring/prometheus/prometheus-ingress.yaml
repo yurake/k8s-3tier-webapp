@@ -5,8 +5,6 @@ metadata:
   namespace: monitoring
   labels:
     app: prometheus
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: prometheus.minikube
