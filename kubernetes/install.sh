@@ -173,6 +173,13 @@ cd ${ROOT_DIR}
 echo "###"
 echo ""
 
+echo "## jaeger"
+cd jaeger
+kubectl apply -f ./jaeger-all-in-one-template.yml
+cd ${ROOT_DIR}
+echo "###"
+echo ""
+
 echo "## monitoring"
 cd ${ROOT_DIR}/monitoring
 kubectl apply -f ./monitoring-namespace.yaml
