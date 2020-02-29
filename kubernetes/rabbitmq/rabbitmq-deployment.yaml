@@ -23,6 +23,13 @@ spec:
         - containerPort: 5672
         - containerPort: 15672
         - containerPort: 15692
+        resources:
+          limits:
+            memory: 600Mi
+            cpu: 500m
+          requests:
+            memory: 100Mi
+            cpu: 100m
         env:
         - name: RABBITMQ_DEFAULT_VHOST
           valueFrom:

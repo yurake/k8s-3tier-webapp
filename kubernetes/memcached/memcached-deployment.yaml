@@ -21,7 +21,21 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 11211
+        resources:
+          limits:
+            memory: 600Mi
+            cpu: 500m
+          requests:
+            memory: 100Mi
+            cpu: 100m
       - name: memcached-exporter
         image: prom/memcached-exporter:v0.6.0
         ports:
         - containerPort: 9150
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 200m
+          requests:
+            memory: 100Mi
+            cpu: 50m

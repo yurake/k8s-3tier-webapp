@@ -44,6 +44,13 @@ spec:
             - --web.enable-lifecycle
           ports:
             - containerPort: 9090
+          resources:
+            limits:
+              memory: 600Mi
+              cpu: 500m
+            requests:
+              memory: 100Mi
+              cpu: 100m
           readinessProbe:
             httpGet:
               path: /-/ready

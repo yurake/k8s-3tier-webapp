@@ -24,6 +24,16 @@ spec:
         args:
         - --character-set-server=utf8mb4
         - --collation-server=utf8mb4_unicode_ci
+        ports:
+        - name: mysql
+          containerPort: 3306
+        resources:
+          limits:
+            memory: 600Mi
+            cpu: 500m
+          requests:
+            memory: 100Mi
+            cpu: 100m
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -35,22 +45,26 @@ spec:
             configMapKeyRef:
               name: mysql-configmap
               key: tz
-        ports:
-        - name: mysql
-          containerPort: 3306
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
       - name: mysql-exporter
         image: prom/mysqld-exporter:v0.12.1
+        ports:
+        - containerPort: 9104
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 200m
+          requests:
+            memory: 100Mi
+            cpu: 50m
         env:
         - name: DATA_SOURCE_NAME
           valueFrom:
             secretKeyRef:
               name: mysql-secret
               key: mysql-exporter-password
-        ports:
-        - containerPort: 9104
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:

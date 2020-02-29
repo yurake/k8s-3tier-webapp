@@ -23,6 +23,13 @@ spec:
         - containerPort: 8161
         - containerPort: 9404
         - containerPort: 61616
+        resources:
+          limits:
+            memory: 600Mi
+            cpu: 500m
+          requests:
+            memory: 100Mi
+            cpu: 100m
         env:
         - name: ENABLE_JMX_EXPORTER
           value: "true"

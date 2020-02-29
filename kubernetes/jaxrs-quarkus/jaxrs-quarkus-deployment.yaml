@@ -19,6 +19,13 @@ spec:
       - name: jaxrs-quarkus
         image: default/jaxrs-quarkus:v0.0.1
         imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: 600Mi
+            cpu: 500m
+          requests:
+            memory: 100Mi
+            cpu: 100m
         livenessProbe:
           httpGet:
             port: 8080

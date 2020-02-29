@@ -21,6 +21,16 @@ spec:
       - name: postgres
         image: default/postgres:v0.0.1
         imagePullPolicy: IfNotPresent
+        ports:
+        - name: postgres
+          containerPort: 5432
+        resources:
+          limits:
+            memory: 600Mi
+            cpu: 500m
+          requests:
+            memory: 100Mi
+            cpu: 100m
         env:
         - name: POSTGRES_PASSWORD
           valueFrom:
@@ -32,22 +42,26 @@ spec:
             configMapKeyRef:
               name: postgres-configmap
               key: tz
-        ports:
-        - name: postgres
-          containerPort: 5432
         volumeMounts:
         - name: postgres-persistent-storage
           mountPath: /var/lib/postgresql/data
       - name: postgres-exporter
         image: wrouesnel/postgres_exporter:v0.8.0
+        ports:
+        - containerPort: 9187
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 200m
+          requests:
+            memory: 100Mi
+            cpu: 50m
         env:
         - name: DATA_SOURCE_NAME
           valueFrom:
             secretKeyRef:
               name: postgres-secret
               key: postgres-exporter-password
-        ports:
-        - containerPort: 9187
       volumes:
       - name: postgres-persistent-storage
         persistentVolumeClaim:

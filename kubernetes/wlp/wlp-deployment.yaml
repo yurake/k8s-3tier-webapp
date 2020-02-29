@@ -18,6 +18,13 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
+        resources:
+          limits:
+            memory: 600Mi
+            cpu: 500m
+          requests:
+            memory: 100Mi
+            cpu: 100m
         volumeMounts:
         - name: wlp-config-volume
           mountPath: /config/jvm.options
