@@ -18,7 +18,12 @@
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
-    <extensions/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.PathRestriction>
+        <includedRegions>kubernetes/*</includedRegions>
+        <excludedRegions>kubernetes/monitoring/*</excludedRegions>
+      </hudson.plugins.git.extensions.impl.PathRestriction>
+    </extensions>
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
@@ -43,7 +48,7 @@ kubectl get po -n default
   <buildWrappers>
     <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.24.1">
       <serverUrl>https://kubernetes.default.svc.cluster.local</serverUrl>
-      <credentialsId>80ac878d-fafb-4f5b-b840-8cbc6d52774a</credentialsId>
+      <credentialsId>993813bf-04bd-43e7-bb5c-d55c604ae588</credentialsId>
     </org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper>
   </buildWrappers>
 </project>
