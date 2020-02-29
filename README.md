@@ -33,7 +33,6 @@ minikube config set disk-size 40g
 minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --kubernetes-version=v1.15.4
 
 minikube addons enable ingress
-minikube addons enable metrics-server
 
 eval $(minikube docker-env)
 ```
