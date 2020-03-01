@@ -25,7 +25,7 @@
         "rgba(245, 54, 54, 0.9)"
       ],
       "composites": [],
-      "content": "graph TD\n  Ascrape_duration_seconds_[nginx] --> B[jaxrs-quarkus]\n  B --> C[activemq]\n  C --> D[activemq-mysql-quarkus]\n  B --> E[hazelcast]\n  E --> F[hazelcast-mysql-quarkus]\n  B --> G[memcached]\n  B --> H[mysql]\n  B --> I[postgres]\n  B --> J[rabbitmq]\n  J --> K[rabbitmq-mysql-quarkus]\n  L[randompublish-quarkus] --> B\n  B --> M[redis-master]\n  M --> N[redis-mysql-helidon]\n  M --> O[redis-mysql-quarkus]\n  P[scheduled-quarkus] --> L\n  Q[wlp] --> C\n  Q --> E\n  Q --> G\n  Q --> H\n  Q --> I\n  Q --> J\n  Q --> M\n  D --> H\n  D --> L\n  F --> H\n  F --> L\n  K --> H\n  K --> L\n  O --> H\n  O --> L\n  grafana\n  prometheus\n  jaeger\n  loki\n  jenkins\n  jupyter\n\t\t",
+      "content": "graph TD\n  Ascrape_duration_seconds_[nginx] --> B[jaxrs-quarkus]\n  B --> C[activemq]\n  C --> D[activemq-mysql-quarkus]\n  B --> E[hazelcast]\n  E --> F[hazelcast-mysql-quarkus]\n  B --> G[memcached]\n  B --> H[mysql]\n  B --> I[postgres]\n  B --> J[rabbitmq]\n  J --> K[rabbitmq-mysql-quarkus]\n  L[randompublish-quarkus] --> B\n  B --> M[redis-master]\n  M --> N[redis-mysql-helidon]\n  M --> O[redis-mysql-quarkus]\n  P[scheduled-quarkus] --> L\n  Q[wlp] --> C\n  Q --> E\n  Q --> G\n  Q --> H\n  Q --> I\n  Q --> J\n  Q --> M\n  D --> H\n  D --> L\n  F --> H\n  F --> L\n  K --> H\n  K --> L\n  O --> H\n  O --> L\n  grafana\n  prometheus-server\n  jaeger\n  loki\n  jenkins\n  jupyter\n\t\t",
       "decimals": 2,
       "format": "none",
       "graphId": "diagram_2",
@@ -182,5 +182,5 @@
   "timezone": "",
   "title": "k8s-3tiers-webapp diagram",
   "uid": "AN8_m9wWz",
-  "version": 5
+  "version": 6
 }
