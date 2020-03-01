@@ -23,13 +23,6 @@ spec:
           name: http-metrics
         - containerPort: 8081
           name: telemetry
-        resources:
-          limits:
-            memory: 600Mi
-            cpu: 500m
-          requests:
-            memory: 100Mi
-            cpu: 100m
         livenessProbe:
           httpGet:
             path: /healthz

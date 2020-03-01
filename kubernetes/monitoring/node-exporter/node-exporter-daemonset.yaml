@@ -29,13 +29,6 @@ spec:
             - name: metrics
               containerPort: 9100
               hostPort: 9100
-          resources:
-            limits:
-              memory: 600Mi
-              cpu: 500m
-            requests:
-              memory: 100Mi
-              cpu: 100m
           volumeMounts:
             - name: node-exporter-persistent-storage-proc
               mountPath: /host/proc
@@ -43,12 +36,6 @@ spec:
             - name: node-exporter-persistent-storage-sys
               mountPath: /host/sys
               readOnly: true
-          resources:
-            limits:
-              memory: 50Mi
-            requests:
-              cpu: 100m
-              memory: 50Mi
       hostNetwork: true
       hostPID: true
       volumes:

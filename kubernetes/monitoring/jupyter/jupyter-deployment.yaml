@@ -21,13 +21,6 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8888
-        resources:
-          limits:
-            memory: 600Mi
-            cpu: 500m
-          requests:
-            memory: 100Mi
-            cpu: 100m
         env:
         - name: JUPYTER_ENABLE_LAB
           valueFrom:

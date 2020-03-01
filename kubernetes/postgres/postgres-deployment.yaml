@@ -24,13 +24,6 @@ spec:
         ports:
         - name: postgres
           containerPort: 5432
-        resources:
-          limits:
-            memory: 600Mi
-            cpu: 500m
-          requests:
-            memory: 100Mi
-            cpu: 100m
         env:
         - name: POSTGRES_PASSWORD
           valueFrom:
@@ -49,13 +42,6 @@ spec:
         image: wrouesnel/postgres_exporter:v0.8.0
         ports:
         - containerPort: 9187
-        resources:
-          limits:
-            memory: 100Mi
-            cpu: 200m
-          requests:
-            memory: 100Mi
-            cpu: 50m
         env:
         - name: DATA_SOURCE_NAME
           valueFrom:

@@ -21,24 +21,10 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
-        resources:
-          limits:
-            memory: 600Mi
-            cpu: 500m
-          requests:
-            memory: 100Mi
-            cpu: 100m
       - name: nginx-exporter
         image: nginx/nginx-prometheus-exporter:0.6.0
         ports:
         - containerPort: 9113
-        resources:
-          limits:
-            memory: 100Mi
-            cpu: 200m
-          requests:
-            memory: 100Mi
-            cpu: 50m
         env:
         - name: SCRAPE_URI
           value: "http://localhost:80/stub_status"

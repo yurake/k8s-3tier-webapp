@@ -21,21 +21,7 @@ spec:
         image: redis:5.0.6
         ports:
         - containerPort: 6379
-        resources:
-          limits:
-            memory: 600Mi
-            cpu: 200m
-          requests:
-            memory: 100Mi
-            cpu: 50m
       - name: redis-exporter
         image: oliver006/redis_exporter:v1.3.5-alpine
         ports:
         - containerPort: 9121
-        resources:
-          limits:
-            memory: 100Mi
-            cpu: 200m
-          requests:
-            memory: 100Mi
-            cpu: 100m
