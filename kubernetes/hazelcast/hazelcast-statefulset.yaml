@@ -21,20 +21,10 @@ spec:
     spec:
       containers:
       - name: hazelcast
-        image: hazelcast/hazelcast:3.12.6
+        image: default/hazelcast:v0.0.1
         ports:
         - containerPort: 5701
         - containerPort: 8080
-        volumeMounts:
-        - name: hazelcast-storage
-          mountPath: /data/hazelcast
-        env:
-        - name: JAVA_OPTS
-          value: "-Dhazelcast.rest.enabled=true -Dhazelcast.config=/data/hazelcast/hazelcast.xml"
         env:
         - name: PROMETHEUS_PORT
           value: "8080"
-      volumes:
-      - name: hazelcast-storage
-        configMap:
-          name: hazelcast-configmap

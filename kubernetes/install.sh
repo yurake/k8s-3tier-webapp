@@ -62,8 +62,7 @@ echo ""
 
 echo "### hazelcast"
 cd hazelcast
-kubectl apply -f ./hazelcast-rbac.yaml
-kubectl apply -f ./hazelcast-configmap.yaml
+docker build -t default/hazelcast:v0.0.1 .
 kubectl apply -f ./hazelcast-statefulset.yaml
 kubectl apply -f ./hazelcast-service.yaml
 cd ${ROOT_DIR}
