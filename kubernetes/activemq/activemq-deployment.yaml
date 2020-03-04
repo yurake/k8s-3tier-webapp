@@ -26,3 +26,5 @@ spec:
         env:
         - name: ENABLE_JMX_EXPORTER
           value: "true"
+        - name: JAVA_OPTS
+          value: "-Duser.timezone=Asia/Tokyo"
