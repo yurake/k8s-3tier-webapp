@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: activemq
-        image: vromero/activemq-artemis:2.11.0-alpine
+        image: default/activemq:v0.0.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8161
@@ -26,3 +26,5 @@ spec:
         env:
         - name: ENABLE_JMX_EXPORTER
           value: "true"
+        - name: JAVA_OPTS
+          value: "-Duser.timezone=Asia/Tokyo"

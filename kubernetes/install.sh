@@ -53,6 +53,7 @@ echo ""
 
 echo "### activemq"
 cd activemq
+docker build -t default/activemq:v0.0.1 .
 kubectl apply -f ./activemq-deployment.yaml
 kubectl apply -f ./activemq-service.yaml
 kubectl apply -f ./activemq-ingress.yaml
