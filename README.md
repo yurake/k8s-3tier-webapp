@@ -39,9 +39,9 @@ eval $(minikube docker-env)
 
 ## Build & Apply
 
-`apply.sh` supports `docker build`, `kubectl apply` to k8s clusters.
+`install.sh` supports `docker build`, `kubectl apply` to k8s clusters.
 ```
-./apply.sh
+./install.sh
 ```
 
 ## Web Console Access
