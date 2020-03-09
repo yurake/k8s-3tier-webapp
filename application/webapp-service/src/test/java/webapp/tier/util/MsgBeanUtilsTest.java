@@ -10,40 +10,68 @@ class MsgBeanUtilsTest {
 
 	@Test
 	void testFullmsg() {
-		MsgBeanUtils extractor = new MsgBeanUtils();
-		extractor.setFullmsg("Test");
-		assertEquals("Test", extractor.getFullmsg());
+		MsgBeanUtils beanutil = new MsgBeanUtils();
+		beanutil.setFullmsg("Test");
+		assertEquals("Test", beanutil.getFullmsg());
 	}
 
 	@Test
 	void testFullmsgWithType() {
-		MsgBeanUtils extractor = new MsgBeanUtils();
+		MsgBeanUtils beanutil = new MsgBeanUtils();
 		MsgBean bean = new MsgBean(1111, "Test");
-		extractor.setFullmsgWithType(bean, "A");
-		assertEquals("A id: 1111, message: Test", extractor.getFullmsg());
+		beanutil.setFullmsgWithType(bean, "A");
+		assertEquals("A id: 1111, message: Test", beanutil.getFullmsg());
 	}
 
 	@Test
 	void testAppendMessage() {
-		MsgBeanUtils extractor = new MsgBeanUtils();
+		MsgBeanUtils beanutil = new MsgBeanUtils();
 		MsgBean bean = new MsgBean(1111, "Test");
-		bean = extractor.appendMessage(bean, "AppendTest");
+		bean = beanutil.appendMessage(bean, "AppendTest");
 		assertEquals("Test AppendTest", bean.getMessage());
 	}
 
 	@Test
 	void testCreateBody() {
-		MsgBeanUtils extractor = new MsgBeanUtils();
+		MsgBeanUtils beanutil = new MsgBeanUtils();
 		MsgBean bean = new MsgBean(1111, "Test");
-		assertEquals("1111,Test", extractor.createBody(bean, ","));
+		assertEquals("1111,Test", beanutil.createBody(bean, ","));
 	}
 
 	@Test
 	void testSplitBody() {
-		MsgBeanUtils extractor = new MsgBeanUtils();
-		MsgBean bean = extractor.splitBody("1111,Test", ",");
+		MsgBeanUtils beanutil = new MsgBeanUtils();
+		MsgBean bean = beanutil.splitBody("1111,Test", ",");
 		assertEquals(1111, bean.getId());
 		assertEquals("Test", bean.getMessage());
+	}
 
+	@Test
+	void testIdString() {
+		MsgBeanUtils beanutil = new MsgBeanUtils();
+		beanutil.setIdString("1111");
+		assertEquals("1111", beanutil.getIdString());
+	}
+
+	@Test
+	void testCheckMsgBeanUtils() {
+		MsgBeanUtils beanutil = new MsgBeanUtils(1111, "Test");
+		assertEquals(false, beanutil.checkMsgBeanUtils(beanutil));
+	}
+
+	@Test
+	void testCheckMsgBeanUtilsIdNull() {
+		MsgBeanUtils beanutil = new MsgBeanUtils();
+		beanutil.setMessage("Test");
+		assertEquals(0, beanutil.getId());
+		assertEquals(true, beanutil.checkMsgBeanUtils(beanutil));
+	}
+
+	@Test
+	void testCheckMsgBeanUtilsMsgNull() {
+		MsgBeanUtils beanutil = new MsgBeanUtils();
+		beanutil.setId(1111);
+		assertEquals(null, beanutil.getMessage());
+		assertEquals(true, beanutil.checkMsgBeanUtils(beanutil));
 	}
 }

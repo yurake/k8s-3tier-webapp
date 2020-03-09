@@ -12,8 +12,9 @@ import com.hazelcast.core.HazelcastInstance;
 
 import webapp.tier.interfaces.Cache;
 import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgBeanUtils;
 
-public class HazelcastCacheService implements Cache{
+public class HazelcastCacheService implements Cache {
 
 	private static Logger LOG = Logger.getLogger(HazelcastCacheService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
@@ -21,16 +22,17 @@ public class HazelcastCacheService implements Cache{
 
 	@Override
 	public String setMsg() throws Exception {
-		String fullmsg = "Error";
-		String id = String.valueOf(CreateId.createid());
 		HazelcastInstance client = null;
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 
 		try {
 			client = ConnectHazelcast.getInstance();
-			Map<String, String> map = client.getMap(cachename);
-			map.put(id, message);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			LOG.info(fullmsg);
+			Map<Integer, String> map = client.getMap(cachename);
+			map.put(msgbean.getId(), msgbean.getMessage());
+
+			msgbean.setFullmsgWithType(msgbean, "Set");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,7 +42,6 @@ public class HazelcastCacheService implements Cache{
 				client.shutdown();
 			}
 		}
-		return fullmsg;
 	}
 
 	@Override
@@ -51,24 +52,27 @@ public class HazelcastCacheService implements Cache{
 	}
 
 	public List<String> getMsgList() throws Exception {
-		List<String> allmsg = new ArrayList<>();
-		String fullmsg = "Error";
+		List<String> msglist = new ArrayList<>();
 		HazelcastInstance client = null;
 
 		try {
 			client = ConnectHazelcast.getInstance();
-			Map<String, String> map = client.getMap(cachename);
-			for (Entry<String, String> entry : map.entrySet()) {
-				fullmsg = "Selected Msg: id: " + entry.getKey() + ", message: " + entry.getValue();
-				LOG.info(fullmsg);
-				allmsg.add(fullmsg);
+			Map<Integer, String> map = client.getMap(cachename);
+
+			for (Entry<Integer, String> entry : map.entrySet()) {
+				MsgBeanUtils msgbean = new MsgBeanUtils();
+				msgbean.setId(entry.getKey());
+				msgbean.setMessage(entry.getValue());
+				msgbean.setFullmsgWithType(msgbean, "Select");
+				LOG.info(msgbean.getFullmsg());
+				msglist.add(msgbean.getFullmsg());
 			}
 
-			if (allmsg.isEmpty()) {
-				fullmsg = "No Data";
-				LOG.info(fullmsg);
-				allmsg.add(fullmsg);
+			if (msglist.isEmpty()) {
+				msglist.add("No Data");
 			}
+
+			return msglist;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,6 +82,5 @@ public class HazelcastCacheService implements Cache{
 				client.shutdown();
 			}
 		}
-		return allmsg;
 	}
 }

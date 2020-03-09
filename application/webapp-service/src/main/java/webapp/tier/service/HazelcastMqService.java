@@ -22,8 +22,8 @@ public class HazelcastMqService implements Messaging {
 
 	@Override
 	public String putMsg() throws Exception {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		HazelcastInstance client = null;
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
@@ -59,7 +59,6 @@ public class HazelcastMqService implements Messaging {
 				msgbean.setFullmsg("No Data");
 			} else {
 				String jmsbody = resp.toString();
-				String[] body = jmsbody.split(splitkey, 0);
 				msgbean.setFullmsgWithType(msgbean.splitBody(jmsbody, splitkey), "Get");
 			}
 
@@ -78,8 +77,8 @@ public class HazelcastMqService implements Messaging {
 
 	@Override
 	public String publishMsg() throws Exception {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		HazelcastInstance client = null;
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {

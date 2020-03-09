@@ -18,6 +18,7 @@ import org.eclipse.microprofile.config.ConfigProvider;
 
 import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgBeanUtils;
 
 public class ActiveMqService implements Messaging {
 
@@ -31,7 +32,6 @@ public class ActiveMqService implements Messaging {
 	private static String topicname = ConfigProvider.getConfig().getValue("activemq.opic.name", String.class);
 	QueueConnection qcon = null;
 	TopicConnection tcon = null;
-	String fullmsg = "Error";
 
 	private QueueConnection getQueueConnection() throws Exception {
 		ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url);
@@ -59,20 +59,12 @@ public class ActiveMqService implements Messaging {
 		}
 	}
 
-	private String createBody(String id) {
-		StringBuilder buf = new StringBuilder();
-		buf.append(id);
-		buf.append(splitkey);
-		buf.append(message);
-		return buf.toString();
-	}
-
 	@Override
 	public String putMsg() throws Exception {
 		QueueSession qsession = null;
 		QueueSender qsender = null;
-		String id = String.valueOf(CreateId.createid());
-		String body = createBody(id);
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
 			qcon = getQueueConnection();
@@ -83,8 +75,10 @@ public class ActiveMqService implements Messaging {
 
 			TextMessage message = qsession.createTextMessage(body);
 			qsender.send(message);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			LOG.info(fullmsg);
+
+			msgbean.setFullmsgWithType(msgbean, "Publish");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -98,13 +92,13 @@ public class ActiveMqService implements Messaging {
 			}
 			closeQueueConnection();
 		}
-		return fullmsg;
 	}
 
 	@Override
 	public String getMsg() throws Exception {
 		QueueSession qsession = null;
 		QueueReceiver qreceiver = null;
+		MsgBeanUtils msgbean = new MsgBeanUtils();
 
 		try {
 			qcon = getQueueConnection();
@@ -113,15 +107,16 @@ public class ActiveMqService implements Messaging {
 			qsession = qcon.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
 			qreceiver = qsession.createReceiver(qsession.createQueue(queuename));
 
-			TextMessage message = (TextMessage) qreceiver.receive(1000);
+			TextMessage resp = (TextMessage) qreceiver.receive(1000);
 
-			if (Objects.isNull(message)) {
-				fullmsg = "No Data";
+			if (Objects.isNull(resp)) {
+				msgbean.setFullmsg("No Data");
 			} else {
-				String[] body = message.getText().split(splitkey, 0);
-				fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
+				msgbean.setFullmsgWithType(msgbean.splitBody(resp.getText(), splitkey), "Get");
 			}
-			LOG.info(fullmsg);
+
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,15 +130,14 @@ public class ActiveMqService implements Messaging {
 			}
 			closeQueueConnection();
 		}
-		return fullmsg;
 	}
 
 	@Override
 	public String publishMsg() throws Exception {
 		TopicSession session = null;
 		TopicPublisher publisher = null;
-		String id = String.valueOf(CreateId.createid());
-		String body = createBody(id);
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
 
@@ -152,8 +146,10 @@ public class ActiveMqService implements Messaging {
 			publisher = session.createPublisher(session.createTopic(topicname));
 			TextMessage message = session.createTextMessage(body);
 			publisher.publish(message);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			LOG.info(fullmsg);
+
+			msgbean.setFullmsgWithType(msgbean, "Publish");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,6 +163,5 @@ public class ActiveMqService implements Messaging {
 			}
 			closeTopicConnection();
 		}
-		return fullmsg;
 	}
 }

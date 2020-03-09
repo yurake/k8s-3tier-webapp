@@ -1,12 +1,15 @@
 package webapp.tier.util;
 
+import java.util.Objects;
+
 import webapp.tier.bean.MsgBean;
 
-public class MsgBeanUtils extends MsgBean{
+public class MsgBeanUtils extends MsgBean {
 
 	String fullmsg = "Error";
 
-	public MsgBeanUtils() {};
+	public MsgBeanUtils() {
+	};
 
 	public MsgBeanUtils(int id, String message) {
 		setId(id);
@@ -23,6 +26,14 @@ public class MsgBeanUtils extends MsgBean{
 
 	public String getFullmsg() {
 		return fullmsg;
+	}
+
+	public void setIdString(String id) {
+		setId(Integer.parseInt(id));
+	}
+
+	public String getIdString() {
+		return String.valueOf(getId());
 	}
 
 	public MsgBean appendMessage(MsgBean bean, String appendmessage) {
@@ -45,5 +56,9 @@ public class MsgBeanUtils extends MsgBean{
 	public MsgBean splitBody(String jmsbody, String splitkey) {
 		String[] body = jmsbody.split(splitkey, 0);
 		return new MsgBean(Integer.parseInt(body[0]), body[1]);
+	}
+
+	public boolean checkMsgBeanUtils(MsgBeanUtils msgbean) {
+		return (msgbean.getId() == 0 || Objects.isNull(msgbean.getMessage()));
 	}
 }

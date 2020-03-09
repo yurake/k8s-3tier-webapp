@@ -62,7 +62,7 @@ public class PostgresService implements Database {
 	public String insertMsg() throws SQLException {
 
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		String sql = insertsql.replace(sqlkey, String.valueOf(msgbean.getId())).replace(sqlbody, msgbean.getMessage());
+		String sql = insertsql.replace(sqlkey, msgbean.getIdString()).replace(sqlbody, msgbean.getMessage());
 
 		try {
 			con = getConnection();
@@ -85,7 +85,7 @@ public class PostgresService implements Database {
 
 	@Override
 	public List<String> selectMsg() throws SQLException {
-		List<String> allmsg = new ArrayList<>();
+		List<String> msglist = new ArrayList<>();
 
 		try {
 			con = getConnection();
@@ -96,18 +96,18 @@ public class PostgresService implements Database {
 
 			while (rs.next()) {
 				MsgBeanUtils msgbean = new MsgBeanUtils();
-				msgbean.setId(Integer.parseInt(rs.getString("id")));
+				msgbean.setIdString(rs.getString("id"));
 				msgbean.setMessage(rs.getString("msg"));
 				msgbean.setFullmsgWithType(msgbean, "Select");
 				LOG.info(msgbean.getFullmsg());
-				allmsg.add(msgbean.getFullmsg());
+				msglist.add(msgbean.getFullmsg());
 			}
 
-			if (allmsg.isEmpty()) {
-				allmsg.add("No Data");
+			if (msglist.isEmpty()) {
+				msglist.add("No Data");
 			}
 
-			return allmsg;
+			return msglist;
 
 		} catch (SQLException e) {
 			e.printStackTrace();

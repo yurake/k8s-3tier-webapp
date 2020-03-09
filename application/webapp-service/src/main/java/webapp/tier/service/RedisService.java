@@ -14,6 +14,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgBeanUtils;
 
 @Provider
 public class RedisService implements Messaging {
@@ -43,48 +44,17 @@ public class RedisService implements Messaging {
 	}
 
 	@Override
-	public String getMsg() throws Exception {
-		List<String> msglist = getMsgList();
-		return msglist.get(msglist.size() - 1);
-	}
-
-	public List<String> getMsgList() throws Exception {
-		List<String> allmsg = new ArrayList<>();
-		Jedis jedis = new Jedis(servername, serverport);
-
-		try {
-			Set<String> keys = jedis.keys("*");
-			for (String key : keys) {
-				String msg = jedis.get(key);
-				String fullmsg = "Selected Msg: id: " + key + ", message: " + msg;
-				LOG.info(fullmsg);
-				allmsg.add(fullmsg);
-			}
-
-			if (allmsg.isEmpty()) {
-				allmsg.add("No Data");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Get Error.");
-		} finally {
-			jedis.close();
-		}
-		return allmsg;
-	}
-
-	@Override
 	public String putMsg() throws Exception {
-		String fullmsg = null;
-		String id = String.valueOf(CreateId.createid());
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		Jedis jedis = new Jedis(servername, serverport);
 
 		try {
-			jedis.set(id, message);
-			jedis.expire(id, setexpire);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			LOG.info(fullmsg);
+			jedis.set(msgbean.getIdString(), msgbean.getMessage());
+			jedis.expire(msgbean.getIdString(), setexpire);
+
+			msgbean.setFullmsgWithType(msgbean, "Put");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,26 +62,54 @@ public class RedisService implements Messaging {
 		} finally {
 			jedis.close();
 		}
-		return fullmsg;
+	}
+
+	@Override
+	public String getMsg() throws Exception {
+		List<String> msglist = getMsgList();
+		return msglist.get(msglist.size() - 1);
+	}
+
+	public List<String> getMsgList() throws Exception {
+		List<String> msglist = new ArrayList<>();
+		Jedis jedis = new Jedis(servername, serverport);
+
+		try {
+			Set<String> keys = jedis.keys("*");
+			for (String key : keys) {
+				MsgBeanUtils msgbean = new MsgBeanUtils(Integer.parseInt(key), jedis.get(key));
+				msgbean.setFullmsgWithType(msgbean, "Get");
+				LOG.info(msgbean.getFullmsg());
+				msglist.add(msgbean.getFullmsg());
+			}
+
+			if (msglist.isEmpty()) {
+				msglist.add("No Data");
+			}
+
+			return msglist;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Get Error.");
+		} finally {
+			jedis.close();
+		}
 	}
 
 	@Override
 	public String publishMsg() throws Exception {
-		String fullmsg = null;
-		String id = String.valueOf(CreateId.createid());
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+		String body = msgbean.createBody(msgbean, splitkey);
 		Jedis jedis = new Jedis(servername, serverport);
 
 		try {
-			StringBuilder buf = new StringBuilder();
-			buf.append(id);
-			buf.append(splitkey);
-			buf.append(message);
-			String body = buf.toString();
-
 			jedis.publish(channel, body);
-			jedis.expire(id, setexpire);
-			fullmsg = "Set channel:" + channel + ", id: " + id + ", msg: " + message;
-			LOG.info(fullmsg);
+			jedis.expire(msgbean.getIdString(), setexpire);
+
+			msgbean.setFullmsgWithType(msgbean, "Publish");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,6 +117,5 @@ public class RedisService implements Messaging {
 		} finally {
 			jedis.close();
 		}
-		return fullmsg;
 	}
 }

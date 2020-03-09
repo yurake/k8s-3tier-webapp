@@ -15,6 +15,7 @@ import org.eclipse.microprofile.config.ConfigProvider;
 
 import webapp.tier.interfaces.Database;
 import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgBeanUtils;
 
 @ApplicationScoped
 public class MysqlService implements Database {
@@ -65,19 +66,19 @@ public class MysqlService implements Database {
 	@Override
 	public String insertMsg() throws SQLException {
 
-		String id = String.valueOf(CreateId.createid());
-
-		String sql = insertsql;
-		sql = sql.replace(sqlkey, id);
-		sql = sql.replace(sqlbody, message);
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+		String sql = insertsql.replace(sqlkey, msgbean.getIdString()).replace(sqlbody, msgbean.getMessage());
 
 		try {
 			con = getConnection();
 			Statement stmt = con.createStatement();
 
-			LOG.info("Execute SQL: " + sql);
+			LOG.info("Insert SQL: " + sql);
 			stmt.executeUpdate(sql);
-			return sql;
+
+			msgbean.setFullmsgWithType(msgbean, "Insert");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,24 +90,21 @@ public class MysqlService implements Database {
 
 	public String insertMsg(String[] receivedbody) throws SQLException {
 
-		String id = receivedbody[0];
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), receivedbody[1]);
 
-		StringBuilder builder = new StringBuilder();
-		builder.append(receivedbody[1]);
-		builder.append(" ");
-		builder.append(addonmsg);
-		String message = builder.toString();
-
-		String sql = insertsql;
-		sql = sql.replace(sqlkey, id);
-		sql = sql.replace(sqlbody, message);
+		msgbean.appendMessage(msgbean, addonmsg);
+		String sql = insertsql.replace(sqlkey, msgbean.getIdString()).replace(sqlbody, msgbean.getMessage());
 
 		try {
 			con = getConnection();
 			Statement stmt = con.createStatement();
 
-			LOG.info("Execute SQL: " + sql);
+			LOG.info("Insert SQL: " + sql);
 			stmt.executeUpdate(sql);
+
+			msgbean.setFullmsgWithType(msgbean, "Insert");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -114,13 +112,12 @@ public class MysqlService implements Database {
 		} finally {
 			closeConnection();
 		}
-		return sql;
 	}
 
 	@Override
 	public List<String> selectMsg() throws SQLException {
 		Connection con = null;
-		List<String> allmsg = new ArrayList<>();
+		List<String> msglist = new ArrayList<>();
 
 		try {
 			con = getConnection();
@@ -130,14 +127,19 @@ public class MysqlService implements Database {
 			ResultSet rs = stmt.executeQuery(selectsql);
 
 			while (rs.next()) {
-				String fullmsg = "Selected Msg: id: " + rs.getString("id") + ", message: " + rs.getString("msg");
-				LOG.info(fullmsg);
-				allmsg.add(fullmsg);
+				MsgBeanUtils msgbean = new MsgBeanUtils();
+				msgbean.setIdString(rs.getString("id"));
+				msgbean.setMessage(rs.getString("msg"));
+				msgbean.setFullmsgWithType(msgbean, "Select");
+				LOG.info(msgbean.getFullmsg());
+				msglist.add(msgbean.getFullmsg());
 			}
 
-			if (allmsg.isEmpty()) {
-				allmsg.add("No Data");
+			if (msglist.isEmpty()) {
+				msglist.add("No Data");
 			}
+
+			return msglist;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -151,7 +153,6 @@ public class MysqlService implements Database {
 				}
 			}
 		}
-		return allmsg;
 	}
 
 	@Override
@@ -162,6 +163,7 @@ public class MysqlService implements Database {
 
 			LOG.info("Delete SQL: " + deletesql);
 			stmt.executeUpdate(deletesql);
+			return "Delete Msg Records";
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -169,6 +171,5 @@ public class MysqlService implements Database {
 		} finally {
 			closeConnection();
 		}
-		return "Deleted";
 	}
 }
