@@ -1,7 +1,5 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -16,10 +14,10 @@ class MemcachedServiceTest {
 		MemcachedService svc = new MemcachedService();
 
 		try {
-			svc.setMemcached();
+			svc.setMsg();
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getMessage(), is("Failed set to Memcached"));
+			assertEquals("Set Error.", expected.getMessage());
 		}
 	}
 
@@ -27,10 +25,10 @@ class MemcachedServiceTest {
 	void testGetMemcachedError() {
 		MemcachedService svc = new MemcachedService();
 		try {
-			svc.getMemcached();
+			svc.getMsg();
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getMessage(), is("Failed get from Memcached"));
+			assertEquals("Get Error.", expected.getMessage());
 		}
 	}
 

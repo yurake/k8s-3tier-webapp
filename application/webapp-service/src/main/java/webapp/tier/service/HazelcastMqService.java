@@ -8,9 +8,11 @@ import org.eclipse.microprofile.config.ConfigProvider;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
 
+import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgBeanUtils;
 
-public class HazelcastMqService {
+public class HazelcastMqService implements Messaging {
 
 	private static final Logger LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
@@ -18,34 +20,35 @@ public class HazelcastMqService {
 	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topicname.name", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
-	public String putQueueHazelcast() throws Exception {
-		String fullmsg = "Error";
-		String id = String.valueOf(CreateId.createid());
-
+	@Override
+	public String putMsg() throws Exception {
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		HazelcastInstance client = null;
-		StringBuilder buf = new StringBuilder();
-		buf.append(id);
-		buf.append(splitkey);
-		buf.append(message);
-		String body = buf.toString();
+		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
 			client = ConnectHazelcast.getInstance();
 			BlockingQueue<Object> queue = client.getQueue(queuename);
 			queue.put(body);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			LOG.info(fullmsg);
+
+			msgbean.setFullmsgWithType(msgbean, "Put");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Put Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		return fullmsg;
 	}
 
-	public String getQueueHazelcast() throws Exception {
+	@Override
+	public String getMsg() throws Exception {
+		MsgBeanUtils msgbean = new MsgBeanUtils();
 		HazelcastInstance client = null;
-		String fullmsg = "Error";
 
 		try {
 			client = ConnectHazelcast.getInstance();
@@ -53,47 +56,48 @@ public class HazelcastMqService {
 			Object resp = queue.poll();
 
 			if (resp.toString().isEmpty()) {
-				fullmsg = "No Data";
-				LOG.info(fullmsg);
-				return fullmsg;
+				msgbean.setFullmsg("No Data");
+			} else {
+				String jmsbody = resp.toString();
+				String[] body = jmsbody.split(splitkey, 0);
+				msgbean.setFullmsgWithType(msgbean.splitBody(jmsbody, splitkey), "Get");
 			}
 
-			String jmsbody = resp.toString();
-			String[] body = jmsbody.split(splitkey, 0);
-			fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
-			LOG.info(fullmsg);
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Get Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		return fullmsg;
 	}
 
-	public String publishHazelcast() throws Exception {
-		String fullmsg = "Error";
-		String id = String.valueOf(CreateId.createid());
-
+	@Override
+	public String publishMsg() throws Exception {
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		HazelcastInstance client = null;
-
-		StringBuilder buf = new StringBuilder();
-		buf.append(id);
-		buf.append(splitkey);
-		buf.append(message);
-		String body = buf.toString();
+		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
 			client = ConnectHazelcast.getInstance();
 			ITopic<Object> topic = client.getTopic(topicname);
 			topic.publish(body);
-			fullmsg = "Publish id: " + id + ", msg: " + message;
-			LOG.info(fullmsg);
+
+			msgbean.setFullmsgWithType(msgbean, "Put");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Publish Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		return fullmsg;
 	}
 }

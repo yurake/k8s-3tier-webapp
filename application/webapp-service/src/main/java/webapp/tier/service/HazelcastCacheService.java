@@ -10,15 +10,17 @@ import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.hazelcast.core.HazelcastInstance;
 
+import webapp.tier.interfaces.Cache;
 import webapp.tier.util.CreateId;
 
-public class HazelcastCacheService {
+public class HazelcastCacheService implements Cache{
 
 	private static Logger LOG = Logger.getLogger(HazelcastCacheService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 
-	public String putMapHazelcast() throws Exception {
+	@Override
+	public String setMsg() throws Exception {
 		String fullmsg = "Error";
 		String id = String.valueOf(CreateId.createid());
 		HazelcastInstance client = null;
@@ -29,6 +31,10 @@ public class HazelcastCacheService {
 			map.put(id, message);
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			LOG.info(fullmsg);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Set Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -37,7 +43,14 @@ public class HazelcastCacheService {
 		return fullmsg;
 	}
 
-	public List<String> getMapHazelcast() throws Exception {
+	@Override
+	public String getMsg() throws Exception {
+		List<String> msglist = getMsgList();
+		return msglist.get(msglist.size() - 1);
+
+	}
+
+	public List<String> getMsgList() throws Exception {
 		List<String> allmsg = new ArrayList<>();
 		String fullmsg = "Error";
 		HazelcastInstance client = null;
@@ -57,6 +70,9 @@ public class HazelcastCacheService {
 				allmsg.add(fullmsg);
 			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Get Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();

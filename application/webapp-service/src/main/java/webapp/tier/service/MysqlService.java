@@ -5,23 +5,24 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
+import webapp.tier.interfaces.Database;
 import webapp.tier.util.CreateId;
 
 @ApplicationScoped
-public class MysqlService {
+public class MysqlService implements Database {
 
 	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String url = ConfigProvider.getConfig().getValue("mysql.url", String.class);
-	private static String instersql = ConfigProvider.getConfig().getValue("mysql.insert.msg", String.class);
+	private static String insertsql = ConfigProvider.getConfig().getValue("mysql.insert.msg", String.class);
 	private static String selectsql = ConfigProvider.getConfig().getValue("mysql.select.msg.all", String.class);
 	private static String deletesql = ConfigProvider.getConfig().getValue("mysql.delete.msg.all", String.class);
 	private static String sqlkey = ConfigProvider.getConfig().getValue("mysql.id", String.class);
@@ -61,11 +62,12 @@ public class MysqlService {
 		return status;
 	}
 
-	public String insertMysql() throws SQLException {
+	@Override
+	public String insertMsg() throws SQLException {
 
 		String id = String.valueOf(CreateId.createid());
 
-		String sql = instersql;
+		String sql = insertsql;
 		sql = sql.replace(sqlkey, id);
 		sql = sql.replace(sqlbody, message);
 
@@ -95,7 +97,7 @@ public class MysqlService {
 		builder.append(addonmsg);
 		String message = builder.toString();
 
-		String sql = instersql;
+		String sql = insertsql;
 		sql = sql.replace(sqlkey, id);
 		sql = sql.replace(sqlbody, message);
 
@@ -115,34 +117,44 @@ public class MysqlService {
 		return sql;
 	}
 
-	public Map<String, String> selectMsg() throws SQLException {
-
-		Map<String, String> returnmsg = new HashMap<>();
+	@Override
+	public List<String> selectMsg() throws SQLException {
+		Connection con = null;
+		List<String> allmsg = new ArrayList<>();
 
 		try {
 			con = getConnection();
 			Statement stmt = con.createStatement();
 
-			LOG.info("Execute SQL: " + selectsql);
+			LOG.info("Select SQL: " + selectsql);
 			ResultSet rs = stmt.executeQuery(selectsql);
 
 			while (rs.next()) {
-				String id = rs.getString("id");
-				String msg = rs.getString("msg");
-				returnmsg.put(id, msg);
-
-				LOG.info("Selected Msg: id: " + id + ", message: " + msg);
+				String fullmsg = "Selected Msg: id: " + rs.getString("id") + ", message: " + rs.getString("msg");
+				LOG.info(fullmsg);
+				allmsg.add(fullmsg);
 			}
-			return returnmsg;
+
+			if (allmsg.isEmpty()) {
+				allmsg.add("No Data");
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException("Select Error.");
 		} finally {
-			closeConnection();
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		return allmsg;
 	}
 
+	@Override
 	public String deleteMsg() throws SQLException {
 		try {
 			con = getConnection();

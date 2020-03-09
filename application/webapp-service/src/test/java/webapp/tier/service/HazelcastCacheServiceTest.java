@@ -7,17 +7,17 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class HazelcastCacheServiceTest {
+class HazelcastCacheServiceTest{
 
 	@Test
 	void testPutMapHazelcastError() {
 		HazelcastCacheService svc = new HazelcastCacheService();
 		try {
-			svc.putMapHazelcast();
+			svc.setMsg();
 			fail();
 		} catch (Exception expected) {
 			expected.printStackTrace();
-			assertEquals(expected.getMessage(), "Unable to connect to any cluster.");
+			assertEquals("Set Error.", expected.getMessage());
 		}
 	}
 
@@ -25,11 +25,11 @@ class HazelcastCacheServiceTest {
 	void testGetMapHazelcastError() {
 		HazelcastCacheService svc = new HazelcastCacheService();
 		try {
-			svc.getMapHazelcast();
+			svc.getMsg();
 			fail();
 		} catch (Exception expected) {
 			expected.printStackTrace();
-			assertEquals(expected.getMessage(), "Unable to connect to any cluster.");
+			assertEquals("Get Error.", expected.getMessage());
 		}
 	}
 

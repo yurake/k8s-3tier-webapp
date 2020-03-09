@@ -23,11 +23,11 @@ class MysqlServiceTest {
 	void testInsertMysqlError() {
 		MysqlService svc = new MysqlService();
 		try {
-			svc.insertMysql();
+			svc.insertMsg();
 			fail();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			assertEquals(e.getMessage(), "Insert Error.");
+			assertEquals("Insert Error.", e.getMessage());
 		}
 	}
 
@@ -40,31 +40,31 @@ class MysqlServiceTest {
 			fail();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			assertEquals(e.getMessage(), "Insert Error.");
+			assertEquals("Insert Error.", e.getMessage());
 		}
 	}
 
 	@Test
-	void testSelectMsg() {
+	void testSelectMsgError() {
 		MysqlService svc = new MysqlService();
 		try {
 			svc.selectMsg();
 			fail();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			assertEquals(e.getMessage(), "Select Error.");
+			assertEquals("Select Error.", e.getMessage());
 		}
 	}
 
 	@Test
-	void testDeleteMsg() {
+	void testDeleteMsgError() {
 		MysqlService svc = new MysqlService();
 		try {
 			svc.deleteMsg();
 			fail();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			assertEquals(e.getMessage(), "Delete Error.");
+			assertEquals("Delete Error.", e.getMessage());
 		}
 	}
 }

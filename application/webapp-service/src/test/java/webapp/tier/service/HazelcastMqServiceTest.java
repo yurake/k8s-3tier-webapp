@@ -13,11 +13,11 @@ class HazelcastMqServiceTest {
 	void testPutQueueHazelcast() {
 		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			svc.putQueueHazelcast();
+			svc.putMsg();
 			fail();
 		} catch (Exception expected) {
 			expected.printStackTrace();
-			assertEquals(expected.getMessage(), "Unable to connect to any cluster.");
+			assertEquals("Put Error.", expected.getMessage());
 		}
 	}
 
@@ -25,11 +25,11 @@ class HazelcastMqServiceTest {
 	void testGetQueueHazelcast() {
 		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			svc.getQueueHazelcast();
+			svc.getMsg();
 			fail();
 		} catch (Exception expected) {
 			expected.printStackTrace();
-			assertEquals(expected.getMessage(), "Unable to connect to any cluster.");
+			assertEquals("Get Error.", expected.getMessage());
 		}
 	}
 
@@ -37,11 +37,11 @@ class HazelcastMqServiceTest {
 	void testPublishHazelcast() {
 		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			svc.publishHazelcast();
+			svc.publishMsg();
 			fail();
 		} catch (Exception expected) {
 			expected.printStackTrace();
-			assertEquals(expected.getMessage(), "Unable to connect to any cluster.");
+			assertEquals("Publish Error.", expected.getMessage());
 		}
 	}
 

@@ -8,9 +8,10 @@ import org.eclipse.microprofile.config.ConfigProvider;
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
+import webapp.tier.interfaces.Cache;
 import webapp.tier.util.CreateId;
 
-public class MemcachedService {
+public class MemcachedService implements Cache{
 
 	private static final Logger LOG = Logger.getLogger(MemcachedService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
@@ -23,7 +24,8 @@ public class MemcachedService {
 		pool.initialize();
 	}
 
-	public String setMemcached() {
+	@Override
+	public String setMsg() throws Exception {
 		String fullmsg = "Error";
 		String id = String.valueOf(CreateId.createid());
 		boolean resultid = false;
@@ -37,14 +39,15 @@ public class MemcachedService {
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			LOG.info(fullmsg);
 		} else {
-			fullmsg = "Failed set to Memcached";
+			fullmsg = "Set Error.";
 			LOG.warning(fullmsg);
-			throw new RuntimeException(fullmsg);
+			throw new Exception(fullmsg);
 		}
 		return fullmsg;
 	}
 
-	public String getMemcached() {
+	@Override
+	public String getMsg() throws Exception {
 		String fullmsg = "Error";
 		MemCachedClient mcc = new MemCachedClient();
 
@@ -52,9 +55,9 @@ public class MemcachedService {
 		String message = (String) mcc.get("msg");
 
 		if (Objects.isNull(id) || Objects.isNull(message)) {
-			fullmsg = "Failed get from Memcached";
+			fullmsg = "Get Error.";
 			LOG.warning(fullmsg);
-			throw new RuntimeException(fullmsg);
+			throw new Exception(fullmsg);
 		} else {
 			fullmsg = "Received id: " + id + ", msg: " + message;
 			LOG.info(fullmsg);

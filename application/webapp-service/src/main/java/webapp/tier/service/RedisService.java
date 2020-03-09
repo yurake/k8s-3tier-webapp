@@ -12,10 +12,11 @@ import org.eclipse.microprofile.config.ConfigProvider;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
+import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
 
 @Provider
-public class RedisService {
+public class RedisService implements Messaging {
 
 	Connection con = null;
 
@@ -41,29 +42,13 @@ public class RedisService {
 		return false;
 	}
 
-	public String publishRedis() {
-		String fullmsg = null;
-		String id = String.valueOf(CreateId.createid());
-		Jedis jedis = new Jedis(servername, serverport);
-
-		try {
-		    StringBuilder buf = new StringBuilder();
-		    buf.append(id);
-		    buf.append(splitkey);
-		    buf.append(message);
-		    String body = buf.toString();
-
-			jedis.publish(channel, body);
-			jedis.expire(id, setexpire);
-			fullmsg = "Set channel:" + channel + ", id: " + id + ", msg: " + message;
-			LOG.info(fullmsg);
-		} finally {
-			jedis.close();
-		}
-		return fullmsg;
+	@Override
+	public String getMsg() throws Exception {
+		List<String> msglist = getMsgList();
+		return msglist.get(msglist.size() - 1);
 	}
 
-	public List<String> getRedis() {
+	public List<String> getMsgList() throws Exception {
 		List<String> allmsg = new ArrayList<>();
 		Jedis jedis = new Jedis(servername, serverport);
 
@@ -80,13 +65,17 @@ public class RedisService {
 				allmsg.add("No Data");
 			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Get Error.");
 		} finally {
 			jedis.close();
 		}
 		return allmsg;
 	}
 
-	public String setRedis() {
+	@Override
+	public String putMsg() throws Exception {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
 		Jedis jedis = new Jedis(servername, serverport);
@@ -96,6 +85,37 @@ public class RedisService {
 			jedis.expire(id, setexpire);
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			LOG.info(fullmsg);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Put Error.");
+		} finally {
+			jedis.close();
+		}
+		return fullmsg;
+	}
+
+	@Override
+	public String publishMsg() throws Exception {
+		String fullmsg = null;
+		String id = String.valueOf(CreateId.createid());
+		Jedis jedis = new Jedis(servername, serverport);
+
+		try {
+			StringBuilder buf = new StringBuilder();
+			buf.append(id);
+			buf.append(splitkey);
+			buf.append(message);
+			String body = buf.toString();
+
+			jedis.publish(channel, body);
+			jedis.expire(id, setexpire);
+			fullmsg = "Set channel:" + channel + ", id: " + id + ", msg: " + message;
+			LOG.info(fullmsg);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Publish Error.");
 		} finally {
 			jedis.close();
 		}

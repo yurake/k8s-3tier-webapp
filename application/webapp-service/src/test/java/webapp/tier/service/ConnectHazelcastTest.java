@@ -23,7 +23,7 @@ class ConnectHazelcastTest {
 		ConnectHazelcast.getInstance();
 		fail();
 		} catch (Exception expected) {
-			assertEquals(expected.getMessage(), "Unable to connect to any cluster.");
+			assertEquals("Unable to connect to any cluster.", expected.getMessage());
 		}
 	}
 }

@@ -10,14 +10,15 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.naming.NamingException;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
+import webapp.tier.interfaces.Database;
 import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgBeanUtils;
 
 @ApplicationScoped
-public class PostgresService {
+public class PostgresService implements Database {
 
 	private static final Logger LOG = Logger.getLogger(PostgresService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
@@ -29,11 +30,22 @@ public class PostgresService {
 	private static String deletesql = ConfigProvider.getConfig().getValue("postgres.delete.msg.all", String.class);
 	private Connection con = null;
 
-	public Connection getConnection() throws SQLException {
+	private Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(url);
 	}
 
-	public boolean connectionStatus() {
+	private void closeConnection() throws SQLException {
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new SQLException();
+			}
+		}
+	}
+
+	public boolean connectionStatus() throws SQLException {
 		boolean status = false;
 		try {
 			con = getConnection();
@@ -41,45 +53,38 @@ public class PostgresService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			closeConnection();
 		}
 		return status;
 	}
 
-	public String insert() throws SQLException, NamingException {
-		Connection con = null;
-		String sql  = null;
-		String id = String.valueOf(CreateId.createid());
+	@Override
+	public String insertMsg() throws SQLException {
+
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+		String sql = insertsql.replace(sqlkey, String.valueOf(msgbean.getId())).replace(sqlbody, msgbean.getMessage());
 
 		try {
-			sql = insertsql.replace(sqlkey, id).replace(sqlbody, message);
-
 			con = getConnection();
 			Statement stmt = con.createStatement();
 
 			LOG.info("Insert SQL: " + sql);
 			stmt.executeUpdate(sql);
 
-		}  finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			msgbean.setFullmsgWithType(msgbean, "Insert");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException("Insert Error.");
+		} finally {
+			closeConnection();
 		}
-		return sql;
 	}
 
-	public List<String> select() throws SQLException, NamingException {
-		Connection con = null;
+	@Override
+	public List<String> selectMsg() throws SQLException {
 		List<String> allmsg = new ArrayList<>();
 
 		try {
@@ -90,47 +95,43 @@ public class PostgresService {
 			ResultSet rs = stmt.executeQuery(selectsql);
 
 			while (rs.next()) {
-				String fullmsg = "Selected Msg: id: " + rs.getString("id") + ", message: " + rs.getString("msg");
-				LOG.info(fullmsg);
-				allmsg.add(fullmsg);
+				MsgBeanUtils msgbean = new MsgBeanUtils();
+				msgbean.setId(Integer.parseInt(rs.getString("id")));
+				msgbean.setMessage(rs.getString("msg"));
+				msgbean.setFullmsgWithType(msgbean, "Select");
+				LOG.info(msgbean.getFullmsg());
+				allmsg.add(msgbean.getFullmsg());
 			}
 
-			if(allmsg.isEmpty()){
+			if (allmsg.isEmpty()) {
 				allmsg.add("No Data");
 			}
 
+			return allmsg;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException("Select Error.");
 		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			closeConnection();
 		}
-		return allmsg;
 	}
 
-	public String delete() throws SQLException, NamingException {
-		Connection con = null;
-
+	@Override
+	public String deleteMsg() throws SQLException {
 		try {
 			con = getConnection();
 			Statement stmt = con.createStatement();
 
 			LOG.info("Delete SQL: " + deletesql);
 			stmt.executeUpdate(deletesql);
+			return "Delete Msg Records";
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException("Delete Error.");
 		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			closeConnection();
 		}
-		return "Deleted";
 	}
-
 }

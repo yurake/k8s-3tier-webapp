@@ -16,9 +16,10 @@ import javax.jms.TopicSession;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.eclipse.microprofile.config.ConfigProvider;
 
+import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
 
-public class ActiveMqService {
+public class ActiveMqService implements Messaging {
 
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
@@ -30,32 +31,48 @@ public class ActiveMqService {
 	private static String topicname = ConfigProvider.getConfig().getValue("activemq.opic.name", String.class);
 	QueueConnection qcon = null;
 	TopicConnection tcon = null;
+	String fullmsg = "Error";
 
-	public QueueConnection getQueueConnection() throws Exception {
+	private QueueConnection getQueueConnection() throws Exception {
 		ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url);
 		cf.setUserName(username);
 		cf.setPassword(password);
 		return cf.createQueueConnection();
 	}
 
-	public TopicConnection getTopicConnection() throws Exception {
+	private TopicConnection getTopicConnection() throws Exception {
 		ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url);
 		cf.setUserName(username);
 		cf.setPassword(password);
 		return cf.createTopicConnection();
 	}
 
-	public String putActiveMq() throws Exception {
-		String fullmsg = "Error";
-		QueueSession qsession = null;
-		QueueSender qsender = null;
-		String id = String.valueOf(CreateId.createid());
+	private void closeQueueConnection() throws Exception {
+		if (tcon != null) {
+			tcon.close();
+		}
+	}
 
+	private void closeTopicConnection() throws Exception {
+		if (qcon != null) {
+			qcon.close();
+		}
+	}
+
+	private String createBody(String id) {
 		StringBuilder buf = new StringBuilder();
 		buf.append(id);
 		buf.append(splitkey);
 		buf.append(message);
-		String body = buf.toString();
+		return buf.toString();
+	}
+
+	@Override
+	public String putMsg() throws Exception {
+		QueueSession qsession = null;
+		QueueSender qsender = null;
+		String id = String.valueOf(CreateId.createid());
+		String body = createBody(id);
 
 		try {
 			qcon = getQueueConnection();
@@ -71,6 +88,7 @@ public class ActiveMqService {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new Exception("Put Error.");
 		} finally {
 			if (qsender != null) {
 				qsender.close();
@@ -78,15 +96,13 @@ public class ActiveMqService {
 			if (qsession != null) {
 				qsession.close();
 			}
-			if (qcon != null) {
-				qcon.close();
-			}
+			closeQueueConnection();
 		}
 		return fullmsg;
 	}
 
-	public String getActiveMq() throws Exception {
-		String fullmsg = "Error";
+	@Override
+	public String getMsg() throws Exception {
 		QueueSession qsession = null;
 		QueueReceiver qreceiver = null;
 
@@ -109,6 +125,7 @@ public class ActiveMqService {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new Exception("Get Error.");
 		} finally {
 			if (qreceiver != null) {
 				qreceiver.close();
@@ -116,25 +133,19 @@ public class ActiveMqService {
 			if (qsession != null) {
 				qsession.close();
 			}
-			if (qcon != null) {
-				qcon.close();
-			}
+			closeQueueConnection();
 		}
 		return fullmsg;
 	}
 
-	public String publishActiveMq() throws Exception {
-		String fullmsg = "Error";
+	@Override
+	public String publishMsg() throws Exception {
 		TopicSession session = null;
 		TopicPublisher publisher = null;
 		String id = String.valueOf(CreateId.createid());
+		String body = createBody(id);
 
 		try {
-			StringBuilder buf = new StringBuilder();
-			buf.append(id);
-			buf.append(splitkey);
-			buf.append(message);
-			String body = buf.toString();
 
 			tcon = getTopicConnection();
 			session = tcon.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -146,22 +157,16 @@ public class ActiveMqService {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new Exception("Publish Error.");
 		} finally {
-			try {
-				if (publisher != null) {
-					publisher.close();
-				}
-				if (session != null) {
-					session.close();
-				}
-				if (tcon != null) {
-					tcon.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (publisher != null) {
+				publisher.close();
 			}
+			if (session != null) {
+				session.close();
+			}
+			closeTopicConnection();
 		}
 		return fullmsg;
 	}
-
 }

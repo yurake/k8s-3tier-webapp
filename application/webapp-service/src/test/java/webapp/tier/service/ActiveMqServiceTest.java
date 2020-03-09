@@ -10,59 +10,38 @@ import io.quarkus.test.junit.QuarkusTest;
 class ActiveMqServiceTest {
 
 	@Test
-	void testGetQueueConnectionError() {
+	void testPutMsg() {
 		ActiveMqService svc = new ActiveMqService();
 		try {
-			svc.getQueueConnection();
+			svc.putMsg();
 			fail();
-		} catch (Exception expected) {
-			expected.printStackTrace();
-			assertEquals(expected.getMessage(), "Could not connect to broker URL: tcp://activemq:61616. Reason: java.net.UnknownHostException: activemq");
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertEquals("Put Error.", e.getMessage());
 		}
 	}
 
 	@Test
-	void testGetTopicConnectionError() {
+	void testGetMsg() {
 		ActiveMqService svc = new ActiveMqService();
 		try {
-			svc.getTopicConnection();
+			svc.getMsg();
 			fail();
-		} catch (Exception expected) {
-			expected.printStackTrace();
-			assertEquals(expected.getMessage(), "Could not connect to broker URL: tcp://activemq:61616. Reason: java.net.UnknownHostException: activemq");
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertEquals("Get Error.", e.getMessage());
 		}
 	}
 
 	@Test
-	void testPutActiveMq() {
+	void testPublishMsg() {
 		ActiveMqService svc = new ActiveMqService();
 		try {
-			String result = svc.putActiveMq();
-			assertEquals(result, "Error");
+			svc.publishMsg();
+			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	@Test
-	void testGetActiveMq() {
-		ActiveMqService svc = new ActiveMqService();
-		try {
-			String result = svc.getActiveMq();
-			assertEquals(result, "Error");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	void testPublishActiveMq() {
-		ActiveMqService svc = new ActiveMqService();
-		try {
-			String result = svc.publishActiveMq();
-			assertEquals(result, "Error");
-		} catch (Exception e) {
-			e.printStackTrace();
+			assertEquals("Publish Error.", e.getMessage());
 		}
 	}
 

@@ -1,7 +1,5 @@
 package webapp.tier.service;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -11,9 +9,11 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.GetResponse;
 
+import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgBeanUtils;
 
-public class RabbitmqService {
+public class RabbitmqService implements Messaging {
 
 	private static final Logger LOG = Logger.getLogger(RabbitmqService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
@@ -25,105 +25,95 @@ public class RabbitmqService {
 	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
 	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
+	Connection connection = null;
+	Channel channel = null;
 
-	public String getMessageQueue() throws IOException, TimeoutException {
+	private Channel getConnectionChannel() throws Exception {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
 		connectionFactory.setPassword(password);
 		connectionFactory.setHost(host);
 		connectionFactory.setVirtualHost(vhost);
-		String fullmsg = "Error";
-
-		Connection connection = connectionFactory.newConnection();
-		Channel channel = connection.createChannel();
-		boolean durable = true;
-		channel.queueDeclare(queuename, durable, false, false, null);
-
-		GetResponse resp = channel.basicGet(queuename, true);
-		if (channel != null) {
-			channel.close();
-		}
-		if (connection != null) {
-			connection.close();
-		}
-
-		if (resp == null) {
-			return "No Data";
-		}
-
-		String jmsbody = new String(resp.getBody(), "UTF-8");
-		String[] body = jmsbody.split(splitkey, 0);
-		fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
-		LOG.info(fullmsg);
-
-		return fullmsg;
+		connection = connectionFactory.newConnection();
+		return connection.createChannel();
 	}
 
-	public String putMessageQueue() throws IOException, TimeoutException {
-		ConnectionFactory connectionFactory = new ConnectionFactory();
-		connectionFactory.setUsername(username);
-		connectionFactory.setPassword(password);
-		connectionFactory.setHost(host);
-		connectionFactory.setVirtualHost(vhost);
-		String fullmsg = "Error";
-
-		Connection connection = connectionFactory.newConnection();
-		Channel channel = connection.createChannel();
-
-		String id = String.valueOf(CreateId.createid());
-
-		StringBuilder buf = new StringBuilder();
-		buf.append(id);
-		buf.append(splitkey);
-		buf.append(message);
-		String body = buf.toString();
-
-		channel.basicPublish("", queuename, null, body.getBytes());
-
-		fullmsg = "Set id: " + id + ", msg:" + message;
-		LOG.info(fullmsg);
-
+	private void closeConnectionChannel() throws Exception {
 		if (channel != null) {
 			channel.close();
 		}
 		if (connection != null) {
 			connection.close();
 		}
-
-		return fullmsg;
 	}
 
-	public String putMessageQueueConsumer() throws IOException, TimeoutException {
-		ConnectionFactory connectionFactory = new ConnectionFactory();
-		connectionFactory.setUsername(username);
-		connectionFactory.setPassword(password);
-		connectionFactory.setHost(host);
-		connectionFactory.setVirtualHost(vhost);
-		String fullmsg = "Error";
+	@Override
+	public String putMsg() throws Exception {
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+		String body = msgbean.createBody(msgbean, splitkey);
 
-		Connection connection = connectionFactory.newConnection();
-		Channel channel = connection.createChannel();
+		try {
+			channel = getConnectionChannel();
+			channel.basicPublish("", queuename, null, body.getBytes());
 
-		String id = String.valueOf(CreateId.createid());
+			msgbean.setFullmsgWithType(msgbean, "Put");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
 
-		StringBuilder buf = new StringBuilder();
-		buf.append(id);
-		buf.append(splitkey);
-		buf.append(message);
-		String body = buf.toString();
-
-		channel.basicPublish("", pubsubqueuename, null, body.getBytes());
-
-		fullmsg = "Publish id: " + id + ", msg: " + message;
-		LOG.info(fullmsg);
-
-		if (channel != null) {
-			channel.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Put Error.");
+		} finally {
+			closeConnectionChannel();
 		}
-		if (connection != null) {
-			connection.close();
-		}
+	}
 
-		return fullmsg;
+	@Override
+	public String getMsg() throws Exception {
+		MsgBeanUtils msgbean = new MsgBeanUtils();
+
+		try {
+			channel = getConnectionChannel();
+			boolean durable = true;
+			channel.queueDeclare(queuename, durable, false, false, null);
+
+			GetResponse resp = channel.basicGet(queuename, true);
+			if (resp == null) {
+				msgbean.setFullmsg("No Data");
+			} else {
+				String jmsbody = new String(resp.getBody(), "UTF-8");
+				msgbean.setFullmsgWithType(msgbean.splitBody(jmsbody, splitkey), "Get");
+			}
+
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Get Error.");
+		} finally {
+			closeConnectionChannel();
+		}
+	}
+
+	@Override
+	public String publishMsg() throws Exception {
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+		String body = msgbean.createBody(msgbean, splitkey);
+
+		try {
+			channel = getConnectionChannel();
+			channel.basicPublish("", pubsubqueuename, null, body.getBytes());
+
+			msgbean.setFullmsgWithType(msgbean, "Publish");
+			LOG.info(msgbean.getFullmsg());
+			return msgbean.getFullmsg();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Publish Error.");
+		} finally {
+			closeConnectionChannel();
+		}
 	}
 }
