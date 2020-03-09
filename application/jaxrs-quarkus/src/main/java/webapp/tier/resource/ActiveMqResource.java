@@ -26,10 +26,10 @@ public class ActiveMqResource {
 	public Response putcache() {
 		ActiveMqService svc = new ActiveMqService();
 		try {
-			return Response.ok().entity(svc.putActiveMq()).build();
+			return Response.ok().entity(svc.putMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -40,10 +40,10 @@ public class ActiveMqResource {
 	public Response getcache() {
 		ActiveMqService svc = new ActiveMqService();
 		try {
-			return Response.ok().entity(svc.getActiveMq()).build();
+			return Response.ok().entity(svc.getMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -54,10 +54,10 @@ public class ActiveMqResource {
 	public Response publish() {
 		ActiveMqService svc = new ActiveMqService();
 		try {
-			return Response.ok().entity(svc.publishActiveMq()).build();
+			return Response.ok().entity(svc.publishMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 }

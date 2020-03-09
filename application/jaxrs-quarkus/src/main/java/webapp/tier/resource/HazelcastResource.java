@@ -27,10 +27,10 @@ public class HazelcastResource {
 	public Response putcache() {
 		HazelcastCacheService svc = new HazelcastCacheService();
 		try {
-			return Response.ok().entity(svc.putMapHazelcast()).build();
+			return Response.ok().entity(svc.setMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -41,10 +41,10 @@ public class HazelcastResource {
 	public Response getcache() {
 		HazelcastCacheService svc = new HazelcastCacheService();
 		try {
-			return Response.ok().entity(svc.getMapHazelcast()).build();
+			return Response.ok().entity(svc.getMsgList()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -55,10 +55,10 @@ public class HazelcastResource {
 	public Response putqueue() {
 		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			return Response.ok().entity(svc.putQueueHazelcast()).build();
+			return Response.ok().entity(svc.putMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -69,10 +69,10 @@ public class HazelcastResource {
 	public Response getqueue() {
 		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			return Response.ok().entity(svc.getQueueHazelcast()).build();
+			return Response.ok().entity(svc.getMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -83,10 +83,10 @@ public class HazelcastResource {
 	public Response publish() {
 		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			return Response.ok().entity(svc.publishHazelcast()).build();
+			return Response.ok().entity(svc.publishMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 }

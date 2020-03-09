@@ -26,10 +26,10 @@ public class RedisResource {
 	public Response set() {
 		RedisService svc = new RedisService();
 		try {
-			return Response.ok().entity(svc.setRedis()).build();
+			return Response.ok().entity(svc.putMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -40,10 +40,10 @@ public class RedisResource {
 	public Response get() {
 		RedisService svc = new RedisService();
 		try {
-			return Response.ok().entity(svc.getRedis()).build();
+			return Response.ok().entity(svc.getMsgList()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -54,10 +54,10 @@ public class RedisResource {
 	public Response publish() {
 		RedisService svc = new RedisService();
 		try {
-			return Response.ok().entity(svc.publishRedis()).build();
+			return Response.ok().entity(svc.publishMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 }

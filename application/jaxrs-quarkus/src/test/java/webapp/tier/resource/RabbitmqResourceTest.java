@@ -1,6 +1,7 @@
 package webapp.tier.resource;
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,8 @@ class RabbitmqResourceTest {
 				.contentType("application/json")
 				.post("/quarkus/rabbitmq/put")
 				.then()
-				.statusCode(500);
+				.statusCode(500)
+				.body(is("Put Error."));
 	}
 
 	@Test
@@ -25,7 +27,8 @@ class RabbitmqResourceTest {
 				.when()
 				.get("/quarkus/rabbitmq/get")
 				.then()
-				.statusCode(500);
+				.statusCode(500)
+				.body(is("Get Error."));
 	}
 
 	@Test
@@ -35,7 +38,8 @@ class RabbitmqResourceTest {
 				.contentType("application/json")
 				.post("/quarkus/rabbitmq/publish")
 				.then()
-				.statusCode(500);
+				.statusCode(500)
+				.body(is("Publish Error."));
 	}
 
 }

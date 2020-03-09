@@ -1,6 +1,7 @@
 package webapp.tier.resource;
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,8 @@ class PostgresResourceTest {
 				.contentType("application/json")
 				.post("/quarkus/postgres/insert")
 				.then()
-				.statusCode(500);
+				.statusCode(500)
+				.body(is("Insert Error."));
 	}
 
 	@Test
@@ -25,7 +27,8 @@ class PostgresResourceTest {
 				.when()
 				.get("/quarkus/postgres/select")
 				.then()
-				.statusCode(500);
+				.statusCode(500)
+				.body(is("Select Error."));
 	}
 
 	@Test
@@ -35,7 +38,8 @@ class PostgresResourceTest {
 				.contentType("application/json")
 				.post("/quarkus/postgres/delete")
 				.then()
-				.statusCode(500);
+				.statusCode(500)
+				.body(is("Delete Error."));
 	}
 
 }

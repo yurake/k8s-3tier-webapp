@@ -2,7 +2,6 @@ package webapp.tier.resource;
 
 import java.sql.SQLException;
 
-import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -30,10 +29,10 @@ public class PostgresResource {
 	public Response insert() {
 		PostgresService postgres = new PostgresService();
 		try {
-			return Response.ok().entity(postgres.insert()).build();
-		} catch (SQLException | NamingException e) {
+			return Response.ok().entity(postgres.insertMsg()).build();
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -44,10 +43,10 @@ public class PostgresResource {
 	public Response select() {
 		PostgresService postgres = new PostgresService();
 		try {
-			return Response.ok().entity(postgres.select()).build();
-		} catch (SQLException | NamingException e) {
+			return Response.ok().entity(postgres.selectMsg()).build();
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -58,10 +57,10 @@ public class PostgresResource {
 	public Response delete() {
 		PostgresService postgres = new PostgresService();
 		try {
-			return Response.ok(postgres.delete()).build();
-		} catch (SQLException | NamingException e) {
+			return Response.ok(postgres.deleteMsg()).build();
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 }

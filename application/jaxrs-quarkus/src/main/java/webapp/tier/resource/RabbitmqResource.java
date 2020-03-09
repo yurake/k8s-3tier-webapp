@@ -26,10 +26,10 @@ public class RabbitmqResource {
 	public Response set() {
 		RabbitmqService svc = new RabbitmqService();
 		try {
-			return Response.ok().entity(svc.putMessageQueue()).build();
+			return Response.ok().entity(svc.putMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -40,10 +40,10 @@ public class RabbitmqResource {
 	public Response get() {
 		RabbitmqService svc = new RabbitmqService();
 		try {
-			return Response.ok().entity(svc.getMessageQueue()).build();
+			return Response.ok().entity(svc.getMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -54,10 +54,10 @@ public class RabbitmqResource {
 	public Response publish() {
 		RabbitmqService svc = new RabbitmqService();
 		try {
-			return Response.ok().entity(svc.putMessageQueueConsumer()).build();
+			return Response.ok().entity(svc.publishMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 }

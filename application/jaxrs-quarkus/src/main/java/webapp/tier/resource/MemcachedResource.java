@@ -27,7 +27,7 @@ public class MemcachedResource {
 	public Response set() {
 		MemcachedService svc = new MemcachedService();
 		try {
-			return Response.ok().entity(svc.setMemcached()).build();
+			return Response.ok().entity(svc.setMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
@@ -41,7 +41,7 @@ public class MemcachedResource {
 	public Response get() {
 		MemcachedService svc = new MemcachedService();
 		try {
-			return Response.ok().entity(svc.getMemcached()).build();
+			return Response.ok().entity(svc.getMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();

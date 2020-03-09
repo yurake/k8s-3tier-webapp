@@ -18,7 +18,7 @@ class MemcachedResourceTest {
 				.post("/quarkus/memcached/set")
 				.then()
 				.statusCode(500)
-				.body(is("Failed set to Memcached"));
+				.body(is("Set Error."));
 	}
 
 	@Test
@@ -28,7 +28,7 @@ class MemcachedResourceTest {
 				.get("/quarkus/memcached/get")
 				.then()
 				.statusCode(500)
-				.body(is("Failed get from Memcached"));
+				.body(is("Get Error."));
 	}
 
 }

@@ -27,10 +27,10 @@ public class MysqlResource {
 	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response insert() {
 		try {
-			return Response.ok().entity(mysqlsvc.insertMysql()).build();
+			return Response.ok().entity(mysqlsvc.insertMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -43,7 +43,7 @@ public class MysqlResource {
 			return Response.ok().entity(mysqlsvc.selectMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 
@@ -56,7 +56,7 @@ public class MysqlResource {
 			return Response.ok().entity(mysqlsvc.deleteMsg()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(500).build();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 }
