@@ -39,12 +39,10 @@ public class CallRandomPublshSchedule {
 
 	@Scheduled(every = "10m")
 	void callDeleteDbs() {
-		String response;
 		LOG.info("Call: Delete Postgres");
-		response = postgresrsvc.delete();
-		LOG.info(response);
-		response = mysqlrsvc.delete();
-		LOG.info(response);
+		LOG.info(postgresrsvc.delete());
+		LOG.info("Call: Delete Mysql");
+		LOG.info(mysqlrsvc.delete());
 	}
 
 }
