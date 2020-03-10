@@ -19,6 +19,8 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
+import webapp.tier.bean.MsgBean;
+import webapp.tier.util.MsgBeanUtils;
 
 @ApplicationScoped
 public class ActiveMqService implements Runnable {
@@ -59,29 +61,22 @@ public class ActiveMqService implements Runnable {
 
 	@Override
 	public void run() {
-		String fullmsg = null;
 		MysqlService mysqlsvc = new MysqlService();
 		try {
 			JMSConsumer jmsconsumer = getJmsConnect();
 			while (true) {
 				LOG.info("Ready for receive message...");
 				Message message = jmsconsumer.receive();
-				if (message instanceof TextMessage) {
-					TextMessage textMessage = (TextMessage) message;
-					String[] body;
-					body = textMessage.getText().split(splitkey, 0);
-					fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
-					LOG.info(fullmsg);
-					mysqlsvc.insertMsg(body);
-				} else {
-					fullmsg = "No Data";
-					LOG.info(fullmsg);
-				}
 
-				String response;
+				MsgBeanUtils msgbean = new MsgBeanUtils();
+				TextMessage textMessage = (TextMessage) message;
+				MsgBean bean = msgbean.splitBody(textMessage.getText(), splitkey);
+				msgbean.setFullmsgWithType(bean, "Received");
+				LOG.info(msgbean.getFullmsg());
+
+				mysqlsvc.insertMsg(bean);
 				LOG.info("Call: Random Publish");
-				response = deliversvc.random();
-				LOG.info(response);
+				LOG.info(deliversvc.random());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -13,6 +13,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Database;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgBeanUtils;
@@ -88,9 +89,9 @@ public class MysqlService implements Database {
 		}
 	}
 
-	public String insertMsg(String[] receivedbody) throws SQLException {
+	public String insertMsg(MsgBean bean) throws SQLException {
 
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), receivedbody[1]);
+		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), bean.getMessage());
 
 		msgbean.appendMessage(msgbean, addonmsg);
 		String sql = insertsql.replace(sqlkey, msgbean.getIdString()).replace(sqlbody, msgbean.getMessage());

@@ -22,6 +22,8 @@ import com.rabbitmq.client.Envelope;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
+import webapp.tier.bean.MsgBean;
+import webapp.tier.util.MsgBeanUtils;
 
 @ApplicationScoped
 public class RabbitMqService implements Runnable {
@@ -79,23 +81,21 @@ public class RabbitMqService implements Runnable {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws UnsupportedEncodingException {
-					String jmsbody = new String(body, "UTF-8");
-					String[] value = jmsbody.split(splitkey, 0);
-					String id = value[0];
-					String message = value[1];
-					LOG.info("Received: id: " + id + ", msg:" + message);
+
+					MsgBeanUtils msgbean = new MsgBeanUtils();
+					MsgBean bean = msgbean.splitBody(new String(body, "UTF-8"), splitkey);
+					msgbean.setFullmsgWithType(bean, "Received");
+					LOG.info(msgbean.getFullmsg());
+
 
 					MysqlService mysqlsvc = new MysqlService();
 					try {
-						mysqlsvc.insertMsg(value);
+						mysqlsvc.insertMsg(bean);
+						LOG.info("Call: Random Publish");
+						LOG.info(deliversvc.random());
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-
-					String response;
-					LOG.info("Call: Random Publish");
-					response = deliversvc.random();
-					LOG.info(response);
 				}
 			};
 			channel.basicConsume(queuename, true, consumer);

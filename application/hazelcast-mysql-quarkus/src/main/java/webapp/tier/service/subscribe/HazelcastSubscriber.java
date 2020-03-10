@@ -11,8 +11,10 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import com.hazelcast.core.Message;
 import com.hazelcast.core.MessageListener;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.service.DeliverService;
 import webapp.tier.service.MysqlService;
+import webapp.tier.util.MsgBeanUtils;
 
 @ApplicationScoped
 public class HazelcastSubscriber implements MessageListener<String> {
@@ -24,18 +26,17 @@ public class HazelcastSubscriber implements MessageListener<String> {
 	@Override
 	public void onMessage(Message<String> message) {
 
-		String[] body = message.getMessageObject().split(splitkey, 0);
-		String fullmsg = "Received id:" + body[0] + ", msg: " + body[1];
+		MsgBeanUtils msgbean = new MsgBeanUtils();
+		MsgBean bean = msgbean.splitBody(message.getMessageObject(), splitkey);
+		msgbean.setFullmsgWithType(bean, "Received");
+		LOG.info(msgbean.getFullmsg());
+
 		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL).get();
 
 		try {
-			LOG.info(fullmsg);
-			mysqlsvc.insertMsg(body);
-
-			String response;
+			mysqlsvc.insertMsg(bean);
 			LOG.info("Call: Random Publish");
-			response = deliversvc.random();
-			LOG.info(response);
+			LOG.info(deliversvc.random());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

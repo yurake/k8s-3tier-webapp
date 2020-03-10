@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.bean.MsgBean;
 
 @QuarkusTest
 class MysqlServiceTest {
@@ -34,9 +35,9 @@ class MysqlServiceTest {
 	@Test
 	void testInsertMsgError() {
 		MysqlService svc = new MysqlService();
-		String[] test = { "11111", "test" };
+		MsgBean msgbean = new MsgBean(1111, "Test");
 		try {
-			svc.insertMsg(test);
+			svc.insertMsg(msgbean);
 			fail();
 		} catch (SQLException e) {
 			e.printStackTrace();
