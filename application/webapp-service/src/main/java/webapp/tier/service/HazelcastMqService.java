@@ -1,5 +1,6 @@
 package webapp.tier.service;
 
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
@@ -55,7 +56,7 @@ public class HazelcastMqService implements Messaging {
 			BlockingQueue<String> queue = client.getQueue(queuename);
 			Object resp = queue.poll();
 
-			if (resp.toString().isEmpty()) {
+			if (Objects.isNull(resp) || resp.toString().isEmpty()) {
 				msgbean.setFullmsg("No Data");
 			} else {
 				String jmsbody = resp.toString();
