@@ -18,7 +18,6 @@
 		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
 		<hazelcast-client.version>3.12.6</hazelcast-client.version>
 		<hazelcast.version>3.12.6</hazelcast.version>
-		<hazelcast-kubernetes.version>2.0.1</hazelcast-kubernetes.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -68,11 +67,6 @@
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
 			<version>${hazelcast.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast-kubernetes</artifactId>
-			<version>${hazelcast-kubernetes.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
