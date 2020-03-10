@@ -55,7 +55,7 @@ public class MemcachedService implements Cache {
 		String error = "Get Error.";
 
 		try {
-			MsgBeanUtils msgbean = new MsgBeanUtils((Integer) mcc.get("id"), (String) mcc.get("msg"));
+			MsgBeanUtils msgbean = new MsgBeanUtils(Integer.parseInt((String) mcc.get("id")), (String) mcc.get("msg"));
 
 			if (!msgbean.checkMsgBeanUtils(msgbean)) {
 				msgbean.setFullmsgWithType(msgbean, "Get");
