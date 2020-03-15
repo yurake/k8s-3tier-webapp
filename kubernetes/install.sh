@@ -194,12 +194,6 @@ cd ${ROOT_DIR}
 echo "###"
 echo ""
 
-if [ $2 = "skip-jenkins" ]; then
-echo "### skip install jenkins"
-echo ""
-
-else
-
 echo "### jenkins"
 cd ${ROOT_DIR}/monitoring/jenkins
 docker build -t monitoring/jenkins:v0.0.1 .
@@ -212,8 +206,6 @@ kubectl apply -f ./jenkins-ingress.yaml
 cd ${ROOT_DIR}
 echo "###"
 echo ""
-
-fi
 
 echo "### node-exporter"
 cd ${ROOT_DIR}/monitoring/node-exporter
