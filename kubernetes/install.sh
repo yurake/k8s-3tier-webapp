@@ -87,12 +87,6 @@ cd ${ROOT_DIR}
 echo "###"
 echo ""
 
-if [ $1 = "skip-app" ]; then
-echo "### skip install application"
-echo ""
-
-else
-
 echo "### rabbitmq-mysql-quarkus"
 cd ../application/rabbitmq-mysql-quarkus
 docker build -t default/rabbitmq-mysql-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
@@ -177,8 +171,6 @@ kubectl apply -f ./scheduled-quarkus-deployment.yaml
 cd ${ROOT_DIR}
 echo "###"
 echo ""
-
-fi
 
 echo "## jaeger"
 cd jaeger
