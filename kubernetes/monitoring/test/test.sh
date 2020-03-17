@@ -12,7 +12,7 @@ echo "#################"
 echo "### ab"
 echo "#################"
 cd ab
-docker build -t test/ab:v0.0.1 .
+docker build -t default/ab:v0.0.1 .
 cd ${ROOT_DIR}
 echo ""
 
