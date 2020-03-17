@@ -26,6 +26,8 @@ Installed CLI commands.
 * minikube
 
 ## Run on Minikube
+
+For Mac  
 ```bash
 minikube config set memory 8192
 minikube config set cpus 4
@@ -35,6 +37,18 @@ minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-
 minikube addons enable ingress
 
 eval $(minikube docker-env)
+```
+
+For Windows  
+```bash
+minikube config set memory 8192
+minikube config set cpus 4
+minikube config set disk-size 40g
+minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --kubernetes-version=v1.15.4
+
+minikube addons enable ingress
+
+minikube docker-env --shell powershell | Invoke-Expression
 ```
 
 ## Build & Apply
