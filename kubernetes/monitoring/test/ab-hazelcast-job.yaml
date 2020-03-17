@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ab-hazelcast
+  namespace: monitoring
+spec:
+  completions: 1
+  parallelism: 1
+  backoffLimit: 10
+  template:
+    spec:
+      containers:
+      - name: ab-rabbitmq
+        image: monitoring/ab:v0.0.1
+        command: ["/bin/sh", "-c"]
+        args: ["/usr/bin/ab -n 100 -c 10 -p /home/sample.json -T application/json http://jaxrs-quarkus-monitoring:8080/quarkus/hazelcast/publish"]
+      restartPolicy: OnFailure
