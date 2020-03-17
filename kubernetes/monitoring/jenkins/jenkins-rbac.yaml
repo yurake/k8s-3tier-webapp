@@ -20,6 +20,7 @@ metadata:
 rules:
   - apiGroups:
       - ""
+      - "batch"
     resources:
       - nodes
       - nodes/metrics
@@ -35,6 +36,7 @@ rules:
       - horizontalpodautoscalers
       - jobs
       - cronjobs
+      - pods/log
     verbs:
       - get
       - list
