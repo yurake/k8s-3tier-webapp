@@ -4,12 +4,13 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.jms.QueueConnection;
+import javax.jms.QueueConnectionFactory;
 import javax.jms.QueueReceiver;
 import javax.jms.QueueSender;
 import javax.jms.QueueSession;
-import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
 import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
 
@@ -32,27 +33,25 @@ public class ActiveMqService implements Messaging {
 	private static String topicname = ConfigProvider.getConfig().getValue("activemq.opic.name", String.class);
 
 	private QueueConnection getQueueConnection() throws Exception {
-		ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url);
-		cf.setUserName(username);
-		cf.setPassword(password);
-		return cf.createQueueConnection();
+		QueueConnectionFactory cf = new ActiveMQConnectionFactory(url);
+		return cf.createQueueConnection(username, password);
 	}
 
 	private TopicConnection getTopicConnection() throws Exception {
-		ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url);
-		cf.setUserName(username);
-		cf.setPassword(password);
-		return cf.createTopicConnection();
+		TopicConnectionFactory cf = new ActiveMQConnectionFactory(url);
+		return cf.createTopicConnection(username, password);
 	}
 
 	private void closeQueueConnection(QueueConnection qcon) throws Exception {
 		if (qcon != null) {
+			LOG.fine("Close Queue Connection");
 			qcon.close();
 		}
 	}
 
 	private void closeTopicConnection(TopicConnection tcon) throws Exception {
 		if (tcon != null) {
+			LOG.fine("Close Topic Connection");
 			tcon.close();
 		}
 	}
@@ -66,36 +65,36 @@ public class ActiveMqService implements Messaging {
 		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
-			LOG.info("Start Get Coonection");
+			LOG.fine("Start Get Coonection");
 			qcon = getQueueConnection();
-			LOG.info("Ended Get Coonection");
-			LOG.info("Start Queue Coonection");
 			qcon.start();
 
-			LOG.info("Start Queue Session");
+			LOG.fine("Start Queue Session");
 			qsession = qcon.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
-			LOG.info("Start Create Sender");
+			LOG.fine("Start Create Sender");
 			qsender = qsession.createSender(qsession.createQueue(queuename));
 
 			TextMessage message = qsession.createTextMessage(body);
+			LOG.fine("Start Send ...");
 			qsender.send(message);
-
-			msgbean.setFullmsgWithType(msgbean, "Publish");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Put Error.");
 		} finally {
 			if (qsender != null) {
+				LOG.fine("Close Sender");
 				qsender.close();
 			}
 			if (qsession != null) {
+				LOG.fine("Close Queue Session");
 				qsession.close();
 			}
 			closeQueueConnection(qcon);
 		}
+		msgbean.setFullmsgWithType(msgbean, "Publish");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
@@ -106,12 +105,16 @@ public class ActiveMqService implements Messaging {
 		MsgBeanUtils msgbean = new MsgBeanUtils();
 
 		try {
+			LOG.fine("Start Get Coonection");
 			qcon = getQueueConnection();
 			qcon.start();
 
+			LOG.fine("Start Queue Session");
 			qsession = qcon.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+			LOG.info("Start Create Receiver");
 			qreceiver = qsession.createReceiver(qsession.createQueue(queuename));
 
+			LOG.fine("Start Receive ...");
 			TextMessage resp = (TextMessage) qreceiver.receive(1000);
 
 			if (Objects.isNull(resp)) {
@@ -120,21 +123,22 @@ public class ActiveMqService implements Messaging {
 				msgbean.setFullmsgWithType(msgbean.splitBody(resp.getText(), splitkey), "Get");
 			}
 
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Get Error.");
 		} finally {
 			if (qreceiver != null) {
+				LOG.fine("Close Receiver");
 				qreceiver.close();
 			}
 			if (qsession != null) {
+				LOG.fine("Close Queue Session");
 				qsession.close();
 			}
 			closeQueueConnection(qcon);
 		}
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
@@ -146,28 +150,34 @@ public class ActiveMqService implements Messaging {
 		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
-
+			LOG.fine("Start Topic Coonection");
 			tcon = getTopicConnection();
-			session = tcon.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+
+			LOG.fine("Start Topic Session");
+			session = tcon.createTopicSession(false, TopicSession.AUTO_ACKNOWLEDGE);
+			LOG.fine("Start Create Publisher");
 			publisher = session.createPublisher(session.createTopic(topicname));
 			TextMessage message = session.createTextMessage(body);
-			publisher.publish(message);
 
-			msgbean.setFullmsgWithType(msgbean, "Publish");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
+			LOG.fine("Start Publish ...");
+			publisher.publish(message);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Publish Error.");
 		} finally {
 			if (publisher != null) {
+				LOG.fine("Close Publisher");
 				publisher.close();
 			}
 			if (session != null) {
+				LOG.fine("Close Topic Session");
 				session.close();
 			}
 			closeTopicConnection(tcon);
 		}
+		msgbean.setFullmsgWithType(msgbean, "Publish");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 }
