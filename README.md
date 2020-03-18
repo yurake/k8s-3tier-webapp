@@ -31,7 +31,7 @@ For Mac
 ```bash
 minikube config set memory 8192
 minikube config set cpus 4
-minikube config set disk-size 40g
+minikube config set disk-size 80g
 minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --kubernetes-version=v1.15.4
 
 minikube addons enable ingress
@@ -43,7 +43,7 @@ For Windows
 ```bash
 minikube config set memory 8192
 minikube config set cpus 4
-minikube config set disk-size 40g
+minikube config set disk-size 80g
 minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --kubernetes-version=v1.15.4
 
 minikube addons enable ingress
