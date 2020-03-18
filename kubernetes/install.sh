@@ -201,6 +201,7 @@ echo ""
 
 echo "### node-exporter"
 cd ${ROOT_DIR}/monitoring/node-exporter
+kubectl apply -f ./node-exporter-pv-sys.yaml
 kubectl apply -f ./node-exporter-pvc-sys.yaml
 kubectl apply -f ./node-exporter-pv-proc.yaml
 kubectl apply -f ./node-exporter-pvc-proc.yaml

@@ -1,6 +1,6 @@
 CREATE DATABASE webapp;
-CREATE USER 'webapp' IDENTIFIED by 'webapp';
-GRANT ALL PRIVILEDGES on webapp.* to 'webapp';
+CREATE user 'webapp' identified by 'webapp';
+GRANT ALL PRIVILEGES on webapp.* to 'webapp';
 use webapp;
 
 CREATE TABLE msg (
