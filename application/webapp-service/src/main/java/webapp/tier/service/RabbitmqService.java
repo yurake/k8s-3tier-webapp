@@ -25,20 +25,21 @@ public class RabbitmqService implements Messaging {
 	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
 	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
-	Connection connection = null;
-	Channel channel = null;
 
-	private Channel getConnectionChannel() throws Exception {
+	private Connection getConnection() throws Exception {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
 		connectionFactory.setPassword(password);
 		connectionFactory.setHost(host);
 		connectionFactory.setVirtualHost(vhost);
-		connection = connectionFactory.newConnection();
-		return connection.createChannel();
+		return connectionFactory.newConnection();
 	}
 
-	private void closeConnectionChannel() throws Exception {
+	private Channel getChannel(Connection con) throws Exception {
+		return con.createChannel();
+	}
+
+	private void closeConnectionChannel(Connection connection, Channel channel) throws Exception {
 		if (channel != null) {
 			channel.close();
 		}
@@ -49,11 +50,14 @@ public class RabbitmqService implements Messaging {
 
 	@Override
 	public String putMsg() throws Exception {
+		Connection connection = null;
+		Channel channel = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
-			channel = getConnectionChannel();
+			connection = getConnection();
+			channel = getChannel(connection);
 			channel.basicPublish("", queuename, null, body.getBytes());
 
 			msgbean.setFullmsgWithType(msgbean, "Put");
@@ -64,16 +68,19 @@ public class RabbitmqService implements Messaging {
 			e.printStackTrace();
 			throw new Exception("Put Error.");
 		} finally {
-			closeConnectionChannel();
+			closeConnectionChannel(connection, channel);
 		}
 	}
 
 	@Override
 	public String getMsg() throws Exception {
+		Connection connection = null;
+		Channel channel = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils();
 
 		try {
-			channel = getConnectionChannel();
+			connection = getConnection();
+			channel = getChannel(connection);
 			boolean durable = true;
 			channel.queueDeclare(queuename, durable, false, false, null);
 
@@ -92,17 +99,20 @@ public class RabbitmqService implements Messaging {
 			e.printStackTrace();
 			throw new Exception("Get Error.");
 		} finally {
-			closeConnectionChannel();
+			closeConnectionChannel(connection, channel);
 		}
 	}
 
 	@Override
 	public String publishMsg() throws Exception {
+		Connection connection = null;
+		Channel channel = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
-			channel = getConnectionChannel();
+			connection = getConnection();
+			channel = getChannel(connection);
 			channel.basicPublish("", pubsubqueuename, null, body.getBytes());
 
 			msgbean.setFullmsgWithType(msgbean, "Publish");
@@ -113,7 +123,7 @@ public class RabbitmqService implements Messaging {
 			e.printStackTrace();
 			throw new Exception("Publish Error.");
 		} finally {
-			closeConnectionChannel();
+			closeConnectionChannel(connection, channel);
 		}
 	}
 }

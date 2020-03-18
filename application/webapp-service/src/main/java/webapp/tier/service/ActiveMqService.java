@@ -30,8 +30,6 @@ public class ActiveMqService implements Messaging {
 	private static String password = ConfigProvider.getConfig().getValue("activemq.password", String.class);
 	private static String queuename = ConfigProvider.getConfig().getValue("activemq.queue.name", String.class);
 	private static String topicname = ConfigProvider.getConfig().getValue("activemq.opic.name", String.class);
-	QueueConnection qcon = null;
-	TopicConnection tcon = null;
 
 	private QueueConnection getQueueConnection() throws Exception {
 		ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url);
@@ -47,30 +45,36 @@ public class ActiveMqService implements Messaging {
 		return cf.createTopicConnection();
 	}
 
-	private void closeQueueConnection() throws Exception {
-		if (tcon != null) {
-			tcon.close();
-		}
-	}
-
-	private void closeTopicConnection() throws Exception {
+	private void closeQueueConnection(QueueConnection qcon) throws Exception {
 		if (qcon != null) {
 			qcon.close();
 		}
 	}
 
+	private void closeTopicConnection(TopicConnection tcon) throws Exception {
+		if (tcon != null) {
+			tcon.close();
+		}
+	}
+
 	@Override
 	public String putMsg() throws Exception {
+		QueueConnection qcon = null;
 		QueueSession qsession = null;
 		QueueSender qsender = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 
 		try {
+			LOG.info("Start Get Coonection");
 			qcon = getQueueConnection();
+			LOG.info("Ended Get Coonection");
+			LOG.info("Start Queue Coonection");
 			qcon.start();
 
+			LOG.info("Start Queue Session");
 			qsession = qcon.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+			LOG.info("Start Create Sender");
 			qsender = qsession.createSender(qsession.createQueue(queuename));
 
 			TextMessage message = qsession.createTextMessage(body);
@@ -90,12 +94,13 @@ public class ActiveMqService implements Messaging {
 			if (qsession != null) {
 				qsession.close();
 			}
-			closeQueueConnection();
+			closeQueueConnection(qcon);
 		}
 	}
 
 	@Override
 	public String getMsg() throws Exception {
+		QueueConnection qcon = null;
 		QueueSession qsession = null;
 		QueueReceiver qreceiver = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils();
@@ -128,12 +133,13 @@ public class ActiveMqService implements Messaging {
 			if (qsession != null) {
 				qsession.close();
 			}
-			closeQueueConnection();
+			closeQueueConnection(qcon);
 		}
 	}
 
 	@Override
 	public String publishMsg() throws Exception {
+		TopicConnection tcon = null;
 		TopicSession session = null;
 		TopicPublisher publisher = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
@@ -161,7 +167,7 @@ public class ActiveMqService implements Messaging {
 			if (session != null) {
 				session.close();
 			}
-			closeTopicConnection();
+			closeTopicConnection(tcon);
 		}
 	}
 }

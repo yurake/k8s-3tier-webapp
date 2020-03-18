@@ -30,13 +30,12 @@ public class MysqlService implements Database {
 	private static String sqlkey = ConfigProvider.getConfig().getValue("mysql.id", String.class);
 	private static String sqlbody = ConfigProvider.getConfig().getValue("mysql.body", String.class);
 	private static String addonmsg = ConfigProvider.getConfig().getValue("mysql.msg.quarkus", String.class);
-	Connection con = null;
 
 	private Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(url);
 	}
 
-	private void closeConnection() throws SQLException {
+	private void closeConnection(Connection con) throws SQLException {
 		if (con != null) {
 			try {
 				con.close();
@@ -48,6 +47,7 @@ public class MysqlService implements Database {
 	}
 
 	public boolean connectionStatus() {
+		Connection con = null;
 		boolean status = false;
 		try {
 			con = getConnection();
@@ -56,7 +56,7 @@ public class MysqlService implements Database {
 			e.printStackTrace();
 		} finally {
 			try {
-				closeConnection();
+				closeConnection(con);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -66,7 +66,7 @@ public class MysqlService implements Database {
 
 	@Override
 	public String insertMsg() throws SQLException {
-
+		Connection con = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String sql = insertsql.replace(sqlkey, msgbean.getIdString()).replace(sqlbody, msgbean.getMessage());
 
@@ -85,12 +85,12 @@ public class MysqlService implements Database {
 			e.printStackTrace();
 			throw new SQLException("Insert Error.");
 		} finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 
 	public String insertMsg(MsgBean bean) throws SQLException {
-
+		Connection con = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), bean.getMessage());
 
 		msgbean.appendMessage(msgbean, addonmsg);
@@ -111,7 +111,7 @@ public class MysqlService implements Database {
 			e.printStackTrace();
 			throw new SQLException("Insert Error.");
 		} finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 
@@ -158,6 +158,8 @@ public class MysqlService implements Database {
 
 	@Override
 	public String deleteMsg() throws SQLException {
+		Connection con = null;
+
 		try {
 			con = getConnection();
 			Statement stmt = con.createStatement();
@@ -170,7 +172,7 @@ public class MysqlService implements Database {
 			e.printStackTrace();
 			throw new SQLException("Delete Error.");
 		} finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 }

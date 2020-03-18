@@ -1,6 +1,5 @@
 package webapp.tier.service;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,8 +17,6 @@ import webapp.tier.util.MsgBeanUtils;
 
 @Provider
 public class RedisService implements Messaging {
-
-	Connection con = null;
 
 	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);

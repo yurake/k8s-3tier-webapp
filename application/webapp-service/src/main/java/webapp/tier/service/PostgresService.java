@@ -28,13 +28,12 @@ public class PostgresService implements Database {
 	private static String insertsql = ConfigProvider.getConfig().getValue("postgres.insert.msg", String.class);
 	private static String selectsql = ConfigProvider.getConfig().getValue("postgres.select.msg.all", String.class);
 	private static String deletesql = ConfigProvider.getConfig().getValue("postgres.delete.msg.all", String.class);
-	private Connection con = null;
 
 	private Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(url);
 	}
 
-	private void closeConnection() throws SQLException {
+	private void closeConnection(Connection con) throws SQLException {
 		if (con != null) {
 			try {
 				con.close();
@@ -46,6 +45,7 @@ public class PostgresService implements Database {
 	}
 
 	public boolean connectionStatus() throws SQLException {
+		Connection con = null;
 		boolean status = false;
 		try {
 			con = getConnection();
@@ -53,14 +53,14 @@ public class PostgresService implements Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(con);
 		}
 		return status;
 	}
 
 	@Override
 	public String insertMsg() throws SQLException {
-
+		Connection con = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String sql = insertsql.replace(sqlkey, msgbean.getIdString()).replace(sqlbody, msgbean.getMessage());
 
@@ -79,12 +79,13 @@ public class PostgresService implements Database {
 			e.printStackTrace();
 			throw new SQLException("Insert Error.");
 		} finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 
 	@Override
 	public List<String> selectMsg() throws SQLException {
+		Connection con = null;
 		List<String> msglist = new ArrayList<>();
 
 		try {
@@ -113,12 +114,13 @@ public class PostgresService implements Database {
 			e.printStackTrace();
 			throw new SQLException("Select Error.");
 		} finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 
 	@Override
 	public String deleteMsg() throws SQLException {
+		Connection con = null;
 		try {
 			con = getConnection();
 			Statement stmt = con.createStatement();
@@ -131,7 +133,7 @@ public class PostgresService implements Database {
 			e.printStackTrace();
 			throw new SQLException("Delete Error.");
 		} finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 }
