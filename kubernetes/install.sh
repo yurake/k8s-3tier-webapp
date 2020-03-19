@@ -97,8 +97,8 @@ echo "###"
 echo ""
 
 echo "### wlp"
-cp -p ../application/wlp-web-java-spring/target/spring.war .
 cd ${ROOT_DIR}/wlp
+\cp -p ../../application/wlp-web-java-spring/target/spring.war .
 docker build -t default/wlp:v0.0.1 .
 kubectl apply -f ./wlp-configmap.yaml
 kubectl apply -f ./wlp-deployment.yaml
@@ -194,6 +194,7 @@ kubectl apply -f ./jenkins-pv.yaml
 kubectl apply -f ./jenkins-pvc.yaml
 kubectl apply -f ./jenkins-deployment.yaml
 kubectl apply -f ./jenkins-service.yaml
+kubectl apply -f ./jaxrs-quarkus-service-externalname.yaml
 kubectl apply -f ./jenkins-ingress.yaml
 cd ${ROOT_DIR}
 echo "###"
