@@ -60,16 +60,16 @@ public class RabbitmqService implements Messaging {
 			channel = getChannel(connection);
 			channel.basicPublish("", queuename, null, body.getBytes());
 
-			msgbean.setFullmsgWithType(msgbean, "Put");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Put Error.");
 		} finally {
 			closeConnectionChannel(connection, channel);
 		}
+		msgbean.setFullmsgWithType(msgbean, "Put");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
+
 	}
 
 	@Override
@@ -92,8 +92,6 @@ public class RabbitmqService implements Messaging {
 				msgbean.setFullmsgWithType(msgbean.splitBody(jmsbody, splitkey), "Get");
 			}
 
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,6 +99,8 @@ public class RabbitmqService implements Messaging {
 		} finally {
 			closeConnectionChannel(connection, channel);
 		}
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
@@ -115,15 +115,14 @@ public class RabbitmqService implements Messaging {
 			channel = getChannel(connection);
 			channel.basicPublish("", pubsubqueuename, null, body.getBytes());
 
-			msgbean.setFullmsgWithType(msgbean, "Publish");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Publish Error.");
 		} finally {
 			closeConnectionChannel(connection, channel);
 		}
+		msgbean.setFullmsgWithType(msgbean, "Publish");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 }

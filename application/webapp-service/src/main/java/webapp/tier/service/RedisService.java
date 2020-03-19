@@ -49,16 +49,15 @@ public class RedisService implements Messaging {
 			jedis.set(msgbean.getIdString(), msgbean.getMessage());
 			jedis.expire(msgbean.getIdString(), setexpire);
 
-			msgbean.setFullmsgWithType(msgbean, "Put");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Put Error.");
 		} finally {
 			jedis.close();
 		}
+		msgbean.setFullmsgWithType(msgbean, "Put");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
@@ -84,14 +83,13 @@ public class RedisService implements Messaging {
 				msglist.add("No Data");
 			}
 
-			return msglist;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Get Error.");
 		} finally {
 			jedis.close();
 		}
+		return msglist;
 	}
 
 	@Override
@@ -104,15 +102,14 @@ public class RedisService implements Messaging {
 			jedis.publish(channel, body);
 			jedis.expire(msgbean.getIdString(), setexpire);
 
-			msgbean.setFullmsgWithType(msgbean, "Publish");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Publish Error.");
 		} finally {
 			jedis.close();
 		}
+		msgbean.setFullmsgWithType(msgbean, "Publish");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 }

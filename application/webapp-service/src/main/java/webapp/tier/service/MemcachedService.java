@@ -35,41 +35,40 @@ public class MemcachedService implements Cache {
 
 			if (resultsetid && resultsetmsg) {
 				msgbean.setFullmsgWithType(msgbean, "Set");
-				LOG.info(msgbean.getFullmsg());
-				return msgbean.getFullmsg();
 			} else {
 				LOG.warning(error);
-				throw new Exception(error);
+				msgbean.setFullmsg(error);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			LOG.warning(error);
-			throw new Exception(error);
+			throw new Exception("Set Error.");
 		}
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
 	public String getMsg() throws Exception {
 		MemCachedClient mcc = new MemCachedClient();
+		MsgBeanUtils msgbean = null;
 		String error = "Get Error.";
 
 		try {
-			MsgBeanUtils msgbean = new MsgBeanUtils(Integer.parseInt((String) mcc.get("id")), (String) mcc.get("msg"));
+			msgbean = new MsgBeanUtils(Integer.parseInt((String) mcc.get("id")), (String) mcc.get("msg"));
 
 			if (!msgbean.checkMsgBeanUtils(msgbean)) {
 				msgbean.setFullmsgWithType(msgbean, "Get");
-				LOG.info(msgbean.getFullmsg());
-				return msgbean.getFullmsg();
 			} else {
 				LOG.warning(error);
-				throw new Exception(error);
+				msgbean.setFullmsg(error);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			LOG.warning(error);
-			throw new Exception(error);
+			throw new Exception("Get Error.");
 		}
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 }

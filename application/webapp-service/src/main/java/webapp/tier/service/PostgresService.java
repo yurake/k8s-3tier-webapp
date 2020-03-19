@@ -71,16 +71,15 @@ public class PostgresService implements Database {
 			LOG.info("Insert SQL: " + sql);
 			stmt.executeUpdate(sql);
 
-			msgbean.setFullmsgWithType(msgbean, "Insert");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException("Insert Error.");
 		} finally {
 			closeConnection(con);
 		}
+		msgbean.setFullmsgWithType(msgbean, "Insert");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
@@ -108,7 +107,6 @@ public class PostgresService implements Database {
 				msglist.add("No Data");
 			}
 
-			return msglist;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -116,6 +114,7 @@ public class PostgresService implements Database {
 		} finally {
 			closeConnection(con);
 		}
+		return msglist;
 	}
 
 	@Override
@@ -127,7 +126,6 @@ public class PostgresService implements Database {
 
 			LOG.info("Delete SQL: " + deletesql);
 			stmt.executeUpdate(deletesql);
-			return "Delete Msg Records";
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,5 +133,6 @@ public class PostgresService implements Database {
 		} finally {
 			closeConnection(con);
 		}
+		return "Delete Msg Records";
 	}
 }

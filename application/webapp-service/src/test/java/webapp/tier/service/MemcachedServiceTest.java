@@ -12,13 +12,11 @@ class MemcachedServiceTest {
 	@Test
 	void testSetMemcachedError() {
 		MemcachedService svc = new MemcachedService();
-
-		try {
-			svc.setMsg();
-			fail();
-		} catch (Exception expected) {
-			assertEquals("Set Error.", expected.getMessage());
-		}
+			try {
+				assertEquals("Set Error.", svc.setMsg());
+			} catch (Exception e) {
+				fail();
+			}
 	}
 
 	@Test

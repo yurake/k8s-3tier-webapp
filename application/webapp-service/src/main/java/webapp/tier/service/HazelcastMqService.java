@@ -32,9 +32,6 @@ public class HazelcastMqService implements Messaging {
 			BlockingQueue<Object> queue = client.getQueue(queuename);
 			queue.put(body);
 
-			msgbean.setFullmsgWithType(msgbean, "Put");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,6 +41,9 @@ public class HazelcastMqService implements Messaging {
 				client.shutdown();
 			}
 		}
+		msgbean.setFullmsgWithType(msgbean, "Put");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
@@ -63,9 +63,6 @@ public class HazelcastMqService implements Messaging {
 				msgbean.setFullmsgWithType(msgbean.splitBody(jmsbody, splitkey), "Get");
 			}
 
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Get Error.");
@@ -74,6 +71,8 @@ public class HazelcastMqService implements Messaging {
 				client.shutdown();
 			}
 		}
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
@@ -87,9 +86,6 @@ public class HazelcastMqService implements Messaging {
 			ITopic<Object> topic = client.getTopic(topicname);
 			topic.publish(body);
 
-			msgbean.setFullmsgWithType(msgbean, "Put");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,5 +95,8 @@ public class HazelcastMqService implements Messaging {
 				client.shutdown();
 			}
 		}
+		msgbean.setFullmsgWithType(msgbean, "Publish");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 }

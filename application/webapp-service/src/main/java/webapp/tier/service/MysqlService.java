@@ -77,9 +77,6 @@ public class MysqlService implements Database {
 			LOG.info("Insert SQL: " + sql);
 			stmt.executeUpdate(sql);
 
-			msgbean.setFullmsgWithType(msgbean, "Insert");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -87,6 +84,9 @@ public class MysqlService implements Database {
 		} finally {
 			closeConnection(con);
 		}
+		msgbean.setFullmsgWithType(msgbean, "Insert");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	public String insertMsg(MsgBean bean) throws SQLException {
@@ -103,9 +103,6 @@ public class MysqlService implements Database {
 			LOG.info("Insert SQL: " + sql);
 			stmt.executeUpdate(sql);
 
-			msgbean.setFullmsgWithType(msgbean, "Insert");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -113,6 +110,9 @@ public class MysqlService implements Database {
 		} finally {
 			closeConnection(con);
 		}
+		msgbean.setFullmsgWithType(msgbean, "Insert");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
@@ -140,8 +140,6 @@ public class MysqlService implements Database {
 				msglist.add("No Data");
 			}
 
-			return msglist;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException("Select Error.");
@@ -154,6 +152,7 @@ public class MysqlService implements Database {
 				}
 			}
 		}
+		return msglist;
 	}
 
 	@Override
@@ -166,7 +165,6 @@ public class MysqlService implements Database {
 
 			LOG.info("Delete SQL: " + deletesql);
 			stmt.executeUpdate(deletesql);
-			return "Delete Msg Records";
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -174,5 +172,6 @@ public class MysqlService implements Database {
 		} finally {
 			closeConnection(con);
 		}
+		return "Delete Msg Records";
 	}
 }

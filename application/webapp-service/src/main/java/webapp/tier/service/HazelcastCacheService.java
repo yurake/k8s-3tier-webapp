@@ -30,9 +30,6 @@ public class HazelcastCacheService implements Cache {
 			Map<Integer, String> map = client.getMap(cachename);
 			map.put(msgbean.getId(), msgbean.getMessage());
 
-			msgbean.setFullmsgWithType(msgbean, "Set");
-			LOG.info(msgbean.getFullmsg());
-			return msgbean.getFullmsg();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -42,6 +39,9 @@ public class HazelcastCacheService implements Cache {
 				client.shutdown();
 			}
 		}
+		msgbean.setFullmsgWithType(msgbean, "Set");
+		LOG.info(msgbean.getFullmsg());
+		return msgbean.getFullmsg();
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class HazelcastCacheService implements Cache {
 				MsgBeanUtils msgbean = new MsgBeanUtils();
 				msgbean.setId(entry.getKey());
 				msgbean.setMessage(entry.getValue());
-				msgbean.setFullmsgWithType(msgbean, "Select");
+				msgbean.setFullmsgWithType(msgbean, "Get");
 				LOG.info(msgbean.getFullmsg());
 				msglist.add(msgbean.getFullmsg());
 			}
@@ -71,8 +71,6 @@ public class HazelcastCacheService implements Cache {
 			if (msglist.isEmpty()) {
 				msglist.add("No Data");
 			}
-
-			return msglist;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,5 +80,6 @@ public class HazelcastCacheService implements Cache {
 				client.shutdown();
 			}
 		}
+		return msglist;
 	}
 }
