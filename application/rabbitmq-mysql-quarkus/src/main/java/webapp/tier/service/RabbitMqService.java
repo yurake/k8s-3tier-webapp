@@ -40,8 +40,6 @@ public class RabbitMqService implements Runnable {
 	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
-	private static Connection connection = null;
-	private static Channel channel = null;
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
@@ -53,27 +51,35 @@ public class RabbitMqService implements Runnable {
 		LOG.info("The application is stopping...");
 	}
 
-	private Channel getJmsChannel() throws Exception {
-
+	private Connection getConnection() throws Exception {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
 		connectionFactory.setPassword(password);
 		connectionFactory.setHost(host);
 		connectionFactory.setVirtualHost(vhost);
+		return connectionFactory.newConnection();
+	}
 
-		if (connection == null) {
-			connection = connectionFactory.newConnection();
+	private Channel getChannel(Connection con) throws Exception {
+		return con.createChannel();
+	}
+
+	private void closeConnectionChannel(Connection connection, Channel channel) throws Exception {
+		if (channel != null) {
+			channel.close();
 		}
-		if (channel == null) {
-			channel = connection.createChannel();
+		if (connection != null) {
+			connection.close();
 		}
-		return channel;
 	}
 
 	@Override
 	public void run() {
+		Connection connection = null;
+		Channel channel = null;
 		try {
-			Channel channel = getJmsChannel();
+			connection = getConnection();
+			channel = getChannel(connection);
 			boolean durable = true;
 			channel.queueDeclare(queuename, durable, false, false, null);
 
@@ -86,7 +92,6 @@ public class RabbitMqService implements Runnable {
 					MsgBean bean = msgbean.splitBody(new String(body, "UTF-8"), splitkey);
 					msgbean.setFullmsgWithType(bean, "Received");
 					LOG.info(msgbean.getFullmsg());
-
 
 					MysqlService mysqlsvc = new MysqlService();
 					try {
@@ -103,16 +108,31 @@ public class RabbitMqService implements Runnable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				closeConnectionChannel(connection, channel);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public boolean isActive() {
+		Connection connection = null;
+		Channel channel = null;
 		boolean status = false;
 		try {
-			getJmsChannel();
+			connection = getConnection();
+			channel = getChannel(connection);
 			status = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				closeConnectionChannel(connection, channel);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return status;
 	}
