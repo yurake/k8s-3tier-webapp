@@ -37,7 +37,7 @@ public class MemcachedService implements Cache {
 				msgbean.setFullmsgWithType(msgbean, "Set");
 			} else {
 				LOG.warning(error);
-				msgbean.setFullmsg(error);
+				throw new Exception("Set Error.");
 			}
 
 		} catch (Exception e) {
@@ -61,7 +61,7 @@ public class MemcachedService implements Cache {
 				msgbean.setFullmsgWithType(msgbean, "Get");
 			} else {
 				LOG.warning(error);
-				msgbean.setFullmsg(error);
+				throw new Exception("Get Error.");
 			}
 
 		} catch (Exception e) {

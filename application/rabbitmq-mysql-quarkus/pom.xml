@@ -16,6 +16,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<webapp-service.version>1.0.3-SNAPSHOT</webapp-service.version>
 		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
+		<rabbitmq-jms.version>1.14.0</rabbitmq-jms.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -55,6 +56,11 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq.jms</groupId>
+			<artifactId>rabbitmq-jms</artifactId>
+			<version>${rabbitmq-jms.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
