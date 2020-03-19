@@ -114,6 +114,7 @@ docker build -t default/jaxrs-quarkus:v0.0.1 -f src/main/docker/Dockerfile.jvm .
 cd ${ROOT_DIR}/jaxrs-quarkus
 kubectl apply -f ./jaxrs-quarkus-deployment.yaml
 kubectl apply -f ./jaxrs-quarkus-service.yaml
+kubectl apply -f ./jaxrs-quarkus-service-externalname.yaml
 cd ${ROOT_DIR}
 echo "###"
 echo ""
@@ -194,7 +195,6 @@ kubectl apply -f ./jenkins-pv.yaml
 kubectl apply -f ./jenkins-pvc.yaml
 kubectl apply -f ./jenkins-deployment.yaml
 kubectl apply -f ./jenkins-service.yaml
-kubectl apply -f ./jaxrs-quarkus-service-externalname.yaml
 kubectl apply -f ./jenkins-ingress.yaml
 cd ${ROOT_DIR}
 echo "###"
