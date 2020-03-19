@@ -3,7 +3,7 @@ name: Issue template
 about: Describe somehing issue
 title: ''
 labels: ''
-assignees: ''
+assignees: yurake
 
 ---
 
