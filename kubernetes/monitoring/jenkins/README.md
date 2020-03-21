@@ -1,9 +1,10 @@
-## Metrics
-Use Prometheus Metrics
-https://plugins.jenkins.io/prometheus/
+## Setup Kubernetes CLI (kubectl)
 
-## Custom Grafana dashboard
-* 9524
+Select Credentials add  
+![CredentialsBefore.png](../../../docs/jenkins/CredentialsBefore.png)
 
-## See also
-https://github.com/cirolini/jenkins-docker-kubectl
+Create Credentials  
+![CredentialsDetail.png](../../../docs/jenkins/CredentialsDetail.png)
+
+Created Credentials  
+![CredentialsAfter.png](../../../docs/jenkins/CredentialsAfter.png)

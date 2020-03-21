@@ -7,6 +7,7 @@ https://grafana.com/grafana/dashboards
 * 6239
 * 8588
 * 8685
+* 9524
 * 9789
 * 10000
 * 10001
