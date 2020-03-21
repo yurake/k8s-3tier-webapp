@@ -256,6 +256,13 @@ cd ${ROOT_DIR}
 echo "###"
 echo ""
 
+echo "### ab"
+cd ${ROOT_DIR}/monitoring/test/ab
+docker build -t monitoring/ab:v0.0.1 .
+cd ${ROOT_DIR}
+echo "###"
+echo ""
+
 echo "### docker rmi tag:none"
 docker image prune -f
 echo "###"
