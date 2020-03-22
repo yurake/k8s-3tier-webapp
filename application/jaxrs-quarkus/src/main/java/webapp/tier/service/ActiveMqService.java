@@ -92,7 +92,7 @@ public class ActiveMqService implements Messaging {
 			}
 			closeQueueConnection(qcon);
 		}
-		msgbean.setFullmsgWithType(msgbean, "Publish");
+		msgbean.setFullmsgWithType(msgbean, "Put");
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
 	}
