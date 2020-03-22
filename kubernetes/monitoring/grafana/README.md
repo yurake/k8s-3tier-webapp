@@ -1,16 +1,27 @@
 ## Recommended grafana dashboards
 https://grafana.com/grafana/dashboards
-* 455
-* 763
-* 1621
-* 3066
-* 6239
-* 8588
-* 8685
-* 9524
-* 9789
-* 10000
-* 10001
-* 10991
+* 455  
+Postgres Overview
+* 763  
+Redis Dashboard for Prometheus Redis Exporter 1.x
+* 1621  
+Kubernetes cluster monitoring (via Prometheus)
+* 3066  
+JVM overview
+* 6239  
+Mysql
+* 8588  
+Kubernetes Deployment Statefulset Daemonset metrics
+* 8685  
+K8s Cluster Summary
+* 9789  
+NGINX Ingress controller
+* 10000  
+Cluster Monitoring for Kubernetes
+* 10001  
+Jaeger
+* 10991  
+RabbitMQ
 
-* https://github.com/nginxinc/nginx-prometheus-exporter/blob/master/grafana/dashboard.json
+## Custom dashboards
+[dashboards](./dashboard)
