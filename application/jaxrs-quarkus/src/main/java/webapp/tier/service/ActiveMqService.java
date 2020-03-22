@@ -111,7 +111,7 @@ public class ActiveMqService implements Messaging {
 
 			LOG.fine("Start Queue Session");
 			qsession = qcon.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
-			LOG.info("Start Create Receiver");
+			LOG.fine("Start Create Receiver");
 			qreceiver = qsession.createReceiver(qsession.createQueue(queuename));
 
 			LOG.fine("Start Receive ...");
