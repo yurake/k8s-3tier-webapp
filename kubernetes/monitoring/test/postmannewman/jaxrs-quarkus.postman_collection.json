@@ -1,0 +1,992 @@
+{
+	"info": {
+		"_postman_id": "7898a613-3edc-4941-b974-30e4cc7777fb",
+		"name": "jaxrs-quarkus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "memcached/set",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "83c3b391-ac98-426f-abc2-f8bf981ea3b3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Set id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/memcached/set",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"memcached",
+						"set"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "memcached/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1d84e98-ce3a-4fae-8ae5-bf485127d2d2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/memcached/get",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"memcached",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redis/set",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11f8be90-29f3-4b84-840f-af8fd5d06282",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Put id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/redis/set",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"redis",
+						"set"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redis/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a947cef1-b75d-4bcf-a78b-606ba0f2c47b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/redis/get",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"redis",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redis/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6e5df42-fd6d-4d5c-9b11-7c0e388e52e8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Publish id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/redis/publish",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"redis",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activemq/put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b8b064ef-41e2-4018-b5ab-ac0674443854",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Put id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/activemq/put",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"activemq",
+						"put"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activemq/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2b9e886a-9cec-4b91-9806-c28260341f96",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/activemq/get",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"activemq",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activemq/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0a3c52fd-1e8c-4e18-a74b-35a1a835645b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Publish id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/activemq/publish",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"activemq",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/putcache",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d1e1796-7d59-48d0-9fd0-29a3434e6b7e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 400ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Set id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/putcache",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"putcache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/getcache",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e2fa0066-d40e-409e-9a03-eb134b6f4553",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 400ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/getcache",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"getcache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "89501a49-a52f-4d57-a07e-5924aabdfb62",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 400ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Publish id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/publish",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/putqueue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10558396-b985-419b-a56f-30e0291ce9a8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 400ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Put id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/putqueue",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"putqueue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/getqueue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "54d6c61a-afaf-4f3a-8cac-bf672a6b1eee",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 400ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/getqueue",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"getqueue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mysql/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3bf277af-8916-4a54-abb0-4a7c4dabd6ea",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Insert id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/mysql/insert",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"mysql",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mysql/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29237794-ab42-4b7a-a3d6-abe3b1759c3d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Select id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/mysql/select",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"mysql",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mysql/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a6db929-6250-4658-bce9-56c45c31b9f5",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Delete Msg Records\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/mysql/delete",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"mysql",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postgres/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2c9b1116-4015-4da1-9a99-c0bbd62a9a85",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Insert id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/postgres/insert",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"postgres",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postgres/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8e8876c4-c3c6-4ae9-9ea9-e10388487f05",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Select id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/postgres/select",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"postgres",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postgres/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "deb5bed1-9d0e-418c-8044-b635b49f39f7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Delete Msg Records\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://k8s.3tier.webapp/quarkus/postgres/delete",
+					"protocol": "http",
+					"host": [
+						"k8s",
+						"3tier",
+						"webapp"
+					],
+					"path": [
+						"quarkus",
+						"postgres",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
