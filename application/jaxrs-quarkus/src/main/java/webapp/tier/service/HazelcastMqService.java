@@ -26,6 +26,7 @@ public class HazelcastMqService implements Messaging {
 		HazelcastInstance client = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
+		LOG.fine("start put");
 
 		try {
 			client = ConnectHazelcast.getInstance();
@@ -43,6 +44,7 @@ public class HazelcastMqService implements Messaging {
 		}
 		msgbean.setFullmsgWithType(msgbean, "Put");
 		LOG.info(msgbean.getFullmsg());
+		LOG.fine("end put");
 		return msgbean.getFullmsg();
 	}
 
@@ -80,6 +82,7 @@ public class HazelcastMqService implements Messaging {
 		HazelcastInstance client = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
+		LOG.fine("start publish");
 
 		try {
 			client = ConnectHazelcast.getInstance();
@@ -97,6 +100,7 @@ public class HazelcastMqService implements Messaging {
 		}
 		msgbean.setFullmsgWithType(msgbean, "Publish");
 		LOG.info(msgbean.getFullmsg());
+		LOG.fine("end publish");
 		return msgbean.getFullmsg();
 	}
 }
