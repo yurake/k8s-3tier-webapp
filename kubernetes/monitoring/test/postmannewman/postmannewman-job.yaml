@@ -13,5 +13,5 @@ spec:
       - name: postmannewman-job
         image: monitoring/postmannewman:v0.0.1
         command: ["/bin/sh", "-c"]
-        args: ["run jaxrs-quarkus.postman_collection.json"]
+        args: ["newman run -e hostname.postman_environment.json jaxrs-quarkus.postman_collection.json"]
       restartPolicy: OnFailure

@@ -263,6 +263,13 @@ cd ${ROOT_DIR}
 echo "###"
 echo ""
 
+echo "### postmannewman"
+cd ${ROOT_DIR}/monitoring/test/postmannewman
+docker build -t monitoring/postmannewman:v0.0.1 .
+cd ${ROOT_DIR}
+echo "###"
+echo ""
+
 echo "### docker rmi tag:none"
 docker image prune -f
 echo "###"

@@ -41,12 +41,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/memcached/set",
+					"raw": "http://{{HOST_NAME}}/quarkus/memcached/set",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -93,12 +91,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/memcached/get",
+					"raw": "http://{{HOST_NAME}}/quarkus/memcached/get",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -145,12 +141,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/redis/set",
+					"raw": "http://{{HOST_NAME}}/quarkus/redis/set",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -197,12 +191,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/redis/get",
+					"raw": "http://{{HOST_NAME}}/quarkus/redis/get",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -249,12 +241,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/redis/publish",
+					"raw": "http://{{HOST_NAME}}/quarkus/redis/publish",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -301,12 +291,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/activemq/put",
+					"raw": "http://{{HOST_NAME}}/quarkus/activemq/put",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -353,12 +341,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/activemq/get",
+					"raw": "http://{{HOST_NAME}}/quarkus/activemq/get",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -405,12 +391,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/activemq/publish",
+					"raw": "http://{{HOST_NAME}}/quarkus/activemq/publish",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -457,12 +441,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/putcache",
+					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/putcache",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -509,12 +491,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/getcache",
+					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/getcache",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -561,12 +541,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/publish",
+					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/publish",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -613,12 +591,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/putqueue",
+					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/putqueue",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -665,12 +641,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/hazelcast/getqueue",
+					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/getqueue",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -717,12 +691,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/mysql/insert",
+					"raw": "http://{{HOST_NAME}}/quarkus/mysql/insert",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -769,12 +741,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/mysql/select",
+					"raw": "http://{{HOST_NAME}}/quarkus/mysql/select",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -818,12 +788,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/mysql/delete",
+					"raw": "http://{{HOST_NAME}}/quarkus/mysql/delete",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -870,12 +838,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/postgres/insert",
+					"raw": "http://{{HOST_NAME}}/quarkus/postgres/insert",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -922,12 +888,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/postgres/select",
+					"raw": "http://{{HOST_NAME}}/quarkus/postgres/select",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
@@ -971,12 +935,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://k8s.3tier.webapp/quarkus/postgres/delete",
+					"raw": "http://{{HOST_NAME}}/quarkus/postgres/delete",
 					"protocol": "http",
 					"host": [
-						"k8s",
-						"3tier",
-						"webapp"
+						"{{HOST_NAME}}"
 					],
 					"path": [
 						"quarkus",
