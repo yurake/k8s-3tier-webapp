@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postmannewman-job
+  namespace: monitoring
+spec:
+  completions: 1
+  parallelism: 1
+  backoffLimit: 10
+  template:
+    spec:
+      containers:
+      - name: postmannewman-job
+        image: monitoring/postmannewman:v0.0.1
+        command: ["/bin/sh", "-c"]
+        args: ["run jaxrs-quarkus.postman_collection.json"]
+      restartPolicy: OnFailure
