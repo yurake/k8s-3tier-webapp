@@ -20,7 +20,7 @@ public class RandomService {
 
 	public String deliverrandom() throws Exception {
 		String response;
-		int id = (int) (Math.random() * 4);
+		int id = (int) (Math.random() * 5);
 		switch (id) {
 		case 0:
 			logger.info("Call: ActiveMQ Publish");
@@ -38,8 +38,12 @@ public class RandomService {
 			logger.info("Call: Postgres Insert");
 			response = deliverresource.postgres();
 			break;
+		case 4:
+			logger.info("Call: Hazelcast Publish");
+			response = deliverresource.hazelcast();
+			break;
 		default:
-			throw new Exception();
+			throw new Exception("random error");
 		}
 		logger.info(response);
 		return response;

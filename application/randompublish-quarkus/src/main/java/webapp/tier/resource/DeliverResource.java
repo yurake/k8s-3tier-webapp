@@ -30,4 +30,9 @@ public interface DeliverResource {
 	@Path("/postgres/insert")
 	String postgres();
 
+
+	@POST
+	@Path("/hazelcast/publish")
+	String hazelcast();
+
 }
