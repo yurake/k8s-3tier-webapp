@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: default/nginx:v0.0.1
+        image: yurak/nginx:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

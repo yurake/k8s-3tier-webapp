@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: activemq-mysql-quarkus
-        image: default/activemq-mysql-quarkus:v0.0.1
+        image: yurak/activemq-mysql-quarkus:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080

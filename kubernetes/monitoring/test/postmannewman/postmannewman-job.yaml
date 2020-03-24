@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: postmannewman-job
-        image: monitoring/postmannewman:v0.0.1
+        image: yurak/postmannewman:latest
         command: ["/bin/sh", "-c"]
         args: ["newman run -e hostname.postman_environment.json jaxrs-quarkus.postman_collection.json"]
       restartPolicy: OnFailure

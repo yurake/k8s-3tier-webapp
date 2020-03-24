@@ -27,7 +27,7 @@ spec:
         runAsUser: 0
       containers:
       - name: jenkins
-        image: monitoring/jenkins:v0.0.1
+        image: yurak/jenkins:latest
         ports:
         - containerPort: 8080
         volumeMounts:

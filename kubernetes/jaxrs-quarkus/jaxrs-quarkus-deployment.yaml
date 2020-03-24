@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: jaxrs-quarkus
-        image: default/jaxrs-quarkus:v0.0.1
+        image: yurak/jaxrs-quarkus:latest
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
