@@ -22,10 +22,6 @@ data:
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       kubernetes_sd_configs:
       - role: endpoints
-        api_server: https://192.168.64.25:8443
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       relabel_configs:
       - action: keep
         regex: default;kubernetes;https
@@ -42,10 +38,6 @@ data:
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       kubernetes_sd_configs:
       - role: node
-        api_server: https://192.168.64.25:8443
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       relabel_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
@@ -58,10 +50,6 @@ data:
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       kubernetes_sd_configs:
       - role: node
-        api_server: https://192.168.64.25:8443
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       relabel_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
@@ -169,10 +157,6 @@ data:
       alertmanagers:
       - kubernetes_sd_configs:
         - role: pod
-          api_server: https://192.168.64.25:8443
-          tls_config:
-            ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-          bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
         relabel_configs:
         - source_labels: [__meta_kubernetes_namespace]
           regex: kube-system
