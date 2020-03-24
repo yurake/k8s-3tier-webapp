@@ -20,6 +20,7 @@ public class ConnectHazelcast {
 	private static String CLIENTXML = "hazelcast-client.xml";
 	private static String HAZELCAST_GROUP_NAME = ConfigProvider.getConfig().getValue("hazelcast.group.name",
 			String.class);
+
 	public HazelcastInstance createNodeInstance() {
 		Config config = new Config();
 		RestApiConfig restApiConfig = new RestApiConfig().setEnabled(true).disableAllGroups()
