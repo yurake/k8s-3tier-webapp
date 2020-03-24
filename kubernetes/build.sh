@@ -75,7 +75,7 @@ echo ""
 
 echo "### redis-mysql-helidon"
 cd ${ROOT_DIR}/../application/redis-mysql-helidon
-docker build -t yurak/redis-mysql-helidon:latest .
+# docker build -t yurak/redis-mysql-helidon:latest .
 echo "###"
 echo ""
 
