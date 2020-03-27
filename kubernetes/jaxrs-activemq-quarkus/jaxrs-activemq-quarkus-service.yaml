@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaxrs-activemq-quarkus
+spec:
+  type: ClusterIP
+  selector:
+    app: jaxrs-activemq-quarkus
+  ports:
+  - protocol: TCP
+    port: 8080

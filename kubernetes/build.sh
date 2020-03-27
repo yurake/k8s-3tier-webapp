@@ -1,7 +1,6 @@
 #!/bin/sh
 set -eu
 
-eval $(minikube docker-env)
 ROOT_DIR=$(cd $(dirname -- $0); pwd)
 
 echo "## default"
@@ -61,9 +60,9 @@ docker build -t yurak/wlp:latest .
 echo "###"
 echo ""
 
-echo "### jaxrs-quarkus"
-cd ${ROOT_DIR}/../application/jaxrs-quarkus
-docker build -t yurak/jaxrs-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+echo "### jaxrs-activemq-quarkus"
+cd ${ROOT_DIR}/../application/jaxrs-activemq-quarkus
+docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
 echo "###"
 echo ""
 

@@ -89,11 +89,11 @@ kubectl apply -f ./wlp-ingress.yaml
 echo "###"
 echo ""
 
-echo "### jaxrs-quarkus"
-cd ${ROOT_DIR}/jaxrs-quarkus
-kubectl apply -f ./jaxrs-quarkus-deployment.yaml
-kubectl apply -f ./jaxrs-quarkus-service.yaml
-kubectl apply -f ./jaxrs-quarkus-service-externalname.yaml
+echo "### jaxrs-activemq-quarkus"
+cd ${ROOT_DIR}/jaxrs-activemq-quarkus
+kubectl apply -f ./jaxrs-activemq-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-activemq-quarkus-service.yaml
+kubectl apply -f ./jaxrs-activemq-quarkus-service-externalname.yaml
 echo "###"
 echo ""
 
