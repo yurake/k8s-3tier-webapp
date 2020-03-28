@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaxrs-memcached-quarkus-monitoring
+  namespace: monitoring
+spec:
+  type: ExternalName
+  externalName: jaxrs-memcached-quarkus.default.svc.cluster.local
