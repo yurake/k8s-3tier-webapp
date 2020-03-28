@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaxrs-postgres-quarkus
+spec:
+  type: ClusterIP
+  selector:
+    app: jaxrs-postgres-quarkus
+  ports:
+  - protocol: TCP
+    port: 8080

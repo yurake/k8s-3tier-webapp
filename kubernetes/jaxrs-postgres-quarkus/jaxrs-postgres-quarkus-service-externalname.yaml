@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaxrs-postgres-quarkus-monitoring
+  namespace: monitoring
+spec:
+  type: ExternalName
+  externalName: jaxrs-postgres-quarkus.default.svc.cluster.local
