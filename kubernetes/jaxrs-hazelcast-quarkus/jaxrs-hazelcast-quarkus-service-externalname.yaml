@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaxrs-hazelcast-quarkus-monitoring
+  namespace: monitoring
+spec:
+  type: ExternalName
+  externalName: jaxrs-hazelcast-quarkus.default.svc.cluster.local
