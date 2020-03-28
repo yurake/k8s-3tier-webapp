@@ -1,51 +1,71 @@
 package webapp.tier.service;
 
+import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import webapp.tier.resource.DeliverResource;
+import webapp.tier.resource.ActivemqResource;
+import webapp.tier.resource.HazelcastResource;
+import webapp.tier.resource.PostgresResource;
+import webapp.tier.resource.RabbitmqResource;
+import webapp.tier.resource.RedisResource;
 
 @ApplicationScoped
 public class RandomService {
 
 	@Inject
 	@RestClient
-	DeliverResource deliverresource;
+	ActivemqResource activemqresource;
 
-	Logger logger = LoggerFactory.getLogger(RandomService.class);
+	@Inject
+	@RestClient
+	HazelcastResource hazelcastresource;
+
+	@Inject
+	@RestClient
+	RabbitmqResource rabbitmqresource;
+
+	@Inject
+	@RestClient
+	RedisResource redisresource;
+
+	@Inject
+	@RestClient
+	PostgresResource postgresresource;
+
+	private static final Logger LOG = Logger.getLogger(RandomService.class.getSimpleName());
 
 	public String deliverrandom() throws Exception {
 		String response;
 		int id = (int) (Math.random() * 5);
 		switch (id) {
 		case 0:
-			logger.info("Call: ActiveMQ Publish");
-			response = deliverresource.activemq();
+			LOG.info("Call: ActiveMQ Publish");
+			response = activemqresource.publish();
 			break;
 		case 1:
-			logger.info("Call: RabbitMQ Publish");
-			response = deliverresource.rabbitmq();
+			LOG.info("Call: RabbitMQ Publish");
+			response = rabbitmqresource.publish();
 			break;
 		case 2:
-			logger.info("Call: Redis Publish");
-			response = deliverresource.redis();
+			LOG.info("Call: Redis Publish");
+			response = redisresource.publish();
 			break;
 		case 3:
-			logger.info("Call: Postgres Insert");
-			response = deliverresource.postgres();
+			LOG.info("Call: Postgres Insert");
+			response = postgresresource.insert();
 			break;
 		case 4:
-			logger.info("Call: Hazelcast Publish");
-			response = deliverresource.hazelcast();
+			LOG.info("Call: Hazelcast Publish");
+			response = hazelcastresource.publish();
 			break;
 		default:
 			throw new Exception("random error");
 		}
-		logger.info(response);
+		LOG.info(response);
 		return response;
 	}
 }
