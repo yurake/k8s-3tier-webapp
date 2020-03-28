@@ -32,7 +32,7 @@ jobs:
       run: mvn -B package
     - name: Build Image - activemq-mysql-quarkus
       working-directory: ./application/activemq-mysql-quarkus
-      run: docker build . -t yurak/activemq-mysql-quarkus:latest
+      run: docker build -t yurak/activemq-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
     - name: Push Image - activemq-mysql-quarkus
       run: docker push yurak/activemq-mysql-quarkus:latest
       
