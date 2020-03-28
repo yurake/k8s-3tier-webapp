@@ -19,3 +19,27 @@ spec:
         backend:
           serviceName: jaxrs-activemq-quarkus
           servicePort: 8080
+      - path: /quarkus/hazelcast
+        backend:
+          serviceName: jaxrs-hazelcast-quarkus
+          servicePort: 8080
+      - path: /quarkus/memcached
+        backend:
+          serviceName: jaxrs-memcached-quarkus
+          servicePort: 8080
+      - path: /quarkus/mysql
+        backend:
+          serviceName: jaxrs-mysql-quarkus
+          servicePort: 8080
+      - path: /quarkus/postgres
+        backend:
+          serviceName: jaxrs-postgres-quarkus
+          servicePort: 8080
+      - path: /quarkus/rabbitmq
+        backend:
+          serviceName: jaxrs-rabbitmq-quarkus
+          servicePort: 8080
+      - path: /quarkus/redis
+        backend:
+          serviceName: jaxrs-redis-quarkus
+          servicePort: 8080

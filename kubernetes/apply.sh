@@ -97,6 +97,54 @@ kubectl apply -f ./jaxrs-activemq-quarkus-service-externalname.yaml
 echo "###"
 echo ""
 
+echo "### jaxrs-hazelcast-quarkus"
+cd ${ROOT_DIR}/jaxrs-hazelcast-quarkus
+kubectl apply -f ./jaxrs-hazelcast-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-hazelcast-quarkus-service.yaml
+kubectl apply -f ./jaxrs-hazelcast-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-memcached-quarkus"
+cd ${ROOT_DIR}/jaxrs-memcached-quarkus
+kubectl apply -f ./jaxrs-memcached-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-memcached-quarkus-service.yaml
+kubectl apply -f ./jaxrs-memcached-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-mysql-quarkus"
+cd ${ROOT_DIR}/jaxrs-mysql-quarkus
+kubectl apply -f ./jaxrs-mysql-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-mysql-quarkus-service.yaml
+kubectl apply -f ./jaxrs-mysql-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-postgres-quarkus"
+cd ${ROOT_DIR}/jaxrs-postgres-quarkus
+kubectl apply -f ./jaxrs-postgres-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-postgres-quarkus-service.yaml
+kubectl apply -f ./jaxrs-postgres-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-rabbitmq-quarkus"
+cd ${ROOT_DIR}/jaxrs-rabbitmq-quarkus
+kubectl apply -f ./jaxrs-rabbitmq-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-rabbitmq-quarkus-service.yaml
+kubectl apply -f ./jaxrs-rabbitmq-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-redis-quarkus"
+cd ${ROOT_DIR}/jaxrs-redis-quarkus
+kubectl apply -f ./jaxrs-redis-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-redis-quarkus-service.yaml
+kubectl apply -f ./jaxrs-redis-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
 echo "### redis-mysql-quarkus"
 cd ${ROOT_DIR}/redis-mysql-quarkus
 kubectl apply -f ./redis-mysql-quarkus-deployment.yaml

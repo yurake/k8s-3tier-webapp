@@ -7,18 +7,50 @@ jobs:
     - name: Check out Git repository
       uses: actions/checkout@v2
       
-    - name: Build the Docker image - mysql
-      working-directory: ./kubernetes/mysql
-      run: docker build -t default/mysql:v0.0.1 .
+    - name: docker login
+      env:
+        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
       
-    - name: Build the Docker image - nginx
+    - name: Build image - nginx
       working-directory: ./kubernetes/nginx
-      run: docker build -t default/nginx:v0.0.1 .
-      
-    - name: Build the Docker image - postgres
+      run: docker build -t yurak/nginx:latest
+    - name: Push Image - nginx
+      run: docker push yurak/nginx:latest
+
+    - name: Build image - mysql
+      working-directory: ./kubernetes/mysql
+      run: docker build -t yurak/mysql:latest
+    - name: Push Image - mysql
+      run: docker push yurak/mysql:latest
+
+    - name: Build image - postgres
       working-directory: ./kubernetes/postgres
-      run: docker build -t default/postgres:v0.0.1 .
+      run: docker build -t yurak/postgres:latest
+    - name: Push Image - postgres
+      run: docker push yurak/postgres:latest
       
-    - name: Build the Docker image - rabbitmq
+    - name: Build image - rabbitmq
       working-directory: ./kubernetes/rabbitmq
-      run: docker build -t default/rabbitmq:v0.0.1 .
+      run: docker build -t yurak/rabbitmq:latest
+    - name: Push Image - rabbitmq
+      run: docker push yurak/rabbitmq:latest
+
+    - name: Build image - jenkins
+      working-directory: ./kubernetes/monitoring/jenkins
+      run: docker build -t yurak/jenkins:latest
+    - name: Push Image - rabbitmq
+      run: docker push yurak/jenkins:latest
+
+    - name: Build image - ab
+      working-directory: ./kubernetes/monitoring/test/ab
+      run: docker build -t yurak/ab:latest
+    - name: Push Image - ab
+      run: docker push yurak/ab:latest
+
+    - name: Build image - postmannewman
+      working-directory: ./kubernetes/monitoring/test/postmannewman
+      run: docker build -t yurak/postmannewman:latest
+    - name: Push Image - postmannewman
+      run: docker push yurak/postmannewman:latest
