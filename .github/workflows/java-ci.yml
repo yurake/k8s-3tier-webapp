@@ -16,6 +16,12 @@ jobs:
       with:
         java-version: 1.8
     
+    - name: docker login
+      env:
+        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      
     - name: Build with Maven - webapp-service
       working-directory: ./application/webapp-service
       run: mvn -B package
