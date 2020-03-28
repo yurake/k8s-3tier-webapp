@@ -33,7 +33,7 @@ jobs:
       
     - name: Build image - rabbitmq
       working-directory: ./kubernetes/rabbitmq
-      run: docker build -t yurak/rabbitmq:latest
+      run: docker build -t yurak/rabbitmq:latest .
     - name: Push Image - rabbitmq
       run: docker push yurak/rabbitmq:latest
 
