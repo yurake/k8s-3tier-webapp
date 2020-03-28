@@ -18,7 +18,7 @@ spec:
       containers:
       - name: jaxrs-redis-quarkus
         image: yurak/jaxrs-redis-quarkus:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             port: 8080

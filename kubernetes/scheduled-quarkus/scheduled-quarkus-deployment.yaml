@@ -18,7 +18,7 @@ spec:
       containers:
       - name: scheduled-quarkus
         image: yurak/scheduled-quarkus:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         livenessProbe:

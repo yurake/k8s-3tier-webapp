@@ -18,7 +18,7 @@ spec:
       containers:
       - name: hazelcast-mysql-quarkus
         image: yurak/hazelcast-mysql-quarkus:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         livenessProbe:

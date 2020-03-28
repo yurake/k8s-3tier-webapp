@@ -18,7 +18,7 @@ spec:
       containers:
       - name: jaxrs-hazelcast-quarkus
         image: yurak/jaxrs-hazelcast-quarkus:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             port: 8080

@@ -18,7 +18,7 @@ spec:
       containers:
       - name: jaxrs-memcached-quarkus
         image: yurak/jaxrs-memcached-quarkus:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             port: 8080

@@ -20,7 +20,7 @@ spec:
       containers:
       - name: postgres
         image: yurak/postgres:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - name: postgres
           containerPort: 5432

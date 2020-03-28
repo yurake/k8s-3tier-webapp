@@ -18,7 +18,7 @@ spec:
       containers:
       - name: jaxrs-postgres-quarkus
         image: yurak/jaxrs-postgres-quarkus:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             port: 8080
