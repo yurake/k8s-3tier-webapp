@@ -8,7 +8,7 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
 
-import webapp.tier.service.MysqlService;
+import webapp.tier.service.HazelcastService;
 
 @Readiness
 @ApplicationScoped
@@ -16,18 +16,15 @@ public class ReadinessHealthCheck implements HealthCheck {
 
 	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheck.class.getSimpleName());
 
-	MysqlService mysqlsvc = new MysqlService();
-
 	@Override
 	public HealthCheckResponse call() {
-		MysqlService mysqlsvc = new MysqlService();
-
-		if (mysqlsvc.connectionStatus()) {
-			LOG.fine("Readiness: UP");
-			return HealthCheckResponse.up("Database connection health check");
+		HazelcastService hassvc = new HazelcastService();
+		if (hassvc.isActive()) {
+			LOG.fine("Liveness: UP");
+			return HealthCheckResponse.up("Cache Server connection health check");
 		} else {
-			LOG.warning("Readiness: DOWN");
-			return HealthCheckResponse.down("Database connection health check");
+			LOG.warning("Liveness: DOWN");
+			return HealthCheckResponse.down("Cache Server connection health check");
 		}
 	}
 }
