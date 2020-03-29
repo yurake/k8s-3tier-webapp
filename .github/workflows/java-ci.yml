@@ -9,10 +9,10 @@ jobs:
 
     steps:
     - name: Check out Git repository
-    - uses: actions/checkout@latest
+      uses: actions/checkout@latest
       
     - name: Setup GraalVM
-    - uses: DeLaGuardo/setup-graalvm@3
+      uses: DeLaGuardo/setup-graalvm@3
       with:
         graalvm-version: '19.3.0.java8'
     - run: java -version
