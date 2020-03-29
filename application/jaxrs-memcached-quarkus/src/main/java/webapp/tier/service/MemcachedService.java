@@ -71,4 +71,15 @@ public class MemcachedService implements Cache {
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
 	}
+
+	public boolean isActive() {
+		boolean status = false;
+		try {
+			getMsg();
+			status = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return status;
+	}
 }

@@ -31,4 +31,9 @@ class MemcachedServiceTest {
 		}
 	}
 
+	@Test
+	void testIsActiveError() {
+		MemcachedService svc = new MemcachedService();
+			assertEquals(false, svc.isActive());
+	}
 }
