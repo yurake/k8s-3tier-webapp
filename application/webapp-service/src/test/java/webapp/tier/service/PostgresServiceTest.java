@@ -16,12 +16,7 @@ class PostgresServiceTest {
 	@Test
 	void testConnectionStatusError() {
 		PostgresService svc = new PostgresService();
-		try {
-			assertThat(svc.connectionStatus(), is(false));
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail();
-		}
+		assertThat(svc.connectionStatus(), is(false));
 	}
 
 	@Test

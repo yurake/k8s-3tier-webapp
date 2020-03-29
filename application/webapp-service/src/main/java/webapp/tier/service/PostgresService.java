@@ -44,7 +44,7 @@ public class PostgresService implements Database {
 		}
 	}
 
-	public boolean connectionStatus() throws SQLException {
+	public boolean connectionStatus() {
 		Connection con = null;
 		boolean status = false;
 		try {
@@ -53,7 +53,11 @@ public class PostgresService implements Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection(con);
+			try {
+				closeConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return status;
 	}

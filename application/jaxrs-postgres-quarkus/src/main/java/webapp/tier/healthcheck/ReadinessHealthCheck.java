@@ -8,7 +8,7 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
 
-import webapp.tier.service.MysqlService;
+import webapp.tier.service.PostgresService;
 
 @Readiness
 @ApplicationScoped
@@ -16,13 +16,12 @@ public class ReadinessHealthCheck implements HealthCheck {
 
 	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheck.class.getSimpleName());
 
-	MysqlService mysqlsvc = new MysqlService();
 
 	@Override
 	public HealthCheckResponse call() {
-		MysqlService mysqlsvc = new MysqlService();
+		PostgresService posgresvc = new PostgresService();
 
-		if (mysqlsvc.connectionStatus()) {
+		if (posgresvc.connectionStatus()) {
 			LOG.fine("Readiness: UP");
 			return HealthCheckResponse.up("Database connection health check");
 		} else {
