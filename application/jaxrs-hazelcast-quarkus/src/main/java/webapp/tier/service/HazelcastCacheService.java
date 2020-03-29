@@ -82,4 +82,20 @@ public class HazelcastCacheService implements Cache {
 		}
 		return msglist;
 	}
+
+	public boolean isActive() {
+		HazelcastInstance client = null;
+		boolean status = false;
+		try {
+			client = ConnectHazelcast.getInstance();
+			status = client.getLifecycleService().isRunning();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (client != null) {
+				client.shutdown();
+			}
+		}
+		return status;
+	}
 }

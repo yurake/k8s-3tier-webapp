@@ -33,4 +33,10 @@ class HazelcastCacheServiceTest{
 		}
 	}
 
+	@Test
+	void testIsActiveError() {
+		HazelcastCacheService svc = new HazelcastCacheService();
+		assertEquals(false, svc.isActive());
+	}
+
 }

@@ -8,7 +8,7 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
 
-import webapp.tier.service.HazelcastService;
+import webapp.tier.service.HazelcastCacheService;
 
 @Readiness
 @ApplicationScoped
@@ -18,7 +18,7 @@ public class ReadinessHealthCheck implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		HazelcastService hassvc = new HazelcastService();
+		HazelcastCacheService hassvc = new HazelcastCacheService();
 		if (hassvc.isActive()) {
 			LOG.fine("Liveness: UP");
 			return HealthCheckResponse.up("Cache Server connection health check");

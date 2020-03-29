@@ -17,9 +17,8 @@ import com.hazelcast.core.HazelcastInstance;
 
 @ApplicationScoped
 public class ConnectHazelcast {
-	private static String CLIENTXML = "hazelcast-client.xml";
-	private static String HAZELCAST_GROUP_NAME = ConfigProvider.getConfig().getValue("hazelcast.group.name",
-			String.class);
+	private static String clientxml = "hazelcast-client.xml";
+	private static String groupname = ConfigProvider.getConfig().getValue("hazelcast.group.name", String.class);
 
 	public HazelcastInstance createNodeInstance() {
 		Config config = new Config();
@@ -31,8 +30,8 @@ public class ConnectHazelcast {
 
 	public static HazelcastInstance getInstance() throws IOException {
 		ClientConfig clientConfig = new ClientConfig();
-		clientConfig.getGroupConfig().setName(HAZELCAST_GROUP_NAME);
-		clientConfig = new XmlClientConfigBuilder(CLIENTXML).build();
+		clientConfig.getGroupConfig().setName(groupname);
+		clientConfig = new XmlClientConfigBuilder(clientxml).build();
 		return HazelcastClient.newHazelcastClient(clientConfig);
 	}
 }
