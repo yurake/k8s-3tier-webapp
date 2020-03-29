@@ -16,6 +16,9 @@ jobs:
       with:
         graalvm-version: '19.3.0.java8'
     - run: java -version
+    - name: setup-native-image
+      run: |
+        gu install native-image
     
     - name: docker login
       env:
