@@ -9,12 +9,13 @@ jobs:
 
     steps:
     - name: Check out Git repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@latest
       
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Setup GraalVM
+    - uses: DeLaGuardo/setup-graalvm@3
       with:
-        java-version: 1.8
+        graalvm-version: '19.3.0.java8'
+    - run: java -version
     
     - name: docker login
       env:
@@ -80,19 +81,19 @@ jobs:
 
     - name: Maven Build - jaxrs-mysql-quarkus
       working-directory: ./application/jaxrs-mysql-quarkus
-      run: mvn -B package
+      run: mvn -B package -Pnative
     - name: Build Image - jaxrs-mysql-quarkus
       working-directory: ./application/jaxrs-mysql-quarkus
-      run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.native .
     - name: Push Image - jaxrs-mysql-quarkus
       run: docker push yurak/jaxrs-mysql-quarkus:latest
 
     - name: Maven Build - jaxrs-postgres-quarkus
       working-directory: ./application/jaxrs-postgres-quarkus
-      run: mvn -B package
+      run: mvn -B package -Pnative
     - name: Build Image - jaxrs-postgres-quarkus
       working-directory: ./application/jaxrs-postgres-quarkus
-      run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.native .
     - name: Push Image - jaxrs-postgres-quarkus
       run: docker push yurak/jaxrs-postgres-quarkus:latest
 
