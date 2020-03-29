@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Check out Git repository
-      uses: actions/checkout@latest
+      uses: actions/checkout@v2
       
     - name: Setup GraalVM
       uses: DeLaGuardo/setup-graalvm@3
