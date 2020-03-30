@@ -125,4 +125,25 @@ public class RabbitmqService implements Messaging {
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
 	}
+
+
+	public boolean isActive() {
+		Connection connection = null;
+		Channel channel = null;
+		boolean status = false;
+		try {
+			connection = getConnection();
+			channel = getChannel(connection);
+			status = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				closeConnectionChannel(connection, channel);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return status;
+	}
 }
