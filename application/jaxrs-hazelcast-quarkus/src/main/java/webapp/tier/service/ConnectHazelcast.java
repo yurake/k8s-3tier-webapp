@@ -29,8 +29,8 @@ public class ConnectHazelcast {
 
 	public static HazelcastInstance getInstance() throws IOException {
 		ClientConfig clientConfig = new ClientConfig();
-		clientConfig.getGroupConfig().setName(groupname);
 		clientConfig.getNetworkConfig().addAddress(address);
+		clientConfig.getGroupConfig().setName(groupname);
 		return HazelcastClient.newHazelcastClient(clientConfig);
 	}
 }
