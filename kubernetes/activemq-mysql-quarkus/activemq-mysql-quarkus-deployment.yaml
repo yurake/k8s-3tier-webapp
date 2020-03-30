@@ -28,6 +28,7 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
           failureThreshold: 5
+          timeoutSeconds: 10
         readinessProbe:
           httpGet:
             port: 8080
