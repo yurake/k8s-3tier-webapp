@@ -8,7 +8,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 
 @Path("/quarkus")
-@RegisterRestClient(configKey = "jaxrs")
+@RegisterRestClient(configKey = "mysql")
 public interface MysqlService {
 
 	@POST
