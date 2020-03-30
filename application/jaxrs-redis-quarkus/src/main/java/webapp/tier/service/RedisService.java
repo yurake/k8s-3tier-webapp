@@ -28,16 +28,17 @@ public class RedisService implements Messaging {
 
 	public boolean ping() {
 		Jedis jedis = new Jedis(servername, serverport);
+		boolean status = false;
 		try {
 			if (jedis.ping().equalsIgnoreCase("PONG")) {
-				return true;
+				status = true;
 			}
 		} catch (JedisConnectionException e) {
 			e.printStackTrace();
 		} finally {
 			jedis.close();
 		}
-		return false;
+		return status;
 	}
 
 	@Override
