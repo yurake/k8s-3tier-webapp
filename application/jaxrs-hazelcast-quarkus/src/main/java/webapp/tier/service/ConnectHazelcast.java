@@ -8,7 +8,6 @@ import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
-import com.hazelcast.client.config.XmlClientConfigBuilder;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.RestApiConfig;
 import com.hazelcast.config.RestEndpointGroup;
@@ -17,7 +16,7 @@ import com.hazelcast.core.HazelcastInstance;
 
 @ApplicationScoped
 public class ConnectHazelcast {
-	private static String clientxml = "hazelcast-client.xml";
+	private static String address = ConfigProvider.getConfig().getValue("hazelcast.address", String.class);
 	private static String groupname = ConfigProvider.getConfig().getValue("hazelcast.group.name", String.class);
 
 	public HazelcastInstance createNodeInstance() {
@@ -31,7 +30,7 @@ public class ConnectHazelcast {
 	public static HazelcastInstance getInstance() throws IOException {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getGroupConfig().setName(groupname);
-		clientConfig = new XmlClientConfigBuilder(clientxml).build();
+		clientConfig.getNetworkConfig().addAddress(address);
 		return HazelcastClient.newHazelcastClient(clientConfig);
 	}
 }

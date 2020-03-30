@@ -66,6 +66,42 @@ docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfil
 echo "###"
 echo ""
 
+echo "### jaxrs-hazelcast-quarkus"
+cd ${ROOT_DIR}/../application/jaxrs-hazelcast-quarkus
+docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+echo "###"
+echo ""
+
+echo "### jaxrs-memcached-quarkus"
+cd ${ROOT_DIR}/../application/jaxrs-memcached-quarkus
+docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+echo "###"
+echo ""
+
+echo "### jaxrs-activemq-quarkus"
+cd ${ROOT_DIR}/../application/jaxrs-mysql-quarkus
+docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+echo "###"
+echo ""
+
+echo "### jaxrs-postgres-quarkus"
+cd ${ROOT_DIR}/../application/jaxrs-postgres-quarkus
+docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+echo "###"
+echo ""
+
+echo "### jaxrs-rabbitmq-quarkus"
+cd ${ROOT_DIR}/../application/jaxrs-rabbitmq-quarkus
+docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+echo "###"
+echo ""
+
+echo "### jaxrs-redis-quarkus"
+cd ${ROOT_DIR}/../application/jaxrs-redis-quarkus
+docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+echo "###"
+echo ""
+
 echo "### redis-mysql-quarkus"
 cd ${ROOT_DIR}/../application/redis-mysql-quarkus
 docker build -t yurak/redis-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
