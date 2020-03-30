@@ -14,7 +14,7 @@ jobs:
     - name: Setup GraalVM
       uses: DeLaGuardo/setup-graalvm@3
       with:
-        graalvm-version: '19.2.1.java8'
+        graalvm-version: '20.0.0.java8'
     - run: java -version
     - name: setup-native-image
       run: |
