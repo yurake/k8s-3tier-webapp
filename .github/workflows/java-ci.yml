@@ -168,7 +168,7 @@ jobs:
       run: docker push yurak/redis-mysql-quarkus:latest
 
 
-    - name: Maven Build - wlp-web-java-spring
+    - name: Maven Build - wlp
       working-directory: ./application/wlp-web-java-spring
       run: mvn -B package
     - name: Copy war file
