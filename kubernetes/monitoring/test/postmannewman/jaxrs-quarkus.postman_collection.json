@@ -41,10 +41,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/memcached/set",
+					"raw": "http://{{HOST_NAME_MEM}}/quarkus/memcached/set",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_MEM}}"
 					],
 					"path": [
 						"quarkus",
@@ -91,10 +91,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/memcached/get",
+					"raw": "http://{{HOST_NAME_MEM}}/quarkus/memcached/get",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_MEM}}"
 					],
 					"path": [
 						"quarkus",
@@ -141,10 +141,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/redis/set",
+					"raw": "http://{{HOST_NAME_REDIS}}/quarkus/redis/set",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_REDIS}}"
 					],
 					"path": [
 						"quarkus",
@@ -191,10 +191,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/redis/get",
+					"raw": "http://{{HOST_NAME_REDIS}}/quarkus/redis/get",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_REDIS}}"
 					],
 					"path": [
 						"quarkus",
@@ -241,10 +241,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/redis/publish",
+					"raw": "http://{{HOST_NAME_REDIS}}/quarkus/redis/publish",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_REDIS}}"
 					],
 					"path": [
 						"quarkus",
@@ -291,10 +291,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/activemq/put",
+					"raw": "http://{{HOST_NAME_ACT}}/quarkus/activemq/put",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_ACT}}"
 					],
 					"path": [
 						"quarkus",
@@ -341,10 +341,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/activemq/get",
+					"raw": "http://{{HOST_NAME_ACT}}/quarkus/activemq/get",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_ACT}}"
 					],
 					"path": [
 						"quarkus",
@@ -391,10 +391,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/activemq/publish",
+					"raw": "http://{{HOST_NAME_ACT}}/quarkus/activemq/publish",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_ACT}}"
 					],
 					"path": [
 						"quarkus",
@@ -441,10 +441,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/putcache",
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/putcache",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_HAZ}}"
 					],
 					"path": [
 						"quarkus",
@@ -491,10 +491,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/getcache",
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/getcache",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_HAZ}}"
 					],
 					"path": [
 						"quarkus",
@@ -541,10 +541,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/publish",
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/publish",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_HAZ}}"
 					],
 					"path": [
 						"quarkus",
@@ -591,10 +591,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/putqueue",
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/putqueue",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_HAZ}}"
 					],
 					"path": [
 						"quarkus",
@@ -641,10 +641,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/hazelcast/getqueue",
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/getqueue",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_HAZ}}"
 					],
 					"path": [
 						"quarkus",
@@ -691,10 +691,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/mysql/insert",
+					"raw": "http://{{HOST_NAME_MYSQL}}/quarkus/mysql/insert",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_MYSQL}}"
 					],
 					"path": [
 						"quarkus",
@@ -741,10 +741,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/mysql/select",
+					"raw": "http://{{HOST_NAME_MYSQL}}/quarkus/mysql/select",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_MYSQL}}"
 					],
 					"path": [
 						"quarkus",
@@ -788,10 +788,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/mysql/delete",
+					"raw": "http://{{HOST_NAME_MYSQL}}/quarkus/mysql/delete",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_MYSQL}}"
 					],
 					"path": [
 						"quarkus",
@@ -838,10 +838,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/postgres/insert",
+					"raw": "http://{{HOST_NAME_PG}}/quarkus/postgres/insert",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_PG}}"
 					],
 					"path": [
 						"quarkus",
@@ -888,10 +888,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/postgres/select",
+					"raw": "http://{{HOST_NAME_PG}}/quarkus/postgres/select",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_PG}}"
 					],
 					"path": [
 						"quarkus",
@@ -935,10 +935,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME}}/quarkus/postgres/delete",
+					"raw": "http://{{HOST_NAME_PG}}/quarkus/postgres/delete",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME}}"
+						"{{HOST_NAME_PG}}"
 					],
 					"path": [
 						"quarkus",
