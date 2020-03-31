@@ -46,7 +46,8 @@
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd kubernetes/monitoring/test/ab
+      <command>#!/bin/sh -x
+cd kubernetes/monitoring/test/ab
 kubectl apply -f ab-${SERVICE}-job.yaml
 kubectl -n monitoring wait --for=condition=complete --timeout=600s job/ab-${SERVICE}
 kubectl -n monitoring describe job ab-${SERVICE}

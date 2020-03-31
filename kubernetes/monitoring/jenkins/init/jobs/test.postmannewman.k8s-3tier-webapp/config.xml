@@ -36,7 +36,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd kubernetes/monitoring/test/postmannewman
+      <command>#!/bin/sh -x
+cd kubernetes/monitoring/test/postmannewman
 kubectl apply -f postmannewman-job.yaml
 kubectl -n monitoring wait --for=condition=complete --timeout=600s job/postmannewman-job
 kubectl -n monitoring describe job postmannewman-job
