@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.1.1">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -22,6 +22,10 @@
       <hudson.plugins.git.extensions.impl.PathRestriction>
         <includedRegions>kubernetes/.*</includedRegions>
         <excludedRegions>kubernetes/monitoring/.*</excludedRegions>
+      </hudson.plugins.git.extensions.impl.PathRestriction>
+      <hudson.plugins.git.extensions.impl.PathRestriction>
+        <includedRegions>application/*</includedRegions>
+        <excludedRegions></excludedRegions>
       </hudson.plugins.git.extensions.impl.PathRestriction>
     </extensions>
   </scm>
@@ -46,9 +50,9 @@ kubectl get po -n default
   </builders>
   <publishers/>
   <buildWrappers>
-    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.24.1">
+    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.25.1">
       <serverUrl>https://kubernetes.default.svc.cluster.local</serverUrl>
-      <credentialsId>993813bf-04bd-43e7-bb5c-d55c604ae588</credentialsId>
+      <credentialsId>eb6e9a5c-ba7e-4ed0-ab16-63316f87b60b</credentialsId>
     </org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper>
   </buildWrappers>
 </project>
