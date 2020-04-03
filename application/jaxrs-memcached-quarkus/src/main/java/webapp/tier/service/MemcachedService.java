@@ -1,6 +1,5 @@
 package webapp.tier.service;
 
-import java.util.Objects;
 import java.util.logging.Logger;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -31,19 +30,19 @@ public class MemcachedService implements Cache {
 
 		try {
 			MemCachedClient mcc = new MemCachedClient();
-			boolean resultsetid = mcc.set("id", msgbean.getIdString());
+			boolean resultsetid = mcc.set("id", msgbean.getId());
 			boolean resultsetmsg = mcc.set("msg", msgbean.getMessage());
 
 			if (resultsetid && resultsetmsg) {
 				msgbean.setFullmsgWithType(msgbean, "Set");
 			} else {
 				LOG.warning(error);
-				throw new Exception("Set Error.");
+				throw new Exception(error);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception("Set Error.");
+			throw new Exception(error);
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
@@ -53,21 +52,15 @@ public class MemcachedService implements Cache {
 	public String getMsg() throws Exception {
 		MemCachedClient mcc = new MemCachedClient();
 		MsgBeanUtils msgbean = new MsgBeanUtils();
-		String error = "Get Error.";
 
 		try {
-			String id = (String) mcc.get("id");
-			if (Objects.isNull(id) || id.toString().isEmpty()) {
-				msgbean.setFullmsg("No Data");
-			} else {
-				msgbean = new MsgBeanUtils(Integer.parseInt(id), (String) mcc.get("msg"));
-			}
+			msgbean.setId((int) mcc.get("id"));
+			msgbean.setMessage((String) mcc.get("msg"));
 
 			if (!msgbean.checkMsgBeanUtils(msgbean)) {
 				msgbean.setFullmsgWithType(msgbean, "Get");
 			} else {
-				LOG.warning(error);
-				throw new Exception("Get Error.");
+				msgbean.setFullmsg("No Data");
 			}
 
 		} catch (Exception e) {
