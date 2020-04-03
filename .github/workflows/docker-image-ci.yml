@@ -13,42 +13,56 @@ jobs:
         DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
       run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
       
+    - name: Pull Image - nginx
+      run: docker pull yurak/nginx:latest
     - name: Build image - nginx
       working-directory: ./kubernetes/nginx
       run: docker build -t yurak/nginx:latest .
     - name: Push Image - nginx
       run: docker push yurak/nginx:latest
 
+    - name: Pull Image - mysql
+      run: docker pull yurak/mysql:latest
     - name: Build image - mysql
       working-directory: ./kubernetes/mysql
       run: docker build -t yurak/mysql:latest .
     - name: Push Image - mysql
       run: docker push yurak/mysql:latest
 
+    - name: Pull Image - postgres
+      run: docker pull yurak/postgres:latest
     - name: Build image - postgres
       working-directory: ./kubernetes/postgres
       run: docker build -t yurak/postgres:latest .
     - name: Push Image - postgres
       run: docker push yurak/postgres:latest
       
+    - name: Pull Image - rabbitmq
+      run: docker pull yurak/rabbitmq:latest
     - name: Build image - rabbitmq
       working-directory: ./kubernetes/rabbitmq
       run: docker build -t yurak/rabbitmq:latest .
     - name: Push Image - rabbitmq
       run: docker push yurak/rabbitmq:latest
 
+    - name: Pull Image - rabbitmq
+      run: docker pull yurak/jenkins:latest
     - name: Build image - jenkins
       working-directory: ./kubernetes/monitoring/jenkins
       run: docker build -t yurak/jenkins:latest .
     - name: Push Image - rabbitmq
       run: docker push yurak/jenkins:latest
 
+    - name: Pull Image - ab
+      run: docker pull yurak/ab:latest
     - name: Build image - ab
       working-directory: ./kubernetes/monitoring/test/ab
       run: docker build -t yurak/ab:latest .
     - name: Push Image - ab
       run: docker push yurak/ab:latest
 
+    - name: Pull Image - postmannewman
+      run: docker pull yurak/postmannewman:latest
     - name: Build image - postmannewman
       working-directory: ./kubernetes/monitoring/test/postmannewman
       run: docker build -t yurak/postmannewman:latest .

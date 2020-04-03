@@ -40,6 +40,8 @@ jobs:
     - name: Maven Build - activemq-mysql-quarkus
       working-directory: ./application/activemq-mysql-quarkus
       run: mvn -B package
+    - name: Pull Image - activemq-mysql-quarkus
+      run: docker pull yurak/activemq-mysql-quarkus:latest
     - name: Build Image - activemq-mysql-quarkus
       working-directory: ./application/activemq-mysql-quarkus
       run: docker build -t yurak/activemq-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -49,6 +51,8 @@ jobs:
     - name: Maven Build - hazelcast-mysql-quarkus
       working-directory: ./application/hazelcast-mysql-quarkus
       run: mvn -B package
+    - name: Pull Image - hazelcast-mysql-quarkus
+      run: docker pull yurak/hazelcast-mysql-quarkus:latest
     - name: Build Image - hazelcast-mysql-quarkus
       working-directory: ./application/hazelcast-mysql-quarkus
       run: docker build -t yurak/hazelcast-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -58,6 +62,8 @@ jobs:
     - name: Maven Build - jaxrs-activemq-quarkus
       working-directory: ./application/jaxrs-activemq-quarkus
       run: mvn -B package
+    - name: Pull Image - jaxrs-activemq-quarkus
+      run: docker pull yurak/jaxrs-activemq-quarkus:latest
     - name: Build Image - jaxrs-activemq-quarkus
       working-directory: ./application/jaxrs-activemq-quarkus
       run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -67,6 +73,8 @@ jobs:
     - name: Maven Build - jaxrs-hazelcast-quarkus
       working-directory: ./application/jaxrs-hazelcast-quarkus
       run: mvn -B package
+    - name: Pull Image - jaxrs-hazelcast-quarkus
+      run: docker pull yurak/jaxrs-hazelcast-quarkus:latest
     - name: Build Image - jaxrs-hazelcast-quarkus
       working-directory: ./application/jaxrs-hazelcast-quarkus
       run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -76,6 +84,8 @@ jobs:
     - name: Maven Build - jaxrs-memcached-quarkus
       working-directory: ./application/jaxrs-memcached-quarkus
       run: mvn -B package
+    - name: Pull Image - jaxrs-memcached-quarkus
+      run: docker pull yurak/jaxrs-memcached-quarkus:latest
     - name: Build Image - jaxrs-memcached-quarkus
       working-directory: ./application/jaxrs-memcached-quarkus
       run: docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -85,6 +95,8 @@ jobs:
     - name: Maven Build - jaxrs-mysql-quarkus
       working-directory: ./application/jaxrs-mysql-quarkus
       run: mvn -B package -Pnative
+    - name: Pull Image - jaxrs-mysql-quarkus
+      run: docker pull yurak/jaxrs-mysql-quarkus:latest
     - name: Build Image - jaxrs-mysql-quarkus
       working-directory: ./application/jaxrs-mysql-quarkus
       run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -94,6 +106,8 @@ jobs:
     - name: Maven Build - jaxrs-postgres-quarkus
       working-directory: ./application/jaxrs-postgres-quarkus
       run: mvn -B package -Pnative
+    - name: Pull Image - jaxrs-postgres-quarkus
+      run: docker pull yurak/jaxrs-postgres-quarkus:latest
     - name: Build Image - jaxrs-postgres-quarkus
       working-directory: ./application/jaxrs-postgres-quarkus
       run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -103,6 +117,8 @@ jobs:
     - name: Maven Build - jaxrs-rabbitmq-quarkus
       working-directory: ./application/jaxrs-rabbitmq-quarkus
       run: mvn -B package
+    - name: Pull Image - jaxrs-rabbitmq-quarkus
+      run: docker pull yurak/jaxrs-rabbitmq-quarkus:latest
     - name: Build Image - jaxrs-rabbitmq-quarkus
       working-directory: ./application/jaxrs-rabbitmq-quarkus
       run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -112,6 +128,8 @@ jobs:
     - name: Maven Build - jaxrs-redis-quarkus
       working-directory: ./application/jaxrs-redis-quarkus
       run: mvn -B package
+    - name: Pull Image - jaxrs-redis-quarkus
+      run: docker pull yurak/jaxrs-redis-quarkus:latest
     - name: Build Image - jaxrs-redis-quarkus
       working-directory: ./application/jaxrs-redis-quarkus
       run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -121,6 +139,8 @@ jobs:
     - name: Maven Build - rabbitmq-mysql-quarkus
       working-directory: ./application/rabbitmq-mysql-quarkus
       run: mvn -B package
+    - name: Pull Image - rabbitmq-mysql-quarkus
+      run: docker pull yurak/rabbitmq-mysql-quarkus:latest
     - name: Build Image - rabbitmq-mysql-quarkus
       working-directory: ./application/rabbitmq-mysql-quarkus
       run: docker build -t yurak/rabbitmq-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -130,6 +150,8 @@ jobs:
     - name: Maven Build - randompublish-quarkus
       working-directory: ./application/randompublish-quarkus
       run: mvn -B package
+    - name: Pull Image - randompublish-quarkus
+      run: docker pull yurak/randompublish-quarkus:latest
     - name: Build Image - randompublish-quarkus
       working-directory: ./application/randompublish-quarkus
       run: docker build -t yurak/randompublish-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -143,6 +165,8 @@ jobs:
     - name: Maven Build - redis-mysql-quarkus
       working-directory: ./application/redis-mysql-quarkus
       run: mvn -B package
+    - name: Pull Image - redis-mysql-quarkus
+      run: docker pull yurak/redis-mysql-quarkus:latest
     - name: Build Image - redis-mysql-quarkus
       working-directory: ./application/redis-mysql-quarkus
       run: docker build -t yurak/redis-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -152,6 +176,8 @@ jobs:
     - name: Maven Build - scheduled-quarkus
       working-directory: ./application/scheduled-quarkus
       run: mvn -B package
+    - name: Pull Image - scheduled-quarkus
+      run: docker pull yurak/scheduled-quarkus:latest
     - name: Build Image - scheduled-quarkus
       working-directory: ./application/scheduled-quarkus
       run: docker build -t yurak/scheduled-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -161,6 +187,8 @@ jobs:
     - name: Maven Build - redis-mysql-quarkus
       working-directory: ./application/redis-mysql-quarkus
       run: mvn -B package
+    - name: Pull Image - redis-mysql-quarkus
+      run: docker pull yurak/redis-mysql-quarkus:latest
     - name: Build Image - redis-mysql-quarkus
       working-directory: ./application/redis-mysql-quarkus
       run: docker build -t yurak/redis-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -176,6 +204,8 @@ jobs:
       with:
         source: "application/wlp-web-java-spring/target/spring.war"
         target: "kubernetes/wlp/spring.war"
+    - name: Pull Image - wlp
+      run: docker pull yurak/wlp:latest
     - name: Build image - wlp
       working-directory: ./kubernetes/wlp
       run: docker build -t yurak/wlp:latest .
