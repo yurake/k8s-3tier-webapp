@@ -1,5 +1,6 @@
 package webapp.tier.service;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -30,7 +31,7 @@ public class MemcachedService implements Cache {
 
 		try {
 			MemCachedClient mcc = new MemCachedClient();
-			boolean resultsetid = mcc.set("id", msgbean.getId());
+			boolean resultsetid = mcc.set("id", msgbean.getIdString());
 			boolean resultsetmsg = mcc.set("msg", msgbean.getMessage());
 
 			if (resultsetid && resultsetmsg) {
@@ -52,15 +53,15 @@ public class MemcachedService implements Cache {
 	public String getMsg() throws Exception {
 		MemCachedClient mcc = new MemCachedClient();
 		MsgBeanUtils msgbean = new MsgBeanUtils();
+		String getid = null;
 
 		try {
-			msgbean.setId((int) mcc.get("id"));
-			msgbean.setMessage((String) mcc.get("msg"));
-
-			if (!msgbean.checkMsgBeanUtils(msgbean)) {
-				msgbean.setFullmsgWithType(msgbean, "Get");
-			} else {
+			getid = (String) mcc.get("id");
+			if (Objects.isNull(getid) || getid.toString().isEmpty()) {
 				msgbean.setFullmsg("No Data");
+			} else {
+				msgbean.setIdString(getid);
+				msgbean.setMessage((String) mcc.get("msg"));
 			}
 
 		} catch (Exception e) {
