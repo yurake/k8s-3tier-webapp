@@ -62,6 +62,7 @@ public class MemcachedService implements Cache {
 			} else {
 				msgbean.setIdString(getid);
 				msgbean.setMessage((String) mcc.get("msg"));
+				msgbean.setFullmsgWithType(msgbean, "Get");
 			}
 
 		} catch (Exception e) {
