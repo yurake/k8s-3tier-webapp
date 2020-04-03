@@ -22,13 +22,13 @@ class MemcachedResourceTest {
 	}
 
 	@Test
-	void testGetError() {
+	void testGetNoData() {
 		given()
 				.when()
 				.get("/quarkus/memcached/get")
 				.then()
-				.statusCode(500)
-				.body(is("Get Error."));
+				.statusCode(200)
+				.body(is("No Data."));
 	}
 
 }

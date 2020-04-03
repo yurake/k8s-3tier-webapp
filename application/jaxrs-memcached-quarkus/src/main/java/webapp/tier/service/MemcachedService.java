@@ -58,7 +58,7 @@ public class MemcachedService implements Cache {
 		try {
 			getid = (String) mcc.get("id");
 			if (Objects.isNull(getid) || getid.toString().isEmpty()) {
-				msgbean.setFullmsg("No Data");
+				msgbean.setFullmsg("No Data.");
 			} else {
 				msgbean.setIdString(getid);
 				msgbean.setMessage((String) mcc.get("msg"));
@@ -70,16 +70,5 @@ public class MemcachedService implements Cache {
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
-	}
-
-	public boolean isActive() {
-		boolean status = false;
-		try {
-			getMsg();
-			status = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return status;
 	}
 }

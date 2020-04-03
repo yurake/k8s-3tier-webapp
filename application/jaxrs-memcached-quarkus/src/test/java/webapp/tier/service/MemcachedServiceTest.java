@@ -21,19 +21,12 @@ class MemcachedServiceTest {
 	}
 
 	@Test
-	void testGetMemcachedError() {
+	void testGetMemcachedNoData() {
 		MemcachedService svc = new MemcachedService();
 		try {
-			svc.getMsg();
-			fail();
+			assertEquals("No Data.", svc.getMsg());
 		} catch (Exception expected) {
-			assertEquals("Get Error.", expected.getMessage());
+			fail();
 		}
-	}
-
-	@Test
-	void testIsActiveError() {
-		MemcachedService svc = new MemcachedService();
-			assertEquals(false, svc.isActive());
 	}
 }
