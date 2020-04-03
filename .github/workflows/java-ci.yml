@@ -149,7 +149,7 @@ jobs:
       
     - name: Maven Build - randompublish-quarkus
       working-directory: ./application/randompublish-quarkus
-      run: mvn -B package
+      run: mvn -B package -Pnative
     - name: Pull Image - randompublish-quarkus
       run: docker pull yurak/randompublish-quarkus:latest
     - name: Build Image - randompublish-quarkus
@@ -175,7 +175,7 @@ jobs:
       
     - name: Maven Build - scheduled-quarkus
       working-directory: ./application/scheduled-quarkus
-      run: mvn -B package
+      run: mvn -B package -Pnative
     - name: Pull Image - scheduled-quarkus
       run: docker pull yurak/scheduled-quarkus:latest
     - name: Build Image - scheduled-quarkus
