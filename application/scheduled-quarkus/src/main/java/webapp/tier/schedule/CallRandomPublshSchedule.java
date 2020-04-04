@@ -8,24 +8,24 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.quarkus.scheduler.Scheduled;
-import webapp.tier.service.DeliverService;
-import webapp.tier.service.MysqlService;
-import webapp.tier.service.PostgresService;
+import webapp.tier.resource.DeliverResource;
+import webapp.tier.resource.MysqlResource;
+import webapp.tier.resource.PostgresResource;
 
 @ApplicationScoped
 public class CallRandomPublshSchedule {
 
 	@Inject
 	@RestClient
-	DeliverService deliversvc;
+	DeliverResource deliverrsc;
 
 	@Inject
 	@RestClient
-	PostgresService postgresrsvc;
+	PostgresResource postgresrrsc;
 
 	@Inject
 	@RestClient
-	MysqlService mysqlrsvc;
+	MysqlResource mysqlrrsc;
 
 	private static final Logger LOG = Logger.getLogger(CallRandomPublshSchedule.class.getSimpleName());
 
@@ -33,16 +33,16 @@ public class CallRandomPublshSchedule {
 	void callRandomPublsh() {
 		String response;
 		LOG.info("Call: Random Publish");
-		response = deliversvc.random();
+		response = deliverrsc.random();
 		LOG.info(response);
 	}
 
 	@Scheduled(every = "10m")
 	void callDeleteDbs() {
 		LOG.info("Call: Delete Postgres");
-		LOG.info(postgresrsvc.delete());
+		LOG.info(postgresrrsc.delete());
 		LOG.info("Call: Delete Mysql");
-		LOG.info(mysqlrsvc.delete());
+		LOG.info(mysqlrrsc.delete());
 	}
 
 }
