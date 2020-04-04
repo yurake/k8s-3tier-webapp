@@ -29,9 +29,17 @@ jobs:
         echo "<settings><servers><server><id>github</id><username>OWNER</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > settings.xml
         mvn deploy --settings settings.xml --file application/webapp-service/pom.xml
 
+      - name: Archive webapp-service artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: webapp-service
+          path: application/webapp-service/target
+
     - name: Maven Build - jaxrs-activemq-quarkus
       working-directory: ./application/jaxrs-activemq-quarkus
-      run: mvn -B package -Pnative
+      run:  |
+        echo "<settings><servers><server><id>github</id><username>OWNER</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > settings.xml
+        mvn -B package --settings settings.xml -Pnative
     - name: Pull Image - jaxrs-activemq-quarkus
       run: docker pull yurak/jaxrs-activemq-quarkus:latest
     - name: Build Image - jaxrs-activemq-quarkus
@@ -64,7 +72,9 @@ jobs:
 
     - name: Maven Build - activemq-mysql-quarkus
       working-directory: ./application/activemq-mysql-quarkus
-      run: mvn -B package -Pnative
+      run:  |
+        echo "<settings><servers><server><id>github</id><username>OWNER</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > settings.xml
+        mvn -B package --settings settings.xml -Pnative
     - name: Pull Image - activemq-mysql-quarkus
       run: docker pull yurak/activemq-mysql-quarkus:latest
     - name: Build Image - activemq-mysql-quarkus
