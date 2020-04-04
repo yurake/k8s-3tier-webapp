@@ -36,7 +36,7 @@ public class MongodbService implements Database {
 	public boolean connectionStatus() {
 		boolean status = false;
 		try {
-			getCollection();
+			mongoClient.getDatabase(dbname);
 			status = true;
 		} catch (Exception e) {
 			e.printStackTrace();
