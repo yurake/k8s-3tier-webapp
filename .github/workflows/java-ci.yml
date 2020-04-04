@@ -14,14 +14,11 @@ jobs:
       with:
         graalvm-version: '20.0.0.java8'
     - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
 
     - name: Maven Build - webapp-service
       working-directory: ./application/webapp-service
       run: mvn -B package
-      
+
     - name: Deploy to Github Package Registry - webapp-service
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,6 +31,28 @@ jobs:
       with:
         name: webapp-service
         path: application/webapp-service/target
+
+  jaxrs-activemq-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+      
+    - name: Setup GraalVM
+      uses: DeLaGuardo/setup-graalvm@3
+      with:
+        graalvm-version: '20.0.0.java8'
+    - run: java -version
+    - name: setup-native-image
+      run: |
+        gu install native-image
+    
+    - name: docker login
+      env:
+        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
     - name: Maven Build - jaxrs-activemq-quarkus
       working-directory: ./application/jaxrs-activemq-quarkus
