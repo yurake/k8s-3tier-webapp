@@ -7,6 +7,7 @@ activemqurl = url + '/activemq';
 hazelcasturl = url + '/hazelcast';
 mysqlurl = url + '/mysql';
 postgresurl = url + '/postgres';
+mongodburl = url + '/mongodb';
 
 $(function () {
 	$("#response").html("Response Values");
@@ -369,6 +370,57 @@ $(function () {
 	})
 
 	$("#deletepostgres").click(function () {
+		$.ajax({
+			type: 'post',
+			url: postgresurl + '/delete',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
+	})
+
+	$("#insertmongodb").click(function () {
+		$.ajax({
+			type: 'post',
+			url: postgresurl + '/insert',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
+	})
+
+	$("#selectmongodb").click(function () {
+		$.ajax({
+			type: 'get',
+			url: postgresurl + '/select',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#response").html(resp);
+		})
+	})
+
+	$("#deletemongodb").click(function () {
 		$.ajax({
 			type: 'post',
 			url: postgresurl + '/delete',

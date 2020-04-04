@@ -27,6 +27,10 @@ spec:
         backend:
           serviceName: jaxrs-memcached-quarkus
           servicePort: 8080
+      - path: /quarkus/mongodb
+        backend:
+          serviceName: jaxrs-mongodb-quarkus
+          servicePort: 8080
       - path: /quarkus/mysql
         backend:
           serviceName: jaxrs-mysql-quarkus
