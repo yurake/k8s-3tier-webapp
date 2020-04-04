@@ -389,7 +389,7 @@ $(function () {
 	$("#insertmongodb").click(function () {
 		$.ajax({
 			type: 'post',
-			url: postgresurl + '/insert',
+			url: mongodburl + '/insert',
 			contentType: 'application/json',
 			scriptCharset: 'utf-8',
 		}).done(function (data) {
@@ -406,7 +406,7 @@ $(function () {
 	$("#selectmongodb").click(function () {
 		$.ajax({
 			type: 'get',
-			url: postgresurl + '/select',
+			url: mongodburl + '/select',
 			contentType: 'application/json',
 			scriptCharset: 'utf-8',
 		}).done(function (data) {
@@ -423,7 +423,7 @@ $(function () {
 	$("#deletemongodb").click(function () {
 		$.ajax({
 			type: 'post',
-			url: postgresurl + '/delete',
+			url: mongodburl + '/delete',
 			contentType: 'application/json',
 			scriptCharset: 'utf-8',
 		}).done(function (data) {
