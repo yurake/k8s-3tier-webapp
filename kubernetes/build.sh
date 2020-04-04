@@ -94,7 +94,14 @@ docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfi
 echo "###"
 echo ""
 
-echo "### jaxrs-activemq-quarkus"
+echo "### jaxrs-mongodb-quarkus"
+cd ${ROOT_DIR}/../application/jaxrs-mongodb-quarkus
+docker pull yurak/jaxrs-mongodb-quarkus:latest
+docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+echo "###"
+echo ""
+
+echo "### jaxrs-mysql-quarkus"
 cd ${ROOT_DIR}/../application/jaxrs-mysql-quarkus
 docker pull yurak/jaxrs-mysql-quarkus:latest
 docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .

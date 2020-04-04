@@ -5,24 +5,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
-	<artifactId>webapp-service</artifactId>
-	<version>1.0.3-SNAPSHOT</version>
+	<artifactId>jaxrs-mongodb-quarkus</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<surefire-plugin.version>2.22.0</surefire-plugin.version>
-		<quarkus.version>1.2.0.Final</quarkus.version>
+		<quarkus.version>1.3.1.Final</quarkus.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<webapp-service.version>1.0.3-SNAPSHOT</webapp-service.version>
 		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
 	</properties>
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub OWNER Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/yurake/k8s-3tier-webapp</url>
-		</repository>
-	</distributionManagement>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -36,6 +30,11 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>webapp-service</artifactId>
+			<version>${webapp-service.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
@@ -47,31 +46,11 @@
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-resteasy</artifactId>
+			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-jdbc-mysql</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-jdbc-postgresql</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-mongodb-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-smallrye-health</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-smallrye-opentracing</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-smallrye-metrics</artifactId>
+			<artifactId>quarkus-smallrye-fault-tolerance</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
@@ -165,3 +144,4 @@
 		</profile>
 	</profiles>
 </project>
+

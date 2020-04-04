@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface Database {
 
-	public String insertMsg() throws SQLException;
-	public List<String> selectMsg() throws SQLException;
-	public String deleteMsg() throws SQLException;
+	public String insertMsg() throws SQLException, Exception;
+	public List<String> selectMsg() throws SQLException, Exception;
+	public String deleteMsg() throws SQLException, Exception;
 }

@@ -124,6 +124,14 @@ kubectl apply -f ./jaxrs-memcached-quarkus-service-externalname.yaml
 echo "###"
 echo ""
 
+echo "### jaxrs-mongodb-quarkus"
+cd ${ROOT_DIR}/jaxrs-mongodb-quarkus
+kubectl apply -f ./jaxrs-mongodb-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-mongodb-quarkus-service.yaml
+kubectl apply -f ./jaxrs-mongodb-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
 echo "### jaxrs-mysql-quarkus"
 cd ${ROOT_DIR}/jaxrs-mysql-quarkus
 kubectl apply -f ./jaxrs-mysql-quarkus-deployment.yaml

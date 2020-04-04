@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaxrs-mongodb-quarkus-monitoring
+  namespace: monitoring
+spec:
+  type: ExternalName
+  externalName: jaxrs-mongodb-quarkus.default.svc.cluster.local
