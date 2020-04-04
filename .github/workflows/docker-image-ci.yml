@@ -1,5 +1,10 @@
 name: Docker Image CI
-on: [push]
+
+on:
+  push:
+    paths:
+    - 'kubernetes/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
