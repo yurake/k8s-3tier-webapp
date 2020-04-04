@@ -36,7 +36,15 @@ jobs:
       run: docker build -t yurak/postgres:latest .
     - name: Push Image - postgres
       run: docker push yurak/postgres:latest
-      
+
+    - name: Pull Image - mongodb
+      run: docker pull yurak/mongodb:latest
+    - name: Build image - mongodb
+      working-directory: ./kubernetes/mongodb
+      run: docker build -t yurak/mongodb:latest .
+    - name: Push Image - mongodb
+      run: docker push yurak/mongodb:latest
+
     - name: Pull Image - rabbitmq
       run: docker pull yurak/rabbitmq:latest
     - name: Build image - rabbitmq

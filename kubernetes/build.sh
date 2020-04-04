@@ -19,6 +19,12 @@ docker build -t yurak/postgres:latest .
 echo "###"
 echo ""
 
+echo "### mongodb"
+cd ${ROOT_DIR}/mongodb
+docker pull yurak/mongodb:latest
+docker build -t yurak/mongodb:latest .
+echo ""
+
 echo "### redis"
 echo "###"
 echo ""

@@ -27,6 +27,17 @@ kubectl apply -f ./postgres-service.yaml
 echo "###"
 echo ""
 
+echo "### mongodb"
+cd ${ROOT_DIR}/mongodb
+kubectl apply -f ./mongodb-pv.yaml
+kubectl apply -f ./mongodb-pvc.yaml
+kubectl apply -f ./mongodb-configmap.yaml
+kubectl apply -f ./mongodb-secret.yaml
+kubectl apply -f ./mongodb-deployment.yaml
+kubectl apply -f ./mongodb-service.yaml
+echo "###"
+echo ""
+
 echo "### redis"
 cd ${ROOT_DIR}/redis
 kubectl apply -f ./redis-deployment.yaml
