@@ -14,7 +14,7 @@ import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.quarkus.runtime.ShutdownEvent;
@@ -29,15 +29,16 @@ public class ActiveMqService implements Runnable {
 	@RestClient
 	DeliverService deliversvc;
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
-	private static String topicname = ConfigProvider.getConfig().getValue("activemq.topic.name", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("activemq.split.key", String.class);
-	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
-	private static JMSContext context = null;
-	private static JMSConsumer consumer = null;
-
 	@Inject
 	ConnectionFactory connectionFactory;
+
+	@ConfigProperty(name = "activemq.splitkey")
+	String splitkey;
+	@ConfigProperty(name = "activemq.topic.name")
+	String topicname;
+
+	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
+	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
@@ -49,24 +50,14 @@ public class ActiveMqService implements Runnable {
 		LOG.info("The application is stopping...");
 	}
 
-	private JMSConsumer getJmsConnect() {
-		if (context == null) {
-			context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
-		}
-		if (consumer == null) {
-			consumer = context.createConsumer(context.createTopic(topicname));
-		}
-		return consumer;
-	}
-
 	@Override
 	public void run() {
 		MysqlService mysqlsvc = new MysqlService();
-		try {
-			JMSConsumer jmsconsumer = getJmsConnect();
+		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			JMSConsumer consumer = context.createConsumer(context.createTopic(topicname));
 			while (true) {
 				LOG.info("Ready for receive message...");
-				Message message = jmsconsumer.receive();
+				Message message = consumer.receive();
 
 				MsgBeanUtils msgbean = new MsgBeanUtils();
 				TextMessage textMessage = (TextMessage) message;
@@ -85,9 +76,7 @@ public class ActiveMqService implements Runnable {
 
 	public boolean isActive() {
 		boolean status = false;
-		try {
-			JMSConsumer jmsconsumer = getJmsConnect();
-			jmsconsumer.getMessageListener();
+		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
 			status = true;
 		} catch (Exception e) {
 			e.printStackTrace();

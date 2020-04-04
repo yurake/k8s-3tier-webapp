@@ -12,7 +12,7 @@ echo ""
 
 echo "### jaxrs-activemq-quarkus"
 cd jaxrs-activemq-quarkus
-./mvnw clean package
+./mvnw clean package -Pnative
 cd ${ROOT_DIR}
 echo "###"
 echo ""
@@ -82,7 +82,7 @@ echo ""
 
 echo "### activemq-mysql-quarkus"
 cd activemq-mysql-quarkus
-./mvnw clean package
+./mvnw clean package -Pnative
 cd ${ROOT_DIR}
 echo "###"
 echo ""

@@ -39,7 +39,7 @@ jobs:
 
     - name: Maven Build - activemq-mysql-quarkus
       working-directory: ./application/activemq-mysql-quarkus
-      run: mvn -B package
+      run: mvn -B package -Pnative
     - name: Pull Image - activemq-mysql-quarkus
       run: docker pull yurak/activemq-mysql-quarkus:latest
     - name: Build Image - activemq-mysql-quarkus
@@ -61,7 +61,7 @@ jobs:
       
     - name: Maven Build - jaxrs-activemq-quarkus
       working-directory: ./application/jaxrs-activemq-quarkus
-      run: mvn -B package
+      run: mvn -B package -Pnative
     - name: Pull Image - jaxrs-activemq-quarkus
       run: docker pull yurak/jaxrs-activemq-quarkus:latest
     - name: Build Image - jaxrs-activemq-quarkus

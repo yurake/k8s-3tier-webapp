@@ -16,7 +16,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<webapp-service.version>1.0.3-SNAPSHOT</webapp-service.version>
 		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
-		<activemq-all.version>5.15.11</activemq-all.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -54,9 +53,8 @@
 			<artifactId>quarkus-smallrye-fault-tolerance</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-all</artifactId>
-			<version>${activemq-all.version}</version>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-artemis-jms</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
