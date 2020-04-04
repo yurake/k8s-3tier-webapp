@@ -80,14 +80,4 @@ public class ActiveMqService implements Messaging {
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
 	}
-
-	public boolean isActive() {
-		boolean status = false;
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			status = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return status;
-	}
 }
