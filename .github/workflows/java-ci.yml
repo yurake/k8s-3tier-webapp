@@ -44,7 +44,7 @@ jobs:
       run: docker pull yurak/activemq-mysql-quarkus:latest
     - name: Build Image - activemq-mysql-quarkus
       working-directory: ./application/activemq-mysql-quarkus
-      run: docker build -t yurak/activemq-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      run: docker build -t yurak/activemq-mysql-quarkus:latest -f src/main/docker/Dockerfile.native .
     - name: Push Image - activemq-mysql-quarkus
       run: docker push yurak/activemq-mysql-quarkus:latest
       
@@ -66,7 +66,7 @@ jobs:
       run: docker pull yurak/jaxrs-activemq-quarkus:latest
     - name: Build Image - jaxrs-activemq-quarkus
       working-directory: ./application/jaxrs-activemq-quarkus
-      run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
     - name: Push Image - jaxrs-activemq-quarkus
       run: docker push yurak/jaxrs-activemq-quarkus:latest
 
@@ -99,7 +99,7 @@ jobs:
       run: docker pull yurak/jaxrs-mongodb-quarkus:latest
     - name: Build Image - jaxrs-mongodb-quarkus
       working-directory: ./application/jaxrs-mongodb-quarkus
-      run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.native .
     - name: Push Image - jaxrs-mongodb-quarkus
       run: docker push yurak/jaxrs-mongodb-quarkus:latest
 
@@ -165,7 +165,7 @@ jobs:
       run: docker pull yurak/randompublish-quarkus:latest
     - name: Build Image - randompublish-quarkus
       working-directory: ./application/randompublish-quarkus
-      run: docker build -t yurak/randompublish-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      run: docker build -t yurak/randompublish-quarkus:latest -f src/main/docker/Dockerfile.native .
     - name: Push Image - randompublish-quarkus
       run: docker push yurak/randompublish-quarkus:latest
       
@@ -191,7 +191,7 @@ jobs:
       run: docker pull yurak/scheduled-quarkus:latest
     - name: Build Image - scheduled-quarkus
       working-directory: ./application/scheduled-quarkus
-      run: docker build -t yurak/scheduled-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      run: docker build -t yurak/scheduled-quarkus:latest -f src/main/docker/Dockerfile.native .
     - name: Push Image - scheduled-quarkus
       run: docker push yurak/scheduled-quarkus:latest
       
