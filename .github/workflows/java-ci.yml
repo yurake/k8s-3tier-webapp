@@ -28,12 +28,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn deploy --settings settings.xml
 
-    - name: Archive webapp-service artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: webapp-service
-        path: application/webapp-service/target
-
   jaxrs-activemq-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
@@ -58,9 +52,9 @@ jobs:
 
     - name: Maven Build - jaxrs-activemq-quarkus
       working-directory: ./application/jaxrs-activemq-quarkus
-      run:  |
-        echo "<settings><servers><server><id>github</id><username>OWNER</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > settings.xml
-        mvn -B package --settings settings.xml -Pnative
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: mvn -B package --settings ../webapp-service/settings.xml -Pnative
     - name: Pull Image - jaxrs-activemq-quarkus
       run: docker pull yurak/jaxrs-activemq-quarkus:latest
     - name: Build Image - jaxrs-activemq-quarkus
