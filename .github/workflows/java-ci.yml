@@ -23,11 +23,10 @@ jobs:
       run: mvn -B package
 
     - name: Deploy to Github Package Registry - webapp-service
+      working-directory: ./application/webapp-service
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        echo "<settings><servers><server><id>github</id><username>OWNER</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > settings.xml
-        mvn deploy --settings settings.xml --file application/webapp-service/pom.xml
+      run: mvn deploy --settings settings.xml
 
     - name: Archive webapp-service artifacts
       uses: actions/upload-artifact@v1
