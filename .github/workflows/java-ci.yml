@@ -19,11 +19,13 @@ jobs:
         graalvm-version: '20.0.0.java8'
     - run: java -version
 
-    - name: Maven Build - webapp-service
-      working-directory: ./application/webapp-service
-      run: mvn -B package
+    - name: Maven Deploy POM to Github Package Registry
+      working-directory: ./application/parent-pom/
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: mvn deploy --settings ../.m2/settings.xml
 
-    - name: Deploy to Github Package Registry - webapp-service
+    - name: Maven Deploy to Github Package Registry
       working-directory: ./application/webapp-service
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
