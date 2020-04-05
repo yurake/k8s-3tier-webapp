@@ -3,6 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<parent>
+		<groupId>webapp.3tier.k8s.parent</groupId>
+		<artifactId>parent-pom</artifactId>
+		<version>1.0.4-SNAPSHOT</version>
+	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>hazelcast-mysql-quarkus</artifactId>
@@ -14,7 +19,6 @@
 		<quarkus.version>1.2.0.Final</quarkus.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<webapp-service.version>1.0.3-SNAPSHOT</webapp-service.version>
 		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
 		<hazelcast-client.version>3.12.6</hazelcast-client.version>
 		<hazelcast.version>3.12.6</hazelcast.version>
@@ -56,7 +60,6 @@
 		<dependency>
 			<groupId>webapp.3tier.k8s</groupId>
 			<artifactId>webapp-service</artifactId>
-			<version>${webapp-service.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.hazelcast</groupId>
