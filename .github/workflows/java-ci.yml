@@ -389,7 +389,7 @@ jobs:
       run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
       
     - name: Maven Build
-      working-directory: ./application/jaxrs-postgres-quarkus
+      working-directory: ./application/jaxrs-rabbitmq-quarkus
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn -B package --settings ../.m2/settings.xml
