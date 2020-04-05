@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'application/**'
+    - '.github/workflows/java-ci.yml'
 
 jobs:
   init-build:

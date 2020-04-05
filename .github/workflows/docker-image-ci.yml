@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'kubernetes/**'
+    - '.github/workflows/docker-image-ci.yml'
 
 jobs:
   build:
