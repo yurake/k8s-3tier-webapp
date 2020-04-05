@@ -1,18 +1,10 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
 class MongodbServiceTest {
-
-	@Test
-	void testConnectionStatusError() {
-		MongodbService svc = new MongodbService();
-		assertThat(svc.connectionStatus(), is(false));
-	}
 
 	@Test
 	void testInsertMysqlError() {

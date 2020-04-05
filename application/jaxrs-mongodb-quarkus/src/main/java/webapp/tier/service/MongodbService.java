@@ -33,17 +33,6 @@ public class MongodbService implements Database {
 
 	private static final Logger LOG = Logger.getLogger(MongodbService.class.getSimpleName());
 
-	public boolean connectionStatus() {
-		boolean status = false;
-		try {
-			mongoClient.getDatabase(dbname);
-			status = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return status;
-	}
-
 	@Override
 	public String insertMsg() throws Exception {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
