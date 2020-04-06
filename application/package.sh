@@ -12,7 +12,7 @@ echo ""
 
 echo "### jaxrs-activemq-quarkus"
 cd jaxrs-activemq-quarkus
-./mvnw clean package -Pnative
+./mvnw clean package
 cd ${ROOT_DIR}
 echo "###"
 echo ""
