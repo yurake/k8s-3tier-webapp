@@ -35,7 +35,7 @@ public class ActiveMqService implements Messaging {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 		try (
-				ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory();
+				ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url, username, password);
 				Connection conn = cf.createConnection();
 				Session session = conn.createSession(Session.AUTO_ACKNOWLEDGE);
 				MessageProducer producer = session.createProducer(session.createQueue(queuename));) {
