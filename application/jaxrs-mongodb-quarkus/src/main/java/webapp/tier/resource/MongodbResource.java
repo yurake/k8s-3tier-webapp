@@ -1,5 +1,6 @@
 package webapp.tier.resource;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,7 +20,8 @@ import webapp.tier.service.MongodbService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MongodbResource {
 
-	MongodbService mongosvc = new MongodbService();
+	@Inject
+	MongodbService mongosvc;
 
 	@POST
 	@Path("/insert")
