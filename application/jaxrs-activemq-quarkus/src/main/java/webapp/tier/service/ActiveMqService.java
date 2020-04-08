@@ -4,14 +4,13 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.jms.Connection;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
+import javax.inject.Inject;
+import javax.jms.ConnectionFactory;
+import javax.jms.JMSConsumer;
+import javax.jms.JMSContext;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
-import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
@@ -20,13 +19,17 @@ import webapp.tier.util.MsgBeanUtils;
 @ApplicationScoped
 public class ActiveMqService implements Messaging {
 
-	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
-	private static String url = ConfigProvider.getConfig().getValue("activemq.url", String.class);
-	private static String username = ConfigProvider.getConfig().getValue("activemq.username", String.class);
-	private static String password = ConfigProvider.getConfig().getValue("activemq.password", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("activemq.splitkey", String.class);
-	private static String queuename = ConfigProvider.getConfig().getValue("activemq.queue.name", String.class);
-	private static String topicname = ConfigProvider.getConfig().getValue("activemq.topic.name", String.class);
+	@Inject
+	ConnectionFactory connectionFactory;
+
+	@ConfigProperty(name = "common.message")
+	String message;
+	@ConfigProperty(name = "activemq.splitkey")
+	String splitkey;
+	@ConfigProperty(name = "activemq.queue.name")
+	String queuename;
+	@ConfigProperty(name = "activemq.topic.name")
+	String topicname;
 
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
 
@@ -34,13 +37,8 @@ public class ActiveMqService implements Messaging {
 	public String putMsg() throws Exception {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
-		try (
-				ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url, username, password);
-				Connection conn = cf.createConnection();
-				Session session = conn.createSession(Session.AUTO_ACKNOWLEDGE);
-				MessageProducer producer = session.createProducer(session.createQueue(queuename));) {
-			conn.start();
-			producer.send(session.createTextMessage(body));
+		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			context.createProducer().send(context.createQueue(queuename), context.createTextMessage(body));
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Put Error.");
@@ -53,17 +51,14 @@ public class ActiveMqService implements Messaging {
 	@Override
 	public String getMsg() throws Exception {
 		MsgBeanUtils msgbean = new MsgBeanUtils();
-		try (
-				ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url, username, password);
-				Connection conn = cf.createConnection();
-				Session session = conn.createSession(Session.AUTO_ACKNOWLEDGE);
-				MessageConsumer consumer = session.createConsumer(session.createQueue(queuename));) {
-			conn.start();
-			TextMessage resp = (TextMessage) consumer.receive(1000);
+		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			JMSConsumer consumer = context.createConsumer(context.createQueue(queuename));
+			String resp = consumer.receiveBody(String.class);
+
 			if (Objects.isNull(resp)) {
 				msgbean.setFullmsg("No Data");
 			} else {
-				msgbean.setFullmsgWithType(msgbean.splitBody(resp.getText(), splitkey), "Get");
+				msgbean.setFullmsgWithType(msgbean.splitBody(resp, splitkey), "Get");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,13 +72,8 @@ public class ActiveMqService implements Messaging {
 	public String publishMsg() throws Exception {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
-		try (
-				ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory(url, username, password);
-				Connection conn = cf.createConnection();
-				Session session = conn.createSession(Session.AUTO_ACKNOWLEDGE);
-				MessageProducer producer = session.createProducer(session.createTopic(topicname));) {
-			conn.start();
-			producer.send(session.createTextMessage(body));
+		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Publish Error.");
