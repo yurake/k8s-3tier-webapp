@@ -64,12 +64,12 @@ jobs:
       working-directory: ./application/jaxrs-activemq-quarkus
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
+      run: mvn -B package --settings ../.m2/settings.xml -Pnative
     - name: Pull Image
       run: docker pull yurak/jaxrs-activemq-quarkus:latest
     - name: Build Image
       working-directory: ./application/jaxrs-activemq-quarkus
-      run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
     - name: Push Image
       run: docker push yurak/jaxrs-activemq-quarkus:latest
 
