@@ -5,7 +5,7 @@ var users = [
     roles: [
       {
         role: 'readWrite',
-        db: 'msg'
+        db: 'webapp'
       }
     ]
   }

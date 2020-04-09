@@ -9,7 +9,7 @@ spec:
     - ReadWriteOnce
   capacity:
     storage: 10Gi
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Delete
   storageClassName: mongodb
   hostPath:
     path: /data/pv009

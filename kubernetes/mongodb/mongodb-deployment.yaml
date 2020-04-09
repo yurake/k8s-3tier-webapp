@@ -40,6 +40,11 @@ spec:
             configMapKeyRef:
               name: mongodb-configmap
               key: tz
+        - name: MONGO_INITDB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mongodb-configmap
+              key: mongodb-initdb
         volumeMounts:
         - name: mongodb-persistent-storage
           mountPath: /data/db

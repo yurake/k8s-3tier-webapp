@@ -3,5 +3,6 @@ kind: ConfigMap
 metadata:
   name: mongodb-configmap
 data:
-  mongodb-root-user: root
+  mongodb-root-user: "root"
   tz: "Asia/Tokyo"
+  mongodb-initdb: "admin"
