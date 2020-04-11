@@ -20,12 +20,9 @@
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.PathRestriction>
-        <includedRegions>kubernetes/.*</includedRegions>
+        <includedRegions>kubernetes/.*
+application/.*</includedRegions>
         <excludedRegions>kubernetes/monitoring/.*</excludedRegions>
-      </hudson.plugins.git.extensions.impl.PathRestriction>
-      <hudson.plugins.git.extensions.impl.PathRestriction>
-        <includedRegions>application/*</includedRegions>
-        <excludedRegions></excludedRegions>
       </hudson.plugins.git.extensions.impl.PathRestriction>
     </extensions>
   </scm>
