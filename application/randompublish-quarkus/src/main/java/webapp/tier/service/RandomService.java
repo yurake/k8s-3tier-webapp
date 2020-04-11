@@ -9,6 +9,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import webapp.tier.resource.ActivemqResource;
 import webapp.tier.resource.HazelcastResource;
+import webapp.tier.resource.MongodbResource;
 import webapp.tier.resource.PostgresResource;
 import webapp.tier.resource.RabbitmqResource;
 import webapp.tier.resource.RedisResource;
@@ -36,11 +37,15 @@ public class RandomService {
 	@RestClient
 	PostgresResource postgresresource;
 
+	@Inject
+	@RestClient
+	MongodbResource mongodbResource;
+
 	private static final Logger LOG = Logger.getLogger(RandomService.class.getSimpleName());
 
 	public String deliverrandom() throws Exception {
 		String response;
-		int id = (int) (Math.random() * 5);
+		int id = (int) (Math.random() * 6);
 		switch (id) {
 		case 0:
 			LOG.info("Call: ActiveMQ Publish");
@@ -61,6 +66,10 @@ public class RandomService {
 		case 4:
 			LOG.info("Call: Hazelcast Publish");
 			response = hazelcastresource.publish();
+			break;
+		case 5:
+			LOG.info("Call: Mongodb Insert");
+			response = mongodbResource.insert();
 			break;
 		default:
 			throw new Exception("random error");
