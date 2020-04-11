@@ -269,8 +269,8 @@
 							"pm.test(\"Status code name has string\", function () {",
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
-							"pm.test(\"Response time is less than 200ms\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"pm.test(\"Response time is less than 400ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);",
 							"});",
 							"pm.test(\"Content-Type is present\", function () {",
 							"    pm.response.to.have.header(\"Content-Type\");",
@@ -943,6 +943,153 @@
 					"path": [
 						"quarkus",
 						"postgres",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mongodb/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2c9b1116-4015-4da1-9a99-c0bbd62a9a85",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 400ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Insert id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MONGO}}/quarkus/mongodb/insert",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MONGO}}"
+					],
+					"path": [
+						"quarkus",
+						"mongodb",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mongodb/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8e8876c4-c3c6-4ae9-9ea9-e10388487f05",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Select id: \");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MONGO}}/quarkus/mongodb/select",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MONGO}}"
+					],
+					"path": [
+						"quarkus",
+						"mongodb",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mongodb/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "deb5bed1-9d0e-418c-8044-b635b49f39f7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Delete Msg Collection\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MONGO}}/quarkus/mongodb/delete",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MONGO}}"
+					],
+					"path": [
+						"quarkus",
+						"mongodb",
 						"delete"
 					]
 				}
