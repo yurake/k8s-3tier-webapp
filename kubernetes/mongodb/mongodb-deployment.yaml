@@ -15,7 +15,7 @@ spec:
         app: mongodb
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "9104"
+        prometheus.io/port: "9216"
     spec:
       containers:
       - name: mongodb
@@ -48,6 +48,16 @@ spec:
         volumeMounts:
         - name: mongodb-persistent-storage
           mountPath: /data/db
+      - name: mongodb-exporter
+        image: ssheehy/mongodb-exporter:0.10.0
+        ports:
+        - containerPort: 9216
+        env:
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongodb-exporter-uri
       volumes:
       - name: mongodb-persistent-storage
         persistentVolumeClaim:

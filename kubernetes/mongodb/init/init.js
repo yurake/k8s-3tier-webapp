@@ -8,6 +8,14 @@ var users = [
         db: 'webapp'
       }
     ]
+  },
+  {
+    user: "root",
+    pwd: "supersecret",
+    roles: [
+      { role: "clusterMonitor", db: "admin" },
+      { role: "read", db: "local" }
+    ]
   }
 ];
 
