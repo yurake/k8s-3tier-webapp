@@ -6,6 +6,8 @@ Postgres Overview
 Redis Dashboard for Prometheus Redis Exporter 1.x
 * 1621  
 Kubernetes cluster monitoring (via Prometheus)
+* 2583
+MongoDB
 * 3066  
 JVM overview
 * 6239  
