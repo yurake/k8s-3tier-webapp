@@ -5,7 +5,7 @@ addons:
   sonarcloud:
     organization: yurak
     token:
-      secure: "gqQb8A+X75A9YRMqf+aJX9/i54+sBxdkJnYkFceo1uFHuvv3AKiz/tQKVAmb8UWdJCegoE4oFumcrBjsWdM5UrSZtzftGR/0XUg+LMn06k5HfqdXoYLce3SjfHHg3GM7pypILAcxPCHUNwBgFLYaw/GiSVU9LK73ASSRuFLc5O8xg8hFWyQEgthlKOlDVyXuiWeznIBq7PIlFQEVYzfHHQICQnHCtdLYhQtMsUy23vSIzAW4VKHxxvh51dOIFLD2OP8bunjZJYdX576qJQWhr4cO1+DotQ2FEzSYeMKuRsGd90l4WGsxc6W+9VDhaiK8Y4p5OsZSG99zeckPH1lrlddF430HreoZ3JbnHU8zixb1nMxfDaYBujiqxeS7yNeYcnuMDm1JyrVRgAONlcp8j09BPJF9tYKdJ4/GcDkjTMYXdRB311enYvsaMwaxSBvlMkc5msCW8WEExdx8Kbxhi7q4Pgecd0pFb85vgbdNA3QnmpV6RVQ0xxgf8JnOQSMMkDqdnznvtWy6h/OnqLbiflyCmtDr3E3DErF2LjaFY5yTNver8FXoOwOW631I2p8buKe20pSzE+5O4eZ6upsGSuK1iSaBIjPyRVJxwPwyDgWEX69Czek93icX8xaua0aGfYu3bqbCh2p2k1xfk4GDlRqh/2FrboTcae+jLgWYHrg="
+      secure: ${SONAR_TOKEN}
 cache:
   directories:
   - "$HOME/.m2/repository"
@@ -15,12 +15,15 @@ jobs:
   - stage: parent-pom
     before_script: cd $TRAVIS_BUILD_DIR/application/parent-pom
     script:
-    - mvn clean install
+    - mvn clean install -DskipTests=true
   - stage: webapp-service
     before_script: cd $TRAVIS_BUILD_DIR/application/webapp-service
     script:
-    - mvn clean install
+    - mvn clean install -DskipTests=true
   - stage: scheduled-quarkus
     before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
     script:
-    - mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_k8s-3tier-webapp
+    - mvn clean verify sonar:sonar -DskipTests=true -Dsonar.projectKey=yurake_k8s-3tier-webapp
+env:
+  global:
+    secure: QIWwrl1rToMAKYsNxNCsoDE/ziJVmk1GsVNwdHVo2Gk77eUaiubkdpPOKmk45vCRkZv+WbfUukSUlc0PXGeneSrSkIVkOoMmiGvMiY+iZfbfors4RIlL0pk6Z5CqjolYwx0+aLiPUFbG8CM3GjOUkICoAQ38nMmPiPNyYkjfpxCw/jX0adorPesIwBHBXWSiKFFFyEXv8OGWKUgy8kMWgUKwgP1D/KftJ0FxRj4vj5b5sTNTIzqMz23GRyB4fh0Etjlfhe0W98E1Dg8Tzw27mq/j2UI0K8SAhpR9m4XPQzWO2xvEd4aA8auH352p8sDhnoazY3dVSxmtyRwSanj0xct8YIYgi/cpoHJfOjA8CKYr7oYvEI9rjqjqizhwGozjXaytXqe0h04YBT4+PgvUdkiyCRxC7YfDT9zW0YHfDRH+flls5YK0/nSFyw+fSX10YEyldvPwaD2/CZ++x20id4vgBYMAOLgR6hU4/Sv40fP2njylS8JKD6MqFjjB/PWZacybJLDiexPQzxk4Xicx5QpNWTv2Jd7iNGlNe1jtsyCnMKbFSXEKrng7WN+gzLvJxh3S8Z3mAfRRd1Utbn17mGjUbUNeWdcpB1uOHiThrJOynmditah7GVW9ro03TAYpXwgdKITRHonQscZFebN7NOWdvS0Z9Y5Mwk3XtBsenFc=
