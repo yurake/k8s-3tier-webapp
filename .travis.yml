@@ -1,4 +1,6 @@
 language: java
+sudo: false
+install: true
 
 jdk:
   - openjdk8
@@ -7,11 +9,12 @@ addons:
   sonarcloud:
     organization: "yurak"
     token:
-      secure: "GnONZM+WxQOJEBTacYKAcKRgcGuZNM4dti27nAn7juc6VhSbZ+m5dlDb3QKicTzhz+Mgn4NgCenTB3GR/7YLztSCVIe20fECjoDz8QfLd5n0AIzRGOrmeelk9Z31g7Yq6vfXxYtv70sVfzMFc+bjI5naV1CTwBoIGt1N6aMseZVeIteDi7zemYVWGD5JI0fl7Pv//G4ppu6hwcbJjYzfDg/0/RvFyc+x3pAfsER9r0mVedgOPATlkMOg3O4cj6Dx+KQUv2IqmKwF6ZCl0ymBY0gJ0vmZGU0WwR6F6iNZeQZPzzd+r75UksMtSWnPi5eiHG50J8n8H0KqSvJeRSYi2Bol79g+cSk2XlYItMvq7TSW8KxIjYcPwm7bJnQvDDmkJCvFKzm6mszgKPX5hVpMvgFLytIZrkgAbH6W1JMWMdKHT7nif0Z1z31AKyka+PPoGxbo+QCYVu//CdHexcJaRlDUWbeJhayGkSz8QfSGFOJkQy4oYc1i2LmOyTN4LeJCAJtAl7DS0+nOAKKvg97+xMgKAT48RJaVfKWREShk+TSQ2I/E5VBSM5FXUu5376aSxFPVsCxck2JawY7khDA+O9HBAEJrgJVxCwhuk1aNFHRE4jstevYPef7Nus5/Y9AdAqY4dVGKJlB08SBkDzISSso/EnJtrgbNghui7NsyOIc="
+      secure: "IGO4y6KN/imvdi0hjxD/KibADygKNtIngFayPC//byiIJqiRxGxUqDFGHGOkBQuEPdNbw+UsELWMx0dD878qy0Fb8BCQaKiQFg7jIt5APTRchws5uvQxix8409Mzghxq259IKtcfDt6LiPRQRpZsVezBIG8cbIQtIyJqngIlKk1PrVG685Da/rm4KYYih1ZPrKz1ZRLAMzjbd+PfGoLCW6dZVo9wl6s4LKyQcrprbrool0jkvoBjsr6gdf3K+BpdsAyJX7yKMtdrRxWu6I1cpUu2pUzfJX51LsVqlOdU+FSL/8DQ+lS5ivdmR9dd5rLQ9xalSqCkY5zsYoEwx0OpHUXdg5wq+5+DmsPr01Z9yurtH5JsE1dMdzuEIxp18TQdPB1bDorrpqfDBt407Li8oZSeSsfqTDytZYzd6gFeBS7n0eEAEAzBvU5ZjeYbJ9WaejcYzqZemRzDJ65x8UV5/kYlsDSaTHPtmRPjvAZHiTLFpSlYnOqeg4m2NqbxBIUGPB1emYzW25K4bVvE8VguaZvQSFqcOM+9TLm4Qgtn3g8ZOp4zhxAiEYBqb7FHjCQgy1lExVW5voThmv8PX0r5YzLt6BTIOJK3+1XR1I18+67HDwYiL+8rmitjslqkbBxp1kNo9REJOAj38l6+oipXA0dfEtHJ1eI5oNDE/SBBB88="
 
 cache:
   directories:
-  - $HOME/.m2
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
 
 jobs:
   include:
@@ -27,4 +30,4 @@ jobs:
       before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
       script:
         # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=yurake_k8s-3tier-webapp
+        - mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_k8s-3tier-webapp
