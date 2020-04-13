@@ -9,6 +9,12 @@ addons:
     token:
       secure: "GnONZM+WxQOJEBTacYKAcKRgcGuZNM4dti27nAn7juc6VhSbZ+m5dlDb3QKicTzhz+Mgn4NgCenTB3GR/7YLztSCVIe20fECjoDz8QfLd5n0AIzRGOrmeelk9Z31g7Yq6vfXxYtv70sVfzMFc+bjI5naV1CTwBoIGt1N6aMseZVeIteDi7zemYVWGD5JI0fl7Pv//G4ppu6hwcbJjYzfDg/0/RvFyc+x3pAfsER9r0mVedgOPATlkMOg3O4cj6Dx+KQUv2IqmKwF6ZCl0ymBY0gJ0vmZGU0WwR6F6iNZeQZPzzd+r75UksMtSWnPi5eiHG50J8n8H0KqSvJeRSYi2Bol79g+cSk2XlYItMvq7TSW8KxIjYcPwm7bJnQvDDmkJCvFKzm6mszgKPX5hVpMvgFLytIZrkgAbH6W1JMWMdKHT7nif0Z1z31AKyka+PPoGxbo+QCYVu//CdHexcJaRlDUWbeJhayGkSz8QfSGFOJkQy4oYc1i2LmOyTN4LeJCAJtAl7DS0+nOAKKvg97+xMgKAT48RJaVfKWREShk+TSQ2I/E5VBSM5FXUu5376aSxFPVsCxck2JawY7khDA+O9HBAEJrgJVxCwhuk1aNFHRE4jstevYPef7Nus5/Y9AdAqY4dVGKJlB08SBkDzISSso/EnJtrgbNghui7NsyOIc="
 
+cache:
+  directories:
+  - $HOME/.m2
+
+before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
+
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=yurake_k8s-3tier-webapp
