@@ -5,11 +5,11 @@ addons:
   sonarcloud:
     organization: yurak
     token:
-      secure: "${SONAR_TOKEN}"
+      secure: "Q+apkUKnH8KGXYhtJdp4gi3pDUWLzrHFFXuwoonVE/8pxYkG6Zgh67gQTppQFlbEtbS1RwzZuCSQ0LUXXeXqXvUW2yVq6A63HawJh+D5oQnTXI2NlHt7rYJSaiQjA+q6wA1uvPOmyhDRUbgGpLnrKRcoXGTG/bbK5H2MYu/KIY4LU6rUhN6dfA/+aprfs79U72Lfmxxdsr+6jugEre6AkrQcQhaeUtu+JmPyjbEaRo16QHrW/H8/3XjkzeD9DDN6CXnmQQ5TX1ryEt+toPO+nUQD72YQ2AdtODjTlyksavK8/fklHpsxc2TBS2e2jJAmE3t2w2aqENjeYDE6yRnWKhDWgb7AHMBuDkqfx8sdJLDHMGzZcLBgMub9vfcLkNtUzln2aDVwX69aifV9hL2hTgCd26++tgERCxERq7cWtE93bL94OY3h2ClrHwJ+Z/ZpUlBC2Rsau7r0UbZefYx8fRCwaWUpFXc2YsplkHZoBWqeALmZfV2p1GBVO+DogcnfA08J0KeqLR4F6lHgPn8ZqAPjDdz5OIafgzOAK7/lETPZqywLzPf03dcOGKbLlfOl1RGEg+7bBYjWIL54feAs24RJcfRtzaT6ck82ejfXRLcQuQUuAa0Dz3YwffnNahcJiqWZaQgtWY0kte4N5z0bh8ejV8nGsA4Z3Nq4B6Thl48="
 cache:
   directories:
-  - "$HOME/.m2/repository"
-  - "$HOME/.sonar/cache"
+  - "${HOME}/.m2/repository"
+  - "${HOME}/.sonar/cache"
 jobs:
   include:
   - stage: parent-pom
@@ -24,6 +24,3 @@ jobs:
     before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
     script:
     - mvn clean verify sonar:sonar -DskipTests=true -Dsonar.projectKey=yurake_k8s-3tier-webapp
-env:
-  global:
-    secure: 0QV8hwSf3puQFjh8HUqolo12Roqhfi5+dFMv0H/T9/SXt/1M2CzRlU0lbHRCcJfGvShn8F5OLjaAnh08M+1vp8xlWIJKayvezORAhl+4osLnCRTLn+4zlaeID4JLLP5BdR5B0bohVD5U0qcFJTGIrMKqpkr2M09vZhrYowPA+G39tzXiecT7/MdYbOYQc9PwqtpJ3HWDpk1uZNN3n9+HLoZCSe0l0uMA2oMKMUPqIJJf72G/ZzgFRxfZG74iS8MebFEEY21vvvtG9psqard9DFwMiksYGY7eDF2P9bt6VXha1gQJLpyt4zaqJkX0peaHtQrvEF6ATd5sMNL1MbGdbrgx0CRk5pOqiZKinE1ghBqYgwOM3scv6W8sUvBGhd/bdcTCn1nh0l18KnUoRv2ROiswCX0Rba8kxWfaf9BZuORfzSLvA7xnhL9rVXUlVfMhKUdYf4HBrY1w+PrjrWrX5W03yUSkuYVzXUfcS7xuF5Xvxt3hHHNBuWBOCWT8ulWwBf64fDjFxFviPoDVd4wYzl0w4KKEc7y6gW9SKZi1l7BThQZbGfMfhdrUD78N12qVFb9SoFNMMdIWmVxEnHqVQ8m/RrJ59/fpsZle5HhJjtwCGYM+LtICTnPyP5xSBYhc6oXD3pYDogxtl8CQvkvAVQMnltK4ZDz9u1ILeTZpc6s=
