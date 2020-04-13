@@ -5,7 +5,7 @@ addons:
   sonarcloud:
     organization: yurak
     token:
-      secure: ${SONAR_TOKEN}
+      secure: "${SONAR_TOKEN}"
 cache:
   directories:
   - "$HOME/.m2/repository"
@@ -26,4 +26,4 @@ jobs:
     - mvn clean verify sonar:sonar -DskipTests=true -Dsonar.projectKey=yurake_k8s-3tier-webapp
 env:
   global:
-    secure: QIWwrl1rToMAKYsNxNCsoDE/ziJVmk1GsVNwdHVo2Gk77eUaiubkdpPOKmk45vCRkZv+WbfUukSUlc0PXGeneSrSkIVkOoMmiGvMiY+iZfbfors4RIlL0pk6Z5CqjolYwx0+aLiPUFbG8CM3GjOUkICoAQ38nMmPiPNyYkjfpxCw/jX0adorPesIwBHBXWSiKFFFyEXv8OGWKUgy8kMWgUKwgP1D/KftJ0FxRj4vj5b5sTNTIzqMz23GRyB4fh0Etjlfhe0W98E1Dg8Tzw27mq/j2UI0K8SAhpR9m4XPQzWO2xvEd4aA8auH352p8sDhnoazY3dVSxmtyRwSanj0xct8YIYgi/cpoHJfOjA8CKYr7oYvEI9rjqjqizhwGozjXaytXqe0h04YBT4+PgvUdkiyCRxC7YfDT9zW0YHfDRH+flls5YK0/nSFyw+fSX10YEyldvPwaD2/CZ++x20id4vgBYMAOLgR6hU4/Sv40fP2njylS8JKD6MqFjjB/PWZacybJLDiexPQzxk4Xicx5QpNWTv2Jd7iNGlNe1jtsyCnMKbFSXEKrng7WN+gzLvJxh3S8Z3mAfRRd1Utbn17mGjUbUNeWdcpB1uOHiThrJOynmditah7GVW9ro03TAYpXwgdKITRHonQscZFebN7NOWdvS0Z9Y5Mwk3XtBsenFc=
+    secure: 0QV8hwSf3puQFjh8HUqolo12Roqhfi5+dFMv0H/T9/SXt/1M2CzRlU0lbHRCcJfGvShn8F5OLjaAnh08M+1vp8xlWIJKayvezORAhl+4osLnCRTLn+4zlaeID4JLLP5BdR5B0bohVD5U0qcFJTGIrMKqpkr2M09vZhrYowPA+G39tzXiecT7/MdYbOYQc9PwqtpJ3HWDpk1uZNN3n9+HLoZCSe0l0uMA2oMKMUPqIJJf72G/ZzgFRxfZG74iS8MebFEEY21vvvtG9psqard9DFwMiksYGY7eDF2P9bt6VXha1gQJLpyt4zaqJkX0peaHtQrvEF6ATd5sMNL1MbGdbrgx0CRk5pOqiZKinE1ghBqYgwOM3scv6W8sUvBGhd/bdcTCn1nh0l18KnUoRv2ROiswCX0Rba8kxWfaf9BZuORfzSLvA7xnhL9rVXUlVfMhKUdYf4HBrY1w+PrjrWrX5W03yUSkuYVzXUfcS7xuF5Xvxt3hHHNBuWBOCWT8ulWwBf64fDjFxFviPoDVd4wYzl0w4KKEc7y6gW9SKZi1l7BThQZbGfMfhdrUD78N12qVFb9SoFNMMdIWmVxEnHqVQ8m/RrJ59/fpsZle5HhJjtwCGYM+LtICTnPyP5xSBYhc6oXD3pYDogxtl8CQvkvAVQMnltK4ZDz9u1ILeTZpc6s=
