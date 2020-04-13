@@ -9,6 +9,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.quarkus.scheduler.Scheduled;
 import webapp.tier.resource.DeliverResource;
+import webapp.tier.resource.MongodbResource;
 import webapp.tier.resource.MysqlResource;
 import webapp.tier.resource.PostgresResource;
 
@@ -21,11 +22,15 @@ public class CallRandomPublshSchedule {
 
 	@Inject
 	@RestClient
-	PostgresResource postgresrrsc;
+	PostgresResource postgresrsc;
 
 	@Inject
 	@RestClient
-	MysqlResource mysqlrrsc;
+	MysqlResource mysqlrsc;
+
+	@Inject
+	@RestClient
+	MongodbResource mongodbrsc;
 
 	private static final Logger LOG = Logger.getLogger(CallRandomPublshSchedule.class.getSimpleName());
 
@@ -40,9 +45,11 @@ public class CallRandomPublshSchedule {
 	@Scheduled(every = "10m")
 	void callDeleteDbs() {
 		LOG.info("Call: Delete Postgres");
-		LOG.info(postgresrrsc.delete());
+		LOG.info(postgresrsc.delete());
 		LOG.info("Call: Delete Mysql");
-		LOG.info(mysqlrrsc.delete());
+		LOG.info(mysqlrsc.delete());
+		LOG.info("Call: Delete Mongodb");
+		LOG.info(mongodbrsc.delete());
 	}
 
 }
