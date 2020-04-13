@@ -10,6 +10,8 @@ cache:
   directories:
   - "${HOME}/.m2/repository"
   - "${HOME}/.sonar/cache"
+git:
+  depth: false
 jobs:
   include:
   - stage: parent-pom
@@ -23,4 +25,4 @@ jobs:
   - stage: scheduled-quarkus
     before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
     script:
-    - mvn clean verify sonar:sonar -DskipTests=true -Dsonar.projectKey=yurake_k8s-3tier-webapp
+    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -DskipTests=true -Dsonar.projectKey=yurake_k8s-3tier-webapp
