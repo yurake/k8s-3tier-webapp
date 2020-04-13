@@ -15,10 +15,10 @@ cache:
 
 jobs:
   include:
-    - stage: parent-pom
-      before_script: cd $TRAVIS_BUILD_DIR/application/parent-pom
+    - stage: webapp-service
+      before_script: cd $TRAVIS_BUILD_DIR/application/webapp-service
       script:
-        - mvn clean package
+        - mvn clean package --settings ../.m2/settings.xml
     - stage: scheduled-quarkus
       before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
       script:
