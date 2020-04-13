@@ -13,6 +13,11 @@ cache:
   directories:
   - $HOME/.m2
 
+before_script: cd $TRAVIS_BUILD_DIR/application/parent-pom
+
+script:
+  - mvn clean package
+
 before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
 
 script:
