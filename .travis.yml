@@ -1,33 +1,26 @@
 language: java
-sudo: false
-install: true
-
 jdk:
-  - openjdk8
-
+- openjdk8
 addons:
   sonarcloud:
-    organization: "yurak"
+    organization: yurak
     token:
-      secure: "IGO4y6KN/imvdi0hjxD/KibADygKNtIngFayPC//byiIJqiRxGxUqDFGHGOkBQuEPdNbw+UsELWMx0dD878qy0Fb8BCQaKiQFg7jIt5APTRchws5uvQxix8409Mzghxq259IKtcfDt6LiPRQRpZsVezBIG8cbIQtIyJqngIlKk1PrVG685Da/rm4KYYih1ZPrKz1ZRLAMzjbd+PfGoLCW6dZVo9wl6s4LKyQcrprbrool0jkvoBjsr6gdf3K+BpdsAyJX7yKMtdrRxWu6I1cpUu2pUzfJX51LsVqlOdU+FSL/8DQ+lS5ivdmR9dd5rLQ9xalSqCkY5zsYoEwx0OpHUXdg5wq+5+DmsPr01Z9yurtH5JsE1dMdzuEIxp18TQdPB1bDorrpqfDBt407Li8oZSeSsfqTDytZYzd6gFeBS7n0eEAEAzBvU5ZjeYbJ9WaejcYzqZemRzDJ65x8UV5/kYlsDSaTHPtmRPjvAZHiTLFpSlYnOqeg4m2NqbxBIUGPB1emYzW25K4bVvE8VguaZvQSFqcOM+9TLm4Qgtn3g8ZOp4zhxAiEYBqb7FHjCQgy1lExVW5voThmv8PX0r5YzLt6BTIOJK3+1XR1I18+67HDwYiL+8rmitjslqkbBxp1kNo9REJOAj38l6+oipXA0dfEtHJ1eI5oNDE/SBBB88="
-
+      secure: "gqQb8A+X75A9YRMqf+aJX9/i54+sBxdkJnYkFceo1uFHuvv3AKiz/tQKVAmb8UWdJCegoE4oFumcrBjsWdM5UrSZtzftGR/0XUg+LMn06k5HfqdXoYLce3SjfHHg3GM7pypILAcxPCHUNwBgFLYaw/GiSVU9LK73ASSRuFLc5O8xg8hFWyQEgthlKOlDVyXuiWeznIBq7PIlFQEVYzfHHQICQnHCtdLYhQtMsUy23vSIzAW4VKHxxvh51dOIFLD2OP8bunjZJYdX576qJQWhr4cO1+DotQ2FEzSYeMKuRsGd90l4WGsxc6W+9VDhaiK8Y4p5OsZSG99zeckPH1lrlddF430HreoZ3JbnHU8zixb1nMxfDaYBujiqxeS7yNeYcnuMDm1JyrVRgAONlcp8j09BPJF9tYKdJ4/GcDkjTMYXdRB311enYvsaMwaxSBvlMkc5msCW8WEExdx8Kbxhi7q4Pgecd0pFb85vgbdNA3QnmpV6RVQ0xxgf8JnOQSMMkDqdnznvtWy6h/OnqLbiflyCmtDr3E3DErF2LjaFY5yTNver8FXoOwOW631I2p8buKe20pSzE+5O4eZ6upsGSuK1iSaBIjPyRVJxwPwyDgWEX69Czek93icX8xaua0aGfYu3bqbCh2p2k1xfk4GDlRqh/2FrboTcae+jLgWYHrg="
 cache:
   directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
-
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
 jobs:
   include:
-    - stage: parent-pom
-      before_script: cd $TRAVIS_BUILD_DIR/application/parent-pom
-      script:
-        - mvn clean install
-    - stage: webapp-service
-      before_script: cd $TRAVIS_BUILD_DIR/application/webapp-service
-      script:
-        - mvn clean install
-    - stage: scheduled-quarkus
-      before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
-      script:
-        # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-        - mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_k8s-3tier-webapp
+  - stage: parent-pom
+    before_script: cd $TRAVIS_BUILD_DIR/application/parent-pom
+    script:
+    - mvn clean install
+  - stage: webapp-service
+    before_script: cd $TRAVIS_BUILD_DIR/application/webapp-service
+    script:
+    - mvn clean install
+  - stage: scheduled-quarkus
+    before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
+    script:
+    - mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_k8s-3tier-webapp
