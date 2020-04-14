@@ -15,9 +15,8 @@ git:
 jobs:
   include:
   - stage: parent-pom
-    before_script: cd $TRAVIS_BUILD_DIR/application/parent-pom
     script:
-    - mvn clean install -DskipTests=true
+    - mvn clean install -f ${TRAVIS_BUILD_DIR}/application/parent-pom/pom.xml -DskipTests=true
   - stage: webapp-service
     before_script: cd $TRAVIS_BUILD_DIR/application/webapp-service
     script:
