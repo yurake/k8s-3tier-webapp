@@ -15,13 +15,9 @@ git:
 jobs:
   include:
   - stage: parent-pom
-    script:
-    - mvn clean install -f ${TRAVIS_BUILD_DIR}/application/parent-pom/pom.xml -DskipTests=true
+    script: mvn clean install -f ${TRAVIS_BUILD_DIR}/application/parent-pom/pom.xml -DskipTests=true
   - stage: webapp-service
-    before_script: cd $TRAVIS_BUILD_DIR/application/webapp-service
-    script:
-    - mvn clean install -DskipTests=true
-  - stage: scheduled-quarkus
-    before_script: cd $TRAVIS_BUILD_DIR/application/scheduled-quarkus
-    script:
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -DskipTests=true -Dsonar.projectKey=yurake_k8s-3tier-webapp
+    script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/webapp-service/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_k8s-3tier-webapp
+  - stage: sonar main project
+    script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/scheduled-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_k8s-3tier-webapp
+    script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/randompublish-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_k8s-3tier-webapp
