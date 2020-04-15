@@ -19,15 +19,17 @@ jobs:
         with:
           minikube version: "v1.5.2"
           kubernetes version: "v1.16.2"
-      - name: Interact with the cluster
+      - name: Apply Service
         run: |
+          minikube addons list
+          minikube addons enable ingress
           kubectl get nodes
           ./kubernetes/apply.sh
           kubectl get po --all-namespaces=true
+      - name: e2e test
+        run: |
           kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
           kubectl -n monitoring wait --for=condition=complete --timeout=600s job/postmannewman-job
           kubectl -n monitoring describe job postmannewman-job
           kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
           kubectl get po --all-namespaces=true
-          minikube addons list
-          minikube addons enable ingress
