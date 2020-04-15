@@ -1,16 +1,18 @@
+name: Assign issues to project
+
 on:
   issues:
     types: [opened, reopened]
   pull_request:
-    types: [opened, reopened]
+    types: [opened]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-name: Assign issues to project
 jobs:
   assign:
     runs-on: ubuntu-latest
     steps:
       - name: Assign issues to project
-        uses: technote-space/create-project-card-action@v1
+        uses: srggrs/assign-one-project-github-action@1.2.0
         with:
-          PROJECT: Feature request
-          COLUMN: To do
+          project: 'https://github.com/yurake/k8s-3tier-webapp/projects/1'
