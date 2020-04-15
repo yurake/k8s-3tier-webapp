@@ -23,7 +23,7 @@ jobs:
         run: |
           minikube addons list
           which minikube
-          sudo minikube addons enable ingress
+          sudo /home/runner/work/_temp/minikube addons enable ingress
           minikube addons list
       - name: apply service
         run: |
