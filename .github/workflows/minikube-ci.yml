@@ -19,4 +19,5 @@ jobs:
       - name: Interact with the cluster
         run: |
           kubectl get nodes
-          kubectl get po --all-namespace=true
+          ./kubernetes/apply.sh
+          kubectl get po --all-namespaces=true
