@@ -17,6 +17,6 @@ jobs:
           command: |
             echo "Run kubeval"
             kustomize build test/kustomize | \
-            for file in `find . -name "*.yaml"`; do \
-            kubeval --strict ${{ file }} \
+            for FILE in `find . -name "*.yaml"`; do \
+            kubeval --strict ${FILE} \
             done 
