@@ -3,7 +3,11 @@ set -eu
 
 ROOT_DIR=$(cd $(dirname -- $0); pwd)
 
-echo "## default"
+echo "### monitoring namespace"
+cd ${ROOT_DIR}/monitoring
+kubectl apply -f ./monitoring-namespace.yaml
+echo "###"
+echo ""
 
 echo "### mysql"
 cd ${ROOT_DIR}/mysql
@@ -205,12 +209,6 @@ echo ""
 echo "## jaeger"
 cd ${ROOT_DIR}/jaeger
 kubectl apply -f ./jaeger-all-in-one-template.yml
-echo "###"
-echo ""
-
-echo "## monitoring"
-cd ${ROOT_DIR}/monitoring
-kubectl apply -f ./monitoring-namespace.yaml
 echo "###"
 echo ""
 

@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  minikube-test:
+  minikube:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
