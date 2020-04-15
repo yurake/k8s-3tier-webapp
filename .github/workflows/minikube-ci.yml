@@ -22,6 +22,7 @@ jobs:
       - name: minikube settings
         run: |
           minikube addons list
+          which minikube
           sudo minikube addons enable ingress
           minikube addons list
       - name: apply service
