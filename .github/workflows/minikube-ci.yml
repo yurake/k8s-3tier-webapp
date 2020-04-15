@@ -12,17 +12,20 @@ jobs:
   minikube:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v1
-      - name: Setup Minikube
+      - name: setup minikube
         uses: manusa/actions-setup-minikube@v1.0.1
         with:
           minikube version: "v1.5.2"
           kubernetes version: "v1.16.2"
-      - name: Apply Service
+      - name: minikube settings
         run: |
           minikube addons list
-          minikube addons enable ingress
+          sudo minikube addons enable ingress
+          minikube addons list
+      - name: apply service
+        run: |
           kubectl get nodes
           ./kubernetes/apply.sh
           kubectl get po --all-namespaces=true
