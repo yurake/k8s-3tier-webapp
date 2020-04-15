@@ -16,4 +16,7 @@ jobs:
           helmv3: 3.1.2
           command: |
             echo "Run kubeval"
-            kustomize build test/kustomize | kubeval --strict
+            kustomize build test/kustomize | \
+            for file in `find . -name "*.yaml"`; do \
+            kubeval --strict ${{ file }} \
+            done 
