@@ -1,6 +1,10 @@
 name: Yaml Validator
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+    - 'kubernetes/**'
+    - '.github/workflows/yaml-validator.yml'
 
 jobs:
   validation:
