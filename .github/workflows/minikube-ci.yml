@@ -24,3 +24,10 @@ jobs:
           kubectl get nodes
           ./kubernetes/apply.sh
           kubectl get po --all-namespaces=true
+          kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
+          kubectl -n monitoring wait --for=condition=complete --timeout=600s job/postmannewman-job
+          kubectl -n monitoring describe job postmannewman-job
+          kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
+          kubectl get po --all-namespaces=true
+          minikube addons list
+          minikube addons enable ingress
