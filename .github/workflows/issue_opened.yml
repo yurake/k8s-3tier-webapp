@@ -1,12 +1,12 @@
 on:
   issues:
-    types: [opened, assigned, labeled]
-  issue_comment:
-    types: [created]
-name: Issue opened
+    types: [opened, reopened]
+  pull_request:
+    types: [opened, reopened]
+
+name: Assign issues to project
 jobs:
   assign:
-    name: Assign issues to project
     runs-on: ubuntu-latest
     steps:
       - name: Assign issues to project
