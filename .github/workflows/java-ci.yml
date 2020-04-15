@@ -5,6 +5,7 @@ on:
     paths:
     - 'application/**'
     - '.github/workflows/java-ci.yml'
+  pull_request:
 
 jobs:
   init-build:

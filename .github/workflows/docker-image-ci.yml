@@ -5,6 +5,7 @@ on:
     paths:
     - 'kubernetes/**'
     - '.github/workflows/docker-image-ci.yml'
+  pull_request:
 
 jobs:
   build:
