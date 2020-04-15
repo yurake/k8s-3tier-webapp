@@ -152,7 +152,7 @@ echo ""
 echo "### activemq-mysql-quarkus"
 cd ${ROOT_DIR}/../application/activemq-mysql-quarkus
 docker pull yurak/activemq-mysql-quarkus:latest
-docker build -t yurak/activemq-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+docker build -t yurak/activemq-mysql-quarkus:latest -f src/main/docker/Dockerfile.native .
 echo "###"
 echo ""
 
