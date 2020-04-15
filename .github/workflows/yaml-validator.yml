@@ -15,7 +15,5 @@ jobs:
           helm: 2.16.5
           helmv3: 3.1.2
           command: |
-            echo "Run conftest"
-            kustomize build test/kustomize | conftest test -p test/policy -
             echo "Run kubeval"
             kustomize build test/kustomize | kubeval --strict
