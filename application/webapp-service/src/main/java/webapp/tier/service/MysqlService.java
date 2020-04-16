@@ -1,5 +1,6 @@
 package webapp.tier.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -47,7 +48,7 @@ public class MysqlService implements Database {
 	}
 
 	@Override
-	public String insertMsg() throws SQLException {
+	public String insertMsg() throws SQLException, NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String sql = insertsql.replace(sqlkey, msgbean.getIdString()).replace(sqlbody, msgbean.getMessage());
 
@@ -63,7 +64,7 @@ public class MysqlService implements Database {
 		return msgbean.getFullmsg();
 	}
 
-	public String insertMsg(MsgBean bean) throws SQLException {
+	public String insertMsg(MsgBean bean) throws SQLException, NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), bean.getMessage());
 
 		msgbean.appendMessage(msgbean, addonmsg);

@@ -1,5 +1,6 @@
 package webapp.tier.resource;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import javax.ws.rs.Consumes;
@@ -30,7 +31,7 @@ public class PostgresResource {
 		PostgresService postgres = new PostgresService();
 		try {
 			return Response.ok().entity(postgres.insertMsg()).build();
-		} catch (SQLException e) {
+		} catch (SQLException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}

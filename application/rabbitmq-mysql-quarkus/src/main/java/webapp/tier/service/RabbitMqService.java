@@ -1,9 +1,11 @@
 package webapp.tier.service;
 
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -98,8 +100,8 @@ public class RabbitMqService implements Runnable {
 						mysqlsvc.insertMsg(bean);
 						LOG.info("Call: Random Publish");
 						LOG.info(deliversvc.random());
-					} catch (SQLException e) {
-						e.printStackTrace();
+					} catch (SQLException | NoSuchAlgorithmException e) {
+						LOG.log(Level.SEVERE, "Insert Errorr.", e);
 					}
 				}
 			};

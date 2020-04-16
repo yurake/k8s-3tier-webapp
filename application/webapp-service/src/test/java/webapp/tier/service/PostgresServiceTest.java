@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class PostgresServiceTest {
 		try {
 			svc.insertMsg();
 			fail();
-		} catch (SQLException e) {
+		} catch (SQLException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			assertEquals("Insert Error.", e.getMessage());
 		}

@@ -1,5 +1,7 @@
 package webapp.tier.util;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class CreateId {
@@ -10,9 +12,10 @@ public class CreateId {
 	/**
 	 * 5桁の正の整数を返す
 	 * @return 5桁の整数
+	 * @throws NoSuchAlgorithmException
 	 */
-	public static int createid() {
-		Random rand = new Random();
+	public static int createid() throws NoSuchAlgorithmException {
+		Random rand = SecureRandom.getInstanceStrong();
 		int id = 0;
 		while (id < 10000) {
 			id = rand.nextInt(99999);
