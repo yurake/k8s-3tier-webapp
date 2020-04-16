@@ -21,7 +21,7 @@ jobs:
           kubernetes version: "v1.16.2"
       - name: minikube config change
         run: |
-          sudo -E minikube config set memory 16384
+          sudo -i minikube config set memory 16384
           sudo minikube config set cpus 8
           sudo minikube config set disk-size 80g
           minikube stop
