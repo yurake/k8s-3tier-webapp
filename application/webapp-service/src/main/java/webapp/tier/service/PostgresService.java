@@ -66,9 +66,9 @@ public class PostgresService implements Database {
 	public List<String> selectMsg() throws SQLException {
 		List<String> msglist = new ArrayList<>();
 
-		try (Statement stmt = getConnection().createStatement()) {
+		try (Statement stmt = getConnection().createStatement();
+				ResultSet rs = stmt.executeQuery(selectsql)) {
 			LOG.info("Select SQL: " + selectsql);
-			ResultSet rs = stmt.executeQuery(selectsql);
 
 			while (rs.next()) {
 				MsgBeanUtils msgbean = new MsgBeanUtils();
