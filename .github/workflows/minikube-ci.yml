@@ -19,12 +19,18 @@ jobs:
         with:
           minikube version: "v1.5.2"
           kubernetes version: "v1.16.2"
-      - name: minikube settings
+      - name: minikube config change
         run: |
-          minikube addons list
-          which minikube
+          minikube stop
+          minikube config set memory 16384
+          minikube config set cpus 8
+          minikube config set disk-size 80g
+          minikube start
+      - name: minikube addon settings
+        run: |
           sudo /home/runner/work/_temp/minikube addons enable ingress
           minikube addons list
+          sudo /home/runner/work/_temp/minikube addons list
       - name: apply service
         run: |
           ./kubernetes/apply.sh
