@@ -21,30 +21,31 @@ jobs:
           kubernetes version: "v1.16.2"
       - name: minikube config change
         run: |
+          sudo mv /home/runner/.kube /home/runner/.minikube $HOME
+          sudo chown -R $USER $HOME/.kube $HOME/.minikube
           minikube stop
           minikube delete
-          sudo /home/runner/work/_temp/minikube config set memory 16384
-          sudo /home/runner/work/_temp/minikube config set cpus 8
-          sudo /home/runner/work/_temp/minikube config set disk-size 80g
-          sudo /home/runner/work/_temp/minikube start --vm-driver=none
+          sudo minikube config set memory 16384
+          sudo minikube config set cpus 8
+          sudo minikube config set disk-size 80g
+          sudo minikube start --vm-driver=none
       - name: minikube addon settings
         run: |
-          sudo /home/runner/work/_temp/minikube addons enable ingress
-          minikube addons list
-          sudo /home/runner/work/_temp/minikube addons list
+          sudo minikube addons enable ingress
+          sudo minikube addons list
       - name: apply service
         run: |
-          ./kubernetes/apply.sh
+          sudo ./kubernetes/apply.sh
       - name: check before test
         run: |
-          kubectl get nodes
-          kubectl get all
-          kubectl get all -n monitoring
-          kubectl get ingress
+          sudo kubectl get nodes
+          sudo kubectl get all
+          sudo kubectl get all -n monitoring
+          sudo kubectl get ingress
       - name: e2e test
         run: |
-          kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
-          kubectl -n monitoring wait --for=condition=complete --timeout=600s job/postmannewman-job
-          kubectl -n monitoring describe job postmannewman-job
-          kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
-          kubectl get po --all-namespaces=true
+          sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
+          sudo kubectl -n monitoring wait --for=condition=complete --timeout=600s job/postmannewman-job
+          sudo kubectl -n monitoring describe job postmannewman-job
+          sudo kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
+          sudo kubectl get po --all-namespaces=true
