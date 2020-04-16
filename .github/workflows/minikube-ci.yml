@@ -34,6 +34,8 @@ jobs:
           sudo kubectl get all
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
+          sudo kubectl describe pod/hazelcast-0
+          sudo kubectl logs -f $(sudo kubectl get pods | awk '{print $1}' | grep redis-mysql-quarkus)
       - name: e2e test
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
