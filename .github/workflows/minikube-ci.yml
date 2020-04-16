@@ -33,7 +33,7 @@ jobs:
           sudo kubectl get all
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
-          sudo kubectl wait --for=condition=Ready --timeout=1h pod/nginx 
+          sudo kubectl wait --for=condition=available --timeout=1h deployment/nginx 
       - name: e2e test
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
