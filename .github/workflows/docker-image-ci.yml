@@ -60,12 +60,18 @@ jobs:
     - name: Push Image - rabbitmq
       run: docker push yurak/rabbitmq:latest
 
-    - name: Pull Image - rabbitmq
+    - name: Build image - hazelcast
+      working-directory: ./kubernetes/hazelcast
+      run: docker build -t yurak/hazelcast:latest .
+    - name: Push Image - hazelcast
+      run: docker push yurak/hazelcast:latest
+
+    - name: Pull Image - jenkins
       run: docker pull yurak/jenkins:latest
     - name: Build image - jenkins
       working-directory: ./kubernetes/monitoring/jenkins
       run: docker build -t yurak/jenkins:latest .
-    - name: Push Image - rabbitmq
+    - name: Push Image - jenkins
       run: docker push yurak/jenkins:latest
 
     - name: Pull Image - ab
