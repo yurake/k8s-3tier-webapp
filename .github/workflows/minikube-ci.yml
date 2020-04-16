@@ -27,9 +27,9 @@ jobs:
         run: |
           sudo /home/runner/work/_temp/minikube addons enable ingress
           sudo /home/runner/work/_temp/minikube addons list
-      - name: apply service
+      - name: apply minimal service
         run: |
-          sudo sh ./kubernetes/apply-default.sh
+          sudo sh ./kubernetes/apply-default-minimal.sh
       - name: check before test
         run: |
           sudo kubectl wait --for=condition=available --timeout=1h deployment/nginx
