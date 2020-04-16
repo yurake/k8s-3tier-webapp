@@ -21,11 +21,11 @@ jobs:
           kubernetes version: "v1.16.2"
       - name: minikube config change
         run: |
-          sudo /home/runner/work/_temp/minikube stop
+          minikube stop
           sudo /home/runner/work/_temp/minikube config set memory 16384
           sudo /home/runner/work/_temp/minikube config set cpus 8
           sudo /home/runner/work/_temp/minikube config set disk-size 80g
-          sudo /home/runner/work/_temp/minikube start
+          minikube start
       - name: minikube addon settings
         run: |
           sudo /home/runner/work/_temp/minikube addons enable ingress
