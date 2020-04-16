@@ -25,7 +25,6 @@ jobs:
           sudo /home/runner/work/_temp/minikube addons list
       - name: apply service
         run: |
-          sudo ls -lR
           sudo sh ./kubernetes/apply-default.sh
       - name: check before test
         run: |
@@ -37,6 +36,9 @@ jobs:
       - name: e2e test
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
+          sleep 300
+          sudo kubectl -n monitoring describe job postmannewman-job
+          sudo kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
           sudo kubectl -n monitoring wait --for=condition=complete --timeout=1h job/postmannewman-job
           sudo kubectl -n monitoring describe job postmannewman-job
           sudo kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
