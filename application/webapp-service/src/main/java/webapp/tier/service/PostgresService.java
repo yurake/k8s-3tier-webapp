@@ -1,5 +1,6 @@
 package webapp.tier.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -33,53 +35,27 @@ public class PostgresService implements Database {
 		return DriverManager.getConnection(url);
 	}
 
-	private void closeConnection(Connection con) throws SQLException {
-		if (con != null) {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new SQLException();
-			}
-		}
-	}
-
 	public boolean connectionStatus() {
-		Connection con = null;
 		boolean status = false;
-		try {
-			con = getConnection();
+		try (Connection con = getConnection()) {
 			status = true;
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				closeConnection(con);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			LOG.log(Level.SEVERE, "Status Check Error.", e);
 		}
 		return status;
 	}
 
 	@Override
-	public String insertMsg() throws SQLException {
-		Connection con = null;
+	public String insertMsg() throws SQLException, NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String sql = insertsql.replace(sqlkey, msgbean.getIdString()).replace(sqlbody, msgbean.getMessage());
 
-		try {
-			con = getConnection();
-			Statement stmt = con.createStatement();
-
+		try (Statement stmt = getConnection().createStatement()) {
 			LOG.info("Insert SQL: " + sql);
 			stmt.executeUpdate(sql);
-
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Insert Error.", e);
 			throw new SQLException("Insert Error.");
-		} finally {
-			closeConnection(con);
 		}
 		msgbean.setFullmsgWithType(msgbean, "Insert");
 		LOG.info(msgbean.getFullmsg());
@@ -88,13 +64,9 @@ public class PostgresService implements Database {
 
 	@Override
 	public List<String> selectMsg() throws SQLException {
-		Connection con = null;
 		List<String> msglist = new ArrayList<>();
 
-		try {
-			con = getConnection();
-			Statement stmt = con.createStatement();
-
+		try (Statement stmt = getConnection().createStatement()) {
 			LOG.info("Select SQL: " + selectsql);
 			ResultSet rs = stmt.executeQuery(selectsql);
 
@@ -111,31 +83,21 @@ public class PostgresService implements Database {
 				msglist.add("No Data");
 			}
 
-
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Select Errorr.", e);
 			throw new SQLException("Select Error.");
-		} finally {
-			closeConnection(con);
 		}
 		return msglist;
 	}
 
 	@Override
 	public String deleteMsg() throws SQLException {
-		Connection con = null;
-		try {
-			con = getConnection();
-			Statement stmt = con.createStatement();
-
+		try (Statement stmt = getConnection().createStatement()) {
 			LOG.info("Delete SQL: " + deletesql);
 			stmt.executeUpdate(deletesql);
-
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Delete Errorr.", e);
 			throw new SQLException("Delete Error.");
-		} finally {
-			closeConnection(con);
 		}
 		return "Delete Msg Records";
 	}
