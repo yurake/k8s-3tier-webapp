@@ -54,6 +54,7 @@ public class MysqlService implements Database {
 
 		try (Statement stmt = getConnection().createStatement()) {
 			LOG.info("Insert SQL: " + sql);
+			LOG.log(Level.INFO, "Insert SQL: {}", sql);
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Insert Error.", e);
