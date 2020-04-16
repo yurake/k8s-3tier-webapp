@@ -1,4 +1,4 @@
-name: e2e test on Minikube
+name: e2e Test on Minikube
 
 on:
   push:
@@ -28,11 +28,12 @@ jobs:
           sudo sh ./kubernetes/apply-default.sh
       - name: check before test
         run: |
+          sudo kubectl wait --for=condition=available --timeout=1h deployment/nginx
+          sudo kubectl wait --for=condition=Ready --timeout=1h $(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
           sudo kubectl get nodes
           sudo kubectl get all
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
-          sudo kubectl wait --for=condition=available --timeout=1h deployment/nginx 
       - name: e2e test
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
