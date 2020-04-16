@@ -22,10 +22,11 @@ jobs:
       - name: minikube config change
         run: |
           minikube stop
+          minikube delete
           sudo /home/runner/work/_temp/minikube config set memory 16384
           sudo /home/runner/work/_temp/minikube config set cpus 8
           sudo /home/runner/work/_temp/minikube config set disk-size 80g
-          minikube start
+          sudo /home/runner/work/_temp/minikube start
       - name: minikube addon settings
         run: |
           sudo /home/runner/work/_temp/minikube addons enable ingress
