@@ -26,7 +26,7 @@ jobs:
       - name: apply service
         run: |
           sudo ls -lR
-          sudo ./kubernetes/apply-default.sh
+          sudo sh ./kubernetes/apply-default.sh
       - name: check before test
         run: |
           sudo kubectl get nodes
