@@ -25,6 +25,7 @@ jobs:
           sudo /home/runner/work/_temp/minikube addons list
       - name: apply service
         run: |
+          sudo ls -lR
           sudo ./kubernetes/apply-default.sh
       - name: check before test
         run: |
