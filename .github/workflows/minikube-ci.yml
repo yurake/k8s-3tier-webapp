@@ -34,9 +34,6 @@ jobs:
           sudo kubectl get all
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
-          sudo kubectl logs $(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
-          sleep 10
-          sudo kubectl logs $(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
       - name: e2e test
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
@@ -58,7 +55,7 @@ jobs:
           echo "### jaxrs-redis ###"
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
           sleep 10
-          echo "### jaxrs-redis ###"
+          echo "### jaxrs-memcached ###"
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
           sleep 10
           echo "### waiting for complete job ... ###"
