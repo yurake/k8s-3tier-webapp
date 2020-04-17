@@ -39,6 +39,7 @@ public class ActiveMqService implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
+	boolean isEnableReceived = true;
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
@@ -53,9 +54,9 @@ public class ActiveMqService implements Runnable {
 	@Override
 	public void run() {
 		MysqlService mysqlsvc = new MysqlService();
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			JMSConsumer consumer = context.createConsumer(context.createTopic(topicname));
-			while (true) {
+		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
+			JMSConsumer consumer = context.createConsumer(context.createTopic(topicname))) {
+			while (isEnableReceived) {
 				LOG.info("Ready for receive message...");
 				Message message = consumer.receive();
 
