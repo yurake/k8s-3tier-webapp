@@ -37,8 +37,6 @@ jobs:
           sudo kubectl logs $(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
           sleep 10
           sudo kubectl logs $(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
-          sleep 10
-          sudo kubectl top node
       - name: e2e test
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
