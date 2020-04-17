@@ -38,7 +38,7 @@ jobs:
           sudo kubectl get all
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
-          sudo kubectl describe pod/hazelcast-0
+          sudo kubectl describe po $(sudo kubectl get pods | awk '{print $1}' | grep mongodb | grep -v jaxrs)
           sudo kubectl logs $(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
       - name: e2e test
         run: |
