@@ -1,7 +1,10 @@
 package webapp.tier.service;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,6 +13,7 @@ import javax.inject.Inject;
 import org.bson.Document;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -34,16 +38,19 @@ public class MongodbService implements Database {
 	private static final Logger LOG = Logger.getLogger(MongodbService.class.getSimpleName());
 
 	@Override
-	public String insertMsg() throws Exception {
+	public String insertMsg() throws NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+		Document document = new Document()
+				.append("id", msgbean.getIdString())
+				.append("msg", msgbean.getMessage());
 		try {
-			Document document = new Document()
-					.append("id", msgbean.getIdString())
-					.append("msg", msgbean.getMessage());
 			getCollection().insertOne(document);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Insert Error.");
+		} catch (NullPointerException e) {
+			LOG.log(Level.SEVERE, "Insert Error.", e);
+			throw new NullPointerException("Insert Error.");
+		} catch (MongoException e) {
+			LOG.log(Level.SEVERE, "Insert Error.", e);
+			throw new RuntimeException("Insert Error.");
 		}
 		msgbean.setFullmsgWithType(msgbean, "Insert");
 		LOG.info(msgbean.getFullmsg());
@@ -51,12 +58,10 @@ public class MongodbService implements Database {
 	}
 
 	@Override
-	public List<String> selectMsg() throws Exception {
-		MongoCursor<Document> cursor = null;
+	public List<String> selectMsg() throws SQLException {
 		List<String> msglist = new ArrayList<>();
 
-		try {
-			cursor = getCollection().find().iterator();
+		try (MongoCursor<Document> cursor = getCollection().find().iterator()) {
 			while (cursor.hasNext()) {
 				Document document = cursor.next();
 				MsgBeanUtils msgbean = new MsgBeanUtils();
@@ -66,29 +71,29 @@ public class MongodbService implements Database {
 				LOG.info(msgbean.getFullmsg());
 				msglist.add(msgbean.getFullmsg());
 			}
-
 			if (msglist.isEmpty()) {
 				msglist.add("No Data");
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Select Error.");
-		} finally {
-			if (cursor != null) {
-				cursor.close();
-			}
+		} catch (NullPointerException e) {
+			LOG.log(Level.SEVERE, "Select Error.", e);
+			throw new SQLException("Select Error.");
+		} catch (MongoException e) {
+			LOG.log(Level.SEVERE, "Select Error.", e);
+			throw new RuntimeException("Select Error.");
 		}
 		return msglist;
 	}
 
 	@Override
-	public String deleteMsg() throws Exception {
+	public String deleteMsg() {
 		try {
 			getCollection().drop();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Delete Error.");
+		} catch (NullPointerException e) {
+			LOG.log(Level.SEVERE, "Delete Error.", e);
+			throw new NullPointerException("Delete Error.");
+		} catch (MongoException e) {
+			LOG.log(Level.SEVERE, "Delete Error.", e);
+			throw new RuntimeException("Delete Error.");
 		}
 		return "Delete Msg Collection";
 	}
