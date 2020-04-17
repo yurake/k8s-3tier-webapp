@@ -34,31 +34,39 @@ jobs:
           sudo kubectl get all
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
-      - name: e2e test
+      - name: run e2e test
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
           sleep 300
-          echo "### postmannewman-job ###"
+      - name: check after test
+        run: |
           sudo kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
-          echo "### jaxrs-activemq ###"
+      - name: check log jaxrs-activemq
+        run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
           sleep 10
-          echo "### jaxrs-mysql ###"
+      - name: check log jaxrs-mysql
+        run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
           sleep 10
-          echo "### jaxrs-postgres ###"
+      - name: check log jaxrs-postgres
+        run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
           sleep 10
-          echo "### jaxrs-mongodb ###"
+      - name: check log jaxrs-mongodb
+        run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
           sleep 10
-          echo "### jaxrs-redis ###"
+      - name: check log jaxrs-redis
+        run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
           sleep 10
-          echo "### jaxrs-memcached ###"
+      - name: check log jaxrs-memcached
+        run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
           sleep 10
-          echo "### waiting for complete job ... ###"
+      - name: waiting for complete e2e job
+        run: |
           sudo kubectl -n monitoring wait --for=condition=complete --timeout=10m job/postmannewman-job
           sudo kubectl -n monitoring describe job postmannewman-job
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
