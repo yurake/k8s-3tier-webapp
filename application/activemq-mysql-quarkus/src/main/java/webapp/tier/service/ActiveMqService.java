@@ -2,6 +2,7 @@ package webapp.tier.service;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -71,7 +72,7 @@ public class ActiveMqService implements Runnable {
 				LOG.info(deliversvc.random());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			  LOG.log(Level.SEVERE, "Publish Error.", e);
 		}
 	}
 }
