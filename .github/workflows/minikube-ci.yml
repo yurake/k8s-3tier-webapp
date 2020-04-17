@@ -12,10 +12,6 @@ jobs:
   minikube:
     runs-on: ubuntu-latest
     steps:
-      - name: sleep for 10 min
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '10m'
       - name: checkout
         uses: actions/checkout@v1
       - name: setup minikube
