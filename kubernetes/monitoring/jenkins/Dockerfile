@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.221-alpine
+FROM jenkins/jenkins:alpine
 USER root
 
 # update apk repositories
