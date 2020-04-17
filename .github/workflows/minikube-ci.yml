@@ -40,7 +40,7 @@ jobs:
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
           sleep 300
-          ehco "### postmannewman-job ###"
+          echo "### postmannewman-job ###"
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
           echo "### jaxrs-activemq ###"
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep jaxrs-activemq)
