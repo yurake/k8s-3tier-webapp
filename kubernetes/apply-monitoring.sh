@@ -9,12 +9,6 @@ kubectl apply -f ./monitoring-namespace.yaml
 echo "###"
 echo ""
 
-echo "## jaeger"
-cd ${ROOT_DIR}/jaeger
-kubectl apply -f ./jaeger-all-in-one-template.yml
-echo "###"
-echo ""
-
 echo "### jenkins"
 cd ${ROOT_DIR}/monitoring/jenkins
 kubectl apply -f ./jenkins-rbac.yaml

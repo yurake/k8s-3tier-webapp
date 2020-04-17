@@ -89,6 +89,12 @@ kubectl apply -f ./nginx-ingress.yaml
 echo "###"
 echo ""
 
+echo "## jaeger"
+cd ${ROOT_DIR}/jaeger
+kubectl apply -f ./jaeger-all-in-one-template.yml
+echo "###"
+echo ""
+
 echo "### jaxrs-activemq-quarkus"
 cd ${ROOT_DIR}/jaxrs-activemq-quarkus
 kubectl apply -f ./jaxrs-activemq-quarkus-deployment.yaml
