@@ -60,7 +60,7 @@ public class DbService {
 		String sql = dbconfig.getInsertsql().replace(dbconfig.getSqlkey(), msgbean.getIdString()).replace(dbconfig.getSqlbody(), msgbean.getMessage());
 
 		try (Statement stmt = getConnection(dbconfig.getUrl()).createStatement()) {
-			LOG.info("Insert SQL: " + sql);
+			LOG.log(Level.INFO, "Insert SQL: {0}", sql);
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Insert Errorr.", e);
@@ -76,7 +76,7 @@ public class DbService {
 
 		try (Statement stmt = getConnection(dbconfig.getUrl()).createStatement();
 				ResultSet rs = stmt.executeQuery(dbconfig.getSelectsql())) {
-			LOG.log(Level.INFO, "Select SQL: {0}" + dbconfig.getSelectsql());
+			LOG.log(Level.INFO, "Select SQL: {0}", dbconfig.getSelectsql());
 
 			while (rs.next()) {
 				MsgBeanUtils msgbean = new MsgBeanUtils();
@@ -100,7 +100,7 @@ public class DbService {
 
 	public String deleteMsg(DbConfig dbconfig) throws SQLException {
 		try (Statement stmt = getConnection(dbconfig.getUrl()).createStatement()) {
-			LOG.log(Level.INFO, "Select SQL: {0}" + dbconfig.getDeletesql());
+			LOG.log(Level.INFO, "Select SQL: {0}", dbconfig.getDeletesql());
 			stmt.executeUpdate(dbconfig.getDeletesql());
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Delete Errorr.", e);
