@@ -53,7 +53,7 @@ public class MongodbService implements Database {
 			throw new RuntimeException("Insert Error.");
 		}
 		msgbean.setFullmsgWithType(msgbean, "Insert");
-		LOG.info(msgbean.getFullmsg());
+		LOG.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean.getFullmsg();
 	}
 
@@ -68,7 +68,7 @@ public class MongodbService implements Database {
 				msgbean.setIdString(document.getString("id"));
 				msgbean.setMessage(document.getString("msg"));
 				msgbean.setFullmsgWithType(msgbean, "Select");
-				LOG.info(msgbean.getFullmsg());
+				LOG.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean.getFullmsg());
 			}
 			if (msglist.isEmpty()) {
@@ -86,8 +86,10 @@ public class MongodbService implements Database {
 
 	@Override
 	public String deleteMsg() {
+		String msg = "Delete Msg Collection";
 		try {
 			getCollection().drop();
+			LOG.log(Level.INFO, msg);
 		} catch (NullPointerException e) {
 			LOG.log(Level.SEVERE, "Delete Error.", e);
 			throw new NullPointerException("Delete Error.");
@@ -95,7 +97,7 @@ public class MongodbService implements Database {
 			LOG.log(Level.SEVERE, "Delete Error.", e);
 			throw new RuntimeException("Delete Error.");
 		}
-		return "Delete Msg Collection";
+		return msg;
 	}
 
 	private MongoCollection<Document> getCollection() {
