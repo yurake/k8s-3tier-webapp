@@ -35,14 +35,23 @@ jobs:
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
           sudo kubectl describe po $(sudo kubectl get pods | awk '{print $1}' | grep mongodb | grep -v jaxrs)
-          sudo kubectl logs $(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
+          sudo kubectl logs $(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
       - name: e2e test
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
           sleep 300
-          sudo kubectl -n monitoring describe job postmannewman-job
-          sudo kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
-          sudo kubectl -n monitoring wait --for=condition=complete --timeout=1h job/postmannewman-job
+          ehco "### postmannewman-job ###"
+          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
+          echo "### jaxrs-activemq ###"
+          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep jaxrs-activemq)
+          echo "### jaxrs-mysql ###"
+          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep jaxrs-mysql)
+          echo "### jaxrs-postgres ###"
+          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep jaxrs-postgres)
+          echo "### jaxrs-mongodb ###"
+          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep jaxrs-mongodb)
+          echo "### waiting for complete job ... ###"
+          sudo kubectl -n monitoring wait --for=condition=complete --timeout=10m job/postmannewman-job
           sudo kubectl -n monitoring describe job postmannewman-job
           sudo kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
           sudo kubectl get po --all-namespaces=true
