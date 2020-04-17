@@ -40,8 +40,7 @@ public class MysqlService {
 			System.exit(0);
 		}
 
-		try {
-			Statement stmt = con.createStatement();
+		try (Statement stmt = con.createStatement()) {
 
 			System.out.println("Execute SQL: " + sql);
 			stmt.executeUpdate(sql);
