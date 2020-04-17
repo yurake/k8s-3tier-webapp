@@ -51,8 +51,8 @@ public class ActiveMqService implements Messaging {
 	@Override
 	public String getMsg() throws Exception {
 		MsgBeanUtils msgbean = new MsgBeanUtils();
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			JMSConsumer consumer = context.createConsumer(context.createQueue(queuename));
+		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
+			JMSConsumer consumer = context.createConsumer(context.createQueue(queuename))) {
 			String resp = consumer.receiveBody(String.class);
 
 			if (Objects.isNull(resp)) {
