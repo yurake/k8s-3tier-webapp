@@ -8,8 +8,8 @@ spec:
   accessModes:
     - ReadWriteOnce
   capacity:
-    storage: 20Gi
-  persistentVolumeReclaimPolicy: Retain
+    storage: 10Gi
+  persistentVolumeReclaimPolicy: Delete
   storageClassName: mysql
   hostPath:
     path: /data/pv001
