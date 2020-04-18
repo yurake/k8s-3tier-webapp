@@ -26,9 +26,9 @@ jobs:
       - name: apply minimal service
         run: |
           sudo sh ./kubernetes/apply-default-minimal.sh
+          sleep 300
       - name: check before test
         run: |
-          sudo kubectl wait --for=condition=Ready --timeout=10m pod/$(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
           sudo kubectl get nodes
           sudo kubectl get pv
           sudo kubectl get pvc
