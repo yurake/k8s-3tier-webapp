@@ -41,7 +41,7 @@ jobs:
           sleep 300
       - name: check after test
         run: |
-          sudo kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
+          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
       - name: check log jaxrs-mysql
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
