@@ -61,6 +61,8 @@ echo ""
 
 echo "### activemq"
 cd ${ROOT_DIR}/activemq
+kubectl apply -f ./activemq-pv.yaml
+kubectl apply -f ./activemq-pvc.yaml
 kubectl apply -f ./activemq-deployment.yaml
 kubectl apply -f ./activemq-service.yaml
 kubectl apply -f ./activemq-ingress.yaml
