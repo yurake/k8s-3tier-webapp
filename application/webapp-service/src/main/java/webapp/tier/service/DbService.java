@@ -100,7 +100,7 @@ public class DbService {
 
 	public String deleteMsg(DbConfig dbconfig) throws SQLException {
 		try (Statement stmt = getConnection(dbconfig.getUrl()).createStatement()) {
-			LOG.log(Level.INFO, "Select SQL: {0}", dbconfig.getDeletesql());
+			LOG.log(Level.INFO, "Delete SQL: {0}", dbconfig.getDeletesql());
 			stmt.executeUpdate(dbconfig.getDeletesql());
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Delete Errorr.", e);
