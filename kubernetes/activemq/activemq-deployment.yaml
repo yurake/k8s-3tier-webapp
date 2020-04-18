@@ -28,3 +28,10 @@ spec:
           value: "true"
         - name: JAVA_OPTS
           value: "-Duser.timezone=Asia/Tokyo"
+        volumeMounts:
+        - name: activemq-persistent-storage
+          mountPath: /var/lib/artemis
+      volumes:
+      - name: activemq-persistent-storage
+        persistentVolumeClaim:
+          claimName: activemq-pvc

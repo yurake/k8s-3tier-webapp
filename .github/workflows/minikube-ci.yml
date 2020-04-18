@@ -31,6 +31,8 @@ jobs:
           sudo kubectl wait --for=condition=available --timeout=1h deployment/nginx
           sudo kubectl wait --for=condition=Ready --timeout=1h pod/$(sudo kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
           sudo kubectl get nodes
+          sudo kubectl get pv
+          sudo kubectl get pvc
           sudo kubectl get all
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
