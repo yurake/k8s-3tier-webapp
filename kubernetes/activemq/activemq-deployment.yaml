@@ -15,6 +15,9 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9404"
     spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 0
       containers:
       - name: activemq
         image: vromero/activemq-artemis:2.11.0-alpine
@@ -30,7 +33,7 @@ spec:
           value: "-Duser.timezone=Asia/Tokyo"
         volumeMounts:
         - name: activemq-persistent-storage
-          mountPath: /var/lib/artemis
+          mountPath: /var/lib/artemis/data
       volumes:
       - name: activemq-persistent-storage
         persistentVolumeClaim:
