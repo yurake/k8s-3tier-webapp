@@ -123,11 +123,11 @@ public class RabbitMqService implements Runnable {
 			channel = getChannel(connection);
 			status = true;
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "Status Check Error.", e);
+			LOG.log(Level.SEVERE, "Connect Error.", e);
 		} finally {
 			try {
 				closeChannel(channel);
-			} catch (Exception e) {
+			} catch (IOException | TimeoutException e) {
 				LOG.log(Level.SEVERE, "Channel Close Error.", e);
 			}
 		}
