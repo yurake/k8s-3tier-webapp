@@ -8,8 +8,8 @@ spec:
   accessModes:
     - ReadWriteOnce
   capacity:
-    storage: 5Gi
-  persistentVolumeReclaimPolicy: Delete
+    storage: 10Gi
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: activemq
   hostPath:
     path: /data/pv010
