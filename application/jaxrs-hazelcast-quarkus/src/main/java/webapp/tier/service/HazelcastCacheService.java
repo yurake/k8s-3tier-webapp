@@ -1,9 +1,12 @@
 package webapp.tier.service;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -21,7 +24,7 @@ public class HazelcastCacheService implements Cache {
 	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 
 	@Override
-	public String setMsg() throws Exception {
+	public String setMsg() throws RuntimeException, NoSuchAlgorithmException {
 		HazelcastInstance client = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 
@@ -29,11 +32,9 @@ public class HazelcastCacheService implements Cache {
 			client = ConnectHazelcast.getInstance();
 			Map<Integer, String> map = client.getMap(cachename);
 			map.put(msgbean.getId(), msgbean.getMessage());
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Set Error.");
+		} catch (IOException | IllegalStateException e) {
+			LOG.log(Level.SEVERE, "Set Error.", e);
+			throw new RuntimeException("Set Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -45,13 +46,13 @@ public class HazelcastCacheService implements Cache {
 	}
 
 	@Override
-	public String getMsg() throws Exception {
+	public String getMsg() throws RuntimeException {
 		List<String> msglist = getMsgList();
 		return msglist.get(msglist.size() - 1);
 
 	}
 
-	public List<String> getMsgList() throws Exception {
+	public List<String> getMsgList() throws RuntimeException {
 		List<String> msglist = new ArrayList<>();
 		HazelcastInstance client = null;
 
@@ -71,10 +72,9 @@ public class HazelcastCacheService implements Cache {
 			if (msglist.isEmpty()) {
 				msglist.add("No Data");
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Get Error.");
+		} catch (IOException | IllegalStateException e) {
+			LOG.log(Level.SEVERE, "Get Error.", e);
+			throw new RuntimeException("Get Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -89,8 +89,8 @@ public class HazelcastCacheService implements Cache {
 		try {
 			client = ConnectHazelcast.getInstance();
 			status = client.getLifecycleService().isRunning();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException | IllegalStateException e) {
+			LOG.log(Level.SEVERE, "Connect Error.", e);
 		} finally {
 			if (client != null) {
 				client.shutdown();

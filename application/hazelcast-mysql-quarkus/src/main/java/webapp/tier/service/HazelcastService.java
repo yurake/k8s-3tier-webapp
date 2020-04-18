@@ -1,5 +1,9 @@
 package webapp.tier.service;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -12,6 +16,7 @@ import webapp.tier.service.subscribe.HazelcastSubscriber;
 @ApplicationScoped
 public class HazelcastService {
 
+	private static final Logger LOG = Logger.getLogger(HazelcastService.class.getSimpleName());
 	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topic.name", String.class);
 
 	public boolean isActive() {
@@ -20,8 +25,8 @@ public class HazelcastService {
 		try {
 			client = ConnectHazelcast.getInstance();
 			status = client.getLifecycleService().isRunning();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException | IllegalStateException e) {
+			LOG.log(Level.SEVERE, "Connect Error.", e);
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -38,8 +43,8 @@ public class HazelcastService {
 			HazelcastInstance client = ConnectHazelcast.getInstance();
 			ITopic<String> topic = client.getTopic(topicname);
 			topic.addMessageListener(hazsubsc);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException | IllegalStateException e) {
+			LOG.log(Level.SEVERE, "Subscribe Error.", e);
 		}
 		return fullmsg;
 	}

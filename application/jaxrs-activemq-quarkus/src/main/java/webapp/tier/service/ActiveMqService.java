@@ -1,6 +1,8 @@
 package webapp.tier.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -34,14 +36,14 @@ public class ActiveMqService implements Messaging {
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
 
 	@Override
-	public String putMsg() throws Exception {
+	public String putMsg() throws RuntimeException, NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
 			context.createProducer().send(context.createQueue(queuename), context.createTextMessage(body));
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Put Error.");
+		} catch (RuntimeException e) {
+			LOG.log(Level.SEVERE, "Put Error.", e);
+			throw new RuntimeException("Put Error.");
 		}
 		msgbean.setFullmsgWithType(msgbean, "Put");
 		LOG.info(msgbean.getFullmsg());
@@ -49,7 +51,7 @@ public class ActiveMqService implements Messaging {
 	}
 
 	@Override
-	public String getMsg() throws Exception {
+	public String getMsg() throws RuntimeException {
 		MsgBeanUtils msgbean = new MsgBeanUtils();
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
 			JMSConsumer consumer = context.createConsumer(context.createQueue(queuename))) {
@@ -61,22 +63,23 @@ public class ActiveMqService implements Messaging {
 				msgbean.setFullmsgWithType(msgbean.splitBody(resp, splitkey), "Get");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Get Error.");
+			LOG.log(Level.SEVERE, "Get Error.", e);
+			throw new RuntimeException("Get Error.");
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
 	}
 
 	@Override
-	public String publishMsg() throws Exception {
+	public String publishMsg() throws RuntimeException, NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
 			context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception("Publish Error.");
+			LOG.log(Level.SEVERE, "Publish Error.", e);
+			throw new RuntimeException("Publish Error.");
 		}
 		msgbean.setFullmsgWithType(msgbean, "Publish");
 		LOG.info(msgbean.getFullmsg());

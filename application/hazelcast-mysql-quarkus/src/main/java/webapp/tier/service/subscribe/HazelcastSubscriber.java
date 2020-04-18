@@ -1,5 +1,8 @@
 package webapp.tier.service.subscribe;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -37,8 +40,8 @@ public class HazelcastSubscriber implements MessageListener<String> {
 			mysqlsvc.insertMsg(bean);
 			LOG.info("Call: Random Publish");
 			LOG.info(deliversvc.random());
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (NoSuchAlgorithmException | SQLException e) {
+			LOG.log(Level.SEVERE, "Mysql Insert Error.", e);
 		}
 	}
 

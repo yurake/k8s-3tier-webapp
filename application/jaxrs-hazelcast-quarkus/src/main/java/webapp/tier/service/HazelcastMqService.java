@@ -1,7 +1,10 @@
 package webapp.tier.service;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -22,7 +25,7 @@ public class HazelcastMqService implements Messaging {
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
 	@Override
-	public String putMsg() throws Exception {
+	public String putMsg() throws RuntimeException, NoSuchAlgorithmException {
 		HazelcastInstance client = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
@@ -32,11 +35,9 @@ public class HazelcastMqService implements Messaging {
 			client = ConnectHazelcast.getInstance();
 			BlockingQueue<Object> queue = client.getQueue(queuename);
 			queue.put(body);
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Put Error.");
+		} catch (IOException | IllegalStateException | InterruptedException e) {
+			LOG.log(Level.SEVERE, "Put Error.", e);
+			throw new RuntimeException("Put Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -49,7 +50,7 @@ public class HazelcastMqService implements Messaging {
 	}
 
 	@Override
-	public String getMsg() throws Exception {
+	public String getMsg() throws RuntimeException {
 		MsgBeanUtils msgbean = new MsgBeanUtils();
 		HazelcastInstance client = null;
 
@@ -64,10 +65,9 @@ public class HazelcastMqService implements Messaging {
 				String jmsbody = resp.toString();
 				msgbean.setFullmsgWithType(msgbean.splitBody(jmsbody, splitkey), "Get");
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Get Error.");
+		} catch (IOException | IllegalStateException e) {
+			LOG.log(Level.SEVERE, "Get Error.", e);
+			throw new RuntimeException("Get Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -78,7 +78,7 @@ public class HazelcastMqService implements Messaging {
 	}
 
 	@Override
-	public String publishMsg() throws Exception {
+	public String publishMsg() throws RuntimeException, NoSuchAlgorithmException {
 		HazelcastInstance client = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
@@ -88,11 +88,9 @@ public class HazelcastMqService implements Messaging {
 			client = ConnectHazelcast.getInstance();
 			ITopic<Object> topic = client.getTopic(topicname);
 			topic.publish(body);
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Publish Error.");
+		} catch (IOException | IllegalStateException e) {
+			LOG.log(Level.SEVERE, "Publish Error.", e);
+			throw new RuntimeException("Publish Error.");
 		} finally {
 			if (client != null) {
 				client.shutdown();

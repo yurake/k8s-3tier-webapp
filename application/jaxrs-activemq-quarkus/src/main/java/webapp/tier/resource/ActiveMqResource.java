@@ -31,7 +31,6 @@ public class ActiveMqResource {
 		try {
 			return Response.ok().entity(svc.putMsg()).build();
 		} catch (Exception e) {
-			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -44,7 +43,6 @@ public class ActiveMqResource {
 		try {
 			return Response.ok().entity(svc.getMsg()).build();
 		} catch (Exception e) {
-			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -57,7 +55,6 @@ public class ActiveMqResource {
 		try {
 			return Response.ok().entity(svc.publishMsg()).build();
 		} catch (Exception e) {
-			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
