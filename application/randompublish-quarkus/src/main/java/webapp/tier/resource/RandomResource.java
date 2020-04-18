@@ -30,7 +30,6 @@ public class RandomResource {
 		try {
 			return randomsvc.deliverrandom();
 		} catch (Exception e) {
-			e.printStackTrace();
 			return e.getMessage();
 		}
 	}
