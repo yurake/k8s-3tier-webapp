@@ -9,13 +9,14 @@ public class CreateId {
 	private CreateId() {
 	}
 
+	private static Random rand = new SecureRandom();
+
 	/**
 	 * 5桁の正の整数を返す
 	 * @return 5桁の整数
 	 * @throws NoSuchAlgorithmException
 	 */
 	public static int createid() throws NoSuchAlgorithmException {
-		Random rand = SecureRandom.getInstanceStrong();
 		int id = 0;
 		while (id < 10000) {
 			id = rand.nextInt(99999);

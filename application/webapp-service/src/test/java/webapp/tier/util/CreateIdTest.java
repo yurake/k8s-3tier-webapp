@@ -16,6 +16,7 @@ class CreateIdTest {
 		try {
 			expected = CreateId.createid();
 			assertThat(expected, is(notNullValue()));
+			System.out.println(expected);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			fail();
