@@ -42,10 +42,6 @@ jobs:
       - name: check after test
         run: |
           sudo kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
-      - name: check log jaxrs-activemq
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
-          sleep 10
       - name: check log jaxrs-mysql
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
@@ -65,6 +61,14 @@ jobs:
       - name: check log jaxrs-memcached
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
+          sleep 10
+      - name: check log jaxrs-activemq
+        run: |
+          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
+          sleep 10
+      - name: check log activemq
+        run: |
+          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep activemq | grep -v jaxrs-activemq)
           sleep 10
       - name: waiting for complete e2e job
         run: |
