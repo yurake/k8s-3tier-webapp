@@ -1,5 +1,6 @@
 package webapp.tier.service.subscribe;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -23,7 +24,7 @@ public class RedisSubscriber extends JedisPubSub {
 
 	@Override
 	public void onMessage(String channel, String message) {
-
+		String errormsg = "Subscribe Error.";
 		MsgBeanUtils msgbean = new MsgBeanUtils();
 		MsgBean bean = msgbean.splitBody(message, splitkey);
 		msgbean.setFullmsgWithType(bean, "Received");
@@ -36,7 +37,8 @@ public class RedisSubscriber extends JedisPubSub {
 			LOG.info("Call: Random Publish");
 			LOG.info(deliversvc.random());
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, errormsg, e);
+			throw new RuntimeException(errormsg);
 		}
 	}
 

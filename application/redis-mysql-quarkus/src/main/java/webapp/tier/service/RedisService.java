@@ -1,5 +1,8 @@
 package webapp.tier.service;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -11,6 +14,7 @@ import webapp.tier.service.subscribe.RedisSubscriber;
 @ApplicationScoped
 public class RedisService {
 
+	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
 	private static String servername = ConfigProvider.getConfig().getValue("redis.server", String.class);
 	private static int serverport = ConfigProvider.getConfig().getValue("redis.port.num", Integer.class);
 	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
@@ -22,7 +26,7 @@ public class RedisService {
 				return true;
 			}
 		} catch (JedisConnectionException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Status Check Error.", e);
 		} finally {
 			jedis.close();
 		}
@@ -37,7 +41,7 @@ public class RedisService {
 		try {
 			jedis.subscribe(redissubsc, channel);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Subscribe Error.", e);
 		} finally {
 			jedis.close();
 		}

@@ -1,10 +1,12 @@
 package webapp.tier.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,7 +55,7 @@ public class RabbitMqService implements Runnable {
 		LOG.info("The application is stopping...");
 	}
 
-	private Connection getConnection() throws Exception {
+	private Connection getConnection() throws IOException, TimeoutException {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
 		connectionFactory.setPassword(password);
@@ -62,25 +64,20 @@ public class RabbitMqService implements Runnable {
 		return connectionFactory.newConnection();
 	}
 
-	private Channel getChannel(Connection con) throws Exception {
+	private Channel getChannel(Connection con) throws IOException {
 		return con.createChannel();
 	}
 
-	private void closeConnectionChannel(Connection connection, Channel channel) throws Exception {
+	private void closeChannel(Channel channel) throws IOException, TimeoutException {
 		if (channel != null) {
 			channel.close();
-		}
-		if (connection != null) {
-			connection.close();
 		}
 	}
 
 	@Override
 	public void run() {
-		Connection connection = null;
 		Channel channel = null;
-		try {
-			connection = getConnection();
+		try (Connection connection = getConnection()) {
 			channel = getChannel(connection);
 			boolean durable = true;
 			channel.queueDeclare(queuename, durable, false, false, null);
@@ -108,32 +105,30 @@ public class RabbitMqService implements Runnable {
 			channel.basicConsume(queuename, true, consumer);
 			LOG.info("Waiting for messages as Consumer...");
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException | TimeoutException e) {
+			LOG.log(Level.SEVERE, "Subscribe Errorr.", e);
 		} finally {
 			try {
-				closeConnectionChannel(connection, channel);
+				closeChannel(channel);
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOG.log(Level.SEVERE, "Channel Close Error.", e);
 			}
 		}
 	}
 
 	public boolean isActive() {
-		Connection connection = null;
 		Channel channel = null;
 		boolean status = false;
-		try {
-			connection = getConnection();
+		try (Connection connection = getConnection()) {
 			channel = getChannel(connection);
 			status = true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Status Check Error.", e);
 		} finally {
 			try {
-				closeConnectionChannel(connection, channel);
+				closeChannel(channel);
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOG.log(Level.SEVERE, "Channel Close Error.", e);
 			}
 		}
 		return status;
