@@ -30,7 +30,7 @@ spec:
           value: "-Duser.timezone=Asia/Tokyo"
         volumeMounts:
         - name: activemq-persistent-storage
-          mountPath: /var/lib/artemis
+          mountPath: /var/lib/artemis/data
       volumes:
       - name: activemq-persistent-storage
         persistentVolumeClaim:
