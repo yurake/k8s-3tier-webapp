@@ -3,10 +3,10 @@ name: e2e Test on Minikube
 on:
   push:
     paths:
-      - "application/**"
-      - "kubernetes/**"
       - ".github/workflows/minikube-ci.yml"
   pull_request:
+  issues:
+    types: [closed]
 
 jobs:
   minikube:
@@ -70,6 +70,9 @@ jobs:
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep activemq | grep -v jaxrs-activemq)
           sleep 10
+      - name: check after test postmannewman-job
+        run: |
+          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
       - name: waiting for complete e2e job
         run: |
           sudo kubectl -n monitoring wait --for=condition=complete --timeout=10m job/postmannewman-job
