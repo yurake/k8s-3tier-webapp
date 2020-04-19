@@ -31,7 +31,6 @@ assignees: yurake
 
 
 ### Logs
-
 ```bash
 # Put the log
 ```
