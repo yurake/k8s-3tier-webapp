@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
-import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.GetResponse;
@@ -39,31 +38,17 @@ public class RabbitmqService implements Messaging {
 		return connectionFactory.newConnection();
 	}
 
-	private Channel getChannel(Connection con) throws IOException {
-		return con.createChannel();
-	}
-
-	private void closeChannel(Channel channel) throws IOException, TimeoutException {
-		if (channel != null) {
-			channel.close();
-		}
-	}
-
 	@Override
 	public String putMsg() throws RuntimeException, NoSuchAlgorithmException, IOException, TimeoutException {
-		Channel channel = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 
 		try (Connection connection = getConnection()) {
-			channel = getChannel(connection);
-			channel.basicPublish("", queuename, null, body.getBytes());
+			connection.createChannel().basicPublish("", queuename, null, body.getBytes());
 
 		} catch (IOException | TimeoutException e) {
 			LOG.log(Level.SEVERE, "Put Error.", e);
 			throw new RuntimeException("Put Error.");
-		} finally {
-			closeChannel(channel);
 		}
 		msgbean.setFullmsgWithType(msgbean, "Put");
 		LOG.info(msgbean.getFullmsg());
@@ -73,15 +58,13 @@ public class RabbitmqService implements Messaging {
 
 	@Override
 	public String getMsg() throws RuntimeException, IOException, TimeoutException {
-		Channel channel = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils();
 
 		try (Connection connection = getConnection()) {
-			channel = getChannel(connection);
 			boolean durable = true;
-			channel.queueDeclare(queuename, durable, false, false, null);
+			connection.createChannel().queueDeclare(queuename, durable, false, false, null);
 
-			GetResponse resp = channel.basicGet(queuename, true);
+			GetResponse resp = connection.createChannel().basicGet(queuename, true);
 			if (resp == null) {
 				msgbean.setFullmsg("No Data");
 			} else {
@@ -91,8 +74,6 @@ public class RabbitmqService implements Messaging {
 		} catch (IOException | TimeoutException e) {
 			LOG.log(Level.SEVERE, "Get Error.", e);
 			throw new RuntimeException("Get Error.");
-		} finally {
-			closeChannel(channel);
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
@@ -100,19 +81,15 @@ public class RabbitmqService implements Messaging {
 
 	@Override
 	public String publishMsg() throws Exception {
-		Channel channel = null;
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 
 		try (Connection connection = getConnection()) {
-			channel = getChannel(connection);
-			channel.basicPublish("", pubsubqueuename, null, body.getBytes());
+			connection.createChannel().basicPublish("", pubsubqueuename, null, body.getBytes());
 
 		} catch (IOException | TimeoutException e) {
 			LOG.log(Level.SEVERE, "Publish Error.", e);
 			throw new RuntimeException("Publish Error.");
-		} finally {
-			closeChannel(channel);
 		}
 		msgbean.setFullmsgWithType(msgbean, "Publish");
 		LOG.info(msgbean.getFullmsg());
@@ -121,19 +98,11 @@ public class RabbitmqService implements Messaging {
 
 
 	public boolean isActive() {
-		Channel channel = null;
 		boolean status = false;
 		try (Connection connection = getConnection()) {
-			channel = getChannel(connection);
 			status = true;
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Connect Error.", e);
-		} finally {
-			try {
-				closeChannel(channel);
-			} catch (IOException | TimeoutException e) {
-				LOG.log(Level.SEVERE, "Channel Close Error.", e);
-			}
 		}
 		return status;
 	}

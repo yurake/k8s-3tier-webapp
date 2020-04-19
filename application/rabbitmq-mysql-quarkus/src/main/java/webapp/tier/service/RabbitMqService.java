@@ -64,23 +64,12 @@ public class RabbitMqService implements Runnable {
 		return connectionFactory.newConnection();
 	}
 
-	private Channel getChannel(Connection con) throws IOException {
-		return con.createChannel();
-	}
-
-	private void closeChannel(Channel channel) throws IOException, TimeoutException {
-		if (channel != null) {
-			channel.close();
-		}
-	}
-
 	@Override
 	public void run() {
 		Channel channel = null;
 		try (Connection connection = getConnection()) {
-			channel = getChannel(connection);
 			boolean durable = true;
-			channel.queueDeclare(queuename, durable, false, false, null);
+			connection.createChannel().queueDeclare(queuename, durable, false, false, null);
 
 			DefaultConsumer consumer = new DefaultConsumer(channel) {
 				@Override
@@ -102,34 +91,20 @@ public class RabbitMqService implements Runnable {
 					}
 				}
 			};
-			channel.basicConsume(queuename, true, consumer);
+			connection.createChannel().basicConsume(queuename, true, consumer);
 			LOG.info("Waiting for messages as Consumer...");
 
 		} catch (IOException | TimeoutException e) {
 			LOG.log(Level.SEVERE, "Subscribe Errorr.", e);
-		} finally {
-			try {
-				closeChannel(channel);
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "Channel Close Error.", e);
-			}
 		}
 	}
 
 	public boolean isActive() {
-		Channel channel = null;
 		boolean status = false;
 		try (Connection connection = getConnection()) {
-			channel = getChannel(connection);
 			status = true;
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Connect Error.", e);
-		} finally {
-			try {
-				closeChannel(channel);
-			} catch (IOException | TimeoutException e) {
-				LOG.log(Level.SEVERE, "Channel Close Error.", e);
-			}
 		}
 		return status;
 	}
