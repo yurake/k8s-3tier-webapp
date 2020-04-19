@@ -39,7 +39,7 @@
 			<dependency>
 				<groupId>webapp.3tier.k8s</groupId>
 				<artifactId>webapp-service</artifactId>
-				<version>1.0.4-SNAPSHOT</version>
+				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
