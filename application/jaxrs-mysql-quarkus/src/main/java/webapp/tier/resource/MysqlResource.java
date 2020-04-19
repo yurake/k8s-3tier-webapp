@@ -1,8 +1,5 @@
 package webapp.tier.resource;
 
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -31,7 +28,8 @@ public class MysqlResource {
 	public Response insert() {
 		try {
 			return Response.ok().entity(mysqlsvc.insertMsg()).build();
-		} catch (NoSuchAlgorithmException | SQLException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -43,7 +41,8 @@ public class MysqlResource {
 	public Response select() {
 		try {
 			return Response.ok().entity(mysqlsvc.selectMsg()).build();
-		} catch (SQLException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -55,7 +54,8 @@ public class MysqlResource {
 	public Response delete() {
 		try {
 			return Response.ok().entity(mysqlsvc.deleteMsg()).build();
-		} catch (SQLException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}

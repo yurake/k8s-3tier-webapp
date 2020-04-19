@@ -37,7 +37,6 @@ public class HazelcastMqService implements Messaging {
 			queue.put(body);
 		} catch (IOException | IllegalStateException | InterruptedException e) {
 			LOG.log(Level.SEVERE, "Put Error.", e);
-		    Thread.currentThread().interrupt();
 			throw new RuntimeException("Put Error.");
 		} finally {
 			if (client != null) {

@@ -1,8 +1,6 @@
 package webapp.tier.service;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -27,9 +25,9 @@ public class MemcachedService implements Cache {
 	}
 
 	@Override
-	public String setMsg() throws RuntimeException, NoSuchAlgorithmException {
+	public String setMsg() throws Exception {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		String errormsg = "Set Error.";
+		String error = "Set Error.";
 
 		try {
 			MemCachedClient mcc = new MemCachedClient();
@@ -39,24 +37,23 @@ public class MemcachedService implements Cache {
 			if (resultsetid && resultsetmsg) {
 				msgbean.setFullmsgWithType(msgbean, "Set");
 			} else {
-				LOG.warning(errormsg);
-				throw new RuntimeException(errormsg);
+				LOG.warning(error);
+				throw new Exception(error);
 			}
 
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, errormsg, e);
-			throw new RuntimeException(errormsg);
+			e.printStackTrace();
+			throw new Exception(error);
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
 	}
 
 	@Override
-	public String getMsg() throws RuntimeException {
+	public String getMsg() throws Exception {
 		MemCachedClient mcc = new MemCachedClient();
 		MsgBeanUtils msgbean = new MsgBeanUtils();
 		String getid = null;
-		String errormsg = "Get Error.";
 
 		try {
 			getid = (String) mcc.get("id");
@@ -69,8 +66,8 @@ public class MemcachedService implements Cache {
 			}
 
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, errormsg, e);
-			throw new RuntimeException(errormsg);
+			e.printStackTrace();
+			throw new Exception("Get Error.");
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();

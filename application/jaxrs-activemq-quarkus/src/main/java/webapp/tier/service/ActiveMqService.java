@@ -77,6 +77,7 @@ public class ActiveMqService implements Messaging {
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
 			context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOG.log(Level.SEVERE, "Publish Error.", e);
 			throw new RuntimeException("Publish Error.");
 		}

@@ -31,6 +31,7 @@ public class MongodbResource {
 		try {
 			return Response.ok().entity(mongosvc.insertMsg()).build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -43,6 +44,7 @@ public class MongodbResource {
 		try {
 			return Response.ok().entity(mongosvc.selectMsg()).build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -55,6 +57,7 @@ public class MongodbResource {
 		try {
 			return Response.ok().entity(mongosvc.deleteMsg()).build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
