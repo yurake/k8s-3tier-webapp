@@ -15,6 +15,7 @@ import webapp.tier.service.MysqlService;
 public class ReadinessHealthCheck implements HealthCheck {
 
 	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheck.class.getSimpleName());
+
 	MysqlService mysqlsvc = new MysqlService();
 
 	@Override
