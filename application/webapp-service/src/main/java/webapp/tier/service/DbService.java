@@ -23,13 +23,9 @@ public class DbService {
 
 	private static final Logger LOG = Logger.getLogger(DbService.class.getSimpleName());
 
-	private Connection getConnection(String url) throws SQLException {
-		return DriverManager.getConnection(url);
-	}
-
 	public boolean connectionStatus(String url) {
 		boolean status = false;
-		try (Connection con = getConnection(url)) {
+		try (Connection con = DriverManager.getConnection(url)) {
 			status = true;
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Status Check Error.", e);
@@ -39,9 +35,11 @@ public class DbService {
 
 	public String insertMsg(DbConfig dbconfig) throws SQLException, NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), dbconfig.getMessage());
-		String sql = dbconfig.getInsertsql().replace(dbconfig.getSqlkey(), msgbean.getIdString()).replace(dbconfig.getSqlbody(), msgbean.getMessage());
+		String sql = dbconfig.getInsertsql().replace(dbconfig.getSqlkey(), msgbean.getIdString())
+				.replace(dbconfig.getSqlbody(), msgbean.getMessage());
 
-		try (Statement stmt = getConnection(dbconfig.getUrl()).createStatement()) {
+		try (Connection con = DriverManager.getConnection(dbconfig.getUrl());
+				Statement stmt = con.createStatement()) {
 			LOG.log(Level.INFO, "Insert SQL: {0}", sql);
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -53,13 +51,16 @@ public class DbService {
 		return msgbean.getFullmsg();
 	}
 
-	public String insertMsg(DbConfig dbconfig, MsgBean bean, String aadonmsg) throws SQLException, NoSuchAlgorithmException {
+	public String insertMsg(DbConfig dbconfig, MsgBean bean, String aadonmsg)
+			throws SQLException, NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), bean.getMessage());
 
 		msgbean.appendMessage(msgbean, aadonmsg);
-		String sql = dbconfig.getInsertsql().replace(dbconfig.getSqlkey(), msgbean.getIdString()).replace(dbconfig.getSqlbody(), msgbean.getMessage());
+		String sql = dbconfig.getInsertsql().replace(dbconfig.getSqlkey(), msgbean.getIdString())
+				.replace(dbconfig.getSqlbody(), msgbean.getMessage());
 
-		try (Statement stmt = getConnection(dbconfig.getUrl()).createStatement()) {
+		try (Connection con = DriverManager.getConnection(dbconfig.getUrl());
+				Statement stmt = con.createStatement()) {
 			LOG.log(Level.INFO, "Insert SQL: {0}", sql);
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -74,7 +75,8 @@ public class DbService {
 	public List<String> selectMsg(DbConfig dbconfig) throws SQLException {
 		List<String> msglist = new ArrayList<>();
 
-		try (Statement stmt = getConnection(dbconfig.getUrl()).createStatement();
+		try (Connection con = DriverManager.getConnection(dbconfig.getUrl());
+				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(dbconfig.getSelectsql())) {
 			LOG.log(Level.INFO, "Select SQL: {0}", dbconfig.getSelectsql());
 
@@ -99,7 +101,8 @@ public class DbService {
 	}
 
 	public String deleteMsg(DbConfig dbconfig) throws SQLException {
-		try (Statement stmt = getConnection(dbconfig.getUrl()).createStatement()) {
+		try (Connection con = DriverManager.getConnection(dbconfig.getUrl());
+				Statement stmt = con.createStatement()) {
 			LOG.log(Level.INFO, "Delete SQL: {0}", dbconfig.getDeletesql());
 			stmt.executeUpdate(dbconfig.getDeletesql());
 		} catch (SQLException e) {
