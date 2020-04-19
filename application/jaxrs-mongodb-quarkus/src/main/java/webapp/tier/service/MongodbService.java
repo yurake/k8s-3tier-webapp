@@ -103,4 +103,15 @@ public class MongodbService implements Database {
 	private MongoCollection<Document> getCollection() {
 		return mongoClient.getDatabase(dbname).getCollection(collectionname);
 	}
+
+	public boolean connectionStatus() {
+		boolean status = false;
+		try {
+			getCollection();
+			status = true;
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "Status Check Error.", e);
+		}
+		return status;
+	}
 }
