@@ -1,8 +1,10 @@
 package webapp.tier.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.ext.Provider;
@@ -34,7 +36,7 @@ public class RedisService implements Messaging {
 				status = true;
 			}
 		} catch (JedisConnectionException e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Status Check Error.", e);
 		} finally {
 			jedis.close();
 		}
@@ -42,17 +44,18 @@ public class RedisService implements Messaging {
 	}
 
 	@Override
-	public String putMsg() throws Exception {
+	public String putMsg() throws RuntimeException, NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		Jedis jedis = new Jedis(servername, serverport);
+		String errormsg = "Put Error.";
 
 		try {
 			jedis.set(msgbean.getIdString(), msgbean.getMessage());
 			jedis.expire(msgbean.getIdString(), setexpire);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Put Error.");
+		} catch (JedisConnectionException e) {
+			LOG.log(Level.SEVERE, errormsg, e);
+			throw new RuntimeException(errormsg);
 		} finally {
 			jedis.close();
 		}
@@ -62,14 +65,15 @@ public class RedisService implements Messaging {
 	}
 
 	@Override
-	public String getMsg() throws Exception {
+	public String getMsg() throws RuntimeException {
 		List<String> msglist = getMsgList();
 		return msglist.get(msglist.size() - 1);
 	}
 
-	public List<String> getMsgList() throws Exception {
+	public List<String> getMsgList() throws RuntimeException {
 		List<String> msglist = new ArrayList<>();
 		Jedis jedis = new Jedis(servername, serverport);
+		String errormsg = "Get Error.";
 
 		try {
 			Set<String> keys = jedis.keys("*");
@@ -85,8 +89,8 @@ public class RedisService implements Messaging {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Get Error.");
+			LOG.log(Level.SEVERE, errormsg, e);
+			throw new RuntimeException(errormsg);
 		} finally {
 			jedis.close();
 		}
@@ -94,18 +98,19 @@ public class RedisService implements Messaging {
 	}
 
 	@Override
-	public String publishMsg() throws Exception {
+	public String publishMsg() throws RuntimeException, NoSuchAlgorithmException {
 		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 		String body = msgbean.createBody(msgbean, splitkey);
 		Jedis jedis = new Jedis(servername, serverport);
+		String errormsg = "Publish Error.";
 
 		try {
 			jedis.publish(channel, body);
 			jedis.expire(msgbean.getIdString(), setexpire);
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Publish Error.");
+			LOG.log(Level.SEVERE, errormsg, e);
+			throw new RuntimeException(errormsg);
 		} finally {
 			jedis.close();
 		}

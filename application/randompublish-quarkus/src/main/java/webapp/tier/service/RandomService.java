@@ -1,5 +1,6 @@
 package webapp.tier.service;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -43,7 +44,7 @@ public class RandomService {
 
 	private static final Logger LOG = Logger.getLogger(RandomService.class.getSimpleName());
 
-	public String deliverrandom() throws Exception {
+	public String deliverrandom() throws RuntimeException {
 		String response;
 		int id = (int) (Math.random() * 6);
 		switch (id) {
@@ -72,7 +73,8 @@ public class RandomService {
 			response = mongodbResource.insert();
 			break;
 		default:
-			throw new Exception("random error");
+			LOG.log(Level.SEVERE, "random Error.");
+			throw new RuntimeException("random error");
 		}
 		LOG.info(response);
 		return response;

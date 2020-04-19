@@ -32,7 +32,6 @@ public class PostgresResource {
 		try {
 			return Response.ok().entity(postgres.insertMsg()).build();
 		} catch (SQLException | NoSuchAlgorithmException e) {
-			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -46,7 +45,6 @@ public class PostgresResource {
 		try {
 			return Response.ok().entity(postgres.selectMsg()).build();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -60,7 +58,6 @@ public class PostgresResource {
 		try {
 			return Response.ok(postgres.deleteMsg()).build();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
