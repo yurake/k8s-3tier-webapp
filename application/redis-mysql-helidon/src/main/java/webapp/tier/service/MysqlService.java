@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -12,6 +14,7 @@ import webapp.tier.util.GetConfig;
 @ApplicationScoped
 public class MysqlService {
 
+	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
 	private static String url = GetConfig.getResourceBundle("mysql.url");
 	private static String instersql = GetConfig.getResourceBundle("mysql.sql");
 	private static String sqlkey = GetConfig.getResourceBundle("mysql.id");
@@ -20,7 +23,6 @@ public class MysqlService {
 
 	public String insertMysql(String[] receivedbody) {
 
-		Connection con = null;
 		String id = String.valueOf(Integer.parseInt(receivedbody[0]) + 1);
 
 		StringBuilder builder = new StringBuilder();
@@ -33,28 +35,12 @@ public class MysqlService {
 		sql = sql.replace(sqlkey, id);
 		sql = sql.replace(sqlbody, message);
 
-		try {
-			con = DriverManager.getConnection(url);
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			System.exit(0);
-		}
-
-		try (Statement stmt = con.createStatement()) {
-
+		try (Connection con = DriverManager.getConnection(url);
+				Statement stmt = con.createStatement()) {
 			System.out.println("Execute SQL: " + sql);
 			stmt.executeUpdate(sql);
-
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			LOG.log(Level.SEVERE, "Insert Error: ", e);
 		}
 		return sql;
 	}

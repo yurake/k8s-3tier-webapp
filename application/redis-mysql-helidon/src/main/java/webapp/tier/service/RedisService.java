@@ -1,6 +1,7 @@
 package webapp.tier.service;
 
-import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -11,8 +12,7 @@ import webapp.tier.util.GetConfig;
 @ApplicationScoped
 public class RedisService {
 
-	Connection con = null;
-
+	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
 	private static String servername = GetConfig.getResourceBundle("redis.server");
 	private static int serverport = Integer.parseInt(GetConfig.getResourceBundle("redis.port"));
 	private static String channel = GetConfig.getResourceBundle("redis.channel");
@@ -36,7 +36,7 @@ public class RedisService {
 				}
 			}, channel);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "Subscribe Error: ", e);
 			System.exit(0);
 		} finally {
 			jedis.close();
