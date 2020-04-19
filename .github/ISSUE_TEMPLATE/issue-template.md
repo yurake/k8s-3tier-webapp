@@ -1,6 +1,6 @@
 ---
 name: Issue template
-about: Describe somehing issue
+about: Describe something issue
 title: ''
 labels: ''
 assignees: yurake
