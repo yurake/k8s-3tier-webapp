@@ -121,12 +121,19 @@ public class RabbitmqService implements Messaging {
 
 
 	public boolean isActive() {
+		Channel channel = null;
 		boolean status = false;
 		try (Connection connection = getConnection()) {
-			getChannel(connection);
+			channel = getChannel(connection);
 			status = true;
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Connect Error.", e);
+		} finally {
+			try {
+				closeChannel(channel);
+			} catch (IOException | TimeoutException e) {
+				LOG.log(Level.SEVERE, "Channel Close Error.", e);
+			}
 		}
 		return status;
 	}
