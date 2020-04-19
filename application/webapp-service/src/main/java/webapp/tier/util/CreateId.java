@@ -1,7 +1,6 @@
 package webapp.tier.util;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Random;
 
 public class CreateId {
@@ -9,7 +8,7 @@ public class CreateId {
 	private CreateId() {
 	}
 
-	private static Random rand = new SecureRandom();
+	private static Random rand = new Random();
 
 	/**
 	 * 5桁の正の整数を返す
