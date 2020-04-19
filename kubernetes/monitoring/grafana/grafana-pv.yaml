@@ -11,7 +11,7 @@ spec:
     - ReadWriteMany
   capacity:
     storage: 20Gi
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Delete
   storageClassName: grafana
   hostPath:
     path: /data/pv005

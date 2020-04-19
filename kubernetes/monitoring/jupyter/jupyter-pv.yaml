@@ -11,7 +11,7 @@ spec:
     - ReadWriteMany
   capacity:
     storage: 10Gi
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Delete
   storageClassName: jupyter
   hostPath:
     path: /data/pv007

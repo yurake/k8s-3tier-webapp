@@ -11,7 +11,7 @@ spec:
     - ReadWriteOnce
   capacity:
     storage: 1Gi
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Delete
   storageClassName: jenkins
   hostPath:
     path: /data/pv006

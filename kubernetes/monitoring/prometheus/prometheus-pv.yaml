@@ -9,7 +9,7 @@ spec:
     - ReadWriteOnce
   capacity:
     storage: 20Gi
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Delete
   storageClassName: prometheus
   hostPath:
     path: /data/pv002
