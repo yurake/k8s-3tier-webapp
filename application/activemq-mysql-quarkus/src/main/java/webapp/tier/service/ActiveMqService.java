@@ -40,7 +40,7 @@ public class ActiveMqService implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
-	boolean isEnableReceived = true;
+	static boolean isEnableReceived = true;
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
@@ -54,10 +54,9 @@ public class ActiveMqService implements Runnable {
 
 	@Override
 	public void run() {
-		MysqlService mysqlsvc = new MysqlService();
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
-			JMSConsumer consumer = context.createConsumer(context.createTopic(topicname))) {
-			while (isEnableReceived) {
+		while (isEnableReceived) {
+			try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
+					JMSConsumer consumer = context.createConsumer(context.createTopic(topicname))) {
 				LOG.info("Ready for receive message...");
 				Message message = consumer.receive();
 
@@ -66,13 +65,19 @@ public class ActiveMqService implements Runnable {
 				MsgBean bean = msgbean.splitBody(textMessage.getText(), splitkey);
 				msgbean.setFullmsgWithType(bean, "Received");
 				LOG.info(msgbean.getFullmsg());
-
-				mysqlsvc.insertMsg(bean);
 				LOG.info("Call: Random Publish");
 				LOG.info(deliversvc.random());
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, "Publish Error.", e);
 			}
-		} catch (Exception e) {
-			  LOG.log(Level.SEVERE, "Publish Error.", e);
 		}
+	}
+
+	public static void startReceived() {
+		ActiveMqService.isEnableReceived = true;
+	}
+
+	public static void stopReceived() {
+		ActiveMqService.isEnableReceived = false;
 	}
 }

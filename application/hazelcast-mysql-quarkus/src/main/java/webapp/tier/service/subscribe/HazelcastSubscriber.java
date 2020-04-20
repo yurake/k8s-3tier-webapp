@@ -1,8 +1,5 @@
 package webapp.tier.service.subscribe;
 
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,13 +13,11 @@ import com.hazelcast.core.MessageListener;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.service.DeliverService;
-import webapp.tier.service.MysqlService;
 import webapp.tier.util.MsgBeanUtils;
 
 @ApplicationScoped
 public class HazelcastSubscriber implements MessageListener<String> {
 
-	MysqlService mysqlsvc = new MysqlService();
 	private static final Logger LOG = Logger.getLogger(HazelcastSubscriber.class.getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
@@ -36,13 +31,8 @@ public class HazelcastSubscriber implements MessageListener<String> {
 
 		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL).get();
 
-		try {
-			mysqlsvc.insertMsg(bean);
-			LOG.info("Call: Random Publish");
-			LOG.info(deliversvc.random());
-		} catch (NoSuchAlgorithmException | SQLException e) {
-			LOG.log(Level.SEVERE, "Mysql Insert Error.", e);
-		}
+		LOG.info("Call: Random Publish");
+		LOG.info(deliversvc.random());
 	}
 
 }

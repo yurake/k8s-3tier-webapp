@@ -2,8 +2,6 @@ package webapp.tier.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
@@ -75,20 +73,12 @@ public class RabbitMqService implements Runnable {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws UnsupportedEncodingException {
-
 					MsgBeanUtils msgbean = new MsgBeanUtils();
 					MsgBean bean = msgbean.splitBody(new String(body, "UTF-8"), splitkey);
 					msgbean.setFullmsgWithType(bean, "Received");
 					LOG.info(msgbean.getFullmsg());
-
-					MysqlService mysqlsvc = new MysqlService();
-					try {
-						mysqlsvc.insertMsg(bean);
-						LOG.info("Call: Random Publish");
-						LOG.info(deliversvc.random());
-					} catch (SQLException | NoSuchAlgorithmException e) {
-						LOG.log(Level.SEVERE, "Insert Errorr.", e);
-					}
+					LOG.info("Call: Random Publish");
+					LOG.info(deliversvc.random());
 				}
 			};
 			connection.createChannel().basicConsume(queuename, true, consumer);
