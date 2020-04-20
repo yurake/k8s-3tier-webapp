@@ -3,6 +3,7 @@ package webapp.tier.resource;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,7 +23,8 @@ import webapp.tier.service.MysqlService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MysqlResource {
 
-	MysqlService mysqlsvc = new MysqlService();
+	@Inject
+	MysqlService mysqlsvc;
 
 	@POST
 	@Path("/insert")

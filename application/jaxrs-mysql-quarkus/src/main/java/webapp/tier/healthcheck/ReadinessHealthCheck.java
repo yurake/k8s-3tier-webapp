@@ -3,6 +3,7 @@ package webapp.tier.healthcheck;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
@@ -16,12 +17,11 @@ public class ReadinessHealthCheck implements HealthCheck {
 
 	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheck.class.getSimpleName());
 
-	MysqlService mysqlsvc = new MysqlService();
+	@Inject
+	MysqlService mysqlsvc;
 
 	@Override
 	public HealthCheckResponse call() {
-		MysqlService mysqlsvc = new MysqlService();
-
 		if (mysqlsvc.connectionStatus()) {
 			LOG.fine("Readiness: UP");
 			return HealthCheckResponse.up("Database connection health check");
