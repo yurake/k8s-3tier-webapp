@@ -1,5 +1,7 @@
 package webapp.tier.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,8 +16,13 @@ class ActiveMqServiceTest {
 	void testOnStartError() {
 		ThreadTestOnStartError th = new ThreadTestOnStartError();
 		ActiveMqService svc = new ActiveMqService();
+		try {
 		th.start();
 		svc.run();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 }
 
