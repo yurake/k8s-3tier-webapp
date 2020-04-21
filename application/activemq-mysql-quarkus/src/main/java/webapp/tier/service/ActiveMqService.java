@@ -64,9 +64,8 @@ public class ActiveMqService implements Runnable {
 				TextMessage textMessage = (TextMessage) message;
 				MsgBean bean = msgbean.splitBody(textMessage.getText(), splitkey);
 				msgbean.setFullmsgWithType(bean, "Received");
-				LOG.info(msgbean.getFullmsg());
-				LOG.info("Call: Random Publish");
-				LOG.info(deliversvc.random());
+				LOG.log(Level.INFO, msgbean.getFullmsg());
+				LOG.log(Level.INFO, "Call Random Publish: {0}", deliversvc.random());
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, "Publish Error.", e);
 			}
