@@ -40,3 +40,4 @@ bin
 *.bak
 /.factorypath
 /.apt_generated_tests/
+application/*/.sts4-cache/classpath-data.json
