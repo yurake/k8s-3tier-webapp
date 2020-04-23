@@ -21,4 +21,4 @@ jobs:
       run: |
         echo CURRENT: ${SOURCE_VERSION}
         echo TARGET: ${TARGET_VERSION}
-        test ${SOURCE_VERSION} -eq ${TARGET_VERSIOM}
+        test ${SOURCE_VERSION} -eq ${TARGET_VERSION}
