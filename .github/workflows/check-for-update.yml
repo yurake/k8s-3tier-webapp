@@ -12,8 +12,7 @@ jobs:
 
     - name: check current quarkus version
       working-directory: ./application/parent-pom/
-      run: echo ::set-env name=SOURCE_VERSION::1
-      # run: echo ::set-env name=SOURCE_VERSION::$(mvn -q -Dexec.executable=echo -Dexec.args='${quarkus-plugin.version}' --non-recursive exec:exec)
+      run: echo ::set-env name=SOURCE_VERSION::$(mvn -q -Dexec.executable=echo -Dexec.args='${quarkus-plugin.version}' --non-recursive exec:exec)
 
     - name: check latest tag quarkus version
       run: echo ::set-env name=TARGET_VERSION::$(git ls-remote -t https://github.com/quarkusio/quarkus.git *Final | awk '{print $2}' | awk 'END{print}' | sed -e 's/refs\/tags\///g')
