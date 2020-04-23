@@ -1,0 +1,26 @@
+name: Check for Update
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check java:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: check own quarkus version
+      working-directory: ./application/parent-pom/
+      run: |
+        SOURCE_VERSION=`mvn -q -Dexec.executable=echo -Dexec.args='${quarkus-plugin.version}' --non-recursive exec:exec`
+        echo ${SOURCE_VERSION}
+
+    - name: check latest tag quarkus version
+      run: |
+        TARGET_VERSION=`git ls-remote -t https://github.com/quarkusio/quarkus.git *Final | awk '{print $2}' | awk 'END{print}' | sed -e 's/refs\/tags\///g'`
+        echo ${TARGET_VERSION}
+
+    - name: check diff
+      run: |
+        [ "${SOURCE_VERSION}" = "${TARGET_VERSIOM}" ] && echo "uselatest version"; exit 0 || echo "use old version"; exit 1
