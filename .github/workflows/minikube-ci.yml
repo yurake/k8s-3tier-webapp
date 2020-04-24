@@ -26,7 +26,11 @@ jobs:
       - name: apply minimal service
         run: |
           sudo sh ./kubernetes/apply-default-minimal.sh
-          sleep 300
+          sleep 150
+      - name: check disk
+        run: |
+          df
+          find /home/runner/work -size +1G | xargs ls -l | sort -rn
       - name: check before test
         run: |
           sudo kubectl get nodes
