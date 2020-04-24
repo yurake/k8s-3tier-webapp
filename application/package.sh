@@ -40,7 +40,7 @@ echo ""
 
 echo "### jaxrs-postgres-quarkus"
 cd jaxrs-postgres-quarkus
-./mvnw clean package -Pnative
+./mvnw clean package
 cd ${ROOT_DIR}
 echo "###"
 echo ""
