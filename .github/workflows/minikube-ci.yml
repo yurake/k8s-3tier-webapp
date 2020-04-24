@@ -33,7 +33,7 @@ jobs:
           find ${GITHUB_WORKSPACE} -size +1G | xargs ls -la | sort -rn
           sudo rm -rf ${GITHUB_WORKSPACE}/application
           df
-          find / -size +1G | xargs ls -la | sort -rn
+          find /home/runner -size +1G | xargs ls -la | sort -rn
       - name: check before test
         run: |
           sudo kubectl get nodes
