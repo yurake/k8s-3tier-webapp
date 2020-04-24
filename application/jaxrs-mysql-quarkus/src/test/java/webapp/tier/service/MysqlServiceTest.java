@@ -7,23 +7,25 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
+import javax.inject.Inject;
+
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
-import webapp.tier.bean.MsgBean;
 
 @QuarkusTest
 class MysqlServiceTest {
 
+	@Inject
+	MysqlService svc;
+
 	@Test
 	void testConnectionStatusError() {
-		MysqlService svc = new MysqlService();
 		assertThat(svc.connectionStatus(), is(false));
 	}
 
 	@Test
 	void testInsertMysqlError() {
-		MysqlService svc = new MysqlService();
 		try {
 			svc.insertMsg();
 			fail();
@@ -34,21 +36,7 @@ class MysqlServiceTest {
 	}
 
 	@Test
-	void testInsertMsgError() {
-		MysqlService svc = new MysqlService();
-		MsgBean msgbean = new MsgBean(1111, "Test");
-		try {
-			svc.insertMsg(msgbean);
-			fail();
-		} catch (SQLException | NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			assertEquals("Insert Error.", e.getMessage());
-		}
-	}
-
-	@Test
 	void testSelectMsgError() {
-		MysqlService svc = new MysqlService();
 		try {
 			svc.selectMsg();
 			fail();
@@ -60,7 +48,6 @@ class MysqlServiceTest {
 
 	@Test
 	void testDeleteMsgError() {
-		MysqlService svc = new MysqlService();
 		try {
 			svc.deleteMsg();
 			fail();
