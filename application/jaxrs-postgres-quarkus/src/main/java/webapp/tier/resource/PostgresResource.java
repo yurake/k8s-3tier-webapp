@@ -3,6 +3,7 @@ package webapp.tier.resource;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,16 +23,17 @@ import webapp.tier.service.PostgresService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class PostgresResource {
 
+	@Inject
+	PostgresService posgressvc;
 
 	@POST
 	@Path("/insert")
 	@Counted(name = "performedChecks_insert", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response insert() {
-		PostgresService postgres = new PostgresService();
 		try {
-			return Response.ok().entity(postgres.insertMsg()).build();
-		} catch (SQLException | NoSuchAlgorithmException e) {
+			return Response.ok().entity(posgressvc.insertMsg()).build();
+		} catch (NoSuchAlgorithmException | SQLException e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -41,9 +43,8 @@ public class PostgresResource {
 	@Counted(name = "performedChecks_select", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response select() {
-		PostgresService postgres = new PostgresService();
 		try {
-			return Response.ok().entity(postgres.selectMsg()).build();
+			return Response.ok().entity(posgressvc.selectMsg()).build();
 		} catch (SQLException e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -54,9 +55,8 @@ public class PostgresResource {
 	@Counted(name = "performedChecks_delete", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response delete() {
-		PostgresService postgres = new PostgresService();
 		try {
-			return Response.ok(postgres.deleteMsg()).build();
+			return Response.ok().entity(posgressvc.deleteMsg()).build();
 		} catch (SQLException e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
