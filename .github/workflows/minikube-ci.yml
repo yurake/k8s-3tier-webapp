@@ -30,7 +30,9 @@ jobs:
       - name: check disk
         run: |
           df
-          find /home/runner/work -size +1G | xargs ls -l | sort -rn
+          find ${GITHUB_WORKSPACE} -size +1G | xargs ls -la | sort -rn
+          find ${HOME} -size +1G | xargs ls -la | sort -rn
+          ls -ltra
       - name: check before test
         run: |
           sudo kubectl get nodes
