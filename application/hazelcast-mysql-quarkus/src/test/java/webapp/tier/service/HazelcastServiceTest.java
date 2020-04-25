@@ -12,7 +12,7 @@ class HazelcastServiceTest {
 	@Test
 	void testOnStartError() {
 		HazelcastService svc = new HazelcastService();
-		svc.subscribeHazelcast();
+		svc.run();
 	}
 
 	@Test

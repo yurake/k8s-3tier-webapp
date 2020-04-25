@@ -1,23 +1,39 @@
 package webapp.tier.service;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
 
+import io.quarkus.runtime.ShutdownEvent;
+import io.quarkus.runtime.StartupEvent;
 import webapp.tier.service.subscribe.HazelcastSubscriber;
 
 @ApplicationScoped
-public class HazelcastService {
+public class HazelcastService implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(HazelcastService.class.getSimpleName());
 	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topic.name", String.class);
+	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
+
+	void onStart(@Observes StartupEvent ev) {
+		scheduler.submit(this);
+		LOG.info("The application is starting...");
+	}
+
+	void onStop(@Observes ShutdownEvent ev) {
+		scheduler.shutdown();
+		LOG.info("The application is stopping...");
+	}
 
 	public boolean isActive() {
 		HazelcastInstance client = null;
@@ -35,8 +51,8 @@ public class HazelcastService {
 		return status;
 	}
 
-	public String subscribeHazelcast() {
-		String fullmsg = "Error";
+	@Override
+	public void run() {
 		HazelcastSubscriber hazsubsc = new HazelcastSubscriber();
 
 		try {
@@ -46,6 +62,5 @@ public class HazelcastService {
 		} catch (IOException | IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Subscribe Error.", e);
 		}
-		return fullmsg;
 	}
 }
