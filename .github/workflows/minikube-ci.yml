@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        minikube: [v1.5.2, v1.8.2, v1.9.2]
-        kubernetes: [v1.16.2, v1.17.5, v1.18.2]
+        minikube: [v1.8.2, v1.9.2]
+        kubernetes: [v1.17.5, v1.18.0]
     steps:
       - name: delete installed software not use
         run: |
