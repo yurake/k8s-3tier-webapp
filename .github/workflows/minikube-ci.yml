@@ -12,9 +12,10 @@ jobs:
   minikube:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         minikube: [v1.8.2, v1.9.2]
-        kubernetes: [v1.17.5, v1.18.0]
+        kubernetes: [v1.18.0, v1.18.2]
     steps:
       - name: delete installed software not use
         run: |
@@ -30,12 +31,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v1
       - name: setup minikube
-        uses: manusa/actions-setup-minikube@v1.0.1
+        uses: manusa/actions-setup-minikube@v1.0.2
         with:
           minikube version: ${{ matrix.minikube }}
           kubernetes version: ${{ matrix.kubernetes }}
       - name: minikube addon settings
         run: |
+          sudo mv /home/runner/.kube /home/runner/.minikube $HOME
+          sudo chown -R $USER $HOME/.kube $HOME/.minikube
           sudo /home/runner/work/_temp/minikube addons enable ingress
           sudo /home/runner/work/_temp/minikube addons list
       - name: apply minimal service
