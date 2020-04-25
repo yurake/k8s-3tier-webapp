@@ -40,8 +40,8 @@ jobs:
           sleep 10
       - name: run e2e test
         run: |
-          date
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
+          echo wait for complete e2e test (sleep 150) ...
           sleep 150
       - name: check minikube status
         run: |
