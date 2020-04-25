@@ -3,8 +3,7 @@
 ![Java CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Java%20CI/badge.svg)
 ![Docker Image CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Image%20CI/badge.svg)
 ![Docker Vulnerability Scan](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Vulnerability%20Scan/badge.svg)
-![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/workflows/Yaml%20Validator/badge.svg)
-![Check for Update](https://github.com/yurake/k8s-3tier-webapp/workflows/Check%20for%20Update/badge.svg)  
+![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/workflows/Yaml%20Validator/badge.svg)  
 [![Build Status](https://travis-ci.com/yurake/k8s-3tier-webapp.svg?branch=master)](https://travis-ci.com/yurake/k8s-3tier-webapp)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=yurake_webapp-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=yurake_webapp-service)
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
@@ -26,9 +25,9 @@ The k8s-3tier-webapp service is for PoC, not production ready.
 
 ## Requirements
 Installed CLI commands.
-* docker
-* kubectl
-* minikube
+* :computer: docker
+* :computer: kubectl
+* :computer: minikube
 
 ## Run on Minikube
 
@@ -72,15 +71,15 @@ echo `minikube ip` k8s.3tier.webapp wlp.minikube api.server.minikube rabbitmq.ma
 ```
 
 #### Web Console list
-* Top Page  
+* :triangular_flag_on_post: op Page  
 http://k8s.3tier.webapp/
 ![top.png](./docs/top.png)
 
-* Open Liberty  
+* :triangular_flag_on_post: Open Liberty  
 http://wlp.minikube  
-* Rabbitmq Management Console  
+* :triangular_flag_on_post: Rabbitmq Management Console  
 http://rabbitmq.management.minikube  
-* Activemq Management Console  
+* :triangular_flag_on_post: Activemq Management Console  
 http://activemq.management.minikube  
 
 ## See Also
@@ -90,3 +89,10 @@ Set up [monitoring](kubernetes/monitoring/README.md)
 ![e2e Test on Minikube](https://github.com/yurake/k8s-3tier-webapp/workflows/e2e%20Test%20on%20Minikube/badge.svg)  
 The workflow for end to end api test on minikube on Github Actions.  
 The trriger is close issue.
+
+## Check for Update [Alpha]
+![Check for Update](https://github.com/yurake/k8s-3tier-webapp/workflows/Check%20for%20Update/badge.svg)  
+Check versioning software which needs update  
+* :heavy_check_mark: Java Quarkus
+* :x: Docker Images
+* :x: Kubernetes
