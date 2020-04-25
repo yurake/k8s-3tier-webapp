@@ -11,6 +11,10 @@ on:
 jobs:
   minikube:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        minikube: [v1.5.2, v1.8.2, v1.9.2]
+        kubernetes: [v1.16.2, v1.17.5, v1.18.2]
     steps:
       - name: delete installed software not use
         run: |
@@ -28,8 +32,8 @@ jobs:
       - name: setup minikube
         uses: manusa/actions-setup-minikube@v1.0.1
         with:
-          minikube version: "v1.5.2"
-          kubernetes version: "v1.16.2"
+          minikube version: ${{ matrix.minikube }}
+          kubernetes version: ${{ matrix.kubernetes }}
       - name: minikube addon settings
         run: |
           sudo /home/runner/work/_temp/minikube addons enable ingress
