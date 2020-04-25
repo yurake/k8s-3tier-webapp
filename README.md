@@ -86,7 +86,7 @@ http://activemq.management.minikube
 ## See Also
 Set up [monitoring](kubernetes/monitoring/README.md)
 
-## Github Actions on minikube [alpha]
+## Github Actions on minikube [Beta]
 ![e2e Test on Minikube](https://github.com/yurake/k8s-3tier-webapp/workflows/e2e%20Test%20on%20Minikube/badge.svg)  
 The workflow for end to end api test on minikube on Github Actions.  
 The trriger is close issue.
