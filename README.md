@@ -9,7 +9,6 @@
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-## About
 Sample web application based on k8s.  
 Focus on connecting components, setting k8s resources, and aiming to microservices.  
 The k8s-3tier-webapp service is for PoC, not production ready.
@@ -21,7 +20,22 @@ The k8s-3tier-webapp service is for PoC, not production ready.
 | 3 | Management | Monitoring, CI/CD, Tracing
 
 ![LayardArchitecturalOverview.png](./docs/LayardArchitecturalOverview.png)
-![diagram.png](./docs/diagram.png)
+
+## Concepts
+* Choice better architecture what you expect based on k8s
+* Help understanding k8s resources based on yaml
+* Test automation on Github Actions for free
+* Expand test automation - end-to-end, performance, recovery
+* Keep observability for monitoring services
+* Improve application quality using public CI services that following Github
+
+## Features
+* All docker components run on k8s
+* All application written by Java mostly Quarkus
+* k8s resources written by yaml, try not to use helm, operator
+* Use only public software, not commercial
+* Use Github Actions for build, test, release
+
 
 ## Requirements
 Installed CLI commands.
