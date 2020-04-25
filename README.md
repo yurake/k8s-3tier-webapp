@@ -1,4 +1,4 @@
-# k8s-3tier-webapp
+# :deer: k8s-3tier-webapp
 
 ![Java CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Java%20CI/badge.svg)
 ![Docker Image CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Image%20CI/badge.svg)
@@ -31,7 +31,7 @@ Installed CLI commands.
 
 ## Run on Minikube
 
-For Mac  
+**Mac**  
 ```bash
 minikube config set memory 8192
 minikube config set cpus 4
@@ -43,7 +43,7 @@ minikube addons enable ingress
 eval $(minikube docker-env)
 ```
 
-For Windows  
+**Windows**  
 ```bash
 minikube config set memory 8192
 minikube config set cpus 4
@@ -57,9 +57,9 @@ minikube docker-env --shell powershell | Invoke-Expression
 
 ## Build & Apply
 
-`install.sh` supports `docker build`, `kubectl apply` to k8s clusters.
+`apply.sh` supports `kubectl apply` to k8s clusters.
 ```
-./install.sh
+./kubernetes/apply.sh
 ```
 
 ## Web Console Access
@@ -71,7 +71,7 @@ echo `minikube ip` k8s.3tier.webapp wlp.minikube api.server.minikube rabbitmq.ma
 ```
 
 #### Web Console list
-* :triangular_flag_on_post: op Page  
+* :triangular_flag_on_post: Top Page  
 http://k8s.3tier.webapp/
 ![top.png](./docs/top.png)
 
@@ -82,7 +82,7 @@ http://rabbitmq.management.minikube
 * :triangular_flag_on_post: Activemq Management Console  
 http://activemq.management.minikube  
 
-## See Also
+## Monitoring
 Set up [monitoring](kubernetes/monitoring/README.md)
 
 ## Github Actions on minikube [Beta]
