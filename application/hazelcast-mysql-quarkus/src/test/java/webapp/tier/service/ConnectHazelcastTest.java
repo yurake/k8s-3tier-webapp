@@ -1,10 +1,14 @@
 package webapp.tier.service;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
+
+import com.hazelcast.core.HazelcastInstance;
 
 import io.quarkus.test.junit.QuarkusTest;
 
@@ -14,7 +18,8 @@ class ConnectHazelcastTest {
 	@Test
 	void testCreateNodeInstanceError() {
 		ConnectHazelcast cast = new ConnectHazelcast();
-		cast.createNodeInstance();
+		HazelcastInstance instance = cast.createNodeInstance();
+		assertThat(instance, is(notNullValue()));
 	}
 
 	@Test
@@ -23,7 +28,7 @@ class ConnectHazelcastTest {
 		ConnectHazelcast.getInstance();
 		fail();
 		} catch (IllegalStateException expected) {
-			assertEquals(expected.getMessage(), "Unable to connect to any cluster.");
+			assertEquals("Unable to connect to any cluster.", expected.getMessage(), "Unexpected Error");
 		}
 	}
 }

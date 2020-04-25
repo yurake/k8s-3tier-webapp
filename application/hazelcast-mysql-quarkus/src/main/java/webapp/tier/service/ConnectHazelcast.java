@@ -1,7 +1,5 @@
 package webapp.tier.service;
 
-import java.io.IOException;
-
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -27,7 +25,7 @@ public class ConnectHazelcast {
 		return Hazelcast.newHazelcastInstance(config);
 	}
 
-	public static HazelcastInstance getInstance() throws IOException {
+	public static HazelcastInstance getInstance() {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getNetworkConfig().addAddress(address);
 		clientConfig.getGroupConfig().setName(groupname);

@@ -13,7 +13,7 @@ class ReadinessHealthCheckTest {
 	@Test
 	void testCall() {
 		ReadinessHealthCheck hc = new ReadinessHealthCheck();
-		assertEquals(hc.call().getState(), State.UP);
+		assertEquals(State.UP, hc.call().getState(), "Unexpected status");
 	}
 
 }

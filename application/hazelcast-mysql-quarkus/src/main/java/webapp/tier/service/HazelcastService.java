@@ -1,6 +1,5 @@
 package webapp.tier.service;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -41,7 +40,7 @@ public class HazelcastService implements Runnable {
 		try {
 			client = ConnectHazelcast.getInstance();
 			status = client.getLifecycleService().isRunning();
-		} catch (IOException | IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Connect Error.", e);
 		} finally {
 			if (client != null) {
@@ -59,7 +58,7 @@ public class HazelcastService implements Runnable {
 			HazelcastInstance client = ConnectHazelcast.getInstance();
 			ITopic<String> topic = client.getTopic(topicname);
 			topic.addMessageListener(hazsubsc);
-		} catch (IOException | IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Subscribe Error.", e);
 		}
 	}

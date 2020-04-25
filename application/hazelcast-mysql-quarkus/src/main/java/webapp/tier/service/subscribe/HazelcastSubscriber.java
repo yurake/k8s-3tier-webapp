@@ -1,5 +1,6 @@
 package webapp.tier.service.subscribe;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -28,11 +29,8 @@ public class HazelcastSubscriber implements MessageListener<String> {
 		MsgBean bean = msgbean.splitBody(message.getMessageObject(), splitkey);
 		msgbean.setFullmsgWithType(bean, "Received");
 		LOG.info(msgbean.getFullmsg());
-
 		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL).get();
-
-		LOG.info("Call: Random Publish");
-		LOG.info(deliversvc.random());
+		LOG.log(Level.INFO, "Call: Random Publish: {0}", deliversvc.random());
 	}
 
 }
