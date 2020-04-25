@@ -35,11 +35,9 @@ jobs:
         run: |
           date
           df
-          sudo find ${GITHUB_WORKSPACE} -size +1G | xargs ls -la | sort -rn
           sudo rm -rf ${GITHUB_WORKSPACE}/application
+          sudo find ${GITHUB_WORKSPACE} -size +1G | xargs ls -la | sort -rn
           df
-          sudo find /home/runner -size +1G | xargs ls -la | sort -rn
-          sudo find /home/runner/work -size +1G | xargs ls -la | sort -rn
       - name: check before test
         run: |
           sudo kubectl get nodes
@@ -52,7 +50,7 @@ jobs:
         run: |
           date
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
-          sleep 10
+          sleep 150
       - name: check after test
         run: |
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
