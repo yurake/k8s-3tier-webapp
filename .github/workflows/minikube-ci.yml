@@ -12,9 +12,17 @@ jobs:
   minikube:
     runs-on: ubuntu-latest
     steps:
-      - name: check disk
+      - name: delete installed software not use
         run: |
-          df
+          df -h /
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /opt/hostedtoolcache/Python
+          sudo rm -rf /opt/hostedtoolcache/Ruby
+          df -h /
+          
       - name: checkout
         uses: actions/checkout@v1
       - name: setup minikube
@@ -28,17 +36,14 @@ jobs:
           sudo /home/runner/work/_temp/minikube addons list
       - name: apply minimal service
         run: |
-          date
           sudo sh ./kubernetes/apply-default-minimal.sh
           sleep 10
-      - name: check disk
+      - name: run e2e test
         run: |
           date
-          df
-          sudo rm -rf ${GITHUB_WORKSPACE}/application
-          sudo find ${GITHUB_WORKSPACE} -size +1G | xargs ls -la | sort -rn
-          df
-      - name: check before test
+          sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
+          sleep 150
+      - name: check minikube status
         run: |
           sudo kubectl get nodes
           sudo kubectl get pv
@@ -46,11 +51,6 @@ jobs:
           sudo kubectl get all
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
-      - name: run e2e test
-        run: |
-          date
-          sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
-          sleep 150
       - name: check after test
         run: |
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
