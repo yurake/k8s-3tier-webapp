@@ -25,7 +25,7 @@ The k8s-3tier-webapp service is for PoC, not production ready.
 * Choice better architecture what you expect based on k8s
 * Help understanding k8s resources based on yaml
 * Test automation on Github Actions for free
-* Expand test automation - end-to-end, performance, recovery
+* Expand test automation - unit, end-to-end, performance, recovery, security
 * Keep observability for monitoring services
 * Improve application quality using public CI services that following Github
 
