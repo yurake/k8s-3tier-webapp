@@ -12,6 +12,9 @@ jobs:
   minikube:
     runs-on: ubuntu-latest
     steps:
+      - name: check disk
+        run: |
+          df
       - name: checkout
         uses: actions/checkout@v1
       - name: setup minikube
@@ -33,7 +36,8 @@ jobs:
           sudo find ${GITHUB_WORKSPACE} -size +1G | xargs ls -la | sort -rn
           sudo rm -rf ${GITHUB_WORKSPACE}/application
           df
-          sdo find /home/runner -size +1G | xargs ls -la | sort -rn
+          sudo find /home/runner -size +1G | xargs ls -la | sort -rn
+          sudo find / -size +1G | xargs ls -la | sort -rn
       - name: check before test
         run: |
           sudo kubectl get nodes
