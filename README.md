@@ -109,4 +109,4 @@ The trriger is close issue.
 Check versioning software which needs update  
 * :heavy_check_mark: Java Quarkus
 * :x: Docker Images
-* :x: Kubernetes
+* :heavy_check_mark: Minikube
