@@ -22,3 +22,21 @@ jobs:
         echo CURRENT: ${SOURCE_VERSION}
         echo TARGET: ${TARGET_VERSION}
         test ${SOURCE_VERSION} = ${TARGET_VERSION}
+
+  minikube:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: check current quarkus version
+      working-directory: ./.github/workflows
+      run: echo ::set-env name=SOURCE_VERSION::$(grep "minikube:" minikube-ci.yml | awk '{print $3}' | tr -d ])
+
+    - name: check latest tag quarkus version
+      run: echo ::set-env name=TARGET_VERSION::$(git ls-remote -t https://github.com/quarkusio/quarkus.git *Final | awk '{print $2}' | awk 'END{print}' | sed -e 's/refs\/tags\///g')
+
+    - name: check diff
+      run: |
+        echo CURRENT: ${SOURCE_VERSION}
+        echo TARGET: ${TARGET_VERSION}
+        test ${SOURCE_VERSION} = ${TARGET_VERSION}
