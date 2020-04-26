@@ -9,7 +9,7 @@ on:
     types: [closed]
 
 jobs:
-  minikube:
+  minikube-k8s:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -35,12 +35,12 @@ jobs:
         with:
           minikube version: ${{ matrix.minikube }}
           kubernetes version: ${{ matrix.kubernetes }}
-      - name: minikube addon settings
+      - name: minikube settings
         run: |
-          sudo mv /home/runner/.kube /home/runner/.minikube $HOME
-          sudo chown -R $USER $HOME/.kube $HOME/.minikube
-          sudo /home/runner/work/_temp/minikube addons enable ingress
-          sudo /home/runner/work/_temp/minikube addons list
+　　　　　　sudo mv $HOME/work/_temp/.minikube $HOME
+          sudo mv $HOME/work/_temp/minikube /usr/bin
+          sudo minikube addons enable ingress
+          sudo minikube addons list
       - name: apply minimal service
         run: |
           sudo sh ./kubernetes/apply-default-minimal.sh
