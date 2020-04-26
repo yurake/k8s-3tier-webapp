@@ -15,7 +15,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-		<quarkus.version>1.4.1.Final</quarkus.version>
+		<quarkus.version>1.3.2.Final</quarkus.version>
 		<surefire-plugin.version>2.22.1</surefire-plugin.version>
 		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
 	</properties>
