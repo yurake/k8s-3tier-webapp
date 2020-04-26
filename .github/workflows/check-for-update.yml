@@ -45,8 +45,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
-      id: create-issue
-    - if: failure()
-      run: 'echo Created issue number ${{ steps.create-issue.outputs.number }}'
-    - if: failure()
-      run: 'echo Created ${{ steps.create-issue.outputs.url }}'
+        id: create-issue
+    - name: Create comment
+      if: failure()
+      uses: peter-evans/create-or-update-comment@v1
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body: |
+          Please see new issue ${{ steps.create-issue.outputs.url }}  
+      
