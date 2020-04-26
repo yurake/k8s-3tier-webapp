@@ -2,7 +2,7 @@ name: Assign issues to project
 
 on:
   issues:
-    types: [opened, labeled, assigned, reopened]
+    types: [opened, reopened]
   pull_request:
     types: [opened]
 env:
