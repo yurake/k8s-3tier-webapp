@@ -37,10 +37,11 @@ jobs:
           kubernetes version: ${{ matrix.kubernetes }}
       - name: minikube settings
         run: |
-          # sudo mv $HOME/work/_temp/.minikube $HOME
+          sudo mv $HOME/work/_temp/.minikube $HOME
           sudo mv $HOME/work/_temp/minikube /usr/bin
           sudo minikube addons enable ingress
           sudo minikube addons list
+          echo ::set-env name=MINIKUBE_HOME::$HOME
       - name: apply minimal service
         run: |
           sudo sh ./kubernetes/apply-default-minimal.sh
