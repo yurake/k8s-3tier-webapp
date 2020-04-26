@@ -45,5 +45,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
-    - run: 'echo Created issue number ${{ steps.create-issue.outputs.number }}'
-    - run: 'echo Created ${{ steps.create-issue.outputs.url }}'
+    - if: failure()
+      run: 'echo Created issue number ${{ steps.create-issue.outputs.number }}'
+    - if: failure()
+      run: 'echo Created ${{ steps.create-issue.outputs.url }}'
