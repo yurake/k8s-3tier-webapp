@@ -23,8 +23,6 @@ jobs:
         echo CURRENT: ${SOURCE_VERSION}
         echo TARGET: ${TARGET_VERSION}
         test ${SOURCE_VERSION} = ${TARGET_VERSION}
-    - run: 'echo Created issue number ${{ steps.create-issue.outputs.number }}'
-    - run: 'echo Created ${{ steps.create-issue.outputs.url }}'
 
   minikube:
     runs-on: ubuntu-latest
