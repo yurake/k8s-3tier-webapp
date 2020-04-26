@@ -101,10 +101,13 @@ jobs:
         with:
           filename: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
         id: create-issue
-      - if: failure()
-        run: 'echo Created issue number ${{ steps.create-issue.outputs.number }}'
-      - if: failure()
-        run: 'echo Created ${{ steps.create-issue.outputs.url }}'
+      - name: Create comment
+        if: failure()
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Please see new issue ${{ steps.create-issue.outputs.url }}  
       - name: check minikube status
         run: |
           sudo kubectl get nodes
