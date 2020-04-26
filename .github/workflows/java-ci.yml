@@ -17,7 +17,7 @@ jobs:
     - name: Setup GraalVM
       uses: DeLaGuardo/setup-graalvm@3
       with:
-        graalvm-version: '20.0.0.java8'
+        graalvm-version: '20.0.0.java11'
     - run: java -version
 
     - name: Maven Deploy POM to Github Package Registry
