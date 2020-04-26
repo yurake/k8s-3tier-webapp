@@ -15,7 +15,7 @@ jobs:
       run: echo ::set-env name=SOURCE_VERSION::$(mvn -q -Dexec.executable=echo -Dexec.args='${quarkus.version}' --non-recursive exec:exec)
 
     - name: check latest tag quarkus version
-      run: echo ::set-env name=TARGET_VERSION::$(git ls-remote -t https://github.com/quarkusio/quarkus.git *Final | awk '{print $2}' | awk 'END{print}' | sed -e 's/refs\/tags\///g')
+      run: echo ::set-env name=TARGET_VERSION::$(git ls-remote -t https://github.com/quarkusio/quarkus.git *Final | awk 'END{print}' | awk '{print $2}' | sed -e 's/refs\/tags\///g')
 
     - name: check diff
       run: |
@@ -33,7 +33,7 @@ jobs:
       run: echo ::set-env name=SOURCE_VERSION::$(grep "minikube:" minikube-ci.yml | awk '{print $3}' | tr -d ])
 
     - name: check latest tag quarkus version
-      run: echo ::set-env name=TARGET_VERSION::$(git ls-remote -t https://github.com/quarkusio/quarkus.git *Final | awk '{print $2}' | awk 'END{print}' | sed -e 's/refs\/tags\///g')
+      run: echo ::set-env name=TARGET_VERSION::$(git ls-remote -t https://github.com/kubernetes/minikube.git | grep -v -e { -e beta | awk 'END{print}' | awk '{print $2}' | sed -e 's/refs\/tags\///g')
 
     - name: check diff
       run: |
