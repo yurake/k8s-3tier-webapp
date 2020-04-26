@@ -84,10 +84,6 @@ jobs:
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
           sleep 10
-      - name: check log activemq
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep activemq | grep -v jaxrs-activemq)
-          sleep 10
       - name: check after test postmannewman-job
         run: |
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
@@ -97,3 +93,12 @@ jobs:
           sudo kubectl -n monitoring describe job postmannewman-job
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
           sudo kubectl get po --all-namespaces=true
+      - name: check minikube status
+        run: |
+          sudo kubectl get nodes
+          sudo kubectl get pv
+          sudo kubectl get pvc
+          sudo kubectl get all
+          sudo kubectl get all -n monitoring
+          sudo kubectl get ingress
+          df -h /
