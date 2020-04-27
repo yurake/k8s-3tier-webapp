@@ -19,7 +19,7 @@ jobs:
     steps:
     - name: delete installed software not use
       run: |
-         df -h /
+        df -h /
         sudo rm -rf /opt/ghc
         sudo rm -rf /usr/local/lib/android
         sudo rm -rf /usr/share/dotnet
