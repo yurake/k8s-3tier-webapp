@@ -37,8 +37,7 @@ jobs:
       with:
         issue-number: ${{ steps.create-issue.outputs.number }}
         body: |
-          Please see failure log:  
-          https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
+          Please see failure log: https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
     - name: create comment
       if: failure()
       uses: peter-evans/create-or-update-comment@v1
