@@ -30,7 +30,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
-        id: create-issue
+      id: create-issue
     - name: create comment
       if: failure()
       uses: peter-evans/create-or-update-comment@v1
@@ -67,7 +67,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
-        id: create-issue
+      id: create-issue
     - name: create comment
       if: failure()
       uses: peter-evans/create-or-update-comment@v1
