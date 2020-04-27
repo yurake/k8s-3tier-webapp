@@ -17,103 +17,111 @@ jobs:
         minikube: [v1.8.2, v1.9.2]
         kubernetes: [v1.18.0, v1.18.2]
     steps:
-      - name: delete installed software not use
-        run: |
-          df -h /
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/share/swift
-          sudo rm -rf /opt/hostedtoolcache/Python
-          sudo rm -rf /opt/hostedtoolcache/Ruby
-          df -h /
+    - name: delete installed software not use
+      run: |
+         df -h /
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /usr/share/swift
+        sudo rm -rf /opt/hostedtoolcache/Python
+        sudo rm -rf /opt/hostedtoolcache/Ruby
+        df -h /
           
-      - name: checkout
-        uses: actions/checkout@v1
-      - name: setup minikube
-        uses: manusa/actions-setup-minikube@v1.0.2
-        with:
-          minikube version: ${{ matrix.minikube }}
-          kubernetes version: ${{ matrix.kubernetes }}
-      - name: minikube settings
-        run: |
-          sudo mv $HOME/work/_temp/.minikube $HOME
-          sudo mv $HOME/work/_temp/minikube /usr/bin
-          sudo sed -i -e 's/work\/_temp\///g' $HOME/.kube/config
-          echo ::set-env name=MINIKUBE_HOME::$HOME
-          sudo minikube addons enable ingress
-          sudo minikube addons list
-      - name: apply minimal service
-        run: |
-          sudo sh ./kubernetes/apply-default-minimal.sh
-          sleep 10
-      - name: run e2e test
-        run: |
-          sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
-          echo wait for run e2e test for 150s ...
-          sleep 150
-      - name: check minikube status
-        run: |
-          sudo kubectl get nodes
-          sudo kubectl get pv
-          sudo kubectl get pvc
-          sudo kubectl get all
-          sudo kubectl get all -n monitoring
-          sudo kubectl get ingress
-      - name: check log jaxrs-mysql
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
-          sleep 10
-      - name: check log jaxrs-postgres
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
-          sleep 10
-      - name: check log jaxrs-mongodb
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
-          sleep 10
-      - name: check log jaxrs-redis
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
-          sleep 10
-      - name: check log jaxrs-memcached
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
-          sleep 10
-      - name: check log jaxrs-activemq
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
-          sleep 10
-      - name: check after test postmannewman-job
-        run: |
-          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
-      - name: waiting for complete e2e job
-        run: |
-          sudo kubectl -n monitoring wait --for=condition=complete --timeout=10m job/postmannewman-job
-          sudo kubectl -n monitoring describe job postmannewman-job
-          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
-          sudo kubectl get po --all-namespaces=true
-      - name: create issue if failure
-        if: failure()
-        uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          filename: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
-        id: create-issue
-      - name: Create comment
-        if: failure()
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            Please see new issue ${{ steps.create-issue.outputs.url }}  
-      - name: check minikube status
-        run: |
-          sudo kubectl get nodes
-          sudo kubectl get pv
-          sudo kubectl get pvc
-          sudo kubectl get all
-          sudo kubectl get all -n monitoring
-          sudo kubectl get ingress
-          df -h /
+    - name: checkout
+      uses: actions/checkout@v1
+    - name: setup minikube
+      uses: manusa/actions-setup-minikube@v1.0.2
+      with:
+        minikube version: ${{ matrix.minikube }}
+        kubernetes version: ${{ matrix.kubernetes }}
+    - name: minikube settings
+      run: |
+        sudo mv $HOME/work/_temp/.minikube $HOME
+        sudo mv $HOME/work/_temp/minikube /usr/bin
+        sudo sed -i -e 's/work\/_temp\///g' $HOME/.kube/config
+        echo ::set-env name=MINIKUBE_HOME::$HOME
+        sudo minikube addons enable ingress
+        sudo minikube addons list
+    - name: apply minimal service
+      run: |
+        sudo sh ./kubernetes/apply-default-minimal.sh
+        sleep 10
+    - name: run e2e test
+      run: |
+        sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
+        echo wait for run e2e test for 150s ...
+        sleep 150
+    - name: check minikube status
+      run: |
+        sudo kubectl get nodes
+        sudo kubectl get pv
+        sudo kubectl get pvc
+        sudo kubectl get all
+        sudo kubectl get all -n monitoring
+        sudo kubectl get ingress
+    - name: check log jaxrs-mysql
+      run: |
+        sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+        sleep 10
+    - name: check log jaxrs-postgres
+      run: |
+        sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
+        sleep 10
+    - name: check log jaxrs-mongodb
+      run: |
+        sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
+        sleep 10
+    - name: check log jaxrs-redis
+      run: |
+        sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
+        sleep 10
+    - name: check log jaxrs-memcached
+      run: |
+        sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
+        sleep 10
+    - name: check log jaxrs-activemq
+      run: |
+        sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
+        sleep 10
+    - name: check after test postmannewman-job
+      run: |
+        sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
+    - name: waiting for complete e2e job
+      run: |
+        sudo kubectl -n monitoring wait --for=condition=complete --timeout=10m job/postmannewman-job
+        sudo kubectl -n monitoring describe job postmannewman-job
+        sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
+        sudo kubectl get po --all-namespaces=true
+    - name: create issue if failure
+      if: failure()
+      uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        filename: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
+      id: create-issue
+    - name: Create comment
+      if: failure()
+      uses: peter-evans/create-or-update-comment@v1
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body: |
+          Please see new issue ${{ steps.create-issue.outputs.url }}  
+    - name: create comment
+      if: failure()
+      uses: peter-evans/create-or-update-comment@v1
+      with:
+        issue-number: ${{ steps.create-issue.outputs.number }}
+        body: |
+          Please see failure log:  
+          https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
+    - name: check minikube status
+      run: |
+        sudo kubectl get nodes
+        sudo kubectl get pv
+        sudo kubectl get pvc
+        sudo kubectl get all
+        sudo kubectl get all -n monitoring
+        sudo kubectl get ingress
+        df -h /
