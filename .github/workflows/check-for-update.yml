@@ -1,9 +1,6 @@
 name: Check for Update
 
 on:
-  push:
-    paths:
-      - ".github/workflows/check-for-update.yml"
   pull_request:
   issues:
     types: [closed]
@@ -30,12 +27,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
-      id: create-issue
+      id: create-issue-java
     - name: create comment
       if: failure()
       uses: peter-evans/create-or-update-comment@v1
       with:
-        issue-number: ${{ steps.create-issue.outputs.number }}
+        issue-number: ${{ steps.create-issue-java.outputs.number }}
         body: |
           Please see failure log: https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
     - name: create comment
@@ -44,7 +41,7 @@ jobs:
       with:
         issue-number: ${{ github.event.issue.number }}
         body: |
-          Please see new issue ${{ steps.create-issue.outputs.url }}  
+          Please see new issue ${{ steps.create-issue-java.outputs.url }}  
 
   minikube:
     runs-on: ubuntu-latest
@@ -67,20 +64,19 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
-      id: create-issue
+      id: create-issue-minikube
     - name: create comment
       if: failure()
       uses: peter-evans/create-or-update-comment@v1
       with:
-        issue-number: ${{ steps.create-issue.outputs.number }}
+        issue-number: ${{ steps.create-issue-minikube.outputs.number }}
         body: |
-          Please see failure log:  
-          https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
-    - name: Create comment
+          Please see failure log: https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
+    - name: create comment
       if: failure()
       uses: peter-evans/create-or-update-comment@v1
       with:
         issue-number: ${{ github.event.issue.number }}
         body: |
-          Please see new issue ${{ steps.create-issue.outputs.url }}  
-      
+          Please see new issue ${{ steps.create-issue-minikube.outputs.url }}  
+
