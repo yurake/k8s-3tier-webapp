@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaxrs-kafka-quarkus
+spec:
+  selector:
+    matchLabels:
+      app: jaxrs-kafka-quarkus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jaxrs-kafka-quarkus
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+      - name: jaxrs-kafka-quarkus
+        image: yurak/jaxrs-kafka-quarkus:latest
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /health/live
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /health/ready
+          initialDelaySeconds: 3
+          periodSeconds: 3

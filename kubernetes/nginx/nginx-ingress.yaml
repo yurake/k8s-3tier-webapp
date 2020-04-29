@@ -23,6 +23,10 @@ spec:
         backend:
           serviceName: jaxrs-hazelcast-quarkus
           servicePort: 8080
+      - path: /quarkus/kafka
+        backend:
+          serviceName: jaxrs-kafka-quarkus
+          servicePort: 8080
       - path: /quarkus/memcached
         backend:
           serviceName: jaxrs-memcached-quarkus

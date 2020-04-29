@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-kafka-quarkus
+spec:
+  selector:
+    matchLabels:
+      app: consumer-kafka-quarkus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: consumer-kafka-quarkus
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+      - name: consumer-kafka-quarkus
+        image: yurak/consumer-kafka-quarkus:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /health/live
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 5
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /health/ready
+          initialDelaySeconds: 3
+          periodSeconds: 3
