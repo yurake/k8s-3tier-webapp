@@ -10,7 +10,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
-	<artifactId>rabbitmq-mysql-quarkus</artifactId>
+	<artifactId>consumer-rabbitmq-quarkus</artifactId>
 	<properties>
 		<rabbitmq-jms.version>1.14.0</rabbitmq-jms.version>
 	</properties>

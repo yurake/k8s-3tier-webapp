@@ -10,7 +10,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
-	<artifactId>activemq-mysql-quarkus</artifactId>
+	<artifactId>consumer-activemq-quarkus</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>webapp.3tier.k8s</groupId>
