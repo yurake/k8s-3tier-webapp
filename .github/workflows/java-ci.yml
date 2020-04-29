@@ -81,7 +81,7 @@ jobs:
 
 
 
-  activemq-mysql-quarkus:
+  consumer-activemq-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
@@ -104,17 +104,17 @@ jobs:
       run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
     - name: Maven Build
-      working-directory: ./application/activemq-mysql-quarkus
+      working-directory: ./application/consumer-activemq-quarkus
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn -B package --settings ../.m2/settings.xml -Pnative
     - name: Pull Image
-      run: docker pull yurak/activemq-mysql-quarkus:latest
+      run: docker pull yurak/consumer-activemq-quarkus:latest
     - name: Build Image
-      working-directory: ./application/activemq-mysql-quarkus
-      run: docker build -t yurak/activemq-mysql-quarkus:latest -f src/main/docker/Dockerfile.native .
+      working-directory: ./application/consumer-activemq-quarkus
+      run: docker build -t yurak/consumer-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
     - name: Push Image
-      run: docker push yurak/activemq-mysql-quarkus:latest
+      run: docker push yurak/consumer-activemq-quarkus:latest
       
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
@@ -123,7 +123,7 @@ jobs:
 
 
 
-  hazelcast-mysql-quarkus:
+  consumer-hazelcast-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
@@ -146,17 +146,17 @@ jobs:
       run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
     - name: Maven Build
-      working-directory: ./application/hazelcast-mysql-quarkus
+      working-directory: ./application/consumer-hazelcast-quarkus
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn -B package --settings ../.m2/settings.xml 
     - name: Pull Image
-      run: docker pull yurak/hazelcast-mysql-quarkus:latest
+      run: docker pull yurak/consumer-hazelcast-quarkus:latest
     - name: Build Image
-      working-directory: ./application/hazelcast-mysql-quarkus
-      run: docker build -t yurak/hazelcast-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      working-directory: ./application/consumer-hazelcast-quarkus
+      run: docker build -t yurak/consumer-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
     - name: Push Image
-      run: docker push yurak/hazelcast-mysql-quarkus:latest
+      run: docker push yurak/consumer-hazelcast-quarkus:latest
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
@@ -501,7 +501,7 @@ jobs:
 
 
 
-  rabbitmq-mysql-quarkus:
+  consumer-rabbitmq-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
@@ -524,17 +524,17 @@ jobs:
       run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
     - name: Maven Build
-      working-directory: ./application/rabbitmq-mysql-quarkus
+      working-directory: ./application/consumer-rabbitmq-quarkus
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn -B package --settings ../.m2/settings.xml
     - name: Pull Image
-      run: docker pull yurak/rabbitmq-mysql-quarkus:latest
+      run: docker pull yurak/consumer-rabbitmq-quarkus:latest
     - name: Build Image
-      working-directory: ./application/rabbitmq-mysql-quarkus
-      run: docker build -t yurak/rabbitmq-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      working-directory: ./application/consumer-rabbitmq-quarkus
+      run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
     - name: Push Image
-      run: docker push yurak/rabbitmq-mysql-quarkus:latest
+      run: docker push yurak/consumer-rabbitmq-quarkus:latest
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
@@ -609,7 +609,7 @@ jobs:
 
 
 
-  redis-mysql-quarkus:
+  consumer-redis-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
@@ -632,17 +632,17 @@ jobs:
       run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
     - name: Maven Build
-      working-directory: ./application/redis-mysql-quarkus
+      working-directory: ./application/consumer-redis-quarkus
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn -B package --settings ../.m2/settings.xml
     - name: Pull Image
-      run: docker pull yurak/redis-mysql-quarkus:latest
+      run: docker pull yurak/consumer-redis-quarkus:latest
     - name: Build Image
-      working-directory: ./application/redis-mysql-quarkus
-      run: docker build -t yurak/redis-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      working-directory: ./application/consumer-redis-quarkus
+      run: docker build -t yurak/consumer-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
     - name: Push Image
-      run: docker push yurak/redis-mysql-quarkus:latest
+      run: docker push yurak/consumer-redis-quarkus:latest
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
