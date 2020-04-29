@@ -13,8 +13,16 @@
 	<artifactId>jaxrs-kafka-quarkus</artifactId>
 	<dependencies>
 		<dependency>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>webapp-service</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
+			<artifactId>quarkus-kafka-streams</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
 	</dependencies>
 </project>
