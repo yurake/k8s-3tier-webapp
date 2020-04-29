@@ -1,4 +1,4 @@
-package org.acme.kafka.streams.producer.generator;
+package webapp.tier.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,16 +18,10 @@ import org.jboss.logging.Logger;
 import io.reactivex.Flowable;
 import io.smallrye.reactive.messaging.kafka.KafkaRecord;
 
-/**
- * A bean producing random temperature data every second.
- * The values are written to a Kafka topic (temperature-values).
- * Another topic contains the name of weather stations (weather-stations).
- * The Kafka configuration is specified in the application configuration.
- */
 @ApplicationScoped
-public class ValuesGenerator {
+public class KafkaService {
 
-	private static final Logger LOG = Logger.getLogger(ValuesGenerator.class);
+	private static Logger LOG = Logger.getLogger(KafkaService.class.getSimpleName());
 
 	private Random random = new Random();
 
