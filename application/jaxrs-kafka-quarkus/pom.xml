@@ -6,7 +6,8 @@
 	<parent>
 		<groupId>webapp.3tier.k8s.parent</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>1.0.5-SNAPSHOT</version>
+		<version>${webapp.3tier.k8s.version}</version>
+		<relativePath>../parent-pom</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.acme</groupId>
