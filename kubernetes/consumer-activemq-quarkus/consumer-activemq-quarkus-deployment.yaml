@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: activemq-mysql-quarkus
+  name: consumer-activemq-quarkus
 spec:
   selector:
     matchLabels:
-      app: activemq-mysql-quarkus
+      app: consumer-activemq-quarkus
   replicas: 1
   template:
     metadata:
       labels:
-        app: activemq-mysql-quarkus
+        app: consumer-activemq-quarkus
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
     spec:
       containers:
-      - name: activemq-mysql-quarkus
-        image: yurak/activemq-mysql-quarkus:latest
+      - name: consumer-activemq-quarkus
+        image: yurak/consumer-activemq-quarkus:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

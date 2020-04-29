@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rabbitmq-mysql-quarkus
+  name: consumer-rabbitmq-quarkus
 spec:
   selector:
     matchLabels:
-      app: rabbitmq-mysql-quarkus
+      app: consumer-rabbitmq-quarkus
   replicas: 1
   template:
     metadata:
       labels:
-        app: rabbitmq-mysql-quarkus
+        app: consumer-rabbitmq-quarkus
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
     spec:
       containers:
-      - name: rabbitmq-mysql-quarkus
-        image: yurak/rabbitmq-mysql-quarkus:latest
+      - name: consumer-rabbitmq-quarkus
+        image: yurak/consumer-rabbitmq-quarkus:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

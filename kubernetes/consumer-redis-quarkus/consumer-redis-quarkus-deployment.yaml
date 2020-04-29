@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-mysql-quarkus
+  name: consumer-redis-quarkus
 spec:
   selector:
     matchLabels:
-      app: redis-mysql-quarkus
+      app: consumer-redis-quarkus
   replicas: 1
   template:
     metadata:
       labels:
-        app: redis-mysql-quarkus
+        app: consumer-redis-quarkus
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
     spec:
       containers:
-      - name: redis-mysql-quarkus
-        image: yurak/redis-mysql-quarkus:latest
+      - name: consumer-redis-quarkus
+        image: yurak/consumer-redis-quarkus:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

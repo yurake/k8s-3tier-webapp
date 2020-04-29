@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hazelcast-mysql-quarkus
+  name: consumer-hazelcast-quarkus
 spec:
   selector:
     matchLabels:
-      app: hazelcast-mysql-quarkus
+      app: consumer-hazelcast-quarkus
   replicas: 1
   template:
     metadata:
       labels:
-        app: hazelcast-mysql-quarkus
+        app: consumer-hazelcast-quarkus
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
     spec:
       containers:
-      - name: hazelcast-mysql-quarkus
-        image: yurak/hazelcast-mysql-quarkus:latest
+      - name: consumer-hazelcast-quarkus
+        image: yurak/consumer-hazelcast-quarkus:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
