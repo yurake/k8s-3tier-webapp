@@ -21,10 +21,13 @@ public class MessageGenerator {
 	@ConfigProperty(name = "common.message")
 	String message;
 
+	@ConfigProperty(name = "kafka.generate.message.period")
+	long period;
+
 	@Outgoing("message")
 	public Flowable<KafkaRecord<Integer, String>> generate() {
 
-		return Flowable.interval(1000, TimeUnit.MILLISECONDS)
+		return Flowable.interval(period, TimeUnit.MILLISECONDS)
 				.onBackpressureDrop()
 				.map(tick -> {
 					MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
