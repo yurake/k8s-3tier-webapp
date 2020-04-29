@@ -5,9 +5,9 @@ ROOT_DIR=$(cd $(dirname -- $0); pwd)
 
 ./apply-default-minimal.sh
 
-echo "### rabbitmq-mysql-quarkus"
-cd ${ROOT_DIR}/rabbitmq-mysql-quarkus
-kubectl apply -f ./rabbitmq-mysql-quarkus-deployment.yaml
+echo "### consumer-rabbitmq-quarkus"
+cd ${ROOT_DIR}/consumer-rabbitmq-quarkus
+kubectl apply -f ./consumer-rabbitmq-quarkus-deployment.yaml
 echo "###"
 echo ""
 
@@ -20,9 +20,9 @@ kubectl apply -f ./wlp-ingress.yaml
 echo "###"
 echo ""
 
-echo "### redis-mysql-quarkus"
-cd ${ROOT_DIR}/redis-mysql-quarkus
-kubectl apply -f ./redis-mysql-quarkus-deployment.yaml
+echo "### consumer-redis-quarkus"
+cd ${ROOT_DIR}/consumer-redis-quarkus
+kubectl apply -f ./consumer-redis-quarkus-deployment.yaml
 echo "###"
 echo ""
 
@@ -32,16 +32,16 @@ kubectl apply -f ./redis-mysql-helidon-deployment.yaml
 echo "###"
 echo ""
 
-echo "### hazelcast-mysql-quarkus"
-cd ${ROOT_DIR}/hazelcast-mysql-quarkus
-kubectl apply -f ./hazelcast-mysql-quarkus-deployment.yaml
+echo "### consumer-hazelcast-quarkus"
+cd ${ROOT_DIR}/consumer-hazelcast-quarkus
+kubectl apply -f ./consumer-hazelcast-quarkus-deployment.yaml
 cd ${ROOT_DIR}
 echo "###"
 echo ""
 
-echo "### activemq-mysql-quarkus"
-cd ${ROOT_DIR}/activemq-mysql-quarkus
-kubectl apply -f ./activemq-mysql-quarkus-deployment.yaml
+echo "### consumer-activemq-quarkus"
+cd ${ROOT_DIR}/consumer-activemq-quarkus
+kubectl apply -f ./consumer-activemq-quarkus-deployment.yaml
 echo "###"
 echo ""
 
