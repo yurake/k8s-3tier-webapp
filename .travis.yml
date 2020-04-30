@@ -20,8 +20,10 @@ jobs:
     script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/webapp-service/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_webapp-service
   - stage: sonar main project
     script: 
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/activemq-mysql-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_activemq-mysql-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/hazelcast-mysql-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_hazelcast-mysql-quarkus
+    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-activemq-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_consumer-activemq-quarkus
+    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-hazelcast-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_consumer-hazelcast-quarkus
+    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-rabbitmq-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_consumer-rabbitmq-quarkus
+    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-redis-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_consumer-redis-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-activemq-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_jaxrs-activemq-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-hazelcast-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_jaxrs-hazelcast-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-memcached-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_jaxrs-memcached-quarkus
@@ -30,10 +32,8 @@ jobs:
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-postgres-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-rabbitmq-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-redis-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/rabbitmq-mysql-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_rabbitmq-mysql-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/randompublish-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_randompublish-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/redis-mysql-helidon/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_redis-mysql-helidon
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/redis-mysql-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_redis-mysql-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/scheduled-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_scheduled-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/wlp-web-java-spring/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_wlp-web-java-spring
     
