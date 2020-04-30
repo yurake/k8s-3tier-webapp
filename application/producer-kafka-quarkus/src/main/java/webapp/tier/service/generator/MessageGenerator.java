@@ -9,7 +9,6 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.jboss.logging.Logger;
 
 import io.reactivex.Flowable;
-import io.smallrye.reactive.messaging.kafka.KafkaRecord;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgBeanUtils;
 
@@ -21,19 +20,21 @@ public class MessageGenerator {
 	@ConfigProperty(name = "common.message")
 	String message;
 
-	@ConfigProperty(name = "kafka.generate.message.period")
+	@ConfigProperty(name = "kafka.splitkey")
+	String splitkey;
+
+	@ConfigProperty(name = "kafka.generate.message.period.seconds")
 	long period;
 
 	@Outgoing("message")
-	public Flowable<KafkaRecord<Integer, String>> generate() {
+	public Flowable<String> generate() {
 
-		return Flowable.interval(period, TimeUnit.MILLISECONDS)
-				.onBackpressureDrop()
+		return Flowable.interval(period, TimeUnit.SECONDS)
 				.map(tick -> {
 					MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 					msgbean.setFullmsgWithType(msgbean, "Generate");
 					LOG.info(msgbean.getFullmsg());
-					return KafkaRecord.of(msgbean.getId(), msgbean.getMessage());
+					return msgbean.createBody(msgbean, splitkey);
 				});
 	}
 }

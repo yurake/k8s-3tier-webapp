@@ -165,6 +165,48 @@ jobs:
 
 
 
+  consumer-kafka-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+      
+    - name: Setup GraalVM
+      uses: DeLaGuardo/setup-graalvm@3
+      with:
+        graalvm-version: '20.0.0.java8'
+    - run: java -version
+    - name: setup-native-image
+      run: |
+        gu install native-image
+    
+    - name: docker login
+      env:
+        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+    - name: Maven Build
+      working-directory: ./application/consumer-kafka-quarkus
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: mvn -B package --settings ../.m2/settings.xml -Pnative
+    - name: Pull Image
+      run: docker pull yurak/consumer-kafka-quarkus:latest
+    - name: Build Image
+      working-directory: ./application/consumer-kafka-quarkus
+      run: docker build -t yurak/consumer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+    - name: Push Image
+      run: docker push yurak/consumer-kafka-quarkus:latest
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+
+
+
   scheduled-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
@@ -241,6 +283,48 @@ jobs:
       run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
     - name: Push Image
       run: docker push yurak/jaxrs-hazelcast-quarkus:latest
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+
+
+
+  jaxrs-kafka-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+      
+    - name: Setup GraalVM
+      uses: DeLaGuardo/setup-graalvm@3
+      with:
+        graalvm-version: '20.0.0.java8'
+    - run: java -version
+    - name: setup-native-image
+      run: |
+        gu install native-image
+    
+    - name: docker login
+      env:
+        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+    - name: Maven Build
+      working-directory: ./application/jaxrs-kafka-quarkus
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: mvn -B package --settings ../.m2/settings.xml -Pnative
+    - name: Pull Image
+      run: docker pull yurak/jaxrs-kafka-quarkus:latest
+    - name: Build Image
+      working-directory: ./application/jaxrs-kafka-quarkus
+      run: docker build -t yurak/jaxrs-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+    - name: Push Image
+      run: docker push yurak/jaxrs-kafka-quarkus:latest
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
@@ -535,6 +619,48 @@ jobs:
       run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
     - name: Push Image
       run: docker push yurak/consumer-rabbitmq-quarkus:latest
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+
+
+
+  producer-kafka-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+      
+    - name: Setup GraalVM
+      uses: DeLaGuardo/setup-graalvm@3
+      with:
+        graalvm-version: '20.0.0.java8'
+    - run: java -version
+    - name: setup-native-image
+      run: |
+        gu install native-image
+    
+    - name: docker login
+      env:
+        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+    - name: Maven Build
+      working-directory: ./application/producer-kafka-quarkus
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: mvn -B package --settings ../.m2/settings.xml -Pnative
+    - name: Pull Image
+      run: docker pull yurak/producer-kafka-quarkus:latest
+    - name: Build Image
+      working-directory: ./application/producer-kafka-quarkus
+      run: docker build -t yurak/producer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+    - name: Push Image
+      run: docker push yurak/producer-kafka-quarkus:latest
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
