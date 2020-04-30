@@ -34,7 +34,7 @@ jobs:
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-postgres-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-rabbitmq-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-redis-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/producer-kafka-kuarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_producer-kafka-kuarkus
+    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/producer-kafka-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_producer-kafka-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/randompublish-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_randompublish-quarkus
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/redis-mysql-helidon/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_redis-mysql-helidon
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/scheduled-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_scheduled-quarkus
