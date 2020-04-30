@@ -39,10 +39,10 @@ public class InteractiveQueries {
 		}
 	}
 
-	public List<String> getStremaData() {
-		LOG.warn("getStremaData: " + InteractiveQueries.class.getName());
+	public List<String> getStreamData() {
+		LOG.warn("getStreamData: " + InteractiveQueries.class.getName());
 		List<String> msglist = new ArrayList<>();
-		ReadOnlyKeyValueStore<Integer, String> kvs = getStremaDataStore();
+		ReadOnlyKeyValueStore<Integer, String> kvs = getStreamDataStore();
 		KeyValueIterator<Integer, String> result = kvs.all();
 
 		if (result != null) {
@@ -71,7 +71,7 @@ public class InteractiveQueries {
 		}
 	}
 
-	private ReadOnlyKeyValueStore<Integer, String> getStremaDataStore() {
+	private ReadOnlyKeyValueStore<Integer, String> getStreamDataStore() {
 		while (true) {
 			try {
 				return streams.store(TopologyProducer.WEATHER_STATIONS_STORE, QueryableStoreTypes.keyValueStore());

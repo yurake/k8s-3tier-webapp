@@ -49,8 +49,8 @@ public class WeatherStationEndpoint {
 	@Path("/stream")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getStremaData() {
-		List<String> result = interactiveQueries.getStremaData();
+	public Response getStreamData() {
+		List<String> result = interactiveQueries.getStreamData();
 		return Response.ok(result).build();
 	}
 
