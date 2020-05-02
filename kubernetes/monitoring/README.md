@@ -13,13 +13,13 @@ http://grafana.minikube/
 http://jenkins.minikube  
 * jaeger  
 http://jaeger.minikube  
-* jupyter notebook
+* jupyter notebook  
 http://jupyter.minikube
 
 ## Optional
 
-### Set up [argo](argo/README.md)  
+### Set up [argo](optional/argo/README.md)  
 * argo dashboard  
 http://argo.minikube
 
-### Set up [tekton](tekton/README.md)  
+### Set up [tekton](optional/tekton/README.md)  
