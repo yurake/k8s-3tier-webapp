@@ -47,7 +47,7 @@ Installed CLI commands.
 
 **Mac**  
 ```bash
-minikube config set memory 8192
+minikube config set memory 121288
 minikube config set cpus 4
 minikube config set disk-size 80g
 minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --kubernetes-version=v1.15.4
@@ -59,7 +59,7 @@ eval $(minikube docker-env)
 
 **Windows**  
 ```bash
-minikube config set memory 8192
+minikube config set memory 121288
 minikube config set cpus 4
 minikube config set disk-size 80g
 minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --kubernetes-version=v1.15.4
