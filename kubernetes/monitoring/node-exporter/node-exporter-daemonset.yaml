@@ -23,8 +23,8 @@ spec:
           image: "prom/node-exporter:v0.18.1"
           imagePullPolicy: "IfNotPresent"
           args:
-            - --path.procfs=/host/proc
-            - --path.sysfs=/host/sys
+            - --path.procfs=/proc
+            - --path.sysfs=/sys
           ports:
             - name: metrics
               containerPort: 9100
