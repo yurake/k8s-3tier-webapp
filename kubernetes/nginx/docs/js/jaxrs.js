@@ -9,9 +9,11 @@ mysqlurl = url + '/mysql';
 postgresurl = url + '/postgres';
 mongodburl = url + '/mongodb';
 kafkaurl = url + '/kafka';
+isOpenOnce = false;
+initialvalue = "Response Values"
 
 $(function () {
-	$("#response").html("Response Values");
+	$("#response").html(initialvalue);
 
 	$("#setmemcached").click(function () {
 		$.ajax({
@@ -438,13 +440,30 @@ $(function () {
 		})
 	})
 
+	var sse;
+
 	$("#streamkafka").click(function (event) {
-		source = new EventSource(kafkaurl + '/stream');
-		$("#response").empty();
-		source.onmessage = function (event) {
-			const resp = event.data
-			console.log(resp);
-			$("#response").append(resp + '\n');
-		};
+		if (isOpenOnce) {
+			console.log("Already connected.");
+		} else {
+			console.log("Connection to server opened.");
+			isOpenOnce = true;
+			sse = new EventSource(kafkaurl + '/stream')
+			$("#response").empty();
+			sse.onmessage = function (event) {
+				const resp = event.data
+				console.log(resp);
+				$("#response").append(resp + '\n');
+			};
+		}
+	})
+
+	$("#stopstreamkafka").click(function () {
+		if (isOpenOnce) {
+			console.log("Connection to server closed.");
+			sse.close();
+			isOpenOnce = false;
+			$("#response").html(initialvalue);
+		}
 	})
 })
