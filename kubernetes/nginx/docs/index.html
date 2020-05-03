@@ -4,14 +4,14 @@
 <head>
 	<title>k8s-3tier-webapp</title>
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="./js/jaxrs.js"></script>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="./css/style.css" />
 	<link rel="icon" type="image/png" sizes="16x16" href="./images/icon-16x16.png" />
 </head>
 
-<body bgcolor=white>
+<body>
 	<p>To prove that they work, you can execute either of the following links:</p>
 	<table>
 		<tr>
@@ -20,6 +20,15 @@
 			<th>SELECT</th>
 			<th>PUBLISH</th>
 			<th>DELETE</th>
+		</tr>
+		<tr>
+			<td>Kafka</td>
+			<td>-</td>
+			<td>
+				<button id="streamkafka" type="button">Stream</button>
+			</td>
+			<td>-</td>
+			<td>-</td>
 		</tr>
 		<tr>
 			<td>Memcached</td>

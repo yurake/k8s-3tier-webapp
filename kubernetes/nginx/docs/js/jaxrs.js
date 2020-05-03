@@ -8,6 +8,7 @@ hazelcasturl = url + '/hazelcast';
 mysqlurl = url + '/mysql';
 postgresurl = url + '/postgres';
 mongodburl = url + '/mongodb';
+kafkaurl = url + '/kafka';
 
 $(function () {
 	$("#response").html("Response Values");
@@ -435,5 +436,15 @@ $(function () {
 			console.log(resp);
 			$("#response").html(resp);
 		})
+	})
+
+	$("#streamkafka").click(function (event) {
+		source = new EventSource(kafkaurl + '/stream');
+		$("#response").empty();
+		source.onmessage = function (event) {
+			const resp = event.data
+			console.log(resp);
+			$("#response").append(resp + '\n');
+		};
 	})
 })
