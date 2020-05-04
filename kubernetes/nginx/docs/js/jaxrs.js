@@ -1,5 +1,6 @@
 root = location.href;
 url = root + 'quarkus';
+kafkaurl = url + '/kafka';
 memcachedurl = url + '/memcached';
 redisurl = url + '/redis';
 rabbitmqurl = url + '/rabbitmq';
@@ -8,12 +9,80 @@ hazelcasturl = url + '/hazelcast';
 mysqlurl = url + '/mysql';
 postgresurl = url + '/postgres';
 mongodburl = url + '/mongodb';
-kafkaurl = url + '/kafka';
 isOpenOnce = false;
 initialvalue = "Response Values"
 
 $(function () {
-	$("#response").html(initialvalue);
+	$("#respkafka").html(initialvalue);
+	$("#respmemcached").html(initialvalue);
+	$("#respredis").html(initialvalue);
+	$("#resprabbitmq").html(initialvalue);
+	$("#respactivemq").html(initialvalue);
+	$("#respcachehazelcast").html(initialvalue);
+	$("#respqueuehazelcast").html(initialvalue);
+	$("#respmysql").html(initialvalue);
+	$("#resppostgres").html(initialvalue);
+	$("#respmongodb").html(initialvalue);
+
+	var sse;
+
+	$("#getkafka").click(function () {
+		$.ajax({
+			type: 'get',
+			url: kafkaurl + '/get',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#respkafka").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#respkafka").html(resp);
+		})
+	})
+
+	$("#publishkafka").click(function () {
+		$.ajax({
+			type: 'post',
+			url: kafkaurl + '/publish',
+			contentType: 'application/json',
+			scriptCharset: 'utf-8',
+		}).done(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#respkafka").html(resp);
+		}).fail(function (data) {
+			const resp = JSON.stringify(data, null, 4)
+			console.log(resp);
+			$("#respkafka").html(resp);
+		})
+	})
+
+	$("#subscribekafka").click(function (event) {
+		if (isOpenOnce) {
+			console.log("Already connected.");
+		} else {
+			console.log("Connection to server opened.");
+			isOpenOnce = true;
+			sse = new EventSource(kafkaurl + '/subscribe')
+			sse.onmessage = function (event) {
+				const resp = event.data;
+				console.log(resp);
+				document.getElementById("respkafka").innerHTML = resp;
+			};
+		}
+	})
+
+	$("#stopkafka").click(function () {
+		if (isOpenOnce) {
+			console.log("Connection to server closed.");
+			sse.close();
+			isOpenOnce = false;
+			$("#respkafka").html(initialvalue);
+		}
+	})
 
 	$("#setmemcached").click(function () {
 		$.ajax({
@@ -24,11 +93,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmemcached").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmemcached").html(resp);
 		})
 	})
 
@@ -41,11 +110,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmemcached").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmemcached").html(resp);
 		})
 	})
 
@@ -58,11 +127,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respredis").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respredis").html(resp);
 		})
 	})
 
@@ -75,11 +144,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respredis").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respredis").html(resp);
 		})
 	})
 
@@ -92,11 +161,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respredis").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respredis").html(resp);
 		})
 	})
 
@@ -109,11 +178,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resprabbitmq").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resprabbitmq").html(resp);
 		})
 	})
 
@@ -126,11 +195,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resprabbitmq").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resprabbitmq").html(resp);
 		})
 	})
 
@@ -143,11 +212,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resprabbitmq").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resprabbitmq").html(resp);
 		})
 	})
 
@@ -160,11 +229,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respactivemq").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respactivemq").html(resp);
 		})
 	})
 
@@ -177,11 +246,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respactivemq").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respactivemq").html(resp);
 		})
 	})
 
@@ -194,11 +263,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respactivemq").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respactivemq").html(resp);
 		})
 	})
 
@@ -211,11 +280,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respcachehazelcast").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respcachehazelcast").html(resp);
 		})
 	})
 
@@ -228,11 +297,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respcachehazelcast").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respcachehazelcast").html(resp);
 		})
 	})
 
@@ -245,11 +314,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respcachehazelcast").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respcachehazelcast").html(resp);
 		})
 	})
 
@@ -262,11 +331,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respqueuehazelcast").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respqueuehazelcast").html(resp);
 		})
 	})
 
@@ -279,11 +348,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respqueuehazelcast").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respqueuehazelcast").html(resp);
 		})
 	})
 
@@ -296,11 +365,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmysql").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmysql").html(resp);
 		})
 	})
 
@@ -313,11 +382,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmysql").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmysql").html(resp);
 		})
 	})
 
@@ -330,11 +399,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmysql").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmysql").html(resp);
 		})
 	})
 
@@ -347,11 +416,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resppostgres").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resppostgres").html(resp);
 		})
 	})
 
@@ -364,11 +433,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resppostgres").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resppostgres").html(resp);
 		})
 	})
 
@@ -381,11 +450,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resppostgres").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#resppostgres").html(resp);
 		})
 	})
 
@@ -398,11 +467,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmongodb").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmongodb").html(resp);
 		})
 	})
 
@@ -415,11 +484,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmongodb").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmongodb").html(resp);
 		})
 	})
 
@@ -432,38 +501,11 @@ $(function () {
 		}).done(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmongodb").html(resp);
 		}).fail(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			console.log(resp);
-			$("#response").html(resp);
+			$("#respmongodb").html(resp);
 		})
-	})
-
-	var sse;
-
-	$("#streamkafka").click(function (event) {
-		if (isOpenOnce) {
-			console.log("Already connected.");
-		} else {
-			console.log("Connection to server opened.");
-			isOpenOnce = true;
-			sse = new EventSource(kafkaurl + '/stream')
-			$("#response").empty();
-			sse.onmessage = function (event) {
-				const resp = event.data
-				console.log(resp);
-				$("#response").append(resp + '\n');
-			};
-		}
-	})
-
-	$("#stopstreamkafka").click(function () {
-		if (isOpenOnce) {
-			console.log("Connection to server closed.");
-			sse.close();
-			isOpenOnce = false;
-			$("#response").html(initialvalue);
-		}
 	})
 })

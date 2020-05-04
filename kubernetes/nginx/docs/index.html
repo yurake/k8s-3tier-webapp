@@ -19,17 +19,27 @@
 			<th>CREATE</th>
 			<th>SELECT</th>
 			<th>PUBLISH</th>
-			<th>DELETE</th>
+			<th>SUBSCRIBE</th>
+			<th>STOP/DELETE</th>
+			<th>RESPONSE</th>
 		</tr>
 		<tr>
 			<td>Kafka</td>
 			<td>-</td>
 			<td>
-				<button id="streamkafka" type="button">Stream</button>
+				<button id="getkafka" type="button">Get</button>
 			</td>
-			<td>-</td>
 			<td>
-				<button id="stopstreamkafka" type="button">Stop</button>
+				<button id="publishkafka" type="button">Publish</button>
+			</td>
+			<td>
+				<button id="subscribekafka" type="button">Subscribe</button>
+			</td>
+			<td>
+				<button id="stopkafka" type="button">Stop</button>
+			</td>
+			<td>
+				<textarea id="respkafka" cols=100 rows=2 disabled></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -42,6 +52,10 @@
 			</td>
 			<td>-</td>
 			<td>-</td>
+			<td>-</td>
+			<td>
+				<textarea id="respmemcached" cols=100 rows=2 disabled></textarea>
+			</td>
 		</tr>
 		<tr>
 			<td>Redis</td>
@@ -55,6 +69,10 @@
 				<button id="publishredis" type="button">Publish</button>
 			</td>
 			<td>-</td>
+			<td>-</td>
+			<td>
+				<textarea id="respredis" cols=100 rows=2 disabled></textarea>
+			</td>
 		</tr>
 		<tr>
 			<td>RabbitMQ</td>
@@ -68,6 +86,10 @@
 				<button id="publishrabbitmq" type="button">Publish</button>
 			</td>
 			<td>-</td>
+			<td>-</td>
+			<td>
+				<textarea id="resprabbitmq" cols=100 rows=2 disabled></textarea>
+			</td>
 		</tr>
 		<tr>
 			<td>ActiveMQ</td>
@@ -81,6 +103,10 @@
 				<button id="publishactivemq" type="button">Publish</button>
 			</td>
 			<td>-</td>
+			<td>-</td>
+			<td>
+				<textarea id="respactivemq" cols=100 rows=2 disabled></textarea>
+			</td>
 		</tr>
 		<tr>
 			<td>Hazelcast</td>
@@ -94,6 +120,10 @@
 				<button id="publishhazelcast" type="button">Publish</button>
 			</td>
 			<td>-</td>
+			<td>-</td>
+			<td>
+				<textarea id="respcachehazelcast" cols=100 rows=2 disabled></textarea>
+			</td>
 		</tr>
 		<tr>
 			<td>Hazelcast</td>
@@ -105,6 +135,10 @@
 			</td>
 			<td>-</td>
 			<td>-</td>
+			<td>-</td>
+			<td>
+				<textarea id="respqueuehazelcast" cols=100 rows=2 disabled></textarea>
+			</td>
 		</tr>
 		<tr>
 			<td>Mysql</td>
@@ -115,8 +149,12 @@
 				<button id="selectmysql" type="button">Select</button>
 			</td>
 			<td>-</td>
+			<td>-</td>
 			<td>
 				<button id="deletemysql" type="button">Delete</button>
+			</td>
+			<td>
+				<textarea id="respmysql" cols=100 rows=2 disabled></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -128,8 +166,12 @@
 				<button id="selectpostgres" type="button">Select</button>
 			</td>
 			<td>-</td>
+			<td>-</td>
 			<td>
 				<button id="deletepostgres" type="button">Delete</button>
+			</td>
+			<td>
+				<textarea id="resppostgres" cols=100 rows=2 disabled></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -141,12 +183,15 @@
 				<button id="selectmongodb" type="button">Select</button>
 			</td>
 			<td>-</td>
+			<td>-</td>
 			<td>
 				<button id="deletemongodb" type="button">Delete</button>
 			</td>
+			<td>
+				<textarea id="respmongodb" cols=100 rows=2 disabled></textarea>
+			</td>
 		</tr>
 	</table>
-	<textarea id="response" cols=130 rows=10 disabled></textarea>
 	<hr />
 	<p><a href="http://wlp.minikube/" target="_blank">Traditional Web Application</a></p>
 	<img src="./images/deer.png" width="200">
