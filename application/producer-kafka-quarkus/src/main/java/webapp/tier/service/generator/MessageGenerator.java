@@ -9,6 +9,7 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.jboss.logging.Logger;
 
 import io.reactivex.Flowable;
+import io.smallrye.reactive.messaging.annotations.Broadcast;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgBeanUtils;
 
@@ -27,6 +28,7 @@ public class MessageGenerator {
 	long period;
 
 	@Outgoing("message")
+	@Broadcast
 	public Flowable<String> generate() {
 
 		return Flowable.interval(period, TimeUnit.SECONDS)
