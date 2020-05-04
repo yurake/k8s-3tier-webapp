@@ -1,9 +1,54 @@
 #!/bin/sh
 set -eu
 
-ROOT_DIR=$(cd $(dirname -- $0); pwd)
+ROOT_DIR=$(
+    cd $(dirname -- $0)
+    pwd
+)
 
 ./apply-default-minimal.sh
+
+echo "### zookeeper"
+cd ${ROOT_DIR}/zookeeper
+kubectl apply -f ./zookeeper-statefulset.yaml
+kubectl apply -f ./zookeeper-service.yaml
+echo "###"
+echo ""
+
+echo "### kafka"
+cd ${ROOT_DIR}/kafka
+kubectl apply -f ./kafka-statefulset.yaml
+kubectl apply -f ./kafka-service.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-kafka-quarkus"
+cd ${ROOT_DIR}/jaxrs-kafka-quarkus
+kubectl apply -f ./jaxrs-kafka-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-kafka-quarkus-service.yaml
+kubectl apply -f ./jaxrs-kafka-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
+echo "### producer-kafka-quarkus"
+cd ${ROOT_DIR}/producer-kafka-quarkus
+kubectl apply -f ./producer-kafka-quarkus-deployment.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-kafka-quarkus"
+cd ${ROOT_DIR}/jaxrs-kafka-quarkus
+kubectl apply -f ./jaxrs-kafka-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-kafka-quarkus-service.yaml
+kubectl apply -f ./jaxrs-kafka-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
+echo "### consumer-kafka-quarkus"
+cd ${ROOT_DIR}/consumer-kafka-quarkus
+kubectl apply -f ./consumer-kafka-quarkus-deployment.yaml
+echo "###"
+echo ""
 
 echo "### consumer-rabbitmq-quarkus"
 cd ${ROOT_DIR}/consumer-rabbitmq-quarkus
