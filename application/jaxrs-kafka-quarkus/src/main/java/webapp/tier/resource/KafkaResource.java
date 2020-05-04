@@ -1,8 +1,5 @@
 package webapp.tier.resource;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -18,16 +15,14 @@ import javax.ws.rs.sse.Sse;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.jboss.resteasy.annotations.SseElementType;
-import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import org.reactivestreams.Publisher;
 
 import webapp.tier.bean.LatestMessage;
+import webapp.tier.service.KafkaService;
 
 @ApplicationScoped
 @Path("/quarkus/kafka")
 public class KafkaResource {
-
-	private static final Logger LOG = Logger.getLogger(KafkaResource.class.getSimpleName());
 
 	@Inject
 	@Channel("in-memory-message")
@@ -36,6 +31,9 @@ public class KafkaResource {
 	@Inject
 	@Channel("message")
 	Emitter<String> emitmsg;
+
+	@Inject
+	KafkaService svc;
 
 	@Context
 	private Sse sse;
@@ -56,10 +54,16 @@ public class KafkaResource {
 	}
 
 	@POST
-	@Path("/broadcast/{msg}")
-	@Consumes(MediaType.TEXT_PLAIN)
-	public Response addPrice(@PathParam String msg) {
-		LOG.log(Level.INFO, "Broadcasted: {0}", msg);
-		return Response.ok(emitmsg.send(msg)).build();
+	@Path("/publish")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response publish() {
+		try {
+			String body = svc.publishMsg();
+			emitmsg.send(body);
+			return Response.ok().entity(body).build();
+		} catch (Exception e) {
+			return Response.status(500).entity(e.getMessage()).build();
+		}
 	}
 }
