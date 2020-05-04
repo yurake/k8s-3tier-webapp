@@ -32,6 +32,7 @@ public class MessageGenerator {
 	public Flowable<String> generate() {
 
 		return Flowable.interval(period, TimeUnit.SECONDS)
+				.onBackpressureDrop()
 				.map(tick -> {
 					MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
 					msgbean.setFullmsgWithType(msgbean, "Generate");
