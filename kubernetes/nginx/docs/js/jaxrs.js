@@ -19,39 +19,51 @@ publish = 'publish';
 insert = 'insert';
 select = 'select';
 delt = 'delete';
+respkafka = "#respkafka";
+respmemcached = "#respmemcached";
+respredis = "#respredis";
+resprabbitmq = "#resprabbitmq";
+respactivemq = "#respactivemq";
+respcachehazelcast = "#respcachehazelcast";
+respqueuehazelcast = "#respqueuehazelcast";
+respmysql = "#respmysql";
+resppostgres = "#resppostgres";
+respmongodb = "#respmongodb";
 
 $(function () {
-	$("#respkafka").html(initialvalue);
-	$("#respmemcached").html(initialvalue);
-	$("#respredis").html(initialvalue);
-	$("#resprabbitmq").html(initialvalue);
-	$("#respactivemq").html(initialvalue);
-	$("#respcachehazelcast").html(initialvalue);
-	$("#respqueuehazelcast").html(initialvalue);
-	$("#respmysql").html(initialvalue);
-	$("#resppostgres").html(initialvalue);
-	$("#respmongodb").html(initialvalue);
+	$(respkafka).html(initialvalue);
+	$(respmemcached).html(initialvalue);
+	$(respredis).html(initialvalue);
+	$(resprabbitmq).html(initialvalue);
+	$(respactivemq).html(initialvalue);
+	$(respcachehazelcast).html(initialvalue);
+	$(respqueuehazelcast).html(initialvalue);
+	$(respmysql).html(initialvalue);
+	$(resppostgres).html(initialvalue);
+	$(respmongodb).html(initialvalue);
 
 	var sse;
 
-	function dispMsg(type, url) {
+	function dispMsg(type, url, respid) {
 		$.ajax({
 			type: type,
 			url: url,
+			cache: false,
+			timeout: 10000,
 		}).always(function (data) {
 			const resp = JSON.stringify(data, null, 4)
 			const respj = JSON.parse(resp)
 			console.log(resp);
-			$("#respmemcached").html(respj.responseText + '\nstatus: ' + respj.status);
+			$(respid).html(respj.responseText + '\nstatus: ' + respj.status);
 		})
 	}
 
 	$("#getkafka").click(function () {
-		dispMsg(get, kafkaurl + get);
+		dispMsg(get, kafkaurl + get, respkafka);
 	})
 
 	$("#publishkafka").click(function () {
-		dispMsg(post, kafkaurl + publish);
+		dispMsg(post, kafkaurl + publish, respkafka);
 	})
 
 	$("#subscribekafka").click(function (event) {
@@ -74,107 +86,107 @@ $(function () {
 			console.log("Connection to server closed.");
 			sse.close();
 			isOpenOnce = false;
-			$("#respkafka").html(initialvalue);
+			$(respkafka).html(initialvalue);
 		}
 	})
 
 	$("#setmemcached").click(function () {
-		dispMsg(post, memcachedurl + set);
+		dispMsg(post, memcachedurl + set, respmemcached);
 	})
 
 	$("#getmemcached").click(function () {
-		dispMsg(get, memcachedurl + get);
+		dispMsg(get, memcachedurl + get, respmemcached);
 	})
 
 	$("#setredis").click(function () {
-		dispMsg(post, redisurl + set);
+		dispMsg(post, redisurl + set, respredis);
 	})
 
 	$("#getredis").click(function () {
-		dispMsg(get, redisurl + get);
+		dispMsg(get, redisurl + get, respredis);
 	})
 
 	$("#publishredis").click(function () {
-		dispMsg(post, redisurl + publish);
+		dispMsg(post, redisurl + publish, respredis);
 	})
 
 	$("#putrabbitmq").click(function () {
-		dispMsg(post, rabbitmqurl + put);
+		dispMsg(post, rabbitmqurl + put, resprabbitmq);
 	})
 
 	$("#getrabbitmq").click(function () {
-		dispMsg(get, rabbitmqurl + get);
+		dispMsg(get, rabbitmqurl + get, resprabbitmq);
 	})
 
 	$("#publishrabbitmq").click(function () {
-		dispMsg(post, rabbitmqurl + publish);
+		dispMsg(post, rabbitmqurl + publish, resprabbitmq);
 	})
 
 	$("#putactivemq").click(function () {
-		dispMsg(post, activemqurl + put);
+		dispMsg(post, activemqurl + put, respactivemq);
 	})
 
 	$("#getactivemq").click(function () {
-		dispMsg(get, activemqurl + get);
+		dispMsg(get, activemqurl + get, respactivemq);
 	})
 
 	$("#publishactivemq").click(function () {
-		dispMsg(post, activemqurl + publish);
+		dispMsg(post, activemqurl + publish, respactivemq);
 	})
 
 	$("#putcachehazelcast").click(function () {
-		dispMsg(post, hazelcasturl + 'putcache');
+		dispMsg(post, hazelcasturl + 'putcache', respcachehazelcast);
 	})
 
 	$("#getcachehazelcast").click(function () {
-		dispMsg(get, hazelcasturl + 'getcache');
+		dispMsg(get, hazelcasturl + 'getcache', respcachehazelcast);
 	})
 
 	$("#publishhazelcast").click(function () {
-		dispMsg(post, hazelcasturl + publish);
+		dispMsg(post, hazelcasturl + publish, respcachehazelcast);
 	})
 
 	$("#putqueuehazelcast").click(function () {
-		dispMsg(post, hazelcasturl + 'putqueue');
+		dispMsg(post, hazelcasturl + 'putqueue', respqueuehazelcast);
 	})
 
 	$("#getqueuehazelcast").click(function () {
-		dispMsg(get, hazelcasturl + 'getqueue');
+		dispMsg(get, hazelcasturl + 'getqueue', respqueuehazelcast);
 	})
 
 	$("#insertmysql").click(function () {
-		dispMsg(post, mysqlurl + insert);
+		dispMsg(post, mysqlurl + insert, respmysql);
 	})
 
 	$("#selectmysql").click(function () {
-		dispMsg(get, mysqlurl + select);
+		dispMsg(get, mysqlurl + select, respmysql);
 	})
 
 	$("#deletemysql").click(function () {
-		dispMsg(post, mysqlurl + delt);
+		dispMsg(post, mysqlurl + delt, respmysql);
 	})
 
 	$("#insertpostgres").click(function () {
-		dispMsg(post, postgresurl + insert);
+		dispMsg(post, postgresurl + insert, resppostgres);
 	})
 
 	$("#selectpostgres").click(function () {
-		dispMsg(get, postgresurl + select);
+		dispMsg(get, postgresurl + select, resppostgres);
 	})
 
 	$("#deletepostgres").click(function () {
-		dispMsg(post, postgresurl + delt);
+		dispMsg(post, postgresurl + delt, resppostgres);
 	})
 
 	$("#insertmongodb").click(function () {
-		dispMsg(post, mongodburl + insert);
+		dispMsg(post, mongodburl + insert, respmongodb);
 	})
 
 	$("#selectmongodb").click(function () {
-		dispMsg(get, mongodburl + select);
+		dispMsg(get, mongodburl + select, respmongodb);
 	})
 
 	$("#deletemongodb").click(function () {
-		dispMsg(post, mongodburl + delt);
+		dispMsg(post, mongodburl + delt, respmongodb);
 	})
 })
