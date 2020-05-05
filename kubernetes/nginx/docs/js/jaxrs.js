@@ -1,16 +1,24 @@
 root = location.href;
 url = root + 'quarkus';
-kafkaurl = url + '/kafka';
-memcachedurl = url + '/memcached';
-redisurl = url + '/redis';
-rabbitmqurl = url + '/rabbitmq';
-activemqurl = url + '/activemq';
-hazelcasturl = url + '/hazelcast';
-mysqlurl = url + '/mysql';
-postgresurl = url + '/postgres';
-mongodburl = url + '/mongodb';
+kafkaurl = url + '/kafka/';
+memcachedurl = url + '/memcached/';
+redisurl = url + '/redis/';
+rabbitmqurl = url + '/rabbitmq/';
+activemqurl = url + '/activemq/';
+hazelcasturl = url + '/hazelcast/';
+mysqlurl = url + '/mysql/';
+postgresurl = url + '/postgres/';
+mongodburl = url + '/mongodb/';
 isOpenOnce = false;
-initialvalue = "Response Values"
+initialvalue = "Response Values";
+set = 'set';
+put = 'put';
+get = 'get';
+post = 'post';
+publish = 'publish';
+insert = 'insert';
+select = 'select';
+delt = 'delete';
 
 $(function () {
 	$("#respkafka").html(initialvalue);
@@ -26,38 +34,24 @@ $(function () {
 
 	var sse;
 
-	$("#getkafka").click(function () {
+	function dispMsg(type, url) {
 		$.ajax({
-			type: 'get',
-			url: kafkaurl + '/get',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
+			type: type,
+			url: url,
+		}).always(function (data) {
 			const resp = JSON.stringify(data, null, 4)
+			const respj = JSON.parse(resp)
 			console.log(resp);
-			$("#respkafka").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respkafka").html(resp);
+			$("#respmemcached").html(respj.responseText + '\nstatus: ' + respj.status);
 		})
+	}
+
+	$("#getkafka").click(function () {
+		dispMsg(get, kafkaurl + get);
 	})
 
 	$("#publishkafka").click(function () {
-		$.ajax({
-			type: 'post',
-			url: kafkaurl + '/publish',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respkafka").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respkafka").html(resp);
-		})
+		dispMsg(post, kafkaurl + publish);
 	})
 
 	$("#subscribekafka").click(function (event) {
@@ -66,7 +60,7 @@ $(function () {
 		} else {
 			console.log("Connection to server opened.");
 			isOpenOnce = true;
-			sse = new EventSource(kafkaurl + '/subscribe')
+			sse = new EventSource(kafkaurl + 'subscribe')
 			sse.onmessage = function (event) {
 				const resp = event.data;
 				console.log(resp);
@@ -85,427 +79,102 @@ $(function () {
 	})
 
 	$("#setmemcached").click(function () {
-		$.ajax({
-			type: 'post',
-			url: memcachedurl + '/set',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmemcached").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmemcached").html(resp);
-		})
+		dispMsg(post, memcachedurl + set);
 	})
 
 	$("#getmemcached").click(function () {
-		$.ajax({
-			type: 'get',
-			url: memcachedurl + '/get',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmemcached").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmemcached").html(resp);
-		})
+		dispMsg(get, memcachedurl + get);
 	})
 
 	$("#setredis").click(function () {
-		$.ajax({
-			type: 'post',
-			url: redisurl + '/set',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respredis").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respredis").html(resp);
-		})
+		dispMsg(post, redisurl + set);
 	})
 
 	$("#getredis").click(function () {
-		$.ajax({
-			type: 'get',
-			url: redisurl + '/get',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respredis").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respredis").html(resp);
-		})
+		dispMsg(get, redisurl + get);
 	})
 
 	$("#publishredis").click(function () {
-		$.ajax({
-			type: 'post',
-			url: redisurl + '/publish',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respredis").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respredis").html(resp);
-		})
+		dispMsg(post, redisurl + publish);
 	})
 
 	$("#putrabbitmq").click(function () {
-		$.ajax({
-			type: 'post',
-			url: rabbitmqurl + '/put',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resprabbitmq").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resprabbitmq").html(resp);
-		})
+		dispMsg(post, rabbitmqurl + put);
 	})
 
 	$("#getrabbitmq").click(function () {
-		$.ajax({
-			type: 'get',
-			url: rabbitmqurl + '/get',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resprabbitmq").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resprabbitmq").html(resp);
-		})
+		dispMsg(get, rabbitmqurl + get);
 	})
 
 	$("#publishrabbitmq").click(function () {
-		$.ajax({
-			type: 'post',
-			url: rabbitmqurl + '/publish',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resprabbitmq").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resprabbitmq").html(resp);
-		})
+		dispMsg(post, rabbitmqurl + publish);
 	})
 
 	$("#putactivemq").click(function () {
-		$.ajax({
-			type: 'post',
-			url: activemqurl + '/put',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respactivemq").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respactivemq").html(resp);
-		})
+		dispMsg(post, activemqurl + put);
 	})
 
 	$("#getactivemq").click(function () {
-		$.ajax({
-			type: 'get',
-			url: activemqurl + '/get',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respactivemq").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respactivemq").html(resp);
-		})
+		dispMsg(get, activemqurl + get);
 	})
 
 	$("#publishactivemq").click(function () {
-		$.ajax({
-			type: 'post',
-			url: activemqurl + '/publish',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respactivemq").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respactivemq").html(resp);
-		})
+		dispMsg(post, activemqurl + publish);
 	})
 
 	$("#putcachehazelcast").click(function () {
-		$.ajax({
-			type: 'post',
-			url: hazelcasturl + '/putcache',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respcachehazelcast").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respcachehazelcast").html(resp);
-		})
+		dispMsg(post, hazelcasturl + 'putcache');
 	})
 
 	$("#getcachehazelcast").click(function () {
-		$.ajax({
-			type: 'get',
-			url: hazelcasturl + '/getcache',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respcachehazelcast").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respcachehazelcast").html(resp);
-		})
+		dispMsg(get, hazelcasturl + 'getcache');
 	})
 
 	$("#publishhazelcast").click(function () {
-		$.ajax({
-			type: 'post',
-			url: hazelcasturl + '/publish',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respcachehazelcast").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respcachehazelcast").html(resp);
-		})
+		dispMsg(post, hazelcasturl + publish);
 	})
 
 	$("#putqueuehazelcast").click(function () {
-		$.ajax({
-			type: 'post',
-			url: hazelcasturl + '/putqueue',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respqueuehazelcast").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respqueuehazelcast").html(resp);
-		})
+		dispMsg(post, hazelcasturl + 'putqueue');
 	})
 
 	$("#getqueuehazelcast").click(function () {
-		$.ajax({
-			type: 'get',
-			url: hazelcasturl + '/getqueue',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respqueuehazelcast").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respqueuehazelcast").html(resp);
-		})
+		dispMsg(get, hazelcasturl + 'getqueue');
 	})
 
 	$("#insertmysql").click(function () {
-		$.ajax({
-			type: 'post',
-			url: mysqlurl + '/insert',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmysql").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmysql").html(resp);
-		})
+		dispMsg(post, mysqlurl + insert);
 	})
 
 	$("#selectmysql").click(function () {
-		$.ajax({
-			type: 'get',
-			url: mysqlurl + '/select',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmysql").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmysql").html(resp);
-		})
+		dispMsg(get, mysqlurl + select);
 	})
 
 	$("#deletemysql").click(function () {
-		$.ajax({
-			type: 'post',
-			url: mysqlurl + '/delete',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmysql").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmysql").html(resp);
-		})
+		dispMsg(post, mysqlurl + delt);
 	})
 
 	$("#insertpostgres").click(function () {
-		$.ajax({
-			type: 'post',
-			url: postgresurl + '/insert',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resppostgres").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resppostgres").html(resp);
-		})
+		dispMsg(post, postgresurl + insert);
 	})
 
 	$("#selectpostgres").click(function () {
-		$.ajax({
-			type: 'get',
-			url: postgresurl + '/select',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resppostgres").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resppostgres").html(resp);
-		})
+		dispMsg(get, postgresurl + select);
 	})
 
 	$("#deletepostgres").click(function () {
-		$.ajax({
-			type: 'post',
-			url: postgresurl + '/delete',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resppostgres").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#resppostgres").html(resp);
-		})
+		dispMsg(post, postgresurl + delt);
 	})
 
 	$("#insertmongodb").click(function () {
-		$.ajax({
-			type: 'post',
-			url: mongodburl + '/insert',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmongodb").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmongodb").html(resp);
-		})
+		dispMsg(post, mongodburl + insert);
 	})
 
 	$("#selectmongodb").click(function () {
-		$.ajax({
-			type: 'get',
-			url: mongodburl + '/select',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmongodb").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmongodb").html(resp);
-		})
+		dispMsg(get, mongodburl + select);
 	})
 
 	$("#deletemongodb").click(function () {
-		$.ajax({
-			type: 'post',
-			url: mongodburl + '/delete',
-			contentType: 'application/json',
-			scriptCharset: 'utf-8',
-		}).done(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmongodb").html(resp);
-		}).fail(function (data) {
-			const resp = JSON.stringify(data, null, 4)
-			console.log(resp);
-			$("#respmongodb").html(resp);
-		})
+		dispMsg(post, mongodburl + delt);
 	})
 })
