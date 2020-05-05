@@ -10,5 +10,5 @@ spec:
   selector:
     app: prometheus
   ports:
-  - protocol: TCP
-    port: 9090
+    - protocol: TCP
+      port: 9090

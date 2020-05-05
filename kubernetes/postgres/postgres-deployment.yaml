@@ -18,37 +18,37 @@ spec:
         prometheus.io/port: "9187"
     spec:
       containers:
-      - name: postgres
-        image: yurak/postgres:latest
-        imagePullPolicy: Always
-        ports:
         - name: postgres
-          containerPort: 5432
-        env:
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: postgres-password
-        - name: TZ
-          valueFrom:
-            configMapKeyRef:
-              name: postgres-configmap
-              key: tz
-        volumeMounts:
-        - name: postgres-persistent-storage
-          mountPath: /var/lib/postgresql/data
-      - name: postgres-exporter
-        image: wrouesnel/postgres_exporter:v0.8.0
-        ports:
-        - containerPort: 9187
-        env:
-        - name: DATA_SOURCE_NAME
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: postgres-exporter-password
+          image: yurak/postgres:latest
+          imagePullPolicy: Always
+          ports:
+            - name: postgres
+              containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-password
+            - name: TZ
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: tz
+          volumeMounts:
+            - name: postgres-persistent-storage
+              mountPath: /var/lib/postgresql/data
+        - name: postgres-exporter
+          image: wrouesnel/postgres_exporter:v0.8.0
+          ports:
+            - containerPort: 9187
+          env:
+            - name: DATA_SOURCE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-exporter-password
       volumes:
-      - name: postgres-persistent-storage
-        persistentVolumeClaim:
-          claimName: postgres-pvc
+        - name: postgres-persistent-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc

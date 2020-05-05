@@ -16,12 +16,12 @@ spec:
         prometheus.io/port: "9150"
     spec:
       containers:
-      - name: memcached
-        image: memcached:1.5
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 11211
-      - name: memcached-exporter
-        image: prom/memcached-exporter:v0.6.0
-        ports:
-        - containerPort: 9150
+        - name: memcached
+          image: memcached:1.5
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 11211
+        - name: memcached-exporter
+          image: prom/memcached-exporter:v0.6.0
+          ports:
+            - containerPort: 9150

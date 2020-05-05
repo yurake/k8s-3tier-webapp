@@ -4,10 +4,10 @@ metadata:
   name: wlp
 spec:
   rules:
-  - host: wlp.minikube
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: wlp
-          servicePort: 9080
+    - host: wlp.minikube
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: wlp
+              servicePort: 9080

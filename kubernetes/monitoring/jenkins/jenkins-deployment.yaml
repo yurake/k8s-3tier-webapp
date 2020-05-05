@@ -23,26 +23,26 @@ spec:
     spec:
       serviceAccountName: jenkins
       securityContext:
-        fsGroup: 1000 
+        fsGroup: 1000
         runAsUser: 0
       containers:
-      - name: jenkins
-        image: yurak/jenkins:latest
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: jenkins-persistent-storage
-          mountPath: /var/jenkins_home
-        - name: docker-socket-volume
-          mountPath: /var/run/docker.sock
-        env:
-        - name: PROMETHEUS_NAMESPACE
-          value: "monitoring"
+        - name: jenkins
+          image: yurak/jenkins:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: jenkins-persistent-storage
+              mountPath: /var/jenkins_home
+            - name: docker-socket-volume
+              mountPath: /var/run/docker.sock
+          env:
+            - name: PROMETHEUS_NAMESPACE
+              value: "monitoring"
       volumes:
-      - name: jenkins-persistent-storage
-        persistentVolumeClaim:
-          claimName: jenkins-pvc
-      - name: docker-socket-volume
-        hostPath:
-          path: /var/run/docker.sock
-          type: File
+        - name: jenkins-persistent-storage
+          persistentVolumeClaim:
+            claimName: jenkins-pvc
+        - name: docker-socket-volume
+          hostPath:
+            path: /var/run/docker.sock
+            type: File

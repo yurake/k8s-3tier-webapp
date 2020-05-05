@@ -20,11 +20,11 @@ spec:
         prometheus.io/path: "/metrics"
     spec:
       containers:
-      - name: hazelcast
-        image: yurak/hazelcast:latest
-        ports:
-        - containerPort: 5701
-        - containerPort: 8080
-        env:
-        - name: PROMETHEUS_PORT
-          value: "8080"
+        - name: hazelcast
+          image: yurak/hazelcast:latest
+          ports:
+            - containerPort: 5701
+            - containerPort: 8080
+          env:
+            - name: PROMETHEUS_PORT
+              value: "8080"

@@ -15,11 +15,11 @@ spec:
         app: zookeeper
     spec:
       containers:
-      - name: zookeeper
-        image: bitnami/zookeeper:3-debian-10
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 2181
-        env:
-        - name: ALLOW_ANONYMOUS_LOGIN
-          value: "yes"
+        - name: zookeeper
+          image: bitnami/zookeeper:3-debian-10
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 2181
+          env:
+            - name: ALLOW_ANONYMOUS_LOGIN
+              value: "yes"

@@ -18,42 +18,42 @@ spec:
         prometheus.io/port: "9104"
     spec:
       containers:
-      - name: mysql
-        image: yurak/mysql:latest
-        imagePullPolicy: Always
-        args:
-        - --character-set-server=utf8mb4
-        - --collation-server=utf8mb4_unicode_ci
-        - --max_connections=200
-        - --wait_timeout=60
-        ports:
         - name: mysql
-          containerPort: 3306
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-root-password
-        - name: TZ
-          valueFrom:
-            configMapKeyRef:
-              name: mysql-configmap
-              key: tz
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-      - name: mysql-exporter
-        image: prom/mysqld-exporter:v0.12.1
-        ports:
-        - containerPort: 9104
-        env:
-        - name: DATA_SOURCE_NAME
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-exporter-password
+          image: yurak/mysql:latest
+          imagePullPolicy: Always
+          args:
+            - --character-set-server=utf8mb4
+            - --collation-server=utf8mb4_unicode_ci
+            - --max_connections=200
+            - --wait_timeout=60
+          ports:
+            - name: mysql
+              containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-root-password
+            - name: TZ
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: tz
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+        - name: mysql-exporter
+          image: prom/mysqld-exporter:v0.12.1
+          ports:
+            - containerPort: 9104
+          env:
+            - name: DATA_SOURCE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-exporter-password
       volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pvc
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc

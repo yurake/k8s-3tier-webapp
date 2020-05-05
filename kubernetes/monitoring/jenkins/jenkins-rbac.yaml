@@ -59,6 +59,6 @@ roleRef:
   kind: ClusterRole
   name: jenkins
 subjects:
-- kind: ServiceAccount
-  name: jenkins
-  namespace: monitoring
+  - kind: ServiceAccount
+    name: jenkins
+    namespace: monitoring

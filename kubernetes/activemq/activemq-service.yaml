@@ -7,9 +7,9 @@ spec:
   selector:
     app: activemq
   ports:
-  - name: mgmt
-    protocol: TCP
-    port: 8161
-  - name: activemq
-    protocol: TCP
-    port: 61616
+    - name: mgmt
+      protocol: TCP
+      port: 8161
+    - name: activemq
+      protocol: TCP
+      port: 61616

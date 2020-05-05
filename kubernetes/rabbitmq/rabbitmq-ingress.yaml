@@ -4,10 +4,10 @@ metadata:
   name: rabbitmq
 spec:
   rules:
-  - host: rabbitmq.management.minikube
-    http:
-      paths:
-      - path:
-        backend:
-          serviceName: rabbitmq
-          servicePort: 15672
+    - host: rabbitmq.management.minikube
+      http:
+        paths:
+          - path:
+            backend:
+              serviceName: rabbitmq
+              servicePort: 15672

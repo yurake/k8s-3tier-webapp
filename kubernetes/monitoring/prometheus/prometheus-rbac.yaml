@@ -55,6 +55,6 @@ roleRef:
   kind: ClusterRole
   name: prometheus
 subjects:
-- kind: ServiceAccount
-  name: prometheus
-  namespace: monitoring
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: monitoring

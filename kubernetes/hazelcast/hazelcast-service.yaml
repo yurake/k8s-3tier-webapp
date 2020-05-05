@@ -8,5 +8,5 @@ spec:
   selector:
     app: hazelcast
   ports:
-  - name: hazelcast
-    port: 5701
+    - name: hazelcast
+      port: 5701

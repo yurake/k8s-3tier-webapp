@@ -7,10 +7,10 @@ metadata:
     app: prometheus
 spec:
   rules:
-  - host: prometheus.minikube
-    http:
-      paths:
-      - path:
-        backend:
-          serviceName: prometheus
-          servicePort: 9090
+    - host: prometheus.minikube
+      http:
+        paths:
+          - path:
+            backend:
+              serviceName: prometheus
+              servicePort: 9090

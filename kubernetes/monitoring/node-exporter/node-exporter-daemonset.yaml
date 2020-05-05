@@ -32,16 +32,16 @@ spec:
           volumeMounts:
             - name: node-exporter-persistent-storage-proc
               mountPath: /host/proc
-              readOnly:  true
+              readOnly: true
             - name: node-exporter-persistent-storage-sys
               mountPath: /host/sys
               readOnly: true
       hostNetwork: true
       hostPID: true
       volumes:
-      - name: node-exporter-persistent-storage-proc
-        persistentVolumeClaim:
-          claimName: node-exporter-pvc-proc
-      - name: node-exporter-persistent-storage-sys
-        persistentVolumeClaim:
-          claimName: node-exporter-pvc-sys
+        - name: node-exporter-persistent-storage-proc
+          persistentVolumeClaim:
+            claimName: node-exporter-pvc-proc
+        - name: node-exporter-persistent-storage-sys
+          persistentVolumeClaim:
+            claimName: node-exporter-pvc-sys

@@ -16,20 +16,20 @@ spec:
         app: grafana
     spec:
       containers:
-      - name: grafana
-        image: grafana/grafana:6.2.5
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 3000
-        volumeMounts:
-        - name: grafana-persistent-storage
-          mountPath: /var/lib/grafana
-        securityContext:
-          runAsUser: 0
-        env:
-        - name: GF_INSTALL_PLUGINS
-          value: "grafana-kubernetes-app,jdbranham-diagram-panel"
+        - name: grafana
+          image: grafana/grafana:6.2.5
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: grafana-persistent-storage
+              mountPath: /var/lib/grafana
+          securityContext:
+            runAsUser: 0
+          env:
+            - name: GF_INSTALL_PLUGINS
+              value: "grafana-kubernetes-app,jdbranham-diagram-panel"
       volumes:
-      - name: grafana-persistent-storage
-        persistentVolumeClaim:
-          claimName: grafana-pvc
+        - name: grafana-persistent-storage
+          persistentVolumeClaim:
+            claimName: grafana-pvc

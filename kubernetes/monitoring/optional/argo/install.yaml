@@ -10,8 +10,8 @@ spec:
     kind: CronWorkflow
     plural: cronworkflows
     shortNames:
-    - cronwf
-    - cwf
+      - cronwf
+      - cwf
   scope: Namespaced
   version: v1alpha1
 ---
@@ -22,21 +22,21 @@ metadata:
   namespace: monitoring
 spec:
   additionalPrinterColumns:
-  - JSONPath: .status.phase
-    description: Status of the workflow
-    name: Status
-    type: string
-  - JSONPath: .status.startedAt
-    description: When the workflow was started
-    format: date-time
-    name: Age
-    type: date
+    - JSONPath: .status.phase
+      description: Status of the workflow
+      name: Status
+      type: string
+    - JSONPath: .status.startedAt
+      description: When the workflow was started
+      format: date-time
+      name: Age
+      type: date
   group: argoproj.io
   names:
     kind: Workflow
     plural: workflows
     shortNames:
-    - wf
+      - wf
   scope: Namespaced
   version: v1alpha1
 ---
@@ -51,7 +51,7 @@ spec:
     kind: WorkflowTemplate
     plural: workflowtemplates
     shortNames:
-    - wftmpl
+      - wftmpl
   scope: Namespaced
   version: v1alpha1
 ---
@@ -73,12 +73,12 @@ metadata:
   name: argo-role
   namespace: monitoring
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - get
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -88,24 +88,24 @@ metadata:
   name: argo-aggregate-to-admin
   namespace: monitoring
 rules:
-- apiGroups:
-  - argoproj.io
-  resources:
-  - workflows
-  - workflows/finalizers
-  - workflowtemplates
-  - workflowtemplates/finalizers
-  - cronworkflows
-  - cronworkflows/finalizers
-  verbs:
-  - create
-  - delete
-  - deletecollection
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - workflows
+      - workflows/finalizers
+      - workflowtemplates
+      - workflowtemplates/finalizers
+      - cronworkflows
+      - cronworkflows/finalizers
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - get
+      - list
+      - patch
+      - update
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -115,24 +115,24 @@ metadata:
   name: argo-aggregate-to-edit
   namespace: monitoring
 rules:
-- apiGroups:
-  - argoproj.io
-  resources:
-  - workflows
-  - workflows/finalizers
-  - workflowtemplates
-  - workflowtemplates/finalizers
-  - cronworkflows
-  - cronworkflows/finalizers
-  verbs:
-  - create
-  - delete
-  - deletecollection
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - workflows
+      - workflows/finalizers
+      - workflowtemplates
+      - workflowtemplates/finalizers
+      - cronworkflows
+      - cronworkflows/finalizers
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - get
+      - list
+      - patch
+      - update
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -142,19 +142,19 @@ metadata:
   name: argo-aggregate-to-view
   namespace: monitoring
 rules:
-- apiGroups:
-  - argoproj.io
-  resources:
-  - workflows
-  - workflows/finalizers
-  - workflowtemplates
-  - workflowtemplates/finalizers
-  - cronworkflows
-  - cronworkflows/finalizers
-  verbs:
-  - get
-  - list
-  - watch
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - workflows
+      - workflows/finalizers
+      - workflowtemplates
+      - workflowtemplates/finalizers
+      - cronworkflows
+      - cronworkflows/finalizers
+    verbs:
+      - get
+      - list
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -162,89 +162,89 @@ metadata:
   name: argo-cluster-role
   namespace: monitoring
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - pods/exec
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - get
-  - watch
-  - list
-- apiGroups:
-  - ""
-  resources:
-  - persistentvolumeclaims
-  verbs:
-  - create
-  - delete
-- apiGroups:
-  - argoproj.io
-  resources:
-  - workflows
-  - workflows/finalizers
-  verbs:
-  - get
-  - list
-  - watch
-  - update
-  - patch
-  - delete
-  - create
-- apiGroups:
-  - argoproj.io
-  resources:
-  - workflowtemplates
-  - workflowtemplates/finalizers
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - serviceaccounts
-  verbs:
-  - get
-  - list
-- apiGroups:
-  - argoproj.io
-  resources:
-  - cronworkflows
-  - cronworkflows/finalizers
-  verbs:
-  - get
-  - list
-  - watch
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
-- apiGroups:
-  - policy
-  resources:
-  - poddisruptionbudgets
-  verbs:
-  - create
-  - get
-  - delete
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - pods/exec
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - persistentvolumeclaims
+    verbs:
+      - create
+      - delete
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - workflows
+      - workflows/finalizers
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+      - patch
+      - delete
+      - create
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - workflowtemplates
+      - workflowtemplates/finalizers
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - serviceaccounts
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - cronworkflows
+      - cronworkflows/finalizers
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+  - apiGroups:
+      - policy
+    resources:
+      - poddisruptionbudgets
+    verbs:
+      - create
+      - get
+      - delete
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -252,50 +252,50 @@ metadata:
   name: argo-server-cluster-role
   namespace: monitoring
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - get
-  - watch
-  - list
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - get
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - pods/exec
-  - pods/log
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - get
-- apiGroups:
-  - argoproj.io
-  resources:
-  - workflows
-  - workflowtemplates
-  - cronworkflows
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-  - update
-  - patch
-  - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - watch
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - pods/exec
+      - pods/log
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - workflows
+      - workflowtemplates
+      - cronworkflows
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - update
+      - patch
+      - delete
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -307,8 +307,8 @@ roleRef:
   kind: Role
   name: argo-role
 subjects:
-- kind: ServiceAccount
-  name: argo
+  - kind: ServiceAccount
+    name: argo
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -320,9 +320,9 @@ roleRef:
   kind: ClusterRole
   name: argo-cluster-role
 subjects:
-- kind: ServiceAccount
-  name: argo
-  namespace: monitoring
+  - kind: ServiceAccount
+    name: argo
+    namespace: monitoring
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -334,9 +334,9 @@ roleRef:
   kind: ClusterRole
   name: argo-server-cluster-role
 subjects:
-- kind: ServiceAccount
-  name: argo-server
-  namespace: monitoring
+  - kind: ServiceAccount
+    name: argo-server
+    namespace: monitoring
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -351,13 +351,13 @@ metadata:
   namespace: monitoring
 spec:
   rules:
-  - host: argo.minikube
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: argo-server
-          servicePort: 2746
+    - host: argo.minikube
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: argo-server
+              servicePort: 2746
 ---
 apiVersion: v1
 kind: Service
@@ -391,19 +391,19 @@ spec:
         app: argo-server
     spec:
       containers:
-      - args:
-        - server
-        image: argoproj/argocli:latest
-        name: argo-server
-        ports:
-        - containerPort: 2746
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 2746
-            scheme: HTTP
-          initialDelaySeconds: 10
-          periodSeconds: 20
+        - args:
+            - server
+          image: argoproj/argocli:latest
+          name: argo-server
+          ports:
+            - containerPort: 2746
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 2746
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 20
       serviceAccountName: argo-server
 ---
 apiVersion: apps/v1
@@ -421,13 +421,13 @@ spec:
         app: workflow-controller
     spec:
       containers:
-      - args:
-        - --configmap
-        - workflow-controller-configmap
-        - --executor-image
-        - argoproj/argoexec:latest
-        command:
-        - workflow-controller
-        image: argoproj/workflow-controller:latest
-        name: workflow-controller
+        - args:
+            - --configmap
+            - workflow-controller-configmap
+            - --executor-image
+            - argoproj/argoexec:latest
+          command:
+            - workflow-controller
+          image: argoproj/workflow-controller:latest
+          name: workflow-controller
       serviceAccountName: argo

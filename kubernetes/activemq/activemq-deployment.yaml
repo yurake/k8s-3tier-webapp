@@ -19,22 +19,22 @@ spec:
         fsGroup: 1000
         runAsUser: 0
       containers:
-      - name: activemq
-        image: vromero/activemq-artemis:2.11.0-alpine
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8161
-        - containerPort: 9404
-        - containerPort: 61616
-        env:
-        - name: ENABLE_JMX_EXPORTER
-          value: "true"
-        - name: JAVA_OPTS
-          value: "-Duser.timezone=Asia/Tokyo"
-        volumeMounts:
-        - name: activemq-persistent-storage
-          mountPath: /var/lib/artemis/data
+        - name: activemq
+          image: vromero/activemq-artemis:2.11.0-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8161
+            - containerPort: 9404
+            - containerPort: 61616
+          env:
+            - name: ENABLE_JMX_EXPORTER
+              value: "true"
+            - name: JAVA_OPTS
+              value: "-Duser.timezone=Asia/Tokyo"
+          volumeMounts:
+            - name: activemq-persistent-storage
+              mountPath: /var/lib/artemis/data
       volumes:
-      - name: activemq-persistent-storage
-        persistentVolumeClaim:
-          claimName: activemq-pvc
+        - name: activemq-persistent-storage
+          persistentVolumeClaim:
+            claimName: activemq-pvc

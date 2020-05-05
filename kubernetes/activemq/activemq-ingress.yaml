@@ -4,10 +4,10 @@ metadata:
   name: activemq
 spec:
   rules:
-  - host: activemq.management.minikube
-    http:
-      paths:
-      - path:
-        backend:
-          serviceName: activemq
-          servicePort: 8161
+    - host: activemq.management.minikube
+      http:
+        paths:
+          - path:
+            backend:
+              serviceName: activemq
+              servicePort: 8161

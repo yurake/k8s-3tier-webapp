@@ -13,7 +13,7 @@ spec:
   replicas: 1
   podManagementPolicy: "Parallel"
   updateStrategy:
-   type: "RollingUpdate"
+    type: "RollingUpdate"
   selector:
     matchLabels:
       app: prometheus
@@ -24,14 +24,14 @@ spec:
     spec:
       serviceAccountName: prometheus
       initContainers:
-      - name: "init-chown-data"
-        image: "busybox:latest"
-        imagePullPolicy: "IfNotPresent"
-        command: ["chown", "-R", "65534:65534", "/data"]
-        volumeMounts:
-        - name: prometheus-persistent-storage
-          mountPath: /data
-          subPath: ""
+        - name: "init-chown-data"
+          image: "busybox:latest"
+          imagePullPolicy: "IfNotPresent"
+          command: ["chown", "-R", "65534:65534", "/data"]
+          volumeMounts:
+            - name: prometheus-persistent-storage
+              mountPath: /data
+              subPath: ""
       containers:
         - name: prometheus-server
           image: "prom/prometheus:v2.2.1"
@@ -69,12 +69,12 @@ spec:
           configMap:
             name: prometheus-config
   volumeClaimTemplates:
-  - metadata:
-      name: prometheus-persistent-storage
-    spec:
-      storageClassName: prometheus
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: "16Gi"
+    - metadata:
+        name: prometheus-persistent-storage
+      spec:
+        storageClassName: prometheus
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: "16Gi"

@@ -10,5 +10,5 @@ spec:
   selector:
     app: wlp
   ports:
-  - protocol: TCP
-    port: 9080
+    - protocol: TCP
+      port: 9080

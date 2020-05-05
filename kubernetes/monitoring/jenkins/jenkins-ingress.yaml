@@ -7,10 +7,10 @@ metadata:
     app: jenkins
 spec:
   rules:
-  - host: jenkins.minikube
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: jenkins
-          servicePort: 8080
+    - host: jenkins.minikube
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: jenkins
+              servicePort: 8080

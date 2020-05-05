@@ -7,10 +7,10 @@ metadata:
     app: jupyter
 spec:
   rules:
-  - host: jupyter.minikube
-    http:
-      paths:
-      - path:
-        backend:
-          serviceName: jupyter
-          servicePort: 8888
+    - host: jupyter.minikube
+      http:
+        paths:
+          - path:
+            backend:
+              serviceName: jupyter
+              servicePort: 8888

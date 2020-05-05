@@ -16,21 +16,21 @@ spec:
         app: jupyter
     spec:
       containers:
-      - name: jupyter
-        image: jupyter/datascience-notebook:ad3574d3c5c7
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8888
-        env:
-        - name: JUPYTER_ENABLE_LAB
-          valueFrom:
-            configMapKeyRef:
-              name: jupyter-configmap
-              key: jupyter-lab
-        volumeMounts:
-        - name: jupyter-persistent-storage
-          mountPath: /home/jovyan/work
+        - name: jupyter
+          image: jupyter/datascience-notebook:ad3574d3c5c7
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8888
+          env:
+            - name: JUPYTER_ENABLE_LAB
+              valueFrom:
+                configMapKeyRef:
+                  name: jupyter-configmap
+                  key: jupyter-lab
+          volumeMounts:
+            - name: jupyter-persistent-storage
+              mountPath: /home/jovyan/work
       volumes:
-      - name: jupyter-persistent-storage
-        persistentVolumeClaim:
-          claimName: jupyter-pvc
+        - name: jupyter-persistent-storage
+          persistentVolumeClaim:
+            claimName: jupyter-pvc

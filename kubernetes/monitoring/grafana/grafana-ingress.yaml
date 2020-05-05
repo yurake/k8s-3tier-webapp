@@ -7,10 +7,10 @@ metadata:
     app: grafana
 spec:
   rules:
-  - host: grafana.minikube
-    http:
-      paths:
-      - path:
-        backend:
-          serviceName: grafana
-          servicePort: 3000
+    - host: grafana.minikube
+      http:
+        paths:
+          - path:
+            backend:
+              serviceName: grafana
+              servicePort: 3000

@@ -4,50 +4,50 @@ metadata:
   name: nginx
 spec:
   rules:
-  - host: k8s.3tier.webapp
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: nginx
-          servicePort: 80
-      - path: /api
-        backend:
-          serviceName: wlp
-          servicePort: 9080
-      - path: /quarkus/activemq
-        backend:
-          serviceName: jaxrs-activemq-quarkus
-          servicePort: 8080
-      - path: /quarkus/hazelcast
-        backend:
-          serviceName: jaxrs-hazelcast-quarkus
-          servicePort: 8080
-      - path: /quarkus/kafka
-        backend:
-          serviceName: jaxrs-kafka-quarkus
-          servicePort: 8080
-      - path: /quarkus/memcached
-        backend:
-          serviceName: jaxrs-memcached-quarkus
-          servicePort: 8080
-      - path: /quarkus/mongodb
-        backend:
-          serviceName: jaxrs-mongodb-quarkus
-          servicePort: 8080
-      - path: /quarkus/mysql
-        backend:
-          serviceName: jaxrs-mysql-quarkus
-          servicePort: 8080
-      - path: /quarkus/postgres
-        backend:
-          serviceName: jaxrs-postgres-quarkus
-          servicePort: 8080
-      - path: /quarkus/rabbitmq
-        backend:
-          serviceName: jaxrs-rabbitmq-quarkus
-          servicePort: 8080
-      - path: /quarkus/redis
-        backend:
-          serviceName: jaxrs-redis-quarkus
-          servicePort: 8080
+    - host: k8s.3tier.webapp
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: nginx
+              servicePort: 80
+          - path: /api
+            backend:
+              serviceName: wlp
+              servicePort: 9080
+          - path: /quarkus/activemq
+            backend:
+              serviceName: jaxrs-activemq-quarkus
+              servicePort: 8080
+          - path: /quarkus/hazelcast
+            backend:
+              serviceName: jaxrs-hazelcast-quarkus
+              servicePort: 8080
+          - path: /quarkus/kafka
+            backend:
+              serviceName: jaxrs-kafka-quarkus
+              servicePort: 8080
+          - path: /quarkus/memcached
+            backend:
+              serviceName: jaxrs-memcached-quarkus
+              servicePort: 8080
+          - path: /quarkus/mongodb
+            backend:
+              serviceName: jaxrs-mongodb-quarkus
+              servicePort: 8080
+          - path: /quarkus/mysql
+            backend:
+              serviceName: jaxrs-mysql-quarkus
+              servicePort: 8080
+          - path: /quarkus/postgres
+            backend:
+              serviceName: jaxrs-postgres-quarkus
+              servicePort: 8080
+          - path: /quarkus/rabbitmq
+            backend:
+              serviceName: jaxrs-rabbitmq-quarkus
+              servicePort: 8080
+          - path: /quarkus/redis
+            backend:
+              serviceName: jaxrs-redis-quarkus
+              servicePort: 8080

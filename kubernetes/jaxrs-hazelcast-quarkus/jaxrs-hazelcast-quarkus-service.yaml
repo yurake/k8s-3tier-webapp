@@ -7,5 +7,5 @@ spec:
   selector:
     app: jaxrs-hazelcast-quarkus
   ports:
-  - protocol: TCP
-    port: 8080
+    - protocol: TCP
+      port: 8080
