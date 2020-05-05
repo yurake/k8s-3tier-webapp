@@ -1,20 +1,28 @@
 table{
   border-collapse: collapse;
   border-spacing: 0;
-  width: 650px;
+  width: auto;
 }
 
 table tr{
-  border-bottom: solid 1px #eee;
+  border-bottom: solid 1px gainsboro;
   cursor: pointer;
 }
 
 table tr:hover{
-  background-color: #d4f0fd;
+  background-color: bisque;
 }
 
 table th,table td{
   text-align: center;
-  width: 25%;
-  padding: 8px 0;
+  width: 13%;
+  padding: 4px 0;
+}
+
+.responsive {
+  width: 100%;
+  height: auto;
+}
+textarea {
+	color: crimson;
 }
