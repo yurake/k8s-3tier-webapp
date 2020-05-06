@@ -28,7 +28,7 @@ class MemcachedResourceTest {
 				.get("/quarkus/memcached/get")
 				.then()
 				.statusCode(200)
-				.body(is("No Data."));
+				.body("message", equalTo("No Data."));
 	}
 
 }

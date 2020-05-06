@@ -16,7 +16,7 @@ import javax.enterprise.context.ApplicationScoped;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.config.DbConfig;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class DbService {
@@ -34,8 +34,8 @@ public class DbService {
 	}
 
 	public String insertMsg(DbConfig dbconfig) throws SQLException, NoSuchAlgorithmException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), dbconfig.getMessage());
-		String sql = dbconfig.getInsertsql().replace(dbconfig.getSqlkey(), msgbean.getIdString())
+		MsgBean msgbean = new MsgBean(CreateId.createid(), dbconfig.getMessage());
+		String sql = dbconfig.getInsertsql().replace(dbconfig.getSqlkey(), MsgUtils.intToString(msgbean.getId()))
 				.replace(dbconfig.getSqlbody(), msgbean.getMessage());
 
 		try (Connection con = DriverManager.getConnection(dbconfig.getUrl());
@@ -46,17 +46,17 @@ public class DbService {
 			LOG.log(Level.SEVERE, "Insert Error.", e);
 			throw new SQLException("Insert Error.");
 		}
-		msgbean.setFullmsgWithType(msgbean, "Insert");
+		msgbean.setFullmsg("Insert");
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
 	}
 
 	public String insertMsg(DbConfig dbconfig, MsgBean bean, String aadonmsg)
 			throws SQLException, NoSuchAlgorithmException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), bean.getMessage());
+		MsgBean msgbean = new MsgBean(CreateId.createid(), bean.getMessage());
 
-		msgbean.appendMessage(msgbean, aadonmsg);
-		String sql = dbconfig.getInsertsql().replace(dbconfig.getSqlkey(), msgbean.getIdString())
+		MsgUtils.appendMessage(msgbean, aadonmsg);
+		String sql = dbconfig.getInsertsql().replace(dbconfig.getSqlkey(), MsgUtils.intToString(msgbean.getId()))
 				.replace(dbconfig.getSqlbody(), msgbean.getMessage());
 
 		try (Connection con = DriverManager.getConnection(dbconfig.getUrl());
@@ -67,7 +67,7 @@ public class DbService {
 			LOG.log(Level.SEVERE, "Insert Errorr.", e);
 			throw new SQLException("Insert Error.");
 		}
-		msgbean.setFullmsgWithType(msgbean, "Insert");
+		msgbean.setFullmsg("Insert");
 		LOG.info(msgbean.getFullmsg());
 		return msgbean.getFullmsg();
 	}
@@ -81,10 +81,7 @@ public class DbService {
 			LOG.log(Level.INFO, "Select SQL: {0}", dbconfig.getSelectsql());
 
 			while (rs.next()) {
-				MsgBeanUtils msgbean = new MsgBeanUtils();
-				msgbean.setIdString(rs.getString("id"));
-				msgbean.setMessage(rs.getString("msg"));
-				msgbean.setFullmsgWithType(msgbean, "Select");
+				MsgBean msgbean = new MsgBean(rs.getString("id"), rs.getString("msg"), "Select");
 				LOG.info(msgbean.getFullmsg());
 				msglist.add(msgbean.getFullmsg());
 			}

@@ -1,9 +1,11 @@
 package webapp.tier.interfaces;
 
+import webapp.tier.bean.MsgBean;
+
 public interface Cache {
 
-	public String setMsg() throws Exception;
+	public MsgBean setMsg() throws Exception;
 
-	public String getMsg() throws Exception;
+	public MsgBean getMsg() throws Exception;
 
 }

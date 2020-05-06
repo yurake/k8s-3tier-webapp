@@ -10,9 +10,10 @@ import org.eclipse.microprofile.config.ConfigProvider;
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Cache;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 public class MemcachedService implements Cache {
 
@@ -27,17 +28,17 @@ public class MemcachedService implements Cache {
 	}
 
 	@Override
-	public String setMsg() throws RuntimeException, NoSuchAlgorithmException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+	public MsgBean setMsg() throws RuntimeException, NoSuchAlgorithmException {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message);
 		String errormsg = "Set Error.";
 
 		try {
 			MemCachedClient mcc = new MemCachedClient();
-			boolean resultsetid = mcc.set("id", msgbean.getIdString());
+			boolean resultsetid = mcc.set("id", String.valueOf(msgbean.getId()));
 			boolean resultsetmsg = mcc.set("msg", msgbean.getMessage());
 
 			if (resultsetid && resultsetmsg) {
-				msgbean.setFullmsgWithType(msgbean, "Set");
+				msgbean.setFullmsg("Set");
 			} else {
 				LOG.warning(errormsg);
 				throw new RuntimeException(errormsg);
@@ -48,24 +49,22 @@ public class MemcachedService implements Cache {
 			throw new RuntimeException(errormsg);
 		}
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
 	@Override
-	public String getMsg() throws RuntimeException {
+	public MsgBean getMsg() throws RuntimeException {
 		MemCachedClient mcc = new MemCachedClient();
-		MsgBeanUtils msgbean = new MsgBeanUtils();
+		MsgBean msgbean = null;
 		String getid = null;
 		String errormsg = "Get Error.";
 
 		try {
 			getid = (String) mcc.get("id");
 			if (Objects.isNull(getid) || getid.toString().isEmpty()) {
-				msgbean.setFullmsg("No Data.");
+				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
-				msgbean.setIdString(getid);
-				msgbean.setMessage((String) mcc.get("msg"));
-				msgbean.setFullmsgWithType(msgbean, "Get");
+				msgbean = new MsgBean(MsgUtils.stringToInt(getid), (String) mcc.get("msg"), "Get");
 			}
 
 		} catch (Exception e) {
@@ -73,6 +72,6 @@ public class MemcachedService implements Cache {
 			throw new RuntimeException(errormsg);
 		}
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 }

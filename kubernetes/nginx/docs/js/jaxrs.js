@@ -44,13 +44,14 @@ $(function () {
 
 	var sse;
 
-	function dispMsg(type, url, respid) {
+	function dispMsgFromString(type, url, respid) {
 		$.ajax({
 			type: type,
 			url: url,
 			cache: false,
 			timeout: 10000,
 		}).always(function (data) {
+			console.log(data);
 			const resp = JSON.stringify(data, null, 4)
 			const respj = JSON.parse(resp)
 			console.log(resp);
@@ -58,12 +59,25 @@ $(function () {
 		})
 	}
 
+	function dispMsgFromJson(type, url, respid) {
+		$.ajax({
+			type: type,
+			url: url,
+			cache: false,
+			timeout: 10000,
+		}).always(function (data, textStatus, jqXHR) {
+			console.log(jqXHR.status);
+			console.log(data);
+			$(respid).html(data.fullmsg + '\nstatus: ' + jqXHR.status);
+		})
+	}
+
 	$("#getkafka").click(function () {
-		dispMsg(get, kafkaurl + get, respkafka);
+		dispMsgFromString(get, kafkaurl + get, respkafka);
 	})
 
 	$("#publishkafka").click(function () {
-		dispMsg(post, kafkaurl + publish, respkafka);
+		dispMsgFromString(post, kafkaurl + publish, respkafka);
 	})
 
 	$("#subscribekafka").click(function (event) {
@@ -91,102 +105,102 @@ $(function () {
 	})
 
 	$("#setmemcached").click(function () {
-		dispMsg(post, memcachedurl + set, respmemcached);
+		dispMsgFromJson(post, memcachedurl + set, respmemcached);
 	})
 
 	$("#getmemcached").click(function () {
-		dispMsg(get, memcachedurl + get, respmemcached);
+		dispMsgFromJson(get, memcachedurl + get, respmemcached);
 	})
 
 	$("#setredis").click(function () {
-		dispMsg(post, redisurl + set, respredis);
+		dispMsgFromString(post, redisurl + set, respredis);
 	})
 
 	$("#getredis").click(function () {
-		dispMsg(get, redisurl + get, respredis);
+		dispMsgFromString(get, redisurl + get, respredis);
 	})
 
 	$("#publishredis").click(function () {
-		dispMsg(post, redisurl + publish, respredis);
+		dispMsgFromString(post, redisurl + publish, respredis);
 	})
 
 	$("#putrabbitmq").click(function () {
-		dispMsg(post, rabbitmqurl + put, resprabbitmq);
+		dispMsgFromString(post, rabbitmqurl + put, resprabbitmq);
 	})
 
 	$("#getrabbitmq").click(function () {
-		dispMsg(get, rabbitmqurl + get, resprabbitmq);
+		dispMsgFromString(get, rabbitmqurl + get, resprabbitmq);
 	})
 
 	$("#publishrabbitmq").click(function () {
-		dispMsg(post, rabbitmqurl + publish, resprabbitmq);
+		dispMsgFromString(post, rabbitmqurl + publish, resprabbitmq);
 	})
 
 	$("#putactivemq").click(function () {
-		dispMsg(post, activemqurl + put, respactivemq);
+		dispMsgFromString(post, activemqurl + put, respactivemq);
 	})
 
 	$("#getactivemq").click(function () {
-		dispMsg(get, activemqurl + get, respactivemq);
+		dispMsgFromString(get, activemqurl + get, respactivemq);
 	})
 
 	$("#publishactivemq").click(function () {
-		dispMsg(post, activemqurl + publish, respactivemq);
+		dispMsgFromString(post, activemqurl + publish, respactivemq);
 	})
 
 	$("#putcachehazelcast").click(function () {
-		dispMsg(post, hazelcasturl + 'putcache', respcachehazelcast);
+		dispMsgFromString(post, hazelcasturl + 'putcache', respcachehazelcast);
 	})
 
 	$("#getcachehazelcast").click(function () {
-		dispMsg(get, hazelcasturl + 'getcache', respcachehazelcast);
+		dispMsgFromString(get, hazelcasturl + 'getcache', respcachehazelcast);
 	})
 
 	$("#publishhazelcast").click(function () {
-		dispMsg(post, hazelcasturl + publish, respcachehazelcast);
+		dispMsgFromString(post, hazelcasturl + publish, respcachehazelcast);
 	})
 
 	$("#putqueuehazelcast").click(function () {
-		dispMsg(post, hazelcasturl + 'putqueue', respqueuehazelcast);
+		dispMsgFromString(post, hazelcasturl + 'putqueue', respqueuehazelcast);
 	})
 
 	$("#getqueuehazelcast").click(function () {
-		dispMsg(get, hazelcasturl + 'getqueue', respqueuehazelcast);
+		dispMsgFromString(get, hazelcasturl + 'getqueue', respqueuehazelcast);
 	})
 
 	$("#insertmysql").click(function () {
-		dispMsg(post, mysqlurl + insert, respmysql);
+		dispMsgFromString(post, mysqlurl + insert, respmysql);
 	})
 
 	$("#selectmysql").click(function () {
-		dispMsg(get, mysqlurl + select, respmysql);
+		dispMsgFromString(get, mysqlurl + select, respmysql);
 	})
 
 	$("#deletemysql").click(function () {
-		dispMsg(post, mysqlurl + delt, respmysql);
+		dispMsgFromString(post, mysqlurl + delt, respmysql);
 	})
 
 	$("#insertpostgres").click(function () {
-		dispMsg(post, postgresurl + insert, resppostgres);
+		dispMsgFromString(post, postgresurl + insert, resppostgres);
 	})
 
 	$("#selectpostgres").click(function () {
-		dispMsg(get, postgresurl + select, resppostgres);
+		dispMsgFromString(get, postgresurl + select, resppostgres);
 	})
 
 	$("#deletepostgres").click(function () {
-		dispMsg(post, postgresurl + delt, resppostgres);
+		dispMsgFromString(post, postgresurl + delt, resppostgres);
 	})
 
 	$("#insertmongodb").click(function () {
-		dispMsg(post, mongodburl + insert, respmongodb);
+		dispMsgFromString(post, mongodburl + insert, respmongodb);
 	})
 
 	$("#selectmongodb").click(function () {
-		dispMsg(get, mongodburl + select, respmongodb);
+		dispMsgFromString(get, mongodburl + select, respmongodb);
 	})
 
 	$("#deletemongodb").click(function () {
-		dispMsg(post, mongodburl + delt, respmongodb);
+		dispMsgFromString(post, mongodburl + delt, respmongodb);
 	})
 })
