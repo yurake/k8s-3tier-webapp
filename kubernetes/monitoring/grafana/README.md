@@ -22,6 +22,8 @@ NGINX Ingress controller
 Cluster Monitoring for Kubernetes
 * 10001  
 Jaeger
+* 10465  
+ZooKeeper
 * 10991  
 RabbitMQ
 

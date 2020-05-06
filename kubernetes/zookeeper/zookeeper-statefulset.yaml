@@ -13,6 +13,9 @@ spec:
     metadata:
       labels:
         app: zookeeper
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "7000"
     spec:
       containers:
         - name: zookeeper
@@ -22,4 +25,6 @@ spec:
             - containerPort: 2181
           env:
             - name: ALLOW_ANONYMOUS_LOGIN
+              value: "yes"
+            - name: ZOO_ENABLE_PROMETHEUS_METRICS
               value: "yes"
