@@ -21,7 +21,7 @@ spec:
       containers:
         - name: activemq
           image: vromero/activemq-artemis:2.11.0-alpine
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8161
             - containerPort: 9404

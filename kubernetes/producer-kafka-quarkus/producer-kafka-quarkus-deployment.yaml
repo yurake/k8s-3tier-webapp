@@ -18,7 +18,7 @@ spec:
       containers:
         - name: producer-kafka-quarkus
           image: yurak/producer-kafka-quarkus:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           livenessProbe:
