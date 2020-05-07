@@ -25,7 +25,7 @@ import com.rabbitmq.client.Envelope;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class RabbitMqService implements Runnable {
@@ -73,9 +73,8 @@ public class RabbitMqService implements Runnable {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws UnsupportedEncodingException {
-					MsgBeanUtils msgbean = new MsgBeanUtils();
-					MsgBean bean = msgbean.splitBody(new String(body, "UTF-8"), splitkey);
-					msgbean.setFullmsgWithType(bean, "Received");
+					MsgBean msgbean = MsgUtils.splitBody(new String(body, "UTF-8"), splitkey);
+					msgbean.setFullmsg("Received");
 					LOG.info(msgbean.getFullmsg());
 					LOG.info("Call: Random Publish");
 					LOG.info(deliversvc.random());

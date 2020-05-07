@@ -12,9 +12,10 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.GetResponse;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 public class RabbitmqService implements Messaging {
 
@@ -39,9 +40,9 @@ public class RabbitmqService implements Messaging {
 	}
 
 	@Override
-	public String putMsg() throws RuntimeException, NoSuchAlgorithmException, IOException, TimeoutException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		String body = msgbean.createBody(msgbean, splitkey);
+	public MsgBean putMsg() throws RuntimeException, NoSuchAlgorithmException, IOException, TimeoutException {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
+		String body = MsgUtils.createBody(msgbean, splitkey);
 
 		try (Connection connection = getConnection()) {
 			connection.createChannel().basicPublish("", queuename, null, body.getBytes());
@@ -50,15 +51,14 @@ public class RabbitmqService implements Messaging {
 			LOG.log(Level.SEVERE, "Put Error.", e);
 			throw new RuntimeException("Put Error.");
 		}
-		msgbean.setFullmsgWithType(msgbean, "Put");
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 
 	}
 
 	@Override
-	public String getMsg() throws RuntimeException, IOException, TimeoutException {
-		MsgBeanUtils msgbean = new MsgBeanUtils();
+	public MsgBean getMsg() throws RuntimeException, IOException, TimeoutException {
+		MsgBean msgbean = null;
 
 		try (Connection connection = getConnection()) {
 			boolean durable = true;
@@ -66,23 +66,23 @@ public class RabbitmqService implements Messaging {
 
 			GetResponse resp = connection.createChannel().basicGet(queuename, true);
 			if (resp == null) {
-				msgbean.setFullmsg("No Data");
+				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
-				String jmsbody = new String(resp.getBody(), "UTF-8");
-				msgbean.setFullmsgWithType(msgbean.splitBody(jmsbody, splitkey), "Get");
+				msgbean = MsgUtils.splitBody(new String(resp.getBody(), "UTF-8"), splitkey);
+				msgbean.setFullmsg("Get");
 			}
 		} catch (IOException | TimeoutException e) {
 			LOG.log(Level.SEVERE, "Get Error.", e);
 			throw new RuntimeException("Get Error.");
 		}
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
 	@Override
-	public String publishMsg() throws Exception {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		String body = msgbean.createBody(msgbean, splitkey);
+	public MsgBean publishMsg() throws Exception {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
+		String body = MsgUtils.createBody(msgbean, splitkey);
 
 		try (Connection connection = getConnection()) {
 			connection.createChannel().basicPublish("", pubsubqueuename, null, body.getBytes());
@@ -91,9 +91,8 @@ public class RabbitmqService implements Messaging {
 			LOG.log(Level.SEVERE, "Publish Error.", e);
 			throw new RuntimeException("Publish Error.");
 		}
-		msgbean.setFullmsgWithType(msgbean, "Publish");
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
 
