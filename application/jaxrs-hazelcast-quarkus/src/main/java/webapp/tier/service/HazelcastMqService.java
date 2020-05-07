@@ -7,15 +7,19 @@ import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
+@ApplicationScoped
 public class HazelcastMqService implements Messaging {
 
 	private static final Logger LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
@@ -25,11 +29,10 @@ public class HazelcastMqService implements Messaging {
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
 	@Override
-	public String putMsg() throws RuntimeException, NoSuchAlgorithmException {
+	public MsgBean putMsg() throws RuntimeException, NoSuchAlgorithmException {
 		HazelcastInstance client = null;
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		String body = msgbean.createBody(msgbean, splitkey);
-		LOG.fine("start put");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
+		String body = MsgUtils.createBody(msgbean, splitkey);
 
 		try {
 			client = ConnectHazelcast.getInstance();
@@ -44,15 +47,13 @@ public class HazelcastMqService implements Messaging {
 				client.shutdown();
 			}
 		}
-		msgbean.setFullmsgWithType(msgbean, "Put");
 		LOG.info(msgbean.getFullmsg());
-		LOG.fine("end put");
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
 	@Override
-	public String getMsg() throws RuntimeException {
-		MsgBeanUtils msgbean = new MsgBeanUtils();
+	public MsgBean getMsg() throws RuntimeException {
+		MsgBean msgbean = null;
 		HazelcastInstance client = null;
 
 		try {
@@ -61,10 +62,10 @@ public class HazelcastMqService implements Messaging {
 			Object resp = queue.poll();
 
 			if (Objects.isNull(resp) || resp.toString().isEmpty()) {
-				msgbean.setFullmsg("No Data");
+				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
-				String jmsbody = resp.toString();
-				msgbean.setFullmsgWithType(msgbean.splitBody(jmsbody, splitkey), "Get");
+				msgbean = MsgUtils.splitBody(resp.toString(), splitkey);
+				msgbean.setFullmsg("Get");
 			}
 		} catch (IOException | IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Get Error.", e);
@@ -75,15 +76,14 @@ public class HazelcastMqService implements Messaging {
 			}
 		}
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
 	@Override
-	public String publishMsg() throws RuntimeException, NoSuchAlgorithmException {
+	public MsgBean publishMsg() throws RuntimeException, NoSuchAlgorithmException {
 		HazelcastInstance client = null;
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		String body = msgbean.createBody(msgbean, splitkey);
-		LOG.fine("start publish");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
+		String body = MsgUtils.createBody(msgbean, splitkey);
 
 		try {
 			client = ConnectHazelcast.getInstance();
@@ -97,9 +97,7 @@ public class HazelcastMqService implements Messaging {
 				client.shutdown();
 			}
 		}
-		msgbean.setFullmsgWithType(msgbean, "Publish");
 		LOG.info(msgbean.getFullmsg());
-		LOG.fine("end publish");
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 }

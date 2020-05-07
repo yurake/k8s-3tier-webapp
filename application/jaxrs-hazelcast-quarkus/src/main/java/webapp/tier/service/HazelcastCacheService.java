@@ -9,14 +9,17 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.hazelcast.core.HazelcastInstance;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Cache;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
 
+@ApplicationScoped
 public class HazelcastCacheService implements Cache {
 
 	private static Logger LOG = Logger.getLogger(HazelcastCacheService.class.getSimpleName());
@@ -24,9 +27,9 @@ public class HazelcastCacheService implements Cache {
 	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 
 	@Override
-	public String setMsg() throws RuntimeException, NoSuchAlgorithmException {
+	public MsgBean setMsg() throws RuntimeException, NoSuchAlgorithmException {
 		HazelcastInstance client = null;
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Set");
 
 		try {
 			client = ConnectHazelcast.getInstance();
@@ -40,20 +43,19 @@ public class HazelcastCacheService implements Cache {
 				client.shutdown();
 			}
 		}
-		msgbean.setFullmsgWithType(msgbean, "Set");
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
 	@Override
-	public String getMsg() throws RuntimeException {
-		List<String> msglist = getMsgList();
+	public MsgBean getMsg() throws RuntimeException {
+		List<MsgBean> msglist = getMsgList();
 		return msglist.get(msglist.size() - 1);
 
 	}
 
-	public List<String> getMsgList() throws RuntimeException {
-		List<String> msglist = new ArrayList<>();
+	public List<MsgBean> getMsgList() throws RuntimeException {
+		List<MsgBean> msglist = new ArrayList<>();
 		HazelcastInstance client = null;
 
 		try {
@@ -61,16 +63,13 @@ public class HazelcastCacheService implements Cache {
 			Map<Integer, String> map = client.getMap(cachename);
 
 			for (Entry<Integer, String> entry : map.entrySet()) {
-				MsgBeanUtils msgbean = new MsgBeanUtils();
-				msgbean.setId(entry.getKey());
-				msgbean.setMessage(entry.getValue());
-				msgbean.setFullmsgWithType(msgbean, "Get");
+				MsgBean msgbean = new MsgBean(entry.getKey(), entry.getValue(), "Get");
 				LOG.info(msgbean.getFullmsg());
-				msglist.add(msgbean.getFullmsg());
+				msglist.add(msgbean);
 			}
 
 			if (msglist.isEmpty()) {
-				msglist.add("No Data");
+				msglist.add(new MsgBean(0, "No Data."));
 			}
 		} catch (IOException | IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Get Error.", e);

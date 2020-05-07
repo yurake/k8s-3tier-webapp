@@ -9,16 +9,17 @@ import org.junit.jupiter.api.Test;
 import com.hazelcast.core.Message;
 
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @QuarkusTest
 class HazelcastSubscriberTest {
 
 	@Test
 	void testOnMessageError() throws NoSuchAlgorithmException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), "test msg");
-		String body = msgbean.createBody(msgbean, ",");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), "test msg");
+		String body = MsgUtils.createBody(msgbean, ",");
 		Message<String> message = new Message<String>("topicName", body, 0, null);
 
 		HazelcastSubscriber hassub = new HazelcastSubscriber();

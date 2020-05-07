@@ -1,5 +1,6 @@
 package webapp.tier.resource;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,14 +21,20 @@ import webapp.tier.service.HazelcastMqService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class HazelcastResource {
 
+	@Inject
+	HazelcastCacheService cachesvc;
+
+	@Inject
+	HazelcastMqService mqsvc;
+
 	@POST
 	@Path("/putcache")
 	@Counted(name = "performedChecks_putcache", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_putcache", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response putcache() {
-		HazelcastCacheService svc = new HazelcastCacheService();
+//		HazelcastCacheService cachesvc = new HazelcastCacheService();
 		try {
-			return Response.ok().entity(svc.setMsg()).build();
+			return Response.ok().entity(cachesvc.setMsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -38,9 +45,9 @@ public class HazelcastResource {
 	@Counted(name = "performedChecks_getcache", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_getcache", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response getcache() {
-		HazelcastCacheService svc = new HazelcastCacheService();
+//		HazelcastCacheService cachesvc = new HazelcastCacheService();
 		try {
-			return Response.ok().entity(svc.getMsgList()).build();
+			return Response.ok().entity(cachesvc.getMsgList()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -51,9 +58,9 @@ public class HazelcastResource {
 	@Counted(name = "performedChecks_putqueue", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_putqueue", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response putqueue() {
-		HazelcastMqService svc = new HazelcastMqService();
+//		HazelcastMqService mqsvc = new HazelcastMqService();
 		try {
-			return Response.ok().entity(svc.putMsg()).build();
+			return Response.ok().entity(mqsvc.putMsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -64,9 +71,9 @@ public class HazelcastResource {
 	@Counted(name = "performedChecks_getqueue", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_getqueue", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response getqueue() {
-		HazelcastMqService svc = new HazelcastMqService();
+//		HazelcastMqService mqsvc = new HazelcastMqService();
 		try {
-			return Response.ok().entity(svc.getMsg()).build();
+			return Response.ok().entity(mqsvc.getMsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -77,9 +84,9 @@ public class HazelcastResource {
 	@Counted(name = "performedChecks_publish", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_publish", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response publish() {
-		HazelcastMqService svc = new HazelcastMqService();
+//		HazelcastMqService mqsvc = new HazelcastMqService();
 		try {
-			return Response.ok().entity(svc.publishMsg()).build();
+			return Response.ok().entity(mqsvc.publishMsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}

@@ -14,7 +14,7 @@ import com.hazelcast.core.MessageListener;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.service.DeliverService;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class HazelcastSubscriber implements MessageListener<String> {
@@ -25,9 +25,8 @@ public class HazelcastSubscriber implements MessageListener<String> {
 	@Override
 	public void onMessage(Message<String> message) {
 
-		MsgBeanUtils msgbean = new MsgBeanUtils();
-		MsgBean bean = msgbean.splitBody(message.getMessageObject(), splitkey);
-		msgbean.setFullmsgWithType(bean, "Received");
+		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject(), splitkey);
+		msgbean.setFullmsg("Received");
 		LOG.info(msgbean.getFullmsg());
 		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL).get();
 		LOG.log(Level.INFO, "Call: Random Publish: {0}", deliversvc.random());
