@@ -1,5 +1,7 @@
 package webapp.tier.resource;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -30,7 +32,7 @@ public class MongodbResource {
 	public Response insert() {
 		try {
 			return Response.ok().entity(mongosvc.insertMsg()).build();
-		} catch (Exception e) {
+		} catch (RuntimeException | NoSuchAlgorithmException e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -42,7 +44,7 @@ public class MongodbResource {
 	public Response select() {
 		try {
 			return Response.ok().entity(mongosvc.selectMsg()).build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -54,7 +56,7 @@ public class MongodbResource {
 	public Response delete() {
 		try {
 			return Response.ok().entity(mongosvc.deleteMsg()).build();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}

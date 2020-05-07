@@ -1,7 +1,6 @@
 package webapp.tier.service;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -38,26 +37,23 @@ public class MongodbService implements Database {
 	private static final Logger LOG = Logger.getLogger(MongodbService.class.getSimpleName());
 
 	@Override
-	public MsgBean insertMsg() throws NoSuchAlgorithmException {
+	public MsgBean insertMsg() throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
 		Document document = new Document()
 				.append("id", msgbean.getId())
 				.append("msg", msgbean.getMessage());
 		try {
 			getCollection().insertOne(document);
-		} catch (NullPointerException e) {
+		} catch (NullPointerException | MongoException e) {
 			LOG.log(Level.SEVERE, "Insert Error.", e);
 			throw new NullPointerException("Insert Error.");
-		} catch (MongoException e) {
-			LOG.log(Level.SEVERE, "Insert Error.", e);
-			throw new RuntimeException("Insert Error.");
 		}
 		LOG.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
 	@Override
-	public List<MsgBean> selectMsg() throws SQLException {
+	public List<MsgBean> selectMsg() throws RuntimeException {
 		List<MsgBean> msglist = new ArrayList<>();
 
 		try (MongoCursor<Document> cursor = getCollection().find().iterator()) {
@@ -70,10 +66,7 @@ public class MongodbService implements Database {
 			if (msglist.isEmpty()) {
 				msglist.add(new MsgBean(0, "No Data."));
 			}
-		} catch (NullPointerException e) {
-			LOG.log(Level.SEVERE, "Select Error.", e);
-			throw new SQLException("Select Error.");
-		} catch (MongoException e) {
+		} catch (NullPointerException | MongoException e) {
 			LOG.log(Level.SEVERE, "Select Error.", e);
 			throw new RuntimeException("Select Error.");
 		}
@@ -81,15 +74,12 @@ public class MongodbService implements Database {
 	}
 
 	@Override
-	public String deleteMsg() {
+	public String deleteMsg() throws RuntimeException {
 		String msg = "Delete Msg Collection";
 		try {
 			getCollection().drop();
 			LOG.log(Level.INFO, msg);
-		} catch (NullPointerException e) {
-			LOG.log(Level.SEVERE, "Delete Error.", e);
-			throw new NullPointerException("Delete Error.");
-		} catch (MongoException e) {
+		} catch (NullPointerException | MongoException e) {
 			LOG.log(Level.SEVERE, "Delete Error.", e);
 			throw new RuntimeException("Delete Error.");
 		}
