@@ -21,7 +21,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class ActiveMqService implements Runnable {
@@ -60,10 +60,9 @@ public class ActiveMqService implements Runnable {
 				LOG.info("Ready for receive message...");
 				Message message = consumer.receive();
 
-				MsgBeanUtils msgbean = new MsgBeanUtils();
 				TextMessage textMessage = (TextMessage) message;
-				MsgBean bean = msgbean.splitBody(textMessage.getText(), splitkey);
-				msgbean.setFullmsgWithType(bean, "Received");
+				MsgBean msgbean = MsgUtils.splitBody(textMessage.getText(), splitkey);
+				msgbean.setFullmsg("Received");
 				LOG.log(Level.INFO, msgbean.getFullmsg());
 				LOG.log(Level.INFO, "Call Random Publish: {0}", deliversvc.random());
 			} catch (Exception e) {

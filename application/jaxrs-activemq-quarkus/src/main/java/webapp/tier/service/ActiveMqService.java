@@ -14,9 +14,10 @@ import javax.jms.Session;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Messaging;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class ActiveMqService implements Messaging {
@@ -36,52 +37,51 @@ public class ActiveMqService implements Messaging {
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
 
 	@Override
-	public String putMsg() throws RuntimeException, NoSuchAlgorithmException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		String body = msgbean.createBody(msgbean, splitkey);
+	public MsgBean putMsg() throws RuntimeException, NoSuchAlgorithmException {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
+		String body = MsgUtils.createBody(msgbean, splitkey);
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
 			context.createProducer().send(context.createQueue(queuename), context.createTextMessage(body));
 		} catch (RuntimeException e) {
 			LOG.log(Level.SEVERE, "Put Error.", e);
 			throw new RuntimeException("Put Error.");
 		}
-		msgbean.setFullmsgWithType(msgbean, "Put");
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
 	@Override
-	public String getMsg() throws RuntimeException {
-		MsgBeanUtils msgbean = new MsgBeanUtils();
+	public MsgBean getMsg() throws RuntimeException {
+		MsgBean msgbean = null;
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
 			JMSConsumer consumer = context.createConsumer(context.createQueue(queuename))) {
 			String resp = consumer.receiveBody(String.class);
 
 			if (Objects.isNull(resp)) {
-				msgbean.setFullmsg("No Data");
+				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
-				msgbean.setFullmsgWithType(msgbean.splitBody(resp, splitkey), "Get");
+				msgbean = MsgUtils.splitBody(resp, splitkey);
+				msgbean.setFullmsg("Get");
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Get Error.", e);
 			throw new RuntimeException("Get Error.");
 		}
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
 	@Override
-	public String publishMsg() throws RuntimeException, NoSuchAlgorithmException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		String body = msgbean.createBody(msgbean, splitkey);
+	public MsgBean publishMsg() throws RuntimeException, NoSuchAlgorithmException {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
+		String body = MsgUtils.createBody(msgbean, splitkey);
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
 			context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Publish Error.", e);
 			throw new RuntimeException("Publish Error.");
 		}
-		msgbean.setFullmsgWithType(msgbean, "Publish");
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 }

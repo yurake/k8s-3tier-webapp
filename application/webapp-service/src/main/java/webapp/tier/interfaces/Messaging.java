@@ -1,10 +1,12 @@
 package webapp.tier.interfaces;
 
+import webapp.tier.bean.MsgBean;
+
 public interface Messaging {
 
-	public String putMsg() throws Exception;
+	public MsgBean putMsg() throws Exception;
 
-	public String getMsg() throws Exception;
+	public MsgBean getMsg() throws Exception;
 
-	public String publishMsg() throws Exception;
+	public MsgBean publishMsg() throws Exception;
 }
