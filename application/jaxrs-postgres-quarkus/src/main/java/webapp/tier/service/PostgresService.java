@@ -17,8 +17,9 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import io.agroal.api.AgroalDataSource;
 import io.quarkus.agroal.DataSource;
+import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class PostgresService {
@@ -57,9 +58,9 @@ public class PostgresService {
 		return status;
 	}
 
-	public String insertMsg() throws SQLException, NoSuchAlgorithmException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		String sql = insertsql.replace(sqlkey, msgbean.getIdString()).replace(sqlbody, msgbean.getMessage());
+	public MsgBean insertMsg() throws SQLException, NoSuchAlgorithmException {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
+		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId())).replace(sqlbody, msgbean.getMessage());
 
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {
@@ -69,28 +70,24 @@ public class PostgresService {
 			LOG.log(Level.SEVERE, "Insert Error.", e);
 			throw new SQLException("Insert Error.");
 		}
-		msgbean.setFullmsgWithType(msgbean, "Insert");
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
-	public List<String> selectMsg() throws SQLException {
-		List<String> msglist = new ArrayList<>();
+	public List<MsgBean> selectMsg() throws SQLException {
+		List<MsgBean> msglist = new ArrayList<>();
 
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(selectsql)) {
 			LOG.log(Level.INFO, "Select SQL: {0}", selectsql);
 			while (rs.next()) {
-				MsgBeanUtils msgbean = new MsgBeanUtils();
-				msgbean.setIdString(rs.getString("id"));
-				msgbean.setMessage(rs.getString("msg"));
-				msgbean.setFullmsgWithType(msgbean, "Select");
+				MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(rs.getString("id")), rs.getString("msg"), "Select");
 				LOG.info(msgbean.getFullmsg());
-				msglist.add(msgbean.getFullmsg());
+				msglist.add(msgbean);
 			}
 			if (msglist.isEmpty()) {
-				msglist.add("No Data");
+				msglist.add(new MsgBean(0, "No Data."));
 			}
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Select Errorr.", e);

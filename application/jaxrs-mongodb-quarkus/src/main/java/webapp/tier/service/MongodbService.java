@@ -18,9 +18,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Database;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
 
 @ApplicationScoped
 public class MongodbService implements Database {
@@ -38,10 +38,10 @@ public class MongodbService implements Database {
 	private static final Logger LOG = Logger.getLogger(MongodbService.class.getSimpleName());
 
 	@Override
-	public String insertMsg() throws NoSuchAlgorithmException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
+	public MsgBean insertMsg() throws NoSuchAlgorithmException {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
 		Document document = new Document()
-				.append("id", msgbean.getIdString())
+				.append("id", msgbean.getId())
 				.append("msg", msgbean.getMessage());
 		try {
 			getCollection().insertOne(document);
@@ -52,27 +52,23 @@ public class MongodbService implements Database {
 			LOG.log(Level.SEVERE, "Insert Error.", e);
 			throw new RuntimeException("Insert Error.");
 		}
-		msgbean.setFullmsgWithType(msgbean, "Insert");
 		LOG.log(Level.INFO, msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return msgbean;
 	}
 
 	@Override
-	public List<String> selectMsg() throws SQLException {
-		List<String> msglist = new ArrayList<>();
+	public List<MsgBean> selectMsg() throws SQLException {
+		List<MsgBean> msglist = new ArrayList<>();
 
 		try (MongoCursor<Document> cursor = getCollection().find().iterator()) {
 			while (cursor.hasNext()) {
 				Document document = cursor.next();
-				MsgBeanUtils msgbean = new MsgBeanUtils();
-				msgbean.setIdString(document.getString("id"));
-				msgbean.setMessage(document.getString("msg"));
-				msgbean.setFullmsgWithType(msgbean, "Select");
+				MsgBean msgbean = new MsgBean(document.getInteger("id"), document.getString("msg"), "Select");
 				LOG.log(Level.INFO, msgbean.getFullmsg());
-				msglist.add(msgbean.getFullmsg());
+				msglist.add(msgbean);
 			}
 			if (msglist.isEmpty()) {
-				msglist.add("No Data");
+				msglist.add(new MsgBean(0, "No Data."));
 			}
 		} catch (NullPointerException e) {
 			LOG.log(Level.SEVERE, "Select Error.", e);
