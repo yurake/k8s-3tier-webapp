@@ -1,5 +1,6 @@
 package webapp.tier.service.subscribe;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,7 +12,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import redis.clients.jedis.JedisPubSub;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.service.DeliverService;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class RedisSubscriber extends JedisPubSub {
@@ -21,15 +22,11 @@ public class RedisSubscriber extends JedisPubSub {
 
 	@Override
 	public void onMessage(String channel, String message) {
-		MsgBeanUtils msgbean = new MsgBeanUtils();
-		MsgBean bean = msgbean.splitBody(message, splitkey);
-		msgbean.setFullmsgWithType(bean, "Received");
+		MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
+		msgbean.setFullmsg("Received");
 		LOG.info(msgbean.getFullmsg());
-
 		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL).get();
-
-		LOG.info("Call: Random Publish");
-		LOG.info(deliversvc.random());
+		LOG.log(Level.INFO, "Call: Random Publish: {0}", deliversvc.random());
 	}
 
 }
