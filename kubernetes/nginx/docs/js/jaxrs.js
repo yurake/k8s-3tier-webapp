@@ -64,9 +64,25 @@ $(function () {
 			cache: false,
 			timeout: 10000,
 		}).always(function (data, textStatus, jqXHR) {
-			console.log(jqXHR.status);
 			console.log(data);
 			$(respid).html(data.fullmsg + '\nstatus: ' + jqXHR.status);
+		})
+	}
+
+	function dispMsgFromJsonArray(type, url, respid) {
+		$.ajax({
+			type: type,
+			url: url,
+			cache: false,
+			timeout: 10000,
+		}).always(function (data, textStatus, jqXHR) {
+			var resparray = "";
+			for (i = 0; i < data.length; i++) {
+				if (data[i] != null) {
+					resparray += data[i].fullmsg + '\n';
+				}
+			}
+			$(respid).html(resparray + jqXHR.status);
 		})
 	}
 
@@ -115,7 +131,7 @@ $(function () {
 	})
 
 	$("#getredis").click(function () {
-		dispMsgFromJson(get, redisurl + get, respredis);
+		dispMsgFromJsonArray(get, redisurl + get, respredis);
 	})
 
 	$("#publishredis").click(function () {
@@ -151,7 +167,7 @@ $(function () {
 	})
 
 	$("#getcachehazelcast").click(function () {
-		dispMsgFromJson(get, hazelcasturl + 'getcache', respcachehazelcast);
+		dispMsgFromJsonArray(get, hazelcasturl + 'getcache', respcachehazelcast);
 	})
 
 	$("#publishhazelcast").click(function () {
@@ -171,7 +187,7 @@ $(function () {
 	})
 
 	$("#selectmysql").click(function () {
-		dispMsgFromJson(get, mysqlurl + select, respmysql);
+		dispMsgFromJsonArray(get, mysqlurl + select, respmysql);
 	})
 
 	$("#deletemysql").click(function () {
@@ -183,7 +199,7 @@ $(function () {
 	})
 
 	$("#selectpostgres").click(function () {
-		dispMsgFromJson(get, postgresurl + select, resppostgres);
+		dispMsgFromJsonArray(get, postgresurl + select, resppostgres);
 	})
 
 	$("#deletepostgres").click(function () {
@@ -195,7 +211,7 @@ $(function () {
 	})
 
 	$("#selectmongodb").click(function () {
-		dispMsgFromJson(get, mongodburl + select, respmongodb);
+		dispMsgFromJsonArray(get, mongodburl + select, respmongodb);
 	})
 
 	$("#deletemongodb").click(function () {
