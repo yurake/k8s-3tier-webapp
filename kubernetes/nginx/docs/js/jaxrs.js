@@ -51,11 +51,9 @@ $(function () {
 			cache: false,
 			timeout: 10000,
 		}).always(function (data) {
-			console.log(data);
-			const resp = JSON.stringify(data, null, 4)
-			const respj = JSON.parse(resp)
+			const resp = JSON.parse(JSON.stringify(data, null, 4));
 			console.log(resp);
-			$(respid).html(respj.responseText + '\nstatus: ' + respj.status);
+			$(respid).html(resp.responseText + '\nstatus: ' + resp.status);
 		})
 	}
 
@@ -77,7 +75,7 @@ $(function () {
 	})
 
 	$("#publishkafka").click(function () {
-		dispMsgFromString(post, kafkaurl + publish, respkafka);
+		dispMsgFromJson(post, kafkaurl + publish, respkafka);
 	})
 
 	$("#subscribekafka").click(function (event) {
@@ -113,67 +111,67 @@ $(function () {
 	})
 
 	$("#setredis").click(function () {
-		dispMsgFromString(post, redisurl + set, respredis);
+		dispMsgFromJson(post, redisurl + set, respredis);
 	})
 
 	$("#getredis").click(function () {
-		dispMsgFromString(get, redisurl + get, respredis);
+		dispMsgFromJson(get, redisurl + get, respredis);
 	})
 
 	$("#publishredis").click(function () {
-		dispMsgFromString(post, redisurl + publish, respredis);
+		dispMsgFromJson(post, redisurl + publish, respredis);
 	})
 
 	$("#putrabbitmq").click(function () {
-		dispMsgFromString(post, rabbitmqurl + put, resprabbitmq);
+		dispMsgFromJson(post, rabbitmqurl + put, resprabbitmq);
 	})
 
 	$("#getrabbitmq").click(function () {
-		dispMsgFromString(get, rabbitmqurl + get, resprabbitmq);
+		dispMsgFromJson(get, rabbitmqurl + get, resprabbitmq);
 	})
 
 	$("#publishrabbitmq").click(function () {
-		dispMsgFromString(post, rabbitmqurl + publish, resprabbitmq);
+		dispMsgFromJson(post, rabbitmqurl + publish, resprabbitmq);
 	})
 
 	$("#putactivemq").click(function () {
-		dispMsgFromString(post, activemqurl + put, respactivemq);
+		dispMsgFromJson(post, activemqurl + put, respactivemq);
 	})
 
 	$("#getactivemq").click(function () {
-		dispMsgFromString(get, activemqurl + get, respactivemq);
+		dispMsgFromJson(get, activemqurl + get, respactivemq);
 	})
 
 	$("#publishactivemq").click(function () {
-		dispMsgFromString(post, activemqurl + publish, respactivemq);
+		dispMsgFromJson(post, activemqurl + publish, respactivemq);
 	})
 
 	$("#putcachehazelcast").click(function () {
-		dispMsgFromString(post, hazelcasturl + 'putcache', respcachehazelcast);
+		dispMsgFromJson(post, hazelcasturl + 'putcache', respcachehazelcast);
 	})
 
 	$("#getcachehazelcast").click(function () {
-		dispMsgFromString(get, hazelcasturl + 'getcache', respcachehazelcast);
+		dispMsgFromJson(get, hazelcasturl + 'getcache', respcachehazelcast);
 	})
 
 	$("#publishhazelcast").click(function () {
-		dispMsgFromString(post, hazelcasturl + publish, respcachehazelcast);
+		dispMsgFromJson(post, hazelcasturl + publish, respcachehazelcast);
 	})
 
 	$("#putqueuehazelcast").click(function () {
-		dispMsgFromString(post, hazelcasturl + 'putqueue', respqueuehazelcast);
+		dispMsgFromJson(post, hazelcasturl + 'putqueue', respqueuehazelcast);
 	})
 
 	$("#getqueuehazelcast").click(function () {
-		dispMsgFromString(get, hazelcasturl + 'getqueue', respqueuehazelcast);
+		dispMsgFromJson(get, hazelcasturl + 'getqueue', respqueuehazelcast);
 	})
 
 	$("#insertmysql").click(function () {
-		dispMsgFromString(post, mysqlurl + insert, respmysql);
+		dispMsgFromJson(post, mysqlurl + insert, respmysql);
 	})
 
 	$("#selectmysql").click(function () {
-		dispMsgFromString(get, mysqlurl + select, respmysql);
+		dispMsgFromJson(get, mysqlurl + select, respmysql);
 	})
 
 	$("#deletemysql").click(function () {
@@ -181,11 +179,11 @@ $(function () {
 	})
 
 	$("#insertpostgres").click(function () {
-		dispMsgFromString(post, postgresurl + insert, resppostgres);
+		dispMsgFromJson(post, postgresurl + insert, resppostgres);
 	})
 
 	$("#selectpostgres").click(function () {
-		dispMsgFromString(get, postgresurl + select, resppostgres);
+		dispMsgFromJson(get, postgresurl + select, resppostgres);
 	})
 
 	$("#deletepostgres").click(function () {
@@ -193,11 +191,11 @@ $(function () {
 	})
 
 	$("#insertmongodb").click(function () {
-		dispMsgFromString(post, mongodburl + insert, respmongodb);
+		dispMsgFromJson(post, mongodburl + insert, respmongodb);
 	})
 
 	$("#selectmongodb").click(function () {
-		dispMsgFromString(get, mongodburl + select, respmongodb);
+		dispMsgFromJson(get, mongodburl + select, respmongodb);
 	})
 
 	$("#deletemongodb").click(function () {
