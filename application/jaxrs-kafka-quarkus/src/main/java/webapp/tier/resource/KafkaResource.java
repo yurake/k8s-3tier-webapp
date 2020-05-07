@@ -13,7 +13,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.sse.Sse;
 
 import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.jboss.resteasy.annotations.SseElementType;
 import org.reactivestreams.Publisher;
 
@@ -27,10 +26,6 @@ public class KafkaResource {
 	@Inject
 	@Channel("in-memory-message")
 	Publisher<String> inmemmsg;
-
-	@Inject
-	@Channel("message")
-	Emitter<String> emitmsg;
 
 	@Inject
 	KafkaService svc;
@@ -59,9 +54,7 @@ public class KafkaResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response publish() {
 		try {
-			String body = svc.publishMsg();
-			emitmsg.send(body);
-			return Response.ok().entity(body).build();
+			return Response.ok().entity(svc.publishMsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}

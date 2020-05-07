@@ -5,8 +5,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
@@ -27,6 +30,10 @@ public class KafkaService {
 	@ConfigProperty(name = "kafka.splitkey")
 	String splitkey;
 
+	@Inject
+	@Channel("message")
+	Emitter<String> emitmsg;
+
 	@Incoming("message")
 	@Outgoing("in-memory-message")
 	@Merge(Merge.Mode.MERGE)
@@ -37,9 +44,10 @@ public class KafkaService {
 		return msg;
 	}
 
-	public String publishMsg() throws NoSuchAlgorithmException {
+	public MsgBean publishMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		LOG.info(msgbean.getFullmsg());
-		return MsgUtils.createBody(msgbean, splitkey);
+		emitmsg.send(MsgUtils.createBody(msgbean, splitkey));
+		return msgbean;
 	}
 }
