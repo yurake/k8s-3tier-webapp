@@ -26,7 +26,7 @@ public class MsgUtils {
 		return bean;
 	}
 
-	public String createBody(MsgBean bean, String splitkey) {
+	public static String createBody(MsgBean bean, String splitkey) {
 		StringBuilder buf = new StringBuilder();
 		buf.append(bean.getId());
 		buf.append(splitkey);
@@ -34,7 +34,7 @@ public class MsgUtils {
 		return buf.toString();
 	}
 
-	public MsgBean splitBody(String body, String splitkey) {
+	public static MsgBean splitBody(String body, String splitkey) {
 		String[] arraybody = body.split(splitkey, 0);
 		return new MsgBean(Integer.parseInt(arraybody[0]), arraybody[1]);
 	}

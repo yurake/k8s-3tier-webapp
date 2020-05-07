@@ -13,8 +13,9 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
 import io.smallrye.reactive.messaging.annotations.Merge;
 import webapp.tier.bean.LatestMessage;
+import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class KafkaService {
@@ -37,10 +38,8 @@ public class KafkaService {
 	}
 
 	public String publishMsg() throws NoSuchAlgorithmException {
-		MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-		msgbean.createBody(msgbean, splitkey);
-		msgbean.setFullmsgWithType(msgbean, "Publish");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		LOG.info(msgbean.getFullmsg());
-		return msgbean.getFullmsg();
+		return MsgUtils.createBody(msgbean, splitkey);
 	}
 }

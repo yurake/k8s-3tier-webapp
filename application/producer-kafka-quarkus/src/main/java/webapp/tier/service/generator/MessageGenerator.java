@@ -10,8 +10,9 @@ import org.jboss.logging.Logger;
 
 import io.reactivex.Flowable;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
+import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgBeanUtils;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class MessageGenerator {
@@ -34,10 +35,9 @@ public class MessageGenerator {
 		return Flowable.interval(period, TimeUnit.SECONDS)
 				.onBackpressureDrop()
 				.map(tick -> {
-					MsgBeanUtils msgbean = new MsgBeanUtils(CreateId.createid(), message);
-					msgbean.setFullmsgWithType(msgbean, "Generate");
+					MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Generate");
 					LOG.info(msgbean.getFullmsg());
-					return msgbean.createBody(msgbean, splitkey);
+					return MsgUtils.createBody(msgbean, splitkey);
 				});
 	}
 }
