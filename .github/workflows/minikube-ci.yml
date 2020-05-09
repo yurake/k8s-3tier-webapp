@@ -17,6 +17,8 @@ jobs:
         minikube: [v1.8.2, v1.9.2]
         kubernetes: [v1.18.0, v1.18.2]
     steps:
+    - name: checkout
+      uses: actions/checkout@v2
     - name: delete installed software not use
       run: |
         df -h /
@@ -27,9 +29,6 @@ jobs:
         sudo rm -rf /opt/hostedtoolcache/Python
         sudo rm -rf /opt/hostedtoolcache/Ruby
         df -h /
-          
-    - name: checkout
-      uses: actions/checkout@v1
     - name: setup minikube
       uses: manusa/actions-setup-minikube@v1.0.2
       with:
