@@ -64,7 +64,7 @@ public class MongodbService implements Database {
 				msglist.add(msgbean);
 			}
 			if (msglist.isEmpty()) {
-				msglist.add(new MsgBean(0, "No Data."));
+				msglist.add(new MsgBean(0, "No Data.", "Select"));
 			}
 		} catch (NullPointerException | MongoException e) {
 			LOG.log(Level.SEVERE, "Select Error.", e);

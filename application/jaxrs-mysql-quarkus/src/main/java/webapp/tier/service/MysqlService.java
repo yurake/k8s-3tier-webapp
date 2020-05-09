@@ -87,7 +87,7 @@ public class MysqlService {
 				msglist.add(msgbean);
 			}
 			if (msglist.isEmpty()) {
-				msglist.add(new MsgBean(0, "No Data."));
+				msglist.add(new MsgBean(0, "No Data.", "Select"));
 			}
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Select Errorr.", e);
