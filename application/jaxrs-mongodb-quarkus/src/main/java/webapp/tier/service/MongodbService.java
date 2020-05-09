@@ -46,7 +46,7 @@ public class MongodbService implements Database {
 			getCollection().insertOne(document);
 		} catch (NullPointerException | MongoException e) {
 			LOG.log(Level.SEVERE, "Insert Error.", e);
-			throw new NullPointerException("Insert Error.");
+			throw new RuntimeException("Insert Error.");
 		}
 		LOG.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
