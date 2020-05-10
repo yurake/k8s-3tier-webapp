@@ -1,5 +1,5 @@
 ## Add Datasource
-URL: http://prometheus  
+URL: http://prometheus:9090  
 Access: Server
 
 ## Recommended grafana dashboards
