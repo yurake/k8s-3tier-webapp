@@ -12,6 +12,7 @@ ldap
 metrics
 credentials-binding
 jdk-tool
+matrix-auth
 pipeline-milestone-step
 ws-cleanup
 bouncycastle-api
