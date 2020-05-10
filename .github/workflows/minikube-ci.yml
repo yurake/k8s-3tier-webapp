@@ -101,41 +101,11 @@ jobs:
         sudo kubectl get all -n monitoring
         sudo kubectl get ingress
         df -h /
-    - name: delete minikube if failure
-      if: failure()
-      run: |
-        docker ps -a
-        minikube stop
-        minikube delete
-        unset DOCKER_TLS_VERIFY
-        unset DOCKER_HOST
-        unset DOCKER_CERT_PATH
-        docker ps -a
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
-    - name: create issue if failure
-      if: failure()
-      uses: JasonEtco/create-an-issue@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        filename: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
-      id: create-issue
-    - name: Create comment
+    - name: add comment if failure
       if: failure()
       uses: peter-evans/create-or-update-comment@v1
       with:
         issue-number: ${{ github.event.issue.number }}
-        body: |
-          Please see new issue ${{ steps.create-issue.outputs.url }}  
-    - name: create comment
-      if: failure()
-      uses: peter-evans/create-or-update-comment@v1
-      with:
-        issue-number: ${{ steps.create-issue.outputs.number }}
         body: |
           Please see failure log:  
           https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
