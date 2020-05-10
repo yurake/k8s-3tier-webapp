@@ -3,819 +3,781 @@ name: Java CI
 on:
   push:
     paths:
-    - 'application/**'
-    - '.github/workflows/java-ci.yml'
+      - "application/**"
+      - ".github/workflows/java-ci.yml"
   pull_request:
 
 jobs:
   init-build:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java11'
-    - run: java -version
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Deploy POM to Github Package Registry
-      working-directory: ./application/parent-pom/
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn deploy --settings ../.m2/settings.xml
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java11"
+      - run: java -version
 
-    - name: Maven Deploy to Github Package Registry
-      working-directory: ./application/webapp-service
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn deploy --settings ../.m2/settings.xml
+      - name: Maven Deploy POM to Github Package Registry
+        working-directory: ./application/parent-pom/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn deploy --settings ../.m2/settings.xml
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Maven Deploy to Github Package Registry
+        working-directory: ./application/webapp-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn deploy --settings ../.m2/settings.xml
 
-
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   jaxrs-activemq-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/jaxrs-activemq-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml -Pnative
-    - name: Pull Image
-      run: docker pull yurak/jaxrs-activemq-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/jaxrs-activemq-quarkus
-      run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
-    - name: Push Image
-      run: docker push yurak/jaxrs-activemq-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/jaxrs-activemq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/jaxrs-activemq-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/jaxrs-activemq-quarkus
+        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/jaxrs-activemq-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   consumer-activemq-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/consumer-activemq-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml -Pnative
-    - name: Pull Image
-      run: docker pull yurak/consumer-activemq-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/consumer-activemq-quarkus
-      run: docker build -t yurak/consumer-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
-    - name: Push Image
-      run: docker push yurak/consumer-activemq-quarkus:latest
-      
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/consumer-activemq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+      - name: Pull Image
+        run: docker pull yurak/consumer-activemq-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/consumer-activemq-quarkus
+        run: docker build -t yurak/consumer-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        run: docker push yurak/consumer-activemq-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   consumer-hazelcast-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/consumer-hazelcast-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml 
-    - name: Pull Image
-      run: docker pull yurak/consumer-hazelcast-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/consumer-hazelcast-quarkus
-      run: docker build -t yurak/consumer-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/consumer-hazelcast-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/consumer-hazelcast-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/consumer-hazelcast-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/consumer-hazelcast-quarkus
+        run: docker build -t yurak/consumer-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/consumer-hazelcast-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   consumer-kafka-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/consumer-kafka-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml -Pnative
-    - name: Pull Image
-      run: docker pull yurak/consumer-kafka-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/consumer-kafka-quarkus
-      run: docker build -t yurak/consumer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
-    - name: Push Image
-      run: docker push yurak/consumer-kafka-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/consumer-kafka-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+      - name: Pull Image
+        run: docker pull yurak/consumer-kafka-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/consumer-kafka-quarkus
+        run: docker build -t yurak/consumer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        run: docker push yurak/consumer-kafka-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   scheduled-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/scheduled-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml -Pnative
-    - name: Pull Image
-      run: docker pull yurak/scheduled-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/scheduled-quarkus
-      run: docker build -t yurak/scheduled-quarkus:latest -f src/main/docker/Dockerfile.native .
-    - name: Push Image
-      run: docker push yurak/scheduled-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/scheduled-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+      - name: Pull Image
+        run: docker pull yurak/scheduled-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/scheduled-quarkus
+        run: docker build -t yurak/scheduled-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        run: docker push yurak/scheduled-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   jaxrs-hazelcast-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/jaxrs-hazelcast-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
-    - name: Pull Image
-      run: docker pull yurak/jaxrs-hazelcast-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/jaxrs-hazelcast-quarkus
-      run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/jaxrs-hazelcast-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/jaxrs-hazelcast-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/jaxrs-hazelcast-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/jaxrs-hazelcast-quarkus
+        run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/jaxrs-hazelcast-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   jaxrs-kafka-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/jaxrs-kafka-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml -Pnative
-    - name: Pull Image
-      run: docker pull yurak/jaxrs-kafka-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/jaxrs-kafka-quarkus
-      run: docker build -t yurak/jaxrs-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
-    - name: Push Image
-      run: docker push yurak/jaxrs-kafka-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/jaxrs-kafka-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+      - name: Pull Image
+        run: docker pull yurak/jaxrs-kafka-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/jaxrs-kafka-quarkus
+        run: docker build -t yurak/jaxrs-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        run: docker push yurak/jaxrs-kafka-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   jaxrs-memcached-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/jaxrs-memcached-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
-    - name: Pull Image
-      run: docker pull yurak/jaxrs-memcached-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/jaxrs-memcached-quarkus
-      run: docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/jaxrs-memcached-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/jaxrs-memcached-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/jaxrs-memcached-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/jaxrs-memcached-quarkus
+        run: docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/jaxrs-memcached-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   jaxrs-mongodb-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/jaxrs-mongodb-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
-    - name: Pull Image
-      run: docker pull yurak/jaxrs-mongodb-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/jaxrs-mongodb-quarkus
-      run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/jaxrs-mongodb-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/jaxrs-mongodb-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/jaxrs-mongodb-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/jaxrs-mongodb-quarkus
+        run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/jaxrs-mongodb-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   jaxrs-mysql-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/jaxrs-mysql-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
-    - name: Pull Image
-      run: docker pull yurak/jaxrs-mysql-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/jaxrs-mysql-quarkus
-      run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/jaxrs-mysql-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/jaxrs-mysql-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/jaxrs-mysql-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/jaxrs-mysql-quarkus
+        run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/jaxrs-mysql-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   jaxrs-postgres-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
-      
-    - name: Maven Build
-      working-directory: ./application/jaxrs-postgres-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
-    - name: Pull Image
-      run: docker pull yurak/jaxrs-postgres-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/jaxrs-postgres-quarkus
-      run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/jaxrs-postgres-quarkus:latest
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/jaxrs-postgres-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/jaxrs-postgres-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/jaxrs-postgres-quarkus
+        run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/jaxrs-postgres-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   jaxrs-rabbitmq-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
-      
-    - name: Maven Build
-      working-directory: ./application/jaxrs-rabbitmq-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
-    - name: Pull Image
-      run: docker pull yurak/jaxrs-rabbitmq-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/jaxrs-rabbitmq-quarkus
-      run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/jaxrs-rabbitmq-quarkus:latest
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/jaxrs-rabbitmq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/jaxrs-rabbitmq-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/jaxrs-rabbitmq-quarkus
+        run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/jaxrs-rabbitmq-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   jaxrs-redis-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/jaxrs-redis-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
-    - name: Pull Image
-      run: docker pull yurak/jaxrs-redis-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/jaxrs-redis-quarkus
-      run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/jaxrs-redis-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/jaxrs-redis-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/jaxrs-redis-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/jaxrs-redis-quarkus
+        run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/jaxrs-redis-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   consumer-rabbitmq-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/consumer-rabbitmq-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
-    - name: Pull Image
-      run: docker pull yurak/consumer-rabbitmq-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/consumer-rabbitmq-quarkus
-      run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/consumer-rabbitmq-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/consumer-rabbitmq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/consumer-rabbitmq-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/consumer-rabbitmq-quarkus
+        run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/consumer-rabbitmq-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   producer-kafka-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/producer-kafka-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml -Pnative
-    - name: Pull Image
-      run: docker pull yurak/producer-kafka-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/producer-kafka-quarkus
-      run: docker build -t yurak/producer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
-    - name: Push Image
-      run: docker push yurak/producer-kafka-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/producer-kafka-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+      - name: Pull Image
+        run: docker pull yurak/producer-kafka-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/producer-kafka-quarkus
+        run: docker build -t yurak/producer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        run: docker push yurak/producer-kafka-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   randompublish-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/randompublish-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml -Pnative
-    - name: Pull Image
-      run: docker pull yurak/randompublish-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/randompublish-quarkus
-      run: docker build -t yurak/randompublish-quarkus:latest -f src/main/docker/Dockerfile.native .
-    - name: Push Image
-      run: docker push yurak/randompublish-quarkus:latest
-      
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/randompublish-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+      - name: Pull Image
+        run: docker pull yurak/randompublish-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/randompublish-quarkus
+        run: docker build -t yurak/randompublish-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        run: docker push yurak/randompublish-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   redis-mysql-helidon:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    
-    - name: Maven Build - redis-mysql-helidon
-      working-directory: ./application/redis-mysql-helidon
-      run: mvn -B package
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
 
+      - name: Maven Build - redis-mysql-helidon
+        working-directory: ./application/redis-mysql-helidon
+        run: mvn -B package
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   consumer-redis-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/consumer-redis-quarkus
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B package --settings ../.m2/settings.xml
-    - name: Pull Image
-      run: docker pull yurak/consumer-redis-quarkus:latest
-    - name: Build Image
-      working-directory: ./application/consumer-redis-quarkus
-      run: docker build -t yurak/consumer-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-    - name: Push Image
-      run: docker push yurak/consumer-redis-quarkus:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Maven Build
+        working-directory: ./application/consumer-redis-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B package --settings ../.m2/settings.xml
+      - name: Pull Image
+        run: docker pull yurak/consumer-redis-quarkus:latest
+      - name: Build Image
+        working-directory: ./application/consumer-redis-quarkus
+        run: docker build -t yurak/consumer-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        run: docker push yurak/consumer-redis-quarkus:latest
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   wlp-web-java-spring:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: Setup GraalVM
-      uses: DeLaGuardo/setup-graalvm@3
-      with:
-        graalvm-version: '20.0.0.java8'
-    - run: java -version
-    - name: setup-native-image
-      run: |
-        gu install native-image
-    
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Maven Build
-      working-directory: ./application/wlp-web-java-spring
-      run: mvn -B package
-    - name: Copy war file
-      uses: canastro/copy-file-action@master
-      with:
-        source: "application/wlp-web-java-spring/target/spring.war"
-        target: "kubernetes/wlp/spring.war"
-    - name: Pull Image
-      run: docker pull yurak/wlp:latest
-    - name: Build image
-      working-directory: ./kubernetes/wlp
-      run: docker build -t yurak/wlp:latest .
-    - name: Push Image
-      run: docker push yurak/wlp:latest
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: "20.0.0.java8"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Maven Build
+        working-directory: ./application/wlp-web-java-spring
+        run: mvn -B package
+      - name: Copy war file
+        uses: canastro/copy-file-action@master
+        with:
+          source: "application/wlp-web-java-spring/target/spring.war"
+          target: "kubernetes/wlp/spring.war"
+      - name: Pull Image
+        run: docker pull yurak/wlp:latest
+      - name: Build image
+        working-directory: ./kubernetes/wlp
+        run: docker build -t yurak/wlp:latest .
+      - name: Push Image
+        run: docker push yurak/wlp:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
