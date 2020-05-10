@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "83c3b391-ac98-426f-abc2-f8bf981ea3b3",
+						"id": "48260878-98dd-4010-9b43-96be16928eee",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -23,11 +23,13 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Set\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Set id: \");",
-							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -70,11 +72,13 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
-							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -100,7 +104,7 @@
 			"response": []
 		},
 		{
-			"name": "redis/set",
+			"name": "redis/put",
 			"event": [
 				{
 					"listen": "test",
@@ -117,11 +121,13 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Put\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Put id: \");",
-							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -132,7 +138,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_REDIS}}/quarkus/redis/set",
+					"raw": "http://{{HOST_NAME_REDIS}}/quarkus/redis/put",
 					"protocol": "http",
 					"host": [
 						"{{HOST_NAME_REDIS}}"
@@ -140,7 +146,7 @@
 					"path": [
 						"quarkus",
 						"redis",
-						"set"
+						"put"
 					]
 				}
 			},
@@ -164,11 +170,13 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
-							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -211,11 +219,13 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Publish id: \");",
-							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -258,10 +268,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Put id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Put\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
@@ -305,10 +316,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
@@ -355,11 +367,13 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Publish id: \");",
-							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -385,7 +399,7 @@
 			"response": []
 		},
 		{
-			"name": "hazelcast/putcache",
+			"name": "hazelcast/setcache",
 			"event": [
 				{
 					"listen": "test",
@@ -402,11 +416,13 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Set\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Set id: \");",
-							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -417,7 +433,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/putcache",
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/setcache",
 					"protocol": "http",
 					"host": [
 						"{{HOST_NAME_HAZ}}"
@@ -425,7 +441,7 @@
 					"path": [
 						"quarkus",
 						"hazelcast",
-						"putcache"
+						"setcache"
 					]
 				}
 			},
@@ -449,11 +465,13 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
-							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -496,11 +514,13 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Publish id: \");",
-							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -543,10 +563,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Put id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Put\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
@@ -590,10 +611,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Get id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
@@ -637,10 +659,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Insert id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Insert\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
@@ -684,10 +707,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Select id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Select\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
@@ -719,7 +743,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4a6db929-6250-4658-bce9-56c45c31b9f5",
+						"id": "9c91f1d6-4388-47e0-9ec4-53398ed44de2",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -775,10 +799,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Insert id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Insert\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
@@ -822,10 +847,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Select id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Select\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
@@ -913,10 +939,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Insert id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Insert\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
@@ -960,10 +987,11 @@
 							"    pm.response.to.have.header(\"Content-Type\");",
 							"});",
 							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"message: Hello k8s-3tier-webapp with quarkus\");",
-							"});",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Select id: \");",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Select\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
 							"});",
 							""
 						],
