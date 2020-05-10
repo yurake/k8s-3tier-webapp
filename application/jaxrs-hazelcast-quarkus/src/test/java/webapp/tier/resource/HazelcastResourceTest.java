@@ -15,7 +15,7 @@ class HazelcastResourceTest {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/hazelcast/putcache")
+				.post("/quarkus/hazelcast/setcache")
 				.then()
 				.statusCode(500)
 				.body(is("Set Error."));

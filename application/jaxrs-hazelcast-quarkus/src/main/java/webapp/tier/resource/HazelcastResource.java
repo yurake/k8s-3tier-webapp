@@ -28,9 +28,9 @@ public class HazelcastResource {
 	HazelcastMqService mqsvc;
 
 	@POST
-	@Path("/putcache")
-	@Counted(name = "performedChecks_putcache", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_putcache", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Path("/setcache")
+	@Counted(name = "performedChecks_setcache", description = "How many primality checks have been performed.")
+	@Timed(name = "checksTimer_setcache", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response putcache() {
 //		HazelcastCacheService cachesvc = new HazelcastCacheService();
 		try {

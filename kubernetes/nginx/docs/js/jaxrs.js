@@ -162,8 +162,8 @@ $(function () {
 		dispMsgFromJson(post, activemqurl + publish, respactivemq);
 	})
 
-	$("#putcachehazelcast").click(function () {
-		dispMsgFromJson(post, hazelcasturl + 'putcache', respcachehazelcast);
+	$("#setcachehazelcast").click(function () {
+		dispMsgFromJson(post, hazelcasturl + 'setcache', respcachehazelcast);
 	})
 
 	$("#getcachehazelcast").click(function () {
