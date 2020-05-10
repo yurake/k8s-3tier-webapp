@@ -92,12 +92,20 @@ jobs:
         sudo kubectl -n monitoring describe job postmannewman-job
         sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
         sudo kubectl get po --all-namespaces=true
-    - name: revert docker config if failue
+    - name: check minikube status
+      run: |
+        sudo kubectl get nodes
+        sudo kubectl get pv
+        sudo kubectl get pvc
+        sudo kubectl get all
+        sudo kubectl get all -n monitoring
+        sudo kubectl get ingress
+        df -h /
+    - name: delete minikube if failure
       if: failure()
       run: |
-        docker ps -a
-        eval $(minikube docker-env -u)
-        docker ps -a
+        minikube stop
+        minikube delete
     - name: create issue if failure
       if: failure()
       uses: JasonEtco/create-an-issue@v2
@@ -121,12 +129,3 @@ jobs:
         body: |
           Please see failure log:  
           https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
-    - name: check minikube status
-      run: |
-        sudo kubectl get nodes
-        sudo kubectl get pv
-        sudo kubectl get pvc
-        sudo kubectl get all
-        sudo kubectl get all -n monitoring
-        sudo kubectl get ingress
-        df -h /
