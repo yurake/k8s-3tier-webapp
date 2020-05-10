@@ -8,8 +8,6 @@ https://grafana.com/grafana/dashboards
 Postgres Overview
 * 763  
 Redis Dashboard for Prometheus Redis Exporter 1.x
-* 1621  
-Kubernetes cluster monitoring (via Prometheus)
 * 2583
 MongoDB
 * 3066  
