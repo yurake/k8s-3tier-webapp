@@ -1,3 +1,7 @@
+## Add Datasource
+URL: http://prometheus  
+Access: Server
+
 ## Recommended grafana dashboards
 https://grafana.com/grafana/dashboards
 * 455  
