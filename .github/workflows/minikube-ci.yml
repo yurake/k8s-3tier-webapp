@@ -106,6 +106,9 @@ jobs:
       run: |
         minikube stop
         minikube delete
+        unset DOCKER_TLS_VERIFY
+        unset DOCKER_HOST
+        unset DOCKER_CERT_PATH
     - name: create issue if failure
       if: failure()
       uses: JasonEtco/create-an-issue@v2
