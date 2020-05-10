@@ -112,6 +112,7 @@ jobs:
         unset DOCKER_CERT_PATH
         docker ps -a
     - name: docker login
+      if: failure()
       env:
         DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
         DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
