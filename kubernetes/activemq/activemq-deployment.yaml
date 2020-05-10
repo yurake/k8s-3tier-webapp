@@ -20,7 +20,7 @@ spec:
         runAsUser: 0
       containers:
         - name: activemq
-          image: vromero/activemq-artemis:2.11.0-alpine
+          image: vromero/activemq-artemis:2.12.0-alpine
           imagePullPolicy: Always
           ports:
             - containerPort: 8161
@@ -29,8 +29,6 @@ spec:
           env:
             - name: ENABLE_JMX_EXPORTER
               value: "true"
-            - name: JAVA_OPTS
-              value: "-Duser.timezone=Asia/Tokyo"
           volumeMounts:
             - name: activemq-persistent-storage
               mountPath: /var/lib/artemis/data
