@@ -126,8 +126,8 @@ $(function () {
 		dispMsgFromJson(get, memcachedurl + get, respmemcached);
 	})
 
-	$("#setredis").click(function () {
-		dispMsgFromJson(post, redisurl + set, respredis);
+	$("#putredis").click(function () {
+		dispMsgFromJson(post, redisurl + put, respredis);
 	})
 
 	$("#getredis").click(function () {

@@ -20,10 +20,10 @@ import webapp.tier.service.RedisService;
 public class RedisResource {
 
 	@POST
-	@Path("/set")
-	@Counted(name = "performedChecks_set", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_set", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
-	public Response set() {
+	@Path("/put")
+	@Counted(name = "performedChecks_put", description = "How many primality checks have been performed.")
+	@Timed(name = "checksTimer_ptt", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	public Response put() {
 		RedisService svc = new RedisService();
 		try {
 			return Response.ok().entity(svc.putMsg()).build();

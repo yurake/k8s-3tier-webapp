@@ -11,11 +11,11 @@ import io.quarkus.test.junit.QuarkusTest;
 class RedisResourceTest {
 
 	@Test
-	void testSetError() {
+	void testPutError() {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/redis/set")
+				.post("/quarkus/redis/put")
 				.then()
 				.statusCode(500)
 				.body(is("Put Error."));
