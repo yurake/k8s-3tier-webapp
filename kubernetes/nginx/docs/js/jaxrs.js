@@ -9,7 +9,6 @@ hazelcasturl = url + '/hazelcast/';
 mysqlurl = url + '/mysql/';
 postgresurl = url + '/postgres/';
 mongodburl = url + '/mongodb/';
-isOpenOnce = false;
 initialvalue = "Response Values";
 set = 'set';
 put = 'put';
@@ -29,6 +28,11 @@ respqueuehazelcast = "#respqueuehazelcast";
 respmysql = "#respmysql";
 resppostgres = "#resppostgres";
 respmongodb = "#respmongodb";
+isopenkafka = false;
+isopenredis = false;
+isopenrabbitmq = false;
+isopenactivemq = false;
+isopenhazelcast = false;
 
 $(function () {
 	$(respkafka).html(initialvalue);
@@ -95,11 +99,11 @@ $(function () {
 	})
 
 	$("#subscribekafka").click(function (event) {
-		if (isOpenOnce) {
+		if (isopenkafka) {
 			console.log("Already connected.");
 		} else {
 			console.log("Connection to server opened.");
-			isOpenOnce = true;
+			isopenkafka = true;
 			sse = new EventSource(kafkaurl + 'subscribe')
 			sse.onmessage = function (event) {
 				const resp = event.data;
@@ -110,10 +114,10 @@ $(function () {
 	})
 
 	$("#stopkafka").click(function () {
-		if (isOpenOnce) {
+		if (isopenkafka) {
 			console.log("Connection to server closed.");
 			sse.close();
-			isOpenOnce = false;
+			isopenkafka = false;
 			$(respkafka).html(initialvalue);
 		}
 	})
@@ -134,6 +138,30 @@ $(function () {
 		dispMsgFromJsonArray(get, redisurl + get, respredis);
 	})
 
+	$("#subscriberedis").click(function (event) {
+		if (isopenredis) {
+			console.log("Already connected.");
+		} else {
+			console.log("Connection to server opened.");
+			isopenredis = true;
+			sse = new EventSource(redisurl + 'subscribe')
+			sse.onmessage = function (event) {
+				const resp = event.data;
+				console.log(resp);
+				document.getElementById("respredis").innerHTML = resp;
+			};
+		}
+	})
+
+	$("#stopredis").click(function () {
+		if (isopenredis) {
+			console.log("Connection to server closed.");
+			sse.close();
+			isopenredis = false;
+			$(respredis).html(initialvalue);
+		}
+	})
+
 	$("#publishredis").click(function () {
 		dispMsgFromJson(post, redisurl + publish, respredis);
 	})
@@ -150,6 +178,30 @@ $(function () {
 		dispMsgFromJson(post, rabbitmqurl + publish, resprabbitmq);
 	})
 
+	$("#subscriberabbitmq").click(function (event) {
+		if (isopenredis) {
+			console.log("Already connected.");
+		} else {
+			console.log("Connection to server opened.");
+			isopenredis = true;
+			sse = new EventSource(rabbitmqurl + 'subscribe')
+			sse.onmessage = function (event) {
+				const resp = event.data;
+				console.log(resp);
+				document.getElementById("resprabbitmq").innerHTML = resp;
+			};
+		}
+	})
+
+	$("#stoprabbitmq").click(function () {
+		if (isopenredis) {
+			console.log("Connection to server closed.");
+			sse.close();
+			isopenredis = false;
+			$(resprabbitmq).html(initialvalue);
+		}
+	})
+
 	$("#putactivemq").click(function () {
 		dispMsgFromJson(post, activemqurl + put, respactivemq);
 	})
@@ -162,6 +214,23 @@ $(function () {
 		dispMsgFromJson(post, activemqurl + publish, respactivemq);
 	})
 
+	$("#subscribeactivemq").click(function () {
+		var ws = new WebSocket('ws://k8s.3tier.webapp/quarkus/activemq/subscribe');
+		ws.onopen;
+		ws.onmessage = function (receive) {
+			$(respactivemq).text(receive.data);
+		};
+	})
+
+	$("#stopactivemq").click(function () {
+		if (isopenactivemq) {
+			console.log("Connection to server closed.");
+			sse.close();
+			isopenactivemq = false;
+			$(respactivemq).html(initialvalue);
+		}
+	})
+
 	$("#setcachehazelcast").click(function () {
 		dispMsgFromJson(post, hazelcasturl + 'setcache', respcachehazelcast);
 	})
@@ -172,6 +241,30 @@ $(function () {
 
 	$("#publishhazelcast").click(function () {
 		dispMsgFromJson(post, hazelcasturl + publish, respcachehazelcast);
+	})
+
+	$("#subscribehazelcast").click(function (event) {
+		if (isopenhazelcast) {
+			console.log("Already connected.");
+		} else {
+			console.log("Connection to server opened.");
+			isopenhazelcast = true;
+			sse = new EventSource(hazelcasturl + 'subscribe')
+			sse.onmessage = function (event) {
+				const resp = event.data;
+				console.log(resp);
+				document.getElementById("respcachehazelcast").innerHTML = resp;
+			};
+		}
+	})
+
+	$("#stophazelcast").click(function () {
+		if (isopenhazelcast) {
+			console.log("Connection to server closed.");
+			sse.close();
+			isopenhazelcast = false;
+			$(respcachehazelcast).html(initialvalue);
+		}
 	})
 
 	$("#putqueuehazelcast").click(function () {

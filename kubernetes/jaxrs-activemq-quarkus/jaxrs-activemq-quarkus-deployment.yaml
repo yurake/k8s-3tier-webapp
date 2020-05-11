@@ -18,7 +18,7 @@ spec:
       containers:
         - name: jaxrs-activemq-quarkus
           image: yurak/jaxrs-activemq-quarkus:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           livenessProbe:
             httpGet:
               port: 8080

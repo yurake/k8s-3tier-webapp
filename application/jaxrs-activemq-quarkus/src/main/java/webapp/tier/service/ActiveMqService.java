@@ -2,28 +2,39 @@ package webapp.tier.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
+import javax.jms.Message;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import io.quarkus.runtime.ShutdownEvent;
+import io.quarkus.runtime.StartupEvent;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Messaging;
+import webapp.tier.service.socket.ActiveMqSocket;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class ActiveMqService implements Messaging {
+public class ActiveMqService implements Messaging, Runnable {
 
 	@Inject
 	ConnectionFactory connectionFactory;
+
+	@Inject
+	ActiveMqSocket amqsock;
 
 	@ConfigProperty(name = "common.message")
 	String message;
@@ -35,6 +46,18 @@ public class ActiveMqService implements Messaging {
 	String topicname;
 
 	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
+	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
+	static boolean isEnableReceived = true;
+
+	void onStart(@Observes StartupEvent ev) {
+		scheduler.submit(this);
+		LOG.info("Subscribe is starting...");
+	}
+
+	void onStop(@Observes ShutdownEvent ev) {
+		scheduler.shutdown();
+		LOG.info("Subscribe is stopping...");
+	}
 
 	@Override
 	public MsgBean putMsg() throws RuntimeException, NoSuchAlgorithmException {
@@ -75,13 +98,42 @@ public class ActiveMqService implements Messaging {
 	public MsgBean publishMsg() throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
+		LOG.info(msgbean.getFullmsg());
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
 			context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Publish Error.", e);
 			throw new RuntimeException("Publish Error.");
 		}
-		LOG.info(msgbean.getFullmsg());
 		return msgbean;
+	}
+
+	@Override
+	public void run() {
+		while (isEnableReceived) {
+			try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
+					JMSConsumer consumer = context.createConsumer(context.createTopic(topicname))) {
+				LOG.info("Ready for receive message...");
+				Message message = consumer.receive();
+
+				TextMessage textMessage = (TextMessage) message;
+				MsgBean msgbean = MsgUtils.splitBody(textMessage.getText(), splitkey);
+				msgbean.setFullmsg("Received");
+				LOG.log(Level.INFO, msgbean.getFullmsg());
+				amqsock.onMessage(MsgUtils.createBody(msgbean, splitkey));
+				msgbean.setFullmsg("Broadcast");
+				LOG.log(Level.INFO, msgbean.getFullmsg());
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, "Publish Error.", e);
+			}
+		}
+	}
+
+	public static void startReceived() {
+		ActiveMqService.isEnableReceived = true;
+	}
+
+	public static void stopReceived() {
+		ActiveMqService.isEnableReceived = false;
 	}
 }
