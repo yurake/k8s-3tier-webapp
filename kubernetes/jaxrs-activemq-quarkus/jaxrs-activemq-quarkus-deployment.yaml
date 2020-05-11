@@ -18,17 +18,18 @@ spec:
       containers:
         - name: jaxrs-activemq-quarkus
           image: yurak/jaxrs-activemq-quarkus:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
               port: 8080
               path: /health/live
-            initialDelaySeconds: 5
+            initialDelaySeconds: 10
             periodSeconds: 5
             failureThreshold: 5
+            timeoutSeconds: 30
           readinessProbe:
             httpGet:
               port: 8080
               path: /health/ready
-            initialDelaySeconds: 3
-            periodSeconds: 3
+            initialDelaySeconds: 10
+            periodSeconds: 30
