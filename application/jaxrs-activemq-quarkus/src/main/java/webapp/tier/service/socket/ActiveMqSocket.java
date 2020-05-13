@@ -47,7 +47,7 @@ public class ActiveMqSocket {
 		sessions.values().forEach(s -> {
 			s.getAsyncRemote().sendObject(message, result -> {
 				if (result.getException() != null) {
-					LOG.log(Level.SEVERE, "Unable to send message: {0}", result.getException());
+					LOG.log(Level.SEVERE, "Unable to send message", result.getException());
 				}
 			});
 		});
