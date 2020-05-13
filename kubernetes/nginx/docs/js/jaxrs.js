@@ -214,20 +214,30 @@ $(function () {
 		dispMsgFromJson(post, activemqurl + publish, respactivemq);
 	})
 
+	var wsactivemq;
+
 	$("#subscribeactivemq").click(function () {
-		var ws = new WebSocket('ws://k8s.3tier.webapp/quarkus/activemq/subscribe');
-		ws.onopen;
-		ws.onmessage = function (receive) {
-			$(respactivemq).text(receive.data);
-		};
+		if (isopenactivemq) {
+			console.log("Already connected.");
+		} else {
+			wsactivemq = new WebSocket('ws://k8s.3tier.webapp/quarkus/activemq/subscribe');
+			isopenactivemq = true;
+			console.log("Connection to server opened.");
+			wsactivemq.onopen = function (e) {
+				wsactivemq.onmessage = function (receive) {
+					$(respactivemq).text(receive.data);
+				};
+			};
+		}
 	})
 
 	$("#stopactivemq").click(function () {
 		if (isopenactivemq) {
+			wsactivemq.close();
 			console.log("Connection to server closed.");
-			sse.close();
 			isopenactivemq = false;
-			$(respactivemq).html(initialvalue);
+		} else {
+			console.log("Already closed.");
 		}
 	})
 
