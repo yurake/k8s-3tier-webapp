@@ -29,6 +29,10 @@
 			<artifactId>quarkus-smallrye-fault-tolerance</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-undertow-websockets</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast-client</artifactId>
 			<version>${hazelcast-client.version}</version>

@@ -13,9 +13,12 @@ import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
+import com.hazelcast.core.Message;
+import com.hazelcast.core.MessageListener;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Messaging;
+import webapp.tier.service.socket.HazelcastSocket;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
@@ -100,4 +103,27 @@ public class HazelcastMqService implements Messaging {
 		LOG.info(msgbean.getFullmsg());
 		return msgbean;
 	}
+
+	public void init() {
+		try {
+			HazelcastInstance client = ConnectHazelcast.getInstance();
+			ITopic<String> topic = client.getTopic(topicname);
+			topic.addMessageListener(new MessageListenerImpl());
+		} catch (IllegalStateException | IOException e) {
+			LOG.log(Level.SEVERE, "Subscribe Error.", e);
+		}
+	}
+
+    private static class MessageListenerImpl implements MessageListener<String> {
+    	HazelcastSocket hazsock = new HazelcastSocket();
+    	@Override
+    	public void onMessage(Message<String> message) {
+    		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject(), splitkey);
+			msgbean.setFullmsg("Received");
+			LOG.log(Level.INFO, msgbean.getFullmsg());
+			hazsock.onMessage(MsgUtils.createBody(msgbean, splitkey));
+			msgbean.setFullmsg("Broadcast");
+			LOG.log(Level.INFO, msgbean.getFullmsg());
+    	}
+    }
 }

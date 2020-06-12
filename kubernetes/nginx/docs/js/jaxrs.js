@@ -236,6 +236,7 @@ $(function () {
 			wsactivemq.close();
 			console.log("Connection to server closed.");
 			isopenactivemq = false;
+			$(respactivemq).html(initialvalue);
 		} else {
 			console.log("Already closed.");
 		}
@@ -253,27 +254,31 @@ $(function () {
 		dispMsgFromJson(post, hazelcasturl + publish, respcachehazelcast);
 	})
 
-	$("#subscribehazelcast").click(function (event) {
+	var wshazelcast;
+
+	$("#subscribehazelcast").click(function () {
 		if (isopenhazelcast) {
 			console.log("Already connected.");
 		} else {
-			console.log("Connection to server opened.");
+			wshazelcast = new WebSocket('ws://k8s.3tier.webapp/quarkus/hazelcast/subscribe');
 			isopenhazelcast = true;
-			sse = new EventSource(hazelcasturl + 'subscribe')
-			sse.onmessage = function (event) {
-				const resp = event.data;
-				console.log(resp);
-				document.getElementById("respcachehazelcast").innerHTML = resp;
+			console.log("Connection to server opened.");
+			wshazelcast.onopen = function (e) {
+				wshazelcast.onmessage = function (receive) {
+					$(respcachehazelcast).text(receive.data);
+				};
 			};
 		}
 	})
 
 	$("#stophazelcast").click(function () {
 		if (isopenhazelcast) {
+			wshazelcast.close();
 			console.log("Connection to server closed.");
-			sse.close();
 			isopenhazelcast = false;
 			$(respcachehazelcast).html(initialvalue);
+		} else {
+			console.log("Already closed.");
 		}
 	})
 
