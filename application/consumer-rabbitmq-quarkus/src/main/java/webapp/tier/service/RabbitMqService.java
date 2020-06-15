@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
@@ -35,13 +37,14 @@ public class RabbitMqService implements Runnable {
 	DeliverService deliversvc;
 
 	private static final Logger LOG = Logger.getLogger(RabbitMqService.class.getSimpleName());
-	private static String queuename = ConfigProvider.getConfig().getValue("rabbitmq.queue.name", String.class);
 	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username", String.class);
 	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password", String.class);
 	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
 	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
+	private static String exchangename = ConfigProvider.getConfig().getValue("rabbitmq.exchange.name", String.class);
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
+	static boolean isEnableReceived = true;
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
@@ -66,10 +69,14 @@ public class RabbitMqService implements Runnable {
 	public void run() {
 		Channel channel = null;
 		try (Connection connection = getConnection()) {
-			boolean durable = true;
-			connection.createChannel().queueDeclare(queuename, durable, false, false, null);
+			channel = connection.createChannel();
 
-			DefaultConsumer consumer = new DefaultConsumer(channel) {
+			channel.exchangeDeclare(exchangename, "fanout");
+			String queueName = channel.queueDeclare().getQueue();
+			LOG.log(Level.INFO, "Create queue: " + queueName);
+			channel.queueBind(queueName, exchangename, "");
+
+			Consumer consumer = new DefaultConsumer(channel) {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws UnsupportedEncodingException {
@@ -80,10 +87,13 @@ public class RabbitMqService implements Runnable {
 					LOG.info(deliversvc.random());
 				}
 			};
-			connection.createChannel().basicConsume(queuename, true, consumer);
-			LOG.info("Waiting for messages as Consumer...");
+			channel.basicConsume(queueName, true, consumer);
 
-		} catch (IOException | TimeoutException e) {
+			while (isEnableReceived) {
+				TimeUnit.MINUTES.sleep(10L);
+			}
+
+		} catch (IOException | TimeoutException | InterruptedException e) {
 			LOG.log(Level.SEVERE, "Subscribe Errorr.", e);
 		}
 	}
@@ -96,5 +106,14 @@ public class RabbitMqService implements Runnable {
 			LOG.log(Level.SEVERE, "Connect Error.", e);
 		}
 		return status;
+	}
+
+
+	public static void startReceived() {
+		RabbitMqService.isEnableReceived = true;
+	}
+
+	public static void stopReceived() {
+		RabbitMqService.isEnableReceived = false;
 	}
 }

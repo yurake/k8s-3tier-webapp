@@ -12,7 +12,7 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>consumer-rabbitmq-quarkus</artifactId>
 	<properties>
-		<rabbitmq-jms.version>1.14.0</rabbitmq-jms.version>
+		<amqp-client.version>5.6.0</amqp-client.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -32,9 +32,9 @@
 			<artifactId>quarkus-resteasy</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.rabbitmq.jms</groupId>
-			<artifactId>rabbitmq-jms</artifactId>
-			<version>${rabbitmq-jms.version}</version>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>${amqp-client.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -178,27 +178,31 @@ $(function () {
 		dispMsgFromJson(post, rabbitmqurl + publish, resprabbitmq);
 	})
 
-	$("#subscriberabbitmq").click(function (event) {
-		if (isopenredis) {
+	var wsrabbitmq;
+
+	$("#subscriberabbitmq").click(function () {
+		if (isopenrabbitmq) {
 			console.log("Already connected.");
 		} else {
+			wsrabbitmq = new WebSocket('ws://k8s.3tier.webapp/quarkus/rabbitmq/subscribe');
+			isopenrabbitmq = true;
 			console.log("Connection to server opened.");
-			isopenredis = true;
-			sse = new EventSource(rabbitmqurl + 'subscribe')
-			sse.onmessage = function (event) {
-				const resp = event.data;
-				console.log(resp);
-				document.getElementById("resprabbitmq").innerHTML = resp;
+			wsrabbitmq.onopen = function (e) {
+				wsrabbitmq.onmessage = function (receive) {
+					$(resprabbitmq).text(receive.data);
+				};
 			};
 		}
 	})
 
 	$("#stoprabbitmq").click(function () {
-		if (isopenredis) {
+		if (isopenrabbitmq) {
+			wsrabbitmq.close();
 			console.log("Connection to server closed.");
-			sse.close();
-			isopenredis = false;
+			isopenrabbitmq = false;
 			$(resprabbitmq).html(initialvalue);
+		} else {
+			console.log("Already closed.");
 		}
 	})
 
