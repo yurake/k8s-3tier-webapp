@@ -4,30 +4,49 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.ext.Provider;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
+import io.quarkus.runtime.ShutdownEvent;
+import io.quarkus.runtime.StartupEvent;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Messaging;
+import webapp.tier.service.subscribe.RedisSubscriber;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
-@Provider
-public class RedisService implements Messaging {
+@ApplicationScoped
+public class RedisService implements Messaging, Runnable {
 
 	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
+	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
+	static boolean isEnableReceived = true;
+
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String servername = ConfigProvider.getConfig().getValue("redis.server", String.class);
 	private static int serverport = ConfigProvider.getConfig().getValue("redis.port.num", Integer.class);
 	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
 	private static int setexpire = ConfigProvider.getConfig().getValue("redis.set.expire", Integer.class);
+
+	void onStart(@Observes StartupEvent ev) {
+		scheduler.submit(this);
+		LOG.info("Subscribe is starting...");
+	}
+
+	void onStop(@Observes ShutdownEvent ev) {
+		scheduler.shutdown();
+		LOG.info("Subscribe is stopping...");
+	}
 
 	public boolean ping() {
 		Jedis jedis = new Jedis(servername, serverport);
@@ -116,5 +135,27 @@ public class RedisService implements Messaging {
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean;
+	}
+
+	@Override
+	public void run() {
+		Jedis jedis = new Jedis(servername, serverport);
+		RedisSubscriber redissubsc = new RedisSubscriber();
+
+		try {
+			jedis.subscribe(redissubsc, channel);
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "Subscribe Error.", e);
+		} finally {
+			jedis.close();
+		}
+	}
+
+	public static void startReceived() {
+		isEnableReceived = true;
+	}
+
+	public static void stopReceived() {
+		isEnableReceived = false;
 	}
 }

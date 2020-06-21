@@ -138,27 +138,31 @@ $(function () {
 		dispMsgFromJsonArray(get, redisurl + get, respredis);
 	})
 
-	$("#subscriberedis").click(function (event) {
+	var wsredis;
+
+	$("#subscriberedis").click(function () {
 		if (isopenredis) {
 			console.log("Already connected.");
 		} else {
-			console.log("Connection to server opened.");
+			wsredis = new WebSocket('ws://k8s.3tier.webapp/quarkus/redis/subscribe');
 			isopenredis = true;
-			sse = new EventSource(redisurl + 'subscribe')
-			sse.onmessage = function (event) {
-				const resp = event.data;
-				console.log(resp);
-				document.getElementById("respredis").innerHTML = resp;
+			console.log("Connection to server opened.");
+			wsredis.onopen = function (e) {
+				wsredis.onmessage = function (receive) {
+					$(respredis).text(receive.data);
+				};
 			};
 		}
 	})
 
 	$("#stopredis").click(function () {
 		if (isopenredis) {
+			wsredis.close();
 			console.log("Connection to server closed.");
-			sse.close();
 			isopenredis = false;
 			$(respredis).html(initialvalue);
+		} else {
+			console.log("Already closed.");
 		}
 	})
 
@@ -259,6 +263,7 @@ $(function () {
 	})
 
 	var wshazelcast;
+	var wsredis;
 
 	$("#subscribehazelcast").click(function () {
 		if (isopenhazelcast) {
