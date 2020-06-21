@@ -18,10 +18,10 @@ import javax.websocket.server.ServerEndpoint;
 public class RedisSocket {
 
 	private static final Logger LOG = Logger.getLogger(RedisSocket.class.getSimpleName());
-	Map<String, Session> sessions = new ConcurrentHashMap<>();
+	private static final Map<String, Session> sessions = new ConcurrentHashMap<>();
 
 	public Map<String, Session> getSessions() {
-		return this.sessions;
+		return sessions;
 	}
 
 	@OnOpen
@@ -44,12 +44,17 @@ public class RedisSocket {
 
 	@OnMessage
 	public void onMessage(String message) {
-		sessions.values().forEach(s -> {
-			s.getAsyncRemote().sendObject(message, result -> {
-				if (result.getException() != null) {
-					LOG.log(Level.SEVERE, "Unable to send message", result.getException());
-				}
+		if (sessions.isEmpty()) {
+			LOG.log(Level.INFO, "No Subscriber");
+		} else {
+			sessions.values().forEach(s -> {
+				LOG.log(Level.INFO, "Send : {0}", s.getId());
+				s.getAsyncRemote().sendObject(message, result -> {
+					if (result.getException() != null) {
+						LOG.log(Level.SEVERE, "Unable to send message", result.getException());
+					}
+				});
 			});
-		});
+		}
 	}
 }

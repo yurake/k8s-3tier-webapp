@@ -23,11 +23,9 @@ public class RedisSubscriber extends JedisPubSub {
 	public void onMessage(String channel, String message) {
 		try {
 			MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
-			msgbean.setFullmsg("Received");
+			msgbean.setFullmsg("Subscribe");
 			LOG.log(Level.INFO, msgbean.getFullmsg());
 			redissock.onMessage(MsgUtils.createBody(msgbean, splitkey));
-			msgbean.setFullmsg("Broadcast");
-			LOG.log(Level.INFO, msgbean.getFullmsg());
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Subscribe Error.", e);
 		}
