@@ -50,8 +50,7 @@ Installed CLI commands.
 minikube config set memory 121288
 minikube config set cpus 6
 minikube config set disk-size 80g
-minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --kubernetes-version=v1.15.4
-
+minikube start --kubernetes-version=v1.18.3
 minikube addons enable ingress
 
 eval $(minikube docker-env)
@@ -62,8 +61,7 @@ eval $(minikube docker-env)
 minikube config set memory 121288
 minikube config set cpus 6
 minikube config set disk-size 80g
-minikube start --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --kubernetes-version=v1.15.4
-
+minikube start --kubernetes-version=v1.18.3
 minikube addons enable ingress
 
 minikube docker-env --shell powershell | Invoke-Expression

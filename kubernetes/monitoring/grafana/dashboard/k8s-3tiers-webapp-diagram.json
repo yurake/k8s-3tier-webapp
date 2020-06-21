@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 44,
+  "id": 6,
   "links": [],
   "panels": [
     {
@@ -25,7 +25,7 @@
         "rgba(245, 54, 54, 0.9)"
       ],
       "composites": [],
-      "content": "graph TD\n  Ascrape_duration_seconds_[nginx] --> B[jaxrs-quarkus]\n  B --> C[activemq]\n  C --> D[activemq-mysql-quarkus]\n  B --> E[hazelcast]\n  E --> F[hazelcast-mysql-quarkus]\n  B --> G[memcached]\n  B --> H[mysql]\n  B --> I[postgres]\n  B --> J[rabbitmq]\n  J --> K[rabbitmq-mysql-quarkus]\n  L[randompublish-quarkus] --> B\n  B --> M[redis-master]\n  M --> N[redis-mysql-helidon]\n  M --> O[redis-mysql-quarkus]\n  P[scheduled-quarkus] --> L\n  Q[wlp] --> C\n  Q --> E\n  Q --> G\n  Q --> H\n  Q --> I\n  Q --> J\n  Q --> M\n  D --> H\n  D --> L\n  F --> H\n  F --> L\n  K --> H\n  K --> L\n  O --> H\n  O --> L\n  grafana\n  prometheus-server\n  jaeger\n  loki\n  jenkins\n  jupyter\n\t\t",
+      "content": "graph TD\n  A[nginx] --> B[jaxrs-mysql-quarkus]\n  B --> H[mysql]\n  A --> D[jaxrs-postgres-quarkus]\n  D --> I[postgres]\n  A --> R[jaxrs-mongodb-quarkus]\n  R --> Y[mongodb]\n  A --> T[jaxrs-memcached-quarkus]\n  T --> G[memcached]\n  L[randompublish-quarkus] --> B\n  L --> C\n  L --> D\n  L --> R\n  L --> S\n  L --> T\n  L --> U\n  P[scheduled-quarkus] --> L\n  A --> U[jaxrs-rabbitmq-quarkus]\n  U --> J[rabbitmq]\n  J --> K[consumer-rabbitmq-quarkus]\n  A --> C[jaxrs-redis-quarkus]\n  C --> M[redis-master]\n  M --> N[redis-mysql-helidon]\n  M --> O[consumer-redis-quarkus]\n  A --> V[jaxrs-activemq-quarkus]\n  V --> W[activemq]\n  W --> X[consumer-activemq-quarkus]\n  A --> S[jaxrs-hazelcast-quarkus]\n  S --> E[hazelcast]\n  E --> F[consumer-hazelcast-quarkus]\n  A --> a[jaxrs-kafka-quarkus]\n  a --> b[kafka]\n  b --> c[consumer-kafka-quarkus]\n  d[producer-kafka-quarkus] --> b\n  X --> L\n  F --> L\n  K --> L\n  O --> L\n  c --> L\n  wlp\n  grafana\n  prometheus-server\n  jaeger\n  loki\n  jenkins\n  jupyter\n  zookeeper\n\t\t",
       "decimals": 2,
       "format": "none",
       "graphId": "diagram_2",
@@ -105,26 +105,33 @@
       "options": {},
       "seriesOverrides": [],
       "style": "",
+      "styleValues": {},
       "targets": [
         {
-          "expr": "sum(rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^.*$\",namespace=\"default\"}[2m])) by (container_name)",
+          "expr": "sum(rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^.*$\",container!=\"POD\",namespace=\"default\"}[1m])) by (container)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ container_name }}",
+          "legendFormat": "{{ container }}",
           "refId": "A"
         },
         {
-          "expr": "sum(rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^.*$\",namespace=\"monitoring\"}[2m])) by (container_name)",
+          "expr": "sum(rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^.*$\",container!=\"POD\",namespace=\"monitoring\"}[1m])) by (container)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ container_name }}",
+          "legendFormat": "{{ container }}",
           "refId": "B"
         }
+      ],
+      "themes": [
+        "default",
+        "dark",
+        "forest",
+        "neutral"
       ],
       "thresholds": "0,0.1",
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pods CPU usage (2m avg) with diagram",
+      "title": "Pods CPU usage (1m avg) with diagram",
       "type": "jdbranham-diagram-panel",
       "valueMaps": [
         {
@@ -182,5 +189,5 @@
   "timezone": "",
   "title": "k8s-3tiers-webapp diagram",
   "uid": "AN8_m9wWz",
-  "version": 6
+  "version": 2
 }
