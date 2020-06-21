@@ -42,6 +42,9 @@ jobs:
           echo ::set-env name=MINIKUBE_HOME::$HOME
           sudo minikube addons enable ingress
           sudo minikube addons list
+      - name: wait for set up ingress
+        run: |
+          sudo kubectl wait --namespace kube-system --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
       - name: apply minimal service
         run: |
           sudo sh ./kubernetes/apply-default-minimal.sh
@@ -86,7 +89,7 @@ jobs:
       - name: check after test postmannewman-job
         run: |
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
-      - name: waiting for complete e2e job
+      - name: wait for complete e2e job
         run: |
           sudo kubectl -n monitoring wait --for=condition=complete --timeout=1m job/postmannewman-job
           sudo kubectl -n monitoring describe job postmannewman-job
