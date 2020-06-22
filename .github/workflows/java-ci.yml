@@ -65,12 +65,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/jaxrs-activemq-quarkus:latest
+        run: docker pull yurak/jaxrs-activemq-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/jaxrs-activemq-quarkus
-        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-activemq-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/jaxrs-activemq-quarkus:latest
+        run: docker push yurak/jaxrs-activemq-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -105,12 +105,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml -Pnative
       - name: Pull Image
-        run: docker pull yurak/consumer-activemq-quarkus:latest
+        run: docker pull yurak/consumer-activemq-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/consumer-activemq-quarkus
-        run: docker build -t yurak/consumer-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
+        run: docker build -t yurak/consumer-activemq-quarkus:v0.4.0 -f src/main/docker/Dockerfile.native .
       - name: Push Image
-        run: docker push yurak/consumer-activemq-quarkus:latest
+        run: docker push yurak/consumer-activemq-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -145,12 +145,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/consumer-hazelcast-quarkus:latest
+        run: docker pull yurak/consumer-hazelcast-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/consumer-hazelcast-quarkus
-        run: docker build -t yurak/consumer-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/consumer-hazelcast-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/consumer-hazelcast-quarkus:latest
+        run: docker push yurak/consumer-hazelcast-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -185,12 +185,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml -Pnative
       - name: Pull Image
-        run: docker pull yurak/consumer-kafka-quarkus:latest
+        run: docker pull yurak/consumer-kafka-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/consumer-kafka-quarkus
-        run: docker build -t yurak/consumer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+        run: docker build -t yurak/consumer-kafka-quarkus:v0.4.0 -f src/main/docker/Dockerfile.native .
       - name: Push Image
-        run: docker push yurak/consumer-kafka-quarkus:latest
+        run: docker push yurak/consumer-kafka-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -225,12 +225,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml -Pnative
       - name: Pull Image
-        run: docker pull yurak/scheduled-quarkus:latest
+        run: docker pull yurak/scheduled-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/scheduled-quarkus
-        run: docker build -t yurak/scheduled-quarkus:latest -f src/main/docker/Dockerfile.native .
+        run: docker build -t yurak/scheduled-quarkus:v0.4.0 -f src/main/docker/Dockerfile.native .
       - name: Push Image
-        run: docker push yurak/scheduled-quarkus:latest
+        run: docker push yurak/scheduled-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -265,12 +265,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/jaxrs-hazelcast-quarkus:latest
+        run: docker pull yurak/jaxrs-hazelcast-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/jaxrs-hazelcast-quarkus
-        run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-hazelcast-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/jaxrs-hazelcast-quarkus:latest
+        run: docker push yurak/jaxrs-hazelcast-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -305,12 +305,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml -Pnative
       - name: Pull Image
-        run: docker pull yurak/jaxrs-kafka-quarkus:latest
+        run: docker pull yurak/jaxrs-kafka-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/jaxrs-kafka-quarkus
-        run: docker build -t yurak/jaxrs-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+        run: docker build -t yurak/jaxrs-kafka-quarkus:v0.4.0 -f src/main/docker/Dockerfile.native .
       - name: Push Image
-        run: docker push yurak/jaxrs-kafka-quarkus:latest
+        run: docker push yurak/jaxrs-kafka-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -345,12 +345,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/jaxrs-memcached-quarkus:latest
+        run: docker pull yurak/jaxrs-memcached-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/jaxrs-memcached-quarkus
-        run: docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-memcached-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/jaxrs-memcached-quarkus:latest
+        run: docker push yurak/jaxrs-memcached-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -385,12 +385,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/jaxrs-mongodb-quarkus:latest
+        run: docker pull yurak/jaxrs-mongodb-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/jaxrs-mongodb-quarkus
-        run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-mongodb-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/jaxrs-mongodb-quarkus:latest
+        run: docker push yurak/jaxrs-mongodb-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -425,12 +425,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/jaxrs-mysql-quarkus:latest
+        run: docker pull yurak/jaxrs-mysql-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/jaxrs-mysql-quarkus
-        run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-mysql-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/jaxrs-mysql-quarkus:latest
+        run: docker push yurak/jaxrs-mysql-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -465,12 +465,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/jaxrs-postgres-quarkus:latest
+        run: docker pull yurak/jaxrs-postgres-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/jaxrs-postgres-quarkus
-        run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-postgres-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/jaxrs-postgres-quarkus:latest
+        run: docker push yurak/jaxrs-postgres-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -505,12 +505,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/jaxrs-rabbitmq-quarkus:latest
+        run: docker pull yurak/jaxrs-rabbitmq-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/jaxrs-rabbitmq-quarkus
-        run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-rabbitmq-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/jaxrs-rabbitmq-quarkus:latest
+        run: docker push yurak/jaxrs-rabbitmq-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -545,12 +545,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/jaxrs-redis-quarkus:latest
+        run: docker pull yurak/jaxrs-redis-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/jaxrs-redis-quarkus
-        run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-redis-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/jaxrs-redis-quarkus:latest
+        run: docker push yurak/jaxrs-redis-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -585,12 +585,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/consumer-rabbitmq-quarkus:latest
+        run: docker pull yurak/consumer-rabbitmq-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/consumer-rabbitmq-quarkus
-        run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/consumer-rabbitmq-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/consumer-rabbitmq-quarkus:latest
+        run: docker push yurak/consumer-rabbitmq-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -625,12 +625,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml -Pnative
       - name: Pull Image
-        run: docker pull yurak/producer-kafka-quarkus:latest
+        run: docker pull yurak/producer-kafka-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/producer-kafka-quarkus
-        run: docker build -t yurak/producer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+        run: docker build -t yurak/producer-kafka-quarkus:v0.4.0 -f src/main/docker/Dockerfile.native .
       - name: Push Image
-        run: docker push yurak/producer-kafka-quarkus:latest
+        run: docker push yurak/producer-kafka-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -665,12 +665,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml -Pnative
       - name: Pull Image
-        run: docker pull yurak/randompublish-quarkus:latest
+        run: docker pull yurak/randompublish-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/randompublish-quarkus
-        run: docker build -t yurak/randompublish-quarkus:latest -f src/main/docker/Dockerfile.native .
+        run: docker build -t yurak/randompublish-quarkus:v0.4.0 -f src/main/docker/Dockerfile.native .
       - name: Push Image
-        run: docker push yurak/randompublish-quarkus:latest
+        run: docker push yurak/randompublish-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -727,12 +727,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B package --settings ../.m2/settings.xml
       - name: Pull Image
-        run: docker pull yurak/consumer-redis-quarkus:latest
+        run: docker pull yurak/consumer-redis-quarkus:v0.4.0
       - name: Build Image
         working-directory: ./application/consumer-redis-quarkus
-        run: docker build -t yurak/consumer-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/consumer-redis-quarkus:v0.4.0 -f src/main/docker/Dockerfile.jvm .
       - name: Push Image
-        run: docker push yurak/consumer-redis-quarkus:latest
+        run: docker push yurak/consumer-redis-quarkus:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -770,12 +770,12 @@ jobs:
           source: "application/wlp-web-java-spring/target/spring.war"
           target: "kubernetes/wlp/spring.war"
       - name: Pull Image
-        run: docker pull yurak/wlp:latest
+        run: docker pull yurak/wlp:v0.4.0
       - name: Build image
         working-directory: ./kubernetes/wlp
-        run: docker build -t yurak/wlp:latest .
+        run: docker build -t yurak/wlp:v0.4.0 .
       - name: Push Image
-        run: docker push yurak/wlp:latest
+        run: docker push yurak/wlp:v0.4.0
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
