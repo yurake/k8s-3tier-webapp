@@ -44,12 +44,17 @@ public class ActiveMqSocket {
 
 	@OnMessage
 	public void onMessage(String message) {
-		sessions.values().forEach(s -> {
-			s.getAsyncRemote().sendObject(message, result -> {
-				if (result.getException() != null) {
-					LOG.log(Level.SEVERE, "Unable to send message", result.getException());
-				}
+		if (sessions.isEmpty()) {
+			LOG.log(Level.INFO, "No Subscriber");
+		} else {
+			sessions.values().forEach(s -> {
+				LOG.log(Level.INFO, "Send : {0}", s.getId());
+				s.getAsyncRemote().sendObject(message, result -> {
+					if (result.getException() != null) {
+						LOG.log(Level.SEVERE, "Unable to send message", result.getException());
+					}
+				});
 			});
-		});
+		}
 	}
 }
