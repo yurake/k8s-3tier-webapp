@@ -1,10 +1,10 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
-  <actions/>
+  <actions />
   <description></description>
   <keepDependencies>false</keepDependencies>
-  <properties/>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
+  <properties />
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.3.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -17,7 +17,7 @@
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
+    <submoduleCfg class="list" />
     <extensions>
       <hudson.plugins.git.extensions.impl.PathRestriction>
         <includedRegions>kubernetes/.*
@@ -39,17 +39,24 @@ application/.*</includedRegions>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>kubectl get pods -n default | awk &apos;{print $1}&apos; | grep -v NAME | xargs kubectl delete pods -n default
-sleep 30
+      <command>_PODS=`kubectl get pods -n default | awk &apos;{print $1}&apos; | grep -v NAME`
+
+while read line
+do
+    kubectl delete pod -n default ${line}
+done &lt;&lt;END
+${_PODS}
+END
+
 kubectl get po -n default
 </command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers />
   <buildWrappers>
-    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.25.1">
+    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.26.1">
       <serverUrl>https://kubernetes.default.svc.cluster.local</serverUrl>
-      <credentialsId>eb6e9a5c-ba7e-4ed0-ab16-63316f87b60b</credentialsId>
+      <credentialsId>31819fb9-eaff-4bf9-a440-679e53d2cee5</credentialsId>
     </org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper>
   </buildWrappers>
-</project>
+</project
