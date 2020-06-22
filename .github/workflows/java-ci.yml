@@ -22,6 +22,7 @@ jobs:
 
       - name: Maven Deploy POM to Github Package Registry
         working-directory: ./application/parent-pom/
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn deploy --settings ../.m2/settings.xml
