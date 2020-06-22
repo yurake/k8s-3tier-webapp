@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: postmannewman-job
-          image: yurak/postmannewman:latest
+          image: yurak/postmannewman:v0.4.0
           command: ["/bin/sh", "-c"]
           args:
             [

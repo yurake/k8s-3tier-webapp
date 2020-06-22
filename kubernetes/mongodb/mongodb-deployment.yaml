@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: mongodb
-          image: yurak/mongodb:latest
+          image: yurak/mongodb:v0.4.0
           imagePullPolicy: Always
           ports:
             - name: mongodb
