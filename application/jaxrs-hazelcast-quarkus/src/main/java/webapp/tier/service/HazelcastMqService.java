@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
@@ -16,6 +19,8 @@ import com.hazelcast.core.ITopic;
 import com.hazelcast.core.Message;
 import com.hazelcast.core.MessageListener;
 
+import io.quarkus.runtime.ShutdownEvent;
+import io.quarkus.runtime.StartupEvent;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Messaging;
 import webapp.tier.service.socket.HazelcastSocket;
@@ -23,13 +28,25 @@ import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class HazelcastMqService implements Messaging {
+public class HazelcastMqService implements Messaging, Runnable {
 
 	private static final Logger LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
+	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
+
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String queuename = ConfigProvider.getConfig().getValue("hazelcast.queue.name", String.class);
 	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topicname.name", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
+
+	void onStart(@Observes StartupEvent ev) {
+		scheduler.submit(this);
+		LOG.info("Subscribe is starting...");
+	}
+
+	void onStop(@Observes ShutdownEvent ev) {
+		scheduler.shutdown();
+		LOG.info("Subscribe is stopping...");
+	}
 
 	@Override
 	public MsgBean putMsg() throws RuntimeException, NoSuchAlgorithmException {
@@ -104,7 +121,8 @@ public class HazelcastMqService implements Messaging {
 		return msgbean;
 	}
 
-	public void init() {
+	@Override
+	public void run() {
 		try {
 			HazelcastInstance client = ConnectHazelcast.getInstance();
 			ITopic<String> topic = client.getTopic(topicname);
