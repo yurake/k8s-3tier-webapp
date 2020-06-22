@@ -3,91 +3,73 @@ name: Docker Image CI
 on:
   push:
     paths:
-    - 'kubernetes/**'
-    - '.github/workflows/docker-image-ci.yml'
+      - "kubernetes/**"
+      - ".github/workflows/docker-image-ci.yml"
   pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v2
-      
-    - name: docker login
-      env:
-        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
-      
-    - name: Pull Image - nginx
-      run: docker pull yurak/nginx:v0.4.0
-    - name: Build image - nginx
-      working-directory: ./kubernetes/nginx
-      run: docker build -t yurak/nginx:v0.4.0 .
-    - name: Push Image - nginx
-      run: docker push yurak/nginx:v0.4.0
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-    - name: Pull Image - mysql
-      run: docker pull yurak/mysql:v0.4.0
-    - name: Build image - mysql
-      working-directory: ./kubernetes/mysql
-      run: docker build -t yurak/mysql:v0.4.0 .
-    - name: Push Image - mysql
-      run: docker push yurak/mysql:v0.4.0
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
-    - name: Pull Image - postgres
-      run: docker pull yurak/postgres:v0.4.0
-    - name: Build image - postgres
-      working-directory: ./kubernetes/postgres
-      run: docker build -t yurak/postgres:v0.4.0 .
-    - name: Push Image - postgres
-      run: docker push yurak/postgres:v0.4.0
+      - name: Build image - nginx
+        working-directory: ./kubernetes/nginx
+        run: docker build -t yurak/nginx:v0.4.0 .
+      - name: Push Image - nginx
+        run: docker push yurak/nginx:v0.4.0
 
-    - name: Pull Image - mongodb
-      run: docker pull yurak/mongodb:v0.4.0
-    - name: Build image - mongodb
-      working-directory: ./kubernetes/mongodb
-      run: docker build -t yurak/mongodb:v0.4.0 .
-    - name: Push Image - mongodb
-      run: docker push yurak/mongodb:v0.4.0
+      - name: Build image - mysql
+        working-directory: ./kubernetes/mysql
+        run: docker build -t yurak/mysql:v0.4.0 .
+      - name: Push Image - mysql
+        run: docker push yurak/mysql:v0.4.0
 
-    - name: Pull Image - rabbitmq
-      run: docker pull yurak/rabbitmq:v0.4.0
-    - name: Build image - rabbitmq
-      working-directory: ./kubernetes/rabbitmq
-      run: docker build -t yurak/rabbitmq:v0.4.0 .
-    - name: Push Image - rabbitmq
-      run: docker push yurak/rabbitmq:v0.4.0
+      - name: Build image - postgres
+        working-directory: ./kubernetes/postgres
+        run: docker build -t yurak/postgres:v0.4.0 .
+      - name: Push Image - postgres
+        run: docker push yurak/postgres:v0.4.0
 
-    - name: Pull Image - hazelcast
-      run: docker pull yurak/hazelcast:v0.4.0
-    - name: Build image - hazelcast
-      working-directory: ./kubernetes/hazelcast
-      run: docker build -t yurak/hazelcast:v0.4.0 .
-    - name: Push Image - hazelcast
-      run: docker push yurak/hazelcast:v0.4.0
+      - name: Build image - mongodb
+        working-directory: ./kubernetes/mongodb
+        run: docker build -t yurak/mongodb:v0.4.0 .
+      - name: Push Image - mongodb
+        run: docker push yurak/mongodb:v0.4.0
 
-    - name: Pull Image - jenkins
-      run: docker pull yurak/jenkins:v0.4.0
-    - name: Build image - jenkins
-      working-directory: ./kubernetes/monitoring/jenkins
-      run: docker build -t yurak/jenkins:v0.4.0 .
-    - name: Push Image - jenkins
-      run: docker push yurak/jenkins:v0.4.0
+      - name: Build image - rabbitmq
+        working-directory: ./kubernetes/rabbitmq
+        run: docker build -t yurak/rabbitmq:v0.4.0 .
+      - name: Push Image - rabbitmq
+        run: docker push yurak/rabbitmq:v0.4.0
 
-    - name: Pull Image - ab
-      run: docker pull yurak/ab:v0.4.0
-    - name: Build image - ab
-      working-directory: ./kubernetes/monitoring/test/ab
-      run: docker build -t yurak/ab:v0.4.0 .
-    - name: Push Image - ab
-      run: docker push yurak/ab:v0.4.0
+      - name: Build image - hazelcast
+        working-directory: ./kubernetes/hazelcast
+        run: docker build -t yurak/hazelcast:v0.4.0 .
+      - name: Push Image - hazelcast
+        run: docker push yurak/hazelcast:v0.4.0
 
-    - name: Pull Image - postmannewman
-      run: docker pull yurak/postmannewman:v0.4.0
-    - name: Build image - postmannewman
-      working-directory: ./kubernetes/monitoring/test/postmannewman
-      run: docker build -t yurak/postmannewman:v0.4.0 .
-    - name: Push Image - postmannewman
-      run: docker push yurak/postmannewman:v0.4.0
+      - name: Build image - jenkins
+        working-directory: ./kubernetes/monitoring/jenkins
+        run: docker build -t yurak/jenkins:v0.4.0 .
+      - name: Push Image - jenkins
+        run: docker push yurak/jenkins:v0.4.0
+
+      - name: Build image - ab
+        working-directory: ./kubernetes/monitoring/test/ab
+        run: docker build -t yurak/ab:v0.4.0 .
+      - name: Push Image - ab
+        run: docker push yurak/ab:v0.4.0
+
+      - name: Build image - postmannewman
+        working-directory: ./kubernetes/monitoring/test/postmannewman
+        run: docker build -t yurak/postmannewman:v0.4.0 .
+      - name: Push Image - postmannewman
+        run: docker push yurak/postmannewman:v0.4.0
