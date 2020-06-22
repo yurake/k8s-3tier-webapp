@@ -44,6 +44,7 @@ jobs:
           sudo minikube addons list
       - name: wait for set up ingress
         run: |
+          sleep 60
           sudo kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
       - name: apply minimal service
         run: |
