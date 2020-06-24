@@ -17,15 +17,13 @@ class MsgUtilsTest {
 
 	@Test
 	void testCreateBody() {
-		MsgUtils beanutil = new MsgUtils();
 		MsgBean bean = new MsgBean(1111, "Test");
-		assertEquals("1111,Test", beanutil.createBody(bean, ","));
+		assertEquals("1111,Test", MsgUtils.createBody(bean, ","));
 	}
 
 	@Test
 	void testSplitBody() {
-		MsgUtils beanutil = new MsgUtils();
-		MsgBean bean = beanutil.splitBody("1111,Test", ",");
+		MsgBean bean = MsgUtils.splitBody("1111,Test", ",");
 		assertEquals(1111, bean.getId());
 		assertEquals("Test", bean.getMessage());
 	}

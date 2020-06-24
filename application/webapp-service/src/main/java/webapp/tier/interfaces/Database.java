@@ -8,6 +8,8 @@ import webapp.tier.bean.MsgBean;
 public interface Database {
 
 	public MsgBean insertMsg() throws SQLException, Exception;
+
 	public List<MsgBean> selectMsg() throws SQLException, Exception;
+
 	public String deleteMsg() throws SQLException, Exception;
 }

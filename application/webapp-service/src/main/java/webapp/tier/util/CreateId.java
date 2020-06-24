@@ -11,9 +11,9 @@ public class CreateId {
 	private static Random rand = new Random();
 
 	/**
-	 * 5桁の正の整数を返す
+	 * 5桁の正の整数を返す.
 	 * @return 5桁の整数
-	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchAlgorithmException This exception is thrown when a particular cryptographic algorithm is requested but is not available in the environment.
 	 */
 	public static int createid() throws NoSuchAlgorithmException {
 		int id = 0;
@@ -24,7 +24,7 @@ public class CreateId {
 	}
 
 	/**
-	 * 正負含む10桁の整数を返す
+	 * 正負含む10桁の整数を返す.
 	 * @return 正負含む10桁の整数
 	 */
 	public static int createwideid() {

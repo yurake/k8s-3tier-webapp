@@ -7,7 +7,7 @@ import webapp.tier.bean.MsgBean;
 public class MsgUtils {
 
 	MsgUtils() {
-	};
+	}
 
 	public static int stringToInt(String id) {
 		return Integer.parseInt(id);

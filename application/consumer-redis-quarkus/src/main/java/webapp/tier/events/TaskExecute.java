@@ -5,7 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import webapp.tier.service.RedisService;
 
 @ApplicationScoped
-public class TaskExecute implements Runnable{
+public class TaskExecute implements Runnable {
 
 	@Override
 	public void run() {

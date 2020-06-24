@@ -8,14 +8,14 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class TaskManager {
 
-	static private TaskManager instace = null;
+	private static TaskManager instace = null;
 	private ExecutorService executor = null;
 
 	private TaskManager() {
 		executor = Executors.newSingleThreadExecutor();
 	}
 
-	synchronized static public TaskManager getInstance() {
+	public static synchronized TaskManager getInstance() {
 		if (instace == null) {
 			instace = new TaskManager();
 		}

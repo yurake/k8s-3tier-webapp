@@ -8,7 +8,8 @@ public class MsgBean {
 	String message;
 	String fullmsg = "Error";
 
-	public MsgBean() {}
+	public MsgBean() {
+	}
 
 	public MsgBean(int id, String message) {
 		setId(id);
