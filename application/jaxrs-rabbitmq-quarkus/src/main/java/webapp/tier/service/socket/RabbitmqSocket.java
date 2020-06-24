@@ -18,10 +18,10 @@ import javax.websocket.server.ServerEndpoint;
 public class RabbitmqSocket {
 
 	private static final Logger LOG = Logger.getLogger(RabbitmqSocket.class.getSimpleName());
-	Map<String, Session> sessions = new ConcurrentHashMap<>();
+	private static final Map<String, Session> sessions = new ConcurrentHashMap<>();
 
 	public Map<String, Session> getSessions() {
-		return this.sessions;
+		return sessions;
 	}
 
 	@OnOpen
