@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -12,12 +13,17 @@ import io.quarkus.test.junit.QuarkusTest;
 @QuarkusTest
 class RabbitmqServiceTest {
 
+	static ThreadTestOnStartError th = new ThreadTestOnStartError();
+
+	@BeforeAll
+	static void threadTestOnStartError() {
+		th.start();
+	}
+
 	@Test
 	void testPutMsgError() {
-		ThreadTestOnStartError th = new ThreadTestOnStartError();
 		RabbitmqService svc = new RabbitmqService();
 		try {
-			th.start();
 			svc.putMsg();
 			fail();
 		} catch (Exception e) {
@@ -28,10 +34,8 @@ class RabbitmqServiceTest {
 
 	@Test
 	void testGetMsgError() {
-		ThreadTestOnStartError th = new ThreadTestOnStartError();
 		RabbitmqService svc = new RabbitmqService();
 		try {
-			th.start();
 			svc.getMsg();
 			fail();
 		} catch (Exception e) {
@@ -42,10 +46,8 @@ class RabbitmqServiceTest {
 
 	@Test
 	void testPublishMsgError() {
-		ThreadTestOnStartError th = new ThreadTestOnStartError();
 		RabbitmqService svc = new RabbitmqService();
 		try {
-			th.start();
 			svc.publishMsg();
 			fail();
 		} catch (Exception e) {
@@ -54,15 +56,12 @@ class RabbitmqServiceTest {
 		}
 	}
 
-}
-
-class ThreadTestOnStartError extends Thread {
-
-	private static final Logger LOG = Logger.getLogger(ThreadTestOnStartError.class.getSimpleName());
-
-	@Override
-	public void run() {
-		RabbitmqService.stopReceived();
-		LOG.log(Level.INFO, "Stopped Received");
+	static class ThreadTestOnStartError extends Thread {
+		private final Logger log = Logger.getLogger(ThreadTestOnStartError.class.getSimpleName());
+		@Override
+		public void run() {
+			RabbitmqService.stopReceived();
+			log.log(Level.INFO, "Stopped Received");
+		}
 	}
 }
