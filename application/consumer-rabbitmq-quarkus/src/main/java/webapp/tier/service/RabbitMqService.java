@@ -67,9 +67,8 @@ public class RabbitMqService implements Runnable {
 
 	@Override
 	public void run() {
-		Channel channel = null;
-		try (Connection connection = getConnection()) {
-			channel = connection.createChannel();
+		try (Connection connection = getConnection();
+				Channel channel = connection.createChannel()) {
 
 			channel.exchangeDeclare(exchangename, "fanout");
 			String queueName = channel.queueDeclare().getQueue();
@@ -93,8 +92,11 @@ public class RabbitMqService implements Runnable {
 				TimeUnit.MINUTES.sleep(10L);
 			}
 
-		} catch (IOException | TimeoutException | InterruptedException e) {
+		} catch (IOException | TimeoutException e) {
 			LOG.log(Level.SEVERE, "Subscribe Errorr.", e);
+		} catch (InterruptedException e) {
+			LOG.log(Level.WARNING, "Interrupted!", e);
+		    Thread.currentThread().interrupt();
 		}
 	}
 
@@ -107,7 +109,6 @@ public class RabbitMqService implements Runnable {
 		}
 		return status;
 	}
-
 
 	public static void startReceived() {
 		RabbitMqService.isEnableReceived = true;
