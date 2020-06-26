@@ -2,9 +2,10 @@ name: e2e Test on Minikube
 
 on:
   push:
+    branches:
+      - master
     paths:
       - ".github/workflows/minikube-ci.yml"
-  pull_request:
   issues:
     types: [closed]
 
