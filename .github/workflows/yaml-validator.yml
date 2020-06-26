@@ -2,9 +2,11 @@ name: Yaml Validator
 
 on:
   push:
+    branches:
+      - master
     paths:
-    - 'kubernetes/**'
-    - '.github/workflows/yaml-validator.yml'
+      - "kubernetes/**"
+      - ".github/workflows/yaml-validator.yml"
   pull_request:
 
 jobs:
