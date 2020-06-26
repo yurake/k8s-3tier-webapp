@@ -24,6 +24,7 @@ jobs:
         working-directory: ./kubernetes/nginx
         run: docker build -t yurak/nginx:latest .
       - name: Push Image - nginx
+        if: github.event_name == 'push'
         run: docker push yurak/nginx:latest
 
       - name: Build image - mysql
