@@ -76,8 +76,9 @@ public class RabbitmqService implements Messaging, Runnable {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
-		try (Connection connection = getConnection()) {
-			connection.createChannel().basicPublish("", queuename, null, body.getBytes());
+		try (Connection connection = getConnection();
+				Channel channel = connection.createChannel()) {
+			channel.basicPublish("", queuename, null, body.getBytes());
 
 		} catch (IOException | TimeoutException e) {
 			LOG.log(Level.SEVERE, "Put Error.", e);
@@ -92,11 +93,12 @@ public class RabbitmqService implements Messaging, Runnable {
 	public MsgBean getMsg() throws RuntimeException, IOException, TimeoutException {
 		MsgBean msgbean = null;
 
-		try (Connection connection = getConnection()) {
+		try (Connection connection = getConnection();
+				Channel channel = connection.createChannel()) {
 			boolean durable = true;
-			connection.createChannel().queueDeclare(queuename, durable, false, false, null);
+			channel.queueDeclare(queuename, durable, false, false, null);
 
-			GetResponse resp = connection.createChannel().basicGet(queuename, true);
+			GetResponse resp = channel.basicGet(queuename, true);
 			if (resp == null) {
 				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
@@ -142,9 +144,8 @@ public class RabbitmqService implements Messaging, Runnable {
 
 	@Override
 	public void run() {
-		Channel channel = null;
-		try (Connection connection = getConnection()) {
-			channel = connection.createChannel();
+		try (Connection connection = getConnection();
+				Channel channel = connection.createChannel()) {
 
 			channel.exchangeDeclare(exchangename, "fanout");
 			String queueName = channel.queueDeclare().getQueue();
@@ -169,8 +170,11 @@ public class RabbitmqService implements Messaging, Runnable {
 				TimeUnit.MINUTES.sleep(10L);
 			}
 
-		} catch (IOException | TimeoutException | InterruptedException e) {
+		} catch (IOException | TimeoutException e) {
 			LOG.log(Level.SEVERE, "Subscribe Errorr.", e);
+		} catch (InterruptedException e) {
+		    LOG.log(Level.WARNING, "Interrupted!", e);
+		    Thread.currentThread().interrupt();
 		}
 	}
 
