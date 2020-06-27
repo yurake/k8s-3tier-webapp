@@ -1,14 +1,14 @@
 package webapp.tier.util;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class CreateId {
 
 	private CreateId() {
 	}
 
-	private static Random rand = new Random();
+	private static SecureRandom rand = new SecureRandom();
 
 	/**
 	 * 5桁の正の整数を返す.
@@ -31,7 +31,7 @@ public class CreateId {
 		int length = 5;
 		int id = 0;
 		for (int i = 0; i <= length; i++) {
-			id = id * 10 + (int) (Math.random() * 10); // 0~9の数値を入れる
+			id = id * 10 + (int) (rand.nextDouble() * 10); // 0~9の数値を入れる
 		}
 		return id;
 	}

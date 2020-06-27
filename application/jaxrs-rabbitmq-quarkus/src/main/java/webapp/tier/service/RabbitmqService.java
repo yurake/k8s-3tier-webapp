@@ -2,6 +2,7 @@ package webapp.tier.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -121,7 +122,7 @@ public class RabbitmqService implements Messaging, Runnable {
 		try (Connection connection = getConnection();
 				Channel channel = connection.createChannel()) {
 			channel.exchangeDeclare(exchangename, "fanout");
-			channel.basicPublish(exchangename, "", null, body.getBytes("UTF-8"));
+			channel.basicPublish(exchangename, "", null, body.getBytes(StandardCharsets.UTF_8));
 
 		} catch (IOException | TimeoutException e) {
 			LOG.log(Level.SEVERE, "Publish Error.", e);
@@ -156,7 +157,7 @@ public class RabbitmqService implements Messaging, Runnable {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws UnsupportedEncodingException {
-					MsgBean msgbean = MsgUtils.splitBody(new String(body, "UTF-8"), splitkey);
+					MsgBean msgbean = MsgUtils.splitBody(new String(body, StandardCharsets.UTF_8), splitkey);
 					msgbean.setFullmsg("Received");
 					LOG.info(msgbean.getFullmsg());
 					rmqsock.onMessage(MsgUtils.createBody(msgbean, splitkey));

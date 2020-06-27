@@ -2,6 +2,7 @@ package webapp.tier.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -72,18 +73,18 @@ public class RabbitMqService implements Runnable {
 
 			channel.exchangeDeclare(exchangename, "fanout");
 			String queueName = channel.queueDeclare().getQueue();
-			LOG.log(Level.INFO, "Create queue: " + queueName);
+			LOG.log(Level.INFO, "Create queue: {0}", queueName);
 			channel.queueBind(queueName, exchangename, "");
 
 			Consumer consumer = new DefaultConsumer(channel) {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 						byte[] body) throws UnsupportedEncodingException {
-					MsgBean msgbean = MsgUtils.splitBody(new String(body, "UTF-8"), splitkey);
+					MsgBean msgbean = MsgUtils.splitBody(new String(body, StandardCharsets.UTF_8), splitkey);
 					msgbean.setFullmsg("Received");
-					LOG.info(msgbean.getFullmsg());
-					LOG.info("Call: Random Publish");
-					LOG.info(deliversvc.random());
+					LOG.log(Level.INFO, msgbean.getFullmsg());
+					String response = deliversvc.random();
+					LOG.log(Level.INFO, "Call Random Publish: {0}", response);
 				}
 			};
 			channel.basicConsume(queueName, true, consumer);

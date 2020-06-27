@@ -1,6 +1,5 @@
 package webapp.tier.service;
 
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
@@ -58,7 +57,7 @@ public class HazelcastMqService implements Messaging, Runnable {
 			client = ConnectHazelcast.getInstance();
 			BlockingQueue<Object> queue = client.getQueue(queuename);
 			queue.put(body);
-		} catch (IOException | IllegalStateException | InterruptedException e) {
+		} catch (IllegalStateException | InterruptedException e) {
 			LOG.log(Level.SEVERE, "Put Error.", e);
 		    Thread.currentThread().interrupt();
 			throw new RuntimeException("Put Error.");
@@ -87,7 +86,7 @@ public class HazelcastMqService implements Messaging, Runnable {
 				msgbean = MsgUtils.splitBody(resp.toString(), splitkey);
 				msgbean.setFullmsg("Get");
 			}
-		} catch (IOException | IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Get Error.", e);
 			throw new RuntimeException("Get Error.");
 		} finally {
@@ -109,7 +108,7 @@ public class HazelcastMqService implements Messaging, Runnable {
 			client = ConnectHazelcast.getInstance();
 			ITopic<Object> topic = client.getTopic(topicname);
 			topic.publish(body);
-		} catch (IOException | IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Publish Error.", e);
 			throw new RuntimeException("Publish Error.");
 		} finally {
@@ -127,7 +126,7 @@ public class HazelcastMqService implements Messaging, Runnable {
 			HazelcastInstance client = ConnectHazelcast.getInstance();
 			ITopic<String> topic = client.getTopic(topicname);
 			topic.addMessageListener(new MessageListenerImpl());
-		} catch (IllegalStateException | IOException e) {
+		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Subscribe Error.", e);
 		}
 	}

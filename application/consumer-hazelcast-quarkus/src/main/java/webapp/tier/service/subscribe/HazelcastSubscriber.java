@@ -29,7 +29,8 @@ public class HazelcastSubscriber implements MessageListener<String> {
 		msgbean.setFullmsg("Received");
 		LOG.info(msgbean.getFullmsg());
 		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL).get();
-		LOG.log(Level.INFO, "Call: Random Publish: {0}", deliversvc.random());
+		String response = deliversvc.random();
+		LOG.log(Level.INFO, "Call Random Publish: {0}", response);
 	}
 
 }

@@ -1,6 +1,5 @@
 package webapp.tier.service;
 
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ public class HazelcastCacheService implements Cache {
 			client = ConnectHazelcast.getInstance();
 			Map<Integer, String> map = client.getMap(cachename);
 			map.put(msgbean.getId(), msgbean.getMessage());
-		} catch (IOException | IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Set Error.", e);
 			throw new RuntimeException("Set Error.");
 		} finally {
@@ -71,7 +70,7 @@ public class HazelcastCacheService implements Cache {
 			if (msglist.isEmpty()) {
 				msglist.add(new MsgBean(0, "No Data."));
 			}
-		} catch (IOException | IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Get Error.", e);
 			throw new RuntimeException("Get Error.");
 		} finally {
@@ -88,7 +87,7 @@ public class HazelcastCacheService implements Cache {
 		try {
 			client = ConnectHazelcast.getInstance();
 			status = client.getLifecycleService().isRunning();
-		} catch (IOException | IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Connect Error.", e);
 		} finally {
 			if (client != null) {
