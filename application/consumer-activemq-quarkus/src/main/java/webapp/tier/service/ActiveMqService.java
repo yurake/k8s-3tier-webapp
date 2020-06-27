@@ -68,6 +68,7 @@ public class ActiveMqService implements Runnable {
 				LOG.log(Level.INFO, "Call Random Publish: {0}", response);
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, "Publish Error.", e);
+				stopReceived();
 			}
 		}
 	}

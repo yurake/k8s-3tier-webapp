@@ -2,41 +2,29 @@ package webapp.tier.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.inject.Inject;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import io.quarkus.artemis.test.ArtemisTestResource;
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
+@QuarkusTestResource(ArtemisTestResource.class)
 class ActiveMqServiceTest {
 
-	static ThreadTestOnStartError th = new ThreadTestOnStartError();
-
-	@BeforeAll
-	static void threadTestOnStartError() {
-		th.start();
-	}
+	@Inject
+	ActiveMqService svc;
 
 	@Test
-	void testOnStartError() {
-		ActiveMqService svc = new ActiveMqService();
+	void testStartStopSubscribe() {
 		try {
-			svc.run();
+			ActiveMqService.stopReceived();
+			ActiveMqService.startReceived();
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
-		}
-	}
-
-	static class ThreadTestOnStartError extends Thread {
-		private final Logger log = Logger.getLogger(ThreadTestOnStartError.class.getSimpleName());
-		@Override
-		public void run() {
-			ActiveMqService.stopReceived();
-			log.log(Level.INFO, "Stopped Received");
 		}
 	}
 }
