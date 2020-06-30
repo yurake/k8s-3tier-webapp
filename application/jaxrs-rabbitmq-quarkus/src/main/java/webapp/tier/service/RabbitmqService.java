@@ -3,7 +3,6 @@ package webapp.tier.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -29,13 +28,12 @@ import com.rabbitmq.client.GetResponse;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.interfaces.Messaging;
 import webapp.tier.service.socket.RabbitmqSocket;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class RabbitmqService implements Messaging, Runnable {
+public class RabbitmqService implements Runnable {
 
 	@Inject
 	RabbitmqSocket rmqsock;
@@ -63,7 +61,7 @@ public class RabbitmqService implements Messaging, Runnable {
 		LOG.info("Subscribe is stopping...");
 	}
 
-	private Connection getConnection() throws IOException, TimeoutException {
+	public Connection getConnection() throws IOException, TimeoutException {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
 		connectionFactory.setPassword(password);
@@ -72,30 +70,22 @@ public class RabbitmqService implements Messaging, Runnable {
 		return connectionFactory.newConnection();
 	}
 
-	@Override
-	public MsgBean putMsg() throws RuntimeException, NoSuchAlgorithmException, IOException, TimeoutException {
+	public MsgBean putMsg(Connection conn) throws Exception {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
-		try (Connection connection = getConnection();
-				Channel channel = connection.createChannel()) {
+		try (Channel channel = conn.createChannel()) {
 			channel.basicPublish("", queuename, null, body.getBytes());
-
-		} catch (IOException | TimeoutException e) {
-			LOG.log(Level.SEVERE, "Put Error.", e);
-			throw new RuntimeException("Put Error.");
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean;
 
 	}
 
-	@Override
-	public MsgBean getMsg() throws RuntimeException, IOException, TimeoutException {
+	public MsgBean getMsg(Connection conn) throws RuntimeException, IOException, TimeoutException {
 		MsgBean msgbean = null;
 
-		try (Connection connection = getConnection();
-				Channel channel = connection.createChannel()) {
+		try (Channel channel = conn.createChannel()) {
 			boolean durable = true;
 			channel.queueDeclare(queuename, durable, false, false, null);
 
@@ -106,27 +96,18 @@ public class RabbitmqService implements Messaging, Runnable {
 				msgbean = MsgUtils.splitBody(new String(resp.getBody(), "UTF-8"), splitkey);
 				msgbean.setFullmsg("Get");
 			}
-		} catch (IOException | TimeoutException e) {
-			LOG.log(Level.SEVERE, "Get Error.", e);
-			throw new RuntimeException("Get Error.");
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean;
 	}
 
-	@Override
-	public MsgBean publishMsg() throws Exception {
+	public MsgBean publishMsg(Connection conn) throws Exception {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
-		try (Connection connection = getConnection();
-				Channel channel = connection.createChannel()) {
+		try (Channel channel = conn.createChannel()) {
 			channel.exchangeDeclare(exchangename, "fanout");
 			channel.basicPublish(exchangename, "", null, body.getBytes(StandardCharsets.UTF_8));
-
-		} catch (IOException | TimeoutException e) {
-			LOG.log(Level.SEVERE, "Publish Error.", e);
-			throw new RuntimeException("Publish Error.");
 		}
 
 		LOG.info(msgbean.getFullmsg());

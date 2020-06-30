@@ -1,5 +1,6 @@
 package webapp.tier.resource;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,6 +20,9 @@ import webapp.tier.service.RabbitmqService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RabbitmqResource {
 
+	@Inject
+	RabbitmqService rabbitconn;
+
 	@POST
 	@Path("/put")
 	@Counted(name = "performedChecks_put", description = "How many primality checks have been performed.")
@@ -26,7 +30,7 @@ public class RabbitmqResource {
 	public Response set() {
 		RabbitmqService svc = new RabbitmqService();
 		try {
-			return Response.ok().entity(svc.putMsg()).build();
+			return Response.ok().entity(svc.putMsg(svc.getConnection())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -39,7 +43,7 @@ public class RabbitmqResource {
 	public Response get() {
 		RabbitmqService svc = new RabbitmqService();
 		try {
-			return Response.ok().entity(svc.getMsg()).build();
+			return Response.ok().entity(svc.getMsg(svc.getConnection())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -52,7 +56,7 @@ public class RabbitmqResource {
 	public Response publish() {
 		RabbitmqService svc = new RabbitmqService();
 		try {
-			return Response.ok().entity(svc.publishMsg()).build();
+			return Response.ok().entity(svc.publishMsg(svc.getConnection())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}

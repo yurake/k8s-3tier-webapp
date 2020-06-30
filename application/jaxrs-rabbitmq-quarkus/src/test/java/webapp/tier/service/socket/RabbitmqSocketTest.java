@@ -10,16 +10,13 @@ import javax.websocket.Session;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import io.quarkus.artemis.test.ArtemisTestResource;
-import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-@QuarkusTestResource(ArtemisTestResource.class)
-class ActiveMqSocketTest {
+class RabbitmqSocketTest {
 
 	@Inject
-	ActiveMqSocket socket;
+	RabbitmqSocket socket;
 
 	String id = "testOnOpen";
 	String message = "testMessage";
@@ -62,7 +59,6 @@ class ActiveMqSocketTest {
 			expected.printStackTrace();
 		}
 	}
-
 	@Test
 	void testOnMessageNoSubscriber() {
 		try {
