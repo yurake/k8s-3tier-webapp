@@ -60,6 +60,8 @@ class ActiveMqSocketTest {
 			fail();
 		} catch (Exception expected) {
 			expected.printStackTrace();
+		} finally {
+			socket.onClose(session);
 		}
 	}
 
