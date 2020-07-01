@@ -57,6 +57,8 @@ class RabbitmqSocketTest {
 			fail();
 		} catch (Exception expected) {
 			expected.printStackTrace();
+		} finally {
+			socket.onClose(session);
 		}
 	}
 	@Test

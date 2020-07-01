@@ -4,6 +4,9 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+
 import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
@@ -83,8 +86,19 @@ class RabbitmqServiceTest {
 	}
 
 	@Test
-	void testIsActive() {
+	void testIsActiveFalse() {
 		assertThat(svc.isActive(), is(false));
+	}
+
+	@Test
+	void testIsActiveTrue() throws IOException, TimeoutException {
+		RabbitmqService rsvc = new RabbitmqService() {
+			public Connection getConnection() {
+				Connection conn = new MockConnectionFactory().newConnection();
+				return conn;
+			}
+		};
+		assertThat(rsvc.isActive(), is(true));
 	}
 
 	@Test
