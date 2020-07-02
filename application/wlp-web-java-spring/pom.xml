@@ -23,7 +23,7 @@
 		<rabbitmq-jms.version>1.10.0</rabbitmq-jms.version>
 		<amqp-client.version>5.4.2</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
-		<mysql-connector-java.version>8.0.12</mysql-connector-java.version>
+		<mysql-connector-java.version>8.0.16</mysql-connector-java.version>
 		<jedis.version>3.1.0</jedis.version>
 		<hazelcast-client.version>3.12.5</hazelcast-client.version>
 		<hazelcast.version>3.12.5</hazelcast.version>
