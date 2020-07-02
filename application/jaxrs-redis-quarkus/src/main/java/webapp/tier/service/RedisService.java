@@ -20,7 +20,6 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Messaging;
-import webapp.tier.service.subscribe.RedisSubscriber;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 

@@ -1,4 +1,4 @@
-package webapp.tier.service.subscribe;
+package webapp.tier.service;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
