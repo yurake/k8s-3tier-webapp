@@ -18,13 +18,18 @@ public class ReadinessHealthCheck implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		RedisService redissvc = new RedisService();
+		String msg = "Cache Server connection health check";
+		RedisService redissvc = this.createRedisService();
 		if (redissvc.ping()) {
 			LOG.fine("Liveness: UP");
-			return HealthCheckResponse.up("Cache Server connection health check");
+			return HealthCheckResponse.up(msg);
 		} else {
 			LOG.warning("Liveness: DOWN");
-			return HealthCheckResponse.down("Cache Server connection health check");
+			return HealthCheckResponse.down(msg);
 		}
+	}
+
+	protected RedisService createRedisService() {
+		return new RedisService();
 	}
 }

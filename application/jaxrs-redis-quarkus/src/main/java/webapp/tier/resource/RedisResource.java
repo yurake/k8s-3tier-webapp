@@ -1,5 +1,6 @@
 package webapp.tier.resource;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,14 +20,16 @@ import webapp.tier.service.RedisService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RedisResource {
 
+	@Inject
+	RedisService svc;
+
 	@POST
 	@Path("/put")
 	@Counted(name = "performedChecks_put", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_ptt", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response put() {
-		RedisService svc = new RedisService();
 		try {
-			return Response.ok().entity(svc.putMsg()).build();
+			return Response.ok().entity(svc.putMsg(svc.createJedis())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -37,9 +40,8 @@ public class RedisResource {
 	@Counted(name = "performedChecks_get", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response get() {
-		RedisService svc = new RedisService();
 		try {
-			return Response.ok().entity(svc.getMsgList()).build();
+			return Response.ok().entity(svc.getMsgList(svc.createJedis())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -50,9 +52,8 @@ public class RedisResource {
 	@Counted(name = "performedChecks_publish", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_publish", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response publish() {
-		RedisService svc = new RedisService();
 		try {
-			return Response.ok().entity(svc.publishMsg()).build();
+			return Response.ok().entity(svc.publishMsg(svc.createJedis())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
