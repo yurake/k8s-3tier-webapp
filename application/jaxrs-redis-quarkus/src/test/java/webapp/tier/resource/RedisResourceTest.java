@@ -49,7 +49,7 @@ class RedisResourceTest {
 	@Test
 	void testPut() throws NoSuchAlgorithmException {
 		Jedis jedis = createJedisMock();
-		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Put");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
         when(svc.createJedis()).thenReturn(jedis);
         when(svc.putMsg(jedis)).thenReturn(msgbean);
 		given()
@@ -65,7 +65,7 @@ class RedisResourceTest {
 	void testGet() throws NoSuchAlgorithmException {
 		Jedis jedis = createJedisMock();
 		List<MsgBean> msglist = new ArrayList<>();
-		msglist.add(new MsgBean(CreateId.createid(), "test", "Put"));
+		msglist.add(new MsgBean(CreateId.createid(), "test", "Test"));
         when(svc.createJedis()).thenReturn(jedis);
         when(svc.getMsgList(jedis)).thenReturn(msglist);
 		given()
@@ -79,7 +79,7 @@ class RedisResourceTest {
 	@Test
 	void testPublish() throws NoSuchAlgorithmException {
 		Jedis jedis = createJedisMock();
-		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Put");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
         when(svc.createJedis()).thenReturn(jedis);
         when(svc.publishMsg(jedis)).thenReturn(msgbean);
 		given()

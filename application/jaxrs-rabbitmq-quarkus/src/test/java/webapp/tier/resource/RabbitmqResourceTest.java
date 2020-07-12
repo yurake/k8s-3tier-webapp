@@ -37,7 +37,7 @@ class RabbitmqResourceTest {
 	@Test
 	void testPut() throws Exception {
 		Connection conn = new MockConnectionFactory().newConnection();
-		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Put");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
         when(svc.getConnection()).thenReturn(conn);
         when(svc.putMsg(conn)).thenReturn(msgbean);
 		given()
@@ -52,7 +52,7 @@ class RabbitmqResourceTest {
 	@Test
 	void testGet() throws Exception {
 		Connection conn = new MockConnectionFactory().newConnection();
-		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Put");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
         when(svc.getConnection()).thenReturn(conn);
         when(svc.getMsg(conn)).thenReturn(msgbean);
 		given()
@@ -66,7 +66,7 @@ class RabbitmqResourceTest {
 	@Test
 	void testPublish() throws Exception {
 		Connection conn = new MockConnectionFactory().newConnection();
-		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Put");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
         when(svc.getConnection()).thenReturn(conn);
         when(svc.publishMsg(conn)).thenReturn(msgbean);
 		given()
