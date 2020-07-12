@@ -14,20 +14,19 @@ import javax.enterprise.event.Observes;
 import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.ITopic;
-import com.hazelcast.core.Message;
-import com.hazelcast.core.MessageListener;
+import com.hazelcast.topic.ITopic;
+import com.hazelcast.topic.Message;
+import com.hazelcast.topic.MessageListener;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.interfaces.Messaging;
 import webapp.tier.service.socket.HazelcastSocket;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class HazelcastMqService implements Messaging, Runnable {
+public class HazelcastMqService extends HazelcastService implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
@@ -47,14 +46,11 @@ public class HazelcastMqService implements Messaging, Runnable {
 		LOG.info("Subscribe is stopping...");
 	}
 
-	@Override
-	public MsgBean putMsg() throws RuntimeException, NoSuchAlgorithmException {
-		HazelcastInstance client = null;
+	public MsgBean putMsg(HazelcastInstance client) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
 		try {
-			client = ConnectHazelcast.getInstance();
 			BlockingQueue<Object> queue = client.getQueue(queuename);
 			queue.put(body);
 		} catch (IllegalStateException | InterruptedException e) {
@@ -70,13 +66,10 @@ public class HazelcastMqService implements Messaging, Runnable {
 		return msgbean;
 	}
 
-	@Override
-	public MsgBean getMsg() throws RuntimeException {
+	public MsgBean getMsg(HazelcastInstance client) throws RuntimeException {
 		MsgBean msgbean = null;
-		HazelcastInstance client = null;
 
 		try {
-			client = ConnectHazelcast.getInstance();
 			BlockingQueue<String> queue = client.getQueue(queuename);
 			Object resp = queue.poll();
 
@@ -98,14 +91,11 @@ public class HazelcastMqService implements Messaging, Runnable {
 		return msgbean;
 	}
 
-	@Override
-	public MsgBean publishMsg() throws RuntimeException, NoSuchAlgorithmException {
-		HazelcastInstance client = null;
+	public MsgBean publishMsg(HazelcastInstance client) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
 		try {
-			client = ConnectHazelcast.getInstance();
 			ITopic<Object> topic = client.getTopic(topicname);
 			topic.publish(body);
 		} catch (IllegalStateException e) {
@@ -123,19 +113,19 @@ public class HazelcastMqService implements Messaging, Runnable {
 	@Override
 	public void run() {
 		try {
-			HazelcastInstance client = ConnectHazelcast.getInstance();
-			ITopic<String> topic = client.getTopic(topicname);
+			HazelcastInstance client = getInstance();
+			ITopic<Object> topic = client.getTopic(topicname);
 			topic.addMessageListener(new MessageListenerImpl());
 		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Subscribe Error.", e);
 		}
 	}
 
-    private static class MessageListenerImpl implements MessageListener<String> {
+    private static class MessageListenerImpl implements MessageListener<Object> {
     	HazelcastSocket hazsock = new HazelcastSocket();
     	@Override
-    	public void onMessage(Message<String> message) {
-    		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject(), splitkey);
+    	public void onMessage(Message<Object> message) {
+    		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject().toString(), splitkey);
 			msgbean.setFullmsg("Received");
 			LOG.log(Level.INFO, msgbean.getFullmsg());
 			hazsock.onMessage(MsgUtils.createBody(msgbean, splitkey));

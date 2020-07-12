@@ -15,23 +15,19 @@ import org.eclipse.microprofile.config.ConfigProvider;
 import com.hazelcast.core.HazelcastInstance;
 
 import webapp.tier.bean.MsgBean;
-import webapp.tier.interfaces.Cache;
 import webapp.tier.util.CreateId;
 
 @ApplicationScoped
-public class HazelcastCacheService implements Cache {
+public class HazelcastCacheService extends HazelcastService {
 
 	private static Logger LOG = Logger.getLogger(HazelcastCacheService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 
-	@Override
-	public MsgBean setMsg() throws RuntimeException, NoSuchAlgorithmException {
-		HazelcastInstance client = null;
+	public MsgBean setMsg(HazelcastInstance client) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Set");
 
 		try {
-			client = ConnectHazelcast.getInstance();
 			Map<Integer, String> map = client.getMap(cachename);
 			map.put(msgbean.getId(), msgbean.getMessage());
 		} catch (IllegalStateException e) {
@@ -46,19 +42,16 @@ public class HazelcastCacheService implements Cache {
 		return msgbean;
 	}
 
-	@Override
-	public MsgBean getMsg() throws RuntimeException {
-		List<MsgBean> msglist = getMsgList();
+	public MsgBean getMsg(HazelcastInstance client) throws RuntimeException {
+		List<MsgBean> msglist = getMsgList(client);
 		return msglist.get(msglist.size() - 1);
 
 	}
 
-	public List<MsgBean> getMsgList() throws RuntimeException {
+	public List<MsgBean> getMsgList(HazelcastInstance client) throws RuntimeException {
 		List<MsgBean> msglist = new ArrayList<>();
-		HazelcastInstance client = null;
 
 		try {
-			client = ConnectHazelcast.getInstance();
 			Map<Integer, String> map = client.getMap(cachename);
 
 			for (Entry<Integer, String> entry : map.entrySet()) {
@@ -82,10 +75,10 @@ public class HazelcastCacheService implements Cache {
 	}
 
 	public boolean isActive() {
-		HazelcastInstance client = null;
 		boolean status = false;
+		HazelcastInstance client = null;
 		try {
-			client = ConnectHazelcast.getInstance();
+			client = createHazelcastInstance();
 			status = client.getLifecycleService().isRunning();
 		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Connect Error.", e);
@@ -95,5 +88,9 @@ public class HazelcastCacheService implements Cache {
 			}
 		}
 		return status;
+	}
+
+	public HazelcastInstance createHazelcastInstance() {
+		return getInstance();
 	}
 }

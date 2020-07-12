@@ -2,46 +2,75 @@ package webapp.tier.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
 
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 class HazelcastMqServiceTest {
 
+	@Inject
+	HazelcastMqService svc;
+
+	private static HazelcastInstance mockInstance;
+
+	@BeforeEach
+	public void setup() throws IOException {
+		mockInstance = Hazelcast.newHazelcastInstance();
+	}
+
+	@AfterEach
+	public void after() {
+		mockInstance.shutdown();
+	}
+
 	@Test
 	void testPutQueueHazelcast() {
-		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			svc.putMsg();
+			svc.putMsg(mockInstance);
+		} catch (Exception expected) {
+			expected.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	void testPutQueueHazelcastErrorNull() {
+		try {
+			HazelcastInstance mockInstanceError = null;
+			svc.putMsg(mockInstanceError);
 			fail();
 		} catch (Exception expected) {
 			expected.printStackTrace();
-			assertEquals("Put Error.", expected.getMessage());
 		}
 	}
 
 	@Test
 	void testGetQueueHazelcast() {
-		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			svc.getMsg();
-			fail();
+			svc.getMsg(mockInstance);
 		} catch (Exception expected) {
 			expected.printStackTrace();
-			assertEquals("Get Error.", expected.getMessage());
+			fail();
 		}
 	}
 
 	@Test
 	void testPublishHazelcast() {
-		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			svc.publishMsg();
-			fail();
+			svc.publishMsg(mockInstance);
 		} catch (Exception expected) {
 			expected.printStackTrace();
-			assertEquals("Publish Error.", expected.getMessage());
+			fail();
 		}
 	}
 

@@ -18,13 +18,18 @@ public class ReadinessHealthCheck implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		HazelcastCacheService hassvc = new HazelcastCacheService();
+		String msg = "Cache Server connection health check";
+		HazelcastCacheService hassvc = this.createHazelcastCacheService();
 		if (hassvc.isActive()) {
 			LOG.fine("Liveness: UP");
-			return HealthCheckResponse.up("Cache Server connection health check");
+			return HealthCheckResponse.up(msg);
 		} else {
 			LOG.warning("Liveness: DOWN");
-			return HealthCheckResponse.down("Cache Server connection health check");
+			return HealthCheckResponse.down(msg);
 		}
+	}
+
+	protected HazelcastCacheService createHazelcastCacheService() {
+		return new HazelcastCacheService();
 	}
 }

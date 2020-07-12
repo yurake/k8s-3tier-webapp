@@ -13,6 +13,9 @@ import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
+import com.hazelcast.core.HazelcastInstance;
+
+import webapp.tier.service.HazelcastService;
 import webapp.tier.service.HazelcastCacheService;
 import webapp.tier.service.HazelcastMqService;
 
@@ -27,13 +30,15 @@ public class HazelcastResource {
 	@Inject
 	HazelcastMqService mqsvc;
 
+	HazelcastInstance client = HazelcastService.getInstance();
+
 	@POST
 	@Path("/setcache")
 	@Counted(name = "performedChecks_setcache", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_setcache", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response putcache() {
 		try {
-			return Response.ok().entity(cachesvc.setMsg()).build();
+			return Response.ok().entity(cachesvc.setMsg(client)).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -45,7 +50,7 @@ public class HazelcastResource {
 	@Timed(name = "checksTimer_getcache", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response getcache() {
 		try {
-			return Response.ok().entity(cachesvc.getMsgList()).build();
+			return Response.ok().entity(cachesvc.getMsgList(client)).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -57,7 +62,7 @@ public class HazelcastResource {
 	@Timed(name = "checksTimer_putqueue", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response putqueue() {
 		try {
-			return Response.ok().entity(mqsvc.putMsg()).build();
+			return Response.ok().entity(mqsvc.putMsg(client)).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -69,7 +74,7 @@ public class HazelcastResource {
 	@Timed(name = "checksTimer_getqueue", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response getqueue() {
 		try {
-			return Response.ok().entity(mqsvc.getMsg()).build();
+			return Response.ok().entity(mqsvc.getMsg(client)).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -81,7 +86,7 @@ public class HazelcastResource {
 	@Timed(name = "checksTimer_publish", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response publish() {
 		try {
-			return Response.ok().entity(mqsvc.publishMsg()).build();
+			return Response.ok().entity(mqsvc.publishMsg(client)).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
