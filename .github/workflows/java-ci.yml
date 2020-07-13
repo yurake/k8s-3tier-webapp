@@ -17,12 +17,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set GraalVM version
-        run: echo ::set-env name=GRAALVM_VERSION::20.1.0
+        run: echo ::set-env name=GRAALVM_VERSION::20.1.0.java11
 
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: ${GRAALVM_VERSION}
+          graalvm-version: "20.1.0.java11"
       - run: java -version
 
       - name: Maven Deploy POM to Github Package Registry
