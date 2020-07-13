@@ -49,27 +49,27 @@ public class RandomService {
 		int id = (int) (Math.random() * 6);
 		switch (id) {
 		case 0:
-			LOG.info("Call: ActiveMQ Publish");
+			LOG.log(Level.INFO, "Call: ActiveMQ Publish");
 			response = activemqresource.publish();
 			break;
 		case 1:
-			LOG.info("Call: RabbitMQ Publish");
+			LOG.log(Level.INFO, "Call: RabbitMQ Publish");
 			response = rabbitmqresource.publish();
 			break;
 		case 2:
-			LOG.info("Call: Redis Publish");
+			LOG.log(Level.INFO, "Call: Redis Publish");
 			response = redisresource.publish();
 			break;
 		case 3:
-			LOG.info("Call: Postgres Insert");
+			LOG.log(Level.INFO, "Call: Postgres Insert");
 			response = postgresresource.insert();
 			break;
 		case 4:
-			LOG.info("Call: Hazelcast Publish");
+			LOG.log(Level.INFO, "Call: Hazelcast Publish");
 			response = hazelcastresource.publish();
 			break;
 		case 5:
-			LOG.info("Call: Mongodb Insert");
+			LOG.log(Level.INFO, "Call: Mongodb Insert");
 			response = mongodbResource.insert();
 			break;
 		default:
