@@ -5,17 +5,19 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
 import webapp.tier.bean.MsgBean;
-import webapp.tier.interfaces.Cache;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
-public class MemcachedService implements Cache {
+@ApplicationScoped
+public class MemcachedService {
 
 	private static final Logger LOG = Logger.getLogger(MemcachedService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
@@ -27,13 +29,15 @@ public class MemcachedService implements Cache {
 		pool.initialize();
 	}
 
-	@Override
-	public MsgBean setMsg() throws RuntimeException, NoSuchAlgorithmException {
+	public MemCachedClient createMemCachedClient() {
+		return new MemCachedClient();
+	}
+
+	public MsgBean setMsg(MemCachedClient mcc) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message);
 		String errormsg = "Set Error.";
 
 		try {
-			MemCachedClient mcc = new MemCachedClient();
 			boolean resultsetid = mcc.set("id", String.valueOf(msgbean.getId()));
 			boolean resultsetmsg = mcc.set("msg", msgbean.getMessage());
 
@@ -52,9 +56,7 @@ public class MemcachedService implements Cache {
 		return msgbean;
 	}
 
-	@Override
-	public MsgBean getMsg() throws RuntimeException {
-		MemCachedClient mcc = new MemCachedClient();
+	public MsgBean getMsg(MemCachedClient mcc) throws RuntimeException {
 		MsgBean msgbean = null;
 		String getid = null;
 		String errormsg = "Get Error.";
