@@ -19,7 +19,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
 
       - name: Maven Deploy POM to Github Package Registry
@@ -50,7 +50,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -89,7 +89,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -128,7 +128,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -167,7 +167,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -206,7 +206,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -245,7 +245,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -284,7 +284,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -323,7 +323,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -362,7 +362,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -401,7 +401,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -440,7 +440,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -479,7 +479,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -518,7 +518,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -557,7 +557,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -596,7 +596,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -635,7 +635,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -674,7 +674,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
 
       - name: Maven Build - redis-mysql-helidon
@@ -696,7 +696,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -735,7 +735,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: "20.0.0.java11"
+          graalvm-version: 20.1.0.java11
       - run: java -version
       - name: setup-native-image
         run: |

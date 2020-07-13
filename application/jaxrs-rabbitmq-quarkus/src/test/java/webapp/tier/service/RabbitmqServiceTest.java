@@ -1,67 +1,115 @@
 package webapp.tier.service;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
-import org.junit.jupiter.api.BeforeAll;
+import javax.inject.Inject;
+
 import org.junit.jupiter.api.Test;
 
+import com.github.fridujo.rabbitmq.mock.MockConnectionFactory;
+import com.rabbitmq.client.Connection;
+
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.bean.MsgBean;
 
 @QuarkusTest
 class RabbitmqServiceTest {
 
-	static ThreadTestOnStartError th = new ThreadTestOnStartError();
+	@Inject
+	RabbitmqService svc;
 
-	@BeforeAll
-	static void threadTestOnStartError() {
-		th.start();
+	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
+	String errormsg = "channel is already closed due to clean channel shutdown";
+
+	@Test
+	void testPutMsg() throws Exception {
+		Connection conn = new MockConnectionFactory().newConnection();
+		MsgBean msgbean = svc.putMsg(conn);
+		assertThat(msgbean.getFullmsg(), containsString(respbody));
 	}
 
 	@Test
 	void testPutMsgError() {
-		RabbitmqService svc = new RabbitmqService();
 		try {
-			svc.putMsg();
+			Connection conn = new MockConnectionFactory().newConnection();
+			conn.close();
+			svc.putMsg(conn);
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Put Error.", e.getMessage());
+			assertEquals(errormsg, e.getMessage());
 		}
 	}
 
 	@Test
+	void testGetMsgNoData() throws Exception {
+		Connection conn = new MockConnectionFactory().newConnection();
+		MsgBean msgbean = svc.getMsg(conn);
+		assertThat(msgbean.getFullmsg(), containsString("No Data."));
+	}
+
+	@Test
+	void testGetMsgWithData() throws Exception {
+		Connection conn = new MockConnectionFactory().newConnection();
+		svc.getMsg(conn);
+		svc.putMsg(conn);
+		MsgBean msgbean = svc.getMsg(conn);
+		assertThat(msgbean.getFullmsg(), containsString(respbody));
+	}
+
+	@Test
 	void testGetMsgError() {
-		RabbitmqService svc = new RabbitmqService();
 		try {
-			svc.getMsg();
-			fail();
+			Connection conn = new MockConnectionFactory().newConnection();
+			conn.close();
+			svc.getMsg(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Get Error.", e.getMessage());
+			assertEquals(errormsg, e.getMessage());
 		}
 	}
 
 	@Test
 	void testPublishMsgError() {
-		RabbitmqService svc = new RabbitmqService();
 		try {
-			svc.publishMsg();
-			fail();
+			Connection conn = new MockConnectionFactory().newConnection();
+			svc.publishMsg(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertEquals("Publish Error.", e.getMessage());
 		}
 	}
 
-	static class ThreadTestOnStartError extends Thread {
-		private final Logger log = Logger.getLogger(ThreadTestOnStartError.class.getSimpleName());
-		@Override
-		public void run() {
+	@Test
+	void testIsActiveFalse() {
+		assertThat(svc.isActive(), is(false));
+	}
+
+	@Test
+	void testIsActiveTrue() throws IOException, TimeoutException {
+		RabbitmqService rsvc = new RabbitmqService() {
+			public Connection getConnection() {
+				Connection conn = new MockConnectionFactory().newConnection();
+				return conn;
+			}
+		};
+		assertThat(rsvc.isActive(), is(true));
+	}
+
+	@Test
+	void testStartStopSubscribe() {
+
+		try {
 			RabbitmqService.stopReceived();
-			log.log(Level.INFO, "Stopped Received");
+			RabbitmqService.startReceived();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
 		}
 	}
 }

@@ -113,7 +113,7 @@ public class ActiveMqService implements Messaging, Runnable {
 		while (isEnableReceived) {
 			try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
 					JMSConsumer consumer = context.createConsumer(context.createTopic(topicname))) {
-				LOG.info("Ready for receive message...");
+				LOG.log(Level.INFO, "Ready for receive message...");
 				Message message = consumer.receive();
 
 				TextMessage textMessage = (TextMessage) message;
@@ -125,6 +125,7 @@ public class ActiveMqService implements Messaging, Runnable {
 				LOG.log(Level.INFO, msgbean.getFullmsg());
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, "Publish Error.", e);
+				stopReceived();
 			}
 		}
 	}

@@ -22,6 +22,7 @@ import webapp.tier.util.MsgUtils;
 public class DbService {
 
 	private static final Logger LOG = Logger.getLogger(DbService.class.getSimpleName());
+	String insertErr = "Insert Error.";
 
 	public boolean connectionStatus(String url) {
 		boolean status = false;
@@ -43,8 +44,8 @@ public class DbService {
 			LOG.log(Level.INFO, "Insert SQL: {0}", sql);
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			LOG.log(Level.SEVERE, "Insert Error.", e);
-			throw new SQLException("Insert Error.");
+			LOG.log(Level.SEVERE, insertErr, e);
+			throw new SQLException();
 		}
 		msgbean.setFullmsg("Insert");
 		LOG.info(msgbean.getFullmsg());
@@ -64,8 +65,8 @@ public class DbService {
 			LOG.log(Level.INFO, "Insert SQL: {0}", sql);
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			LOG.log(Level.SEVERE, "Insert Errorr.", e);
-			throw new SQLException("Insert Error.");
+			LOG.log(Level.SEVERE, insertErr, e);
+			throw new SQLException();
 		}
 		msgbean.setFullmsg("Insert");
 		LOG.info(msgbean.getFullmsg());
@@ -92,7 +93,7 @@ public class DbService {
 
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Select Errorr.", e);
-			throw new SQLException("Select Error.");
+			throw new SQLException();
 		}
 		return msglist;
 	}
@@ -104,7 +105,7 @@ public class DbService {
 			stmt.executeUpdate(dbconfig.getDeletesql());
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Delete Errorr.", e);
-			throw new SQLException("Delete Error.");
+			throw new SQLException();
 		}
 		return "Delete Msg Records";
 	}

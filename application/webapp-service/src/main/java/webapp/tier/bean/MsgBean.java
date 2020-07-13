@@ -6,7 +6,7 @@ public class MsgBean {
 
 	int id;
 	String message;
-	String fullmsg = "Error";
+	String fullmsg = "MsgBean init error";
 
 	public MsgBean() {
 	}

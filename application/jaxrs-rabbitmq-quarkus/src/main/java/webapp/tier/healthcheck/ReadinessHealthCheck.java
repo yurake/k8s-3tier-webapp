@@ -18,14 +18,19 @@ public class ReadinessHealthCheck implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		RabbitmqService rabbitmqsvc = new RabbitmqService();
+		String msg = "Database connection health check";
 
-		if (rabbitmqsvc.isActive()) {
+		RabbitmqService svc = this.createRabbitmqService();
+		if (svc.isActive()) {
 			LOG.fine("Readiness: UP");
-			return HealthCheckResponse.up("Database connection health check");
+			return HealthCheckResponse.up(msg);
 		} else {
 			LOG.warning("Readiness: DOWN");
-			return HealthCheckResponse.down("Database connection health check");
+			return HealthCheckResponse.down(msg);
 		}
+	}
+
+	protected RabbitmqService createRabbitmqService() {
+		return new RabbitmqService();
 	}
 }

@@ -36,6 +36,12 @@
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.fppt</groupId>
+			<artifactId>jedis-mock</artifactId>
+			<version>0.1.16</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>
 

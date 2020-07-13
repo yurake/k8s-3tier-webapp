@@ -1,5 +1,6 @@
 package webapp.tier.resource;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,14 +20,16 @@ import webapp.tier.service.RabbitmqService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RabbitmqResource {
 
+	@Inject
+	RabbitmqService svc;
+
 	@POST
 	@Path("/put")
 	@Counted(name = "performedChecks_put", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_put", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
-	public Response set() {
-		RabbitmqService svc = new RabbitmqService();
+	public Response put() {
 		try {
-			return Response.ok().entity(svc.putMsg()).build();
+			return Response.ok().entity(svc.putMsg(svc.getConnection())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -37,9 +40,8 @@ public class RabbitmqResource {
 	@Counted(name = "performedChecks_get", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response get() {
-		RabbitmqService svc = new RabbitmqService();
 		try {
-			return Response.ok().entity(svc.getMsg()).build();
+			return Response.ok().entity(svc.getMsg(svc.getConnection())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -50,9 +52,8 @@ public class RabbitmqResource {
 	@Counted(name = "performedChecks_publish", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_publish", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response publish() {
-		RabbitmqService svc = new RabbitmqService();
 		try {
-			return Response.ok().entity(svc.publishMsg()).build();
+			return Response.ok().entity(svc.publishMsg(svc.getConnection())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}

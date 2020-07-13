@@ -16,15 +16,14 @@ public class KafkaService {
 
 	@Inject
 	@RestClient
-	DeliverResource deliverrsc;
+	DeliverResource deliversvc;
 
 	private static final Logger LOG = Logger.getLogger(KafkaService.class.getSimpleName());
 
 	@Incoming("message")
 	public void process(String message) {
 		LOG.log(Level.INFO, "Received: {0}", message);
-		String response;
-		response = deliverrsc.random();
+		String response = deliversvc.random();
 		LOG.log(Level.INFO, "Call Random Publish: {0}", response);
 	}
 }

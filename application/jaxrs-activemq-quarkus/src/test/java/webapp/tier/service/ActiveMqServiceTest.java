@@ -1,68 +1,71 @@
 package webapp.tier.service;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.inject.Inject;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import io.quarkus.artemis.test.ArtemisTestResource;
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.bean.MsgBean;
 
 @QuarkusTest
+@QuarkusTestResource(ArtemisTestResource.class)
 class ActiveMqServiceTest {
 
-	static ThreadTestOnStartError th = new ThreadTestOnStartError();
+	@Inject
+	ActiveMqService svc;
 
-	@BeforeAll
-	static void threadTestOnStartError() {
-		th.start();
-	}
+	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@Test
 	void testPutMsg() {
-
-		ActiveMqService svc = new ActiveMqService();
 		try {
-			svc.putMsg();
-			fail();
+			MsgBean msgbean = svc.putMsg();
+			assertThat(msgbean.getFullmsg(), containsString(respbody));
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Put Error.", e.getMessage());
+			fail();
 		}
 	}
 
 	@Test
 	void testGetMsg() {
-		ActiveMqService svc = new ActiveMqService();
 		try {
-			svc.getMsg();
-			fail();
+			MsgBean msgbeanexpect = svc.putMsg();
+			MsgBean msgbeanactual = svc.getMsg();
+			assertThat(msgbeanactual.getId(), is(msgbeanexpect.getId()));
+			assertThat(msgbeanactual.getMessage(), is(msgbeanexpect.getMessage()));
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Get Error.", e.getMessage());
+			fail();
 		}
 	}
 
 	@Test
 	void testPublishMsg() {
-		ActiveMqService svc = new ActiveMqService();
 		try {
-			svc.publishMsg();
-			fail();
+			MsgBean msgbean = svc.publishMsg();
+			assertThat(msgbean.getFullmsg(), containsString(respbody));
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Publish Error.", e.getMessage());
+			fail();
 		}
 	}
 
-	static class ThreadTestOnStartError extends Thread {
-		private final Logger log = Logger.getLogger(ThreadTestOnStartError.class.getSimpleName());
-		@Override
-		public void run() {
+
+	@Test
+	void testStartStopSubscribe() {
+		try {
 			ActiveMqService.stopReceived();
-			log.log(Level.INFO, "Stopped Received");
+			ActiveMqService.startReceived();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
 		}
 	}
 }

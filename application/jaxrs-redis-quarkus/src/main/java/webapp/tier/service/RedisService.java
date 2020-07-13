@@ -3,6 +3,7 @@ package webapp.tier.service;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,13 +20,11 @@ import io.quarkus.runtime.StartupEvent;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.interfaces.Messaging;
-import webapp.tier.service.subscribe.RedisSubscriber;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class RedisService implements Messaging, Runnable {
+public class RedisService implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
@@ -48,25 +47,34 @@ public class RedisService implements Messaging, Runnable {
 		LOG.info("Subscribe is stopping...");
 	}
 
+	public Jedis createJedis() {
+		return new Jedis(servername, serverport);
+	}
+
+	protected RedisSubscriber createRedisSubscriber() {
+		return new RedisSubscriber();
+	}
+
 	public boolean ping() {
-		Jedis jedis = new Jedis(servername, serverport);
+		Jedis jedis = createJedis();
 		boolean status = false;
-		try {
-			if (jedis.ping().equalsIgnoreCase("PONG")) {
-				status = true;
+
+		if (Objects.nonNull(jedis)) {
+			try {
+				if (jedis.ping().equalsIgnoreCase("PONG")) {
+					status = true;
+				}
+			} catch (JedisConnectionException e) {
+				LOG.log(Level.SEVERE, "Status Check Error.", e);
+			} finally {
+				jedis.close();
 			}
-		} catch (JedisConnectionException e) {
-			LOG.log(Level.SEVERE, "Status Check Error.", e);
-		} finally {
-			jedis.close();
 		}
 		return status;
 	}
 
-	@Override
-	public MsgBean putMsg() throws RuntimeException, NoSuchAlgorithmException {
+	public MsgBean putMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
-		Jedis jedis = new Jedis(servername, serverport);
 		String errormsg = "Put Error.";
 
 		try {
@@ -84,15 +92,13 @@ public class RedisService implements Messaging, Runnable {
 		return msgbean;
 	}
 
-	@Override
-	public MsgBean getMsg() throws RuntimeException {
-		List<MsgBean> msglist = getMsgList();
+	public MsgBean getMsg(Jedis jedis) throws RuntimeException {
+		List<MsgBean> msglist = getMsgList(jedis);
 		return msglist.get(msglist.size() - 1);
 	}
 
-	public List<MsgBean> getMsgList() throws RuntimeException {
+	public List<MsgBean> getMsgList(Jedis jedis) throws RuntimeException {
 		List<MsgBean> msglist = new ArrayList<>();
-		Jedis jedis = new Jedis(servername, serverport);
 		String errormsg = "Get Error.";
 
 		try {
@@ -116,11 +122,9 @@ public class RedisService implements Messaging, Runnable {
 		return msglist;
 	}
 
-	@Override
-	public MsgBean publishMsg() throws RuntimeException, NoSuchAlgorithmException {
+	public MsgBean publishMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
-		Jedis jedis = new Jedis(servername, serverport);
 		String errormsg = "Publish Error.";
 
 		try {
@@ -139,8 +143,8 @@ public class RedisService implements Messaging, Runnable {
 
 	@Override
 	public void run() {
-		Jedis jedis = new Jedis(servername, serverport);
-		RedisSubscriber redissubsc = new RedisSubscriber();
+		Jedis jedis = createJedis();
+		RedisSubscriber redissubsc = createRedisSubscriber();
 
 		try {
 			jedis.subscribe(redissubsc, channel);
@@ -149,6 +153,10 @@ public class RedisService implements Messaging, Runnable {
 		} finally {
 			jedis.close();
 		}
+	}
+
+	protected void flushAll(Jedis jedis) {
+		jedis.flushAll();
 	}
 
 	public static void startReceived() {

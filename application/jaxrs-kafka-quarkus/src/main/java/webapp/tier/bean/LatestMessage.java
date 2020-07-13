@@ -1,5 +1,8 @@
 package webapp.tier.bean;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class LatestMessage {
 
 	private static String latestMsg;
