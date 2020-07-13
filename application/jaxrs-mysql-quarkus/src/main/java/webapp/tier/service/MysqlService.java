@@ -51,7 +51,6 @@ public class MysqlService implements Database {
 
 	protected Connection getConnectionWrapper() throws SQLException {
 		return ds.getConnection();
-
 	}
 
 	public boolean connectionStatus() {
