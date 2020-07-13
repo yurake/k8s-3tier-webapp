@@ -2,16 +2,20 @@ package webapp.tier.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import javax.inject.Inject;
+
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class HazelcastServiceTest {
+class HazelcastSubscribeServiceTest {
+
+	@Inject
+	HazelcastSubscribeService svc;
 
 	@Test
 	void testOnStartError() {
-		HazelcastService svc = new HazelcastService();
 		try {
 			svc.run();
 		} catch (Exception e) {
@@ -21,7 +25,6 @@ class HazelcastServiceTest {
 
 	@Test
 	void testIsActiveError() {
-		HazelcastService svc = new HazelcastService();
 		assertEquals(false, svc.isActive(), "Unexpected status");
 	}
 
