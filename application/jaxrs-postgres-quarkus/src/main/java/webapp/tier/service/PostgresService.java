@@ -18,11 +18,12 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import io.agroal.api.AgroalDataSource;
 import io.quarkus.agroal.DataSource;
 import webapp.tier.bean.MsgBean;
+import webapp.tier.interfaces.Database;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class PostgresService {
+public class PostgresService implements Database {
 
 	@Inject
 	@DataSource("postgres")
@@ -58,9 +59,11 @@ public class PostgresService {
 		return status;
 	}
 
+	@Override
 	public MsgBean insertMsg() throws SQLException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
-		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId())).replace(sqlbody, msgbean.getMessage());
+		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId())).replace(sqlbody,
+				msgbean.getMessage());
 
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {
@@ -74,6 +77,7 @@ public class PostgresService {
 		return msgbean;
 	}
 
+	@Override
 	public List<MsgBean> selectMsg() throws SQLException {
 		List<MsgBean> msglist = new ArrayList<>();
 
@@ -96,6 +100,7 @@ public class PostgresService {
 		return msglist;
 	}
 
+	@Override
 	public String deleteMsg() throws SQLException {
 
 		try (Connection con = ds.getConnection();
