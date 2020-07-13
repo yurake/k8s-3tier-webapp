@@ -1,29 +1,46 @@
 package webapp.tier.bean;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 import org.junit.jupiter.api.Test;
 
 class MsgBeanTest {
 
 	@Test
-	void testMsgBeanAll() {
+	void testMsgBean() {
 		MsgBean bean = new MsgBean(1111, "Test");
-		assertEquals(1111, bean.getId());
-		assertEquals("Test", bean.getMessage());
+		assertThat(bean.getId(), is(1111));
+		assertThat(bean.getMessage(), is("Test"));
+	}
+
+	@Test
+	void testMsgBeanWithTypeInt() {
+		MsgBean bean = new MsgBean(1111, "Test", "TEST");
+		assertThat(bean.getId(), is(1111));
+		assertThat(bean.getMessage(), is("Test"));
+		assertThat(bean.getFullmsg(), containsString("TEST"));
+	}
+
+	@Test
+	void testMsgBeanWithTypeString() {
+		MsgBean bean = new MsgBean("1111", "Test", "TEST");
+		assertThat(bean.getId(), is(1111));
+		assertThat(bean.getMessage(), is("Test"));
+		assertThat(bean.getFullmsg(), containsString("TEST"));
 	}
 
 	@Test
 	void testId() {
 		MsgBean bean = new MsgBean();
 		bean.setId(1111);
-		assertEquals(1111, bean.getId());
+		assertThat(bean.getId(), is(1111));
 	}
 
 	@Test
 	void testMsg() {
 		MsgBean bean = new MsgBean();
 		bean.setMessage("Test");
-		assertEquals("Test", bean.getMessage());
+		assertThat(bean.getMessage(), is("Test"));
 	}
 }
