@@ -3,7 +3,9 @@
     "config:base"
   ],
   "automerge": true,
-  "assignees": "yurak",
+  "assignees": [
+    "yurak"
+  ],
   "timezone": "Asia/Tokyo",
   "schedule": [
     "every weekend"
