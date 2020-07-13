@@ -6,7 +6,7 @@ on:
     types: [closed]
 
 jobs:
-  java:
+  quarkus:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -45,6 +45,36 @@ jobs:
         run: echo ::set-env name=SOURCE_VERSION::$(grep "minikube:" minikube-ci.yml | awk '{print $3}' | tr -d ])
       - name: check latest tag quarkus version
         run: echo ::set-env name=TARGET_VERSION::$( curl -s https://api.github.com/repos/kubernetes/minikube/releases/latest | jq '.tag_name' | tr -d '"')
+      - name: check diff
+        run: |
+          echo CURRENT: ${SOURCE_VERSION}
+          echo TARGET: ${TARGET_VERSION}
+          test ${SOURCE_VERSION} = ${TARGET_VERSION}
+      - name: create issue if failure
+        if: failure()
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
+        id: create-issue-minikube
+      - name: create comment
+        if: failure()
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ steps.create-issue-minikube.outputs.number }}
+          body: |
+            Please see failure log: https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
+
+  graalvm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: check current grralvm version
+        working-directory: ./.github/workflows
+        run: echo ::set-env name=SOURCE_VERSION::$(grep graalvm-version java-ci.yml | head -1 | awk '{print $2}' | sed -e "s/\.java11//")
+      - name: check latest tag grralvm version
+        run: echo ::set-env name=TARGET_VERSION::$(curl -s https://api.github.com/repos/graalvm/graalvm-ce-builds/releases/latest | jq '.tag_name' | tr -d '"' | tr -d 'vm-')
       - name: check diff
         run: |
           echo CURRENT: ${SOURCE_VERSION}
