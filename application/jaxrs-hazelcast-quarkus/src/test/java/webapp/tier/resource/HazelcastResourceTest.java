@@ -46,8 +46,8 @@ class HazelcastResourceTest {
 	@Test
 	void testPutcache() throws NoSuchAlgorithmException, RuntimeException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(csvc.createHazelcastInstance()).thenReturn(mockInstance);
-        when(csvc.setMsg(mockInstance)).thenReturn(msgbean);
+		when(csvc.createHazelcastInstance()).thenReturn(mockInstance);
+		when(csvc.setMsg(mockInstance)).thenReturn(msgbean);
 		given()
 				.when()
 				.contentType("application/json")
@@ -62,8 +62,8 @@ class HazelcastResourceTest {
 		msgbeanList.add(new MsgBean(CreateId.createid(), "test", "Test"));
 		msgbeanList.add(new MsgBean(CreateId.createid(), "test", "Test"));
 
-        when(csvc.createHazelcastInstance()).thenReturn(mockInstance);
-        when(csvc.getMsgList(mockInstance)).thenReturn(msgbeanList);
+		when(csvc.createHazelcastInstance()).thenReturn(mockInstance);
+		when(csvc.getMsgList(mockInstance)).thenReturn(msgbeanList);
 		given()
 				.when()
 				.get("/quarkus/hazelcast/getcache")
@@ -74,7 +74,7 @@ class HazelcastResourceTest {
 	@Test
 	void testPutqueue() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(msvc.putMsg(mockInstance)).thenReturn(msgbean);
+		when(msvc.putMsg(mockInstance)).thenReturn(msgbean);
 		given()
 				.when()
 				.contentType("application/json")
@@ -86,7 +86,7 @@ class HazelcastResourceTest {
 	@Test
 	void testGetqueue() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(msvc.getMsg(mockInstance)).thenReturn(msgbean);
+		when(msvc.getMsg(mockInstance)).thenReturn(msgbean);
 		given()
 				.when()
 				.get("/quarkus/hazelcast/getqueue")
@@ -97,7 +97,7 @@ class HazelcastResourceTest {
 	@Test
 	void testPublish() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(msvc.publishMsg(mockInstance)).thenReturn(msgbean);
+		when(msvc.publishMsg(mockInstance)).thenReturn(msgbean);
 		given()
 				.when()
 				.contentType("application/json")
@@ -107,4 +107,3 @@ class HazelcastResourceTest {
 	}
 
 }
-
