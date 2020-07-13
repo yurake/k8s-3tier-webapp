@@ -108,11 +108,27 @@ jobs:
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
           df -h /
+      - name: create issue if failure
+        if: failure()
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
+        id: create-issue-minikube-ci
       - name: add comment if failure
         if: failure()
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.issue.number }}
+          body: |
+            Please see failure log:  
+            https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
+      - name: create comment if failure
+        if: failure()
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ steps.create-issue-minikube-ci.outputs.number }}
           body: |
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
