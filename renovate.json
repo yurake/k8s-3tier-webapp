@@ -1,5 +1,14 @@
 {
   "extends": [
     "config:base"
+  ],
+  "automerge": true,
+  "assignees": "yurak",
+  "timezone": "Asia/Tokyo",
+  "schedule": [
+    "every weekend"
+  ],
+  "labels": [
+    "renovate"
   ]
 }
