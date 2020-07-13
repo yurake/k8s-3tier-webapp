@@ -39,7 +39,7 @@ public class MysqlService implements Database {
 	String selectsql;
 
 	@ConfigProperty(name = "mysql.delete.msg")
-	String deletesql = "mysql.delete.msg";
+	String deletesql;
 
 	@ConfigProperty(name = "mysql.id")
 	String sqlkey;
@@ -49,9 +49,14 @@ public class MysqlService implements Database {
 
 	private static final Logger LOG = Logger.getLogger(MysqlService.class.getSimpleName());
 
+	protected Connection getConnectionWrapper() throws SQLException {
+		return ds.getConnection();
+
+	}
+
 	public boolean connectionStatus() {
 		boolean status = false;
-		try (Connection con = ds.getConnection()) {
+		try (Connection con = getConnectionWrapper()) {
 			status = true;
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Status Check Error.", e);
@@ -64,7 +69,7 @@ public class MysqlService implements Database {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
 		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId())).replace(sqlbody, msgbean.getMessage());
 
-		try (Connection con = ds.getConnection();
+		try (Connection con = getConnectionWrapper();
 				Statement stmt = con.createStatement()) {
 			LOG.log(Level.INFO, "Insert SQL: {0}", sql);
 			stmt.executeUpdate(sql);
@@ -80,7 +85,7 @@ public class MysqlService implements Database {
 	public List<MsgBean> selectMsg() throws SQLException {
 		List<MsgBean> msglist = new ArrayList<>();
 
-		try (Connection con = ds.getConnection();
+		try (Connection con = getConnectionWrapper();
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(selectsql)) {
 			LOG.log(Level.INFO, "Select SQL: {0}", selectsql);
@@ -102,7 +107,7 @@ public class MysqlService implements Database {
 	@Override
 	public String deleteMsg() throws SQLException {
 
-		try (Connection con = ds.getConnection();
+		try (Connection con = getConnectionWrapper();
 				Statement stmt = con.createStatement()) {
 			LOG.log(Level.INFO, "Delete SQL: {0}", deletesql);
 			stmt.executeUpdate(deletesql);
