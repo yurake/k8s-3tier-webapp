@@ -31,13 +31,13 @@ import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class RabbitMqService implements Runnable {
+public class RabbitmqSubscribeService implements Runnable {
 
 	@Inject
 	@RestClient
 	DeliverService deliversvc;
 
-	private static final Logger LOG = Logger.getLogger(RabbitMqService.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(RabbitmqSubscribeService.class.getSimpleName());
 	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username", String.class);
 	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password", String.class);
 	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
@@ -57,7 +57,7 @@ public class RabbitMqService implements Runnable {
 		LOG.info("The application is stopping...");
 	}
 
-	private Connection getConnection() throws IOException, TimeoutException {
+	protected Connection getConnection() throws IOException, TimeoutException {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
 		connectionFactory.setPassword(password);
@@ -112,10 +112,10 @@ public class RabbitMqService implements Runnable {
 	}
 
 	public static void startReceived() {
-		RabbitMqService.isEnableReceived = true;
+		RabbitmqSubscribeService.isEnableReceived = true;
 	}
 
 	public static void stopReceived() {
-		RabbitMqService.isEnableReceived = false;
+		RabbitmqSubscribeService.isEnableReceived = false;
 	}
 }
