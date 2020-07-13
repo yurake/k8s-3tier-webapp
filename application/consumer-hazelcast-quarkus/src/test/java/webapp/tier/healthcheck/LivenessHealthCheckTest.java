@@ -13,7 +13,7 @@ class LivenessHealthCheckTest {
 	@Test
 	void testCallError() {
 		LivenessHealthCheck hc = new LivenessHealthCheck();
-		assertEquals(State.DOWN, hc.call().getState(), "Unexpected status");
+		assertEquals(State.UP, hc.call().getState(), "Unexpected status");
 	}
 
 }
