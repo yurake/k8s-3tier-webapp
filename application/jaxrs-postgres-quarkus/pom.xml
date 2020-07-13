@@ -32,6 +32,11 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-jdbc-postgresql</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-test-h2</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>
 
