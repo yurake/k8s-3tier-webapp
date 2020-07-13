@@ -30,11 +30,16 @@ class HazelcastServiceTest {
 
 	@Test
 	void testGetInstanceError() throws IOException, IllegalStateException {
+		HazelcastInstance mockInstance = null;
 		try {
-			HazelcastService.getInstance();
+			mockInstance = HazelcastService.getInstance();
 			fail();
 		} catch (Exception expected) {
 			expected.fillInStackTrace();
+		} finally {
+			if (mockInstance != null) {
+				mockInstance.shutdown();
+			}
 		}
 	}
 }
