@@ -1,5 +1,6 @@
 package webapp.tier.resource;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,14 +21,16 @@ import webapp.tier.service.MemcachedService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MemcachedResource {
 
+	@Inject
+	MemcachedService svc;
+
 	@POST
 	@Path("/set")
 	@Counted(name = "performedChecks_set", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_set", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response set() {
-		MemcachedService svc = new MemcachedService();
 		try {
-			return Response.ok().entity(svc.setMsg()).build();
+			return Response.ok().entity(svc.setMsg(svc.createMemCachedClient())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -38,9 +41,8 @@ public class MemcachedResource {
 	@Counted(name = "performedChecks_get", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response get() {
-		MemcachedService svc = new MemcachedService();
 		try {
-			return Response.ok().entity(svc.getMsg()).build();
+			return Response.ok().entity(svc.getMsg(svc.createMemCachedClient())).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
