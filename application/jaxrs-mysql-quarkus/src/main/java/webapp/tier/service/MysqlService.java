@@ -57,7 +57,7 @@ public class MysqlService implements Database {
 		boolean status = false;
 		try (Connection con = getConnectionWrapper()) {
 			status = true;
-		} catch (SQLException e) {
+		} catch (SQLException | NullPointerException e) {
 			LOG.log(Level.SEVERE, "Status Check Error.", e);
 		}
 		return status;
