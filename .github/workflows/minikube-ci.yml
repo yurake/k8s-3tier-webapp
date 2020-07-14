@@ -116,6 +116,37 @@ jobs:
         with:
           filename: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
         id: create-issue-minikube-ci
+      - name: create issue if failure 2
+        if: failure()
+        uses: maxkomarychev/oction-create-issue@v0.7.1
+        id: create-issue-minikube-ci-2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Minikube CI Failure
+          labels: bug
+          assignees: yurak
+          body: |
+            Please see failure log:  
+            https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
+      - name: Print outputs create issue if failure 2
+        run: |
+          echo ${{ steps.create-issue-minikube-ci-2.outputs.id }}
+          echo ${{ steps.create-issue-minikube-ci-2.outputs.number }}
+      - name: create issue if failure 3
+        if: failure()
+        uses: peter-evans/create-issue-from-file@v2
+        id: create-issue-minikube-ci-3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Minikube CI Failure
+          labels: bug
+          assignees: yurak
+          body: |
+            Please see failure log:  
+            https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
+      - name: Print outputs create issue if failure 3
+        run: |
+          echo ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
       - name: add comment if failure
         if: failure()
         uses: peter-evans/create-or-update-comment@v1
