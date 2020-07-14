@@ -49,13 +49,9 @@ public class PostgresService implements Database {
 
 	private static final Logger LOG = Logger.getLogger(PostgresService.class.getSimpleName());
 
-	protected Connection getConnectionWrapper() throws SQLException {
-		return ds.getConnection();
-	}
-
 	public boolean connectionStatus() {
 		boolean status = false;
-		try (Connection con = getConnectionWrapper()) {
+		try (Connection con = ds.getConnection()) {
 			status = true;
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Status Check Error.", e);
@@ -69,7 +65,7 @@ public class PostgresService implements Database {
 		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId())).replace(sqlbody,
 				msgbean.getMessage());
 
-		try (Connection con = getConnectionWrapper();
+		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {
 			LOG.log(Level.INFO, "Insert SQL: {0}", sql);
 			stmt.executeUpdate(sql);
@@ -85,7 +81,7 @@ public class PostgresService implements Database {
 	public List<MsgBean> selectMsg() throws SQLException {
 		List<MsgBean> msglist = new ArrayList<>();
 
-		try (Connection con = getConnectionWrapper();
+		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(selectsql)) {
 			LOG.log(Level.INFO, "Select SQL: {0}", selectsql);
@@ -107,7 +103,7 @@ public class PostgresService implements Database {
 	@Override
 	public String deleteMsg() throws SQLException {
 
-		try (Connection con = getConnectionWrapper();
+		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {
 			LOG.log(Level.INFO, "Delete SQL: {0}", deletesql);
 			stmt.executeUpdate(deletesql);
