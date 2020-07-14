@@ -128,7 +128,7 @@ jobs:
         with:
           project-name: Feature request
           column-name: To do
-          issue-number: ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
+          issue-number: ${{ steps.create-issue-minikube-ci-2.outputs.issue-number }}
       - name: create issue if failure 3
         if: failure()
         uses: peter-evans/create-issue-from-file@v2
