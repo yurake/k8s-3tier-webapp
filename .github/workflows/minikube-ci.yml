@@ -124,7 +124,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Minikube CI Failure
           labels: bug
-          assignees: yurak
           body: |
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
@@ -139,6 +138,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Minikube CI Failure
+          content-filepath: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
           labels: bug
           assignees: yurak
           body: |
