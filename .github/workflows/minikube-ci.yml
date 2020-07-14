@@ -136,7 +136,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Minikube CI Failure
-          content-filepath: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
+          content-filepath: "./.github/ISSUE_TEMPLATE/minikube-ci-failure.md"
           labels: bug
           assignees: yurak
       - name: Print outputs create issue if failure 3
