@@ -147,6 +147,12 @@ jobs:
       - name: Print outputs create issue if failure 3
         run: |
           echo ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
+      - name: Create or Update Project Card
+        uses: peter-evans/create-or-update-project-card@v1
+        with:
+          project-name: Feature request
+          column-name: To do
+          issue-number: ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
       - name: add comment if failure
         if: failure()
         uses: peter-evans/create-or-update-comment@v1
