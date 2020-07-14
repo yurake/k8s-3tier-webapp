@@ -20,7 +20,7 @@
 		<servlet.version>3.1.0</servlet.version>
 
 
-		<rabbitmq-jms.version>1.10.0</rabbitmq-jms.version>
+		<rabbitmq-jms.version>1.15.1</rabbitmq-jms.version>
 		<amqp-client.version>5.9.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<mysql-connector-java.version>8.0.12</mysql-connector-java.version>
