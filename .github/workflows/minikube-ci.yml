@@ -2,8 +2,6 @@ name: e2e Test on Minikube
 
 on:
   push:
-    branches:
-      - master
     paths:
       - ".github/workflows/minikube-ci.yml"
   issues:
@@ -152,19 +150,26 @@ jobs:
           project-name: Feature request
           column-name: To do
           issue-number: ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
-      - name: add comment if failure
+      - name: Add issue comment if failure
         if: failure()
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
+            Add new issue:  
+            ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
+
+
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
-      - name: create comment if failure
+      - name: Add PR comment if failure
         if: failure()
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ steps.create-issue-minikube-ci.outputs.number }}
+          issue-number: ${{ github.event.pull_request.number }}
           body: |
+            Add new issue:  
+            ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
+
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
