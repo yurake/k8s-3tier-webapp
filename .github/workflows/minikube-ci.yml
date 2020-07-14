@@ -108,14 +108,6 @@ jobs:
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
           df -h /
-      - name: create issue if failure
-        if: failure()
-        uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          filename: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
-        id: create-issue-minikube-ci
       - name: create issue if failure 2
         if: failure()
         uses: maxkomarychev/oction-create-issue@v0.7.1
@@ -128,9 +120,17 @@ jobs:
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
       - name: Print outputs create issue if failure 2
+        if: failure()
         run: |
           echo ${{ steps.create-issue-minikube-ci-2.outputs.id }}
           echo ${{ steps.create-issue-minikube-ci-2.outputs.number }}
+      - name: Create or Update Project Card 2
+        uses: peter-evans/create-or-update-project-card@v1
+        if: failure()
+        with:
+          project-name: Feature request
+          column-name: To do
+          issue-number: ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
       - name: create issue if failure 3
         if: failure()
         uses: peter-evans/create-issue-from-file@v2
@@ -141,14 +141,13 @@ jobs:
           content-filepath: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
           labels: bug
           assignees: yurak
-          body: |
-            Please see failure log:  
-            https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
       - name: Print outputs create issue if failure 3
+        if: failure()
         run: |
           echo ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
-      - name: Create or Update Project Card
+      - name: Create or Update Project Card 3
         uses: peter-evans/create-or-update-project-card@v1
+        if: failure()
         with:
           project-name: Feature request
           column-name: To do
