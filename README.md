@@ -5,6 +5,7 @@
 ![Docker Vulnerability Scan](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Vulnerability%20Scan/badge.svg)
 ![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/workflows/Yaml%20Validator/badge.svg)  
 [![Build Status](https://travis-ci.com/yurake/k8s-3tier-webapp.svg?branch=master)](https://travis-ci.com/yurake/k8s-3tier-webapp)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=yurake_webapp-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=yurake_webapp-service)
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
