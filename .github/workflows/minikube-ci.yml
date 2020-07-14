@@ -106,10 +106,11 @@ jobs:
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
           df -h /
-      - name: create issue if failure 2
+          
+      - name: create issue if failure
         if: failure()
         uses: maxkomarychev/oction-create-issue@v0.7.1
-        id: create-issue-minikube-ci-2
+        id: create-issue-minikube-ci
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Minikube CI Failure
@@ -117,18 +118,13 @@ jobs:
           body: |
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
-      - name: Print outputs create issue if failure 2
-        if: failure()
-        run: |
-          echo ${{ steps.create-issue-minikube-ci-2.outputs.id }}
-          echo ${{ steps.create-issue-minikube-ci-2.outputs.number }}
-      - name: Create or Update Project Card 2
+      - name: Create or Update Project Card
         uses: peter-evans/create-or-update-project-card@v1
         if: failure()
         with:
-          project-name: Feature request
+          project-number: 1
           column-name: To do
-          issue-number: ${{ steps.create-issue-minikube-ci-2.outputs.issue-number }}
+          issue-number: ${{ steps.create-issue-minikube-ci.outputs.issue-number }}
       - name: create issue if failure 3
         if: failure()
         uses: peter-evans/create-issue-from-file@v2
@@ -139,17 +135,6 @@ jobs:
           content-filepath: "./.github/ISSUE_TEMPLATE/minikube-ci-failure.md"
           labels: bug
           assignees: yurak
-      - name: Print outputs create issue if failure 3
-        if: failure()
-        run: |
-          echo ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
-      - name: Create or Update Project Card 3
-        uses: peter-evans/create-or-update-project-card@v1
-        if: failure()
-        with:
-          project-name: Feature request
-          column-name: To do
-          issue-number: ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
       - name: Add issue comment if failure
         if: failure()
         uses: peter-evans/create-or-update-comment@v1
@@ -158,8 +143,6 @@ jobs:
           body: |
             Add new issue:  
             ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
-
-
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
       - name: Add PR comment if failure
@@ -170,6 +153,5 @@ jobs:
           body: |
             Add new issue:  
             ${{ steps.create-issue-minikube-ci-3.outputs.issue-number }}
-
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
