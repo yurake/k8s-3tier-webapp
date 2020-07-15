@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hazelcast-configmap
+  labels:
+    app: hazelcast
+data:
+  prometheus-port: "8080"
+  java-ops: "-Dhazelcast.config=/data/hazelcast/hazelcast.yaml -Duser.timezone=Asia/Tokyo"
+  logging-level: "WARNING"
+  hazelcast.yaml: |-
+    hazelcast:
+      network:
+        join:
+          multicast:
+            enabled: false
+          tcp-ip:
+            enabled: false
+        rest-api:
+          enabled: true
+          endpoint-groups:
+            HEALTH_CHECK:
+              enabled: true
