@@ -1,10 +1,12 @@
-name: e2e Test on Minikube
+name: Minikube CI
 
 on:
   push:
-    branches:
-      - master
+    branches-ignore:
+      - 'renovate/**'
     paths:
+      - "application/**"
+      - "kubernetes/**"
       - ".github/workflows/minikube-ci.yml"
   issues:
     types: [closed]
@@ -15,7 +17,6 @@ jobs:
   minik-k8s:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         minikube: [v1.11.0, v1.12.0]
         kubernetes: [v1.18.2, v1.18.3]
@@ -108,27 +109,42 @@ jobs:
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
           df -h /
+          
       - name: create issue if failure
         if: failure()
-        uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          filename: .github/ISSUE_TEMPLATE/minikube-ci-failure.md
+        uses: maxkomarychev/oction-create-issue@v0.7.1
         id: create-issue-minikube-ci
-      - name: add comment if failure
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Minikube CI Failure
+          labels: bug
+          body: |
+            Please see failure log:  
+            https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
+      - name: Create or Update Project Card
+        uses: peter-evans/create-or-update-project-card@v1
+        if: failure()
+        with:
+          project-number: 1
+          column-name: To do
+          issue-number: ${{ steps.create-issue-minikube-ci.outputs.number }}
+      - name: Add issue comment if failure
         if: failure()
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
+            Add new issue:  
+            #${{ steps.create-issue-minikube-ci.outputs.number }}
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
-      - name: create comment if failure
+      - name: Add PR comment if failure
         if: failure()
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ steps.create-issue-minikube-ci.outputs.number }}
+          issue-number: ${{ github.event.pull_request.number }}
           body: |
+            Add new issue:  
+            #${{ steps.create-issue-minikube-ci.outputs.number }}
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}

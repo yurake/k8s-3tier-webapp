@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>io.helidon.applications</groupId>
 		<artifactId>helidon-mp</artifactId>
-		<version>1.4.0</version>
+		<version>1.4.5</version>
 		<relativePath />
 	</parent>
 	<groupId>webapp.3tier.k8s</groupId>
@@ -24,8 +24,8 @@
 
 	<properties>
 		<mainClass>webapp.tier.events.TaskServiceMain</mainClass>
-		<jedis.version>3.1.0</jedis.version>
-		<mysql.version>8.0.16</mysql.version>
+		<jedis.version>3.3.0</jedis.version>
+		<mysql.version>8.0.21</mysql.version>
 	</properties>
 
 	<dependencies>
