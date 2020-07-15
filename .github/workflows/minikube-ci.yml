@@ -1,7 +1,9 @@
-name: e2e Test on Minikube
+name: Minikube CI
 
 on:
   push:
+    branches-ignore:
+      - 'renovate/**'
     paths:
       - ".github/workflows/minikube-ci.yml"
   issues:
