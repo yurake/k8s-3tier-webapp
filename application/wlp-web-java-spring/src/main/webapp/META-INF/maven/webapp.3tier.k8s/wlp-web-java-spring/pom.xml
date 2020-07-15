@@ -30,7 +30,7 @@
 		<hazelcast-kubernetes.version>1.5.3</hazelcast-kubernetes.version>
 
 		<javaee-api.version>7.0</javaee-api.version>
-		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 
 		<!-- Spring -->
 		<spring-framework.version>5.2.3.RELEASE</spring-framework.version>
