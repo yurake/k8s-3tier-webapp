@@ -3,7 +3,6 @@ package webapp.tier.service;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -18,7 +17,6 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import io.quarkus.test.junit.QuarkusTest;
 import webapp.tier.bean.MsgBean;
@@ -58,13 +56,6 @@ class MysqlServiceTest {
 	@Test
 	void testConnectionStatusTrue() {
 		assertThat(svc.connectionStatus(), is(true));
-	}
-
-	@Test
-	void testConnectionStatusFalse() throws SQLException {
-		MysqlService svcmock = Mockito.mock(MysqlService.class);
-		when(svcmock.getConnectionWrapper()).thenThrow(new SQLException());
-		assertThat(svcmock.connectionStatus(), is(false));
 	}
 
 	@Test
