@@ -33,7 +33,7 @@
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 
 		<!-- Spring -->
-		<spring-framework.version>5.2.3.RELEASE</spring-framework.version>
+		<spring-framework.version>5.2.7.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.3.11.Final</hibernate.version>
