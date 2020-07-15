@@ -70,6 +70,7 @@ echo ""
 
 echo "### hazelcast"
 cd ${ROOT_DIR}/hazelcast
+kubectl apply -f ./hazelcast-configmap.yaml
 kubectl apply -f ./hazelcast-statefulset.yaml
 kubectl apply -f ./hazelcast-service.yaml
 echo "###"
