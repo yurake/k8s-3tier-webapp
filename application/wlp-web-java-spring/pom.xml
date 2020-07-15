@@ -24,13 +24,13 @@
 		<amqp-client.version>5.9.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<mysql-connector-java.version>8.0.21</mysql-connector-java.version>
-		<jedis.version>3.1.0</jedis.version>
+		<jedis.version>3.3.0</jedis.version>
 		<hazelcast-client.version>3.12.8</hazelcast-client.version>
 		<hazelcast.version>3.12.8</hazelcast.version>
 		<hazelcast-kubernetes.version>1.5.3</hazelcast-kubernetes.version>
 
 		<javaee-api.version>7.0</javaee-api.version>
-		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 
 		<!-- Spring -->
 		<spring-framework.version>5.2.3.RELEASE</spring-framework.version>
@@ -44,7 +44,7 @@
 
 		<!-- Test -->
 		<junit.version>5.6.2</junit.version>
-		<jersey.version>2.30</jersey.version>
+		<jersey.version>2.31</jersey.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -86,7 +86,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.2.2</version>
+				<version>3.3.1</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -176,7 +176,7 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
-			<version>3.2.4</version>
+			<version>3.4.0</version>
 			<scope>test</scope>
 		</dependency>
 
