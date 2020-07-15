@@ -5,6 +5,8 @@ on:
     branches-ignore:
       - 'renovate/**'
     paths:
+      - "application/**"
+      - "kubernetes/**"
       - ".github/workflows/minikube-ci.yml"
   issues:
     types: [closed]
