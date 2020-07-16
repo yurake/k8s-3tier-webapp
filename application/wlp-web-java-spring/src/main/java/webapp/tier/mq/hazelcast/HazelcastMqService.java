@@ -7,9 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.ITopic;
+import com.hazelcast.topic.ITopic;
 
-import webapp.tier.cache.hazelcast.ConnectHazelcast;
 import webapp.tier.cache.memcached.GetMemcached;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
@@ -22,11 +21,9 @@ public class HazelcastMqService {
 	private static String topicname = GetConfig.getResourceBundle("hazelcast.topic.name");
 	private static String splitkey = GetConfig.getResourceBundle("hazelcast.split.key");
 
-	public String putQueueHazelcast() throws Exception {
+	public String putQueueHazelcast(HazelcastInstance client) throws Exception {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
-
-		HazelcastInstance client = ConnectHazelcast.getInstance();
 		BlockingQueue<Object> queue = client.getQueue(queuename);
 
 		StringBuilder buf = new StringBuilder();
@@ -45,8 +42,7 @@ public class HazelcastMqService {
 		return fullmsg;
 	}
 
-	public String getQueueHazelcast() throws Exception {
-		HazelcastInstance client = ConnectHazelcast.getInstance();
+	public String getQueueHazelcast(HazelcastInstance client) throws Exception {
 		BlockingQueue<String> queue = client.getQueue(queuename);
 		String fullmsg = null;
 
@@ -70,11 +66,9 @@ public class HazelcastMqService {
 		return fullmsg;
 	}
 
-	public String publishHazelcast() throws Exception {
+	public String publishHazelcast(HazelcastInstance client) throws Exception {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
-
-		HazelcastInstance client = ConnectHazelcast.getInstance();
 		ITopic<Object> topic = client.getTopic(topicname);
 
 		StringBuilder buf = new StringBuilder();

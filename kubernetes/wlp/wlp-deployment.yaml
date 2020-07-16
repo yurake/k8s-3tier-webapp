@@ -15,7 +15,7 @@ spec:
       containers:
         - name: wlp
           image: yurak/wlp:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9080
           resources:
