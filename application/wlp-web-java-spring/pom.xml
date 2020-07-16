@@ -19,18 +19,14 @@
 		<jstl.version>1.2</jstl.version>
 		<servlet.version>4.0.1</servlet.version>
 
-
+		<!-- Service -->
 		<rabbitmq-jms.version>2.1.1</rabbitmq-jms.version>
 		<amqp-client.version>5.9.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<mysql-connector-java.version>8.0.21</mysql-connector-java.version>
 		<jedis.version>3.3.0</jedis.version>
-		<hazelcast-client.version>3.12.8</hazelcast-client.version>
-		<hazelcast.version>3.12.8</hazelcast.version>
-		<hazelcast-kubernetes.version>2.0.1</hazelcast-kubernetes.version>
-
+		<hazelcast.version>4.0.2</hazelcast.version>
 		<javaee-api.version>7.0</javaee-api.version>
-		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 
 		<!-- Spring -->
 		<spring-framework.version>5.2.7.RELEASE</spring-framework.version>
@@ -43,16 +39,14 @@
 		<slf4j.version>1.7.30</slf4j.version>
 
 		<!-- Test -->
-		<junit.version>5.6.2</junit.version>
+		<junit.jupiter.version>5.6.2</junit.jupiter.version>
+		<junit.version>${junit.jupiter.version}</junit.version>
 		<jersey.version>2.31</jersey.version>
-
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-		<junit.jupiter.version>5.6.2</junit.jupiter.version>
+		<mockito.junit.jupiter>3.4.0</mockito.junit.jupiter>
 	</properties>
-
-
 
 	<build>
 		<finalName>spring</finalName>
@@ -147,40 +141,7 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 
-
-		<!-- Test Artifacts -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring-framework.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>${junit.jupiter.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.test-framework.providers</groupId>
-			<artifactId>jersey-test-framework-provider-jetty</artifactId>
-			<version>${jersey.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-junit-jupiter</artifactId>
-			<version>3.4.0</version>
-			<scope>test</scope>
-		</dependency>
-
-
+		<!-- Services -->
 		<dependency>
 			<groupId>com.rabbitmq</groupId>
 			<artifactId>amqp-client</artifactId>
@@ -208,20 +169,9 @@
 		</dependency>
 		<dependency>
 			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast-client</artifactId>
-			<version>${hazelcast-client.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
 			<version>${hazelcast.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast-kubernetes</artifactId>
-			<version>${hazelcast-kubernetes.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
@@ -229,8 +179,54 @@
 			<scope>provided</scope>
 		</dependency>
 
-
+		<!-- Test Artifacts -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring-framework.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>${mockito.junit.jupiter}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.test-framework</groupId>
+			<artifactId>jersey-test-framework-core</artifactId>
+			<version>${jersey.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.test-framework.providers</groupId>
+			<artifactId>jersey-test-framework-provider-grizzly2</artifactId>
+			<version>${jersey.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq.tooling</groupId>
+			<artifactId>activemq-junit</artifactId>
+			<version>5.16.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-broker</artifactId>
+			<version>5.16.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
-
-
 </project>
