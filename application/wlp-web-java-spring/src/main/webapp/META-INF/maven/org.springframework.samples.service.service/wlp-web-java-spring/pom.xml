@@ -29,7 +29,7 @@
 		<hazelcast.version>3.12.8</hazelcast.version>
 		<hazelcast-kubernetes.version>2.0.1</hazelcast-kubernetes.version>
 
-		<javaee-api.version>7.0</javaee-api.version>
+		<javaee-api.version>8.0.1</javaee-api.version>
 
 		<!-- Spring -->
 		<spring-framework.version>5.2.7.RELEASE</spring-framework.version>
