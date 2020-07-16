@@ -17,33 +17,33 @@
 		<!-- Web -->
 		<jsp.version>2.2</jsp.version>
 		<jstl.version>1.2</jstl.version>
-		<servlet.version>3.1.0</servlet.version>
+		<servlet.version>4.0.1</servlet.version>
 
 
-		<rabbitmq-jms.version>1.15.1</rabbitmq-jms.version>
+		<rabbitmq-jms.version>2.1.1</rabbitmq-jms.version>
 		<amqp-client.version>5.9.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<mysql-connector-java.version>8.0.21</mysql-connector-java.version>
 		<jedis.version>3.3.0</jedis.version>
 		<hazelcast-client.version>3.12.8</hazelcast-client.version>
 		<hazelcast.version>3.12.8</hazelcast.version>
-		<hazelcast-kubernetes.version>1.5.3</hazelcast-kubernetes.version>
+		<hazelcast-kubernetes.version>2.0.1</hazelcast-kubernetes.version>
 
 		<javaee-api.version>7.0</javaee-api.version>
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 
 		<!-- Spring -->
-		<spring-framework.version>5.2.3.RELEASE</spring-framework.version>
+		<spring-framework.version>5.2.7.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>4.3.11.Final</hibernate.version>
+		<hibernate.version>5.4.18.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
-		<slf4j.version>1.7.5</slf4j.version>
+		<slf4j.version>1.7.30</slf4j.version>
 
 		<!-- Test -->
-		<junit.version>5.6.0</junit.version>
+		<junit.version>5.6.2</junit.version>
 		<jersey.version>2.31</jersey.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

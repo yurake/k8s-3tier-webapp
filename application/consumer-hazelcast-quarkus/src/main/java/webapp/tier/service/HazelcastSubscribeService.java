@@ -12,8 +12,6 @@ import javax.enterprise.inject.spi.CDI;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.topic.ITopic;
 import com.hazelcast.topic.Message;
@@ -25,12 +23,11 @@ import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class HazelcastSubscribeService implements Runnable {
+public class HazelcastSubscribeService extends HazelcastService implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(HazelcastSubscribeService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 
-	private static String address = ConfigProvider.getConfig().getValue("hazelcast.address", String.class);
 	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topic.name", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
@@ -42,12 +39,6 @@ public class HazelcastSubscribeService implements Runnable {
 	void onStop(@Observes ShutdownEvent ev) {
 		scheduler.shutdown();
 		LOG.info("The application is stopping...");
-	}
-
-	public static HazelcastInstance getInstance() {
-		ClientConfig clientConfig = new ClientConfig();
-		clientConfig.getNetworkConfig().addAddress(address);
-		return HazelcastClient.newHazelcastClient(clientConfig);
 	}
 
 	public boolean isActive() {

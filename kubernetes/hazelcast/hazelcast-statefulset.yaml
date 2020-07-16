@@ -14,17 +14,52 @@ spec:
     metadata:
       labels:
         app: hazelcast
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"
-        prometheus.io/path: "/metrics"
     spec:
       containers:
         - name: hazelcast
-          image: yurak/hazelcast:latest
+          image: hazelcast/hazelcast:4.0.2
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /hazelcast/health/node-state
+              port: 5701
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /hazelcast/health/node-state
+              port: 5701
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
           ports:
             - containerPort: 5701
             - containerPort: 8080
           env:
             - name: PROMETHEUS_PORT
-              value: "8080"
+              valueFrom:
+                configMapKeyRef:
+                  name: hazelcast-configmap
+                  key: prometheus-port
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  name: hazelcast-configmap
+                  key: java-ops
+            - name: LOGGING_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: hazelcast-configmap
+                  key: logging-level
+          volumeMounts:
+            - name: hazelcast-storage
+              mountPath: /data/hazelcast
+      volumes:
+        - name: hazelcast-storage
+          configMap:
+            name: hazelcast-configmap
