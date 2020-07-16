@@ -17,7 +17,7 @@
 		<!-- Web -->
 		<jsp.version>2.2</jsp.version>
 		<jstl.version>1.2</jstl.version>
-		<servlet.version>3.1.0</servlet.version>
+		<servlet.version>4.0.1</servlet.version>
 
 
 		<rabbitmq-jms.version>2.1.1</rabbitmq-jms.version>
