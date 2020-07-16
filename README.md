@@ -5,6 +5,7 @@
 [![Docker Vulnerability Scan](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Vulnerability%20Scan/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Docker+Vulnerability+Scan%22)
 [![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/workflows/Yaml%20Validator/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Yaml+Validator%22)  
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6549c4c8ae5a4abd8ae052cb5c62d388)](https://app.codacy.com/manual/yurake/k8s-3tier-webapp?utm_source=github.com&utm_medium=referral&utm_content=yurake/k8s-3tier-webapp&utm_campaign=Badge_Grade_Settings)
+[![CodeFactor](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp/badge)](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp)
 [![Maintainability](https://api.codeclimate.com/v1/badges/51c8c54de1b0bfc18c81/maintainability)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/51c8c54de1b0bfc18c81/test_coverage)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/test_coverage)  
 [![Build Status](https://travis-ci.com/yurake/k8s-3tier-webapp.svg?branch=master)](https://travis-ci.com/yurake/k8s-3tier-webapp)
