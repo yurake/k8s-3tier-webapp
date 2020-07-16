@@ -1,4 +1,4 @@
-FROM rabbitmq:3.8.2-management-alpine
+FROM rabbitmq:3.8.5-management-alpine
 RUN apk update && \
     apk --no-cache add tzdata && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
