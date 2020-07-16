@@ -21,10 +21,10 @@ public class ReadinessHealthCheck implements HealthCheck {
 		String msg = "Cache Server connection health check";
 		HazelcastCacheService hassvc = this.createHazelcastCacheService();
 		if (hassvc.isActive()) {
-			LOG.fine("Liveness: UP");
+			LOG.fine("Readiness: UP");
 			return HealthCheckResponse.up(msg);
 		} else {
-			LOG.warning("Liveness: DOWN");
+			LOG.warning("Readiness: DOWN");
 			return HealthCheckResponse.down(msg);
 		}
 	}

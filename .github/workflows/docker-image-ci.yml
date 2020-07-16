@@ -57,13 +57,6 @@ jobs:
         if: github.event_name == 'push'
         run: docker push yurak/rabbitmq:latest
 
-      - name: Build image - hazelcast
-        working-directory: ./kubernetes/hazelcast
-        run: docker build -t yurak/hazelcast:latest .
-      - name: Push Image - hazelcast
-        if: github.event_name == 'push'
-        run: docker push yurak/hazelcast:latest
-
       - name: Build image - jenkins
         working-directory: ./kubernetes/monitoring/jenkins
         run: docker build -t yurak/jenkins:latest .

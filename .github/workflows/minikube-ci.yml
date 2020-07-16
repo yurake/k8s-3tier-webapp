@@ -1,8 +1,12 @@
-name: e2e Test on Minikube
+name: Minikube CI
 
 on:
   push:
+    branches-ignore:
+      - 'renovate/**'
     paths:
+      - "application/**"
+      - "kubernetes/**"
       - ".github/workflows/minikube-ci.yml"
   issues:
     types: [closed]
@@ -113,7 +117,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Minikube CI Failure
-          labels: bug
+          labels: ci failure
           body: |
             Please see failure log:  
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
