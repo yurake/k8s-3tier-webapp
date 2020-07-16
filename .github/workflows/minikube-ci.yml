@@ -109,7 +109,6 @@ jobs:
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
           df -h /
-          
       - name: create issue if failure
         if: failure()
         uses: maxkomarychev/oction-create-issue@v0.7.1
@@ -119,7 +118,7 @@ jobs:
           title: Minikube CI Failure
           labels: ci failure
           body: |
-            Please see failure log:  
+            Please see failure log:
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
       - name: Create or Update Project Card
         uses: peter-evans/create-or-update-project-card@v1
@@ -134,9 +133,9 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Add new issue:  
+            Add new issue:
             #${{ steps.create-issue-minikube-ci.outputs.number }}
-            Please see failure log:  
+            Please see failure log:
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
       - name: Add PR comment if failure
         if: failure()
@@ -144,7 +143,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            Add new issue:  
+            Add new issue:
             #${{ steps.create-issue-minikube-ci.outputs.number }}
-            Please see failure log:  
+            Please see failure log:
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}

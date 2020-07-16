@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>wlp-web-java-spring</artifactId>
@@ -26,7 +24,7 @@
 		<mysql-connector-java.version>8.0.21</mysql-connector-java.version>
 		<jedis.version>3.3.0</jedis.version>
 		<hazelcast.version>4.0.2</hazelcast.version>
-		<javaee-api.version>7.0</javaee-api.version>
+		<javaee-api.version>8.0.1</javaee-api.version>
 
 		<!-- Spring -->
 		<spring-framework.version>5.2.7.RELEASE</spring-framework.version>
