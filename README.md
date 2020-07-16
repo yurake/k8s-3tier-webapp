@@ -1,10 +1,10 @@
 # :deer: k8s-3tier-webapp
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6549c4c8ae5a4abd8ae052cb5c62d388)](https://app.codacy.com/manual/yurake/k8s-3tier-webapp?utm_source=github.com&utm_medium=referral&utm_content=yurake/k8s-3tier-webapp&utm_campaign=Badge_Grade_Settings)
 [![Java CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Java%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
 [![Docker Image CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Docker+Image+CI%22)
 [![Docker Vulnerability Scan](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Vulnerability%20Scan/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Docker+Vulnerability+Scan%22)
 [![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/workflows/Yaml%20Validator/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Yaml+Validator%22)  
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6549c4c8ae5a4abd8ae052cb5c62d388)](https://app.codacy.com/manual/yurake/k8s-3tier-webapp?utm_source=github.com&utm_medium=referral&utm_content=yurake/k8s-3tier-webapp&utm_campaign=Badge_Grade_Settings)
 [![Build Status](https://travis-ci.com/yurake/k8s-3tier-webapp.svg?branch=master)](https://travis-ci.com/yurake/k8s-3tier-webapp)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://app.renovatebot.com/dashboard#github/yurake/k8s-3tier-webapp)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=yurake_webapp-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=yurake_webapp-service)
