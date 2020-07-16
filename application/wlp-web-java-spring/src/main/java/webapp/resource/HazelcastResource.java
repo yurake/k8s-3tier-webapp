@@ -8,6 +8,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.hazelcast.core.HazelcastInstance;
+
+import webapp.tier.cache.hazelcast.ConnectHazelcast;
 import webapp.tier.cache.hazelcast.HazelcastCacheService;
 import webapp.tier.mq.hazelcast.HazelcastMqService;
 
@@ -21,7 +24,8 @@ public class HazelcastResource {
 	public Response putcache() {
 		HazelcastCacheService svc = new HazelcastCacheService();
 		try {
-			return Response.ok().entity(svc.putMapHazelcast()).build();
+			HazelcastInstance client = ConnectHazelcast.getInstance();
+			return Response.ok().entity(svc.putMapHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -33,7 +37,8 @@ public class HazelcastResource {
 	public Response getcache() {
 		HazelcastCacheService svc = new HazelcastCacheService();
 		try {
-			return Response.ok().entity(svc.getMapHazelcast()).build();
+			HazelcastInstance client = ConnectHazelcast.getInstance();
+			return Response.ok().entity(svc.getMapHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -45,7 +50,8 @@ public class HazelcastResource {
 	public Response putqueue() {
 		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			return Response.ok().entity(svc.putQueueHazelcast()).build();
+			HazelcastInstance client = ConnectHazelcast.getInstance();
+			return Response.ok().entity(svc.putQueueHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -57,7 +63,8 @@ public class HazelcastResource {
 	public Response getqueue() {
 		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			return Response.ok().entity(svc.getQueueHazelcast()).build();
+			HazelcastInstance client = ConnectHazelcast.getInstance();
+			return Response.ok().entity(svc.getQueueHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -69,7 +76,8 @@ public class HazelcastResource {
 	public Response publish() {
 		HazelcastMqService svc = new HazelcastMqService();
 		try {
-			return Response.ok().entity(svc.publishHazelcast()).build();
+			HazelcastInstance client = ConnectHazelcast.getInstance();
+			return Response.ok().entity(svc.publishHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();

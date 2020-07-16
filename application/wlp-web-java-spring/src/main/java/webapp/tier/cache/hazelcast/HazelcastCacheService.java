@@ -18,11 +18,9 @@ public class HazelcastCacheService {
 	private static String message = GetConfig.getResourceBundle("common.message");
 	private static String cachename = GetConfig.getResourceBundle("hazelcast.cache.name");
 
-	public String putMapHazelcast() throws Exception {
+	public String putMapHazelcast(HazelcastInstance client) throws Exception {
 		String fullmsg = null;
 		String id = String.valueOf(CreateId.createid());
-
-		HazelcastInstance client = ConnectHazelcast.getInstance();
 		Map<String, String> map = client.getMap(cachename);
 
 		try {
@@ -35,9 +33,8 @@ public class HazelcastCacheService {
 		return fullmsg;
 	}
 
-	public List<String> getMapHazelcast() throws Exception {
+	public List<String> getMapHazelcast(HazelcastInstance client) throws Exception {
 		List<String> allmsg = new ArrayList<>();
-		HazelcastInstance client = ConnectHazelcast.getInstance();
 		Map<String, String> map = client.getMap(cachename);
 		String fullmsg = null;
 
