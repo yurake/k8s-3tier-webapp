@@ -29,7 +29,7 @@
 		<hazelcast.version>4.0.2</hazelcast.version>
 		<hazelcast-kubernetes.version>2.0.1</hazelcast-kubernetes.version>
 
-		<javaee-api.version>7.0</javaee-api.version>
+		<javaee-api.version>8.0.1</javaee-api.version>
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 
 		<!-- Spring -->
