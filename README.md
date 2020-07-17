@@ -7,11 +7,12 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6549c4c8ae5a4abd8ae052cb5c62d388)](https://app.codacy.com/manual/yurake/k8s-3tier-webapp?utm_source=github.com&utm_medium=referral&utm_content=yurake/k8s-3tier-webapp&utm_campaign=Badge_Grade_Settings)
 [![CodeFactor](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp/badge)](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp)
 [![Maintainability](https://api.codeclimate.com/v1/badges/51c8c54de1b0bfc18c81/maintainability)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/51c8c54de1b0bfc18c81/test_coverage)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/test_coverage)  
+[![Test Coverage](https://api.codeclimate.com/v1/badges/51c8c54de1b0bfc18c81/test_coverage)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/test_coverage)
+[![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)  
+[![CircleCI](https://circleci.com/gh/yurake/k8s-3tier-webapp.svg?style=svg)](https://circleci.com/gh/yurake/k8s-3tier-webapp)
 [![Build Status](https://travis-ci.com/yurake/k8s-3tier-webapp.svg?branch=master)](https://travis-ci.com/yurake/k8s-3tier-webapp)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://app.renovatebot.com/dashboard#github/yurake/k8s-3tier-webapp)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=yurake_webapp-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=yurake_webapp-service)
-[![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 Sample web application based on k8s.  

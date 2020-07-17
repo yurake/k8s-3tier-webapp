@@ -12,13 +12,13 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import webapp.tier.resource.DeliverResource;
 
 @ApplicationScoped
-public class KafkaService {
+public class KafkaSubscribeService {
 
 	@Inject
 	@RestClient
 	DeliverResource deliversvc;
 
-	private static final Logger LOG = Logger.getLogger(KafkaService.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(KafkaSubscribeService.class.getSimpleName());
 
 	@Incoming("message")
 	public void process(String message) {
