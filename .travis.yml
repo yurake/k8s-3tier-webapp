@@ -1,6 +1,6 @@
 language: java
 jdk:
-- openjdk11
+  - openjdk11
 addons:
   sonarcloud:
     organization: yurak
@@ -8,35 +8,32 @@ addons:
       secure: "Q+apkUKnH8KGXYhtJdp4gi3pDUWLzrHFFXuwoonVE/8pxYkG6Zgh67gQTppQFlbEtbS1RwzZuCSQ0LUXXeXqXvUW2yVq6A63HawJh+D5oQnTXI2NlHt7rYJSaiQjA+q6wA1uvPOmyhDRUbgGpLnrKRcoXGTG/bbK5H2MYu/KIY4LU6rUhN6dfA/+aprfs79U72Lfmxxdsr+6jugEre6AkrQcQhaeUtu+JmPyjbEaRo16QHrW/H8/3XjkzeD9DDN6CXnmQQ5TX1ryEt+toPO+nUQD72YQ2AdtODjTlyksavK8/fklHpsxc2TBS2e2jJAmE3t2w2aqENjeYDE6yRnWKhDWgb7AHMBuDkqfx8sdJLDHMGzZcLBgMub9vfcLkNtUzln2aDVwX69aifV9hL2hTgCd26++tgERCxERq7cWtE93bL94OY3h2ClrHwJ+Z/ZpUlBC2Rsau7r0UbZefYx8fRCwaWUpFXc2YsplkHZoBWqeALmZfV2p1GBVO+DogcnfA08J0KeqLR4F6lHgPn8ZqAPjDdz5OIafgzOAK7/lETPZqywLzPf03dcOGKbLlfOl1RGEg+7bBYjWIL54feAs24RJcfRtzaT6ck82ejfXRLcQuQUuAa0Dz3YwffnNahcJiqWZaQgtWY0kte4N5z0bh8ejV8nGsA4Z3Nq4B6Thl48="
 cache:
   directories:
-  - "${HOME}/.m2/repository"
-  - "${HOME}/.sonar/cache"
+    - "${HOME}/.m2/repository"
+    - "${HOME}/.sonar/cache"
 git:
   depth: false
 jobs:
   include:
-  - stage: parent-pom
-    script: mvn clean install -f ${TRAVIS_BUILD_DIR}/application/parent-pom/pom.xml -DskipTests=true
-  - stage: webapp-service
-    script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/webapp-service/pom.xml -Dsonar.projectKey=yurake_webapp-service
-  - stage: sonar main project
-    script: 
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-activemq-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-activemq-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-hazelcast-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-hazelcast-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-kafka-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-kafka-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-rabbitmq-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-rabbitmq-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-redis-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-redis-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-activemq-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-activemq-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-hazelcast-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-hazelcast-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-kafka-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-kafka-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-memcached-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-memcached-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-mongodb-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-mongodb-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-mysql-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-mysql-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-postgres-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-rabbitmq-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-redis-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/producer-kafka-quarkus/pom.xml -Dsonar.projectKey=yurake_producer-kafka-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/randompublish-quarkus/pom.xml -Dsonar.projectKey=yurake_randompublish-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/redis-mysql-helidon/pom.xml -Dsonar.projectKey=yurake_redis-mysql-helidon
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/scheduled-quarkus/pom.xml -Dsonar.projectKey=yurake_scheduled-quarkus
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/wlp-web-java-spring/pom.xml -Dsonar.projectKey=yurake_wlp-web-java-spring
-    
+    - stage: parent-pom
+      script:
+        - mvn clean install -f ${TRAVIS_BUILD_DIR}/application/parent-pom/pom.xml
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/webapp-service/pom.xml -Dsonar.projectKey=yurake_webapp-service
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-activemq-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-activemq-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-hazelcast-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-hazelcast-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-kafka-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-kafka-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-rabbitmq-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-rabbitmq-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-redis-quarkus/pom.xml -Dsonar.projectKey=yurake_consumer-redis-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-activemq-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-activemq-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-hazelcast-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-hazelcast-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-kafka-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-kafka-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-memcached-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-memcached-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-mongodb-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-mongodb-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-mysql-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-mysql-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-postgres-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-rabbitmq-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/jaxrs-redis-quarkus/pom.xml -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/producer-kafka-quarkus/pom.xml -Dsonar.projectKey=yurake_producer-kafka-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/randompublish-quarkus/pom.xml -Dsonar.projectKey=yurake_randompublish-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/redis-mysql-helidon/pom.xml -Dsonar.projectKey=yurake_redis-mysql-helidon
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/scheduled-quarkus/pom.xml -Dsonar.projectKey=yurake_scheduled-quarkus
+        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/wlp-web-java-spring/pom.xml -Dsonar.projectKey=yurake_wlp-web-java-spring
