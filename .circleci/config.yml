@@ -38,7 +38,7 @@ jobs:
           working_directory: application/webapp-service
           command: |
             ../../cc-test-reporter before-build
-            mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+            mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -DskipTests=true -Dmaven.javadoc.skip=true 
             ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
             ../../cc-test-reporter upload-coverage
       - save_cache:
@@ -57,7 +57,7 @@ jobs:
           working_directory: application/consumer-activemq-quarkus
           command: |
             ../../cc-test-reporter before-build
-            mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+            mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -DskipTests=true -Dmaven.javadoc.skip=true
             ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
             ../../cc-test-reporter upload-coverage
       - save_cache:
