@@ -25,8 +25,8 @@ jobs:
             mvn clean install
             ../../cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
       - save_cache:
-        paths:
-          - ~/.m2
+          paths:
+            - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
       - store_artifacts:
           path:  target
