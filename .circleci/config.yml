@@ -1,6 +1,43 @@
 version: 2
 jobs:
-  build:
+  setup:
+    docker:
+      - image: 'cimg/openjdk:11.0.6'
+    steps:
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - save_cache:
+          paths:
+            - cc-test-reporter
+          key: cc-test-reporter
+  parent-pom:
+    environment:
+      CC_TEST_REPORTER_ID: 15eac2dc9551ea8566757f925a7f33f2677d2f9e106785390b872dc1a8bfc042
+    docker:
+      - image: 'cimg/openjdk:11.0.6'
+    working_directory: ~/application/parent-pom
+    steps:
+      - checkout:
+        path: ../../
+      - restore_cache:
+          key: cc-test-reporter
+      - run: 
+          name: Run tests
+          command: |
+            ./cc-test-reporter before-build
+            mvn clean install
+            ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+      - store_artifacts:
+        main:
+          path: target
+  main:
     environment:
       CC_TEST_REPORTER_ID: 15eac2dc9551ea8566757f925a7f33f2677d2f9e106785390b872dc1a8bfc042
     docker:
@@ -29,4 +66,4 @@ jobs:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
       - store_artifacts:
-          path:  target
+          path: target
