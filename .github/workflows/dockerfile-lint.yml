@@ -10,7 +10,7 @@ on:
   pull_request:
 
 jobs:
-  hadolint_default:
+  dockerfile_default:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,7 +22,7 @@ jobs:
         with:
           dockerfile: kubernetes/${{ matrix.dockerfile_default }}/Dockerfile
 
-  hadolint_application:
+  dockerfile_application:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -30,31 +30,31 @@ jobs:
 jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, wlp, jaxrs-hazelcast-quarkus, consumer-hazelcast-quarkus, jaxrs-redis-quarkus, consumer-redis-quarkus, redis-mysql-helidon]
     steps:
       - uses: actions/checkout@v2
-      - name: lint ${{ matrix.dockerfile_default }}
+      - name: lint ${{ matrix.dockerfile_application }}
         uses: brpaz/hadolint-action@master
         with:
           dockerfile: application/${{ matrix.dockerfile_application }}/src/main/docker/Dockerfile.jvm
 
-  hadolint_monitoring:
+  dockerfile_monitoring:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dockerfile_monitoring: [jenkins]
     steps:
       - uses: actions/checkout@v2
-      - name: lint ${{ matrix.dockerfile_default }}
+      - name: lint ${{ matrix.dockerfile_monitoring }}
         uses: brpaz/hadolint-action@master
         with:
-          dockerfile: kubernetes/monitoring/${{ matrix.hadolint_monitoring }}/Dockerfile
+          dockerfile: kubernetes/monitoring/${{ matrix.dockerfile_monitoring }}/Dockerfile
 
-  hadolint_test:
+  dockerfile_test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dockerfile_test: [postmannewman, ab]
     steps:
       - uses: actions/checkout@v2
-      - name: lint ${{ matrix.dockerfile_default }}
+      - name: lint ${{ matrix.dockerfile_test }}
         uses: brpaz/hadolint-action@master
         with:
           dockerfile: kubernetes/monitoring/test/${{ matrix.dockerfile_test }}/Dockerfile
