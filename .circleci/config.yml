@@ -12,6 +12,11 @@ jobs:
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
       - run: 
           name: Run tests
           working_directory: application/consumer-activemq-quarkus
@@ -19,5 +24,9 @@ jobs:
             ../../cc-test-reporter before-build
             mvn clean install
             ../../cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
+      - save_cache:
+        paths:
+          - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
       - store_artifacts:
           path:  target
