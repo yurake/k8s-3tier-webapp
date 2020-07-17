@@ -21,9 +21,7 @@ jobs:
           name: Run tests parent-pom
           working_directory: application/parent-pom
           command: |
-            ../../cc-test-reporter before-build
             mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
-            ../../cc-test-reporter after-build -t jacoco target/site/jacoco/jacoco.xml --exit-code $?
       - save_cache:
           paths:
             - ~/.m2
@@ -41,7 +39,8 @@ jobs:
           command: |
             ../../cc-test-reporter before-build
             mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
-            ../../cc-test-reporter after-build -t jacoco target/site/jacoco/jacoco.xml --exit-code $?
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
       - save_cache:
           paths:
             - ~/.m2
@@ -59,7 +58,8 @@ jobs:
           command: |
             ../../cc-test-reporter before-build
             mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
-            ../../cc-test-reporter after-build -t jacoco target/site/jacoco/jacoco.xml --exit-code $?
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
       - save_cache:
           paths:
             - ~/.m2
