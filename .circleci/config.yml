@@ -19,7 +19,7 @@ jobs:
             - maven-repo-v1-
       - run: 
           name: Run tests parent-pom
-          working_directory: ~/application/parent-pom
+          working_directory: application/parent-pom
           command: |
             ../../cc-test-reporter before-build
             mvn clean install
@@ -37,7 +37,7 @@ jobs:
             - maven-repo-v1-
       - run: 
           name: Run tests webapp-service
-          working_directory: ~/application/webapp-service
+          working_directory: application/webapp-service
           command: |
             ../../cc-test-reporter before-build
             mvn clean install
@@ -55,7 +55,7 @@ jobs:
             - maven-repo-v1-
       - run: 
           name: Run tests consumer-activemq-quarkus
-          working_directory: ~/application/consumer-activemq-quarkus
+          working_directory: application/consumer-activemq-quarkus
           command: |
             ../../cc-test-reporter before-build
             mvn clean install
