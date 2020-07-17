@@ -1,12 +1,24 @@
-version: 2.1
-
+version: 2
 jobs:
   build:
+    environment:
+      CC_TEST_REPORTER_ID: 15eac2dc9551ea8566757f925a7f33f2677d2f9e106785390b872dc1a8bfc042
     docker:
       - image: 'cimg/openjdk:11.0.6'
     steps:
       - checkout
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+          # download test reporter as a static binary
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
       - run: 
-          name: Build and test
-          command: mvn clean install
-
+          name: Run tests
+          working_directory: application/consumer-activemq-quarkus
+          command: |
+            ./cc-test-reporter before-build
+            mvn clean install
+            ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
+      - store_artifacts:
+          path:  target
