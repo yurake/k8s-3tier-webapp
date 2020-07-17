@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile_application: [jaxrs-memcached-quarkus, jaxrs-rabbitmq-quarkus, consumer-rabbitmq-quarkus, jaxrs-mongodb-quarkus, consumer-activemq-quarkus, jaxrs-mysql-quarkus, randompublish-quarkus, 
+        dockerfile_application: [jaxrs-memcached-quarkus, jaxrs-rabbitmq-quarkus, consumer-rabbitmq-quarkus, jaxrs-mongodb-quarkus, consumer-activemq-quarkus, jaxrs-mysql-quarkus, randompublish-quarkus,
 jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelcast-quarkus, consumer-hazelcast-quarkus, jaxrs-redis-quarkus, consumer-redis-quarkus]
     steps:
       - uses: actions/checkout@v2
