@@ -22,8 +22,8 @@ jobs:
           working_directory: application/parent-pom
           command: |
             ../../cc-test-reporter before-build
-            mvn clean install
-            ../../cc-test-reporter after-build -t jacoco --exit-code $?
+            mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+            ../../cc-test-reporter after-build -t jacoco target/site/jacoco/jacoco.xml --exit-code $?
       - save_cache:
           paths:
             - ~/.m2
@@ -40,8 +40,8 @@ jobs:
           working_directory: application/webapp-service
           command: |
             ../../cc-test-reporter before-build
-            mvn clean install
-            ../../cc-test-reporter after-build -t jacoco --exit-code $?
+            mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+            ../../cc-test-reporter after-build -t jacoco target/site/jacoco/jacoco.xml --exit-code $?
       - save_cache:
           paths:
             - ~/.m2
@@ -58,8 +58,8 @@ jobs:
           working_directory: application/consumer-activemq-quarkus
           command: |
             ../../cc-test-reporter before-build
-            mvn clean install
-            ../../cc-test-reporter after-build -t jacoco --exit-code $?
+            mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
+            ../../cc-test-reporter after-build -t jacoco target/site/jacoco/jacoco.xml --exit-code $?
       - save_cache:
           paths:
             - ~/.m2
