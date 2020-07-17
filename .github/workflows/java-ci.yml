@@ -33,7 +33,7 @@ jobs:
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn deploy --settings ../.m2/settings.xml
+        run: mvn verify deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -66,7 +66,7 @@ jobs:
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-activemq-quarkus
         run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -105,7 +105,7 @@ jobs:
         working-directory: ./application/consumer-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/consumer-activemq-quarkus
         run: docker build -t yurak/consumer-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -144,7 +144,7 @@ jobs:
         working-directory: ./application/consumer-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/consumer-hazelcast-quarkus
         run: docker build -t yurak/consumer-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -183,7 +183,7 @@ jobs:
         working-directory: ./application/consumer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/consumer-kafka-quarkus
         run: docker build -t yurak/consumer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -222,7 +222,7 @@ jobs:
         working-directory: ./application/scheduled-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/scheduled-quarkus
         run: docker build -t yurak/scheduled-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -261,7 +261,7 @@ jobs:
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-hazelcast-quarkus
         run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -300,7 +300,7 @@ jobs:
         working-directory: ./application/jaxrs-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-kafka-quarkus
         run: docker build -t yurak/jaxrs-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -339,7 +339,7 @@ jobs:
         working-directory: ./application/jaxrs-memcached-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-memcached-quarkus
         run: docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -378,7 +378,7 @@ jobs:
         working-directory: ./application/jaxrs-mongodb-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-mongodb-quarkus
         run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -417,7 +417,7 @@ jobs:
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-mysql-quarkus
         run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -456,7 +456,7 @@ jobs:
         working-directory: ./application/jaxrs-postgres-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-postgres-quarkus
         run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -495,7 +495,7 @@ jobs:
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -534,7 +534,7 @@ jobs:
         working-directory: ./application/jaxrs-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-redis-quarkus
         run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -573,7 +573,7 @@ jobs:
         working-directory: ./application/consumer-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/consumer-rabbitmq-quarkus
         run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -612,7 +612,7 @@ jobs:
         working-directory: ./application/producer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/producer-kafka-quarkus
         run: docker build -t yurak/producer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -651,7 +651,7 @@ jobs:
         working-directory: ./application/randompublish-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml -Pnative
+        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/randompublish-quarkus
         run: docker build -t yurak/randompublish-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -679,7 +679,7 @@ jobs:
 
       - name: Maven Build - redis-mysql-helidon
         working-directory: ./application/redis-mysql-helidon
-        run: mvn -B package
+        run: mvn -B verify package
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -712,7 +712,7 @@ jobs:
         working-directory: ./application/consumer-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/consumer-redis-quarkus
         run: docker build -t yurak/consumer-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -749,7 +749,7 @@ jobs:
 
       - name: Maven Build
         working-directory: ./application/wlp-web-java-spring
-        run: mvn -B package
+        run: mvn -B verify package
       - name: Copy war file
         uses: canastro/copy-file-action@master
         with:

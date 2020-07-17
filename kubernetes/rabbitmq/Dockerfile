@@ -1,6 +1,6 @@
 FROM rabbitmq:3.8.5-management-alpine
 RUN apk update && \
-    apk --no-cache add tzdata && \
+    apk --no-cache add tzdata=2020a-r0 && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     apk del tzdata
 COPY custom_definitions.json /etc/rabbitmq/

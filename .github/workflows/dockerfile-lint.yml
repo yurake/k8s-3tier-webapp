@@ -1,0 +1,60 @@
+name: Dockerfile Lint
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "kubernetes/**"
+      - ".github/workflows/dockerfile-lint.yml"
+  pull_request:
+
+jobs:
+  dockerfile_default:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx, wlp]
+    steps:
+      - uses: actions/checkout@v2
+      - name: lint ${{ matrix.dockerfile_default }}
+        uses: brpaz/hadolint-action@master
+        with:
+          dockerfile: kubernetes/${{ matrix.dockerfile_default }}/Dockerfile
+
+  dockerfile_application:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile_application: [jaxrs-memcached-quarkus, jaxrs-rabbitmq-quarkus, consumer-rabbitmq-quarkus, jaxrs-mongodb-quarkus, consumer-activemq-quarkus, jaxrs-mysql-quarkus, randompublish-quarkus,
+jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelcast-quarkus, consumer-hazelcast-quarkus, jaxrs-redis-quarkus, consumer-redis-quarkus]
+    steps:
+      - uses: actions/checkout@v2
+      - name: lint ${{ matrix.dockerfile_application }}
+        uses: brpaz/hadolint-action@master
+        with:
+          dockerfile: application/${{ matrix.dockerfile_application }}/src/main/docker/Dockerfile.jvm
+
+  dockerfile_monitoring:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile_monitoring: [jenkins]
+    steps:
+      - uses: actions/checkout@v2
+      - name: lint ${{ matrix.dockerfile_monitoring }}
+        uses: brpaz/hadolint-action@master
+        with:
+          dockerfile: kubernetes/monitoring/${{ matrix.dockerfile_monitoring }}/Dockerfile
+
+  dockerfile_test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile_test: [postmannewman, ab]
+    steps:
+      - uses: actions/checkout@v2
+      - name: lint ${{ matrix.dockerfile_test }}
+        uses: brpaz/hadolint-action@master
+        with:
+          dockerfile: kubernetes/monitoring/test/${{ matrix.dockerfile_test }}/Dockerfile
