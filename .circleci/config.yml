@@ -62,3 +62,327 @@ jobs:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-activemq-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-hazelcast-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests consumer-hazelcast-quarkus
+          working_directory: application/consumer-hazelcast-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-hazelcast-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-kafka-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests consumer-kafka-quarkus
+          working_directory: application/consumer-kafka-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-kafka-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-rabbitmq-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests consumer-rabbitmq-quarkus
+          working_directory: application/consumer-rabbitmq-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-rabbitmq-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-redis-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests consumer-redis-quarkus
+          working_directory: application/consumer-redis-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-redis-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-activemq-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests jaxrs-activemq-quarkus
+          working_directory: application/jaxrs-activemq-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-activemq-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-hazelcast-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests jaxrs-hazelcast-quarkus
+          working_directory: application/jaxrs-hazelcast-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-hazelcast-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-kafka-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests jaxrs-kafka-quarkus
+          working_directory: application/jaxrs-kafka-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-kafka-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-memcached-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests jaxrs-memcached-quarkus
+          working_directory: application/jaxrs-memcached-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-memcached-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-mongodb-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests jaxrs-mongodb-quarkus
+          working_directory: application/jaxrs-mongodb-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-mongodb-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-mysql-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests jaxrs-mysql-quarkus
+          working_directory: application/jaxrs-mysql-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-mysql-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-postgres-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests jaxrs-postgres-quarkus
+          working_directory: application/jaxrs-postgres-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-postgres-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-rabbitmq-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests jaxrs-rabbitmq-quarkus
+          working_directory: application/jaxrs-rabbitmq-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-rabbitmq-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-redis-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests jaxrs-redis-quarkus
+          working_directory: application/jaxrs-redis-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-redis-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/producer-kafka-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests producer-kafka-quarkus
+          working_directory: application/producer-kafka-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/producer-kafka-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/randompublish-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests randompublish-quarkus
+          working_directory: application/randompublish-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/randompublish-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/redis-mysql-helidon/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests redis-mysql-helidon
+          working_directory: application/redis-mysql-helidon
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/redis-mysql-helidon/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/scheduled-quarkus/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests scheduled-quarkus
+          working_directory: application/scheduled-quarkus
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/scheduled-quarkus/pom.xml" }}
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "application/wlp-web-java-spring/pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
+      - run: 
+          name: Run tests wlp-web-java-spring
+          working_directory: application/wlp-web-java-spring
+          command: |
+            ../../cc-test-reporter before-build
+            mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
+            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+            ../../cc-test-reporter upload-coverage
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/wlp-web-java-spring/pom.xml" }}
