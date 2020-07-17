@@ -21,7 +21,7 @@ jobs:
     working_directory: ~/application/parent-pom
     steps:
       - checkout:
-        path: ../../
+          path: ../../
       - restore_cache:
           key: cc-test-reporter
       - run: 
@@ -35,7 +35,6 @@ jobs:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
       - store_artifacts:
-        main:
           path: target
   main:
     environment:
