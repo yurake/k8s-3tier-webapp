@@ -1,5 +1,7 @@
 package webapp.tier.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -12,6 +14,7 @@ class KafkaSubscribeServiceTest {
 		KafkaSubscribeService svc = new KafkaSubscribeService();
 		try {
 		svc.process("Test");
+		fail();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

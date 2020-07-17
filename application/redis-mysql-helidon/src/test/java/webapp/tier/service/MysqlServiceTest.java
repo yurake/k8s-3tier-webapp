@@ -1,5 +1,7 @@
 package webapp.tier.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 class MysqlServiceTest {
@@ -8,7 +10,12 @@ class MysqlServiceTest {
 	void test() {
 		MysqlService svc = new MysqlService();
 		String[] receivedbody = { "1111", "Test" };
-		svc.insertMysql(receivedbody);
+		try {
+			svc.insertMysql(receivedbody);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 }
