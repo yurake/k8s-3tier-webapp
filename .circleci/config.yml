@@ -4,7 +4,7 @@ jobs:
     environment:
       CC_TEST_REPORTER_ID: 15eac2dc9551ea8566757f925a7f33f2677d2f9e106785390b872dc1a8bfc042
     docker:
-      - image: "cimg/openjdk:11.0.6"
+      - image: "cimg/openjdk:11.0.7"
     steps:
       - checkout
       - run:
