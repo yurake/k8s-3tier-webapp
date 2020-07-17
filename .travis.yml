@@ -17,7 +17,7 @@ jobs:
   - stage: parent-pom
     script: mvn clean install -f ${TRAVIS_BUILD_DIR}/application/parent-pom/pom.xml -DskipTests=true
   - stage: webapp-service
-    script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/webapp-service/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_webapp-service
+    script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/webapp-service/pom.xml -Dsonar.projectKey=yurake_webapp-service
   - stage: sonar main project
     script: 
     - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -f ${TRAVIS_BUILD_DIR}/application/consumer-activemq-quarkus/pom.xml -DskipTests=true -Dsonar.projectKey=yurake_consumer-activemq-quarkus
