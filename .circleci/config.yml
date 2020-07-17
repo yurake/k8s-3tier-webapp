@@ -26,8 +26,6 @@ jobs:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/parent-pom/pom.xml" }}
-      - store_artifacts:
-          path: application/parent-pom/target
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/webapp-service/pom.xml" }}
@@ -46,8 +44,6 @@ jobs:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/webapp-service/pom.xml" }}
-      - store_artifacts:
-          path: application/webapp-service/target
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-activemq-quarkus/pom.xml" }}
@@ -66,5 +62,3 @@ jobs:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-activemq-quarkus/pom.xml" }}
-      - store_artifacts:
-          path: application/consumer-activemq-quarkus/target
