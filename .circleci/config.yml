@@ -39,6 +39,7 @@ jobs:
           command: |
             ../../cc-test-reporter before-build
             mvn clean verify install
+            export JACOCO_SOURCE_PATH="src/main/java"
             ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
             ../../cc-test-reporter upload-coverage
       - save_cache:
@@ -58,6 +59,7 @@ jobs:
           command: |
             ../../cc-test-reporter before-build
             mvn clean verify
+            export JACOCO_SOURCE_PATH="src/main/java"
             ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
             ../../cc-test-reporter upload-coverage
       - save_cache:
