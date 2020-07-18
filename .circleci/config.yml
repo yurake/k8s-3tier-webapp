@@ -9,7 +9,8 @@ jobs:
       - checkout
       - run:
           name: Setup Code Climate test-reporter
-          command: |
+          command:
+            mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_consumer-kafka-quarkus
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
       - restore_cache:
@@ -20,7 +21,8 @@ jobs:
       - run:
           name: Run tests parent-pom
           working_directory: application/parent-pom
-          command: |
+          command:
+            mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_consumer-kafka-quarkus
             mvn clean install
       - save_cache:
           paths:
@@ -34,16 +36,12 @@ jobs:
       - run:
           name: Run tests webapp-service
           working_directory: application/webapp-service
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_webapp-service
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/webapp-service/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-activemq-quarkus/pom.xml" }}
@@ -52,16 +50,12 @@ jobs:
       - run:
           name: Run tests consumer-activemq-quarkus
           working_directory: application/consumer-activemq-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-activemq-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-hazelcast-quarkus/pom.xml" }}
@@ -70,16 +64,12 @@ jobs:
       - run:
           name: Run tests consumer-hazelcast-quarkus
           working_directory: application/consumer-hazelcast-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_consumer-hazelcast-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-hazelcast-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-kafka-quarkus/pom.xml" }}
@@ -88,16 +78,12 @@ jobs:
       - run:
           name: Run tests consumer-kafka-quarkus
           working_directory: application/consumer-kafka-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_consumer-kafka-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-kafka-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-rabbitmq-quarkus/pom.xml" }}
@@ -106,16 +92,12 @@ jobs:
       - run:
           name: Run tests consumer-rabbitmq-quarkus
           working_directory: application/consumer-rabbitmq-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_consumer-rabbitmq-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-rabbitmq-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-redis-quarkus/pom.xml" }}
@@ -124,16 +106,12 @@ jobs:
       - run:
           name: Run tests consumer-redis-quarkus
           working_directory: application/consumer-redis-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_consumer-redis-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/consumer-redis-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-activemq-quarkus/pom.xml" }}
@@ -142,16 +120,12 @@ jobs:
       - run:
           name: Run tests jaxrs-activemq-quarkus
           working_directory: application/jaxrs-activemq-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_jaxrs-activemq-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-activemq-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-hazelcast-quarkus/pom.xml" }}
@@ -160,16 +134,12 @@ jobs:
       - run:
           name: Run tests jaxrs-hazelcast-quarkus
           working_directory: application/jaxrs-hazelcast-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_jaxrs-hazelcast-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-hazelcast-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-kafka-quarkus/pom.xml" }}
@@ -178,16 +148,13 @@ jobs:
       - run:
           name: Run tests jaxrs-kafka-quarkus
           working_directory: application/jaxrs-kafka-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_jaxrs-kafka-quarkus
 
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-kafka-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-memcached-quarkus/pom.xml" }}
@@ -196,16 +163,12 @@ jobs:
       - run:
           name: Run tests jaxrs-memcached-quarkus
           working_directory: application/jaxrs-memcached-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_jaxrs-memcached-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-memcached-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-mongodb-quarkus/pom.xml" }}
@@ -214,16 +177,12 @@ jobs:
       - run:
           name: Run tests jaxrs-mongodb-quarkus
           working_directory: application/jaxrs-mongodb-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_jaxrs-mongodb-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-mongodb-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-mysql-quarkus/pom.xml" }}
@@ -232,16 +191,12 @@ jobs:
       - run:
           name: Run tests jaxrs-mysql-quarkus
           working_directory: application/jaxrs-mysql-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_jaxrs-mysql-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-mysql-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-postgres-quarkus/pom.xml" }}
@@ -250,16 +205,12 @@ jobs:
       - run:
           name: Run tests jaxrs-postgres-quarkus
           working_directory: application/jaxrs-postgres-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-postgres-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-rabbitmq-quarkus/pom.xml" }}
@@ -268,16 +219,12 @@ jobs:
       - run:
           name: Run tests jaxrs-rabbitmq-quarkus
           working_directory: application/jaxrs-rabbitmq-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-rabbitmq-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-redis-quarkus/pom.xml" }}
@@ -286,16 +233,12 @@ jobs:
       - run:
           name: Run tests jaxrs-redis-quarkus
           working_directory: application/jaxrs-redis-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/jaxrs-redis-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/producer-kafka-quarkus/pom.xml" }}
@@ -304,16 +247,12 @@ jobs:
       - run:
           name: Run tests producer-kafka-quarkus
           working_directory: application/producer-kafka-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_producer-kafka-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/producer-kafka-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/randompublish-quarkus/pom.xml" }}
@@ -322,16 +261,12 @@ jobs:
       - run:
           name: Run tests randompublish-quarkus
           working_directory: application/randompublish-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_randompublish-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/randompublish-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/redis-mysql-helidon/pom.xml" }}
@@ -340,16 +275,12 @@ jobs:
       - run:
           name: Run tests redis-mysql-helidon
           working_directory: application/redis-mysql-helidon
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_redis-mysql-helidon
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/redis-mysql-helidon/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/scheduled-quarkus/pom.xml" }}
@@ -358,16 +289,12 @@ jobs:
       - run:
           name: Run tests scheduled-quarkus
           working_directory: application/scheduled-quarkus
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
-
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_scheduled-quarkus
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/scheduled-quarkus/pom.xml" }}
+
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/wlp-web-java-spring/pom.xml" }}
@@ -376,19 +303,8 @@ jobs:
       - run:
           name: Run tests wlp-web-java-spring
           working_directory: application/wlp-web-java-spring
-          command: |
-            ../../cc-test-reporter before-build
-            mvn clean verify
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ../../cc-test-reporter format-coverage target/site/jacoco/jacoco.xml -t jacoco
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_wlp-web-java-spring
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/wlp-web-java-spring/pom.xml" }}
-
-      - run:
-          name: upload codeclimate coverage
-          command: |
-            ./cc-test-reporter sum-coverage -o jacoco_all.xml application/**/target/site/jacoco/jacoco.xml
-            export JACOCO_SOURCE_PATH="src/main/java"
-            ./cc-test-reporter upload-coverage -i jacoco_all.xml

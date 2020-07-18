@@ -24,13 +24,6 @@ jobs:
           echo CURRENT: ${SOURCE_PROJECT}
           echo TARGET: ${JAVACI_PROJECT}
           test ${SOURCE_PROJECT} = ${JAVACI_PROJECT}
-      - name: get .travis.yml
-        run: echo ::set-env name=TRAVISCI_PROJECT::$(grep pom.xml .travis.yml | wc -l | tr -d ' ')
-      - name: check java-ci.yml
-        run: |
-          echo CURRENT: ${SOURCE_PROJECT}
-          echo TARGET: ${TRAVISCI_PROJECT}
-          test ${SOURCE_PROJECT} = ${TRAVISCI_PROJECT}
       - name: get .circleci
         working-directory: ./.circleci
         run: echo ::set-env name=CIRCLECI_PROJECT::$(grep mvn config.yml | wc -l | tr -d ' ')
