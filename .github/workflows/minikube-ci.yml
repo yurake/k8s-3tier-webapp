@@ -96,7 +96,7 @@ jobs:
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
       - name: wait for complete e2e job
         run: |
-          sudo kubectl -n monitoring wait --for=condition=complete --timeout=1m job/postmannewman-job
+          sudo kubectl -n monitoring wait --for=condition=complete --timeout=10m job/postmannewman-job
           sudo kubectl -n monitoring describe job postmannewman-job
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
           sudo kubectl get po --all-namespaces=true
