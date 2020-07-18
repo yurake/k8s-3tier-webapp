@@ -1,18 +1,12 @@
-version: 2
+version: 2.1
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
 jobs:
   build:
-    environment:
-      CC_TEST_REPORTER_ID: 15eac2dc9551ea8566757f925a7f33f2677d2f9e106785390b872dc1a8bfc042
     docker:
       - image: "cimg/openjdk:14.0.1"
     steps:
       - checkout
-      - run:
-          name: Setup Code Climate test-reporter
-          command:
-            mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_consumer-kafka-quarkus
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
       - restore_cache:
           keys:
             - maven-repo-v1-{{ .Branch }}-{{ checksum "application/parent-pom/pom.xml" }}
