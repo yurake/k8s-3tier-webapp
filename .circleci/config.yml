@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Run tests webapp-service
           working_directory: application/webapp-service
-          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_webapp-service
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_webapp-service -Dsonar.host.url=https://sonarcloud.io
       - save_cache:
           paths:
             - ~/.m2
