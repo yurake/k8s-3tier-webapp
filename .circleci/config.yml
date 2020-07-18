@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Run tests webapp-service
           working_directory: application/webapp-service
-          command: mvn clean verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io
+          command: mvn clean verify sonar:sonar
       - save_cache:
           paths:
             - ~/.m2
@@ -300,3 +300,8 @@ jobs:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "application/wlp-web-java-spring/pom.xml" }}
+workflows:
+  main:
+    jobs:
+      - build:
+          context: sonarcloud
