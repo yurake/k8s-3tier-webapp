@@ -10,7 +10,7 @@ on:
   pull_request:
 
 jobs:
-  parent:
+  init-build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
