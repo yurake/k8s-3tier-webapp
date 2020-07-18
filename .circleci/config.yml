@@ -15,9 +15,7 @@ jobs:
       - run:
           name: Run tests parent-pom
           working_directory: application/parent-pom
-          command:
-            mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_consumer-kafka-quarkus
-            mvn clean install
+          command: mvn clean install
       - save_cache:
           paths:
             - ~/.m2
@@ -44,7 +42,7 @@ jobs:
       - run:
           name: Run tests consumer-activemq-quarkus
           working_directory: application/consumer-activemq-quarkus
-          command: mvn clean verify sonar:sonar
+          command: mvn clean verify sonar:sonar -Dsonar.projectKey=yurake_consumer-activemq-quarkus
       - save_cache:
           paths:
             - ~/.m2
