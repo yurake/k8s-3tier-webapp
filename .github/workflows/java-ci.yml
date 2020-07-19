@@ -46,7 +46,7 @@ jobs:
       - name: Upload coverage to SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         with:
-          projectBaseDir: ./application/parent-pom/
+          projectBaseDir: application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
