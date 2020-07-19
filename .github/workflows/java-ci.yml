@@ -43,13 +43,15 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@master
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-      - name: Setup sonarqube
-        uses: warchant/setup-sonar-scanner@v1
       - name: Upload coverage to SonarCloud
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: sonar-scanner -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.organization=yurak -Dsonar.projectKey=webapp-service
+        run: mvn sonar:sonar
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.organization=yurak
+          -Dsonar.projectKey=webapp-service
 
   jaxrs-activemq-quarkus:
     needs: init-build
