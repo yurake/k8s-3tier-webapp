@@ -24,14 +24,6 @@ jobs:
           echo CURRENT: ${SOURCE_PROJECT}
           echo TARGET: ${JAVACI_PROJECT}
           test ${SOURCE_PROJECT} = ${JAVACI_PROJECT}
-      - name: get .circleci
-        working-directory: ./.circleci
-        run: echo ::set-env name=CIRCLECI_PROJECT::$(grep mvn config.yml | wc -l | tr -d ' ')
-      - name: check .circleci
-        run: |
-          echo CURRENT: ${SOURCE_PROJECT}
-          echo TARGET: ${CIRCLECI_PROJECT}
-          test ${SOURCE_PROJECT} = ${CIRCLECI_PROJECT}
       - name: create issue if failure
         if: failure()
         uses: JasonEtco/create-an-issue@v2
