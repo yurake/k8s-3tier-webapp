@@ -27,18 +27,31 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn deploy --settings ../.m2/settings.xml
+        run: mvn -B verify deploy --settings ../.m2/settings.xml
 
       - name: Maven Deploy to Github Package Registry
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn verify deploy --settings ../.m2/settings.xml
+        run: mvn -B verify deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload coverage to coday
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/webapp-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_webapp-service
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-activemq-quarkus:
     needs: init-build
@@ -78,6 +91,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-activemq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-activemq-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-activemq-quarkus:
     needs: init-build
@@ -117,6 +143,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/consumer-activemq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_consumer-activemq-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-hazelcast-quarkus:
     needs: init-build
@@ -156,6 +195,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/consumer-hazelcast-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_consumer-hazelcast-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-kafka-quarkus:
     needs: init-build
@@ -195,6 +247,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/consumer-kafka-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_consumer-kafka-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   scheduled-quarkus:
     needs: init-build
@@ -234,6 +299,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/scheduled-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_scheduled-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-hazelcast-quarkus:
     needs: init-build
@@ -273,6 +351,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-hazelcast-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-hazelcast-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-kafka-quarkus:
     needs: init-build
@@ -312,6 +403,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-kafka-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-kafka-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-memcached-quarkus:
     needs: init-build
@@ -351,6 +455,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-memcached-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-memcached-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-mongodb-quarkus:
     needs: init-build
@@ -390,6 +507,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-mongodb-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-mongodb-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-mysql-quarkus:
     needs: init-build
@@ -429,6 +559,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-mysql-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-mysql-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-postgres-quarkus:
     needs: init-build
@@ -468,6 +611,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-postgres-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-rabbitmq-quarkus:
     needs: init-build
@@ -507,6 +663,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-rabbitmq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-redis-quarkus:
     needs: init-build
@@ -546,6 +715,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-redis-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-rabbitmq-quarkus:
     needs: init-build
@@ -585,6 +767,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/consumer-rabbitmq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_consumer-rabbitmq-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   producer-kafka-quarkus:
     needs: init-build
@@ -624,6 +819,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/producer-kafka-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_producer-kafka-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   randompublish-quarkus:
     needs: init-build
@@ -663,6 +871,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/randompublish-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_randompublish-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   redis-mysql-helidon:
     needs: init-build
@@ -685,6 +906,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/redis-mysql-helidon
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_redis-mysql-helidon
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-redis-quarkus:
     needs: init-build
@@ -724,6 +958,19 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/consumer-redis-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_consumer-redis-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   wlp-web-java-spring:
     needs: init-build
@@ -766,3 +1013,16 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/wlp-web-java-spring
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_wlp-web-java-spring
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
