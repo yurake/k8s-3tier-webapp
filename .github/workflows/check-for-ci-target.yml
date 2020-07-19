@@ -1,6 +1,9 @@
 name: Check for CI Target
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
   issues:
     types: [closed]
@@ -15,27 +18,12 @@ jobs:
         run: echo ::set-env name=SOURCE_PROJECT::$(find . -name "pom.xml" | grep -v -e target -e src | wc -l | tr -d ' ')
       - name: get java-ci.yml
         working-directory: ./.github/workflows
-        run: echo ::set-env name=JAVACI_PROJECT::$(grep mvn java-ci.yml | wc -l | tr -d ' ')
+        run: echo ::set-env name=JAVACI_PROJECT::$(grep "mvn -B verify" java-ci.yml | wc -l | tr -d ' ')
       - name: check java-ci.yml
         run: |
           echo CURRENT: ${SOURCE_PROJECT}
           echo TARGET: ${JAVACI_PROJECT}
           test ${SOURCE_PROJECT} = ${JAVACI_PROJECT}
-      - name: get .travis.yml
-        run: echo ::set-env name=TRAVISCI_PROJECT::$(grep pom.xml .travis.yml | wc -l | tr -d ' ')
-      - name: check java-ci.yml
-        run: |
-          echo CURRENT: ${SOURCE_PROJECT}
-          echo TARGET: ${TRAVISCI_PROJECT}
-          test ${SOURCE_PROJECT} = ${TRAVISCI_PROJECT}
-      - name: get .circleci
-        working-directory: ./.circleci
-        run: echo ::set-env name=CIRCLECI_PROJECT::$(grep mvn config.yml | wc -l | tr -d ' ')
-      - name: check .circleci
-        run: |
-          echo CURRENT: ${SOURCE_PROJECT}
-          echo TARGET: ${CIRCLECI_PROJECT}
-          test ${SOURCE_PROJECT} = ${CIRCLECI_PROJECT}
       - name: create issue if failure
         if: failure()
         uses: JasonEtco/create-an-issue@v2

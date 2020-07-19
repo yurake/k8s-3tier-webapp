@@ -1,6 +1,9 @@
 name: Check for Update
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
   issues:
     types: [closed]
