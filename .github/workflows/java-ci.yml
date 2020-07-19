@@ -49,7 +49,7 @@ jobs:
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: sonar-scanner -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.projectKey=webapp-service
+        run: sonar-scanner -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   jaxrs-activemq-quarkus:
     needs: init-build
