@@ -27,13 +27,13 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn deploy --settings ../.m2/settings.xml
+        run: mvn -B verify deploy --settings ../.m2/settings.xml
 
       - name: Maven Deploy to Github Package Registry
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn verify deploy --settings ../.m2/settings.xml
+        run: mvn -B verify deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -48,7 +48,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn sonar:sonar
-          -Dsonar.projectKey=webapp-service
+          -Dsonar.projectKey=yurake_webapp-service
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
