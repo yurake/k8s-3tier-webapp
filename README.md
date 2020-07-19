@@ -13,7 +13,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/51c8c54de1b0bfc18c81/maintainability)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/maintainability)
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://app.renovatebot.com/dashboard#github/yurake/k8s-3tier-webapp)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=yurake_webapp-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=yurake_webapp-service)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=yurake_k8s-3tier-webapp&metric=alert_status)](https://sonarcloud.io/organizations/yurak/projects)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 Sample web application based on k8s.  
