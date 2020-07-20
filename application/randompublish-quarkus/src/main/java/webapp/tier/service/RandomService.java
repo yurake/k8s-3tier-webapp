@@ -46,7 +46,7 @@ public class RandomService {
 
 	public String deliverrandom() throws RuntimeException {
 		String response;
-		int id = (int) (Math.random() * 6);
+		int id = getNum(6);
 		switch (id) {
 		case 0:
 			LOG.log(Level.INFO, "Call: ActiveMQ Publish");
@@ -78,5 +78,9 @@ public class RandomService {
 		}
 		LOG.info(response);
 		return response;
+	}
+
+	protected int getNum(Integer i) {
+		 return (int) (Math.random() * i);
 	}
 }

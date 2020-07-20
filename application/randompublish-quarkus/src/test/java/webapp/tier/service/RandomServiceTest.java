@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -93,14 +92,6 @@ class RandomServiceTest {
 		RandomService srv = new RandomService() {
 			protected int getNum(Integer i) {
 				return 5;
-	void testDeliverrandom() {
-		RandomService srv = new RandomService();
-		int counts = 50;
-		for (int i = 0; i < counts; i++) {
-			try {
-				srv.deliverrandom();
-				fail();
-			} catch (Exception e) {
 			}
 		};
 		try {
@@ -134,3 +125,4 @@ class RandomServiceTest {
 		assertThat(i, lessThanOrEqualTo(5));
 	}
 }
+
