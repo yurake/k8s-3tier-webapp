@@ -19,9 +19,9 @@ jobs:
       - name: setup docker actions
         env:
           TZ: 'Asia/Tokyo'
-          run: |
-            echo ::set-env name=BUILD_DATE::$(date -u +"%Y-%m-%dT%H:%M:%SZ)
-            echo ::set-env name=VCS_REF::$(echo ${GITHUB_SHA} | cut -c1-8)
+        run: |
+          echo ::set-env name=BUILD_DATE::$(date -u +"%Y-%m-%dT%H:%M:%SZ)
+          echo ::set-env name=VCS_REF::$(echo ${GITHUB_SHA} | cut -c1-8)
 
       - name: docker login
         env:
