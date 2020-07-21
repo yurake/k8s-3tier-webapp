@@ -52,8 +52,8 @@ jobs:
 
       - name: Build image - mongodb
         working-directory: ./kubernetes/mongodb
-        run: docker build -t yurak/mongodb:latest \
-          --build-arg VCS_REF=${VCS_REF} \
+        run: docker build -t yurak/mongodb:latest
+          --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - mongodb
         if: github.event_name == 'push'
