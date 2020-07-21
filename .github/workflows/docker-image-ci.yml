@@ -19,9 +19,9 @@ jobs:
       - name: setup docker actions
         env:
           TZ: 'Asia/Tokyo'
-          run: |
-            echo ::set-env name=BUILD_DATE::$(date -u +"%Y-%m-%dT%H:%M:%SZ)
-            echo ::set-env name=VCS_REF::$(echo ${GITHUB_SHA} | cut -c1-8)
+        run: |
+          echo ::set-env name=BUILD_DATE::$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo ::set-env name=VCS_REF::$(echo ${GITHUB_SHA} | cut -c1-8)
 
       - name: docker login
         env:
@@ -52,9 +52,9 @@ jobs:
 
       - name: Build image - mongodb
         working-directory: ./kubernetes/mongodb
-        run: docker build -t yurak/mongodb:latest \
-          --build-arg VCS_REF=`git rev-parse --short HEAD` \
-          --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` .
+        run: docker build -t yurak/mongodb:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - mongodb
         if: github.event_name == 'push'
         run: docker push yurak/mongodb:latest
