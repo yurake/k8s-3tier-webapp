@@ -103,5 +103,11 @@ http://rabbitmq.management.minikube
 * :triangular_flag_on_post: Activemq Management Console  
 http://activemq.management.minikube  
 
+## Application
+Java based web application for [application](application/README.md)
+
+## Kubernetes
+Yaml based kubernetes manifests for [kubernetes](kubernetes/README.md)
+
 ## Monitoring
 Set up [monitoring](kubernetes/monitoring/README.md)
