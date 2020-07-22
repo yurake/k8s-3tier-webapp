@@ -22,7 +22,3 @@ jobs:
         with:
           sh_checker_comment: true
           sh_checker_exclude: "**/mvnw"
-      - name: Run shellCheck-action
-        uses: fearphage/shellcheck-action@0.0.4
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
