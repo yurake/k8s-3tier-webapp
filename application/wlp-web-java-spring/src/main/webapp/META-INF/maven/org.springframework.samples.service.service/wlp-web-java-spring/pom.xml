@@ -32,7 +32,7 @@
 		<javaee-api.version>8.0.1</javaee-api.version>
 
 		<!-- Spring -->
-		<spring-framework.version>5.2.7.RELEASE</spring-framework.version>
+		<spring-framework.version>5.2.8.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
 		<hibernate.version>5.4.18.Final</hibernate.version>
