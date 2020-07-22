@@ -2,7 +2,7 @@
 set -eu
 
 ROOT_DIR="$(
-    cd "$(dirname -- '$0')"
+    cd "$(dirname -- "$0")"
     pwd
 )"
 

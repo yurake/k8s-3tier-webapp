@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-ROOT_DIR="$(cd "$(dirname -- '$0')"; pwd)"
+ROOT_DIR="$(cd "$(dirname -- "$0")"; pwd)"
 
 echo "### monitoring namespace"
 cd "${ROOT_DIR}"/monitoring
