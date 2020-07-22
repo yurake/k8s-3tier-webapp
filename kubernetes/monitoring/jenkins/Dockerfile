@@ -1,4 +1,7 @@
 FROM jenkins/jenkins:2.245-alpine
+ARG BUILD_DATE
+ARG VCS_REF
+LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF
 USER root
 
 # update apk repositories
