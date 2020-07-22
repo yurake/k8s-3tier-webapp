@@ -22,6 +22,14 @@ jobs:
           graalvm-version: 20.1.0.java11
       - run: java -version
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/parent-pom/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-parent-pom
+
       - name: Maven Deploy POM to Github Package Registry
         working-directory: ./application/parent-pom/
         continue-on-error: true
