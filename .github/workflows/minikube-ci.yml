@@ -10,8 +10,6 @@ on:
       - ".github/workflows/minikube-ci.yml"
   issues:
     types: [closed]
-  pull_request:
-    types: [closed]
 
 jobs:
   minik-k8s:
