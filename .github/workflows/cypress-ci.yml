@@ -22,6 +22,5 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          config-file: kubernetes/monitoring/test/cypress/cypress.json
-          project: kubernetes/monitoring/test/cypress/cypress/integration/test
+          working-directory: kubernetes/monitoring/test/cypress
           record: true
