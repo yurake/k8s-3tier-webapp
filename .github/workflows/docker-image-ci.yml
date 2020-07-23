@@ -37,6 +37,8 @@ jobs:
       - name: Push Image - nginx
         if: github.event_name == 'push'
         run: docker push yurak/nginx:latest
+      - name: Update Microbadger
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/nginx/7QCS0ho29O-wTHs3nIw5N2XZls8=
 
       - name: Build image - mysql
         working-directory: ./kubernetes/mysql
@@ -46,6 +48,8 @@ jobs:
       - name: Push Image - mysql
         if: github.event_name == 'push'
         run: docker push yurak/mysql:latest
+      - name: Update Microbadger
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/mysql/VdV3GfTNPegsi3iEgCzrSp7fcso=
 
       - name: Build image - postgres
         working-directory: ./kubernetes/postgres
@@ -55,6 +59,8 @@ jobs:
       - name: Push Image - postgres
         if: github.event_name == 'push'
         run: docker push yurak/postgres:latest
+      - name: Update Microbadger
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postgres/buxVcrUNzGrKjvWm2_-mvfW5OHc=
 
       - name: Build image - mongodb
         working-directory: ./kubernetes/mongodb
@@ -64,6 +70,8 @@ jobs:
       - name: Push Image - mongodb
         if: github.event_name == 'push'
         run: docker push yurak/mongodb:latest
+      - name: Update Microbadger
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/mongodb/UMosuG9BuAvvnGJ9gWcSzgBjC5k=
 
       - name: Build image - rabbitmq
         working-directory: ./kubernetes/rabbitmq
@@ -73,6 +81,8 @@ jobs:
       - name: Push Image - rabbitmq
         if: github.event_name == 'push'
         run: docker push yurak/rabbitmq:latest
+      - name: Update Microbadger
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/rabbitmq/aN6TGvG8Z9g5SxT7PsSAS5ruys0=
 
       - name: Build image - jenkins
         working-directory: ./kubernetes/monitoring/jenkins
@@ -82,6 +92,8 @@ jobs:
       - name: Push Image - jenkins
         if: github.event_name == 'push'
         run: docker push yurak/jenkins:latest
+      - name: Update Microbadger
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/jenkins/9IhdDnEDW1zwZc2v7l7DWfYTZ4E=
 
       - name: Build image - ab
         working-directory: ./kubernetes/monitoring/test/ab
@@ -91,6 +103,8 @@ jobs:
       - name: Push Image - ab
         if: github.event_name == 'push'
         run: docker push yurak/ab:latest
+      - name: Update Microbadger
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/ab/Rd4WPZ1EPQWA2KTQwML6JyKoNgc=
 
       - name: Build image - postmannewman
         working-directory: ./kubernetes/monitoring/test/postmannewman
@@ -100,3 +114,5 @@ jobs:
       - name: Push Image - postmannewman
         if: github.event_name == 'push'
         run: docker push yurak/postmannewman:latest
+      - name: Update Microbadger
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman/JYNTOrYaF6nvNQVKCj1BGP1yBpM=
