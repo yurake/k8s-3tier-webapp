@@ -10,8 +10,6 @@ on:
       - ".github/workflows/minikube-ci.yml"
   issues:
     types: [closed]
-  pull_request:
-    types: [closed]
 
 jobs:
   minik-k8s:
@@ -48,7 +46,6 @@ jobs:
           sudo minikube addons list
       - name: wait for set up ingress
         run: |
-          sleep 60
           sudo kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
       - name: apply minimal service
         run: |
@@ -57,46 +54,9 @@ jobs:
       - name: run e2e test
         run: |
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
-          echo wait for run e2e test for 150s ...
-          sleep 150
-      - name: check minikube status
-        run: |
-          sudo kubectl get nodes
-          sudo kubectl get pv
-          sudo kubectl get pvc
-          sudo kubectl get all
-          sudo kubectl get all -n monitoring
-          sudo kubectl get ingress
-      - name: check log jaxrs-mysql
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
-          sleep 10
-      - name: check log jaxrs-postgres
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
-          sleep 10
-      - name: check log jaxrs-mongodb
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
-          sleep 10
-      - name: check log jaxrs-redis
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
-          sleep 10
-      - name: check log jaxrs-memcached
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
-          sleep 10
-      - name: check log jaxrs-activemq
-        run: |
-          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
-          sleep 10
-      - name: check after test postmannewman-job
-        run: |
-          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
       - name: wait for complete e2e job
         run: |
-          sudo kubectl -n monitoring wait --for=condition=complete --timeout=10m job/postmannewman-job
+          sudo kubectl -n monitoring wait --for=condition=complete --timeout=20m job/postmannewman-job
           sudo kubectl -n monitoring describe job postmannewman-job
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
           sudo kubectl get po --all-namespaces=true
@@ -109,6 +69,27 @@ jobs:
           sudo kubectl get all -n monitoring
           sudo kubectl get ingress
           df -h /
+      - name: check log jaxrs-mysql
+        run: |
+          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+      - name: check log jaxrs-postgres
+        run: |
+          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
+      - name: check log jaxrs-mongodb
+        run: |
+          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
+      - name: check log jaxrs-redis
+        run: |
+          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
+      - name: check log jaxrs-memcached
+        run: |
+          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
+      - name: check log jaxrs-activemq
+        run: |
+          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
+      - name: check after test postmannewman-job
+        run: |
+          sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
       - name: create issue if failure
         if: failure()
         uses: maxkomarychev/oction-create-issue@v0.7.1
@@ -132,16 +113,6 @@ jobs:
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: |
-            Add new issue:
-            #${{ steps.create-issue-minikube-ci.outputs.number }}
-            Please see failure log:
-            https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
-      - name: Add PR comment if failure
-        if: failure()
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
           body: |
             Add new issue:
             #${{ steps.create-issue-minikube-ci.outputs.number }}

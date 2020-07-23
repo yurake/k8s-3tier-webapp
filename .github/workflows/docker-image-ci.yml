@@ -31,21 +31,27 @@ jobs:
 
       - name: Build image - nginx
         working-directory: ./kubernetes/nginx
-        run: docker build -t yurak/nginx:latest .
+        run: docker build -t yurak/nginx:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - nginx
         if: github.event_name == 'push'
         run: docker push yurak/nginx:latest
 
       - name: Build image - mysql
         working-directory: ./kubernetes/mysql
-        run: docker build -t yurak/mysql:latest .
+        run: docker build -t yurak/mysql:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - mysql
         if: github.event_name == 'push'
         run: docker push yurak/mysql:latest
 
       - name: Build image - postgres
         working-directory: ./kubernetes/postgres
-        run: docker build -t yurak/postgres:latest .
+        run: docker build -t yurak/postgres:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postgres
         if: github.event_name == 'push'
         run: docker push yurak/postgres:latest
@@ -61,28 +67,36 @@ jobs:
 
       - name: Build image - rabbitmq
         working-directory: ./kubernetes/rabbitmq
-        run: docker build -t yurak/rabbitmq:latest .
+        run: docker build -t yurak/rabbitmq:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - rabbitmq
         if: github.event_name == 'push'
         run: docker push yurak/rabbitmq:latest
 
       - name: Build image - jenkins
         working-directory: ./kubernetes/monitoring/jenkins
-        run: docker build -t yurak/jenkins:latest .
+        run: docker build -t yurak/jenkins:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - jenkins
         if: github.event_name == 'push'
         run: docker push yurak/jenkins:latest
 
       - name: Build image - ab
         working-directory: ./kubernetes/monitoring/test/ab
-        run: docker build -t yurak/ab:latest .
+        run: docker build -t yurak/ab:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - ab
         if: github.event_name == 'push'
         run: docker push yurak/ab:latest
 
       - name: Build image - postmannewman
         working-directory: ./kubernetes/monitoring/test/postmannewman
-        run: docker build -t yurak/postmannewman:latest .
+        run: docker build -t yurak/postmannewman:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postmannewman
         if: github.event_name == 'push'
         run: docker push yurak/postmannewman:latest

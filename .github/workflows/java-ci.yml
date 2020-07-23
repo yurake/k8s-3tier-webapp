@@ -22,12 +22,28 @@ jobs:
           graalvm-version: 20.1.0.java11
       - run: java -version
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/parent-pom/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-parent-pom
+
       - name: Maven Deploy POM to Github Package Registry
         working-directory: ./application/parent-pom/
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B verify deploy --settings ../.m2/settings.xml
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/webapp-service/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-webapp-service
 
       - name: Maven Deploy to Github Package Registry
         working-directory: ./application/webapp-service
@@ -74,6 +90,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-activemq-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-activemq-quarkus
 
       - name: Maven Build
         working-directory: ./application/jaxrs-activemq-quarkus
@@ -127,6 +151,14 @@ jobs:
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-activemq-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-consumer-activemq-quarkus
+
       - name: Maven Build
         working-directory: ./application/consumer-activemq-quarkus
         env:
@@ -178,6 +210,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-hazelcast-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-consumer-hazelcast-quarkus
 
       - name: Maven Build
         working-directory: ./application/consumer-hazelcast-quarkus
@@ -231,6 +271,14 @@ jobs:
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-kafka-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-consumer-kafka-quarkus
+
       - name: Maven Build
         working-directory: ./application/consumer-kafka-quarkus
         env:
@@ -282,6 +330,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/scheduled-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-scheduled-quarkus
 
       - name: Maven Build
         working-directory: ./application/scheduled-quarkus
@@ -335,6 +391,14 @@ jobs:
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-hazelcast-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-hazelcast-quarkus
+
       - name: Maven Build
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
@@ -386,6 +450,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-kafka-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-kafka-quarkus
 
       - name: Maven Build
         working-directory: ./application/jaxrs-kafka-quarkus
@@ -439,6 +511,14 @@ jobs:
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-memcached-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-memcached-quarkus
+
       - name: Maven Build
         working-directory: ./application/jaxrs-memcached-quarkus
         env:
@@ -490,6 +570,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mongodb-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-mongodb-quarkus
 
       - name: Maven Build
         working-directory: ./application/jaxrs-mongodb-quarkus
@@ -543,6 +631,14 @@ jobs:
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mysql-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-mysql-quarkus
+
       - name: Maven Build
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
@@ -594,6 +690,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-postgres-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-postgres-quarkus
 
       - name: Maven Build
         working-directory: ./application/jaxrs-postgres-quarkus
@@ -647,6 +751,14 @@ jobs:
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-rabbitmq-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-rabbitmq-quarkus
+
       - name: Maven Build
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
@@ -698,6 +810,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-redis-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-redis-quarkus
 
       - name: Maven Build
         working-directory: ./application/jaxrs-redis-quarkus
@@ -751,6 +871,14 @@ jobs:
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-rabbitmq-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-consumer-rabbitmq-quarkus
+
       - name: Maven Build
         working-directory: ./application/consumer-rabbitmq-quarkus
         env:
@@ -802,6 +930,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/producer-kafka-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-producer-kafka-quarkus
 
       - name: Maven Build
         working-directory: ./application/producer-kafka-quarkus
@@ -855,6 +991,14 @@ jobs:
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/randompublish-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-randompublish-quarkus
+
       - name: Maven Build
         working-directory: ./application/randompublish-quarkus
         env:
@@ -897,6 +1041,14 @@ jobs:
         with:
           graalvm-version: 20.1.0.java11
       - run: java -version
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/redis-mysql-helidon/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-redis-mysql-helidon
 
       - name: Maven Build - redis-mysql-helidon
         working-directory: ./application/redis-mysql-helidon
@@ -941,6 +1093,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-redis-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-consumer-redis-quarkus
 
       - name: Maven Build
         working-directory: ./application/consumer-redis-quarkus
@@ -993,6 +1153,14 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/wlp-web-java-spring/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-wlp-web-java-spring
 
       - name: Maven Build
         working-directory: ./application/wlp-web-java-spring

@@ -1,0 +1,24 @@
+name: Shell Validator
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.sh"
+  pull_request:
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run shellcheck
+        uses: ludeeus/action-shellcheck@master
+      - name: Run sh-checker
+        uses: luizm/action-sh-checker@v0.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          sh_checker_comment: true
+          sh_checker_exclude: "**/mvnw"
