@@ -18,6 +18,10 @@ jobs:
         uses: actions/checkout@v1
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           config-file: kubernetes/monitoring/test/cypress/cypress.json
           project: kubernetes/monitoring/test/cypress/cypress/integration/test
+          record: true
