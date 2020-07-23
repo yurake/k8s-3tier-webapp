@@ -15,8 +15,9 @@
 [![](https://www.code-inspector.com/project/11254/score/svg)](https://frontend.code-inspector.com/project/11254/dashboard)
 [![](https://www.code-inspector.com/project/11254/status/svg)](https://frontend.code-inspector.com/project/11254/techdebt)  
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
-[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://app.renovatebot.com/dashboard#github/yurake/k8s-3tier-webapp)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=yurake_k8s-3tier-webapp&metric=alert_status)](https://sonarcloud.io/organizations/yurak/projects)
+[![k8s-3tier-webapp](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/uv6uzj/master&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/uv6uzj/runs)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://app.renovatebot.com/dashboard#github/yurake/k8s-3tier-webapp)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/yurake/k8s-3tier-webapp)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
