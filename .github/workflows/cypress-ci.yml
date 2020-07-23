@@ -1,0 +1,29 @@
+name: Cypress CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "application/**"
+      - "kubernetes/**"
+      - ".github/workflows/cypress-ci.yml"
+  pull_request:
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: kubernetes/monitoring/test/cypress
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          working-directory: kubernetes/monitoring/test/cypress
+          record: true
