@@ -61,10 +61,7 @@ public class ActiveMqService {
 		String id = String.valueOf(CreateId.createid());
 
 		StringBuilder buf = new StringBuilder();
-		buf.append(id);
-		buf.append(splitkey);
-		buf.append(msg);
-		String body = buf.toString();
+		String body = buf.append(id).append(splitkey).append(msg).toString();
 
 		qcon = getQueueConnection();
 		qcon.start();
@@ -90,7 +87,7 @@ public class ActiveMqService {
 	}
 
 	public String getActiveMq() throws Exception {
-		String fullmsg = null;
+		String fullmsg = "No Data";
 		QueueSession qsession = null;
 		QueueReceiver qreceiver = null;
 
@@ -102,9 +99,7 @@ public class ActiveMqService {
 
 		TextMessage message = (TextMessage) qreceiver.receive(1000);
 
-		if (Objects.isNull(message)) {
-			fullmsg = "No Data";
-		} else {
+		if (Objects.nonNull(message)) {
 			String[] body = message.getText().split(splitkey, 0);
 			fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
 		}
