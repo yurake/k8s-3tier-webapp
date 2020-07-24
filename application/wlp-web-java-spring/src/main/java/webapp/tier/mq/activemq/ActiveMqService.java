@@ -117,56 +117,6 @@ public class ActiveMqService {
 		return fullmsg;
 	}
 
-	/**
-	public String putProducerActiveMq() throws Exception {
-		String fullmsg = null;
-		String id = String.valueOf(CreateId.createid());
-
-		StringBuilder buf = new StringBuilder();
-		buf.append(id);
-		buf.append(splitkey);
-		buf.append(msg);
-		String body = buf.toString();
-
-		con = getQueueConnection();
-		con.start();
-		Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		TextMessage message = session.createTextMessage(body);
-		session.createProducer(getQueue()).send(message);
-		fullmsg = "Set id: " + id + ", msg: " + message;
-		logger.info(fullmsg);
-
-		return fullmsg;
-	}
-
-	public String getConsumerActiveMq() throws Exception {
-		String fullmsg = null;
-
-		try {
-			con = getQueueConnection();
-			con.start();
-			Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			Message message = session.createConsumer(getQueue()).receive();
-
-			if (message instanceof TextMessage) {
-				TextMessage textMessage = (TextMessage) message;
-				String[] body = textMessage.getText().split(splitkey, 0);
-				fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
-				logger.info(fullmsg);
-			} else {
-				fullmsg = "No Data";
-				logger.info(fullmsg);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			con.close();
-		}
-		return fullmsg;
-	}
-	**/
-
 	public String publishActiveMq() throws Exception {
 		String fullmsg = "Error";
 		TopicSession session = null;
@@ -174,10 +124,7 @@ public class ActiveMqService {
 		String id = String.valueOf(CreateId.createid());
 
 		StringBuilder buf = new StringBuilder();
-		buf.append(id);
-		buf.append(splitkey);
-		buf.append(pubmessage);
-		String body = buf.toString();
+		String body = buf.append(id).append(splitkey).append(pubmessage).toString();
 
 		tcon = getTopicConnection();
 		session = tcon.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
