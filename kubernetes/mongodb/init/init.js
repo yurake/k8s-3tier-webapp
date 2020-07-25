@@ -22,4 +22,4 @@ db.getSiblingDB("admin").createUser({
     { role: "clusterMonitor", db: "admin" },
     { role: "read", db: "local" }
   ]
-})
+});
