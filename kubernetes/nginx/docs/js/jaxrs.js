@@ -62,7 +62,7 @@ $(function () {
 			const resp = JSON.parse(JSON.stringify(data, null, 4));
 			console.log(resp);
 			$(respid).html(resp.responseText + '\nstatus: ' + resp.status);
-		})
+		});
 	}
 
 	function dispMsgFromJson(type, url, respid) {
@@ -74,7 +74,7 @@ $(function () {
 		}).always(function (data, jqXHR) {
 			console.log(data);
 			$(respid).html(data.fullmsg + '\nstatus: ' + jqXHR.status);
-		})
+		});
 	}
 
 	function dispMsgFromJsonArray(type, url, respid) {
@@ -91,7 +91,7 @@ $(function () {
 				}
 			}
 			$(respid).html(resparray + jqXHR.status);
-		})
+		});
 	}
 
 	function subscribeWebSocket(svc) {
@@ -128,11 +128,11 @@ $(function () {
 
 	$("#getkafka").click(function () {
 		dispMsgFromString(get, kafkaurl + get, respkafka);
-	})
+	});
 
 	$("#publishkafka").click(function () {
 		dispMsgFromJson(post, kafkaurl + publish, respkafka);
-	})
+	});
 
 	$("#subscribekafka").click(function () {
 		if (isopenkafka) {
@@ -140,14 +140,14 @@ $(function () {
 		} else {
 			console.log("Connection to server opened.");
 			isopenkafka = true;
-			sse = new EventSource(kafkaurl + 'subscribe')
+			sse = new EventSource(kafkaurl + 'subscribe');
 			sse.onmessage = function (event) {
 				const resp = event.data;
 				console.log(resp);
 				document.getElementById("respkafka").innerHTML = resp;
 			};
 		}
-	})
+	});
 
 	$("#stopkafka").click(function () {
 		if (isopenkafka) {
@@ -156,137 +156,137 @@ $(function () {
 			isopenkafka = false;
 			$(respkafka).html(initialvalue);
 		}
-	})
+	});
 
 	$("#setmemcached").click(function () {
 		dispMsgFromJson(post, memcachedurl + set, respmemcached);
-	})
+	});
 
 	$("#getmemcached").click(function () {
 		dispMsgFromJson(get, memcachedurl + get, respmemcached);
-	})
+	});
 
 	$("#putredis").click(function () {
 		dispMsgFromJson(post, redisurl + put, respredis);
-	})
+	});
 
 	$("#getredis").click(function () {
 		dispMsgFromJsonArray(get, redisurl + get, respredis);
-	})
+	});
 
 	$("#subscriberedis").click(function () {
 		subscribeWebSocket(redis);
-	})
+	});
 
 	$("#stopredis").click(function () {
 		stopSweSocket(redis);
-	})
+	});
 
 	$("#publishredis").click(function () {
 		dispMsgFromJson(post, redisurl + publish, respredis);
-	})
+	});
 
 	$("#putrabbitmq").click(function () {
 		dispMsgFromJson(post, rabbitmqurl + put, resprabbitmq);
-	})
+	});
 
 	$("#getrabbitmq").click(function () {
 		dispMsgFromJson(get, rabbitmqurl + get, resprabbitmq);
-	})
+	});
 
 	$("#publishrabbitmq").click(function () {
 		dispMsgFromJson(post, rabbitmqurl + publish, resprabbitmq);
-	})
+	});
 
 	$("#subscriberabbitmq").click(function () {
 		subscribeWebSocket(rabbitmq);
-	})
+	});
 
 	$("#stoprabbitmq").click(function () {
 		stopSweSocket(rabbitmq);
-	})
+	});
 
 	$("#putactivemq").click(function () {
 		dispMsgFromJson(post, activemqurl + put, respactivemq);
-	})
+	});
 
 	$("#getactivemq").click(function () {
 		dispMsgFromJson(get, activemqurl + get, respactivemq);
-	})
+	});
 
 	$("#publishactivemq").click(function () {
 		dispMsgFromJson(post, activemqurl + publish, respactivemq);
-	})
+	});
 
 	$("#subscribeactivemq").click(function () {
 		subscribeWebSocket(activemq);
-	})
+	});
 
 	$("#stopactivemq").click(function () {
 		stopSweSocket(activemq);
-	})
+	});
 
 	$("#setcachehazelcast").click(function () {
 		dispMsgFromJson(post, hazelcasturl + 'setcache', respcachehazelcast);
-	})
+	});
 
 	$("#getcachehazelcast").click(function () {
 		dispMsgFromJsonArray(get, hazelcasturl + 'getcache', respcachehazelcast);
-	})
+	});
 
 	$("#publishhazelcast").click(function () {
 		dispMsgFromJson(post, hazelcasturl + publish, respcachehazelcast);
-	})
+	});
 
 	$("#subscribehazelcast").click(function () {
 		subscribeWebSocket(hazelcast);
-	})
+	});
 
 	$("#stophazelcast").click(function () {
 		stopSweSocket(hazelcast);
-	})
+	});
 
 	$("#putqueuehazelcast").click(function () {
 		dispMsgFromJson(post, hazelcasturl + 'putqueue', respqueuehazelcast);
-	})
+	});
 
 	$("#getqueuehazelcast").click(function () {
 		dispMsgFromJson(get, hazelcasturl + 'getqueue', respqueuehazelcast);
-	})
+	});
 
 	$("#insertmysql").click(function () {
 		dispMsgFromJson(post, mysqlurl + insert, respmysql);
-	})
+	});
 
 	$("#selectmysql").click(function () {
 		dispMsgFromJsonArray(get, mysqlurl + select, respmysql);
-	})
+	});
 
 	$("#deletemysql").click(function () {
 		dispMsgFromString(post, mysqlurl + delt, respmysql);
-	})
+	});
 
 	$("#insertpostgres").click(function () {
 		dispMsgFromJson(post, postgresurl + insert, resppostgres);
-	})
+	});
 
 	$("#selectpostgres").click(function () {
 		dispMsgFromJsonArray(get, postgresurl + select, resppostgres);
-	})
+	});
 
 	$("#deletepostgres").click(function () {
 		dispMsgFromString(post, postgresurl + delt, resppostgres);
-	})
+	});
 
 	$("#insertmongodb").click(function () {
 		dispMsgFromJson(post, mongodburl + insert, respmongodb);
-	})
+	});
 
 	$("#selectmongodb").click(function () {
 		dispMsgFromJsonArray(get, mongodburl + select, respmongodb);
-	})
+	});
 
 	$("#deletemongodb").click(function () {
 		dispMsgFromString(post, mongodburl + delt, respmongodb);
-	})
-})
+	});
+});
