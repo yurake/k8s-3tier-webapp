@@ -36,7 +36,6 @@ public class RabbitmqSubscribeService implements Runnable {
 	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password", String.class);
 	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
 	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
 	private static String exchangename = ConfigProvider.getConfig().getValue("rabbitmq.exchange.name", String.class);
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	static boolean isEnableReceived = true;
