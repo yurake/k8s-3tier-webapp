@@ -1,6 +1,8 @@
 package webapp.tier.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -15,14 +17,18 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Consumer;
+import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.Envelope;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
-import webapp.tier.service.subscribe.RabbitmqSubscriber;
+import webapp.tier.bean.MsgBean;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class RabbitmqSubscribeService implements Runnable {
@@ -69,7 +75,17 @@ public class RabbitmqSubscribeService implements Runnable {
 			LOG.log(Level.INFO, "Create queue: {0}", queueName);
 			channel.queueBind(queueName, exchangename, "");
 
-			Consumer consumer = new RabbitmqSubscriber(channel);
+			Consumer consumer = new DefaultConsumer(channel) {
+				@Override
+				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
+						byte[] body) throws UnsupportedEncodingException {
+					MsgBean msgbean = MsgUtils.splitBody(new String(body, StandardCharsets.UTF_8), splitkey);
+					msgbean.setFullmsg("Received");
+					LOG.log(Level.INFO, msgbean.getFullmsg());
+					String response = deliversvc.random();
+					LOG.log(Level.INFO, "Call Random Publish: {0}", response);
+				}
+			};
 			channel.basicConsume(queueName, true, consumer);
 
 			while (isEnableReceived) {
