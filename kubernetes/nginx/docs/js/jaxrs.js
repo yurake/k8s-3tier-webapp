@@ -47,6 +47,10 @@ $(function () {
 	$(respmongodb).html(initialvalue);
 
 	var sse;
+	var wsrabbitmq;
+	var wsactivemq;
+	var wshazelcast;
+	var wsredis;
 
 	function dispMsgFromString(type, url, respid) {
 		$.ajax({
@@ -67,7 +71,7 @@ $(function () {
 			url: url,
 			cache: false,
 			timeout: 10000,
-		}).always(function (data, textStatus, jqXHR) {
+		}).always(function (data, jqXHR) {
 			console.log(data);
 			$(respid).html(data.fullmsg + '\nstatus: ' + jqXHR.status);
 		})
@@ -79,7 +83,7 @@ $(function () {
 			url: url,
 			cache: false,
 			timeout: 10000,
-		}).always(function (data, textStatus, jqXHR) {
+		}).always(function (data, jqXHR) {
 			var resparray = "";
 			for (i = 0; i < data.length; i++) {
 				if (data[i] != null) {
@@ -90,6 +94,38 @@ $(function () {
 		})
 	}
 
+	function subscribeWebSocket(svc) {
+		isopen = "isopen" + svc;
+		ws = "ws" + svc;
+		resp = "resp" + svc;
+		if (isopen) {
+			console.log("Already connected.");
+		} else {
+			ws = new WebSocket('ws://k8s.3tier.webapp/quarkus/' + svc + '/subscribe');
+			isopen = true;
+			console.log("Connection to server opened.");
+			ws.onopen = function () {
+				ws.onmessage = function (receive) {
+					$(resp).text(receive.data);
+				};
+			};
+		}
+	}
+
+	function stopSweSocket(svc) {
+		isopen = "isopen" + svc;
+		ws = "ws" + svc;
+		resp = "resp" + svc;
+		if (isopen) {
+			ws.close();
+			console.log("Connection to server closed.");
+			isopen = false;
+			$(resp).html(initialvalue);
+		} else {
+			console.log("Already closed.");
+		}
+	}
+
 	$("#getkafka").click(function () {
 		dispMsgFromString(get, kafkaurl + get, respkafka);
 	})
@@ -98,7 +134,7 @@ $(function () {
 		dispMsgFromJson(post, kafkaurl + publish, respkafka);
 	})
 
-	$("#subscribekafka").click(function (event) {
+	$("#subscribekafka").click(function () {
 		if (isopenkafka) {
 			console.log("Already connected.");
 		} else {
@@ -138,32 +174,12 @@ $(function () {
 		dispMsgFromJsonArray(get, redisurl + get, respredis);
 	})
 
-	var wsredis;
-
 	$("#subscriberedis").click(function () {
-		if (isopenredis) {
-			console.log("Already connected.");
-		} else {
-			wsredis = new WebSocket('ws://k8s.3tier.webapp/quarkus/redis/subscribe');
-			isopenredis = true;
-			console.log("Connection to server opened.");
-			wsredis.onopen = function (e) {
-				wsredis.onmessage = function (receive) {
-					$(respredis).text(receive.data);
-				};
-			};
-		}
+		subscribeWebSocket(redis);
 	})
 
 	$("#stopredis").click(function () {
-		if (isopenredis) {
-			wsredis.close();
-			console.log("Connection to server closed.");
-			isopenredis = false;
-			$(respredis).html(initialvalue);
-		} else {
-			console.log("Already closed.");
-		}
+		stopSweSocket(redis);
 	})
 
 	$("#publishredis").click(function () {
@@ -182,32 +198,12 @@ $(function () {
 		dispMsgFromJson(post, rabbitmqurl + publish, resprabbitmq);
 	})
 
-	var wsrabbitmq;
-
 	$("#subscriberabbitmq").click(function () {
-		if (isopenrabbitmq) {
-			console.log("Already connected.");
-		} else {
-			wsrabbitmq = new WebSocket('ws://k8s.3tier.webapp/quarkus/rabbitmq/subscribe');
-			isopenrabbitmq = true;
-			console.log("Connection to server opened.");
-			wsrabbitmq.onopen = function (e) {
-				wsrabbitmq.onmessage = function (receive) {
-					$(resprabbitmq).text(receive.data);
-				};
-			};
-		}
+		subscribeWebSocket(rabbitmq);
 	})
 
 	$("#stoprabbitmq").click(function () {
-		if (isopenrabbitmq) {
-			wsrabbitmq.close();
-			console.log("Connection to server closed.");
-			isopenrabbitmq = false;
-			$(resprabbitmq).html(initialvalue);
-		} else {
-			console.log("Already closed.");
-		}
+		stopSweSocket(rabbitmq);
 	})
 
 	$("#putactivemq").click(function () {
@@ -222,32 +218,12 @@ $(function () {
 		dispMsgFromJson(post, activemqurl + publish, respactivemq);
 	})
 
-	var wsactivemq;
-
 	$("#subscribeactivemq").click(function () {
-		if (isopenactivemq) {
-			console.log("Already connected.");
-		} else {
-			wsactivemq = new WebSocket('ws://k8s.3tier.webapp/quarkus/activemq/subscribe');
-			isopenactivemq = true;
-			console.log("Connection to server opened.");
-			wsactivemq.onopen = function (e) {
-				wsactivemq.onmessage = function (receive) {
-					$(respactivemq).text(receive.data);
-				};
-			};
-		}
+		subscribeWebSocket(activemq);
 	})
 
 	$("#stopactivemq").click(function () {
-		if (isopenactivemq) {
-			wsactivemq.close();
-			console.log("Connection to server closed.");
-			isopenactivemq = false;
-			$(respactivemq).html(initialvalue);
-		} else {
-			console.log("Already closed.");
-		}
+		stopSweSocket(activemq);
 	})
 
 	$("#setcachehazelcast").click(function () {
@@ -262,33 +238,12 @@ $(function () {
 		dispMsgFromJson(post, hazelcasturl + publish, respcachehazelcast);
 	})
 
-	var wshazelcast;
-	var wsredis;
-
 	$("#subscribehazelcast").click(function () {
-		if (isopenhazelcast) {
-			console.log("Already connected.");
-		} else {
-			wshazelcast = new WebSocket('ws://k8s.3tier.webapp/quarkus/hazelcast/subscribe');
-			isopenhazelcast = true;
-			console.log("Connection to server opened.");
-			wshazelcast.onopen = function (e) {
-				wshazelcast.onmessage = function (receive) {
-					$(respcachehazelcast).text(receive.data);
-				};
-			};
-		}
+		subscribeWebSocket(hazelcast);
 	})
 
 	$("#stophazelcast").click(function () {
-		if (isopenhazelcast) {
-			wshazelcast.close();
-			console.log("Connection to server closed.");
-			isopenhazelcast = false;
-			$(respcachehazelcast).html(initialvalue);
-		} else {
-			console.log("Already closed.");
-		}
+		stopSweSocket(hazelcast);
 	})
 
 	$("#putqueuehazelcast").click(function () {
