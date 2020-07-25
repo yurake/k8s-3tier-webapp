@@ -3,7 +3,7 @@
 
 # Java
 *.class
-*.jar
+application/**/*.jar
 *.war
 *.ear
 
