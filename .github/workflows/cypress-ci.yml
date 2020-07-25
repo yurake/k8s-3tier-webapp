@@ -2,12 +2,6 @@ name: Cypress CI
 
 on:
   push:
-    branches:
-      - master
-    paths:
-      - "application/**"
-      - "kubernetes/**"
-      - ".github/workflows/cypress-ci.yml"
   pull_request:
 
 jobs:
