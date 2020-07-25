@@ -6,10 +6,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<html>
+<html lang="en">
 <head>
 <title>Hello k8s-3tier-webapp</title>
-<link rel="icon" type="image/png" sizes="16x16" href="./images/icon-16x16.png" />
+<link rel="icon" type="image/png" sizes="16x16"
+	href="./images/icon-16x16.png" />
 <link href='<spring:url value="./resources/css/style.css"/>'
 	rel="stylesheet" />
 <script type="text/javascript"
@@ -22,7 +23,8 @@
 
 	<button onclick="changeColor()">Change Color</button>
 
-	<p>To prove that they work, you can execute either of the following links:</p>
+	<p>To prove that they work, you can execute either of the following
+		links:</p>
 
 	<table>
 		<tr>

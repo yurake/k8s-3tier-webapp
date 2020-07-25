@@ -6,10 +6,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<html>
+<html lang="en">
 <head>
 <title>Hello k8s-3tier-webapp</title>
-<link rel="icon" type="image/png" sizes="16x16" href="./images/icon-16x16.png" />
+<link rel="icon" type="image/png" sizes="16x16"
+	href="./images/icon-16x16.png" />
 </head>
 <body bgcolor=white>
 
