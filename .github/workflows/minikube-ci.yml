@@ -2,8 +2,8 @@ name: Minikube CI
 
 on:
   push:
-    branches-ignore:
-      - "renovate/**"
+    branches:
+      - master
     paths:
       - "application/**"
       - "kubernetes/**"
