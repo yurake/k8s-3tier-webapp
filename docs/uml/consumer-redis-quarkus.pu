@@ -1,0 +1,4 @@
+@startuml consumer-redis-quarkus
+Redis -> Consumer: subscribe
+Consumer -> RandomPublish: deliver
+@enduml

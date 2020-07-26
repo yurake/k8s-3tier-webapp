@@ -1,0 +1,4 @@
+@startuml consumer-hazelcast-quarkus
+Hazelcast -> Consumer: subscribe
+Consumer -> RandomPublish: deliver
+@enduml
