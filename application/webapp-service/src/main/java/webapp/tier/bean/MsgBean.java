@@ -12,8 +12,8 @@ public class MsgBean {
 	}
 
 	public MsgBean(int id, String message) {
-		setId(id);
-		setMessage(message);
+		this.id = id;
+		this.message = message;
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class MsgBean {
 	public MsgBean(int id, String message, String type) {
 		this.id = id;
 		this.message = message;
-		setFullmsg(type);
+		setFullmsgIncImpl(type);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class MsgBean {
 	public MsgBean(String id, String message, String type) {
 		this.id = MsgUtils.stringToInt(id);
 		this.message = message;
-		setFullmsg(type);
+		setFullmsgIncImpl(type);
 	}
 
 	public int getId() {
@@ -61,7 +61,11 @@ public class MsgBean {
 	}
 
 	public void setFullmsg(String type) {
-		this.fullmsg = type + " : id: " + getId() + ", message: " + getMessage();
+		setFullmsgIncImpl(type);
+	}
+
+	private void setFullmsgIncImpl(String type) {
+	this.fullmsg = type + " : id: " + getId() + ", message: " + getMessage();
 	}
 
 	public String getFullmsg() {
