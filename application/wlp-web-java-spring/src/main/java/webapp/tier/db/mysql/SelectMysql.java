@@ -21,35 +21,25 @@ public class SelectMysql extends HttpServlet {
 	private static String sql = GetConfig.getResourceBundle("mysql.select.msg.all");
 
 	public List<String> selectMsg() throws SQLException, NamingException {
-		Connection con = null;
 		List<String> allmsg = new ArrayList<>();
+		ConnectMysql conmysql = new ConnectMysql();
+		Connection con = conmysql.getConnection();
+		Statement stmt = con.createStatement();
 
-		try {
-			ConnectMysql conmysql = new ConnectMysql();
-			con = conmysql.getConnection();
-			Statement stmt = con.createStatement();
+		logger.info("Execute SQL: " + sql);
+		ResultSet rs = stmt.executeQuery(sql);
 
-			logger.info("Execute SQL: " + sql);
-			ResultSet rs = stmt.executeQuery(sql);
+		while (rs.next()) {
+			String fullmsg = "Selected Msg: id: " + rs.getString("id") + ", message: " + rs.getString("msg");
+			logger.info(fullmsg);
+			allmsg.add(fullmsg);
+		}
+		if (allmsg.isEmpty()) {
+			allmsg.add("No Data");
+		}
 
-			while (rs.next()) {
-				String fullmsg = "Selected Msg: id: " + rs.getString("id") + ", message: " + rs.getString("msg");
-				logger.info(fullmsg);
-				allmsg.add(fullmsg);
-			}
-
-			if(allmsg.isEmpty()){
-				allmsg.add("No Data");
-			}
-
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+		if (con != null) {
+			con.close();
 		}
 		return allmsg;
 	}
