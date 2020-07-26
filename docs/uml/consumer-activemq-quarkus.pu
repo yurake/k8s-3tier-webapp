@@ -1,0 +1,4 @@
+@startuml consumer-activemq-quarkus
+ActiveMQ -> Consumer: subscribe
+Consumer -> RandomPublish: deliver
+@enduml
