@@ -16,15 +16,31 @@ public class MsgBean {
 		setMessage(message);
 	}
 
+	/**
+	* Class constructor specifying number of objects to create.
+	*
+	* @param id int number of id
+	* @param message message
+	* @param type message type that the message comes from
+	*
+	*/
 	public MsgBean(int id, String message, String type) {
-		setId(id);
-		setMessage(message);
+		this.id = id;
+		this.message = message;
 		setFullmsg(type);
 	}
 
+	/**
+	* Class constructor specifying number of objects to create.
+	*
+	* @param id String number of id
+	* @param message message
+	* @param type message type that the message comes from
+	*
+	*/
 	public MsgBean(String id, String message, String type) {
-		setId(MsgUtils.stringToInt(id));
-		setMessage(message);
+		this.id = MsgUtils.stringToInt(id);
+		this.message = message;
 		setFullmsg(type);
 	}
 
