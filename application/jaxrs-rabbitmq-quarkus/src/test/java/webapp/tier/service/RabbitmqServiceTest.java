@@ -1,8 +1,10 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -31,18 +33,24 @@ class RabbitmqServiceTest {
 		Connection conn = new MockConnectionFactory().newConnection();
 		MsgBean msgbean = svc.putMsg(conn);
 		assertThat(msgbean.getFullmsg(), containsString(respbody));
+		conn.close();
 	}
 
 	@Test
-	void testPutMsgError() {
+	void testPutMsgError() throws IOException {
+		Connection conn = null;
 		try {
-			Connection conn = new MockConnectionFactory().newConnection();
+			conn = new MockConnectionFactory().newConnection();
 			conn.close();
 			svc.putMsg(conn);
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertEquals(errormsg, e.getMessage());
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
@@ -51,6 +59,7 @@ class RabbitmqServiceTest {
 		Connection conn = new MockConnectionFactory().newConnection();
 		MsgBean msgbean = svc.getMsg(conn);
 		assertThat(msgbean.getFullmsg(), containsString("No Data."));
+		conn.close();
 	}
 
 	@Test
@@ -60,6 +69,7 @@ class RabbitmqServiceTest {
 		svc.putMsg(conn);
 		MsgBean msgbean = svc.getMsg(conn);
 		assertThat(msgbean.getFullmsg(), containsString(respbody));
+		conn.close();
 	}
 
 	@Test
@@ -75,13 +85,18 @@ class RabbitmqServiceTest {
 	}
 
 	@Test
-	void testPublishMsgError() {
+	void testPublishMsgError() throws IOException {
+		Connection conn = null;
 		try {
-			Connection conn = new MockConnectionFactory().newConnection();
+			conn = new MockConnectionFactory().newConnection();
 			svc.publishMsg(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertEquals("Publish Error.", e.getMessage());
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
