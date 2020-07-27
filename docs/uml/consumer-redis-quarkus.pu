@@ -1,0 +1,8 @@
+@startuml consumer-redis-quarkus
+participant Redis
+participant Consumer as Consumer #99FF99
+Redis -> Consumer: subscribe
+activate Consumer
+Consumer -> RandomPublish: deliver
+deactivate Consumer
+@enduml

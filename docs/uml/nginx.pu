@@ -1,0 +1,93 @@
+@startuml nginx
+actor Browser
+participant Ingress as Ingress #99FF99
+participant Nginx as Nginx #99FF99
+Browser -> Ingress: http request
+activate Ingress
+alt /
+Ingress -> Nginx: get static files
+activate Nginx
+Nginx -> Ingress: 
+deactivate Nginx
+
+deactivate Ingress
+end
+Browser -> Ingress: http request
+activate Ingress
+alt /api
+Ingress -> wlp: 
+activate wlp
+wlp -> Ingress: 
+deactivate wlp
+
+else /quarkus/activemq
+Ingress -> activemq: 
+activate activemq
+activemq -> Ingress: 
+deactivate activemq
+
+else /quarkus/hazelcast
+Ingress -> hazelcast: 
+activate hazelcast
+hazelcast -> Ingress: 
+deactivate hazelcast
+
+else /quarkus/kafka
+Ingress -> kafka: 
+activate kafka
+kafka -> Ingress: 
+deactivate kafka
+
+else /quarkus/memcached
+Ingress -> memcached: 
+activate memcached
+memcached -> Ingress: 
+deactivate memcached
+
+else /quarkus/mongodb
+Ingress -> mongodb: 
+activate mongodb
+mongodb -> Ingress: 
+deactivate mongodb
+
+else /quarkus/mysql
+Ingress -> mysql: 
+activate mysql
+mysql -> Ingress: 
+deactivate mysql
+
+else /quarkus/postgres
+Ingress -> postgres: 
+activate postgres
+postgres -> Ingress: 
+deactivate postgres
+
+else /quarkus/rabbitmq
+Ingress -> rabbitmq: 
+activate rabbitmq
+rabbitmq -> Ingress: 
+deactivate rabbitmq
+
+else /quarkus/redis
+Ingress -> redis: 
+activate redis
+redis -> Ingress: 
+deactivate redis
+
+end
+Ingress -> Browser:
+deactivate Ingress
+
+box JAXRS_
+participant wlp as wlp #ADD1B2
+participant activemq as activemq #ADD1B2
+participant hazelcast as hazelcast #ADD1B2
+participant kafka as kafka #ADD1B2
+participant memcached as memcached #ADD1B2
+participant mongodb as mongodb #ADD1B2
+participant mysql as mysql #ADD1B2
+participant postgres as postgres #ADD1B2
+participant rabbitmq as rabbitmq #ADD1B2
+participant redis as redis #ADD1B2
+end box
+@enduml

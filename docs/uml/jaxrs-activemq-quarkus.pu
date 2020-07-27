@@ -1,0 +1,24 @@
+@startuml jaxrs-activemq-quarkus
+actor Browser
+Browser -> Nginx: http request
+activate Nginx
+participant Jaxrs as Jaxrs #99FF99
+Nginx -> Jaxrs: post, get 
+activate Jaxrs
+Jaxrs -> ActiveMQ: put, get, publish, subscribe
+activate ActiveMQ
+ActiveMQ -> Browser: message
+deactivate ActiveMQ
+deactivate Jaxrs
+deactivate Nginx
+
+actor RandomPublish
+RandomPublish -> Jaxrs: http request
+activate Jaxrs
+Jaxrs -> ActiveMQ: publish
+activate ActiveMQ
+ActiveMQ -> Jaxrs: subscribed response
+deactivate ActiveMQ
+Jaxrs -> Browser: message
+deactivate Jaxrs
+@enduml

@@ -1,0 +1,35 @@
+@startuml ab
+actor CLI
+participant ab as ab #99FF99
+CLI -> ab : ab params
+activate ab
+ab -> activemq: publish(parallel)
+ab -> activemq
+ab -> activemq
+deactivate ab
+CLI -> ab : ab params
+activate ab
+ab -> hazelcast: publish(parallel)
+ab -> hazelcast
+ab -> hazelcast
+deactivate ab
+CLI -> ab : ab params
+activate ab
+ab -> rabbitmq: publish(parallel)
+ab -> rabbitmq
+ab -> rabbitmq
+deactivate ab
+CLI -> ab : ab params
+activate ab
+ab -> redis: publish(parallel)
+ab -> redis
+ab -> redis
+deactivate ab
+
+box JAXRS_
+participant activemq as activemq #ADD1B2
+participant hazelcast as hazelcast #ADD1B2
+participant rabbitmq as rabbitmq #ADD1B2
+participant redis as redis #ADD1B2
+end box
+@enduml

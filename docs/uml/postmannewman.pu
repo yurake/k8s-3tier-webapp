@@ -1,0 +1,87 @@
+@startuml postmannewman
+actor CLI
+participant postmannewman as postmannewman #99FF99
+CLI -> postmannewman  : newman params
+activate postmannewman
+postmannewman -> activemq
+activate activemq
+activemq -> postmannewman
+deactivate activemq
+deactivate postmannewman
+
+CLI -> postmannewman  : newman params
+activate postmannewman
+postmannewman -> hazelcast
+activate hazelcast
+hazelcast -> postmannewman
+deactivate hazelcast
+deactivate postmannewman
+
+CLI -> postmannewman  : newman params
+activate postmannewman
+postmannewman -> kafka
+activate kafka
+kafka -> postmannewman
+deactivate kafka
+deactivate postmannewman
+
+CLI -> postmannewman  : newman params
+activate postmannewman
+postmannewman -> memcached
+activate memcached
+memcached -> postmannewman
+deactivate memcached
+deactivate postmannewman
+
+CLI -> postmannewman  : newman params
+activate postmannewman
+postmannewman -> mongodb
+activate mongodb
+mongodb -> postmannewman
+deactivate mongodb
+deactivate postmannewman
+
+CLI -> postmannewman  : newman params
+activate postmannewman
+postmannewman -> mysql
+activate mysql
+mysql -> postmannewman
+deactivate mysql
+deactivate postmannewman
+
+CLI -> postmannewman  : newman params
+activate postmannewman
+postmannewman -> postgres
+activate postgres
+postgres -> postmannewman
+deactivate postgres
+deactivate postmannewman
+
+CLI -> postmannewman  : newman params
+activate postmannewman
+postmannewman -> rabbitmq
+activate rabbitmq
+rabbitmq -> postmannewman
+deactivate rabbitmq
+deactivate postmannewman
+
+CLI -> postmannewman  : newman params
+activate postmannewman
+postmannewman -> redis
+activate redis
+redis -> postmannewman
+deactivate redis
+deactivate postmannewman
+
+box JAXRS_
+participant activemq as activemq #ADD1B2
+participant hazelcast as hazelcast #ADD1B2
+participant kafka as kafka #ADD1B2
+participant memcached as memcached #ADD1B2
+participant mongodb as mongodb #ADD1B2
+participant mysql as mysql #ADD1B2
+participant postgres as postgres #ADD1B2
+participant rabbitmq as rabbitmq #ADD1B2
+participant redis as redis #ADD1B2
+end box
+@enduml
