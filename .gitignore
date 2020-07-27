@@ -38,6 +38,7 @@ bin
 *.log
 *.swp
 *.bak
+*.code-workspace
 /.factorypath
 /.apt_generated_tests/
 application/*/.sts4-cache/classpath-data.json
