@@ -2,19 +2,28 @@
 participant RandomPublish as RandomPublish #99FF99
 [-> RandomPublish  : http request
 activate RandomPublish
-alt ActiveMQ
-    RandomPublish -> ActiveMQ: publish
-else RabbitMQ
-    RandomPublish -> RabbitMQ: publish
-else Redis
-    RandomPublish -> Redis: publish
-else Hazelcast
-    RandomPublish -> Hazelcast: publish
-else PostgreSQL
-    RandomPublish -> PostgreSQL: Insert
-else MongoDB
-    RandomPublish -> MongoDB: Insert
+alt activemq
+    RandomPublish -> activemq: publish
+else hazelcast
+    RandomPublish -> hazelcast: publish
+else mongodb
+    RandomPublish -> mongodb: Insert
+else postgres
+    RandomPublish -> postgres: Insert
+else rabbitmq
+    RandomPublish -> rabbitmq: publish
+else redis
+    RandomPublish -> redis: publish
 end
 [<- RandomPublish : http response
 deactivate RandomPublish
+
+box JAXRS_
+participant activemq as activemq #ADD1B2
+participant hazelcast as hazelcast #ADD1B2
+participant mongodb as mongodb #ADD1B2
+participant postgres as postgres #ADD1B2
+participant rabbitmq as rabbitmq #ADD1B2
+participant redis as redis #ADD1B2
+end box
 @enduml

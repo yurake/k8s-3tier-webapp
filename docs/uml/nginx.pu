@@ -2,7 +2,7 @@
 actor Browser
 participant Ingress as Ingress #99FF99
 participant Nginx as Nginx #99FF99
-Browser -> Ingress:
+Browser -> Ingress: http request
 activate Ingress
 alt /
 Ingress -> Nginx: get static files
@@ -12,7 +12,7 @@ deactivate Nginx
 
 deactivate Ingress
 end
-Browser -> Ingress:
+Browser -> Ingress: http request
 activate Ingress
 alt /api
 Ingress -> wlp: 
