@@ -44,6 +44,7 @@ The k8s-3tier-webapp service is for PoC, not production ready.
 ![LayardArchitecturalOverview.png](./docs/LayardArchitecturalOverview.png)
 
 ## Concepts
+
 * Choice better architecture what you expect based on k8s
 * Help understanding k8s resources based on yaml
 * Test automation on Github Actions for free
@@ -52,6 +53,7 @@ The k8s-3tier-webapp service is for PoC, not production ready.
 * Improve application quality using public CI services that following Github
 
 ## Features
+
 * All docker components run on k8s
 * All application written by Java mostly Quarkus
 * k8s resources written by yaml, try not to use helm, operator
@@ -60,6 +62,7 @@ The k8s-3tier-webapp service is for PoC, not production ready.
 
 
 ## Requirements
+
 Installed CLI commands.
 * :computer: docker
 * :computer: kubectl
@@ -99,12 +102,14 @@ minikube docker-env --shell powershell | Invoke-Expression
 ## Web Console Access
 
 ### Add hosts
+
 Add IP, domain in /etc/hosts
 ```
 echo `minikube ip` k8s.3tier.webapp wlp.minikube api.server.minikube rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube grafana.minikube jupyter.minikube hazelcast.manager.minikube activemq.management.minikube jaeger.minikube argo.minikube >> /etc/hosts
 ```
 
 #### Web Console list
+
 * :triangular_flag_on_post: Top Page  
 http://k8s.3tier.webapp/
 ![top.png](./docs/top.png)
@@ -116,11 +121,24 @@ http://rabbitmq.management.minikube
 * :triangular_flag_on_post: Activemq Management Console  
 http://activemq.management.minikube  
 
-## Application
+## Component
+
+### Application
+
 Java based web application for [application](application/README.md)
 
-## Kubernetes
+### Kubernetes
+
 Yaml based kubernetes manifests for [kubernetes](kubernetes/README.md)
 
-## Monitoring
-Set up [monitoring](kubernetes/monitoring/README.md)
+### Monitoring
+
+Set up [monitoring](kubernetes/monitoring/README.md) for Tier 3
+
+## Contribution
+
+1. [Fork](https://github.com/yurake/k8s-3tier-webapp/fork) this repo
+1. Create a feature branch named like feature/enhancement from [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
+1. Commit your changes
+1. Rebase your local changes against the [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
+1. Create new Pull Request
