@@ -106,9 +106,9 @@ minikube docker-env --shell powershell | Invoke-Expression
 ### Add hosts
 
 Add IP, domain in /etc/hosts
-<p>
+```
 echo `minikube ip` k8s.3tier.webapp wlp.minikube api.server.minikube rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube grafana.minikube jupyter.minikube hazelcast.manager.minikube activemq.management.minikube jaeger.minikube argo.minikube >> /etc/hosts
-</p>
+```
 
 ### Web Console list
 
