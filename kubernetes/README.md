@@ -1,6 +1,6 @@
 # :deer: application
 
-## nginx
+## Nginx
 
 [![DockerHub](https://img.shields.io/docker/pulls/yurak/nginx.svg)](https://hub.docker.com/r/yurak/nginx)
 [![Image Info](https://images.microbadger.com/badges/image/yurak/nginx.svg)](https://microbadger.com/images/yurak/nginx)
