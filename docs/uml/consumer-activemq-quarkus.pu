@@ -1,4 +1,8 @@
 @startuml consumer-activemq-quarkus
+participant ActiveMQ
+participant Consumer as Consumer #99FF99
 ActiveMQ -> Consumer: subscribe
+activate Consumer
 Consumer -> RandomPublish: deliver
+deactivate Consumer
 @enduml

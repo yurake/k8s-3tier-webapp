@@ -1,4 +1,8 @@
 @startuml consumer-rabbitmq-quarkus
+participant RabbitMQ
+participant Consumer as Consumer #99FF99
 RabbitMQ -> Consumer: subscribe
+activate Consumer
 Consumer -> RandomPublish: deliver
+deactivate Consumer
 @enduml
