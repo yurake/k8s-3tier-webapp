@@ -4,7 +4,8 @@
 
 [![DockerHub](https://img.shields.io/docker/pulls/yurak/nginx.svg)](https://hub.docker.com/r/yurak/nginx)
 [![Image Info](https://images.microbadger.com/badges/image/yurak/nginx.svg)](https://microbadger.com/images/yurak/nginx)
-[![Image Version](https://images.microbadger.com/badges/version/yurak/nginx.svg)](https://microbadger.com/images/yurak/nginx)
+[![Image Version](https://images.microbadger.com/badges/version/yurak/nginx.svg)](https://microbadger.com/images/yurak/nginx)  
+![Sequence Diagram](../docs/uml/nginx.png)
 
 ## mysql
 
