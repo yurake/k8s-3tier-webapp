@@ -1,0 +1,8 @@
+@startuml consumer-kafka-quarkus
+participant Kafka
+participant Consumer as Consumer #99FF99
+Kafka -> Consumer: subscribe
+activate Consumer
+Consumer -> RandomPublish: deliver
+deactivate Consumer
+@enduml

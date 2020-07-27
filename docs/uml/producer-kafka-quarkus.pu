@@ -1,0 +1,9 @@
+@startuml producer-kafka-quarkus
+participant Producer as Producer #99FF99
+Producer -> Producer : (timer)
+activate Producer
+Producer -> Kafka: publish
+deactivate Producer
+activate Kafka
+deactivate Kafka
+@enduml

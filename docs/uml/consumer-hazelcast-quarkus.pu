@@ -1,0 +1,8 @@
+@startuml consumer-hazelcast-quarkus
+participant Hazelcast
+participant Consumer as Consumer #99FF99
+Hazelcast -> Consumer: subscribe
+activate Consumer
+Consumer -> RandomPublish: deliver
+deactivate Consumer
+@enduml

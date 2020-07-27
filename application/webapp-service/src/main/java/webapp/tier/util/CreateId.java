@@ -3,12 +3,12 @@ package webapp.tier.util;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-public class CreateId {
+public final class CreateId {
+
+	private static Random rand = new Random();
 
 	private CreateId() {
 	}
-
-	private static Random rand = new Random();
 
 	/**
 	 * 5桁の正の整数を返す.

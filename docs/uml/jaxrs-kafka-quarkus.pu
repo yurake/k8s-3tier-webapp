@@ -1,0 +1,21 @@
+@startuml jaxrs-kafka-quarkus
+actor Browser
+Browser -> Nginx: http request
+activate Nginx
+participant Jaxrs as Jaxrs #99FF99
+Nginx -> Jaxrs: get 
+activate Jaxrs
+Jaxrs -> Kafka: get, publish, subscribe
+activate Kafka
+Kafka -> Browser: message
+deactivate Kafka
+deactivate Jaxrs
+deactivate Nginx
+
+actor Producer
+Producer -> Kafka: produce
+activate Kafka
+Kafka -> Browser: message
+deactivate Kafka
+deactivate Jaxrs
+@enduml

@@ -1,0 +1,20 @@
+@startuml randompublish-quarkus
+participant RandomPublish as RandomPublish #99FF99
+[-> RandomPublish  : http request
+activate RandomPublish
+alt ActiveMQ
+    RandomPublish -> ActiveMQ: publish
+else RabbitMQ
+    RandomPublish -> RabbitMQ: publish
+else Redis
+    RandomPublish -> Redis: publish
+else Hazelcast
+    RandomPublish -> Hazelcast: publish
+else PostgreSQL
+    RandomPublish -> PostgreSQL: Insert
+else MongoDB
+    RandomPublish -> MongoDB: Insert
+end
+[<- RandomPublish : http response
+deactivate RandomPublish
+@enduml

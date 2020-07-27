@@ -1,0 +1,14 @@
+@startuml scheduled-quarkus
+participant Scheduled as Scheduled #99FF99
+Scheduled -> Scheduled : (timer)
+activate Scheduled
+Scheduled -> RandomPubsub: http request
+deactivate Scheduled
+
+Scheduled -> Scheduled : (timer)
+activate Scheduled
+Scheduled -> MySQL: delete
+Scheduled -> PostgreSQL: delete
+Scheduled -> MongoDB: delete
+deactivate Scheduled
+@enduml

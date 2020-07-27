@@ -12,20 +12,36 @@ public class MsgBean {
 	}
 
 	public MsgBean(int id, String message) {
-		setId(id);
-		setMessage(message);
+		this.id = id;
+		this.message = message;
 	}
 
+	/**
+	* Class constructor specifying number of objects to create.
+	*
+	* @param id int number of id
+	* @param message message
+	* @param type message type that the message comes from
+	*
+	*/
 	public MsgBean(int id, String message, String type) {
-		setId(id);
-		setMessage(message);
-		setFullmsg(type);
+		this.id = id;
+		this.message = message;
+		setFullmsgIncImpl(type);
 	}
 
+	/**
+	* Class constructor specifying number of objects to create.
+	*
+	* @param id String number of id
+	* @param message message
+	* @param type message type that the message comes from
+	*
+	*/
 	public MsgBean(String id, String message, String type) {
-		setId(MsgUtils.stringToInt(id));
-		setMessage(message);
-		setFullmsg(type);
+		this.id = MsgUtils.stringToInt(id);
+		this.message = message;
+		setFullmsgIncImpl(type);
 	}
 
 	public int getId() {
@@ -45,7 +61,11 @@ public class MsgBean {
 	}
 
 	public void setFullmsg(String type) {
-		this.fullmsg = type + " : id: " + getId() + ", message: " + getMessage();
+		setFullmsgIncImpl(type);
+	}
+
+	private void setFullmsgIncImpl(String type) {
+	this.fullmsg = type + " : id: " + this.id + ", message: " + this.message;
 	}
 
 	public String getFullmsg() {
