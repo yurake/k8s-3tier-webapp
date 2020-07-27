@@ -112,20 +112,20 @@ echo `minikube ip` k8s.3tier.webapp wlp.minikube api.server.minikube rabbitmq.ma
 
 ### Web Console list
 
-#### :triangular_flag_on_post: Top Page  
+#### Top Page  
 
 <http://k8s.3tier.webapp/>
 ![top.png](./docs/top.png)
 
-#### :triangular_flag_on_post: Open Liberty  
+#### Open Liberty  
 
 <http://wlp.minikube>  
 
-#### :triangular_flag_on_post: Rabbitmq Management Console  
+#### Rabbitmq Management Console  
 
 <http://rabbitmq.management.minikube>  
 
-#### :triangular_flag_on_post: Activemq Management Console  
+#### Activemq Management Console  
 
 <http://activemq.management.minikube>  
 
