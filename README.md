@@ -70,7 +70,8 @@ Installed CLI commands.
 
 ## Run on Minikube
 
-**Mac**  
+### Mac
+
 ```bash
 minikube config set memory 121288
 minikube config set cpus 6
@@ -81,7 +82,8 @@ minikube addons enable ingress
 eval $(minikube docker-env)
 ```
 
-**Windows**  
+### Windows
+
 ```bash
 minikube config set memory 121288
 minikube config set cpus 6
@@ -108,18 +110,24 @@ Add IP, domain in /etc/hosts
 echo `minikube ip` k8s.3tier.webapp wlp.minikube api.server.minikube rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube grafana.minikube jupyter.minikube hazelcast.manager.minikube activemq.management.minikube jaeger.minikube argo.minikube >> /etc/hosts
 ```
 
-#### Web Console list
+### Web Console list
 
-* :triangular_flag_on_post: Top Page  
-http://k8s.3tier.webapp/
+#### :triangular_flag_on_post: Top Page  
+
+<http://k8s.3tier.webapp/>
 ![top.png](./docs/top.png)
 
-* :triangular_flag_on_post: Open Liberty  
-http://wlp.minikube  
-* :triangular_flag_on_post: Rabbitmq Management Console  
-http://rabbitmq.management.minikube  
-* :triangular_flag_on_post: Activemq Management Console  
-http://activemq.management.minikube  
+#### :triangular_flag_on_post: Open Liberty  
+
+<http://wlp.minikube>  
+
+#### :triangular_flag_on_post: Rabbitmq Management Console  
+
+<http://rabbitmq.management.minikube>  
+
+#### :triangular_flag_on_post: Activemq Management Console  
+
+<http://activemq.management.minikube>  
 
 ## Component
 
