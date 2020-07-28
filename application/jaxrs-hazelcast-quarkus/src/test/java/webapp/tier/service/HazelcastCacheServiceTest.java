@@ -25,7 +25,7 @@ import io.quarkus.test.junit.QuarkusTest;
 class HazelcastCacheServiceTest{
 
 	@Inject
-	HazelcastCacheService svc;
+	private HazelcastCacheService svc;
 
 	private static HazelcastInstance mockInstance;
 	String respbody = "message: Hello k8s-3tier-webapp with quarkus";

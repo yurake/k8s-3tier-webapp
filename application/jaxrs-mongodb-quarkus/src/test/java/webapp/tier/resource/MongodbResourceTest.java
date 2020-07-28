@@ -21,7 +21,7 @@ import webapp.tier.util.CreateId;
 class MongodbResourceTest {
 
 	@InjectMock
-	MongodbService svc;
+	private MongodbService svc;
 
 	@Test
 	void testInsert() throws NoSuchAlgorithmException {

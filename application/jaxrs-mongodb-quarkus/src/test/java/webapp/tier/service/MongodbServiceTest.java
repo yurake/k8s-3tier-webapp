@@ -29,9 +29,9 @@ import webapp.tier.bean.MsgBean;
 class MongodbServiceTest {
 
 	@Inject
-	MongodbService mongosvc;
+	private MongodbService mongosvc;
 
-	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
+	private String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@Test
 	@SuppressWarnings("unchecked")
