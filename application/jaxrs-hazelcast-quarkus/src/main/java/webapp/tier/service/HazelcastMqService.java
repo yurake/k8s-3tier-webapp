@@ -26,10 +26,11 @@ import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class HazelcastMqService extends HazelcastService implements Runnable {
+public class HazelcastMqService implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
+	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
 
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String queuename = ConfigProvider.getConfig().getValue("hazelcast.queue.name", String.class);
@@ -46,29 +47,28 @@ public class HazelcastMqService extends HazelcastService implements Runnable {
 		LOG.info("Subscribe is stopping...");
 	}
 
-	public MsgBean putMsg(HazelcastInstance client) throws RuntimeException, NoSuchAlgorithmException {
-		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
-		String body = MsgUtils.createBody(msgbean, splitkey);
-
+	public MsgBean putMsg(HazelcastInstance client) {
+		MsgBean msgbean = errormsg;
 		try {
+			msgbean = new MsgBean(CreateId.createid(), message, "Put");
+			String body = MsgUtils.createBody(msgbean, splitkey);
 			BlockingQueue<Object> queue = client.getQueue(queuename);
 			queue.put(body);
-		} catch (IllegalStateException | InterruptedException e) {
+		} catch (IllegalStateException | InterruptedException | NoSuchAlgorithmException e) {
 			LOG.log(Level.SEVERE, "Put Error.", e);
 		    Thread.currentThread().interrupt();
-			throw new RuntimeException("Put Error.");
+			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		LOG.info(msgbean.getFullmsg());
+		LOG.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
-	public MsgBean getMsg(HazelcastInstance client) throws RuntimeException {
-		MsgBean msgbean = null;
-
+	public MsgBean getMsg(HazelcastInstance client) {
+		MsgBean msgbean = errormsg;
 		try {
 			BlockingQueue<String> queue = client.getQueue(queuename);
 			Object resp = queue.poll();
@@ -81,43 +81,45 @@ public class HazelcastMqService extends HazelcastService implements Runnable {
 			}
 		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Get Error.", e);
-			throw new RuntimeException("Get Error.");
+			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		LOG.info(msgbean.getFullmsg());
+		LOG.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
-	public MsgBean publishMsg(HazelcastInstance client) throws RuntimeException, NoSuchAlgorithmException {
-		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
-		String body = MsgUtils.createBody(msgbean, splitkey);
+	public MsgBean publishMsg(HazelcastInstance client) {
+		MsgBean msgbean = errormsg;
 
 		try {
+			msgbean = new MsgBean(CreateId.createid(), message, "Publish");
+			String body = MsgUtils.createBody(msgbean, splitkey);
 			ITopic<Object> topic = client.getTopic(topicname);
 			topic.publish(body);
-		} catch (IllegalStateException e) {
+		} catch (IllegalStateException | NoSuchAlgorithmException e) {
 			LOG.log(Level.SEVERE, "Publish Error.", e);
-			throw new RuntimeException("Publish Error.");
+			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		LOG.info(msgbean.getFullmsg());
+		LOG.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
 	@Override
 	public void run() {
 		try {
-			HazelcastInstance client = getInstance();
+			HazelcastInstance client = HazelcastService.getInstance();
 			ITopic<Object> topic = client.getTopic(topicname);
 			topic.addMessageListener(new MessageListenerImpl());
 		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Subscribe Error.", e);
+			e.printStackTrace();
 		}
 	}
 

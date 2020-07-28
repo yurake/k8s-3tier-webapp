@@ -18,21 +18,22 @@ import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
 
 @ApplicationScoped
-public class HazelcastCacheService extends HazelcastService {
+public class HazelcastCacheService {
 
+	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
 	private static Logger LOG = Logger.getLogger(HazelcastCacheService.class.getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 
-	public MsgBean setMsg(HazelcastInstance client) throws RuntimeException, NoSuchAlgorithmException {
-		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Set");
-
+	public MsgBean setMsg(HazelcastInstance client) {
+		MsgBean msgbean = errormsg;
 		try {
+			msgbean = new MsgBean(CreateId.createid(), message, "Set");
 			Map<Integer, String> map = client.getMap(cachename);
 			map.put(msgbean.getId(), msgbean.getMessage());
-		} catch (IllegalStateException e) {
+		} catch (IllegalStateException | NoSuchAlgorithmException e) {
 			LOG.log(Level.SEVERE, "Set Error.", e);
-			throw new RuntimeException("Set Error.");
+			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -42,13 +43,13 @@ public class HazelcastCacheService extends HazelcastService {
 		return msgbean;
 	}
 
-	public MsgBean getMsg(HazelcastInstance client) throws RuntimeException {
+	public MsgBean getMsg(HazelcastInstance client) {
 		List<MsgBean> msglist = getMsgList(client);
 		return msglist.get(msglist.size() - 1);
 
 	}
 
-	public List<MsgBean> getMsgList(HazelcastInstance client) throws RuntimeException {
+	public List<MsgBean> getMsgList(HazelcastInstance client) {
 		List<MsgBean> msglist = new ArrayList<>();
 
 		try {
@@ -59,14 +60,13 @@ public class HazelcastCacheService extends HazelcastService {
 				LOG.info(msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}
-
-			if (msglist.isEmpty()) {
-				msglist.add(new MsgBean(0, "No Data."));
-			}
 		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Get Error.", e);
-			throw new RuntimeException("Get Error.");
+			e.printStackTrace();
 		} finally {
+			if (msglist.isEmpty()) {
+				msglist.add(new MsgBean(0, "No Data.", "Get"));
+			}
 			if (client != null) {
 				client.shutdown();
 			}
@@ -82,6 +82,7 @@ public class HazelcastCacheService extends HazelcastService {
 			status = client.getLifecycleService().isRunning();
 		} catch (IllegalStateException e) {
 			LOG.log(Level.SEVERE, "Connect Error.", e);
+			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -91,6 +92,6 @@ public class HazelcastCacheService extends HazelcastService {
 	}
 
 	public HazelcastInstance createHazelcastInstance() {
-		return getInstance();
+		return HazelcastService.getInstance();
 	}
 }

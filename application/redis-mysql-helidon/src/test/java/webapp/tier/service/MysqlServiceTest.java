@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class MysqlServiceTest {
 
 	@Test
-	void test() {
+	void testInsertMysqlError() {
 		MysqlService svc = new MysqlService();
 		String[] receivedbody = { "1111", "Test" };
 		try {

@@ -1,8 +1,8 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -47,6 +47,7 @@ class RabbitmqResourceTest {
 				.then()
 				.statusCode(200)
                 .body(containsString("test"));
+		conn.close();
 	}
 
 	@Test
@@ -61,6 +62,7 @@ class RabbitmqResourceTest {
 				.then()
 				.statusCode(200)
                 .body(containsString("test"));
+		conn.close();
 	}
 
 	@Test
@@ -76,6 +78,7 @@ class RabbitmqResourceTest {
 				.then()
 				.statusCode(200)
                 .body(containsString("test"));
+		conn.close();
 	}
 
 }

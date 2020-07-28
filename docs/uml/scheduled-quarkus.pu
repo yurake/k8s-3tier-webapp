@@ -7,8 +7,15 @@ deactivate Scheduled
 
 Scheduled -> Scheduled : (timer)
 activate Scheduled
-Scheduled -> MySQL: delete
-Scheduled -> PostgreSQL: delete
-Scheduled -> MongoDB: delete
+Scheduled -> mysql: delete
+Scheduled -> postgres: delete
+Scheduled -> mongodb: delete
 deactivate Scheduled
+
+box JAXRS_
+participant RandomPubsub as RandomPubsub #ADD1B2
+participant mysql as mysql #ADD1B2
+participant mongodb as mongodb #ADD1B2
+participant postgres as postgres #ADD1B2
+end box
 @enduml
