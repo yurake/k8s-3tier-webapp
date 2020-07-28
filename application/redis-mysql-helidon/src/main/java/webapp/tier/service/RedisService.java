@@ -28,7 +28,7 @@ public class RedisService {
 				public void onMessage(String channel, String message) {
 					String fullmsg = null;
 					String[] body = message.split(splitkey, 0);
-					fullmsg = "Received channel:" + channel + ", id: " + body[0]+ ", msg: " + body[1];
+					fullmsg = "Received channel:" + channel + ", id: " + body[0] + ", msg: " + body[1];
 					System.out.println(fullmsg);
 
 					MysqlService mysqlsvc = new MysqlService();
@@ -37,9 +37,10 @@ public class RedisService {
 			}, channel);
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Subscribe Error: ", e);
-			System.exit(0);
 		} finally {
-			jedis.close();
+			if (jedis != null) {
+				jedis.close();
+			}
 		}
 	}
 }
