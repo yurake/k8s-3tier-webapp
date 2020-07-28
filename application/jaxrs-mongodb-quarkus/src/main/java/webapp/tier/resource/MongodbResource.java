@@ -1,7 +1,5 @@
 package webapp.tier.resource;
 
-import java.security.NoSuchAlgorithmException;
-
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -11,9 +9,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.bson.Document;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
+
+import com.mongodb.client.MongoCollection;
 
 import webapp.tier.service.MongodbService;
 
@@ -31,8 +32,9 @@ public class MongodbResource {
 	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response insert() {
 		try {
-			return Response.ok().entity(mongosvc.insertMsg()).build();
-		} catch (RuntimeException | NoSuchAlgorithmException e) {
+			MongoCollection<Document> collection = mongosvc.getCollection();
+			return Response.ok().entity(mongosvc.insertMsg(collection)).build();
+		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -43,8 +45,9 @@ public class MongodbResource {
 	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response select() {
 		try {
-			return Response.ok().entity(mongosvc.selectMsg()).build();
-		} catch (RuntimeException e) {
+			MongoCollection<Document> collection = mongosvc.getCollection();
+			return Response.ok().entity(mongosvc.selectMsg(collection)).build();
+		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -55,8 +58,9 @@ public class MongodbResource {
 	@Timed(name = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response delete() {
 		try {
-			return Response.ok().entity(mongosvc.deleteMsg()).build();
-		} catch (RuntimeException e) {
+			MongoCollection<Document> collection = mongosvc.getCollection();
+			return Response.ok().entity(mongosvc.deleteMsg(collection)).build();
+		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
