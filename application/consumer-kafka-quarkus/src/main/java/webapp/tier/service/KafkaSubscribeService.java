@@ -9,14 +9,12 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import webapp.tier.resource.DeliverResource;
-
 @ApplicationScoped
 public class KafkaSubscribeService {
 
 	@Inject
 	@RestClient
-	DeliverResource deliversvc;
+	DeliverService deliversvc;
 
 	private static final Logger LOG = Logger.getLogger(KafkaSubscribeService.class.getSimpleName());
 

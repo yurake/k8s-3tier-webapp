@@ -24,7 +24,7 @@ import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class ActiveMqService implements Runnable {
+public class ActiveMqSubscribeService implements Runnable {
 
 	@Inject
 	@RestClient
@@ -38,7 +38,7 @@ public class ActiveMqService implements Runnable {
 	@ConfigProperty(name = "activemq.topic.name")
 	String topicname;
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(ActiveMqSubscribeService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	static boolean isEnableReceived = true;
 
@@ -74,10 +74,10 @@ public class ActiveMqService implements Runnable {
 	}
 
 	public static void startReceived() {
-		ActiveMqService.isEnableReceived = true;
+		ActiveMqSubscribeService.isEnableReceived = true;
 	}
 
 	public static void stopReceived() {
-		ActiveMqService.isEnableReceived = false;
+		ActiveMqSubscribeService.isEnableReceived = false;
 	}
 }

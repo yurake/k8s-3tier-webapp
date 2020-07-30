@@ -9,7 +9,7 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 
 @ApplicationScoped
-public class HazelcastService {
+public class HazelcastConnectionWrapper {
 	private static String address = ConfigProvider.getConfig().getValue("hazelcast.address", String.class);
 
 	public static HazelcastInstance getInstance() throws RuntimeException {

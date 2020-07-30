@@ -13,6 +13,7 @@
 	<artifactId>consumer-redis-quarkus</artifactId>
 	<properties>
 		<jedis.version>3.3.0</jedis.version>
+		<jedis-mock.version>0.1.16</jedis-mock.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -35,6 +36,12 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.fppt</groupId>
+			<artifactId>jedis-mock</artifactId>
+			<version>${jedis-mock.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
