@@ -1,83 +1,56 @@
-version: 1
-update_configs:
-  - package_manager: docker
+version: 2
+updates:
+  - package-ecosystem: docker
     directory: "/kubernetes/monitoring/test/ab"
-    update_schedule: daily
-    automerged_updates:
-      - match:
-          dependency_type: all
-          update_type: all
-    default_assignees:
+    schedule:
+      interval: daily
+    assignees:
       - yurake
-  - package_manager: docker
+  - package-ecosystem: docker
     directory: "/kubernetes/monitoring/test/postmannewman"
-    update_schedule: daily
-    automerged_updates:
-      - match:
-          dependency_type: all
-          update_type: all
-    default_assignees:
+    schedule:
+      interval: daily
+    assignees:
       - yurake
-  - package_manager: docker
+  - package-ecosystem: docker
     directory: "/kubernetes/postgres"
-    update_schedule: daily
-    automerged_updates:
-      - match:
-          dependency_type: all
-          update_type: all
-    default_assignees:
+    schedule:
+      interval: daily
+    assignees:
       - yurake
-  - package_manager: docker
+  - package-ecosystem: docker
     directory: "/kubernetes/mysql"
-    update_schedule: daily
-    automerged_updates:
-      - match:
-          dependency_type: all
-          update_type: all
-    default_assignees:
+    schedule:
+      interval: daily
+    assignees:
       - yurake
-  - package_manager: docker
+  - package-ecosystem: docker
     directory: "/kubernetes/nginx"
-    update_schedule: daily
-    automerged_updates:
-      - match:
-          dependency_type: all
-          update_type: all
-    default_assignees:
+    schedule:
+      interval: daily
+    assignees:
       - yurake
-  - package_manager: docker
+  - package-ecosystem: docker
     directory: "/kubernetes/mongodb"
-    update_schedule: daily
-    automerged_updates:
-      - match:
-          dependency_type: all
-          update_type: all
-    default_assignees:
+    schedule:
+      interval: daily
+    assignees:
       - yurake
-  - package_manager: docker
+  - package-ecosystem: docker
     directory: "/kubernetes/monitoring/jenkins"
-    update_schedule: daily
-    automerged_updates:
-      - match:
-          dependency_type: all
-          update_type: all
-    default_assignees:
+    schedule:
+      interval: daily
+    assignees:
       - yurake
-  - package_manager: docker
+  - package-ecosystem: docker
     directory: "/kubernetes/wlp"
-    update_schedule: daily
-    automerged_updates:
-      - match:
-          dependency_type: all
-          update_type: all
-    default_assignees:
+    schedule:
+      interval: daily
+    assignees:
       - yurake
-  - package_manager: docker
+  - package-ecosystem: docker
     directory: "/kubernetes/rabbitmq"
-    update_schedule: daily
-    automerged_updates:
-      - match:
-          dependency_type: all
-          update_type: all
-    default_assignees:
+    schedule:
+      interval: daily
+    assignees:
       - yurake
