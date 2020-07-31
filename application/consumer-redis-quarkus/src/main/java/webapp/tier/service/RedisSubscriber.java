@@ -1,4 +1,4 @@
-package webapp.tier.service.subscribe;
+package webapp.tier.service;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,7 +11,6 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import redis.clients.jedis.JedisPubSub;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.service.DeliverService;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped

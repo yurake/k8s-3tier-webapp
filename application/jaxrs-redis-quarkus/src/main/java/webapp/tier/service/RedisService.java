@@ -28,7 +28,6 @@ public class RedisService implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
-	static boolean isEnableReceived = true;
 
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String servername = ConfigProvider.getConfig().getValue("redis.server", String.class);
@@ -157,13 +156,5 @@ public class RedisService implements Runnable {
 
 	protected void flushAll(Jedis jedis) {
 		jedis.flushAll();
-	}
-
-	public static void startReceived() {
-		isEnableReceived = true;
-	}
-
-	public static void stopReceived() {
-		isEnableReceived = false;
 	}
 }

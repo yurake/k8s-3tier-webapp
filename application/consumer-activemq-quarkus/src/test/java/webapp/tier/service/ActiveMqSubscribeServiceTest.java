@@ -12,16 +12,16 @@ import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 @QuarkusTestResource(ArtemisTestResource.class)
-class ActiveMqServiceTest {
+class ActiveMqSubscribeServiceTest {
 
 	@Inject
-	ActiveMqService svc;
+	ActiveMqSubscribeService svc;
 
 	@Test
 	void testStartStopSubscribe() {
 		try {
-			ActiveMqService.stopReceived();
-			ActiveMqService.startReceived();
+			ActiveMqSubscribeService.stopReceived();
+			ActiveMqSubscribeService.startReceived();
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
