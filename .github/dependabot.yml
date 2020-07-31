@@ -1,0 +1,58 @@
+version: 2
+updates:
+- package-ecosystem: docker
+  directory: "/kubernetes/monitoring/test/ab"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+- package-ecosystem: docker
+  directory: "/kubernetes/monitoring/test/postmannewman"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+- package-ecosystem: docker
+  directory: "/kubernetes/postgres"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+- package-ecosystem: docker
+  directory: "/kubernetes/mysql"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+- package-ecosystem: docker
+  directory: "/kubernetes/nginx"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+- package-ecosystem: docker
+  directory: "/kubernetes/mongodb"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+- package-ecosystem: docker
+  directory: "/kubernetes/monitoring/jenkins"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+- package-ecosystem: docker
+  directory: "/kubernetes/wlp"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - yurake
+- package-ecosystem: docker
+  directory: "/kubernetes/rabbitmq"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
