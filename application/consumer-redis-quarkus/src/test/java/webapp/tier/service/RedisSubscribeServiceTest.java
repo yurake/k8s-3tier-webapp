@@ -5,8 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -16,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import com.github.fppt.jedismock.RedisServer;
 
-import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.test.junit.QuarkusTest;
 import redis.clients.jedis.Jedis;
 
@@ -64,7 +61,7 @@ class RedisSubscribeServiceTest {
 					return jedis;
 				}
 			};
-			ThreadTestOnStartError th = new ThreadTestOnStartError();
+			MockPublisher th = new MockPublisher();
 			th.start();
 
 			Thread thread = new Thread(rsvc);
@@ -100,43 +97,5 @@ class RedisSubscribeServiceTest {
 	@Test
 	void testPingFalse() {
 		assertThat(svc.ping(), is(false));
-	}
-
-}
-
-class ThreadTestOnStartError extends Thread {
-
-	private static final Logger LOG = Logger.getLogger(ThreadTestOnStartError.class.getSimpleName());
-
-	@Override
-	public void run() {
-		Jedis jedis = RedisSubscribeServiceTest.createJedisMock();
-		try {
-			Thread.sleep(1000);
-			jedis.publish("pubsub", "1111,Test");
-			jedis.expire("1111", 3600);
-			LOG.log(Level.INFO, "Test Publish");
-
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "Test Error", e);
-		} finally {
-			jedis.close();
-		}
-	}
-}
-
-class Shutdown extends Thread {
-
-	private static final Logger LOG = Logger.getLogger(Shutdown.class.getSimpleName());
-
-	@Override
-	public void run() {
-		RedisSubscribeService svc = new RedisSubscribeService();
-		try {
-			Thread.sleep(2000);
-			svc.onStop(new ShutdownEvent());
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "Test Error", e);
-		}
 	}
 }
