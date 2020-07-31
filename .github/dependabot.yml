@@ -4,10 +4,10 @@ updates:
     directory: "/kubernetes/monitoring/test/ab"
     schedule:
       interval: daily
-      automerged_updates:
-        - match:
-            dependency_type: all
-            update_type: all
+    automerged_updates:
+      - match:
+        dependency_type: all
+        update_type: all
     open-pull-requests-limit: 10
     assignees:
       - yurake
@@ -15,10 +15,10 @@ updates:
     directory: "/kubernetes/monitoring/test/postmannewman"
     schedule:
       interval: daily
-      automerged_updates:
-        - match:
-            dependency_type: all
-            update_type: all
+    automerged_updates:
+      - match:
+        dependency_type: all
+        update_type: all
     open-pull-requests-limit: 10
     assignees:
       - yurake
@@ -26,10 +26,10 @@ updates:
     directory: "/kubernetes/postgres"
     schedule:
       interval: daily
-      automerged_updates:
-        - match:
-            dependency_type: all
-            update_type: all
+    automerged_updates:
+      - match:
+        dependency_type: all
+        update_type: all
     open-pull-requests-limit: 10
     assignees:
       - yurake
@@ -37,10 +37,10 @@ updates:
     directory: "/kubernetes/mysql"
     schedule:
       interval: daily
-      automerged_updates:
-        - match:
-            dependency_type: all
-            update_type: all
+    automerged_updates:
+      - match:
+        dependency_type: all
+        update_type: all
     open-pull-requests-limit: 10
     assignees:
       - yurake
@@ -48,10 +48,10 @@ updates:
     directory: "/kubernetes/nginx"
     schedule:
       interval: daily
-      automerged_updates:
-        - match:
-            dependency_type: all
-            update_type: all
+    automerged_updates:
+      - match:
+        dependency_type: all
+        update_type: all
     open-pull-requests-limit: 10
     assignees:
       - yurake
@@ -59,10 +59,10 @@ updates:
     directory: "/kubernetes/mongodb"
     schedule:
       interval: daily
-      automerged_updates:
-        - match:
-            dependency_type: all
-            update_type: all
+    automerged_updates:
+      - match:
+        dependency_type: all
+        update_type: all
     open-pull-requests-limit: 10
     assignees:
       - yurake
@@ -70,10 +70,10 @@ updates:
     directory: "/kubernetes/monitoring/jenkins"
     schedule:
       interval: daily
-      automerged_updates:
-        - match:
-            dependency_type: all
-            update_type: all
+    automerged_updates:
+      - match:
+        dependency_type: all
+        update_type: all
     open-pull-requests-limit: 10
     assignees:
       - yurake
@@ -81,10 +81,10 @@ updates:
     directory: "/kubernetes/wlp"
     schedule:
       interval: daily
-      automerged_updates:
-        - match:
-            dependency_type: all
-            update_type: all
+    automerged_updates:
+      - match:
+        dependency_type: all
+        update_type: all
     open-pull-requests-limit: 10
     assignees:
       - yurake
@@ -92,10 +92,10 @@ updates:
     directory: "/kubernetes/rabbitmq"
     schedule:
       interval: daily
-      automerged_updates:
-        - match:
-            dependency_type: all
-            update_type: all
+    automerged_updates:
+      - match:
+        dependency_type: all
+        update_type: all
     open-pull-requests-limit: 10
     assignees:
       - yurake
