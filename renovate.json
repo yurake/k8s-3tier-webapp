@@ -12,28 +12,6 @@
         "digest"
       ],
       "automerge": true
-    },
-    {
-      "packageNames": [
-        "actions/checkout",
-        "actions/cache",
-        "actions/upload-artifact",
-        "actions/download-artifact",
-        "actions/setup-node",
-        "brpaz/hadolint-action"
-      ],
-      "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?"
-    }
-  ],
-  "regexManagers": [
-    {
-      "fileMatch": [
-        "^\\.github/workflows/[^/]+\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "uses: (?<depName>.*?)@(?<currentValue>.*?)\n"
-      ],
-      "datasourceTemplate": "github-releases"
     }
   ],
   "assignees": [
