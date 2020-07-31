@@ -23,7 +23,7 @@ import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class HazelcastSubscribeService extends HazelcastConnectionWrapper implements Runnable {
+public class HazelcastSubscribeService extends HazelcastConnectionHelper implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(HazelcastSubscribeService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
