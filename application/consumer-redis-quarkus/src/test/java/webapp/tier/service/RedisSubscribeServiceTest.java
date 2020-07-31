@@ -27,7 +27,6 @@ class RedisSubscribeServiceTest {
 	RedisSubscribeService svc;
 
 	private static RedisServer server = null;
-	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@BeforeAll
 	public static void setup() throws IOException {
