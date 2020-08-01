@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import io.quarkus.test.junit.QuarkusTest;
-import webapp.tier.service.RedisSubscribeService;
+import webapp.tier.service.RedisService;
 
 @QuarkusTest
 class ReadinessHealthCheckTest {
@@ -24,8 +24,8 @@ class ReadinessHealthCheckTest {
 	@Test
 	void testCallUp() throws IOException, TimeoutException {
 		ReadinessHealthCheck hc = new ReadinessHealthCheck() {
-			protected RedisSubscribeService createRedisService() {
-				RedisSubscribeService mock = Mockito.mock(RedisSubscribeService.class);
+			protected RedisService createRedisService() {
+				RedisService mock = Mockito.mock(RedisService.class);
 				Mockito.when(mock.ping()).thenReturn(true);
 				return mock;
 			}

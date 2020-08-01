@@ -142,6 +142,10 @@ public class RedisService implements Runnable {
 
 	@Override
 	public void run() {
+		subscribeRedis();
+	}
+
+	void subscribeRedis() {
 		Jedis jedis = createJedis();
 		RedisSubscriber redissubsc = createRedisSubscriber();
 

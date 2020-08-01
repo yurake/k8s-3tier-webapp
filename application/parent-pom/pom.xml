@@ -40,6 +40,11 @@
 				<artifactId>webapp-service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>webapp.3tier.k8s</groupId>
+				<artifactId>jaxrs-redis-quarkus</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>

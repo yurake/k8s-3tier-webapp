@@ -8,7 +8,7 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
 
-import webapp.tier.service.RedisSubscribeService;
+import webapp.tier.service.RedisService;
 
 @Readiness
 @ApplicationScoped
@@ -19,7 +19,7 @@ public class ReadinessHealthCheck implements HealthCheck {
 	@Override
 	public HealthCheckResponse call() {
 		String msg = "Cache Server connection health check";
-		RedisSubscribeService redissvc = this.createRedisService();
+		RedisService redissvc = this.createRedisService();
 		if (redissvc.ping()) {
 			LOG.fine("Liveness: UP");
 			return HealthCheckResponse.up(msg);
@@ -29,8 +29,8 @@ public class ReadinessHealthCheck implements HealthCheck {
 		}
 	}
 
-	protected RedisSubscribeService createRedisService() {
-		return new RedisSubscribeService();
+	protected RedisService createRedisService() {
+		return new RedisService();
 	}
 
 }
