@@ -1,10 +1,11 @@
 package webapp.tier.service.socket;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import javax.inject.Inject;
+import javax.websocket.RemoteEndpoint;
 import javax.websocket.Session;
 
 import org.junit.jupiter.api.Test;
@@ -50,13 +51,15 @@ class RedisSocketTest {
 	@Test
 	void testOnMessage() {
 		Session session = Mockito.mock(Session.class);
+		RemoteEndpoint.Async async = Mockito.mock(RemoteEndpoint.Async.class);
 		Mockito.when(session.getId()).thenReturn(id);
+		Mockito.when(session.getAsyncRemote()).thenReturn(async);
 		socket.onOpen(session);
 		try {
 			socket.onMessage(message);
-			fail();
 		} catch (Exception expected) {
 			expected.printStackTrace();
+			fail();
 		} finally {
 			socket.onClose(session);
 		}

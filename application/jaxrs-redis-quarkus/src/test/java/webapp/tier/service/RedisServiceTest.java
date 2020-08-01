@@ -44,7 +44,7 @@ class RedisServiceTest {
 		server = null;
 	}
 
-	private Jedis createJedisMock() {
+	static Jedis createJedisMock() {
 		return new Jedis(server.getHost(), server.getBindPort());
 	}
 
@@ -118,6 +118,18 @@ class RedisServiceTest {
 	}
 
 	@Test
+	void testGetMsgList0() throws NoSuchAlgorithmException, RuntimeException {
+		Jedis jedis = createJedisMock();
+
+		List<MsgBean> msgbeans = svc.getMsgList(jedis);
+		svc.flushAll(jedis);
+		msgbeans.forEach(s -> {
+			assertThat(s.getId(), is(0));
+			assertThat(s.getMessage(), is("No Data."));
+		});
+	}
+
+	@Test
 	void testGetMsgListError() {
 		Jedis jedis = createJedisErrorMock();
 		try {
@@ -166,6 +178,48 @@ class RedisServiceTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertEquals("Publish Error.", e.getMessage());
+		}
+	}
+
+	@Test
+	void testSubscribe() {
+		try {
+			RedisService rsvc = new RedisService() {
+				public Jedis createJedis() {
+					Jedis jedis = createJedisMock();
+					return jedis;
+				}
+			};
+			MockPublisher th = new MockPublisher();
+			th.start();
+
+			Thread thread = new Thread(rsvc);
+			thread.start();
+			thread.join(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	void testSubscribeError() {
+		try {
+			RedisService rsvc = new RedisService() {
+				public Jedis createJedis() {
+					Jedis jedis = createJedisMock();
+					return jedis;
+				}
+			};
+			MockErrorMsgPublisher th = new MockErrorMsgPublisher();
+			th.start();
+
+			Thread thread = new Thread(rsvc);
+			thread.start();
+			thread.join(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
 		}
 	}
 }
