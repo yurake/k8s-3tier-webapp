@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: ab-activemq
-          image: yurak/ab:v0.4.1
+          image: yurak/ab:latest
           command: ["/bin/sh", "-c"]
           args:
             [
