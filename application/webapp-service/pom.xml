@@ -18,4 +18,10 @@
 			<url>https://maven.pkg.github.com/yurake/k8s-3tier-webapp</url>
 		</repository>
 	</distributionManagement>
+	<dependencies>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-undertow-websockets</artifactId>
+		</dependency>
+	</dependencies>
 </project>
