@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +18,7 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import com.github.fppt.jedismock.RedisServer;
 
@@ -44,7 +47,7 @@ class RedisServiceTest {
 		server = null;
 	}
 
-	private Jedis createJedisMock() {
+	static Jedis createJedisMock() {
 		return new Jedis(server.getHost(), server.getBindPort());
 	}
 
@@ -118,6 +121,18 @@ class RedisServiceTest {
 	}
 
 	@Test
+	void testGetMsgList0() throws NoSuchAlgorithmException, RuntimeException {
+		Jedis jedis = createJedisMock();
+
+		List<MsgBean> msgbeans = svc.getMsgList(jedis);
+		svc.flushAll(jedis);
+		msgbeans.forEach(s -> {
+			assertThat(s.getId(), is(0));
+			assertThat(s.getMessage(), is("No Data."));
+		});
+	}
+
+	@Test
 	void testGetMsgListError() {
 		Jedis jedis = createJedisErrorMock();
 		try {
@@ -166,6 +181,63 @@ class RedisServiceTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertEquals("Publish Error.", e.getMessage());
+		}
+	}
+
+	@Test
+	void testSubscribe() {
+		try {
+			RedisService rsvc = new RedisService() {
+				public Jedis createJedis() {
+					Jedis jedis = createJedisMock();
+					return jedis;
+				}
+			};
+			MockPublisher th = new MockPublisher();
+			th.start();
+
+			Thread thread = new Thread(rsvc);
+			thread.start();
+			thread.join(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	void testSubscribeError() {
+		try {
+			RedisService rsvc = new RedisService() {
+				public Jedis createJedis() {
+					Jedis jedis = createJedisMock();
+					return jedis;
+				}
+			};
+			MockErrorMsgPublisher th = new MockErrorMsgPublisher();
+			th.start();
+
+			Thread thread = new Thread(rsvc);
+			thread.start();
+			thread.join(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	void testSubscribeMock() {
+		try {
+			RedisSubscriber redissubsc = new RedisSubscriber();
+			RedisService mock = Mockito.mock(RedisService.class);
+			Jedis jmock = Mockito.mock(Jedis.class);
+			doNothing().when(jmock).subscribe(redissubsc, "pubsub");
+			when(mock.createJedis()).thenReturn(jmock);
+			mock.subscribeRedis(redissubsc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
 		}
 	}
 }

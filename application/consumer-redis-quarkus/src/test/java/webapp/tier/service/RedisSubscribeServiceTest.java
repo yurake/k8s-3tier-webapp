@@ -1,7 +1,5 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
@@ -42,7 +40,7 @@ class RedisSubscribeServiceTest {
 	}
 
 	@Test
-	void testOnStartError() {
+	void testSubscribeError() {
 		try {
 			RedisSubscribeService svc = new RedisSubscribeService();
 			svc.run();
@@ -53,7 +51,7 @@ class RedisSubscribeServiceTest {
 	}
 
 	@Test
-	void testOnStart() {
+	void testSubscribe() {
 		try {
 			RedisSubscribeService rsvc = new RedisSubscribeService() {
 				public Jedis createJedis() {
@@ -71,31 +69,5 @@ class RedisSubscribeServiceTest {
 			e.printStackTrace();
 			fail();
 		}
-	}
-
-	@Test
-	void testPingTrue() {
-		RedisSubscribeService rsvc = new RedisSubscribeService() {
-			public Jedis createJedis() {
-				Jedis jedis = createJedisMock();
-				return jedis;
-			}
-		};
-		assertThat(rsvc.ping(), is(true));
-	}
-
-	@Test
-	void testPingFalseNull() {
-		RedisSubscribeService rsvc = new RedisSubscribeService() {
-			public Jedis createJedis() {
-				return null;
-			}
-		};
-		assertThat(rsvc.ping(), is(false));
-	}
-
-	@Test
-	void testPingFalse() {
-		assertThat(svc.ping(), is(false));
 	}
 }

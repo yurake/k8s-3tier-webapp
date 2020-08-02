@@ -9,12 +9,11 @@ import javax.enterprise.inject.spi.CDI;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import redis.clients.jedis.JedisPubSub;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class RedisSubscriber extends JedisPubSub {
+public class RedisDeliverSubscriber extends RedisSubscriber {
 
 	private static final Logger LOG = Logger.getLogger(RedisSubscriber.class.getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
