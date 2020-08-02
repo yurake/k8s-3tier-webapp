@@ -142,12 +142,11 @@ public class RedisService implements Runnable {
 
 	@Override
 	public void run() {
-		subscribeRedis();
+		subscribeRedis(createRedisSubscriber());
 	}
 
-	void subscribeRedis() {
+	void subscribeRedis(RedisSubscriber redissubsc) {
 		Jedis jedis = createJedis();
-		RedisSubscriber redissubsc = createRedisSubscriber();
 
 		try {
 			jedis.subscribe(redissubsc, channel);

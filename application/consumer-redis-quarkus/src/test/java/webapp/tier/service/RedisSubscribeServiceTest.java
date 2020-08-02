@@ -53,7 +53,7 @@ class RedisSubscribeServiceTest {
 	@Test
 	void testSubscribe() {
 		try {
-			RedisService rsvc = new RedisService() {
+			RedisSubscribeService rsvc = new RedisSubscribeService() {
 				public Jedis createJedis() {
 					Jedis jedis = createJedisMock();
 					return jedis;

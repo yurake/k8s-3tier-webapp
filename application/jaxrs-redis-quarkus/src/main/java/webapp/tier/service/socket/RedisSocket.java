@@ -49,11 +49,7 @@ public class RedisSocket {
 		} else {
 			sessions.values().forEach(s -> {
 				LOG.log(Level.INFO, "Send : {0}", s.getId());
-				s.getAsyncRemote().sendObject(message, result -> {
-					if (result.getException() != null) {
-						LOG.log(Level.SEVERE, "Unable to send message", result.getException());
-					}
-				});
+				s.getAsyncRemote().sendObject(message);
 			});
 		}
 	}

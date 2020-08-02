@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +18,7 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import com.github.fppt.jedismock.RedisServer;
 
@@ -217,6 +220,21 @@ class RedisServiceTest {
 			Thread thread = new Thread(rsvc);
 			thread.start();
 			thread.join(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	void testSubscribeMock() {
+		try {
+			RedisSubscriber redissubsc = new RedisSubscriber();
+			RedisService mock = Mockito.mock(RedisService.class);
+			Jedis jmock = Mockito.mock(Jedis.class);
+			doNothing().when(jmock).subscribe(redissubsc, "pubsub");
+			when(mock.createJedis()).thenReturn(jmock);
+			mock.subscribeRedis(redissubsc);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

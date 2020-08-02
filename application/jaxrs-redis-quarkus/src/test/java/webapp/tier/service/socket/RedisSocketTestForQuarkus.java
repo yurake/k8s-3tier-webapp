@@ -12,6 +12,8 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.ContainerProvider;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
+import javax.websocket.SendHandler;
+import javax.websocket.SendResult;
 import javax.websocket.Session;
 
 import org.junit.jupiter.api.Test;
@@ -36,11 +38,22 @@ class RedisSocketTestForQuarkus {
 	static Session mastersession;
 
 	@Test
-	public void testWebsocketChat() throws Exception {
+	public void testOmMessage() throws Exception {
 		try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(Client.class, uri)) {
 			mastersession = session;
 			assertThat(MESSAGES.poll(10, TimeUnit.SECONDS), is("CONNECT"));
-			session.getAsyncRemote().sendObject("Test");
+
+			SendHandler sendHandler = new SendHandler() {
+				@Override
+				public void onResult(SendResult result) {
+					assertOK(result);
+				}
+
+				private void assertOK(SendResult result) {
+					assertThat("session sendHandler result ok: ", result.isOK());
+				}
+			};
+			session.getAsyncRemote().sendObject("Test", sendHandler);
 			assertThat(MESSAGES.poll(10, TimeUnit.SECONDS), is("Test"));
 		}
 	}
