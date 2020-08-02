@@ -7,7 +7,6 @@ import java.net.URI;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.ContainerProvider;
 import javax.websocket.OnMessage;
@@ -23,12 +22,6 @@ import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 class RedisSocketTestForQuarkus {
-
-	@Inject
-	RedisSocket socket;
-
-	String id = "testOnOpen";
-	String message = "testMessage";
 
 	private static final LinkedBlockingDeque<String> MESSAGES = new LinkedBlockingDeque<>();
 
@@ -67,7 +60,7 @@ class RedisSocketTestForQuarkus {
 		}
 
 		@OnMessage
-		void message(String msg) {
+		public void message(String msg) {
 			MESSAGES.add(msg);
 		}
 	}

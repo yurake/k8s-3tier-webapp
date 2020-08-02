@@ -145,7 +145,7 @@ public class RedisService implements Runnable {
 		subscribeRedis(createRedisSubscriber());
 	}
 
-	void subscribeRedis(RedisSubscriber redissubsc) {
+	protected void subscribeRedis(RedisSubscriber redissubsc) {
 		Jedis jedis = createJedis();
 
 		try {
