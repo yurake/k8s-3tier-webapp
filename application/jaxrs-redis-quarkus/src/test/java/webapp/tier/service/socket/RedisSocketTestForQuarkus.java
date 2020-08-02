@@ -28,12 +28,9 @@ class RedisSocketTestForQuarkus {
 	@TestHTTPResource("/quarkus/redis/subscribe")
 	URI uri;
 
-	static Session mastersession;
-
 	@Test
 	public void testOmMessage() throws Exception {
 		try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(Client.class, uri)) {
-			mastersession = session;
 			assertThat(MESSAGES.poll(10, TimeUnit.SECONDS), is("CONNECT"));
 
 			SendHandler sendHandler = new SendHandler() {
