@@ -7,13 +7,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
+import com.github.fridujo.rabbitmq.mock.MockConnection;
 import com.github.fridujo.rabbitmq.mock.MockConnectionFactory;
+import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -25,57 +29,58 @@ class RabbitmqServiceTest {
 	@Inject
 	RabbitmqService svc;
 
-	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
-	String errormsg = "channel is already closed due to clean channel shutdown";
+	private static final String respbody = "message: Hello k8s-3tier-webapp with quarkus";
+	private static final String errormsg = "channel is already closed due to clean channel shutdown";
+	private static final String exchangename = "exchangemsg";
+	private static final String routingkey = "routingkeymsg";
+
+	private static MockConnection createRabbitmqMock() {
+		MockConnection conn = new MockConnectionFactory().newConnection();
+		return conn;
+	}
 
 	@Test
 	void testPutMsg() throws Exception {
-		Connection conn = new MockConnectionFactory().newConnection();
-		MsgBean msgbean = svc.putMsg(conn);
-		assertThat(msgbean.getFullmsg(), containsString(respbody));
-		conn.close();
+		try (Connection conn = createRabbitmqMock()) {
+			MsgBean msgbean = svc.putMsg(conn);
+			assertThat(msgbean.getFullmsg(), containsString(respbody));
+			conn.close();
+		}
 	}
 
 	@Test
 	void testPutMsgError() throws IOException {
-		Connection conn = null;
-		try {
-			conn = new MockConnectionFactory().newConnection();
+		try (Connection conn = createRabbitmqMock()) {
 			conn.close();
 			svc.putMsg(conn);
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertEquals(errormsg, e.getMessage());
-		} finally {
-			if (conn != null) {
-				conn.close();
-			}
 		}
 	}
 
 	@Test
 	void testGetMsgNoData() throws Exception {
-		Connection conn = new MockConnectionFactory().newConnection();
-		MsgBean msgbean = svc.getMsg(conn);
-		assertThat(msgbean.getFullmsg(), containsString("No Data."));
-		conn.close();
+		try (Connection conn = createRabbitmqMock()) {
+			MsgBean msgbean = svc.getMsg(conn);
+			assertThat(msgbean.getFullmsg(), containsString("No Data."));
+		}
 	}
 
 	@Test
 	void testGetMsgWithData() throws Exception {
-		Connection conn = new MockConnectionFactory().newConnection();
-		svc.getMsg(conn);
-		svc.putMsg(conn);
-		MsgBean msgbean = svc.getMsg(conn);
-		assertThat(msgbean.getFullmsg(), containsString(respbody));
-		conn.close();
+		try (Connection conn = createRabbitmqMock()) {
+			svc.getMsg(conn);
+			svc.putMsg(conn);
+			MsgBean msgbean = svc.getMsg(conn);
+			assertThat(msgbean.getFullmsg(), containsString(respbody));
+		}
 	}
 
 	@Test
 	void testGetMsgError() {
-		try {
-			Connection conn = new MockConnectionFactory().newConnection();
+		try (Connection conn = createRabbitmqMock()) {
 			conn.close();
 			svc.getMsg(conn);
 		} catch (Exception e) {
@@ -86,17 +91,11 @@ class RabbitmqServiceTest {
 
 	@Test
 	void testPublishMsgError() throws IOException {
-		Connection conn = null;
-		try {
-			conn = new MockConnectionFactory().newConnection();
+		try (Connection conn = createRabbitmqMock()) {
 			svc.publishMsg(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertEquals("Publish Error.", e.getMessage());
-		} finally {
-			if (conn != null) {
-				conn.close();
-			}
 		}
 	}
 
@@ -107,21 +106,69 @@ class RabbitmqServiceTest {
 
 	@Test
 	void testIsActiveTrue() throws IOException, TimeoutException {
-		RabbitmqService rsvc = new RabbitmqService() {
-			public Connection getConnection() {
-				Connection conn = new MockConnectionFactory().newConnection();
-				return conn;
-			}
-		};
-		assertThat(rsvc.isActive(), is(true));
+		try (MockConnection conn = createRabbitmqMock()) {
+			RabbitmqService rsvc = new RabbitmqService() {
+				public Connection getConnection() {
+					return conn;
+				}
+			};
+			assertThat(rsvc.isActive(), is(true));
+		}
 	}
 
 	@Test
-	void testStartStopSubscribe() {
+	void testSubscribe() {
 
-		try {
+		try (MockConnection conn = createRabbitmqMock();
+				Channel channel = conn.createChannel()) {
+			RabbitmqService rsvc = new RabbitmqService() {
+				public Connection getConnection() {
+					return conn;
+				}
+			};
+			Thread thread = new Thread(rsvc);
+			thread.start();
+
+			channel.exchangeDeclare(exchangename, "direct", true);
+			String queueName = channel.queueDeclare().getQueue();
+			channel.queueBind(queueName, exchangename, routingkey);
+
+			channel.exchangeDeclare(exchangename, "direct", true);
+			channel.basicPublish(exchangename, routingkey, null, "0000,Test".getBytes(StandardCharsets.UTF_8));
+			TimeUnit.MILLISECONDS.sleep(200L);
+			channel.basicPublish(exchangename, routingkey, null, "1111,Test".getBytes(StandardCharsets.UTF_8));
+			TimeUnit.MILLISECONDS.sleep(200L);
+			channel.basicPublish(exchangename, routingkey, null, "2222,Test".getBytes(StandardCharsets.UTF_8));
+			TimeUnit.MILLISECONDS.sleep(200L);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	void testIsEnableReceived() {
+
+		try (MockConnection conn = createRabbitmqMock();
+				Channel channel = conn.createChannel()) {
+			RabbitmqService rsvc = new RabbitmqService() {
+				public Connection getConnection() {
+					return conn;
+				}
+			};
+			Thread thread = new Thread(rsvc);
 			RabbitmqService.stopReceived();
+			thread.start();
 			RabbitmqService.startReceived();
+
+			channel.exchangeDeclare(exchangename, "direct", true);
+			String queueName = channel.queueDeclare().getQueue();
+			channel.queueBind(queueName, exchangename, routingkey);
+
+			channel.exchangeDeclare(exchangename, "direct", true);
+			channel.basicPublish(exchangename, routingkey, null, "0000,Test".getBytes(StandardCharsets.UTF_8));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

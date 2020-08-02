@@ -1,7 +1,6 @@
 package webapp.tier.service;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,13 +15,9 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
-import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
-import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.GetResponse;
 
 import io.quarkus.runtime.ShutdownEvent;
@@ -45,6 +40,8 @@ public class RabbitmqService implements Runnable {
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String queuename = ConfigProvider.getConfig().getValue("rabbitmq.queue.name", String.class);
 	private static String exchangename = ConfigProvider.getConfig().getValue("rabbitmq.exchange.name", String.class);
+	private static String routingkey = ConfigProvider.getConfig().getValue("rabbitmq.exchange.routingkey",
+			String.class);
 	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username", String.class);
 	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password", String.class);
 	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
@@ -53,12 +50,20 @@ public class RabbitmqService implements Runnable {
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
-		LOG.info("Subscribe is starting...");
+		LOG.log(Level.INFO, "Subscribe is starting...");
 	}
 
 	void onStop(@Observes ShutdownEvent ev) {
 		scheduler.shutdown();
-		LOG.info("Subscribe is stopping...");
+		LOG.log(Level.INFO, "Subscribe is stopping...");
+	}
+
+	public static void startReceived() {
+		RabbitmqService.isEnableReceived = true;
+	}
+
+	public static void stopReceived() {
+		RabbitmqService.isEnableReceived = false;
 	}
 
 	public Connection getConnection() throws IOException, TimeoutException {
@@ -70,6 +75,10 @@ public class RabbitmqService implements Runnable {
 		return connectionFactory.newConnection();
 	}
 
+	protected RabbitmqConsumer createRabbitmqConsumer(Channel channel) {
+		return new RabbitmqConsumer(channel);
+	}
+
 	public MsgBean putMsg(Connection conn) throws Exception {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
@@ -77,7 +86,7 @@ public class RabbitmqService implements Runnable {
 		try (Channel channel = conn.createChannel()) {
 			channel.basicPublish("", queuename, null, body.getBytes());
 		}
-		LOG.info(msgbean.getFullmsg());
+		LOG.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 
 	}
@@ -97,7 +106,7 @@ public class RabbitmqService implements Runnable {
 				msgbean.setFullmsg("Get");
 			}
 		}
-		LOG.info(msgbean.getFullmsg());
+		LOG.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -106,11 +115,11 @@ public class RabbitmqService implements Runnable {
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
 		try (Channel channel = conn.createChannel()) {
-			channel.exchangeDeclare(exchangename, "fanout");
-			channel.basicPublish(exchangename, "", null, body.getBytes(StandardCharsets.UTF_8));
+			channel.exchangeDeclare(exchangename, "direct", true);
+			channel.basicPublish(exchangename, routingkey, null, body.getBytes(StandardCharsets.UTF_8));
 		}
 
-		LOG.info(msgbean.getFullmsg());
+		LOG.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -126,45 +135,23 @@ public class RabbitmqService implements Runnable {
 
 	@Override
 	public void run() {
-		try (Connection connection = getConnection();
-				Channel channel = connection.createChannel()) {
-
-			channel.exchangeDeclare(exchangename, "fanout");
-			String queueName = channel.queueDeclare().getQueue();
-			LOG.log(Level.INFO, "Create queue: " + queueName);
-			channel.queueBind(queueName, exchangename, "");
-
-			Consumer consumer = new DefaultConsumer(channel) {
-				@Override
-				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
-						byte[] body) throws UnsupportedEncodingException {
-					MsgBean msgbean = MsgUtils.splitBody(new String(body, StandardCharsets.UTF_8), splitkey);
-					msgbean.setFullmsg("Received");
-					LOG.info(msgbean.getFullmsg());
-					rmqsock.onMessage(MsgUtils.createBody(msgbean, splitkey));
-					msgbean.setFullmsg("Broadcast");
-					LOG.log(Level.INFO, msgbean.getFullmsg());
-				}
-			};
-			channel.basicConsume(queueName, true, consumer);
-
-			while (isEnableReceived) {
-				TimeUnit.MINUTES.sleep(10L);
-			}
-
-		} catch (IOException | TimeoutException e) {
+		try (Connection conn = getConnection();
+				Channel channel = conn.createChannel()) {
+			subscribeRabbitmq(conn, channel, createRabbitmqConsumer(channel));
+		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Subscribe Errorr.", e);
-		} catch (InterruptedException e) {
-		    LOG.log(Level.WARNING, "Interrupted!", e);
-		    Thread.currentThread().interrupt();
 		}
 	}
 
-	public static void startReceived() {
-		RabbitmqService.isEnableReceived = true;
-	}
+	protected void subscribeRabbitmq(Connection conn, Channel channel, RabbitmqConsumer consumer)
+			throws IOException, TimeoutException, InterruptedException {
+		channel.exchangeDeclare(exchangename, "direct", true);
+		String queueName = channel.queueDeclare().getQueue();
+		channel.queueBind(queueName, exchangename, routingkey);
+		channel.basicConsume(queueName, false, "myConsumerTag", consumer);
 
-	public static void stopReceived() {
-		RabbitmqService.isEnableReceived = false;
+		while (isEnableReceived) {
+			TimeUnit.MINUTES.sleep(10L);
+		}
 	}
 }
