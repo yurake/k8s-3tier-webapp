@@ -763,7 +763,7 @@ jobs:
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: mvn -B verify deploy --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -850,7 +850,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-rabbitmq-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-rabbitmq-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
