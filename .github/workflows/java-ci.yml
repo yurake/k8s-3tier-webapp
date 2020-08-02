@@ -1073,7 +1073,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-redis-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-redis-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
