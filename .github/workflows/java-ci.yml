@@ -739,7 +739,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 19.3.3.java11
       - run: java -version
       - name: setup-native-image
         run: |
