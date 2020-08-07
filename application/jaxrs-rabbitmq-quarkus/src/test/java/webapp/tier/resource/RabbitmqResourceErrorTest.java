@@ -1,26 +1,13 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static io.restassured.RestAssured.given;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 class RabbitmqResourceErrorTest {
-
-	@BeforeAll
-	public static void setup() {
-		ThreadTestOnStartError th = new ThreadTestOnStartError();
-		try {
-			th.start();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
 
 	@Test
 	void testPutError() {

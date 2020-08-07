@@ -19,8 +19,8 @@ class ServiceSocketTest {
 	@Inject
 	private ServiceSocket socket;
 
-	private String id = "testOnOpen";
-	private String message = "testMessage";
+	private static final String id = "testOnOpen";
+	private static final String message = "testMessage";
 
 	@Test
 	void testOnOpen() {
