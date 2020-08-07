@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        minikube: [v1.12.0, v1.12.1]
+        minikube: [v1.12.1, v1.12.2]
         kubernetes: [v1.18.2, v1.18.3]
     steps:
       - name: checkout

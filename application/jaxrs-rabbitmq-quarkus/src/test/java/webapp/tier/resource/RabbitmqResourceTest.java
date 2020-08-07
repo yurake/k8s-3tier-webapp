@@ -2,10 +2,8 @@ package webapp.tier.resource;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.github.fridujo.rabbitmq.mock.MockConnectionFactory;
@@ -22,17 +20,6 @@ class RabbitmqResourceTest {
 
 	@InjectMock
 	RabbitmqService svc;
-
-	@BeforeAll
-	public static void setup() {
-		ThreadTestOnStartError th = new ThreadTestOnStartError();
-		try {
-			th.start();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
 
 	@Test
 	void testPut() throws Exception {
