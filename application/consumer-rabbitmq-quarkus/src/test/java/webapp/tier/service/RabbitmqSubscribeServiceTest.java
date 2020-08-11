@@ -1,17 +1,17 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
+import com.github.fridujo.rabbitmq.mock.MockConnection;
 import com.github.fridujo.rabbitmq.mock.MockConnectionFactory;
+import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -19,30 +19,22 @@ import io.quarkus.test.junit.QuarkusTest;
 @QuarkusTest
 class RabbitmqSubscribeServiceTest {
 
+	private static final String exchangename = "exchangemsg";
+	private static final String routingkey = "routingkeymsg";
+
+	private static MockConnection createRabbitmqMock() {
+		MockConnection conn = new MockConnectionFactory().newConnection();
+		return conn;
+	}
+
 	@Inject
 	RabbitmqSubscribeService svc;
 
 	@Test
-	void testIsActiveFalse() {
-		assertThat(svc.isActive(), is(false));
-	}
-
-	@Test
-	void testIsActiveTrue() throws IOException, TimeoutException {
-		RabbitmqSubscribeService rsvc = new RabbitmqSubscribeService() {
-			public Connection getConnection() {
-				Connection conn = new MockConnectionFactory().newConnection();
-				return conn;
-			}
-		};
-		assertThat(rsvc.isActive(), is(true));
-	}
-
-	@Test
-	void testStartStopSubscribe() {
+	void testSubscribeError() {
 		try {
-			RabbitmqSubscribeService.stopReceived();
-			RabbitmqSubscribeService.startReceived();
+			RabbitmqSubscribeService svc = new RabbitmqSubscribeService();
+			svc.run();
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -50,20 +42,32 @@ class RabbitmqSubscribeServiceTest {
 	}
 
 	@Test
-	void testRun() throws IOException, TimeoutException {
-		RabbitmqSubscribeService rsvc = new RabbitmqSubscribeService() {
-			public Connection getConnection() {
-				Connection conn = new MockConnectionFactory().newConnection();
-				return conn;
-			}
-		};
-		try {
-			RabbitmqSubscribeService.stopReceived();
-			rsvc.run();
+	void testSubscribe() {
+		try (MockConnection conn = createRabbitmqMock();
+				Channel channel = conn.createChannel()) {
+			RabbitmqSubscribeService rsvc = new RabbitmqSubscribeService() {
+				public Connection getConnection() {
+					return conn;
+				}
+			};
+			Thread thread = new Thread(rsvc);
+			thread.start();
+
+			channel.exchangeDeclare(exchangename, "direct", true);
+			String queueName = channel.queueDeclare().getQueue();
+			channel.queueBind(queueName, exchangename, routingkey);
+
+			channel.exchangeDeclare(exchangename, "direct", true);
+			channel.basicPublish(exchangename, routingkey, null, "0000,Test".getBytes(StandardCharsets.UTF_8));
+			TimeUnit.MILLISECONDS.sleep(200L);
+			channel.basicPublish(exchangename, routingkey, null, "1111,Test".getBytes(StandardCharsets.UTF_8));
+			TimeUnit.MILLISECONDS.sleep(200L);
+			channel.basicPublish(exchangename, routingkey, null, "2222,Test".getBytes(StandardCharsets.UTF_8));
+			TimeUnit.MILLISECONDS.sleep(200L);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
-
 }
