@@ -12,9 +12,9 @@ import webapp.tier.service.RedisService;
 
 @Readiness
 @ApplicationScoped
-public class ReadinessHealthCheck implements HealthCheck {
+public class ReadinessHealthCheckRedisSubscriber implements HealthCheck {
 
-	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheck.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheckRedisSubscriber.class.getSimpleName());
 
 	@Override
 	public HealthCheckResponse call() {

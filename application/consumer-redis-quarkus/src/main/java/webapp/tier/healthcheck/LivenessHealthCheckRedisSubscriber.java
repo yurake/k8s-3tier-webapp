@@ -8,7 +8,7 @@ import org.eclipse.microprofile.health.Liveness;
 
 @Liveness
 @ApplicationScoped
-public class LivenessHealthCheck implements HealthCheck {
+public class LivenessHealthCheckRedisSubscriber implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {

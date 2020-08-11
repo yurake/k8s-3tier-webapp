@@ -12,9 +12,9 @@ import webapp.tier.service.RabbitmqSubscribeService;
 
 @Readiness
 @ApplicationScoped
-public class ReadinessHealthCheck implements HealthCheck {
+public class ReadinessHealthCheckRabbitmqSubscriber implements HealthCheck {
 
-	private static final Logger LOG = Logger.getLogger(LivenessHealthCheck.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(LivenessHealthCheckRabbitmqSubscriber.class.getSimpleName());
 
 	@Override
 	public HealthCheckResponse call() {
