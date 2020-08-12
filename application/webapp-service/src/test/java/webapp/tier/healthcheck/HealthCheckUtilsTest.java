@@ -12,16 +12,16 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class HealthCheckUtilityTest {
+class HealthCheckUtilsTest {
 
 	@Test
 	void respHealthCheckStatusDown() {
-		assertThat(HealthCheckUtility.respHealthCheckStatus(false, "Test").getState(), is(State.DOWN));
+		assertThat(HealthCheckUtils.respHealthCheckStatus(false, "Test").getState(), is(State.DOWN));
 	}
 
 	@Test
 	void respHealthCheckStatusUp() throws IOException, TimeoutException {
-		assertThat(HealthCheckUtility.respHealthCheckStatus(true, "Test").getState(), is(State.UP));
+		assertThat(HealthCheckUtils.respHealthCheckStatus(true, "Test").getState(), is(State.UP));
 	}
 
 }

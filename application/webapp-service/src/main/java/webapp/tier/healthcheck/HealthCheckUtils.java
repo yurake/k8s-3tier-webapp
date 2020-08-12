@@ -4,9 +4,9 @@ import java.util.logging.Logger;
 
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
-public class HealthCheckUtility {
+public class HealthCheckUtils {
 
-	private static final Logger LOG = Logger.getLogger(HealthCheckUtility.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(HealthCheckUtils.class.getSimpleName());
 
 	public static HealthCheckResponse respHealthCheckStatus(boolean status, String msg) {
 		if (status) {

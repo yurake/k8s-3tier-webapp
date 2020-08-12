@@ -20,7 +20,7 @@ public class ReadinessHealthCheckRedis implements HealthCheck {
 
 	protected HealthCheckResponse checkRabbitmqService(RedisService svc) {
 		String msg = "Redis Server connection health check";
-		return HealthCheckUtility.respHealthCheckStatus(svc.ping(), msg);
+		return HealthCheckUtils.respHealthCheckStatus(svc.ping(), msg);
 	}
 
 
