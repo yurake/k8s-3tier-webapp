@@ -12,15 +12,18 @@ import webapp.tier.service.RabbitmqService;
 
 @Readiness
 @ApplicationScoped
-public class ReadinessHealthCheck implements HealthCheck {
+public class ReadinessHealthCheckRabbitmq implements HealthCheck {
 
-	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheck.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheckRabbitmq.class.getSimpleName());
 
 	@Override
 	public HealthCheckResponse call() {
-		String msg = "Database connection health check";
-
 		RabbitmqService svc = this.createRabbitmqService();
+		return checkRabbitmqService(svc);
+	}
+
+	protected HealthCheckResponse checkRabbitmqService(RabbitmqService svc) {
+		String msg = "Database connection health check";
 		if (svc.isActive()) {
 			LOG.fine("Readiness: UP");
 			return HealthCheckResponse.up(msg);

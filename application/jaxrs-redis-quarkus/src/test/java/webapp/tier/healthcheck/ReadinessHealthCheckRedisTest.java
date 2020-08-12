@@ -13,17 +13,17 @@ import io.quarkus.test.junit.QuarkusTest;
 import webapp.tier.service.RedisService;
 
 @QuarkusTest
-class ReadinessHealthCheckTest {
+class ReadinessHealthCheckRedisTest {
 
 	@Test
 	void testCallDown() {
-		ReadinessHealthCheck hc = new ReadinessHealthCheck();
+		ReadinessHealthCheckRedis hc = new ReadinessHealthCheckRedis();
 		assertEquals(State.DOWN, hc.call().getState(), "Unexpected status");
 	}
 
 	@Test
 	void testCallUp() throws IOException, TimeoutException {
-		ReadinessHealthCheck hc = new ReadinessHealthCheck() {
+		ReadinessHealthCheckRedis hc = new ReadinessHealthCheckRedis() {
 			protected RedisService createRedisService() {
 				RedisService mock = Mockito.mock(RedisService.class);
 				Mockito.when(mock.ping()).thenReturn(true);

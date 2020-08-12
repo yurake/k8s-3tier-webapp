@@ -1,36 +1,24 @@
 package webapp.tier.healthcheck;
 
-import java.util.logging.Logger;
-
 import javax.enterprise.context.ApplicationScoped;
 
-import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
 
-import webapp.tier.service.RedisService;
+import webapp.tier.service.RedisSubscribeService;
 
 @Readiness
 @ApplicationScoped
-public class ReadinessHealthCheckRedisSubscriber implements HealthCheck {
-
-	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheckRedisSubscriber.class.getSimpleName());
+public class ReadinessHealthCheckRedisSubscriber extends ReadinessHealthCheckRedis {
 
 	@Override
 	public HealthCheckResponse call() {
-		String msg = "Cache Server connection health check";
-		RedisService redissvc = this.createRedisService();
-		if (redissvc.ping()) {
-			LOG.fine("Liveness: UP");
-			return HealthCheckResponse.up(msg);
-		} else {
-			LOG.warning("Liveness: DOWN");
-			return HealthCheckResponse.down(msg);
-		}
+		RedisSubscribeService svc = this.createRedisSubscribeService();
+		return checkRabbitmqService(svc);
 	}
 
-	protected RedisService createRedisService() {
-		return new RedisService();
+	protected RedisSubscribeService createRedisSubscribeService() {
+		return new RedisSubscribeService();
 	}
 
 }

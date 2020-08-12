@@ -13,17 +13,17 @@ import io.quarkus.test.junit.QuarkusTest;
 import webapp.tier.service.RabbitmqService;
 
 @QuarkusTest
-class ReadinessHealthCheckRabbitmqSubscriberTest {
+class ReadinessHealthCheckRabbitmqTest {
 
 	@Test
 	void testCallDown() {
-		ReadinessHealthCheck hc = new ReadinessHealthCheck();
+		ReadinessHealthCheckRabbitmq hc = new ReadinessHealthCheckRabbitmq();
 		assertEquals(State.DOWN, hc.call().getState(), "Unexpected status");
 	}
 
 	@Test
 	void testCallUp() throws IOException, TimeoutException {
-		ReadinessHealthCheck hc = new ReadinessHealthCheck() {
+		ReadinessHealthCheckRabbitmq hc = new ReadinessHealthCheckRabbitmq() {
 			protected RabbitmqService createRabbitmqService() {
 				RabbitmqService mock = Mockito.mock(RabbitmqService.class);
 				Mockito.when(mock.isActive()).thenReturn(true);

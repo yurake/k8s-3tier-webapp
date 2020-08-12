@@ -12,15 +12,19 @@ import webapp.tier.service.RedisService;
 
 @Readiness
 @ApplicationScoped
-public class ReadinessHealthCheck implements HealthCheck {
+public class ReadinessHealthCheckRedis implements HealthCheck {
 
-	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheck.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheckRedis.class.getSimpleName());
 
 	@Override
 	public HealthCheckResponse call() {
+		RedisService svc = this.createRedisService();
+		return checkRabbitmqService(svc);
+	}
+
+	protected HealthCheckResponse checkRabbitmqService(RedisService svc) {
 		String msg = "Cache Server connection health check";
-		RedisService redissvc = this.createRedisService();
-		if (redissvc.ping()) {
+		if (svc.ping()) {
 			LOG.fine("Liveness: UP");
 			return HealthCheckResponse.up(msg);
 		} else {
@@ -28,6 +32,7 @@ public class ReadinessHealthCheck implements HealthCheck {
 			return HealthCheckResponse.down(msg);
 		}
 	}
+
 
 	protected RedisService createRedisService() {
 		return new RedisService();

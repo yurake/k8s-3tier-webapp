@@ -1,10 +1,7 @@
 package webapp.tier.healthcheck;
 
-import java.util.logging.Logger;
-
 import javax.enterprise.context.ApplicationScoped;
 
-import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
 
@@ -12,22 +9,12 @@ import webapp.tier.service.RabbitmqSubscribeService;
 
 @Readiness
 @ApplicationScoped
-public class ReadinessHealthCheckRabbitmqSubscriber implements HealthCheck {
-
-	private static final Logger LOG = Logger.getLogger(LivenessHealthCheckRabbitmqSubscriber.class.getSimpleName());
+public class ReadinessHealthCheckRabbitmqSubscriber extends ReadinessHealthCheckRabbitmq {
 
 	@Override
 	public HealthCheckResponse call() {
-		String msg = "Cache Server connection health check";
-
-		RabbitmqSubscribeService rabbitmqsvc = this.createRabbitmqSubscribeService();
-		if (rabbitmqsvc.isActive()) {
-			LOG.fine("Liveness: UP");
-			return HealthCheckResponse.up(msg);
-		} else {
-			LOG.warning("Liveness: DOWN");
-			return HealthCheckResponse.down(msg);
-		}
+		RabbitmqSubscribeService svc = this.createRabbitmqSubscribeService();
+		return checkRabbitmqService(svc);
 	}
 
 	protected RabbitmqSubscribeService createRabbitmqSubscribeService() {
