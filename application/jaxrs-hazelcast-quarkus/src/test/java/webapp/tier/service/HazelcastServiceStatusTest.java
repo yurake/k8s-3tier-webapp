@@ -20,7 +20,7 @@ import io.quarkus.test.junit.QuarkusTest;
 class HazelcastServiceStatusTest {
 
 	@Inject
-	HazelcastServiceStatus svc;
+	private HazelcastServiceStatus svc;
 
 	private static HazelcastInstance mockInstance;
 
