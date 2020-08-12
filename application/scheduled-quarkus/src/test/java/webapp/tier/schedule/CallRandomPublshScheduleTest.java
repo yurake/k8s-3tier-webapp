@@ -12,7 +12,7 @@ import io.quarkus.test.junit.QuarkusTest;
 class CallRandomPublshScheduleTest {
 
 	@Inject
-	CallRandomPublshSchedule rps;
+	private CallRandomPublshSchedule rps;
 
 	@Test
 	void testCallRandomPublsh() {
