@@ -1,4 +1,4 @@
-package webapp.tier.resource;
+package webapp.tier.service;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -9,7 +9,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @Path("/quarkus")
 @RegisterRestClient(configKey = "mysql")
-public interface MysqlResource {
+public interface MysqlService {
 
 	@POST
 	@Path("/mysql/delete")

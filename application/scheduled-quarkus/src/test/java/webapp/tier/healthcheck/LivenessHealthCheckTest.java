@@ -1,18 +1,23 @@
 package webapp.tier.healthcheck;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.HealthCheckResponse.State;
 import org.junit.jupiter.api.Test;
 
+import io.quarkus.test.junit.QuarkusTest;
+
+@QuarkusTest
 class LivenessHealthCheckTest {
 
 	@Test
 	void testCallError() {
 		LivenessHealthCheck hc = new LivenessHealthCheck();
 		HealthCheckResponse resp = hc.call();
-		assertEquals(resp.getState(), HealthCheckResponse.State.UP);
-		assertEquals(resp.getName(), "OK");
+		assertThat(resp.getState(), is(State.UP));
+		assertThat(resp.getName(), is("OK"));
 	}
 
 }

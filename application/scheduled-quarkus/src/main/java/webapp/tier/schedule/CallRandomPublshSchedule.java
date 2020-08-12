@@ -8,29 +8,29 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.quarkus.scheduler.Scheduled;
-import webapp.tier.resource.DeliverResource;
-import webapp.tier.resource.MongodbResource;
-import webapp.tier.resource.MysqlResource;
-import webapp.tier.resource.PostgresResource;
+import webapp.tier.service.DeliverService;
+import webapp.tier.service.MongodbService;
+import webapp.tier.service.MysqlService;
+import webapp.tier.service.PostgresService;
 
 @ApplicationScoped
 public class CallRandomPublshSchedule {
 
 	@Inject
 	@RestClient
-	DeliverResource deliverrsc;
+	DeliverService deliversvc;
 
 	@Inject
 	@RestClient
-	PostgresResource postgresrsc;
+	PostgresService postgressvc;
 
 	@Inject
 	@RestClient
-	MysqlResource mysqlrsc;
+	MysqlService mysqlsvc;
 
 	@Inject
 	@RestClient
-	MongodbResource mongodbrsc;
+	MongodbService mongodbsvc;
 
 	private static final Logger LOG = Logger.getLogger(CallRandomPublshSchedule.class.getSimpleName());
 
@@ -38,18 +38,18 @@ public class CallRandomPublshSchedule {
 	void callRandomPublsh() {
 		String response;
 		LOG.info("Call: Random Publish");
-		response = deliverrsc.random();
+		response = deliversvc.random();
 		LOG.info(response);
 	}
 
 	@Scheduled(every = "10m")
 	void callDeleteDbs() {
 		LOG.info("Call: Delete Postgres");
-		LOG.info(postgresrsc.delete());
+		LOG.info(postgressvc.delete());
 		LOG.info("Call: Delete Mysql");
-		LOG.info(mysqlrsc.delete());
+		LOG.info(mysqlsvc.delete());
 		LOG.info("Call: Delete Mongodb");
-		LOG.info(mongodbrsc.delete());
+		LOG.info(mongodbsvc.delete());
 	}
 
 }
