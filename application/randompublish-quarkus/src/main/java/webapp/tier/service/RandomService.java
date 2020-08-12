@@ -8,45 +8,44 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import webapp.tier.resource.ActivemqResource;
-import webapp.tier.resource.HazelcastResource;
-import webapp.tier.resource.MongodbResource;
-import webapp.tier.resource.PostgresResource;
-import webapp.tier.resource.RabbitmqResource;
-import webapp.tier.resource.RedisResource;
+import webapp.tier.service.client.ActivemqClientService;
+import webapp.tier.service.client.HazelcastClientService;
+import webapp.tier.service.client.MongodbClientService;
+import webapp.tier.service.client.PostgresClientService;
+import webapp.tier.service.client.RabbitmqClientService;
+import webapp.tier.service.client.RedisClientService;
 
 @ApplicationScoped
 public class RandomService {
 
 	@Inject
 	@RestClient
-	ActivemqResource activemqresource;
+	ActivemqClientService activemqresource;
 
 	@Inject
 	@RestClient
-	HazelcastResource hazelcastresource;
+	HazelcastClientService hazelcastresource;
 
 	@Inject
 	@RestClient
-	RabbitmqResource rabbitmqresource;
+	RabbitmqClientService rabbitmqresource;
 
 	@Inject
 	@RestClient
-	RedisResource redisresource;
+	RedisClientService redisresource;
 
 	@Inject
 	@RestClient
-	PostgresResource postgresresource;
+	PostgresClientService postgresresource;
 
 	@Inject
 	@RestClient
-	MongodbResource mongodbResource;
+	MongodbClientService mongodbResource;
 
 	private static final Logger LOG = Logger.getLogger(RandomService.class.getSimpleName());
 
-	public String deliverrandom() throws RuntimeException {
+	public String deliverrandom(Integer id) throws Exception {
 		String response;
-		int id = getNum(6);
 		switch (id) {
 		case 0:
 			LOG.log(Level.INFO, "Call: ActiveMQ Publish");
@@ -74,13 +73,13 @@ public class RandomService {
 			break;
 		default:
 			LOG.log(Level.SEVERE, "random Error.");
-			throw new RuntimeException("random error");
+			throw new IllegalArgumentException("random error");
 		}
 		LOG.info(response);
 		return response;
 	}
 
-	protected int getNum(Integer i) {
+	public int getNum(Integer i) {
 		 return (int) (Math.random() * i);
 	}
 }
