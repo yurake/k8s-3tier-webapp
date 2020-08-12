@@ -19,6 +19,9 @@ import io.quarkus.test.junit.QuarkusTest;
 @QuarkusTest
 class RabbitmqSubscribeServiceTest {
 
+	@Inject
+	RabbitmqSubscribeService svc;
+
 	private static final String exchangename = "exchangemsg";
 	private static final String routingkey = "routingkeymsg";
 
@@ -26,9 +29,6 @@ class RabbitmqSubscribeServiceTest {
 		MockConnection conn = new MockConnectionFactory().newConnection();
 		return conn;
 	}
-
-	@Inject
-	RabbitmqSubscribeService svc;
 
 	@Test
 	void testSubscribeError() {
