@@ -19,6 +19,9 @@ public class HazelcastService {
 	public static HazelcastInstance getInstance() throws RuntimeException {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getNetworkConfig().addAddress(address);
+		clientConfig.getConnectionStrategyConfig().getConnectionRetryConfig()
+				.setClusterConnectTimeoutMillis(5000)
+				.setMaxBackoffMillis(10000);
 		return HazelcastClient.newHazelcastClient(clientConfig);
 	}
 }
