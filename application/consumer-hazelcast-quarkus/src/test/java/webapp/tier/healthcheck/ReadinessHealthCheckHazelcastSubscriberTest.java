@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class LivenessHealthCheckTest {
+class ReadinessHealthCheckHazelcastSubscriberTest {
 
 	@Test
-	void testCallError() {
-		LivenessHealthCheck hc = new LivenessHealthCheck();
-		assertEquals(State.UP, hc.call().getState(), "Unexpected status");
+	void testCallDown() {
+		ReadinessHealthCheckHazelcastSubscriber hc = new ReadinessHealthCheckHazelcastSubscriber();
+		assertEquals(State.DOWN, hc.call().getState(), "Unexpected status");
 	}
 
 }

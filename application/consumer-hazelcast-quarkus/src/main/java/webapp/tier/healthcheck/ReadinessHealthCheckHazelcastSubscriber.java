@@ -12,9 +12,9 @@ import webapp.tier.service.HazelcastSubscribeService;
 
 @Readiness
 @ApplicationScoped
-public class ReadinessHealthCheck implements HealthCheck {
+public class ReadinessHealthCheckHazelcastSubscriber implements HealthCheck {
 
-	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheck.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheckHazelcastSubscriber.class.getSimpleName());
 
 
 	@Override

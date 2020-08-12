@@ -13,8 +13,21 @@
 	<artifactId>consumer-rabbitmq-quarkus</artifactId>
 	<properties>
 		<amqp-client.version>5.9.0</amqp-client.version>
+		<rabbitmq-mock.version>1.1.1</rabbitmq-mock.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>webapp-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>jaxrs-rabbitmq-quarkus</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-rest-client</artifactId>
@@ -24,14 +37,6 @@
 			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>webapp.3tier.k8s</groupId>
-			<artifactId>webapp-service</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-resteasy</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.rabbitmq</groupId>
 			<artifactId>amqp-client</artifactId>
 			<version>${amqp-client.version}</version>
@@ -39,7 +44,7 @@
 		<dependency>
 			<groupId>com.github.fridujo</groupId>
 			<artifactId>rabbitmq-mock</artifactId>
-			<version>1.1.1</version>
+			<version>${rabbitmq-mock.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

@@ -10,23 +10,23 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import io.quarkus.test.junit.QuarkusTest;
-import webapp.tier.service.RabbitmqService;
+import webapp.tier.service.RedisService;
 
 @QuarkusTest
-class ReadinessHealthCheckTest {
+class ReadinessHealthCheckRedisTest {
 
 	@Test
 	void testCallDown() {
-		ReadinessHealthCheck hc = new ReadinessHealthCheck();
+		ReadinessHealthCheckRedis hc = new ReadinessHealthCheckRedis();
 		assertEquals(State.DOWN, hc.call().getState(), "Unexpected status");
 	}
 
 	@Test
 	void testCallUp() throws IOException, TimeoutException {
-		ReadinessHealthCheck hc = new ReadinessHealthCheck() {
-			protected RabbitmqService createRabbitmqService() {
-				RabbitmqService mock = Mockito.mock(RabbitmqService.class);
-				Mockito.when(mock.isActive()).thenReturn(true);
+		ReadinessHealthCheckRedis hc = new ReadinessHealthCheckRedis() {
+			protected RedisService createRedisService() {
+				RedisService mock = Mockito.mock(RedisService.class);
+				Mockito.when(mock.ping()).thenReturn(true);
 				return mock;
 			}
 		};

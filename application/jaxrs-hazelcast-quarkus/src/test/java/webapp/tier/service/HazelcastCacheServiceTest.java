@@ -1,7 +1,6 @@
 package webapp.tier.service;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
@@ -72,22 +71,6 @@ class HazelcastCacheServiceTest{
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
 		when(mockInstanceError.getMap(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
 		assertThat(svc.getMsg(mockInstanceError).getFullmsg(), containsString("No Data."));
-	}
-
-	@Test
-	void testIsActiveTrue() {
-		assertThat(svc.isActive(), is(true));
-	}
-
-	@Test
-	void testIsActiveFalse() {
-		HazelcastCacheService csvc = new HazelcastCacheService() {
-			public HazelcastInstance createHazelcastInstance() {
-				return mockInstance;
-			}
-		};
-		after();
-		assertThat(csvc.isActive(), is(false));
 	}
 
 }

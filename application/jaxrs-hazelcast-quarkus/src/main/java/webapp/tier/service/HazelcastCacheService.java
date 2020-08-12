@@ -74,23 +74,6 @@ public class HazelcastCacheService {
 		return msglist;
 	}
 
-	public boolean isActive() {
-		boolean status = false;
-		HazelcastInstance client = null;
-		try {
-			client = createHazelcastInstance();
-			status = client.getLifecycleService().isRunning();
-		} catch (IllegalStateException e) {
-			LOG.log(Level.SEVERE, "Connect Error.", e);
-			e.printStackTrace();
-		} finally {
-			if (client != null) {
-				client.shutdown();
-			}
-		}
-		return status;
-	}
-
 	public HazelcastInstance createHazelcastInstance() {
 		return HazelcastService.getInstance();
 	}

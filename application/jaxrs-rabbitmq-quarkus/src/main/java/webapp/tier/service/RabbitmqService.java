@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
@@ -23,15 +22,11 @@ import com.rabbitmq.client.GetResponse;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.service.socket.RabbitmqSocket;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
 public class RabbitmqService implements Runnable {
-
-	@Inject
-	RabbitmqSocket rmqsock;
 
 	private static final Logger LOG = Logger.getLogger(RabbitmqService.class.getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
