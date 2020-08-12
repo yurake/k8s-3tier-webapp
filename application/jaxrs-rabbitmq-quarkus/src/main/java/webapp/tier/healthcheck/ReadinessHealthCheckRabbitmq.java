@@ -1,7 +1,5 @@
 package webapp.tier.healthcheck;
 
-import java.util.logging.Logger;
-
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.health.HealthCheck;
@@ -14,8 +12,6 @@ import webapp.tier.service.RabbitmqService;
 @ApplicationScoped
 public class ReadinessHealthCheckRabbitmq implements HealthCheck {
 
-	private static final Logger LOG = Logger.getLogger(ReadinessHealthCheckRabbitmq.class.getSimpleName());
-
 	@Override
 	public HealthCheckResponse call() {
 		RabbitmqService svc = this.createRabbitmqService();
@@ -23,14 +19,8 @@ public class ReadinessHealthCheckRabbitmq implements HealthCheck {
 	}
 
 	protected HealthCheckResponse checkRabbitmqService(RabbitmqService svc) {
-		String msg = "Database connection health check";
-		if (svc.isActive()) {
-			LOG.fine("Readiness: UP");
-			return HealthCheckResponse.up(msg);
-		} else {
-			LOG.warning("Readiness: DOWN");
-			return HealthCheckResponse.down(msg);
-		}
+		String msg = "Rabbitmq Server connection health check";
+		return HealthCheckUtility.respHealthCheckStatus(svc.isActive(), msg);
 	}
 
 	protected RabbitmqService createRabbitmqService() {
