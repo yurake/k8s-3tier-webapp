@@ -1,4 +1,4 @@
-package webapp.tier.resource;
+package webapp.tier.service.client;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -6,14 +6,12 @@ import javax.ws.rs.Produces;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-
 @Path("/quarkus")
-@RegisterRestClient(configKey = "mysql")
-public interface MysqlResource {
+@RegisterRestClient(configKey = "hazelcast")
+public interface HazelcastClientService {
 
 	@POST
-	@Path("/mysql/delete")
+	@Path("/hazelcast/publish")
 	@Produces("application/json")
-	String delete();
-
+	String publish();
 }

@@ -1,4 +1,4 @@
-package webapp.tier.resource;
+package webapp.tier.service;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -6,13 +6,14 @@ import javax.ws.rs.Produces;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
+
 @Path("/quarkus")
-@RegisterRestClient(configKey = "postgres")
-public interface PostgresResource {
+@RegisterRestClient(configKey = "mysql")
+public interface MysqlService {
 
 	@POST
-	@Path("/postgres/delete")
+	@Path("/mysql/delete")
 	@Produces("application/json")
-	public String delete();
+	String delete();
 
 }

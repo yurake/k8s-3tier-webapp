@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
@@ -26,11 +27,11 @@ public class RandomResource {
 	@GET
 	@Counted(name = "performedChecks", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
-	public String random() {
+	public Response random() {
 		try {
-			return randomsvc.deliverrandom();
+			return Response.ok().entity(randomsvc.deliverrandom(randomsvc.getNum(6))).build();
 		} catch (Exception e) {
-			return e.getMessage();
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 }

@@ -1,30 +1,36 @@
 package webapp.tier.schedule;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
+import io.quarkus.test.junit.QuarkusTest;
+
+@QuarkusTest
 class CallRandomPublshScheduleTest {
 
+	@Inject
+	private CallRandomPublshSchedule rps;
+
 	@Test
-	void testCallRandomPublshError() {
-		CallRandomPublshSchedule sch = new CallRandomPublshSchedule();
+	void testCallRandomPublsh() {
 		try {
-			sch.callRandomPublsh();
-			fail();
+			rps.callRandomPublsh();
 		} catch (NullPointerException expected) {
 			expected.printStackTrace();
+			fail();
 		}
 	}
 
 	@Test
 	void testCallDeleteDbsError() {
-		CallRandomPublshSchedule sch = new CallRandomPublshSchedule();
 		try {
-			sch.callDeleteDbs();
-			fail();
+			rps.callDeleteDbs();
 		} catch (NullPointerException expected) {
 			expected.printStackTrace();
+			fail();
 		}
 	}
 

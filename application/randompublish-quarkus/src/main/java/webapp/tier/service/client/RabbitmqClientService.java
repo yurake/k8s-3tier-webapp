@@ -1,4 +1,4 @@
-package webapp.tier.resource;
+package webapp.tier.service.client;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -7,11 +7,11 @@ import javax.ws.rs.Produces;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @Path("/quarkus")
-@RegisterRestClient(configKey = "mongodb")
-public interface MongodbResource {
+@RegisterRestClient(configKey = "rabbitmq")
+public interface RabbitmqClientService {
 
 	@POST
-	@Path("/mongodb/insert")
+	@Path("/rabbitmq/publish")
 	@Produces("application/json")
-	String insert();
+	String publish();
 }
