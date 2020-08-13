@@ -27,13 +27,16 @@ public class HazelcastCacheService {
 
 	public MsgBean setMsg(HazelcastInstance client) {
 		MsgBean msgbean = errormsg;
+		String errormsg = "Set Error.";
+
 		try {
 			msgbean = new MsgBean(CreateId.createid(), message, "Set");
 			Map<Integer, String> map = client.getMap(cachename);
 			map.put(msgbean.getId(), msgbean.getMessage());
 		} catch (IllegalStateException | NoSuchAlgorithmException e) {
-			LOG.log(Level.SEVERE, "Set Error.", e);
+			LOG.log(Level.SEVERE, errormsg, e);
 			e.printStackTrace();
+			throw new RuntimeException(errormsg);
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -51,6 +54,7 @@ public class HazelcastCacheService {
 
 	public List<MsgBean> getMsgList(HazelcastInstance client) {
 		List<MsgBean> msglist = new ArrayList<>();
+		String errormsg = "Get Error.";
 
 		try {
 			Map<Integer, String> map = client.getMap(cachename);
@@ -60,21 +64,18 @@ public class HazelcastCacheService {
 				LOG.info(msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}
-		} catch (IllegalStateException e) {
-			LOG.log(Level.SEVERE, "Get Error.", e);
-			e.printStackTrace();
-		} finally {
 			if (msglist.isEmpty()) {
 				msglist.add(new MsgBean(0, "No Data.", "Get"));
 			}
+		} catch (IllegalStateException e) {
+			LOG.log(Level.SEVERE, errormsg, e);
+			e.printStackTrace();
+			throw new RuntimeException(errormsg);
+		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
 		return msglist;
-	}
-
-	public HazelcastInstance createHazelcastInstance() {
-		return HazelcastService.getInstance();
 	}
 }
