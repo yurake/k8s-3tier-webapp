@@ -19,7 +19,7 @@ public class HazelcastMessageListener implements MessageListener<Object> {
 
 	private static final Logger LOG = Logger.getLogger(HazelcastMessageListener.class.getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
-	HazelcastSocket hazsock = new HazelcastSocket();
+	private HazelcastSocket hazsock = new HazelcastSocket();
 
 	@Override
 	public void onMessage(Message<Object> message) {

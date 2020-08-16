@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ class HazelcastCacheServiceTest {
 	}
 
 	@Test
-	void testPutMsgHazelcast() {
+	void testPutMsgHazelcast() throws NoSuchAlgorithmException {
 		assertThat(svc.setMsg(mockInstance).getFullmsg(), containsString(respbody));
 	}
 
@@ -53,10 +54,13 @@ class HazelcastCacheServiceTest {
 	void testPutMsgHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
 		when(mockInstanceError.getMap(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
-		Throwable exception = assertThrows(RuntimeException.class, () -> {
+		try {
 			svc.setMsg(mockInstanceError);
-		});
-		assertThat(exception.getMessage(), is("Set Error."));
+			fail();
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertThat(e.getClass(), is(IllegalStateException.class));
+		}
 	}
 
 	@Test
@@ -76,10 +80,13 @@ class HazelcastCacheServiceTest {
 	void testGetMsgHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
 		when(mockInstanceError.getMap(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
-		Throwable exception = assertThrows(RuntimeException.class, () -> {
+		try {
 			svc.getMsg(mockInstanceError);
-		});
-		assertThat(exception.getMessage(), is("Get Error."));
+			fail();
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertThat(e.getClass(), is(IllegalStateException.class));
+		}
 	}
 
 	@Test
@@ -100,7 +107,7 @@ class HazelcastCacheServiceTest {
 	}
 
 	@Test
-	void testGetMsgList2() {
+	void testGetMsgList2() throws NoSuchAlgorithmException {
 		List<Integer> expecteds = new ArrayList<>();
 		for (int i = 0; i < 2; i++) {
 			expecteds.add(svc.setMsg(Hazelcast.newHazelcastInstance()).getId());

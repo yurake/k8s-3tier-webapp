@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -25,18 +24,13 @@ public class HazelcastCacheService {
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 
-	public MsgBean setMsg(HazelcastInstance client) {
+	public MsgBean setMsg(HazelcastInstance client) throws NoSuchAlgorithmException {
 		MsgBean msgbean = errormsg;
-		String errormsg = "Set Error.";
 
 		try {
 			msgbean = new MsgBean(CreateId.createid(), message, "Set");
 			Map<Integer, String> map = client.getMap(cachename);
 			map.put(msgbean.getId(), msgbean.getMessage());
-		} catch (IllegalStateException | NoSuchAlgorithmException e) {
-			LOG.log(Level.SEVERE, errormsg, e);
-			e.printStackTrace();
-			throw new RuntimeException(errormsg);
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -54,7 +48,6 @@ public class HazelcastCacheService {
 
 	public List<MsgBean> getMsgList(HazelcastInstance client) {
 		List<MsgBean> msglist = new ArrayList<>();
-		String errormsg = "Get Error.";
 
 		try {
 			Map<Integer, String> map = client.getMap(cachename);
@@ -67,10 +60,6 @@ public class HazelcastCacheService {
 			if (msglist.isEmpty()) {
 				msglist.add(new MsgBean(0, "No Data.", "Get"));
 			}
-		} catch (IllegalStateException e) {
-			LOG.log(Level.SEVERE, errormsg, e);
-			e.printStackTrace();
-			throw new RuntimeException(errormsg);
 		} finally {
 			if (client != null) {
 				client.shutdown();

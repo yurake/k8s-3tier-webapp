@@ -26,7 +26,7 @@ class HazelcastSocketTestForQuarkus {
 	private static final LinkedBlockingDeque<String> MESSAGES = new LinkedBlockingDeque<>();
 
 	@TestHTTPResource("/quarkus/hazelcast/subscribe")
-	URI uri;
+	private URI uri;
 
 	@Test
 	public void testOmMessage() throws Exception {
