@@ -15,13 +15,10 @@ import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.topic.ITopic;
-import com.hazelcast.topic.Message;
-import com.hazelcast.topic.MessageListener;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.service.socket.HazelcastSocket;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
@@ -47,6 +44,10 @@ public class HazelcastMqService implements Runnable {
 		LOG.info("Subscribe is stopping...");
 	}
 
+	protected HazelcastMessageListener createHazelcastMessageListener() {
+		return new HazelcastMessageListener();
+	}
+
 	public MsgBean putMsg(HazelcastInstance client) {
 		MsgBean msgbean = errormsg;
 		try {
@@ -56,7 +57,6 @@ public class HazelcastMqService implements Runnable {
 			queue.put(body);
 		} catch (IllegalStateException | InterruptedException | NoSuchAlgorithmException e) {
 			LOG.log(Level.SEVERE, "Put Error.", e);
-		    Thread.currentThread().interrupt();
 			e.printStackTrace();
 		} finally {
 			if (client != null) {
@@ -113,26 +113,12 @@ public class HazelcastMqService implements Runnable {
 
 	@Override
 	public void run() {
-		try {
-			HazelcastInstance client = HazelcastService.getInstance();
-			ITopic<Object> topic = client.getTopic(topicname);
-			topic.addMessageListener(new MessageListenerImpl());
-		} catch (IllegalStateException e) {
-			LOG.log(Level.SEVERE, "Subscribe Error.", e);
-			e.printStackTrace();
-		}
+		subscribeHazelcast(HazelcastService.getInstance(), createHazelcastMessageListener());
 	}
 
-    private static class MessageListenerImpl implements MessageListener<Object> {
-    	HazelcastSocket hazsock = new HazelcastSocket();
-    	@Override
-    	public void onMessage(Message<Object> message) {
-    		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject().toString(), splitkey);
-			msgbean.setFullmsg("Received");
-			LOG.log(Level.INFO, msgbean.getFullmsg());
-			hazsock.onMessage(MsgUtils.createBody(msgbean, splitkey));
-			msgbean.setFullmsg("Broadcast");
-			LOG.log(Level.INFO, msgbean.getFullmsg());
-    	}
-    }
+	protected void subscribeHazelcast(HazelcastInstance client, HazelcastMessageListener listener) {
+		ITopic<Object> topic = client.getTopic(topicname);
+		topic.addMessageListener(listener);
+	}
+
 }
