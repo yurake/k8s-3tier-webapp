@@ -7,23 +7,42 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class RedisResourceErrorTest {
+class HazelcastResourceErrorTest {
+
+	@Test
+	void testSetError() {
+		given()
+				.when()
+				.contentType("application/json")
+				.post("/quarkus/hazelcast/setcache")
+				.then()
+				.statusCode(500);
+	}
+
+	@Test
+	void testGetCacheError() {
+		given()
+				.when()
+				.get("/quarkus/hazelcast/getcache")
+				.then()
+				.statusCode(500);
+	}
 
 	@Test
 	void testPutError() {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/redis/put")
+				.post("/quarkus/hazelcast/putqueue")
 				.then()
 				.statusCode(500);
 	}
 
 	@Test
-	void testGetError() {
+	void testGetQueueError() {
 		given()
 				.when()
-				.get("/quarkus/redis/get")
+				.get("/quarkus/hazelcast/getqueue")
 				.then()
 				.statusCode(500);
 	}
@@ -33,7 +52,7 @@ class RedisResourceErrorTest {
 		given()
 				.when()
 				.contentType("application/json")
-				.post("/quarkus/redis/publish")
+				.post("/quarkus/hazelcast/publish")
 				.then()
 				.statusCode(500);
 	}
