@@ -14,16 +14,16 @@ public class ReadinessHealthCheckHazelcast implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		return checkHazelcastService();
+		HazelcastServiceStatus svc = this.createHazelcastStatus();
+		return checkHazelcastService(svc);
 	}
 
-	protected HealthCheckResponse checkHazelcastService() {
+	protected HealthCheckResponse checkHazelcastService(HazelcastServiceStatus svc) {
 		String msg = "Hazelcast Server connection health check";
-		HazelcastServiceStatus sts = new HazelcastServiceStatus();
-		return HealthCheckUtils.respHealthCheckStatus(sts.isActive(), msg);
+		return HealthCheckUtils.respHealthCheckStatus(svc.isActive(), msg);
 	}
 
-	protected HazelcastServiceStatus createHazelcastService() {
+	protected HazelcastServiceStatus createHazelcastStatus() {
 		return new HazelcastServiceStatus();
 	}
 }

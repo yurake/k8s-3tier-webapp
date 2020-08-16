@@ -74,16 +74,11 @@ public class RedisService implements Runnable {
 
 	public MsgBean putMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
-		String errormsg = "Put Error.";
 
 		try {
 			String id = MsgUtils.intToString(msgbean.getId());
 			jedis.set(id, msgbean.getMessage());
 			jedis.expire(id, setexpire);
-
-		} catch (JedisConnectionException e) {
-			LOG.log(Level.SEVERE, errormsg, e);
-			throw new RuntimeException(errormsg);
 		} finally {
 			jedis.close();
 		}
@@ -98,7 +93,6 @@ public class RedisService implements Runnable {
 
 	public List<MsgBean> getMsgList(Jedis jedis) throws RuntimeException {
 		List<MsgBean> msglist = new ArrayList<>();
-		String errormsg = "Get Error.";
 
 		try {
 			Set<String> keys = jedis.keys("*");
@@ -111,10 +105,6 @@ public class RedisService implements Runnable {
 			if (msglist.isEmpty()) {
 				msglist.add(new MsgBean(0, "No Data."));
 			}
-
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, errormsg, e);
-			throw new RuntimeException(errormsg);
 		} finally {
 			jedis.close();
 		}
@@ -124,15 +114,10 @@ public class RedisService implements Runnable {
 	public MsgBean publishMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
-		String errormsg = "Publish Error.";
 
 		try {
 			jedis.publish(channel, body);
 			jedis.expire(MsgUtils.intToString(msgbean.getId()), setexpire);
-
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, errormsg, e);
-			throw new RuntimeException(errormsg);
 		} finally {
 			jedis.close();
 		}

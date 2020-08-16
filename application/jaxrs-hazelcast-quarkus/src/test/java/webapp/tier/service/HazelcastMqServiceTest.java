@@ -3,6 +3,7 @@ package webapp.tier.service;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
@@ -16,10 +17,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
+import com.hazelcast.collection.IQueue;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.bean.MsgBean;
 
 @QuarkusTest
 class HazelcastMqServiceTest {
@@ -51,17 +54,6 @@ class HazelcastMqServiceTest {
 	}
 
 	@Test
-	void testPutQueueHazelcastErrorNull() {
-		try {
-			HazelcastInstance mockInstanceError = null;
-			svc.putMsg(mockInstanceError);
-			fail();
-		} catch (Exception expected) {
-			expected.printStackTrace();
-		}
-	}
-
-	@Test
 	void testPutQueueHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
 		when(mockInstanceError.getQueue(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
@@ -69,13 +61,24 @@ class HazelcastMqServiceTest {
 	}
 
 	@Test
+	void testPutQueueHazelcastNullError() {
+		HazelcastInstance mockInstanceError = null;
+		assertThrows(NullPointerException.class, () -> {
+			svc.putMsg(mockInstanceError);
+		});
+	}
+
+	@Test
+	void testGetQueueList0() {
+		assertThat(svc.getMsg(mockInstance).getFullmsg(), containsString("No Data."));
+	}
+
+	@Test
 	void testGetQueueHazelcast() {
-		try {
-			svc.getMsg(mockInstance);
-		} catch (Exception expected) {
-			expected.printStackTrace();
-			fail();
-		}
+		MsgBean expected = svc.putMsg(Hazelcast.newHazelcastInstance());
+		MsgBean msgbean = svc.getMsg(mockInstance);
+		assertThat(msgbean.getFullmsg(), containsString(respbody));
+		assertThat(msgbean.getId(), is(expected.getId()));
 	}
 
 	@Test
@@ -83,6 +86,34 @@ class HazelcastMqServiceTest {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
 		when(mockInstanceError.getQueue(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
 		assertThat(svc.getMsg(mockInstanceError).getMessage(), is("Unexpected Error"));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	void testGetQueueHazelcastObjectNullError() {
+		HazelcastInstance mocknull = Mockito.mock(HazelcastInstance.class);
+		IQueue<Object> mockqueue = Mockito.mock(IQueue.class);
+		when(mocknull.getQueue(ArgumentMatchers.any())).thenReturn(mockqueue);
+		when(mockqueue.poll()).thenReturn(null);
+		assertThat(svc.getMsg(mocknull).getFullmsg(), containsString("No Data."));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	void testGetQueueHazelcastObjectEmptyError() {
+		HazelcastInstance mocknull = Mockito.mock(HazelcastInstance.class);
+		IQueue<Object> mockqueue = Mockito.mock(IQueue.class);
+		when(mocknull.getQueue(ArgumentMatchers.any())).thenReturn(mockqueue);
+		when(mockqueue.poll()).thenReturn("");
+		assertThat(svc.getMsg(mocknull).getFullmsg(), containsString("No Data."));
+	}
+
+	@Test
+	void testGetQueueHazelcastNullError() {
+		HazelcastInstance mockInstanceError = null;
+		assertThrows(NullPointerException.class, () -> {
+			svc.getMsg(mockInstanceError);
+		});
 	}
 
 	@Test
@@ -103,13 +134,16 @@ class HazelcastMqServiceTest {
 	}
 
 	@Test
-	void testSubscribeError() {
-		try {
-			svc.publishMsg(mockInstance);
-			svc.run();
-		} catch (Exception expected) {
-			expected.printStackTrace();
-			fail();
-		}
+	void testPublishHazelcastNullError() {
+		HazelcastInstance mockInstanceError = null;
+		assertThrows(NullPointerException.class, () -> {
+			svc.publishMsg(mockInstanceError);
+		});
+	}
+
+	@Test
+	void testSubscribeHazelcast() {
+		svc.subscribeHazelcast(mockInstance, svc.createHazelcastMessageListener());
+		assertThat(svc.publishMsg(mockInstance).getFullmsg(), containsString(respbody));
 	}
 }

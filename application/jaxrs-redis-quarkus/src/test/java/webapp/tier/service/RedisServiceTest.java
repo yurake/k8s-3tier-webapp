@@ -3,7 +3,6 @@ package webapp.tier.service;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -24,6 +23,7 @@ import com.github.fppt.jedismock.RedisServer;
 
 import io.quarkus.test.junit.QuarkusTest;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 import webapp.tier.bean.MsgBean;
 
 @QuarkusTest
@@ -99,7 +99,7 @@ class RedisServiceTest {
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Get Error.", e.getMessage());
+			assertThat(e.getClass(), is(JedisConnectionException.class));
 		}
 	}
 
@@ -140,7 +140,7 @@ class RedisServiceTest {
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Get Error.", e.getMessage());
+			assertThat(e.getClass(), is(JedisConnectionException.class));
 		}
 	}
 
@@ -160,7 +160,7 @@ class RedisServiceTest {
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Put Error.", e.getMessage());
+			assertThat(e.getClass(), is(JedisConnectionException.class));
 		}
 	}
 
@@ -180,7 +180,7 @@ class RedisServiceTest {
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Publish Error.", e.getMessage());
+			assertThat(e.getClass(), is(JedisConnectionException.class));
 		}
 	}
 
