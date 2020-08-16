@@ -1,7 +1,6 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.*;
+import static io.restassured.RestAssured.given;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +16,7 @@ class RedisResourceErrorTest {
 				.contentType("application/json")
 				.post("/quarkus/redis/put")
 				.then()
-				.statusCode(500)
-				.body(is("Put Error."));
+				.statusCode(500);
 	}
 
 	@Test
@@ -27,8 +25,7 @@ class RedisResourceErrorTest {
 				.when()
 				.get("/quarkus/redis/get")
 				.then()
-				.statusCode(500)
-				.body(is("Get Error."));
+				.statusCode(500);
 	}
 
 	@Test
@@ -38,8 +35,7 @@ class RedisResourceErrorTest {
 				.contentType("application/json")
 				.post("/quarkus/redis/publish")
 				.then()
-				.statusCode(500)
-				.body(is("Publish Error."));
+				.statusCode(500);
 	}
 
 }
