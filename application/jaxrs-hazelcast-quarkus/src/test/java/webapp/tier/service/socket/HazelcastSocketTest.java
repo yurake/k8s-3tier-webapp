@@ -1,10 +1,11 @@
 package webapp.tier.service.socket;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import javax.inject.Inject;
+import javax.websocket.RemoteEndpoint;
 import javax.websocket.Session;
 
 import org.junit.jupiter.api.Test;
@@ -24,39 +25,53 @@ class HazelcastSocketTest {
 	@Test
 	void testOnOpen() {
 		Session session = Mockito.mock(Session.class);
-		Mockito.when(session.getId()).thenReturn(id);
-		socket.onOpen(session);
-		assertThat(socket.getSessions().containsKey(id), is(true));
+		try {
+			Mockito.when(session.getId()).thenReturn(id);
+			socket.onOpen(session);
+			assertThat(socket.getSessions().containsKey(id), is(true));
+		} finally {
+			socket.onClose(session);
+		}
 	}
 
 	@Test
 	void testOnClose() {
 		Session session = Mockito.mock(Session.class);
-		Mockito.when(session.getId()).thenReturn(id);
-		socket.onOpen(session);
-		socket.onClose(session);
-		assertThat(socket.getSessions().containsKey(id), is(false));
+		try {
+			Mockito.when(session.getId()).thenReturn(id);
+			socket.onOpen(session);
+			socket.onClose(session);
+			assertThat(socket.getSessions().containsKey(id), is(false));
+		} finally {
+			socket.onClose(session);
+		}
 	}
 
 	@Test
 	void testOnError() {
 		Session session = Mockito.mock(Session.class);
-		Mockito.when(session.getId()).thenReturn(id);
-		socket.onOpen(session);
-		socket.onError(session, new Throwable("testOnError"));
-		assertThat(socket.getSessions().containsKey(id), is(false));
+		try {
+			Mockito.when(session.getId()).thenReturn(id);
+			socket.onOpen(session);
+			socket.onError(session, new Throwable("testOnError"));
+			assertThat(socket.getSessions().containsKey(id), is(false));
+		} finally {
+			socket.onClose(session);
+		}
 	}
 
 	@Test
 	void testOnMessage() {
 		Session session = Mockito.mock(Session.class);
-		Mockito.when(session.getId()).thenReturn(id);
-		socket.onOpen(session);
 		try {
+			RemoteEndpoint.Async async = Mockito.mock(RemoteEndpoint.Async.class);
+			Mockito.when(session.getId()).thenReturn(id);
+			Mockito.when(session.getAsyncRemote()).thenReturn(async);
+			socket.onOpen(session);
 			socket.onMessage(message);
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			expected.printStackTrace();
 		} finally {
 			socket.onClose(session);
 		}
@@ -66,8 +81,8 @@ class HazelcastSocketTest {
 	void testOnMessageNoSubscriber() {
 		try {
 			socket.onMessage(message);
-		} catch (Exception expected) {
-			expected.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
 		}
 	}
