@@ -1,6 +1,6 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.given;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -46,7 +46,6 @@ class HazelcastResourceTest {
 	@Test
 	void testPutcache() throws NoSuchAlgorithmException, RuntimeException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-		when(csvc.createHazelcastInstance()).thenReturn(mockInstance);
 		when(csvc.setMsg(mockInstance)).thenReturn(msgbean);
 		given()
 				.when()
@@ -62,7 +61,6 @@ class HazelcastResourceTest {
 		msgbeanList.add(new MsgBean(CreateId.createid(), "test", "Test"));
 		msgbeanList.add(new MsgBean(CreateId.createid(), "test", "Test"));
 
-		when(csvc.createHazelcastInstance()).thenReturn(mockInstance);
 		when(csvc.getMsgList(mockInstance)).thenReturn(msgbeanList);
 		given()
 				.when()
