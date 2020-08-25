@@ -31,7 +31,7 @@ public class HazelcastMqService implements Runnable {
 
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String queuename = ConfigProvider.getConfig().getValue("hazelcast.queue.name", String.class);
-	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topicname.name", String.class);
+	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topic.name", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
 	void onStart(@Observes StartupEvent ev) {
