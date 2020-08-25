@@ -24,7 +24,7 @@ class HazelcastSubscribeServiceTest {
 	HazelcastSubscribeService svc;
 
 	private static HazelcastInstance mockInstance;
-	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
+	private String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@BeforeEach
 	public void setup() throws IOException {
