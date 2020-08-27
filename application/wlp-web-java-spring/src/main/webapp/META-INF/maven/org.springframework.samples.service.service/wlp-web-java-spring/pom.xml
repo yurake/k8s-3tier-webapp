@@ -35,7 +35,7 @@
 		<spring-framework.version>5.2.8.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>5.4.20.Final</hibernate.version>
+		<hibernate.version>5.4.21.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
