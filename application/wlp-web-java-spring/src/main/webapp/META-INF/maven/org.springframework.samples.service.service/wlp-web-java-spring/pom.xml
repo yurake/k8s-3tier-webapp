@@ -27,7 +27,7 @@
 		<jedis.version>3.3.0</jedis.version>
 		<hazelcast-client.version>3.12.9</hazelcast-client.version>
 		<hazelcast.version>4.0.2</hazelcast.version>
-		<hazelcast-kubernetes.version>2.0.2</hazelcast-kubernetes.version>
+		<hazelcast-kubernetes.version>2.1</hazelcast-kubernetes.version>
 
 		<javaee-api.version>8.0.1</javaee-api.version>
 
@@ -35,7 +35,7 @@
 		<spring-framework.version>5.2.8.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>5.4.20.Final</hibernate.version>
+		<hibernate.version>5.4.21.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
