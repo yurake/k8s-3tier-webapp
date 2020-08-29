@@ -43,7 +43,7 @@
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-		<mockito.junit.jupiter>3.5.0</mockito.junit.jupiter>
+		<mockito.junit.jupiter>3.5.7</mockito.junit.jupiter>
 	</properties>
 
 	<build>
