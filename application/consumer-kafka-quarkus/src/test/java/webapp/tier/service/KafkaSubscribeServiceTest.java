@@ -20,7 +20,7 @@ class KafkaSubscribeServiceTest {
 	@Inject
 	@Channel("message")
 	@Merge(Merge.Mode.MERGE)
-	Emitter<String> emitmsg;
+	private Emitter<String> emitmsg;
 
 	@Test
 	void testProcess() {
