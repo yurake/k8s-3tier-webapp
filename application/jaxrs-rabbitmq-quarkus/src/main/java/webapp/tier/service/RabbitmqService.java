@@ -2,6 +2,7 @@ package webapp.tier.service;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -74,7 +75,7 @@ public class RabbitmqService implements Runnable {
 		return new RabbitmqConsumer(channel);
 	}
 
-	public MsgBean putMsg(Connection conn) throws Exception {
+	public MsgBean putMsg(Connection conn) throws NoSuchAlgorithmException, IOException, TimeoutException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
@@ -86,7 +87,7 @@ public class RabbitmqService implements Runnable {
 
 	}
 
-	public MsgBean getMsg(Connection conn) throws RuntimeException, IOException, TimeoutException {
+	public MsgBean getMsg(Connection conn) throws IOException, TimeoutException {
 		MsgBean msgbean = null;
 
 		try (Channel channel = conn.createChannel()) {
@@ -105,7 +106,7 @@ public class RabbitmqService implements Runnable {
 		return msgbean;
 	}
 
-	public MsgBean publishMsg(Connection conn) throws Exception {
+	public MsgBean publishMsg(Connection conn) throws NoSuchAlgorithmException, IOException, TimeoutException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
