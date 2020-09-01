@@ -15,7 +15,7 @@ import io.smallrye.reactive.messaging.annotations.Merge;
 class KafkaSubscribeServiceTest {
 
 	@Inject
-	KafkaSubscribeService svc;
+	private KafkaSubscribeService svc;
 
 	@Inject
 	@Channel("message")
