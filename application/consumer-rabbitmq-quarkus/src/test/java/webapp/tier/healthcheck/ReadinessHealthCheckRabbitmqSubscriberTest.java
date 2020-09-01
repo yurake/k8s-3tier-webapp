@@ -13,7 +13,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import webapp.tier.service.RabbitmqSubscribeService;
 
 @QuarkusTest
-class ReadinessHealthCheckTestRabbitmqSubscriber {
+class ReadinessHealthCheckRabbitmqSubscriberTest {
 
 	@Test
 	void testCallDown() {
