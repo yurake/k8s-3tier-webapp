@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import io.smallrye.reactive.messaging.annotations.Merge;
+
 @ApplicationScoped
 public class KafkaSubscribeService {
 
@@ -19,6 +21,7 @@ public class KafkaSubscribeService {
 	private static final Logger LOG = Logger.getLogger(KafkaSubscribeService.class.getSimpleName());
 
 	@Incoming("message")
+	@Merge(Merge.Mode.MERGE)
 	public void process(String message) {
 		LOG.log(Level.INFO, "Received: {0}", message);
 		String response = deliversvc.random();
