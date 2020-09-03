@@ -1,7 +1,7 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,10 +13,10 @@ import io.quarkus.test.junit.QuarkusTest;
 @QuarkusTestResource(ArtemisTestResource.class)
 class ActivemqResourceTest {
 
-	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
+	private String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@Test
-	void testPutError() {
+	void testPut() {
 		given()
 				.when()
 				.contentType("application/json")
@@ -27,7 +27,11 @@ class ActivemqResourceTest {
 	}
 
 	@Test
-	void testGetError() {
+	void testGet() {
+		given()
+				.when()
+				.contentType("application/json")
+				.post("/quarkus/activemq/put");
 		given()
 				.when()
 				.get("/quarkus/activemq/get")
@@ -37,7 +41,7 @@ class ActivemqResourceTest {
 	}
 
 	@Test
-	void testPublishError() {
+	void testPublish() {
 		given()
 				.when()
 				.contentType("application/json")
@@ -46,5 +50,4 @@ class ActivemqResourceTest {
 				.statusCode(200)
 				.body(containsString(respbody));
 	}
-
 }
