@@ -31,7 +31,7 @@ class ActiveMqServiceTest {
 	@ConfigProperty(name = "activemq.queue.name")
 	String queuename;
 
-	private String respbody = "message: Hello k8s-3tier-webapp with quarkus";
+	private final String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@Test
 	void testPutMsg() {

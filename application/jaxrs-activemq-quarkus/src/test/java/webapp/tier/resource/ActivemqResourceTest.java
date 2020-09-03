@@ -13,7 +13,7 @@ import io.quarkus.test.junit.QuarkusTest;
 @QuarkusTestResource(ArtemisTestResource.class)
 class ActivemqResourceTest {
 
-	private String respbody = "message: Hello k8s-3tier-webapp with quarkus";
+	private final String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@Test
 	void testPut() {
