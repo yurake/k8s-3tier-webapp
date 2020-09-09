@@ -41,6 +41,8 @@ class ActiveMqServiceTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
+		} finally {
+			svc.getMsg();
 		}
 	}
 
