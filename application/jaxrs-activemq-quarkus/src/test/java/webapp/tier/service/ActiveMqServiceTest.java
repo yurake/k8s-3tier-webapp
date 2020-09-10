@@ -23,10 +23,10 @@ import webapp.tier.bean.MsgBean;
 class ActiveMqServiceTest {
 
 	@Inject
-	private ActiveMqService svc;
+	ActiveMqService svc;
 
 	@Inject
-	private ConnectionFactory connectionFactory;
+	ConnectionFactory connectionFactory;
 
 	@ConfigProperty(name = "activemq.queue.name")
 	String queuename;
@@ -41,6 +41,8 @@ class ActiveMqServiceTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
+		} finally {
+			svc.getMsg();
 		}
 	}
 
