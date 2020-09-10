@@ -58,10 +58,11 @@ jobs:
           sudo kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
       - name: wait for complete e2e job
         run: |
-          sudo kubectl -n monitoring wait --for=condition=complete --timeout=20m job/postmannewman-job
+          sudo kubectl -n monitoring wait --for=condition=complete --timeout=30m job/postmannewman-job
           sudo kubectl -n monitoring describe job postmannewman-job
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
       - name: check minikube status
+        if: always()
         run: |
           sudo kubectl get po --all-namespaces=true
           sudo kubectl get nodes
@@ -72,24 +73,31 @@ jobs:
           sudo kubectl get ingress
           df -h /
       - name: check log jaxrs-mysql
+        if: always()
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
       - name: check log jaxrs-postgres
+        if: always()
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
       - name: check log jaxrs-mongodb
+        if: always()
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
       - name: check log jaxrs-redis
+        if: always()
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
       - name: check log jaxrs-memcached
+        if: always()
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
       - name: check log jaxrs-activemq
+        if: always()
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
       - name: check after test postmannewman-job
+        if: always()
         run: |
           sudo kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
       - name: create issue if failure

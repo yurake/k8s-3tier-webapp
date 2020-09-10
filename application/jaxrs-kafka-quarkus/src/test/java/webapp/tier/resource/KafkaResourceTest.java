@@ -1,14 +1,14 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class AKafkaResourceTest {
+class KafkaResourceTest {
 
 	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 

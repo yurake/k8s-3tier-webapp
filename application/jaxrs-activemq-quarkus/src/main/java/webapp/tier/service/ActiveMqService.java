@@ -64,10 +64,6 @@ public class ActiveMqService implements Messaging, Runnable {
 		ActiveMqService.isEnableReceived = false;
 	}
 
-	protected ActiveMqConsumer createActiveMqConsumer() {
-		return new ActiveMqConsumer();
-	}
-
 	@Override
 	public MsgBean putMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
