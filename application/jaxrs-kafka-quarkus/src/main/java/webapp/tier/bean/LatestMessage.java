@@ -5,6 +5,9 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class LatestMessage {
 
+	private LatestMessage() {
+	}
+
 	private static String latestMsg;
 
 	public static String getLatestMsg() {

@@ -31,7 +31,7 @@ public class KafkaResource {
 	KafkaService svc;
 
 	@Context
-	private Sse sse;
+	Sse sse;
 
 	@GET
 	@Path("/subscribe")
