@@ -103,7 +103,7 @@ jobs:
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: mvn -B verify deploy --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-activemq-quarkus
         run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -130,7 +130,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-activemq-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-activemq-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -190,7 +190,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-hazelcast-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-hazelcast-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -250,7 +250,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-kafka-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-kafka-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -910,7 +910,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   producer-kafka-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-kafka-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
