@@ -1,8 +1,9 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -33,8 +34,9 @@ class KafkaServiceTest {
 	void testPublishMsg() {
 		try {
 			kfksvc.publishMsg();
+			Thread.sleep(1000);
 			assertThat(ChannelEmitter.getRespmsg(), containsString(respbody));
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException | InterruptedException e) {
 			e.printStackTrace();
 			fail();
 		}
