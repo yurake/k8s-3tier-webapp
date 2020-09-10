@@ -10,7 +10,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
-import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import webapp.tier.bean.MsgBean;
@@ -24,7 +23,6 @@ public class ActiveMqDeliverConsumer extends ActiveMqConsumer {
 	DeliverService deliversvc;
 
 	private static final Logger LOG = Logger.getLogger(ActiveMqDeliverConsumer.class.getSimpleName());
-	private static String splitkey = ConfigProvider.getConfig().getValue("activemq.split.key", String.class);
 
 	@Override
 	public void consume(JMSConsumer consumer) throws JMSException {

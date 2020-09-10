@@ -9,7 +9,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.service.socket.ActiveMqSocket;
@@ -18,8 +18,10 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class ActiveMqConsumer {
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqConsumer.class.getSimpleName());
-	private static String splitkey = ConfigProvider.getConfig().getValue("activemq.split.key", String.class);
+	@ConfigProperty(name = "activemq.split.key")
+	String splitkey;
+
+	protected static final Logger LOG = Logger.getLogger(ActiveMqConsumer.class.getSimpleName());
 	ActiveMqSocket amqsock = new ActiveMqSocket();
 
 	public void consume(JMSConsumer consumer) throws JMSException {
