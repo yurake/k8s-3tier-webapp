@@ -28,10 +28,10 @@ import webapp.tier.util.MsgUtils;
 public class ActiveMqService implements Messaging, Runnable {
 
 	@Inject
-	private ConnectionFactory connectionFactory;
+	ConnectionFactory connectionFactory;
 
 	@Inject
-	private ActiveMqConsumer amqconsumer;
+	ActiveMqConsumer amqconsumer;
 
 	@ConfigProperty(name = "common.message")
 	String message;
@@ -62,10 +62,6 @@ public class ActiveMqService implements Messaging, Runnable {
 
 	public static void stopReceived() {
 		ActiveMqService.isEnableReceived = false;
-	}
-
-	protected ActiveMqConsumer createActiveMqConsumer() {
-		return new ActiveMqConsumer();
 	}
 
 	@Override

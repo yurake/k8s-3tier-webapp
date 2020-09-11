@@ -16,18 +16,7 @@ class ActivemqResourceTest {
 	private static final String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@Test
-	void testPut() {
-		given()
-				.when()
-				.contentType("application/json")
-				.post("/quarkus/activemq/put")
-				.then()
-				.statusCode(200)
-				.body(containsString(respbody));
-	}
-
-	@Test
-	void testGet() {
+	void testPutGet() {
 		given()
 				.when()
 				.contentType("application/json")
