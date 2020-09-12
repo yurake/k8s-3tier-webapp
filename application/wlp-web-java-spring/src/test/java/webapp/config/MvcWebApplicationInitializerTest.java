@@ -1,9 +1,12 @@
 package webapp.config;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import javax.servlet.ServletRegistration;
 
@@ -36,9 +39,9 @@ class MvcWebApplicationInitializerTest {
 		MvcWebApplicationInitializer init = new MvcWebApplicationInitializer();
 		try {
 			init.customizeRegistration(dynamic);
-			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
+			fail();
 		}
 	}
 

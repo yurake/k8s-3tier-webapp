@@ -1,4 +1,4 @@
-package webapp.tier.mq.hazelcast;
+package webapp.tier.mq;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
+import webapp.tier.mq.HazelcastMqService;
 import webapp.tier.util.GetConfig;
 
 class HazelcastMqServiceTest {

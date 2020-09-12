@@ -1,4 +1,4 @@
-package webapp.tier.mq.hazelcast;
+package webapp.tier.mq;
 
 import java.util.concurrent.BlockingQueue;
 

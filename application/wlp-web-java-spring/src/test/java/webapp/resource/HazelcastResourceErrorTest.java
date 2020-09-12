@@ -7,7 +7,7 @@ import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 
-public class HazelcastResourceTest {
+public class HazelcastResourceErrorTest {
 
 	@Test
 	public void testPutcacheError() {

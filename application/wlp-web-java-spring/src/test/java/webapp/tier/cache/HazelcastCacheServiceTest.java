@@ -1,4 +1,4 @@
-package webapp.tier.cache.hazelcast;
+package webapp.tier.cache;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
+import webapp.tier.cache.HazelcastCacheService;
 import webapp.tier.util.GetConfig;
 
 class HazelcastCacheServiceTest {
