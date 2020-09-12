@@ -50,8 +50,8 @@ public class ApplicationController {
 	public String selectMysql(Model model) throws SQLException, NamingException {
 
 		logger.info("SelectMysql");
-		SelectMysql insmsg = new SelectMysql();
-		List<String> allMessage = insmsg.selectMsg();
+		SelectMysql selmsg = new SelectMysql();
+		List<String> allMessage = selmsg.selectMsg();
 
 		model.addAttribute("allMessageList", allMessage);
 
@@ -62,8 +62,8 @@ public class ApplicationController {
 	public String deleteMysql() throws SQLException, NamingException {
 
 		logger.info("DeleteMysql");
-		DeleteMysql insmsg = new DeleteMysql();
-		insmsg.deleteMsg();
+		DeleteMysql delmsg = new DeleteMysql();
+		delmsg.deleteMsg();
 
 		return "deletemysql";
 	}
