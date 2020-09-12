@@ -38,6 +38,7 @@ class MvcWebApplicationInitializerTest {
 			init.customizeRegistration(dynamic);
 			fail();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -50,6 +51,7 @@ class MvcWebApplicationInitializerTest {
 			init.customizeRegistration(dynamic);
 			fail();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
