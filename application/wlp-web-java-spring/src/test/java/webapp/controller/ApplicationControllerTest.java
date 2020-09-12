@@ -1,9 +1,12 @@
 package webapp.controller;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +38,7 @@ public class ApplicationControllerTest {
 
 	@BeforeEach
 	public void setup() {
-		MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.openMocks(this);
 		this.mockMvc = MockMvcBuilders.standaloneSetup(appcont).build();
 	}
 
@@ -53,7 +56,7 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/InsertMysql"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
+			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
@@ -63,7 +66,7 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/SelectMysql"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
+			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
@@ -73,7 +76,7 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/DeleteMysql"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
+			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
@@ -83,7 +86,7 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/GetRabbitmq"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
+			assertThat(expected.getClass().getSimpleName(), is("ConnectException"));
 		}
 	}
 
@@ -93,7 +96,7 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/PutRabbitmq"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
+			assertThat(expected.getClass().getSimpleName(), is("ConnectException"));
 		}
 	}
 
@@ -103,7 +106,7 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/PutRabbitmqConsumer"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
+			assertThat(expected.getClass().getSimpleName(), is("ConnectException"));
 		}
 	}
 
@@ -113,7 +116,7 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/GetMemcached"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
+			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
@@ -123,7 +126,7 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/SetMemcached"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
+			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
@@ -133,7 +136,8 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/GetRedis"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
+
+			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
@@ -143,7 +147,8 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/SetRedis"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
+
+			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
@@ -153,7 +158,8 @@ public class ApplicationControllerTest {
 			mockMvc.perform(get("/PublishRedis"));
 			fail();
 		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
+
+			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
