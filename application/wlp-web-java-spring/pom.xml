@@ -46,6 +46,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
 		<mockito.junit.jupiter>3.5.7</mockito.junit.jupiter>
+		<activemq-broker.version>5.16.0</activemq-broker.version>
 	</properties>
 
 	<build>
@@ -217,27 +218,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.activemq.tooling</groupId>
-			<artifactId>activemq-junit</artifactId>
-			<version>5.16.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-broker</artifactId>
-			<version>5.16.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.activemq.examples.broker</groupId>
-			<artifactId>topic</artifactId>
-			<version>2.15.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>artemis-junit</artifactId>
-			<version>2.15.0</version>
+			<version>${activemq-broker.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
