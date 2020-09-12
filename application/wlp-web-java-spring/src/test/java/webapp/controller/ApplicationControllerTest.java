@@ -1,7 +1,5 @@
 package webapp.controller;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -18,9 +16,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import webapp.tier.cache.memcached.GetMemcached;
+import webapp.tier.cache.memcached.SetMemcached;
+import webapp.tier.cache.redis.GetRedis;
+import webapp.tier.cache.redis.PublishRedis;
+import webapp.tier.cache.redis.SetRedis;
+import webapp.tier.db.mysql.DeleteMysql;
 import webapp.tier.db.mysql.InsertMysql;
 import webapp.tier.db.mysql.SelectMysql;
 import webapp.tier.mq.rabbitmq.GetRabbitmq;
+import webapp.tier.mq.rabbitmq.PutRabbitmq;
+import webapp.tier.mq.rabbitmq.PutRabbitmqConsumer;
 
 @ExtendWith(MockitoExtension.class)
 public class ApplicationControllerTest {
@@ -28,11 +34,38 @@ public class ApplicationControllerTest {
 	private MockMvc mockMvc;
 
 	@Mock
-	InsertMysql insmysql;
+	InsertMysql insmsg;
+
 	@Mock
-	SelectMysql selmysql;
+	SelectMysql selmsg;
+
 	@Mock
-	GetRabbitmq getrab;
+	DeleteMysql delmsg;
+
+	@Mock
+	GetRabbitmq getmq;
+
+	@Mock
+	PutRabbitmq putmq;
+
+	@Mock
+	PutRabbitmqConsumer putmqb;
+
+	@Mock
+	GetMemcached getmemcache;
+
+	@Mock
+	SetMemcached setmemcache;
+
+	@Mock
+	GetRedis getrediscache;
+
+	@Mock
+	SetRedis setrediscache;
+
+	@Mock
+	PublishRedis publishrediscache;
+
 	@InjectMocks
 	ApplicationController appcont;
 
@@ -51,115 +84,145 @@ public class ApplicationControllerTest {
 	}
 
 	@Test
-	public void testInsertDbError() throws Exception {
+	public void testInsertDb() throws Exception {
 		try {
-			mockMvc.perform(get("/InsertMysql"));
+			mockMvc.perform(get("/InsertMysql"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("insertmysql"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
 	@Test
-	public void testSelectMysqlError() throws Exception {
+	public void testSelectMysql() throws Exception {
 		try {
-			mockMvc.perform(get("/SelectMysql"));
+			mockMvc.perform(get("/SelectMysql"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("selectmysql"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
 	@Test
-	public void testDeleteMysqlError() throws Exception {
+	public void testDeleteMysql() throws Exception {
 		try {
-			mockMvc.perform(get("/DeleteMysql"));
+			mockMvc.perform(get("/DeleteMysql"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("deletemysql"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
 	@Test
-	public void testGetMqError() throws Exception {
+	public void testGetMq() throws Exception {
 		try {
-			mockMvc.perform(get("/GetRabbitmq"));
+			mockMvc.perform(get("/GetRabbitmq"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("getrabbitmq"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().getSimpleName(), is("ConnectException"));
 		}
 	}
 
 	@Test
-	public void testPutMqError() {
+	public void testPutMq() {
 		try {
-			mockMvc.perform(get("/PutRabbitmq"));
+			mockMvc.perform(get("/PutRabbitmq"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("putrabbitmq"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().getSimpleName(), is("ConnectException"));
 		}
 	}
 
 	@Test
-	public void testPutMqBatchError() {
+	public void testPutMqConsumer() {
 		try {
-			mockMvc.perform(get("/PutRabbitmqConsumer"));
+			mockMvc.perform(get("/PutRabbitmqConsumer"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("putrabbitmqconsumer"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().getSimpleName(), is("ConnectException"));
 		}
 	}
 
 	@Test
 	public void testGetMemcached() {
 		try {
-			mockMvc.perform(get("/GetMemcached"));
+			mockMvc.perform(get("/GetMemcached"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("getmemcached"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
 	@Test
 	public void testSetMemcached() {
 		try {
-			mockMvc.perform(get("/SetMemcached"));
+			mockMvc.perform(get("/SetMemcached"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("setmemcached"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
 	@Test
 	public void testGetRedis() {
 		try {
-			mockMvc.perform(get("/GetRedis"));
+			mockMvc.perform(get("/GetRedis"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("getredis"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-
-			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
 	@Test
 	public void testSetRedis() {
 		try {
-			mockMvc.perform(get("/SetRedis"));
+			mockMvc.perform(get("/SetRedis"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("setredis"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-
-			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
 	@Test
 	public void testPublishRedis() {
 		try {
-			mockMvc.perform(get("/PublishRedis"));
+			mockMvc.perform(get("/PublishRedis"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("publishredis"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-
-			assertThat(expected.getClass().getSimpleName(), is("NestedServletException"));
 		}
 	}
 
