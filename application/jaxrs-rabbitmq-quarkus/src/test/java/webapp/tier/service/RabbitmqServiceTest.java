@@ -44,6 +44,7 @@ class RabbitmqServiceTest {
 		try (Connection conn = createRabbitmqMock()) {
 			MsgBean msgbean = svc.putMsg(conn);
 			assertThat(msgbean.getFullmsg(), containsString(respbody));
+			svc.getMsg(conn);
 			conn.close();
 		}
 	}
@@ -71,7 +72,6 @@ class RabbitmqServiceTest {
 	@Test
 	void testGetMsgWithData() throws Exception {
 		try (Connection conn = createRabbitmqMock()) {
-			svc.getMsg(conn);
 			svc.putMsg(conn);
 			MsgBean msgbean = svc.getMsg(conn);
 			assertThat(msgbean.getFullmsg(), containsString(respbody));
