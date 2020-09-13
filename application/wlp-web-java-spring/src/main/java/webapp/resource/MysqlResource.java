@@ -23,7 +23,7 @@ public class MysqlResource {
 	public Response insert() {
 		MysqlService insmysql = new MysqlService();
 		try {
-			return Response.ok().entity(insmysql.insertMysql()).build();
+			return Response.ok().entity(insmysql.insert()).build();
 		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -35,7 +35,7 @@ public class MysqlResource {
 	public Response select() {
 		MysqlService selmysql = new MysqlService();
 		try {
-			return Response.ok().entity(selmysql.selectMsg()).build();
+			return Response.ok().entity(selmysql.select()).build();
 		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -47,7 +47,7 @@ public class MysqlResource {
 	public Response delete() {
 		MysqlService delmysql = new MysqlService();
 		try {
-			return Response.ok(delmysql.deleteMsg()).build();
+			return Response.ok(delmysql.delete()).build();
 		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
 			return Response.status(500).build();

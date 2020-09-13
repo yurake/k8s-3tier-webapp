@@ -40,6 +40,7 @@ public class BeforeAllTest {
 		when(ds.getConnection()).thenReturn(conn);
 		when(conn.createStatement()).thenReturn(stsm);
 		builder.bind("jdbc/postgres", ds);
+		builder.bind("jdbc/mysql", ds);
 
 		MessageProducer pro = mock(MessageProducer.class);
 		MessageConsumer con = mock(MessageConsumer.class);

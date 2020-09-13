@@ -54,7 +54,7 @@ public class MysqlService {
 		return status;
 	}
 
-	public String insertMysql() throws SQLException, NamingException {
+	public String insert() throws SQLException, NamingException {
 		Connection con = null;
 		String id = String.valueOf(CreateId.createid());
 		String sql = GetConfig.getResourceBundle("mysql.insert.msg");
@@ -75,7 +75,7 @@ public class MysqlService {
 		return sql;
 	}
 
-	public List<String> selectMsg() throws SQLException, NamingException {
+	public List<String> select() throws SQLException, NamingException {
 		List<String> allmsg = new ArrayList<>();
 		MysqlService conmysql = new MysqlService();
 		Connection con = conmysql.getConnection();
@@ -99,7 +99,7 @@ public class MysqlService {
 		return allmsg;
 	}
 
-	public String deleteMsg() throws SQLException, NamingException {
+	public String delete() throws SQLException, NamingException {
 		Connection con = null;
 
 		try {

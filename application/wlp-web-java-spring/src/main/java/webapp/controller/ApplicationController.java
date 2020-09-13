@@ -64,7 +64,7 @@ public class ApplicationController {
 	@RequestMapping("InsertMysql")
 	public String insertDb(Model model) throws Exception {
 		logger.info("InsertMysql");
-		String msg = mysqlsvc.insertMysql();
+		String msg = mysqlsvc.insert();
 		model.addAttribute("insertMysql", msg);
 		return "insertmysql";
 	}
@@ -72,7 +72,7 @@ public class ApplicationController {
 	@RequestMapping("SelectMysql")
 	public String selectMysql(Model model) throws SQLException, NamingException {
 		logger.info("SelectMysql");
-		List<String> allMessage = mysqlsvc.selectMsg();
+		List<String> allMessage = mysqlsvc.select();
 		model.addAttribute("allMessageList", allMessage);
 		return "selectmysql";
 	}
@@ -80,7 +80,7 @@ public class ApplicationController {
 	@RequestMapping("DeleteMysql")
 	public String deleteMysql() throws SQLException, NamingException {
 		logger.info("DeleteMysql");
-		mysqlsvc.deleteMsg();
+		mysqlsvc.delete();
 		return "deletemysql";
 	}
 
