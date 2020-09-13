@@ -17,8 +17,8 @@ public class HazelcastInstanceConfigurator {
 	public static HazelcastInstance getInstance() throws IOException {
 		ClientConfig clientConfig = new XmlClientConfigBuilder(clientxml).build();
 		clientConfig.getConnectionStrategyConfig().getConnectionRetryConfig()
-				.setClusterConnectTimeoutMillis(5000)
-				.setMaxBackoffMillis(10000);
+				.setClusterConnectTimeoutMillis(1000)
+				.setMaxBackoffMillis(2000);
 		return HazelcastClient.newHazelcastClient(clientConfig);
 	}
 }

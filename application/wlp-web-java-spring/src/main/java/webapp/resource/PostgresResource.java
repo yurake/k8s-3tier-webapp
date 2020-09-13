@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import webapp.tier.db.postgres.PostgresService;
+import webapp.tier.db.PostgresService;
 
 @Path("/postgres")
 @Produces(MediaType.APPLICATION_JSON)

@@ -1,4 +1,4 @@
-package webapp.tier.db.postgres;
+package webapp.tier.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,7 +27,6 @@ public class PostgresService {
 	private static String insertsql = GetConfig.getResourceBundle("mysql.insert.msg");
 	private static String selectsql = GetConfig.getResourceBundle("mysql.select.msg.all");
 	private static String deletesql = GetConfig.getResourceBundle("mysql.delete.msg.all");
-	private Connection con = null;
 	private DataSource ds = null;
 
 	public Connection getConnection() throws SQLException, NamingException {
@@ -38,100 +37,51 @@ public class PostgresService {
 
 	public boolean connectionStatus() {
 		boolean status = false;
-		try {
-			con = getConnection();
+		try (Connection con = getConnection()) {
 			status = true;
 		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		return status;
 	}
 
 	public String insert() throws SQLException, NamingException {
-		Connection con = null;
-		String sql  = null;
+		String sql = null;
 		String id = String.valueOf(CreateId.createid());
 
-		try {
+		try (Connection con = getConnection();
+				Statement stmt = con.createStatement()) {
 			sql = insertsql.replace(sqlkey, id).replace(sqlbody, message);
-
-			con = getConnection();
-			Statement stmt = con.createStatement();
-
 			logger.info("Execute SQL: " + sql);
 			stmt.executeUpdate(sql);
-
-		}  finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		return sql;
 	}
 
 	public List<String> select() throws SQLException, NamingException {
-		Connection con = null;
 		List<String> allmsg = new ArrayList<>();
 
-		try {
-			con = getConnection();
-			Statement stmt = con.createStatement();
-
+		try (Connection con = getConnection();
+				Statement stmt = con.createStatement()) {
 			logger.info("Execute SQL: " + selectsql);
 			ResultSet rs = stmt.executeQuery(selectsql);
-
 			while (rs.next()) {
 				String fullmsg = "Selected Msg: id: " + rs.getString("id") + ", message: " + rs.getString("msg");
 				logger.info(fullmsg);
 				allmsg.add(fullmsg);
 			}
-
-			if(allmsg.isEmpty()){
+			if (allmsg.isEmpty()) {
 				allmsg.add("No Data");
-			}
-
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 			}
 		}
 		return allmsg;
 	}
 
 	public String delete() throws SQLException, NamingException {
-		Connection con = null;
-
-		try {
-			con = getConnection();
-			Statement stmt = con.createStatement();
-
+		try (Connection con = getConnection();
+				Statement stmt = con.createStatement()) {
 			logger.info("Delete SQL: " + deletesql);
 			stmt.executeUpdate(deletesql);
-
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		return "Deleted";
 	}

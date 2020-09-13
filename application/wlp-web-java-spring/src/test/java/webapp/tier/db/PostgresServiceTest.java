@@ -1,14 +1,14 @@
-package webapp.tier.mq;
+package webapp.tier.db;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,6 +20,7 @@ import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.Topic;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
@@ -29,12 +30,12 @@ import org.mockito.ArgumentMatchers;
 import org.springframework.mock.jndi.SimpleNamingContextBuilder;
 
 @SuppressWarnings("deprecation")
-class ActiveMqServiceTest {
+class PostgresServiceTest {
 
 	private static SimpleNamingContextBuilder builder;
 
 	@BeforeAll
-	public static void setupAll() throws JMSException, IllegalStateException, NamingException, SQLException {
+	public static void setupEach() throws JMSException, IllegalStateException, NamingException, SQLException {
 		builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
 
 		ResultSet result = mock(ResultSet.class);
@@ -63,16 +64,10 @@ class ActiveMqServiceTest {
 	}
 
 	@Test
-	void testgetConnection() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
-		svc.getConnection();
-	}
-
-	@Test
-	void testcloseAllNull() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
+	void testgetConnection() throws SQLException, NamingException {
+		PostgresService svc = new PostgresService();
 		try {
-			svc.close();
+			svc.getConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -80,26 +75,54 @@ class ActiveMqServiceTest {
 	}
 
 	@Test
-	void testputActiveMq() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
-		String result = svc.putActiveMq();
-		assertThat(result, is(notNullValue()));
-		assertThat(result, containsString("Set"));
+	void testconnectionStatusTrue() {
+		PostgresService svc = new PostgresService();
+		assertThat(svc.connectionStatus(), is(true));
 	}
 
 	@Test
-	void testgetActiveMqWithNoData() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
-		String result = svc.getActiveMq();
-		assertThat(result, is(notNullValue()));
+	void testconnectionStatusNamingExceptionFalse() throws IllegalStateException, NamingException, SQLException {
+		PostgresService svc = new PostgresService() {
+			public Connection getConnection() throws NamingException, SQLException {
+				InitialContext ctx = new InitialContext();
+				DataSource ds = (DataSource) ctx.lookup("test");
+				return ds.getConnection();
+			}
+		};
+		assertThat(svc.connectionStatus(), is(false));
+	}
+
+	@Test
+	void testconnectionStatusSQLExceptionFalse() throws IllegalStateException, NamingException, SQLException {
+		PostgresService svc = new PostgresService() {
+			public Connection getConnection() throws NamingException, SQLException {
+				DataSource ds = mock(DataSource.class);
+				when(ds.getConnection()).thenThrow(new SQLException());
+				return ds.getConnection();
+			}
+		};
+		assertThat(svc.connectionStatus(), is(false));
+	}
+
+	@Test
+	void testinsert() throws SQLException, NamingException {
+		PostgresService svc = new PostgresService();
+		String result = svc.insert();
+		assertThat(result, containsString("INSERT INTO msg (id, msg) VALUES ("));
+		assertThat(result, containsString(", 'Hello k8s-3tier-webapp!')"));
+	}
+
+	@Test
+	void testselectWithNoData() throws SQLException, NamingException {
+		PostgresService svc = new PostgresService();
+		String result = svc.select().get(0);
 		assertThat(result, is("No Data"));
 	}
 
 	@Test
-	void testpublishActiveMq() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
-		String result = svc.publishActiveMq();
-		assertThat(result, is(notNullValue()));
-		assertThat(result, containsString("Publish"));
+	void testdelete() throws SQLException, NamingException {
+		PostgresService svc = new PostgresService();
+		String result = svc.delete();
+		assertThat(result, is("Deleted"));
 	}
 }
