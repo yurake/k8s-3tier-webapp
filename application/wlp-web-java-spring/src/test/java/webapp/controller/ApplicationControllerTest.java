@@ -22,9 +22,7 @@ import webapp.tier.cache.redis.GetRedis;
 import webapp.tier.cache.redis.PublishRedis;
 import webapp.tier.cache.redis.SetRedis;
 import webapp.tier.db.MysqlService;
-import webapp.tier.mq.rabbitmq.GetRabbitmq;
-import webapp.tier.mq.rabbitmq.PutRabbitmq;
-import webapp.tier.mq.rabbitmq.PutRabbitmqConsumer;
+import webapp.tier.mq.RabbitmqService;
 
 @ExtendWith(MockitoExtension.class)
 public class ApplicationControllerTest {
@@ -35,13 +33,7 @@ public class ApplicationControllerTest {
 	MysqlService mysqlsvc;
 
 	@Mock
-	GetRabbitmq getmq;
-
-	@Mock
-	PutRabbitmq putmq;
-
-	@Mock
-	PutRabbitmqConsumer putmqb;
+	RabbitmqService rabbitmqsvc;
 
 	@Mock
 	GetMemcached getmemcache;

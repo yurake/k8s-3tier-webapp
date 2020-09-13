@@ -20,9 +20,7 @@ import webapp.tier.cache.redis.GetRedis;
 import webapp.tier.cache.redis.PublishRedis;
 import webapp.tier.cache.redis.SetRedis;
 import webapp.tier.db.MysqlService;
-import webapp.tier.mq.rabbitmq.GetRabbitmq;
-import webapp.tier.mq.rabbitmq.PutRabbitmq;
-import webapp.tier.mq.rabbitmq.PutRabbitmqConsumer;
+import webapp.tier.mq.RabbitmqService;
 
 @Controller
 public class ApplicationController {
@@ -31,13 +29,7 @@ public class ApplicationController {
 	MysqlService mysqlsvc;
 
 	@Inject
-	GetRabbitmq getmq;
-
-	@Inject
-	PutRabbitmq putmq;
-
-	@Inject
-	PutRabbitmqConsumer putmqb;
+	RabbitmqService rabbitmqsvc;
 
 	@Inject
 	GetMemcached getmemcache;
@@ -87,7 +79,7 @@ public class ApplicationController {
 	@RequestMapping("GetRabbitmq")
 	public String getMq(Model model) throws Exception {
 		logger.info("GetRabbitmq");
-		String telegram = getmq.getMessageQueue();
+		String telegram = rabbitmqsvc.get();
 		model.addAttribute("getRabbitmq", telegram);
 		return "getrabbitmq";
 	}
@@ -95,7 +87,7 @@ public class ApplicationController {
 	@RequestMapping("PutRabbitmq")
 	public String putMq(Model model) throws IOException, TimeoutException {
 		logger.info("PutRabbitmq");
-		String telegram = putmq.putMessageQueue();
+		String telegram = rabbitmqsvc.put();
 		model.addAttribute("putRabbitmq", telegram);
 		return "putrabbitmq";
 	}
@@ -103,7 +95,7 @@ public class ApplicationController {
 	@RequestMapping("PutRabbitmqConsumer")
 	public String putMqBatch(Model model) throws IOException, TimeoutException {
 		logger.info("PutRabbitmqConsumer");
-		String telegram = putmqb.putMessageQueueConsumer();
+		String telegram = rabbitmqsvc.publish();
 		model.addAttribute("putRabbitmqConsumer", telegram);
 		return "putrabbitmqconsumer";
 	}

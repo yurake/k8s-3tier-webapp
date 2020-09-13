@@ -15,14 +15,14 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import webapp.tier.mq.rabbitmq.GetRabbitmq;
+import webapp.tier.mq.RabbitmqService;
 
 class AdviceControllerTest {
 
 	private MockMvc mockMvc;
 
 	@Mock
-	GetRabbitmq getrab;
+	RabbitmqService getrab;
 
 	@InjectMocks
 	ApplicationController appcont;
