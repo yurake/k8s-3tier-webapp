@@ -19,9 +19,7 @@ import webapp.tier.cache.memcached.SetMemcached;
 import webapp.tier.cache.redis.GetRedis;
 import webapp.tier.cache.redis.PublishRedis;
 import webapp.tier.cache.redis.SetRedis;
-import webapp.tier.db.mysql.DeleteMysql;
-import webapp.tier.db.mysql.InsertMysql;
-import webapp.tier.db.mysql.SelectMysql;
+import webapp.tier.db.MysqlService;
 import webapp.tier.mq.rabbitmq.GetRabbitmq;
 import webapp.tier.mq.rabbitmq.PutRabbitmq;
 import webapp.tier.mq.rabbitmq.PutRabbitmqConsumer;
@@ -30,13 +28,7 @@ import webapp.tier.mq.rabbitmq.PutRabbitmqConsumer;
 public class ApplicationController {
 
 	@Inject
-	InsertMysql insmsg;
-
-	@Inject
-	SelectMysql selmsg;
-
-	@Inject
-	DeleteMysql delmsg;
+	MysqlService mysqlsvc;
 
 	@Inject
 	GetRabbitmq getmq;
@@ -72,7 +64,7 @@ public class ApplicationController {
 	@RequestMapping("InsertMysql")
 	public String insertDb(Model model) throws Exception {
 		logger.info("InsertMysql");
-		String msg = insmsg.insertMysql();
+		String msg = mysqlsvc.insertMysql();
 		model.addAttribute("insertMysql", msg);
 		return "insertmysql";
 	}
@@ -80,7 +72,7 @@ public class ApplicationController {
 	@RequestMapping("SelectMysql")
 	public String selectMysql(Model model) throws SQLException, NamingException {
 		logger.info("SelectMysql");
-		List<String> allMessage = selmsg.selectMsg();
+		List<String> allMessage = mysqlsvc.selectMsg();
 		model.addAttribute("allMessageList", allMessage);
 		return "selectmysql";
 	}
@@ -88,7 +80,7 @@ public class ApplicationController {
 	@RequestMapping("DeleteMysql")
 	public String deleteMysql() throws SQLException, NamingException {
 		logger.info("DeleteMysql");
-		delmsg.deleteMsg();
+		mysqlsvc.deleteMsg();
 		return "deletemysql";
 	}
 

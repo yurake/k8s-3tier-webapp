@@ -21,9 +21,7 @@ import webapp.tier.cache.memcached.SetMemcached;
 import webapp.tier.cache.redis.GetRedis;
 import webapp.tier.cache.redis.PublishRedis;
 import webapp.tier.cache.redis.SetRedis;
-import webapp.tier.db.mysql.DeleteMysql;
-import webapp.tier.db.mysql.InsertMysql;
-import webapp.tier.db.mysql.SelectMysql;
+import webapp.tier.db.MysqlService;
 import webapp.tier.mq.rabbitmq.GetRabbitmq;
 import webapp.tier.mq.rabbitmq.PutRabbitmq;
 import webapp.tier.mq.rabbitmq.PutRabbitmqConsumer;
@@ -34,13 +32,7 @@ public class ApplicationControllerTest {
 	private MockMvc mockMvc;
 
 	@Mock
-	InsertMysql insmsg;
-
-	@Mock
-	SelectMysql selmsg;
-
-	@Mock
-	DeleteMysql delmsg;
+	MysqlService mysqlsvc;
 
 	@Mock
 	GetRabbitmq getmq;

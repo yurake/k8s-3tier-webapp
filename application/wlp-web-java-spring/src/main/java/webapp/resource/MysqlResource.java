@@ -11,9 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import webapp.tier.db.mysql.DeleteMysql;
-import webapp.tier.db.mysql.InsertMysql;
-import webapp.tier.db.mysql.SelectMysql;
+import webapp.tier.db.MysqlService;
 
 @Path("/mysql")
 @Produces(MediaType.APPLICATION_JSON)
@@ -23,7 +21,7 @@ public class MysqlResource {
 	@POST
 	@Path("/insert")
 	public Response insert() {
-		InsertMysql insmysql = new InsertMysql();
+		MysqlService insmysql = new MysqlService();
 		try {
 			return Response.ok().entity(insmysql.insertMysql()).build();
 		} catch (SQLException | NamingException e) {
@@ -35,7 +33,7 @@ public class MysqlResource {
 	@GET
 	@Path("/select")
 	public Response select() {
-		SelectMysql selmysql = new SelectMysql();
+		MysqlService selmysql = new MysqlService();
 		try {
 			return Response.ok().entity(selmysql.selectMsg()).build();
 		} catch (SQLException | NamingException e) {
@@ -47,7 +45,7 @@ public class MysqlResource {
 	@POST
 	@Path("/delete")
 	public Response delete() {
-		DeleteMysql delmysql = new DeleteMysql();
+		MysqlService delmysql = new MysqlService();
 		try {
 			return Response.ok(delmysql.deleteMsg()).build();
 		} catch (SQLException | NamingException e) {
