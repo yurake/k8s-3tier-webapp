@@ -19,8 +19,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import webapp.tier.cache.RedisService;
 import webapp.tier.cache.memcached.GetMemcached;
 import webapp.tier.cache.memcached.SetMemcached;
-import webapp.tier.cache.redis.PublishRedis;
-import webapp.tier.cache.redis.SetRedis;
 import webapp.tier.db.MysqlService;
 import webapp.tier.mq.RabbitmqService;
 
@@ -42,13 +40,7 @@ public class ApplicationControllerTest {
 	SetMemcached setmemcache;
 
 	@Mock
-	RedisService getrediscache;
-
-	@Mock
-	SetRedis setrediscache;
-
-	@Mock
-	PublishRedis publishrediscache;
+	RedisService redissvc;
 
 	@InjectMocks
 	ApplicationController appcont;

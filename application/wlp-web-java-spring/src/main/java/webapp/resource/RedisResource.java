@@ -8,9 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import webapp.tier.cache.redis.GetRedis;
-import webapp.tier.cache.redis.PublishRedis;
-import webapp.tier.cache.redis.SetRedis;
+import webapp.tier.cache.RedisService;
 
 @Path("/redis")
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,9 +18,9 @@ public class RedisResource {
 	@POST
 	@Path("/set")
 	public Response set() {
-		SetRedis svc = new SetRedis();
+		RedisService svc = new RedisService();
 		try {
-			return Response.ok().entity(svc.setRedis()).build();
+			return Response.ok().entity(svc.set()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -32,9 +30,9 @@ public class RedisResource {
 	@GET
 	@Path("/get")
 	public Response get() {
-		GetRedis svc = new GetRedis();
+		RedisService svc = new RedisService();
 		try {
-			return Response.ok().entity(svc.getRedis()).build();
+			return Response.ok().entity(svc.get()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -44,9 +42,9 @@ public class RedisResource {
 	@POST
 	@Path("/publish")
 	public Response publish() {
-		PublishRedis svc = new PublishRedis();
+		RedisService svc = new RedisService();
 		try {
-			return Response.ok().entity(svc.publishRedis()).build();
+			return Response.ok().entity(svc.publish()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();

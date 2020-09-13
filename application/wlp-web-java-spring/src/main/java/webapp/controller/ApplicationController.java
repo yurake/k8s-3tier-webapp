@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import webapp.tier.cache.RedisService;
 import webapp.tier.cache.memcached.GetMemcached;
 import webapp.tier.cache.memcached.SetMemcached;
-import webapp.tier.cache.redis.PublishRedis;
-import webapp.tier.cache.redis.SetRedis;
 import webapp.tier.db.MysqlService;
 import webapp.tier.mq.RabbitmqService;
 
@@ -39,13 +37,7 @@ public class ApplicationController {
 	SetMemcached setmemcache;
 
 	@Inject
-	RedisService getrediscache;
-
-	@Inject
-	SetRedis setrediscache;
-
-	@Inject
-	PublishRedis publishrediscache;
+	RedisService redissvc;
 
 	Logger logger = LoggerFactory.getLogger(ApplicationController.class);
 
@@ -120,7 +112,7 @@ public class ApplicationController {
 	@RequestMapping("GetRedis")
 	public String getRedis(Model model) {
 		logger.info("GetRedis");
-		List<String> cache = getrediscache.getRedis();
+		List<String> cache = redissvc.get();
 		model.addAttribute("getRedisList", cache);
 		return "getredis";
 	}
@@ -128,7 +120,7 @@ public class ApplicationController {
 	@RequestMapping("SetRedis")
 	public String setRedis(Model model) {
 		logger.info("SetRedis");
-		String cache = setrediscache.setRedis();
+		String cache = redissvc.set();
 		model.addAttribute("setRedis", cache);
 		return "setredis";
 	}
@@ -136,7 +128,7 @@ public class ApplicationController {
 	@RequestMapping("PublishRedis")
 	public String publishRedis(Model model) {
 		logger.info("PublishRedis");
-		String cache = publishrediscache.publishRedis();
+		String cache = redissvc.publish();
 		model.addAttribute("publishRedis", cache);
 		return "publishredis";
 	}
