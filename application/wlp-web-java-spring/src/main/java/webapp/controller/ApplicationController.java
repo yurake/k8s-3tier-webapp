@@ -118,7 +118,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("SetRedis")
-	public String setRedis(Model model) {
+	public String setRedis(Model model) throws NoSuchAlgorithmException {
 		logger.info("SetRedis");
 		String cache = redissvc.set();
 		model.addAttribute("setRedis", cache);
@@ -126,7 +126,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("PublishRedis")
-	public String publishRedis(Model model) {
+	public String publishRedis(Model model) throws NoSuchAlgorithmException {
 		logger.info("PublishRedis");
 		String cache = redissvc.publish();
 		model.addAttribute("publishRedis", cache);

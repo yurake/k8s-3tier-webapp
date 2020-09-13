@@ -45,19 +45,17 @@ public class RedisService {
 		return status;
 	}
 
-	public String set() {
+	public String set() throws NoSuchAlgorithmException {
 		String fullmsg = null;
 		Jedis jedis = null;
 		String id;
 		try {
 			id = String.valueOf(CreateId.createid());
-			jedis = new Jedis(servername, serverport);
+			jedis = createJedis();
 			jedis.set(id, message);
 			jedis.expire(id, setexpire);
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
 		} finally {
 			jedis.close();
 		}
@@ -66,9 +64,10 @@ public class RedisService {
 
 	public List<String> get() {
 		List<String> allmsg = new ArrayList<>();
-		Jedis jedis = new Jedis(servername, serverport);
+		Jedis jedis = null;
 
 		try {
+			jedis = createJedis();
 			Set<String> keys = jedis.keys("*");
 			for (String key : keys) {
 				String msg = jedis.get(key);
@@ -87,13 +86,13 @@ public class RedisService {
 		return allmsg;
 	}
 
-	public String publish() {
+	public String publish() throws NoSuchAlgorithmException {
 		String fullmsg = null;
 		Jedis jedis = null;
 		String id;
 		try {
+			jedis = createJedis();
 			id = String.valueOf(CreateId.createid());
-			jedis = new Jedis(servername, serverport);
 			StringBuilder buf = new StringBuilder();
 			buf.append(id);
 			buf.append(splitkey);
@@ -102,10 +101,8 @@ public class RedisService {
 
 			jedis.publish(channel, body);
 			jedis.expire(id, setexpire);
-			fullmsg = "Set channel:" + channel + ", id: " + id + ", msg: " + message;
+			fullmsg = "Publish channel:" + channel + ", id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
 		} finally {
 			jedis.close();
 		}
