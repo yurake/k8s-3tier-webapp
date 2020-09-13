@@ -1,6 +1,6 @@
 package webapp.tier.cache;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Map;
 
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
-import webapp.tier.cache.HazelcastCacheService;
 import webapp.tier.util.GetConfig;
 
 class HazelcastCacheServiceTest {
@@ -17,7 +16,7 @@ class HazelcastCacheServiceTest {
 	private static String cachename = GetConfig.getResourceBundle("hazelcast.cache.name");
 
 	@Test
-	void testPutMapHazelcast() throws Exception {
+	void testPutMapHazelcast() {
 		HazelcastInstance mockInstance = null;
 		try {
 			HazelcastCacheService svc = new HazelcastCacheService();
@@ -34,7 +33,7 @@ class HazelcastCacheServiceTest {
 	}
 
 	@Test
-	void testGetMapHazelcastNoData() throws Exception {
+	void testGetMapHazelcastNoData() {
 		HazelcastInstance mockInstance = null;
 		try {
 			HazelcastCacheService svc = new HazelcastCacheService();
@@ -51,7 +50,7 @@ class HazelcastCacheServiceTest {
 	}
 
 	@Test
-	void testGetMapHazelcastWithData() throws Exception {
+	void testGetMapHazelcastWithData() {
 		HazelcastInstance mockInstance = null;
 		try {
 			HazelcastCacheService svc = new HazelcastCacheService();

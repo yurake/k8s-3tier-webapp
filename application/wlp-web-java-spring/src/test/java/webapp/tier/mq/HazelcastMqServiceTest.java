@@ -1,6 +1,6 @@
 package webapp.tier.mq;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
-import webapp.tier.mq.HazelcastMqService;
 import webapp.tier.util.GetConfig;
 
 class HazelcastMqServiceTest {
@@ -17,7 +16,7 @@ class HazelcastMqServiceTest {
 	private static String queuename = GetConfig.getResourceBundle("hazelcast.queue.name");
 
 	@Test
-	void testPutQueueHazelcast() throws Exception {
+	void testPutQueueHazelcast() {
 		HazelcastInstance mockInstance = null;
 		try {
 			HazelcastMqService svc = new HazelcastMqService();
@@ -34,7 +33,7 @@ class HazelcastMqServiceTest {
 	}
 
 	@Test
-	void testGetQueueHazelcastNoData() throws Exception {
+	void testGetQueueHazelcastNoData() {
 		HazelcastInstance mockInstance = null;
 		try {
 			HazelcastMqService svc = new HazelcastMqService();
@@ -51,7 +50,7 @@ class HazelcastMqServiceTest {
 	}
 
 	@Test
-	void testGetQueueHazelcastWithData() throws Exception {
+	void testGetQueueHazelcastWithData() {
 		HazelcastInstance mockInstance = null;
 		try {
 			HazelcastMqService svc = new HazelcastMqService();
@@ -74,8 +73,9 @@ class HazelcastMqServiceTest {
 			}
 		}
 	}
+
 	@Test
-	void testPublishHazelcast() throws Exception {
+	void testPublishHazelcast() {
 		HazelcastInstance mockInstance = null;
 		try {
 			HazelcastMqService svc = new HazelcastMqService();

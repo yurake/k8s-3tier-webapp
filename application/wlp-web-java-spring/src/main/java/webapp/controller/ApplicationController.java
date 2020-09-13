@@ -15,9 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import webapp.tier.cache.RedisService;
 import webapp.tier.cache.memcached.GetMemcached;
 import webapp.tier.cache.memcached.SetMemcached;
-import webapp.tier.cache.redis.GetRedis;
 import webapp.tier.cache.redis.PublishRedis;
 import webapp.tier.cache.redis.SetRedis;
 import webapp.tier.db.MysqlService;
@@ -39,7 +39,7 @@ public class ApplicationController {
 	SetMemcached setmemcache;
 
 	@Inject
-	GetRedis getrediscache;
+	RedisService getrediscache;
 
 	@Inject
 	SetRedis setrediscache;

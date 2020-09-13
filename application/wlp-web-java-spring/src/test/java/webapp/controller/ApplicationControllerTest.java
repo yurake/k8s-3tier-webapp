@@ -16,9 +16,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import webapp.tier.cache.RedisService;
 import webapp.tier.cache.memcached.GetMemcached;
 import webapp.tier.cache.memcached.SetMemcached;
-import webapp.tier.cache.redis.GetRedis;
 import webapp.tier.cache.redis.PublishRedis;
 import webapp.tier.cache.redis.SetRedis;
 import webapp.tier.db.MysqlService;
@@ -42,7 +42,7 @@ public class ApplicationControllerTest {
 	SetMemcached setmemcache;
 
 	@Mock
-	GetRedis getrediscache;
+	RedisService getrediscache;
 
 	@Mock
 	SetRedis setrediscache;
@@ -60,15 +60,20 @@ public class ApplicationControllerTest {
 	}
 
 	@Test
-	public void testIndex() throws Exception {
+	public void testIndex() {
+		try {
 		mockMvc.perform(get("/"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("index"))
 				.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	public void testInsertDb() throws Exception {
+	public void testInsertDb() {
 		try {
 			mockMvc.perform(get("/InsertMysql"))
 					.andExpect(status().isOk())
@@ -81,7 +86,7 @@ public class ApplicationControllerTest {
 	}
 
 	@Test
-	public void testSelectMysql() throws Exception {
+	public void testSelectMysql() {
 		try {
 			mockMvc.perform(get("/SelectMysql"))
 					.andExpect(status().isOk())
@@ -94,7 +99,7 @@ public class ApplicationControllerTest {
 	}
 
 	@Test
-	public void testDeleteMysql() throws Exception {
+	public void testDeleteMysql() {
 		try {
 			mockMvc.perform(get("/DeleteMysql"))
 					.andExpect(status().isOk())
@@ -107,7 +112,7 @@ public class ApplicationControllerTest {
 	}
 
 	@Test
-	public void testGetMq() throws Exception {
+	public void testGetMq() {
 		try {
 			mockMvc.perform(get("/GetRabbitmq"))
 					.andExpect(status().isOk())

@@ -3,11 +3,9 @@ package webapp.tier.mq;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
-import java.util.concurrent.TimeoutException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,51 +55,71 @@ class RabbitmqServiceTest {
 	}
 
 	@Test
-	void testput() throws IOException, TimeoutException, NoSuchAlgorithmException {
-		RabbitmqService svc = new RabbitmqService() {
-			public Connection getConnection() {
-				return conn;
-			}
-		};
-		String result = svc.put();
-		assertThat(result, containsString("Set id: "));
-		assertThat(result, containsString(", msg:Hello k8s-3tier-webapp!"));
+	void testput() {
+		try {
+			RabbitmqService svc = new RabbitmqService() {
+				public Connection getConnection() {
+					return conn;
+				}
+			};
+			String result = svc.put();
+			assertThat(result, containsString("Set id: "));
+			assertThat(result, containsString(", msg:Hello k8s-3tier-webapp!"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	void testgetWithData() throws IOException, TimeoutException, NoSuchAlgorithmException {
-		RabbitmqService svc = new RabbitmqService() {
-			public Connection getConnection() {
-				return conn;
-			}
-		};
-		svc.get();
-		svc.put();
-		String result = svc.get();
-		assertThat(result, containsString("Get id: "));
-		assertThat(result, containsString(", msg: Hello k8s-3tier-webapp!"));
+	void testgetWithData() {
+		try {
+			RabbitmqService svc = new RabbitmqService() {
+				public Connection getConnection() {
+					return conn;
+				}
+			};
+			svc.get();
+			svc.put();
+			String result = svc.get();
+			assertThat(result, containsString("Get id: "));
+			assertThat(result, containsString(", msg: Hello k8s-3tier-webapp!"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	void testgetWithNoData() throws IOException, TimeoutException {
-		RabbitmqService svc = new RabbitmqService() {
-			public Connection getConnection() {
-				return conn;
-			}
-		};
-		String result = svc.get();
-		assertThat(result, is("No Data"));
+	void testgetWithNoData() {
+		try {
+			RabbitmqService svc = new RabbitmqService() {
+				public Connection getConnection() {
+					return conn;
+				}
+			};
+			String result = svc.get();
+			assertThat(result, is("No Data"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	void testpublish() throws IOException, TimeoutException, NoSuchAlgorithmException {
-		RabbitmqService svc = new RabbitmqService() {
-			public Connection getConnection() {
-				return conn;
-			}
-		};
-		String result = svc.publish();
-		assertThat(result, containsString("Publish id: "));
-		assertThat(result, containsString(", msg: Hello k8s-3tier-webapp!"));
+	void testpublish() {
+		try {
+			RabbitmqService svc = new RabbitmqService() {
+				public Connection getConnection() {
+					return conn;
+				}
+			};
+			String result = svc.publish();
+			assertThat(result, containsString("Publish id: "));
+			assertThat(result, containsString(", msg: Hello k8s-3tier-webapp!"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 }

@@ -7,11 +7,9 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.jms.JMSException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -24,12 +22,12 @@ import webapp.tier.util.BeforeAllTest;
 class MysqlServiceTest {
 
 	@BeforeAll
-	public static void setupEach() throws NamingException, SQLException, JMSException {
+	public static void setupAll() {
 		BeforeAllTest.getInstance();
 	}
 
 	@Test
-	void testgetConnection() throws SQLException, NamingException {
+	void testgetConnection() {
 		MysqlService svc = new MysqlService();
 		try {
 			svc.getConnection();
@@ -46,7 +44,7 @@ class MysqlServiceTest {
 	}
 
 	@Test
-	void testconnectionStatusNamingExceptionFalse() throws IllegalStateException, NamingException, SQLException {
+	void testconnectionStatusNamingExceptionFalse() {
 		MysqlService svc = new MysqlService() {
 			public Connection getConnection() throws NamingException, SQLException {
 				InitialContext ctx = new InitialContext();
@@ -58,7 +56,7 @@ class MysqlServiceTest {
 	}
 
 	@Test
-	void testconnectionStatusSQLExceptionFalse() throws IllegalStateException, NamingException, SQLException {
+	void testconnectionStatusSQLExceptionFalse() {
 		MysqlService svc = new MysqlService() {
 			public Connection getConnection() throws NamingException, SQLException {
 				DataSource ds = mock(DataSource.class);
@@ -70,24 +68,39 @@ class MysqlServiceTest {
 	}
 
 	@Test
-	void testinsert() throws SQLException, NamingException, NoSuchAlgorithmException {
-		MysqlService svc = new MysqlService();
-		String result = svc.insert();
-		assertThat(result, containsString("INSERT INTO msg (id, msg) VALUES ("));
-		assertThat(result, containsString(", 'Hello k8s-3tier-webapp!')"));
+	void testinsert() {
+		try {
+			MysqlService svc = new MysqlService();
+			String result = svc.insert();
+			assertThat(result, containsString("INSERT INTO msg (id, msg) VALUES ("));
+			assertThat(result, containsString(", 'Hello k8s-3tier-webapp!')"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	void testselectWithNoData() throws SQLException, NamingException {
-		MysqlService svc = new MysqlService();
-		String result = svc.select().get(0);
-		assertThat(result, is("No Data"));
+	void testselectWithNoData() {
+		try {
+			MysqlService svc = new MysqlService();
+			String result = svc.select().get(0);
+			assertThat(result, is("No Data"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	void testdelete() throws SQLException, NamingException {
-		MysqlService svc = new MysqlService();
-		String result = svc.delete();
-		assertThat(result, is("Deleted"));
+	void testdelete() {
+		try {
+			MysqlService svc = new MysqlService();
+			String result = svc.delete();
+			assertThat(result, is("Deleted"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 }

@@ -6,11 +6,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-import java.sql.SQLException;
-
-import javax.jms.JMSException;
-import javax.naming.NamingException;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -19,20 +14,25 @@ import webapp.tier.util.BeforeAllTest;
 class ActiveMqServiceTest {
 
 	@BeforeAll
-	public static void setupEach() throws NamingException, SQLException, JMSException {
+	public static void setupEach() {
 		BeforeAllTest.getInstance();
 	}
 
 	@Test
-	void testgetConnection() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
-		svc.getConnection();
+	void testgetConnection() {
+		try {
+			ActiveMqService svc = new ActiveMqService();
+			svc.getConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	void testcloseAllNull() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
+	void testcloseAllNull() {
 		try {
+			ActiveMqService svc = new ActiveMqService();
 			svc.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,26 +41,41 @@ class ActiveMqServiceTest {
 	}
 
 	@Test
-	void testputActiveMq() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
-		String result = svc.putActiveMq();
-		assertThat(result, is(notNullValue()));
-		assertThat(result, containsString("Set"));
+	void testputActiveMq() {
+		try {
+			ActiveMqService svc = new ActiveMqService();
+			String result = svc.putActiveMq();
+			assertThat(result, is(notNullValue()));
+			assertThat(result, containsString("Set"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	void testgetActiveMqWithNoData() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
-		String result = svc.getActiveMq();
-		assertThat(result, is(notNullValue()));
-		assertThat(result, is("No Data"));
+	void testgetActiveMqWithNoData() {
+		try {
+			ActiveMqService svc = new ActiveMqService();
+			String result = svc.getActiveMq();
+			assertThat(result, is(notNullValue()));
+			assertThat(result, is("No Data"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	void testpublishActiveMq() throws Exception {
-		ActiveMqService svc = new ActiveMqService();
-		String result = svc.publishActiveMq();
-		assertThat(result, is(notNullValue()));
-		assertThat(result, containsString("Publish"));
+	void testpublishActiveMq() {
+		try {
+			ActiveMqService svc = new ActiveMqService();
+			String result = svc.publishActiveMq();
+			assertThat(result, is(notNullValue()));
+			assertThat(result, containsString("Publish"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 }

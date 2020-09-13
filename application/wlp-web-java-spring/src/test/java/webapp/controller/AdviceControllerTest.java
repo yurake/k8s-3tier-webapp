@@ -2,6 +2,7 @@ package webapp.controller;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -37,14 +38,19 @@ class AdviceControllerTest {
 	}
 
 	@Test
-	void testhandleservlet() throws Exception {
+	void testhandleservlet() {
+		try {
 		mockMvc.perform(get("/api"))
 				.andDo(print())
 				.andExpect(status().isNotFound());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	void testHandle() throws Exception {
+	void testHandle() {
 		Exception ex = mock(Exception.class);
 		assertThat(con.handle(ex), is("404"));
 	}
