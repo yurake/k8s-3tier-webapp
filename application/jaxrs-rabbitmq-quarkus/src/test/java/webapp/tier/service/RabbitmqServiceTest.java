@@ -55,6 +55,7 @@ class RabbitmqServiceTest {
 			conn.close();
 			svc.putMsg(conn);
 			fail();
+			svc.getMsg(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertEquals(errormsg, e.getMessage());
@@ -72,6 +73,7 @@ class RabbitmqServiceTest {
 	@Test
 	void testGetMsgWithData() throws Exception {
 		try (Connection conn = createRabbitmqMock()) {
+			svc.getMsg(conn);
 			svc.putMsg(conn);
 			MsgBean msgbean = svc.getMsg(conn);
 			assertThat(msgbean.getFullmsg(), containsString(respbody));
@@ -83,6 +85,7 @@ class RabbitmqServiceTest {
 		try (Connection conn = createRabbitmqMock()) {
 			conn.close();
 			svc.getMsg(conn);
+			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertEquals(errormsg, e.getMessage());
@@ -90,12 +93,24 @@ class RabbitmqServiceTest {
 	}
 
 	@Test
-	void testPublishMsgError() throws IOException {
+	void testPublishMsg() throws IOException {
 		try (Connection conn = createRabbitmqMock()) {
 			svc.publishMsg(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertEquals("Publish Error.", e.getMessage());
+			fail();
+		}
+	}
+
+	@Test
+	void testPublishMsgError() throws IOException {
+		try (Connection conn = createRabbitmqMock()) {
+			conn.close();
+			svc.publishMsg(conn);
+			fail();
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertEquals(errormsg, e.getMessage());
 		}
 	}
 
