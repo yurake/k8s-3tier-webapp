@@ -1,6 +1,7 @@
 package webapp.controller;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -85,7 +86,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("PutRabbitmq")
-	public String putMq(Model model) throws IOException, TimeoutException {
+	public String putMq(Model model) throws IOException, TimeoutException, NoSuchAlgorithmException {
 		logger.info("PutRabbitmq");
 		String telegram = rabbitmqsvc.put();
 		model.addAttribute("putRabbitmq", telegram);
@@ -93,7 +94,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("PutRabbitmqConsumer")
-	public String putMqBatch(Model model) throws IOException, TimeoutException {
+	public String putMqBatch(Model model) throws IOException, TimeoutException, NoSuchAlgorithmException {
 		logger.info("PutRabbitmqConsumer");
 		String telegram = rabbitmqsvc.publish();
 		model.addAttribute("putRabbitmqConsumer", telegram);

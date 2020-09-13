@@ -1,5 +1,6 @@
 package webapp.tier.db;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,7 +55,7 @@ public class MysqlService {
 		return status;
 	}
 
-	public String insert() throws SQLException, NamingException {
+	public String insert() throws SQLException, NamingException, NoSuchAlgorithmException {
 		Connection con = null;
 		String id = String.valueOf(CreateId.createid());
 		String sql = GetConfig.getResourceBundle("mysql.insert.msg");

@@ -1,14 +1,16 @@
 package webapp.tier.util;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.Test;
 
 public class CreateIdTest {
 
 	@Test
-	public void testCreateid() {
+	public void testCreateid() throws NoSuchAlgorithmException {
 		assertThat(5, is(String.valueOf(CreateId.createid()).length()));
 	}
 

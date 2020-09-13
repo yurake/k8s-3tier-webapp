@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -69,7 +70,7 @@ class MysqlServiceTest {
 	}
 
 	@Test
-	void testinsert() throws SQLException, NamingException {
+	void testinsert() throws SQLException, NamingException, NoSuchAlgorithmException {
 		MysqlService svc = new MysqlService();
 		String result = svc.insert();
 		assertThat(result, containsString("INSERT INTO msg (id, msg) VALUES ("));

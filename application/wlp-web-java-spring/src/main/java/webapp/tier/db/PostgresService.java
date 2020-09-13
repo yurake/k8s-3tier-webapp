@@ -1,5 +1,6 @@
 package webapp.tier.db;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,7 +46,7 @@ public class PostgresService {
 		return status;
 	}
 
-	public String insert() throws SQLException, NamingException {
+	public String insert() throws SQLException, NamingException, NoSuchAlgorithmException {
 		String sql = null;
 		String id = String.valueOf(CreateId.createid());
 

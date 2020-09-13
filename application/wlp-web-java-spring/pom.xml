@@ -230,5 +230,10 @@
 			<version>${rabbitmq-mock.verison}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>webapp.3tier.k8s</groupId>
+			<artifactId>webapp-service</artifactId>
+			<version>0.4.2-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -1,5 +1,6 @@
 package webapp.resource;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -25,7 +26,7 @@ public class PostgresResource {
 		PostgresService postgres = new PostgresService();
 		try {
 			return Response.ok().entity(postgres.insert()).build();
-		} catch (SQLException | NamingException e) {
+		} catch (SQLException | NamingException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}

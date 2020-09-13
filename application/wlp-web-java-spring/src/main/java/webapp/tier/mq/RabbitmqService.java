@@ -1,6 +1,7 @@
 package webapp.tier.mq;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ public class RabbitmqService {
 		return status;
 	}
 
-	public String put() throws IOException, TimeoutException {
+	public String put() throws IOException, TimeoutException, NoSuchAlgorithmException {
 		String fullmsg = "Error";
 		Connection conn = getConnection();
 		try (Channel channel = conn.createChannel()) {
@@ -73,14 +74,14 @@ public class RabbitmqService {
 			} else {
 				String jmsbody = new String(resp.getBody(), "UTF-8");
 				String[] body = jmsbody.split(splitkey, 0);
-				fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
+				fullmsg = "Get id: " + body[0] + ", msg: " + body[1];
 			}
 		}
 		logger.info(fullmsg);
 		return fullmsg;
 	}
 
-	public String publish() throws IOException, TimeoutException {
+	public String publish() throws IOException, TimeoutException, NoSuchAlgorithmException {
 		String fullmsg = "Error";
 		Connection conn = getConnection();
 		try (Channel channel = conn.createChannel()) {

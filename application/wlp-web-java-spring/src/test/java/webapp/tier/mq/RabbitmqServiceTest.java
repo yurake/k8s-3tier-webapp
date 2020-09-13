@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.concurrent.TimeoutException;
 
@@ -56,7 +57,7 @@ class RabbitmqServiceTest {
 	}
 
 	@Test
-	void testput() throws IOException, TimeoutException {
+	void testput() throws IOException, TimeoutException, NoSuchAlgorithmException {
 		RabbitmqService svc = new RabbitmqService() {
 			public Connection getConnection() {
 				return conn;
@@ -68,7 +69,7 @@ class RabbitmqServiceTest {
 	}
 
 	@Test
-	void testgetWithData() throws IOException, TimeoutException {
+	void testgetWithData() throws IOException, TimeoutException, NoSuchAlgorithmException {
 		RabbitmqService svc = new RabbitmqService() {
 			public Connection getConnection() {
 				return conn;
@@ -77,7 +78,8 @@ class RabbitmqServiceTest {
 		svc.get();
 		svc.put();
 		String result = svc.get();
-		assertThat(result, is("No Data"));
+		assertThat(result, containsString("Get id: "));
+		assertThat(result, containsString(", msg: Hello k8s-3tier-webapp!"));
 	}
 
 	@Test
@@ -92,7 +94,7 @@ class RabbitmqServiceTest {
 	}
 
 	@Test
-	void testpublish() throws IOException, TimeoutException {
+	void testpublish() throws IOException, TimeoutException, NoSuchAlgorithmException {
 		RabbitmqService svc = new RabbitmqService() {
 			public Connection getConnection() {
 				return conn;
