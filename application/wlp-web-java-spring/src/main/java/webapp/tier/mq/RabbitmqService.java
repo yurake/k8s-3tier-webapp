@@ -19,6 +19,7 @@ import webapp.tier.util.GetConfig;
 public class RabbitmqService {
 	Logger logger = LoggerFactory.getLogger(RabbitmqService.class);
 	private static String queuename = GetConfig.getResourceBundle("rabbitmq.queue.name");
+	private static String batchqueuename = GetConfig.getResourceBundle("rabbitmq.batch.queue.name");
 	private static String username = GetConfig.getResourceBundle("rabbitmq.username");
 	private static String password = GetConfig.getResourceBundle("rabbitmq.password");
 	private static String host = GetConfig.getResourceBundle("rabbitmq.host");
@@ -45,21 +46,29 @@ public class RabbitmqService {
 		return status;
 	}
 
-	public String put() throws IOException, TimeoutException, NoSuchAlgorithmException {
+	private String getBody(String id) {
+		StringBuilder buf = new StringBuilder();
+		buf.append(id);
+		buf.append(splitkey);
+		buf.append(message);
+		return buf.toString();
+	}
+
+	private String basicPublish(String queue, String type) throws IOException, TimeoutException, NoSuchAlgorithmException {
 		String fullmsg = "Error";
 		Connection conn = getConnection();
 		try (Channel channel = conn.createChannel()) {
 			String id = String.valueOf(CreateId.createid());
-			StringBuilder buf = new StringBuilder();
-			buf.append(id);
-			buf.append(splitkey);
-			buf.append(message);
-			String body = buf.toString();
-			channel.basicPublish("", queuename, null, body.getBytes());
-			fullmsg = "Set id: " + id + ", msg:" + message;
+			String body = getBody(id);
+			channel.basicPublish("", queue, null, body.getBytes());
+			fullmsg = type + " id: " + id + ", msg: " + message;
 		}
 		logger.info(fullmsg);
 		return fullmsg;
+	}
+
+	public String put() throws IOException, TimeoutException, NoSuchAlgorithmException {
+		return basicPublish(queuename, "Set");
 	}
 
 	public String get() throws IOException, TimeoutException {
@@ -82,19 +91,6 @@ public class RabbitmqService {
 	}
 
 	public String publish() throws IOException, TimeoutException, NoSuchAlgorithmException {
-		String fullmsg = "Error";
-		Connection conn = getConnection();
-		try (Channel channel = conn.createChannel()) {
-			String id = String.valueOf(CreateId.createid());
-			StringBuilder buf = new StringBuilder();
-			buf.append(id);
-			buf.append(splitkey);
-			buf.append(message);
-			String body = buf.toString();
-			channel.basicPublish("", queuename, null, body.getBytes());
-			fullmsg = "Publish id: " + id + ", msg: " + message;
-		}
-		logger.info(fullmsg);
-		return fullmsg;
+		return basicPublish(batchqueuename, "Publish");
 	}
 }
