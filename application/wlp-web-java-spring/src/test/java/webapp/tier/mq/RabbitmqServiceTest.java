@@ -64,7 +64,7 @@ class RabbitmqServiceTest {
 			};
 			String result = svc.put();
 			assertThat(result, containsString("Set id: "));
-			assertThat(result, containsString(", msg:Hello k8s-3tier-webapp!"));
+			assertThat(result, containsString(", msg: Hello k8s-3tier-webapp!"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
