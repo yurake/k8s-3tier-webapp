@@ -25,12 +25,12 @@ class RabbitmqServiceTest {
 	ConnectionFactory cf;
 
 	@BeforeEach
-	private void createRabbitmqMock() {
+	public void createRabbitmqMock() {
 		conn = new MockConnectionFactory().newConnection();
 	}
 
 	@AfterEach
-	private void closeRabbitmqMock() {
+	public void closeRabbitmqMock() {
 		if (Objects.nonNull(conn)) {
 			conn.close();
 		}
