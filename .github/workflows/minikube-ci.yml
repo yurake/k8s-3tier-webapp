@@ -101,6 +101,14 @@ jobs:
         if: always()
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) -c mysql
+      - name: check log ingress
+        if: always()
+        run: |
+          sudo kubectl logs $(kubectl get pods -n kube-system | awk '{print $1}' | grep ingress-nginx-controller)
+      - name: check log storage-provisioner
+        if: always()
+        run: |
+          sudo kubectl logs $(kubectl get pods -n kube-system | awk '{print $1}' | grep storage-provisionerr)
       - name: check after test postmannewman-job
         if: always()
         run: |
