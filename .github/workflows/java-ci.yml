@@ -1164,7 +1164,7 @@ jobs:
 
       - name: Maven Build
         working-directory: ./application/wlp-web-java-spring
-        run: mvn -B verify package
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Copy war file
         uses: canastro/copy-file-action@master
         with:
