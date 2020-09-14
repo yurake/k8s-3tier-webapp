@@ -15,9 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import webapp.tier.cache.MemcachedService;
 import webapp.tier.cache.RedisService;
-import webapp.tier.cache.memcached.GetMemcached;
-import webapp.tier.cache.memcached.SetMemcached;
 import webapp.tier.db.MysqlService;
 import webapp.tier.mq.RabbitmqService;
 
@@ -31,10 +30,7 @@ public class ApplicationController {
 	RabbitmqService rabbitmqsvc;
 
 	@Inject
-	GetMemcached getmemcache;
-
-	@Inject
-	SetMemcached setmemcache;
+	MemcachedService memcachedsvc;
 
 	@Inject
 	RedisService redissvc;
@@ -96,7 +92,7 @@ public class ApplicationController {
 	@RequestMapping("GetMemcached")
 	public String getMemcached(Model model) {
 		logger.info("GetMemcached");
-		String cache = getmemcache.getMemcached();
+		String cache = memcachedsvc.get();
 		model.addAttribute("getMemcached", cache);
 		return "getmemcached";
 	}
@@ -104,7 +100,7 @@ public class ApplicationController {
 	@RequestMapping("SetMemcached")
 	public String setMemcached(Model model) throws Exception {
 		logger.info("SetMemcached");
-		String cache = setmemcache.setMemcached();
+		String cache = memcachedsvc.set();
 		model.addAttribute("setMemcached", cache);
 		return "setmemcached";
 	}

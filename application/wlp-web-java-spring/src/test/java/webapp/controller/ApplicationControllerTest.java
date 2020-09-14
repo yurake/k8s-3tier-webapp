@@ -16,9 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import webapp.tier.cache.MemcachedService;
 import webapp.tier.cache.RedisService;
-import webapp.tier.cache.memcached.GetMemcached;
-import webapp.tier.cache.memcached.SetMemcached;
 import webapp.tier.db.MysqlService;
 import webapp.tier.mq.RabbitmqService;
 
@@ -34,10 +33,7 @@ public class ApplicationControllerTest {
 	RabbitmqService rabbitmqsvc;
 
 	@Mock
-	GetMemcached getmemcache;
-
-	@Mock
-	SetMemcached setmemcache;
+	MemcachedService memcachedsvc;
 
 	@Mock
 	RedisService redissvc;

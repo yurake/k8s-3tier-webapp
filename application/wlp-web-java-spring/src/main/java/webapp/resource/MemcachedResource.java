@@ -8,8 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import webapp.tier.cache.memcached.GetMemcached;
-import webapp.tier.cache.memcached.SetMemcached;
+import webapp.tier.cache.MemcachedService;
 
 @Path("/memcached")
 @Produces(MediaType.APPLICATION_JSON)
@@ -19,9 +18,9 @@ public class MemcachedResource {
 	@POST
 	@Path("/set")
 	public Response set() {
-		SetMemcached svc = new SetMemcached();
+		MemcachedService svc = new MemcachedService();
 		try {
-			return Response.ok().entity(svc.setMemcached()).build();
+			return Response.ok().entity(svc.set()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -31,9 +30,9 @@ public class MemcachedResource {
 	@GET
 	@Path("/get")
 	public Response get() {
-		GetMemcached svc = new GetMemcached();
+		MemcachedService svc = new MemcachedService();
 		try {
-			return Response.ok().entity(svc.getMemcached()).build();
+			return Response.ok().entity(svc.get()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
