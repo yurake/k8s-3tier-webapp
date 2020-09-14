@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>wlp-web-java-spring</artifactId>
@@ -39,13 +37,13 @@
 		<slf4j.version>1.7.30</slf4j.version>
 
 		<!-- Test -->
-		<junit.jupiter.version>5.6.2</junit.jupiter.version>
+		<junit.jupiter.version>5.7.0</junit.jupiter.version>
 		<junit.version>${junit.jupiter.version}</junit.version>
 		<jersey.version>2.31</jersey.version>
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 		<maven.compiler.source>1.11</maven.compiler.source>
 		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-		<mockito.junit.jupiter>3.5.7</mockito.junit.jupiter>
+		<mockito.junit.jupiter>3.5.10</mockito.junit.jupiter>
 		<activemq-broker.version>5.16.0</activemq-broker.version>
 		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 		<jedis-mock.version>0.1.16</jedis-mock.version>
