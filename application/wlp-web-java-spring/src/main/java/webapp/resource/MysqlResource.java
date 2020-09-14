@@ -1,9 +1,5 @@
 package webapp.resource;
 
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-
-import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,13 +15,17 @@ import webapp.tier.db.MysqlService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MysqlResource {
 
+	MysqlService createMysqlService() {
+		return new MysqlService();
+	}
+
 	@POST
 	@Path("/insert")
 	public Response insert() {
-		MysqlService insmysql = new MysqlService();
+		MysqlService insmysql = createMysqlService();
 		try {
 			return Response.ok().entity(insmysql.insert()).build();
-		} catch (SQLException | NamingException | NoSuchAlgorithmException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
@@ -34,10 +34,10 @@ public class MysqlResource {
 	@GET
 	@Path("/select")
 	public Response select() {
-		MysqlService selmysql = new MysqlService();
+		MysqlService selmysql = createMysqlService();
 		try {
 			return Response.ok().entity(selmysql.select()).build();
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
@@ -46,10 +46,10 @@ public class MysqlResource {
 	@POST
 	@Path("/delete")
 	public Response delete() {
-		MysqlService delmysql = new MysqlService();
+		MysqlService delmysql = createMysqlService();
 		try {
 			return Response.ok(delmysql.delete()).build();
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}

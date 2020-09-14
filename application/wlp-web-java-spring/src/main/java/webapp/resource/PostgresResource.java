@@ -1,9 +1,5 @@
 package webapp.resource;
 
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-
-import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,13 +16,17 @@ import webapp.tier.db.PostgresService;
 public class PostgresResource {
 
 
+	PostgresService createPostgresService() {
+		return new PostgresService();
+	}
+
 	@POST
 	@Path("/insert")
 	public Response insert() {
-		PostgresService postgres = new PostgresService();
+		PostgresService postgres = createPostgresService();
 		try {
 			return Response.ok().entity(postgres.insert()).build();
-		} catch (SQLException | NamingException | NoSuchAlgorithmException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
@@ -35,10 +35,10 @@ public class PostgresResource {
 	@GET
 	@Path("/select")
 	public Response select() {
-		PostgresService postgres = new PostgresService();
+		PostgresService postgres = createPostgresService();
 		try {
 			return Response.ok().entity(postgres.select()).build();
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
@@ -47,10 +47,10 @@ public class PostgresResource {
 	@POST
 	@Path("/delete")
 	public Response delete() {
-		PostgresService postgres = new PostgresService();
+		PostgresService postgres = createPostgresService();
 		try {
 			return Response.ok(postgres.delete()).build();
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}

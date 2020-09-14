@@ -19,10 +19,18 @@ import webapp.tier.util.HazelcastInstanceConfigurator;
 @Consumes(MediaType.APPLICATION_JSON)
 public class HazelcastResource {
 
+	HazelcastCacheService createHazelcastCacheService() {
+		return new HazelcastCacheService();
+	}
+
+	HazelcastMqService createHazelcastMqService() {
+		return new HazelcastMqService();
+	}
+
 	@POST
 	@Path("/putcache")
 	public Response putcache() {
-		HazelcastCacheService svc = new HazelcastCacheService();
+		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.putMapHazelcast(client)).build();
@@ -35,7 +43,7 @@ public class HazelcastResource {
 	@GET
 	@Path("/getcache")
 	public Response getcache() {
-		HazelcastCacheService svc = new HazelcastCacheService();
+		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.getMapHazelcast(client)).build();
@@ -48,7 +56,7 @@ public class HazelcastResource {
 	@POST
 	@Path("/putqueue")
 	public Response putqueue() {
-		HazelcastMqService svc = new HazelcastMqService();
+		HazelcastMqService svc = createHazelcastMqService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.putQueueHazelcast(client)).build();
@@ -61,7 +69,7 @@ public class HazelcastResource {
 	@GET
 	@Path("/getqueue")
 	public Response getqueue() {
-		HazelcastMqService svc = new HazelcastMqService();
+		HazelcastMqService svc = createHazelcastMqService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.getQueueHazelcast(client)).build();
@@ -74,7 +82,7 @@ public class HazelcastResource {
 	@POST
 	@Path("/publish")
 	public Response publish() {
-		HazelcastMqService svc = new HazelcastMqService();
+		HazelcastMqService svc = createHazelcastMqService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.publishHazelcast(client)).build();

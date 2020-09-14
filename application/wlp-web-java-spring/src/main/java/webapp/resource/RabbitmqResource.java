@@ -15,10 +15,14 @@ import webapp.tier.mq.RabbitmqService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RabbitmqResource {
 
+	RabbitmqService createRabbitmqService() {
+		return new RabbitmqService();
+	}
+
 	@POST
 	@Path("/put")
-	public Response set() {
-		RabbitmqService svc = new RabbitmqService();
+	public Response put() {
+		RabbitmqService svc = createRabbitmqService();
 		try {
 			return Response.ok().entity(svc.put()).build();
 		} catch (Exception e) {
@@ -30,7 +34,7 @@ public class RabbitmqResource {
 	@GET
 	@Path("/get")
 	public Response get() {
-		RabbitmqService svc = new RabbitmqService();
+		RabbitmqService svc = createRabbitmqService();
 		try {
 			return Response.ok().entity(svc.get()).build();
 		} catch (Exception e) {
@@ -42,7 +46,7 @@ public class RabbitmqResource {
 	@POST
 	@Path("/publish")
 	public Response publish() {
-		RabbitmqService svc = new RabbitmqService();
+		RabbitmqService svc = createRabbitmqService();
 		try {
 			return Response.ok().entity(svc.publish()).build();
 		} catch (Exception e) {

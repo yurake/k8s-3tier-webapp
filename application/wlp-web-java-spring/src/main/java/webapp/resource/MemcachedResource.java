@@ -15,10 +15,14 @@ import webapp.tier.cache.MemcachedService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MemcachedResource {
 
+	MemcachedService createMemcachedService() {
+		return new MemcachedService();
+	}
+
 	@POST
 	@Path("/set")
 	public Response set() {
-		MemcachedService svc = new MemcachedService();
+		MemcachedService svc = createMemcachedService();
 		try {
 			return Response.ok().entity(svc.set()).build();
 		} catch (Exception e) {
@@ -30,7 +34,7 @@ public class MemcachedResource {
 	@GET
 	@Path("/get")
 	public Response get() {
-		MemcachedService svc = new MemcachedService();
+		MemcachedService svc = createMemcachedService();
 		try {
 			return Response.ok().entity(svc.get()).build();
 		} catch (Exception e) {

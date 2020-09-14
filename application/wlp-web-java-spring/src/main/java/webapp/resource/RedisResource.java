@@ -15,10 +15,14 @@ import webapp.tier.cache.RedisService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RedisResource {
 
+	RedisService createRedisService() {
+		return new RedisService();
+	}
+
 	@POST
 	@Path("/set")
 	public Response set() {
-		RedisService svc = new RedisService();
+		RedisService svc = createRedisService();
 		try {
 			return Response.ok().entity(svc.set()).build();
 		} catch (Exception e) {
@@ -30,7 +34,7 @@ public class RedisResource {
 	@GET
 	@Path("/get")
 	public Response get() {
-		RedisService svc = new RedisService();
+		RedisService svc = createRedisService();
 		try {
 			return Response.ok().entity(svc.get()).build();
 		} catch (Exception e) {
@@ -42,7 +46,7 @@ public class RedisResource {
 	@POST
 	@Path("/publish")
 	public Response publish() {
-		RedisService svc = new RedisService();
+		RedisService svc = createRedisService();
 		try {
 			return Response.ok().entity(svc.publish()).build();
 		} catch (Exception e) {
