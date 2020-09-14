@@ -1133,7 +1133,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   wlp-web-java-spring:
-    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
