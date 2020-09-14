@@ -18,6 +18,7 @@ jobs:
       matrix:
         minikube: [v1.12.3, v1.13.0]
         kubernetes: [v1.18.2, v1.18.3]
+      fail-fast: false
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -96,6 +97,10 @@ jobs:
         if: always()
         run: |
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
+      - name: check log mysql
+        if: always()
+        run: |
+          sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
       - name: check after test postmannewman-job
         if: always()
         run: |

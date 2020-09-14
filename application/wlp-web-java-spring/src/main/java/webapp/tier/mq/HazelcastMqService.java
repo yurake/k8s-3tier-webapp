@@ -1,4 +1,4 @@
-package webapp.tier.mq.hazelcast;
+package webapp.tier.mq;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -9,12 +9,12 @@ import org.springframework.util.StringUtils;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.topic.ITopic;
 
-import webapp.tier.cache.memcached.GetMemcached;
+import webapp.tier.cache.MemcachedService;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
 public class HazelcastMqService {
-	Logger logger = LoggerFactory.getLogger(GetMemcached.class);
+	Logger logger = LoggerFactory.getLogger(MemcachedService.class);
 	private static String message = GetConfig.getResourceBundle("common.message");
 	private static String pubmessage = GetConfig.getResourceBundle("hazelcast.publisher.message");
 	private static String queuename = GetConfig.getResourceBundle("hazelcast.queue.name");

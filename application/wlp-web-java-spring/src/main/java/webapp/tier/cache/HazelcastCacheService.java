@@ -1,4 +1,4 @@
-package webapp.tier.cache.hazelcast;
+package webapp.tier.cache;
 
 import java.util.ArrayList;
 import java.util.List;

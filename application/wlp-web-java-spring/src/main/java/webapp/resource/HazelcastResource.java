@@ -10,21 +10,29 @@ import javax.ws.rs.core.Response;
 
 import com.hazelcast.core.HazelcastInstance;
 
-import webapp.tier.cache.hazelcast.ConnectHazelcast;
-import webapp.tier.cache.hazelcast.HazelcastCacheService;
-import webapp.tier.mq.hazelcast.HazelcastMqService;
+import webapp.tier.cache.HazelcastCacheService;
+import webapp.tier.mq.HazelcastMqService;
+import webapp.tier.util.HazelcastInstanceConfigurator;
 
 @Path("/hazelcast")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class HazelcastResource {
 
+	HazelcastCacheService createHazelcastCacheService() {
+		return new HazelcastCacheService();
+	}
+
+	HazelcastMqService createHazelcastMqService() {
+		return new HazelcastMqService();
+	}
+
 	@POST
 	@Path("/putcache")
 	public Response putcache() {
-		HazelcastCacheService svc = new HazelcastCacheService();
+		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
-			HazelcastInstance client = ConnectHazelcast.getInstance();
+			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.putMapHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -35,9 +43,9 @@ public class HazelcastResource {
 	@GET
 	@Path("/getcache")
 	public Response getcache() {
-		HazelcastCacheService svc = new HazelcastCacheService();
+		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
-			HazelcastInstance client = ConnectHazelcast.getInstance();
+			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.getMapHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,9 +56,9 @@ public class HazelcastResource {
 	@POST
 	@Path("/putqueue")
 	public Response putqueue() {
-		HazelcastMqService svc = new HazelcastMqService();
+		HazelcastMqService svc = createHazelcastMqService();
 		try {
-			HazelcastInstance client = ConnectHazelcast.getInstance();
+			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.putQueueHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,9 +69,9 @@ public class HazelcastResource {
 	@GET
 	@Path("/getqueue")
 	public Response getqueue() {
-		HazelcastMqService svc = new HazelcastMqService();
+		HazelcastMqService svc = createHazelcastMqService();
 		try {
-			HazelcastInstance client = ConnectHazelcast.getInstance();
+			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.getQueueHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,9 +82,9 @@ public class HazelcastResource {
 	@POST
 	@Path("/publish")
 	public Response publish() {
-		HazelcastMqService svc = new HazelcastMqService();
+		HazelcastMqService svc = createHazelcastMqService();
 		try {
-			HazelcastInstance client = ConnectHazelcast.getInstance();
+			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
 			return Response.ok().entity(svc.publishHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();

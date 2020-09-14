@@ -1,10 +1,12 @@
 package webapp.controller;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
+import javax.inject.Inject;
 import javax.naming.NamingException;
 
 import org.slf4j.Logger;
@@ -13,20 +15,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import webapp.tier.cache.memcached.GetMemcached;
-import webapp.tier.cache.memcached.SetMemcached;
-import webapp.tier.cache.redis.GetRedis;
-import webapp.tier.cache.redis.PublishRedis;
-import webapp.tier.cache.redis.SetRedis;
-import webapp.tier.db.mysql.DeleteMysql;
-import webapp.tier.db.mysql.InsertMysql;
-import webapp.tier.db.mysql.SelectMysql;
-import webapp.tier.mq.rabbitmq.GetRabbitmq;
-import webapp.tier.mq.rabbitmq.PutRabbitmq;
-import webapp.tier.mq.rabbitmq.PutRabbitmqConsumer;
+import webapp.tier.cache.MemcachedService;
+import webapp.tier.cache.RedisService;
+import webapp.tier.db.MysqlService;
+import webapp.tier.mq.RabbitmqService;
 
 @Controller
 public class ApplicationController {
+
+	@Inject
+	MysqlService mysqlsvc;
+
+	@Inject
+	RabbitmqService rabbitmqsvc;
+
+	@Inject
+	MemcachedService memcachedsvc;
+
+	@Inject
+	RedisService redissvc;
+
 	Logger logger = LoggerFactory.getLogger(ApplicationController.class);
 
 	@RequestMapping("/")
@@ -36,131 +44,88 @@ public class ApplicationController {
 
 	@RequestMapping("InsertMysql")
 	public String insertDb(Model model) throws Exception {
-
 		logger.info("InsertMysql");
-		InsertMysql insmsg = new InsertMysql();
-		String msg = insmsg.insertMysql();
-
+		String msg = mysqlsvc.insert();
 		model.addAttribute("insertMysql", msg);
-
 		return "insertmysql";
 	}
 
 	@RequestMapping("SelectMysql")
 	public String selectMysql(Model model) throws SQLException, NamingException {
-
 		logger.info("SelectMysql");
-		SelectMysql insmsg = new SelectMysql();
-		List<String> allMessage = insmsg.selectMsg();
-
+		List<String> allMessage = mysqlsvc.select();
 		model.addAttribute("allMessageList", allMessage);
-
 		return "selectmysql";
 	}
 
 	@RequestMapping("DeleteMysql")
 	public String deleteMysql() throws SQLException, NamingException {
-
 		logger.info("DeleteMysql");
-		DeleteMysql insmsg = new DeleteMysql();
-		insmsg.deleteMsg();
-
+		mysqlsvc.delete();
 		return "deletemysql";
 	}
 
 	@RequestMapping("GetRabbitmq")
 	public String getMq(Model model) throws Exception {
-
 		logger.info("GetRabbitmq");
-		GetRabbitmq getmq = new GetRabbitmq();
-		String telegram = getmq.getMessageQueue();
-
+		String telegram = rabbitmqsvc.get();
 		model.addAttribute("getRabbitmq", telegram);
-
 		return "getrabbitmq";
 	}
 
 	@RequestMapping("PutRabbitmq")
-	public String putMq(Model model) throws IOException, TimeoutException {
-
+	public String putMq(Model model) throws IOException, TimeoutException, NoSuchAlgorithmException {
 		logger.info("PutRabbitmq");
-		PutRabbitmq putmq = new PutRabbitmq();
-		String telegram = putmq.putMessageQueue();
-
+		String telegram = rabbitmqsvc.put();
 		model.addAttribute("putRabbitmq", telegram);
-
 		return "putrabbitmq";
 	}
 
 	@RequestMapping("PutRabbitmqConsumer")
-	public String putMqBatch(Model model) throws IOException, TimeoutException {
-
+	public String putMqBatch(Model model) throws IOException, TimeoutException, NoSuchAlgorithmException {
 		logger.info("PutRabbitmqConsumer");
-		PutRabbitmqConsumer putmqb = new PutRabbitmqConsumer();
-		String telegram = putmqb.putMessageQueueConsumer();
-
+		String telegram = rabbitmqsvc.publish();
 		model.addAttribute("putRabbitmqConsumer", telegram);
-
 		return "putrabbitmqconsumer";
 	}
 
 	@RequestMapping("GetMemcached")
 	public String getMemcached(Model model) {
-
 		logger.info("GetMemcached");
-		GetMemcached getcache = new GetMemcached();
-		String cache = getcache.getMemcached();
-
+		String cache = memcachedsvc.get();
 		model.addAttribute("getMemcached", cache);
-
 		return "getmemcached";
 	}
 
 	@RequestMapping("SetMemcached")
 	public String setMemcached(Model model) throws Exception {
-
 		logger.info("SetMemcached");
-		SetMemcached setcache = new SetMemcached();
-		String cache = setcache.setMemcached();
-
+		String cache = memcachedsvc.set();
 		model.addAttribute("setMemcached", cache);
-
 		return "setmemcached";
 	}
 
 	@RequestMapping("GetRedis")
 	public String getRedis(Model model) {
-
 		logger.info("GetRedis");
-		GetRedis getcache = new GetRedis();
-		List<String> cache = getcache.getRedis();
-
+		List<String> cache = redissvc.get();
 		model.addAttribute("getRedisList", cache);
-
 		return "getredis";
 	}
 
 	@RequestMapping("SetRedis")
-	public String setRedis(Model model) {
-
+	public String setRedis(Model model) throws NoSuchAlgorithmException {
 		logger.info("SetRedis");
-		SetRedis setcache = new SetRedis();
-		String cache = setcache.setRedis();
-
+		String cache = redissvc.set();
 		model.addAttribute("setRedis", cache);
-
 		return "setredis";
 	}
 
 	@RequestMapping("PublishRedis")
-	public String publishRedis(Model model) {
-
+	public String publishRedis(Model model) throws NoSuchAlgorithmException {
 		logger.info("PublishRedis");
-		PublishRedis publishcache = new PublishRedis();
-		String cache = publishcache.publishRedis();
-
+		String cache = redissvc.publish();
 		model.addAttribute("publishRedis", cache);
-
 		return "publishredis";
 	}
 }

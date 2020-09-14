@@ -8,17 +8,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import webapp.tier.mq.activemq.ActiveMqService;
+import webapp.tier.mq.ActiveMqService;
 
 @Path("/activemq")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ActiveMqResource {
 
+	ActiveMqService createActiveMqService() {
+		return new ActiveMqService();
+	}
+
 	@POST
 	@Path("/put")
 	public Response putcache() {
-		ActiveMqService svc = new ActiveMqService();
+		ActiveMqService svc = createActiveMqService();
 		try {
 			return Response.ok().entity(svc.putActiveMq()).build();
 		} catch (Exception e) {
@@ -30,7 +34,7 @@ public class ActiveMqResource {
 	@GET
 	@Path("/get")
 	public Response getcache() {
-		ActiveMqService svc = new ActiveMqService();
+		ActiveMqService svc = createActiveMqService();
 		try {
 			return Response.ok().entity(svc.getActiveMq()).build();
 		} catch (Exception e) {
@@ -42,7 +46,7 @@ public class ActiveMqResource {
 	@POST
 	@Path("/publish")
 	public Response publish() {
-		ActiveMqService svc = new ActiveMqService();
+		ActiveMqService svc = createActiveMqService();
 		try {
 			return Response.ok().entity(svc.publishActiveMq()).build();
 		} catch (Exception e) {

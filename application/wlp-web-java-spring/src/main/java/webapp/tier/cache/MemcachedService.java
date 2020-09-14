@@ -1,4 +1,4 @@
-package webapp.tier.cache.memcached;
+package webapp.tier.cache;
 
 import java.util.Objects;
 
@@ -10,11 +10,13 @@ import org.slf4j.LoggerFactory;
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
+import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
-public class GetMemcached extends HttpServlet {
-	Logger logger = LoggerFactory.getLogger(GetMemcached.class);
+public class MemcachedService extends HttpServlet {
+	Logger logger = LoggerFactory.getLogger(MemcachedService.class);
 	private static String serverconf = GetConfig.getResourceBundle("memcached.server.conf");
+	private static String message = GetConfig.getResourceBundle("common.message");
 
 	// コネクションプールの初期化
 	static {
@@ -23,7 +25,7 @@ public class GetMemcached extends HttpServlet {
 		pool.initialize();
 	}
 
-	public String getMemcached() {
+	public String get() {
 		String fullmsg = "Error";
 		MemCachedClient mcc = new MemCachedClient();
 
@@ -37,6 +39,27 @@ public class GetMemcached extends HttpServlet {
 		} else {
 			fullmsg = "Received id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
+		}
+		return fullmsg;
+	}
+
+	public String set() throws Exception {
+		String fullmsg = "Error";
+		String id = String.valueOf(CreateId.createid());
+		boolean resultid = false;
+		boolean resultmsg = false;
+
+		MemCachedClient mcc = new MemCachedClient();
+		resultid = mcc.set("id", id);
+		resultmsg = mcc.set("msg", message);
+
+		if (resultid && resultmsg) {
+			fullmsg = "Set id: " + id + ", msg: " + message;
+			logger.info(fullmsg);
+		} else {
+			fullmsg = "Failed set to Memcached";
+			logger.warn(fullmsg);
+			throw new RuntimeException(fullmsg);
 		}
 		return fullmsg;
 	}
