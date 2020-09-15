@@ -106,7 +106,7 @@ jobs:
       - name: check log mysql
         if: always()
         run: |
-          sudo kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) -c mysql
+          sudo kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
           sudo kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) -c mysql
       - name: check log ingress
         if: always()
