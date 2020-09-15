@@ -47,6 +47,9 @@ jobs:
           echo ::set-env name=MINIKUBE_HOME::$HOME
           sudo minikube addons enable ingress
           sudo minikube addons list
+          # https://minikube.sigs.k8s.io/docs/drivers/docker/#troubleshooting
+          sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+          sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
       - name: wait for set up ingress
         run: |
           sudo kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
@@ -116,8 +119,8 @@ jobs:
       - name: check log storage-provisioner
         if: always()
         run: |
-          sudo kubectl -n kube-system describe po $(kubectl get pods -n kube-system | awk '{print $1}' | grep storage-provisionerr)
-          sudo kubectl -n kube-system logs $(kubectl get pods -n kube-system | awk '{print $1}' | grep storage-provisionerr)
+          sudo kubectl -n kube-system describe po $(kubectl get pods -n kube-system | awk '{print $1}' | grep storage-provisioner)
+          sudo kubectl -n kube-system logs $(kubectl get pods -n kube-system | awk '{print $1}' | grep storage-provisioner)
       - name: check after test postmannewman-job
         if: always()
         run: |
