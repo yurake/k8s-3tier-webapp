@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nginx
@@ -8,46 +8,79 @@ spec:
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: nginx
-              servicePort: 80
+              service:
+                name: nginx
+                port:
+                  number: 80
           - path: /api
+            pathType: Prefix
             backend:
-              serviceName: wlp
-              servicePort: 9080
+              service:
+                name: wlp
+                port:
+                  number: 9080
           - path: /quarkus/activemq
+            pathType: Prefix
             backend:
-              serviceName: jaxrs-activemq-quarkus
-              servicePort: 8080
+              service:
+                name: jaxrs-activemq-quarkus
+                port:
+                  number: 8080
           - path: /quarkus/hazelcast
+            pathType: Prefix
             backend:
-              serviceName: jaxrs-hazelcast-quarkus
-              servicePort: 8080
+              service:
+                name: jaxrs-hazelcast-quarkus
+                port:
+                  number: 8080
           - path: /quarkus/kafka
+            pathType: Prefix
             backend:
-              serviceName: jaxrs-kafka-quarkus
-              servicePort: 8080
+              service:
+                name: jaxrs-kafka-quarkus
+                port:
+                  number: 8080
           - path: /quarkus/memcached
+            pathType: Prefix
             backend:
-              serviceName: jaxrs-memcached-quarkus
-              servicePort: 8080
+              service:
+                name: jaxrs-memcached-quarkus
+                port:
+                  number: 8080
           - path: /quarkus/mongodb
+            pathType: Prefix
             backend:
-              serviceName: jaxrs-mongodb-quarkus
-              servicePort: 8080
+              service:
+                name: jaxrs-mongodb-quarkus
+                port:
+                  number: 8080
           - path: /quarkus/mysql
+            pathType: Prefix
             backend:
-              serviceName: jaxrs-mysql-quarkus
-              servicePort: 8080
+              service:
+                name: jaxrs-mysql-quarkus
+                port:
+                  number: 8080
           - path: /quarkus/postgres
+            pathType: Prefix
             backend:
-              serviceName: jaxrs-postgres-quarkus
-              servicePort: 8080
+              service:
+                name: jaxrs-postgres-quarkus
+                port:
+                  number: 8080
           - path: /quarkus/rabbitmq
+            pathType: Prefix
             backend:
-              serviceName: jaxrs-rabbitmq-quarkus
-              servicePort: 8080
+              service:
+                name: jaxrs-rabbitmq-quarkus
+                port:
+                  number: 8080
           - path: /quarkus/redis
+            pathType: Prefix
             backend:
-              serviceName: jaxrs-redis-quarkus
-              servicePort: 8080
+              service:
+                name: jaxrs-redis-quarkus
+                port:
+                  number: 8080

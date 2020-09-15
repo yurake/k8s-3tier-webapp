@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: activemq
@@ -7,7 +7,10 @@ spec:
     - host: activemq.management.minikube
       http:
         paths:
-          - path:
+          - path: /
+            pathType: Prefix
             backend:
-              serviceName: activemq
-              servicePort: 8161
+              service:
+                name: activemq
+                port:
+                  number: 8161
