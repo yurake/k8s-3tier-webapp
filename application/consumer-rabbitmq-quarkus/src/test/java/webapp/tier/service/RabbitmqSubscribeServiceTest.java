@@ -1,6 +1,8 @@
 package webapp.tier.service;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
@@ -31,17 +33,6 @@ class RabbitmqSubscribeServiceTest {
 	}
 
 	@Test
-	void testSubscribeError() {
-		try {
-			RabbitmqSubscribeService svc = new RabbitmqSubscribeService();
-			svc.run();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
-
-	@Test
 	void testSubscribe() {
 		try (MockConnection conn = createRabbitmqMock();
 				Channel channel = conn.createChannel()) {
@@ -65,6 +56,27 @@ class RabbitmqSubscribeServiceTest {
 			channel.basicPublish(exchangename, routingkey, null, "2222,Test".getBytes(StandardCharsets.UTF_8));
 			TimeUnit.MILLISECONDS.sleep(200L);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	void testSubscribeNoError() {
+		Connection conn = mock(Connection.class);
+		Channel chan = mock(Channel.class);
+		try {
+			when(conn.createChannel()).thenReturn(chan);
+			RabbitmqSubscribeService rsvc = new RabbitmqSubscribeService() {
+				public Connection getConnection() {
+					return conn;
+				}
+
+				protected void subscribeRabbitmq(Connection conn, Channel channel, RabbitmqConsumer consumer) {
+				}
+			};
+			rsvc.run();
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
