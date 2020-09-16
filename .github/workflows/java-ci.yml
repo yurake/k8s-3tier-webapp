@@ -19,7 +19,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
 
       - name: Cache local Maven repository
@@ -79,7 +79,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -103,7 +103,7 @@ jobs:
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: mvn -B verify deploy --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-activemq-quarkus
         run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -130,7 +130,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-activemq-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-activemq-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -139,7 +139,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -190,7 +190,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-hazelcast-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-hazelcast-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -199,7 +199,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -250,7 +250,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   consumer-kafka-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-kafka-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -259,7 +259,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -319,7 +319,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -379,7 +379,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -439,7 +439,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -499,7 +499,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -559,7 +559,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -619,7 +619,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -679,7 +679,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -739,7 +739,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -799,7 +799,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -859,7 +859,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -910,7 +910,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   producer-kafka-quarkus:
-    needs: init-build
+    needs: [init-build, jaxrs-kafka-quarkus]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -919,7 +919,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -979,7 +979,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -1039,7 +1039,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
 
       - name: Cache local Maven repository
@@ -1082,7 +1082,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -1133,7 +1133,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   wlp-web-java-spring:
-    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1142,7 +1141,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: 20.1.0.java11
+          graalvm-version: 20.2.0.java11
       - run: java -version
       - name: setup-native-image
         run: |
@@ -1164,7 +1163,7 @@ jobs:
 
       - name: Maven Build
         working-directory: ./application/wlp-web-java-spring
-        run: mvn -B verify package
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Copy war file
         uses: canastro/copy-file-action@master
         with:

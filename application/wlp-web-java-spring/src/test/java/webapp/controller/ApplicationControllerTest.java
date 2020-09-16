@@ -1,9 +1,10 @@
 package webapp.controller;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.Assert.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,9 +16,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import webapp.tier.db.mysql.InsertMysql;
-import webapp.tier.db.mysql.SelectMysql;
-import webapp.tier.mq.rabbitmq.GetRabbitmq;
+import webapp.tier.cache.MemcachedService;
+import webapp.tier.cache.RedisService;
+import webapp.tier.db.MysqlService;
+import webapp.tier.mq.RabbitmqService;
 
 @ExtendWith(MockitoExtension.class)
 public class ApplicationControllerTest {
@@ -25,135 +27,179 @@ public class ApplicationControllerTest {
 	private MockMvc mockMvc;
 
 	@Mock
-	InsertMysql insmysql;
+	MysqlService mysqlsvc;
+
 	@Mock
-	SelectMysql selmysql;
+	RabbitmqService rabbitmqsvc;
+
 	@Mock
-	GetRabbitmq getrab;
+	MemcachedService memcachedsvc;
+
+	@Mock
+	RedisService redissvc;
+
 	@InjectMocks
 	ApplicationController appcont;
 
 	@BeforeEach
 	public void setup() {
-		MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.openMocks(this);
 		this.mockMvc = MockMvcBuilders.standaloneSetup(appcont).build();
 	}
 
 	@Test
-	public void testIndex() throws Exception {
+	public void testIndex() {
+		try {
 		mockMvc.perform(get("/"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("index"))
 				.andExpect(model().hasNoErrors());
-	}
-
-	@Test
-	public void testInsertDbError() throws Exception {
-		try {
-			mockMvc.perform(get("/InsertMysql"));
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
 		}
 	}
 
 	@Test
-	public void testSelectMysqlError() throws Exception {
+	public void testInsertDb() {
 		try {
-			mockMvc.perform(get("/SelectMysql"));
+			mockMvc.perform(get("/InsertMysql"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("insertmysql"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
 		}
 	}
 
 	@Test
-	public void testDeleteMysqlError() throws Exception {
+	public void testSelectMysql() {
 		try {
-			mockMvc.perform(get("/DeleteMysql"));
+			mockMvc.perform(get("/SelectMysql"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("selectmysql"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
 		}
 	}
 
 	@Test
-	public void testGetMqError() throws Exception {
+	public void testDeleteMysql() {
 		try {
-			mockMvc.perform(get("/GetRabbitmq"));
+			mockMvc.perform(get("/DeleteMysql"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("deletemysql"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
 		}
 	}
 
 	@Test
-	public void testPutMqError() {
+	public void testGetMq() {
 		try {
-			mockMvc.perform(get("/PutRabbitmq"));
+			mockMvc.perform(get("/GetRabbitmq"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("getrabbitmq"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
 		}
 	}
 
 	@Test
-	public void testPutMqBatchError() {
+	public void testPutMq() {
 		try {
-			mockMvc.perform(get("/PutRabbitmqConsumer"));
+			mockMvc.perform(get("/PutRabbitmq"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("putrabbitmq"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class java.net.UnknownHostException"));
+		}
+	}
+
+	@Test
+	public void testPutMqConsumer() {
+		try {
+			mockMvc.perform(get("/PutRabbitmqConsumer"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("putrabbitmqconsumer"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
 		}
 	}
 
 	@Test
 	public void testGetMemcached() {
 		try {
-			mockMvc.perform(get("/GetMemcached"));
+			mockMvc.perform(get("/GetMemcached"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("getmemcached"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
 		}
 	}
 
 	@Test
 	public void testSetMemcached() {
 		try {
-			mockMvc.perform(get("/SetMemcached"));
+			mockMvc.perform(get("/SetMemcached"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("setmemcached"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
 		}
 	}
 
 	@Test
 	public void testGetRedis() {
 		try {
-			mockMvc.perform(get("/GetRedis"));
+			mockMvc.perform(get("/GetRedis"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("getredis"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
 		}
 	}
 
 	@Test
 	public void testSetRedis() {
 		try {
-			mockMvc.perform(get("/SetRedis"));
+			mockMvc.perform(get("/SetRedis"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("setredis"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
 		}
 	}
 
 	@Test
 	public void testPublishRedis() {
 		try {
-			mockMvc.perform(get("/PublishRedis"));
+			mockMvc.perform(get("/PublishRedis"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("publishredis"))
+					.andExpect(model().hasNoErrors());
+		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
-		} catch (Exception expected) {
-			assertThat(expected.getClass().toString(), is("class org.springframework.web.util.NestedServletException"));
 		}
 	}
 

@@ -31,17 +31,6 @@ class RabbitmqSubscribeServiceTest {
 	}
 
 	@Test
-	void testSubscribeError() {
-		try {
-			RabbitmqSubscribeService svc = new RabbitmqSubscribeService();
-			svc.run();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
-
-	@Test
 	void testSubscribe() {
 		try (MockConnection conn = createRabbitmqMock();
 				Channel channel = conn.createChannel()) {
