@@ -9,9 +9,13 @@ import java.util.ResourceBundle;
  *
  */
 public class GetConfig {
-    private static final String PROPERTY = "java";
 
-    public static String getResourceBundle(String key) {
-	return ResourceBundle.getBundle(PROPERTY).getString(key);
-    }
+	private static final String PROPERTY = "java";
+
+	private GetConfig() {
+	}
+
+	public static String getResourceBundle(String key) {
+		return ResourceBundle.getBundle(PROPERTY).getString(key);
+	}
 }
