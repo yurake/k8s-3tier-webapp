@@ -9,15 +9,44 @@ on:
     types: [closed]
 
 jobs:
-  minikube:
+  minikube-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: check current quarkus version
+      - name: check current minikube version
         working-directory: ./.github/workflows
-        run: echo ::set-env name=SOURCE_VERSION::$(grep "minikube:" minikube-ci.yml | awk '{print $3}' | tr -d ])
-      - name: check latest tag quarkus version
-        run: echo ::set-env name=TARGET_VERSION::$( curl -s https://api.github.com/repos/kubernetes/minikube/releases/latest | jq '.tag_name' | tr -d '"')
+        run: echo ::set-env name=SOURCE_VERSION::$(grep "minikube:" minikube-ci.yml | awk '{print $2}' | tr -d ']' | tr -d '[')
+      - name: check latest tag minikube version
+        run: echo ::set-env name=TARGET_VERSION::$( curl -s https://api.github.com/repos/kubernetes/minikube/releases/latest | jq '.tag_name' | tr -d '"' | tr -d 'v')
+      - name: check diff
+        run: |
+          echo CURRENT: ${SOURCE_VERSION}
+          echo TARGET: ${TARGET_VERSION}
+          test ${SOURCE_VERSION} = ${TARGET_VERSION}
+      - name: create issue if failure
+        if: failure()
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
+        id: create-issue-minikube
+      - name: create comment
+        if: failure()
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ steps.create-issue-minikube.outputs.number }}
+          body: |
+            Please see failure log: https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
+  kubernetes-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: check current kubernetes version
+        working-directory: ./.github/workflows
+        run: echo ::set-env name=SOURCE_VERSION::$(grep "kubernetes:" minikube-ci.yml | awk '{print $3}' | tr -d ])
+      - name: check latest tag kubernetes version
+        run: echo ::set-env name=TARGET_VERSION::$( curl -s https://api.github.com/repos/kubernetes/kubernetes/releases/latest | jq '.tag_name' | tr -d '"' | tr -d 'v')
       - name: check diff
         run: |
           echo CURRENT: ${SOURCE_VERSION}
