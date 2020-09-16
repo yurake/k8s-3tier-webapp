@@ -14,8 +14,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -35,16 +35,15 @@ class RedisServiceTest {
 	private static RedisServer server = null;
 	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
-	@BeforeAll
-	public static void setup() throws IOException {
+	@BeforeEach
+	public void setup() throws IOException {
 		server = RedisServer.newRedisServer();
 		server.start();
 	}
 
-	@AfterAll
-	public static void after() {
+	@AfterEach
+	public void after() {
 		server.stop();
-		server = null;
 	}
 
 	static Jedis createJedisMock() {

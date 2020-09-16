@@ -3,9 +3,6 @@ package webapp.tier.healthcheck;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
-
 import org.eclipse.microprofile.health.HealthCheckResponse.State;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +17,7 @@ class HealthCheckUtilsTest {
 	}
 
 	@Test
-	void respHealthCheckStatusUp() throws IOException, TimeoutException {
+	void respHealthCheckStatusUp() {
 		assertThat(HealthCheckUtils.respHealthCheckStatus(true, "Test").getState(), is(State.UP));
 	}
 

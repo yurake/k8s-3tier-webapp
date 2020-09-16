@@ -1,20 +1,30 @@
 package webapp.tier.util;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.Test;
 
-public class CreateIdTest {
+class CreateIdTest {
 
 	@Test
-	public void testCreateid() {
-		assertThat(5, is(String.valueOf(CreateId.createid()).length()));
+	void testCreateid() {
+		int expected;
+		try {
+			expected = CreateId.createid();
+			assertThat(expected, is(notNullValue()));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
-	public void testCreatewideid() {
-		assertThat(5, is(String.valueOf(CreateId.createwideid()).length()));
+	void testCreatewideid() {
+		int expected = CreateId.createwideid();
+		assertThat(expected, is(notNullValue()));
 	}
-
 }

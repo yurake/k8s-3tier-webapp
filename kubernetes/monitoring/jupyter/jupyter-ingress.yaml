@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: jupyter
@@ -10,7 +10,10 @@ spec:
     - host: jupyter.minikube
       http:
         paths:
-          - path:
+          - path: /
+            pathType: Prefix
             backend:
-              serviceName: jupyter
-              servicePort: 8888
+              service:
+                name: jupyter
+                port:
+                  number: 8888
