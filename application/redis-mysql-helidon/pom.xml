@@ -27,6 +27,8 @@
 		<jedis.version>3.3.0</jedis.version>
 		<mysql.version>8.0.21</mysql.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
+		<jedis-mock.version>0.1.16</jedis-mock.version>
+		<mockito.junit.jupiter>3.5.10</mockito.junit.jupiter>
 	</properties>
 
 	<dependencies>
@@ -67,6 +69,16 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.fppt</groupId>
+			<artifactId>jedis-mock</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -79,6 +91,16 @@
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.fppt</groupId>
+				<artifactId>jedis-mock</artifactId>
+				<version>${jedis-mock.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-junit-jupiter</artifactId>
+				<version>${mockito.junit.jupiter}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
