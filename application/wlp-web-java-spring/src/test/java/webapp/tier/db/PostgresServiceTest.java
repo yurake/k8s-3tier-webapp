@@ -86,7 +86,7 @@ class PostgresServiceTest {
 
 	@Test
 	void testselect() {
-		MysqlService svc = new MysqlService() {
+		PostgresService svc = new PostgresService() {
 			public Connection getConnection() throws NamingException, SQLException {
 				ResultSet rs = mock(ResultSet.class);
 				Statement stmt = mock(Statement.class);
