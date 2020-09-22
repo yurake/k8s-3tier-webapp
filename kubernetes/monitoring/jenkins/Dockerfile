@@ -11,7 +11,7 @@ RUN echo "http://dl-2.alpinelinux.org/alpine/edge/community" >> /etc/apk/reposit
 RUN echo "http://dl-2.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 # install docker
-RUN apk -U --no-cache --allow-untrusted add gcc=10.2.0-r5 docker=19.03.12-r0
+RUN apk -U --no-cache --allow-untrusted add gcc=10.2.0-r5 docker=19.03.13-r0
 
 # install kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/"$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)"/bin/linux/amd64/kubectl; chmod +x ./kubectl; mv ./kubectl /usr/local/bin/kubectl
