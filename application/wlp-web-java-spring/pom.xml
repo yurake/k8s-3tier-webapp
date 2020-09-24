@@ -29,7 +29,7 @@
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<mysql-connector-java.version>8.0.21</mysql-connector-java.version>
 		<jedis.version>3.3.0</jedis.version>
-		<hazelcast.version>4.0.2</hazelcast.version>
+		<hazelcast.version>4.0.3</hazelcast.version>
 		<javaee-api.version>8.0.1</javaee-api.version>
 
 		<!-- Spring -->
@@ -47,7 +47,7 @@
 		<junit.version>${junit.jupiter.version}</junit.version>
 		<jersey.version>2.31</jersey.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-		<mockito.junit.jupiter>3.5.10</mockito.junit.jupiter>
+		<mockito.junit.jupiter>3.5.11</mockito.junit.jupiter>
 		<activemq-broker.version>5.16.0</activemq-broker.version>
 		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 		<jedis-mock.version>0.1.16</jedis-mock.version>
