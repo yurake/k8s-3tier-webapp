@@ -23,21 +23,6 @@ jobs:
           echo CURRENT: ${SOURCE_VERSION}
           echo TARGET: ${TARGET_VERSION}
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: create issue if failure
-        if: failure()
-        uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
-        id: create-issue-minikube
-      - name: create comment
-        if: failure()
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          issue-number: ${{ steps.create-issue-minikube.outputs.number }}
-          body: |
-            Please see failure log: https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
   kubernetes-version:
     runs-on: ubuntu-latest
     steps:
@@ -52,18 +37,3 @@ jobs:
           echo CURRENT: ${SOURCE_VERSION}
           echo TARGET: ${TARGET_VERSION}
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: create issue if failure
-        if: failure()
-        uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
-        id: create-issue-minikube
-      - name: create comment
-        if: failure()
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          issue-number: ${{ steps.create-issue-minikube.outputs.number }}
-          body: |
-            Please see failure log: https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
