@@ -20,14 +20,14 @@ import webapp.tier.util.GetConfig;
 
 public class PostgresService {
 
-	Logger logger = LoggerFactory.getLogger(PostgresService.class);
+	private static Logger logger = LoggerFactory.getLogger(PostgresService.class);
 	private static String jndiname = GetConfig.getResourceBundle("postgres.jndi.name");
 	private static String sqlkey = GetConfig.getResourceBundle("postgres.insert.msg.id");
 	private static String sqlbody = GetConfig.getResourceBundle("postgres.insert.msg.body");
 	private static String message = GetConfig.getResourceBundle("common.message");
-	private static String insertsql = GetConfig.getResourceBundle("mysql.insert.msg");
-	private static String selectsql = GetConfig.getResourceBundle("mysql.select.msg.all");
-	private static String deletesql = GetConfig.getResourceBundle("mysql.delete.msg.all");
+	private static String insertsql = GetConfig.getResourceBundle("postgres.insert.msg");
+	private static String selectsql = GetConfig.getResourceBundle("postgres.select.msg.all");
+	private static String deletesql = GetConfig.getResourceBundle("postgres.delete.msg.all");
 	private DataSource ds = null;
 
 	public Connection getConnection() throws SQLException, NamingException {

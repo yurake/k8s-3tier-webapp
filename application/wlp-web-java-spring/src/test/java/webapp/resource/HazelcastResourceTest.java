@@ -1,33 +1,38 @@
 package webapp.resource;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
+
 import javax.ws.rs.core.Response;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
 
 import webapp.tier.cache.HazelcastCacheService;
 import webapp.tier.mq.HazelcastMqService;
 
 public class HazelcastResourceTest {
 
-	/**
-	private HazelcastResource createHazelcastCacheService() throws Exception {
-		HazelcastCacheService casvc = mock(HazelcastCacheService.class);
-		List<String> allmsg = new ArrayList<>();
-		allmsg.add("OK");
-		when(casvc.putMapHazelcast(ArgumentMatchers.any())).thenReturn("OK");
-		when(casvc.getMapHazelcast(ArgumentMatchers.any())).thenReturn(allmsg);
-		return new HazelcastResource() {
-			HazelcastCacheService createHazelcastCacheService() {
-				return casvc;
-			}
-		};
+	private static HazelcastInstance mockInstance;
+
+	@BeforeEach
+	public void setup() throws IOException {
+		mockInstance = Hazelcast.newHazelcastInstance();
 	}
-	**/
+
+	@AfterEach
+	public void after() {
+		mockInstance.shutdown();
+	}
 
 	private HazelcastResource createHazelcastCacheServiceNull() throws Exception {
 		return new HazelcastResource() {
@@ -36,20 +41,6 @@ public class HazelcastResourceTest {
 			}
 		};
 	}
-
-	/**
-	private HazelcastResource createHazelcastMqService() throws Exception {
-		HazelcastMqService mqsvc = mock(HazelcastMqService.class);
-		when(mqsvc.putQueueHazelcast(ArgumentMatchers.any())).thenReturn("OK");
-		when(mqsvc.getQueueHazelcast(ArgumentMatchers.any())).thenReturn("OK");
-		when(mqsvc.publishHazelcast(ArgumentMatchers.any())).thenReturn("OK");
-		return new HazelcastResource() {
-			HazelcastMqService createHazelcastMqService() {
-				return mqsvc;
-			}
-		};
-	}
-	**/
 
 	private HazelcastResource createHazelcastMqServiceNull() throws Exception {
 		return new HazelcastResource() {
@@ -81,23 +72,23 @@ public class HazelcastResourceTest {
 		}
 	}
 
-	/**
 	@Test
 	public void testputcache() {
 		try {
-			HazelcastResource rsc = createHazelcastCacheService();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.putcache();
 			assertThat(resp.getStatus(), is(200));
-			assertThat(resp.getEntity().toString(), is("OK"));
+			String result = resp.getEntity().toString();
+			assertThat(result, containsString("Set id: "));
+			assertThat(result, containsString(", msg: Hello k8s-3tier-webapp!"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
-	**/
 
 	@Test
-	public void testPutcacheError() {
+	public void testputcacheError() {
 		try {
 			HazelcastResource rsc = createHazelcastCacheServiceNull();
 			Response resp = rsc.putcache();
@@ -108,20 +99,18 @@ public class HazelcastResourceTest {
 		}
 	}
 
-	/**
 	@Test
 	public void testgetcache() {
 		try {
-			HazelcastResource rsc = createHazelcastCacheService();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.getcache();
 			assertThat(resp.getStatus(), is(200));
-			assertThat(resp.getEntity().toString(), is("OK"));
+			assertThat(resp.getEntity().toString(), is("[No Data]"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
-	**/
 
 	@Test
 	public void testgetcacheError() {
@@ -136,20 +125,20 @@ public class HazelcastResourceTest {
 	}
 
 
-	/**
 	@Test
 	public void testputqueue() {
 		try {
-			HazelcastResource rsc = createHazelcastMqService();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.putqueue();
 			assertThat(resp.getStatus(), is(200));
-			assertThat(resp.getEntity().toString(), is("OK"));
+			String result = resp.getEntity().toString();
+			assertThat(result, containsString("Set id: "));
+			assertThat(result, containsString(", msg: Hello k8s-3tier-webapp!"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
-	**/
 
 	@Test
 	public void testputqueueError() {
@@ -163,20 +152,18 @@ public class HazelcastResourceTest {
 		}
 	}
 
-	/**
 	@Test
 	public void testgetqueue() {
 		try {
-			HazelcastResource rsc = createHazelcastMqService();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.getqueue();
 			assertThat(resp.getStatus(), is(200));
-			assertThat(resp.getEntity().toString(), is("OK"));
+			assertThat(resp.getEntity().toString(), is("No Data"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
-	**/
 
 	@Test
 	public void testgetqueueError() {
@@ -190,20 +177,20 @@ public class HazelcastResourceTest {
 		}
 	}
 
-	/**
 	@Test
 	public void testpublish() {
 		try {
-			HazelcastResource rsc = createHazelcastMqService();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(200));
-			assertThat(resp.getEntity().toString(), is("OK"));
+			String result = resp.getEntity().toString();
+			assertThat(result, containsString("Publish id: "));
+			assertThat(result, containsString(", msg: Hello k8s-3tier-webapp via hazelcast-subscriber!"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
-	**/
 
 	@Test
 	public void testpublishError() {
