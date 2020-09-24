@@ -4,6 +4,8 @@ import javax.servlet.ServletRegistration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import webapp.tier.exception.WebappServiceException;
+
 public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
@@ -25,7 +27,7 @@ public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispat
 	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
 		boolean done = registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
 		if (!done)
-			throw new RuntimeException();
+			throw new WebappServiceException("Registration Error");
 	}
 
 }
