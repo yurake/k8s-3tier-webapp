@@ -53,7 +53,7 @@ public class PostgresService implements Database {
 		boolean status = false;
 		try (Connection con = ds.getConnection()) {
 			status = true;
-		} catch (SQLException e) {
+		} catch (SQLException | NullPointerException e) {
 			LOG.log(Level.SEVERE, "Status Check Error.", e);
 		}
 		return status;

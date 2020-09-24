@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class MongodbResourceTestError {
+class MongodbResourceErrorTest {
 
 	@Test
 	void testInsertError() {
