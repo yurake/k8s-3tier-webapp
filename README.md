@@ -76,7 +76,7 @@ Installed CLI commands.
 minikube config set memory 121288
 minikube config set cpus 6
 minikube config set disk-size 80g
-minikube start --kubernetes-version=v1.18.3
+minikube start
 minikube addons enable ingress
 
 eval $(minikube docker-env)
@@ -88,7 +88,7 @@ eval $(minikube docker-env)
 minikube config set memory 121288
 minikube config set cpus 6
 minikube config set disk-size 80g
-minikube start --kubernetes-version=v1.18.3
+minikube start
 minikube addons enable ingress
 
 minikube docker-env --shell powershell | Invoke-Expression
