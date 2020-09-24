@@ -58,6 +58,7 @@ public class HazelcastMqService implements Runnable {
 		} catch (IllegalStateException | InterruptedException | NoSuchAlgorithmException e) {
 			LOG.log(Level.SEVERE, "Put Error.", e);
 			e.printStackTrace();
+		    Thread.currentThread().interrupt();
 		} finally {
 			if (client != null) {
 				client.shutdown();
