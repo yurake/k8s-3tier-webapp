@@ -35,7 +35,7 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
 
       - name: Cache local Maven repository
         uses: actions/cache@v2
@@ -49,7 +49,7 @@ jobs:
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -63,7 +63,7 @@ jobs:
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_webapp-service
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -103,10 +103,10 @@ jobs:
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-activemq-quarkus
-        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-activemq-quarkus:latest
@@ -123,7 +123,7 @@ jobs:
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_jaxrs-activemq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -163,7 +163,7 @@ jobs:
         working-directory: ./application/consumer-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/consumer-activemq-quarkus
         run: docker build -t yurak/consumer-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -183,7 +183,7 @@ jobs:
         working-directory: ./application/consumer-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_consumer-activemq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -223,7 +223,7 @@ jobs:
         working-directory: ./application/consumer-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/consumer-hazelcast-quarkus
         run: docker build -t yurak/consumer-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -243,7 +243,7 @@ jobs:
         working-directory: ./application/consumer-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_consumer-hazelcast-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -283,7 +283,7 @@ jobs:
         working-directory: ./application/consumer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/consumer-kafka-quarkus
         run: docker build -t yurak/consumer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -303,7 +303,7 @@ jobs:
         working-directory: ./application/consumer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_consumer-kafka-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -343,7 +343,7 @@ jobs:
         working-directory: ./application/scheduled-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/scheduled-quarkus
         run: docker build -t yurak/scheduled-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -363,7 +363,7 @@ jobs:
         working-directory: ./application/scheduled-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_scheduled-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -403,7 +403,7 @@ jobs:
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-hazelcast-quarkus
         run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -423,7 +423,7 @@ jobs:
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_jaxrs-hazelcast-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -463,7 +463,7 @@ jobs:
         working-directory: ./application/jaxrs-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-kafka-quarkus
         run: docker build -t yurak/jaxrs-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -483,7 +483,7 @@ jobs:
         working-directory: ./application/jaxrs-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_jaxrs-kafka-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -523,7 +523,7 @@ jobs:
         working-directory: ./application/jaxrs-memcached-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-memcached-quarkus
         run: docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -543,7 +543,7 @@ jobs:
         working-directory: ./application/jaxrs-memcached-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_jaxrs-memcached-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -583,10 +583,10 @@ jobs:
         working-directory: ./application/jaxrs-mongodb-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-mongodb-quarkus
-        run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-mongodb-quarkus:latest
@@ -603,7 +603,7 @@ jobs:
         working-directory: ./application/jaxrs-mongodb-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_jaxrs-mongodb-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -643,10 +643,10 @@ jobs:
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-mysql-quarkus
-        run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-mysql-quarkus:latest
@@ -663,7 +663,7 @@ jobs:
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_jaxrs-mysql-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -703,10 +703,10 @@ jobs:
         working-directory: ./application/jaxrs-postgres-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-postgres-quarkus
-        run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-postgres-quarkus:latest
@@ -723,7 +723,7 @@ jobs:
         working-directory: ./application/jaxrs-postgres-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -763,7 +763,7 @@ jobs:
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -783,7 +783,7 @@ jobs:
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -823,7 +823,7 @@ jobs:
         working-directory: ./application/jaxrs-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-redis-quarkus
         run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -843,7 +843,7 @@ jobs:
         working-directory: ./application/jaxrs-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -883,7 +883,7 @@ jobs:
         working-directory: ./application/consumer-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/consumer-rabbitmq-quarkus
         run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -903,7 +903,7 @@ jobs:
         working-directory: ./application/consumer-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_consumer-rabbitmq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -943,7 +943,7 @@ jobs:
         working-directory: ./application/producer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/producer-kafka-quarkus
         run: docker build -t yurak/producer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -963,7 +963,7 @@ jobs:
         working-directory: ./application/producer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_producer-kafka-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1003,7 +1003,7 @@ jobs:
         working-directory: ./application/randompublish-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/randompublish-quarkus
         run: docker build -t yurak/randompublish-quarkus:latest -f src/main/docker/Dockerfile.native .
@@ -1023,7 +1023,7 @@ jobs:
         working-directory: ./application/randompublish-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_randompublish-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1106,7 +1106,7 @@ jobs:
         working-directory: ./application/consumer-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/consumer-redis-quarkus
         run: docker build -t yurak/consumer-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -1126,7 +1126,7 @@ jobs:
         working-directory: ./application/consumer-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: ./mvnw sonar:sonar
           -Dsonar.projectKey=yurake_consumer-redis-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/

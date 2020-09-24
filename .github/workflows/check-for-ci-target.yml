@@ -18,31 +18,9 @@ jobs:
         run: echo ::set-env name=SOURCE_PROJECT::$(find . -name "pom.xml" | grep -v -e target -e src | wc -l | tr -d ' ')
       - name: get java-ci.yml
         working-directory: ./.github/workflows
-        run: echo ::set-env name=JAVACI_PROJECT::$(grep "mvn -B verify" java-ci.yml | wc -l | tr -d ' ')
+        run: echo ::set-env name=JAVACI_PROJECT::$(grep verify java-ci.yml | wc -l | tr -d ' ')
       - name: check java-ci.yml
         run: |
           echo CURRENT: ${SOURCE_PROJECT}
           echo TARGET: ${JAVACI_PROJECT}
           test ${SOURCE_PROJECT} = ${JAVACI_PROJECT}
-      - name: create issue if failure
-        if: failure()
-        uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          filename: .github/ISSUE_TEMPLATE/check-for-update-failure.md
-        id: create-issue-java
-      - name: create comment
-        if: failure()
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          issue-number: ${{ steps.create-issue-java.outputs.number }}
-          body: |
-            Please see failure log: https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
-      - name: create comment
-        if: failure()
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            Please see new issue ${{ steps.create-issue-java.outputs.url }}
