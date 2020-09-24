@@ -1052,7 +1052,7 @@ jobs:
 
       - name: Maven Build - redis-mysql-helidon
         working-directory: ./application/redis-mysql-helidon
-        run: ./mvnw -B verify package
+        run: mvn -B verify package
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -1163,7 +1163,7 @@ jobs:
 
       - name: Maven Build
         working-directory: ./application/wlp-web-java-spring
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
+        run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Copy war file
         uses: canastro/copy-file-action@master
         with:
