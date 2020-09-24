@@ -18,7 +18,7 @@ import webapp.tier.service.ActiveMqService;
 class ActivemqResourceErrorTest {
 
 	@InjectMock
-	private ActiveMqService svc;
+	ActiveMqService svc;
 
 	@Test
 	void testPutError() throws NoSuchAlgorithmException {
