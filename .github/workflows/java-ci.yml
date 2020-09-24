@@ -106,7 +106,7 @@ jobs:
         run: mvn -B verify deploy --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-activemq-quarkus
-        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-activemq-quarkus:latest
@@ -226,7 +226,7 @@ jobs:
         run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/consumer-hazelcast-quarkus
-        run: docker build -t yurak/consumer-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/consumer-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.fast-jar .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/consumer-hazelcast-quarkus:latest
@@ -406,7 +406,7 @@ jobs:
         run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-hazelcast-quarkus
-        run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.fast-jar .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-hazelcast-quarkus:latest
@@ -526,7 +526,7 @@ jobs:
         run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-memcached-quarkus
-        run: docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.fast-jar .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-memcached-quarkus:latest
@@ -586,7 +586,7 @@ jobs:
         run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-mongodb-quarkus
-        run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-mongodb-quarkus:latest
@@ -646,7 +646,7 @@ jobs:
         run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-mysql-quarkus
-        run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-mysql-quarkus:latest
@@ -706,7 +706,7 @@ jobs:
         run: mvn -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-postgres-quarkus
-        run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-postgres-quarkus:latest
@@ -766,7 +766,7 @@ jobs:
         run: mvn -B verify deploy --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-rabbitmq-quarkus
-        run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.fast-jar .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-rabbitmq-quarkus:latest
@@ -826,7 +826,7 @@ jobs:
         run: mvn -B verify deploy --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-redis-quarkus
-        run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.fast-jar .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-redis-quarkus:latest
@@ -886,7 +886,7 @@ jobs:
         run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/consumer-rabbitmq-quarkus
-        run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.fast-jar .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/consumer-rabbitmq-quarkus:latest
@@ -1109,7 +1109,7 @@ jobs:
         run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/consumer-redis-quarkus
-        run: docker build -t yurak/consumer-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/consumer-redis-quarkus:latest -f src/main/docker/Dockerfile.fast-jar .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/consumer-redis-quarkus:latest
