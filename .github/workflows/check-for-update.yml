@@ -17,7 +17,7 @@ jobs:
         working-directory: ./.github/workflows
         run: echo ::set-env name=SOURCE_VERSION::$(grep "minikube:" minikube-ci.yml | awk '{print $3}' | tr -d ])
       - name: check latest tag minikube version
-        run: echo ::set-env name=TARGET_VERSION::$( curl -s https://api.github.com/repos/kubernetes/minikube/releases/latest | jq '.tag_name' | tr -d '"' | tr -d 'v')
+        run: echo ::set-env name=TARGET_VERSION::$( curl -s https://api.github.com/repos/kubernetes/minikube/releases | jq -r '.[].tag_name' | grep -v '-' | sort | tail -n 1 | tr -d 'v')
       - name: check diff
         run: |
           echo CURRENT: ${SOURCE_VERSION}
@@ -31,7 +31,7 @@ jobs:
         working-directory: ./.github/workflows
         run: echo ::set-env name=SOURCE_VERSION::$(grep "kubernetes:" minikube-ci.yml | awk '{print $3}' | tr -d ])
       - name: check latest tag kubernetes version
-        run: echo ::set-env name=TARGET_VERSION::$( curl -s https://api.github.com/repos/kubernetes/kubernetes/releases/latest | jq '.tag_name' | tr -d '"' | tr -d 'v')
+        run: echo ::set-env name=TARGET_VERSION::$( curl -s https://api.github.com/repos/kubernetes/kubernetes/releases | jq -r '.[].tag_name' | grep -v '-' | sort | tail -n 1 | tr -d 'v')
       - name: check diff
         run: |
           echo CURRENT: ${SOURCE_VERSION}
