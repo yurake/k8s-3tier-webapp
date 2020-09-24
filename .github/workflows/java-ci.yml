@@ -1066,7 +1066,7 @@ jobs:
         working-directory: ./application/redis-mysql-helidon
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: mvn sonar:sonar
           -Dsonar.projectKey=yurake_redis-mysql-helidon
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1188,7 +1188,7 @@ jobs:
         working-directory: ./application/wlp-web-java-spring
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: mvn sonar:sonar
           -Dsonar.projectKey=yurake_wlp-web-java-spring
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
