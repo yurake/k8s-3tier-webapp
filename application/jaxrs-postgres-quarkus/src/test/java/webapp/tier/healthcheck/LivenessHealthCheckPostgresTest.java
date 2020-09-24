@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class LivenessHealthCheckTest {
+class LivenessHealthCheckPostgresTest {
 
 	@Test
 	void testCallError() {
-		LivenessHealthCheck hc = new LivenessHealthCheck();
+		LivenessHealthCheckPostgres hc = new LivenessHealthCheckPostgres();
 		assertEquals(State.UP, hc.call().getState(), "Unexpected status");
 	}
 
