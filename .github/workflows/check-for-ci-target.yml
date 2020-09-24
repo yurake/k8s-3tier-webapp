@@ -18,7 +18,7 @@ jobs:
         run: echo ::set-env name=SOURCE_PROJECT::$(find . -name "pom.xml" | grep -v -e target -e src | wc -l | tr -d ' ')
       - name: get java-ci.yml
         working-directory: ./.github/workflows
-        run: echo ::set-env name=JAVACI_PROJECT::$(grep "mvnw -B verify" java-ci.yml | wc -l | tr -d ' ')
+        run: echo ::set-env name=JAVACI_PROJECT::$(grep verify java-ci.yml | wc -l | tr -d ' ')
       - name: check java-ci.yml
         run: |
           echo CURRENT: ${SOURCE_PROJECT}
