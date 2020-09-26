@@ -17,7 +17,7 @@ import io.quarkus.test.junit.QuarkusTest;
 class ServiceSocketTest {
 
 	@Inject
-	private ServiceSocket socket;
+	ServiceSocket socket;
 
 	private static final String id = "testOnOpen";
 	private static final String message = "testMessage";
