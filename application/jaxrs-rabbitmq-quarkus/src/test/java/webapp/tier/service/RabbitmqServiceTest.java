@@ -82,7 +82,8 @@ class RabbitmqServiceTest {
 
 	@Test
 	void testGetMsgError() {
-		try (Connection conn = createRabbitmqMock()) {
+		try {
+			Connection conn = createRabbitmqMock();
 			conn.close();
 			svc.getMsg(conn);
 			fail();
@@ -104,7 +105,8 @@ class RabbitmqServiceTest {
 
 	@Test
 	void testPublishMsgError() throws IOException {
-		try (Connection conn = createRabbitmqMock()) {
+		try {
+			Connection conn = createRabbitmqMock();
 			conn.close();
 			svc.publishMsg(conn);
 			fail();

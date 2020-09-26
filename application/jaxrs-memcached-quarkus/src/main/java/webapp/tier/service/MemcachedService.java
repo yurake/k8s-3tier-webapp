@@ -13,6 +13,7 @@ import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
 import webapp.tier.bean.MsgBean;
+import webapp.tier.exception.WebappServiceException;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
@@ -45,12 +46,12 @@ public class MemcachedService {
 				msgbean.setFullmsg("Set");
 			} else {
 				LOG.warning(errormsg);
-				throw new RuntimeException(errormsg);
+				throw new WebappServiceException(errormsg);
 			}
 
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, errormsg, e);
-			throw new RuntimeException(errormsg);
+			throw new WebappServiceException(errormsg, e);
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean;
@@ -71,7 +72,7 @@ public class MemcachedService {
 
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, errormsg, e);
-			throw new RuntimeException(errormsg);
+			throw new WebappServiceException(errormsg);
 		}
 		LOG.info(msgbean.getFullmsg());
 		return msgbean;

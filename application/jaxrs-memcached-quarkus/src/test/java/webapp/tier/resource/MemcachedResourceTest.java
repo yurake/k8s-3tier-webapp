@@ -1,7 +1,7 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
 
 import java.security.NoSuchAlgorithmException;
@@ -51,6 +51,5 @@ class MemcachedResourceTest {
 				.statusCode(200)
                 .body(containsString("test"));
 	}
-
 }
 
