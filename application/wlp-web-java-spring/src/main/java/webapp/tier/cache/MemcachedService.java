@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
+import webapp.tier.exception.WebappServiceException;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
@@ -42,7 +43,7 @@ public class MemcachedService extends HttpServlet {
 		if (Objects.isNull(id) || Objects.isNull(message)) {
 			fullmsg = "Failed get from Memcached";
 			logger.warn(fullmsg);
-			throw new RuntimeException(fullmsg);
+			throw new WebappServiceException(fullmsg);
 		} else {
 			fullmsg = "Get id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
@@ -66,7 +67,7 @@ public class MemcachedService extends HttpServlet {
 		} else {
 			fullmsg = "Failed set to Memcached";
 			logger.warn(fullmsg);
-			throw new RuntimeException(fullmsg);
+			throw new WebappServiceException(fullmsg);
 		}
 		return fullmsg;
 	}
