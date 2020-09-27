@@ -68,6 +68,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/webapp-service/target/surefire-reports/*.xml"
 
   jaxrs-activemq-quarkus:
     needs: init-build
