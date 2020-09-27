@@ -29,10 +29,9 @@
 
 ---
 
-Sample web application based on k8s.
-Focus on connecting components, setting k8s resources, and aiming to
-microservices.
-The k8s-3tier-webapp service is for PoC, not production ready.
+Sample web application based on k8s. Focus on connecting components, setting k8s
+resources, and aiming to microservices. The k8s-3tier-webapp service is for PoC,
+not production ready.
 
 ---
 
