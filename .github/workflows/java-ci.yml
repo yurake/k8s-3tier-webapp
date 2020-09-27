@@ -68,6 +68,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/webapp-service/target/surefire-reports/*.xml"
 
   jaxrs-activemq-quarkus:
     needs: init-build
@@ -128,6 +134,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-activemq-quarkus/target/surefire-reports/*.xml"
 
   consumer-activemq-quarkus:
     needs: [init-build, jaxrs-activemq-quarkus]
@@ -188,6 +200,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/consumer-activemq-quarkus/target/surefire-reports/*.xml"
 
   consumer-hazelcast-quarkus:
     needs: [init-build, jaxrs-hazelcast-quarkus]
@@ -248,6 +266,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/consumer-hazelcast-quarkus/target/surefire-reports/*.xml"
 
   consumer-kafka-quarkus:
     needs: [init-build, jaxrs-kafka-quarkus]
@@ -308,6 +332,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/consumer-kafka-quarkus/target/surefire-reports/*.xml"
 
   scheduled-quarkus:
     needs: init-build
@@ -368,6 +398,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/scheduled-quarkus/target/surefire-reports/*.xml"
 
   jaxrs-hazelcast-quarkus:
     needs: init-build
@@ -428,6 +464,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-hazelcast-quarkus/target/surefire-reports/*.xml"
 
   jaxrs-kafka-quarkus:
     needs: init-build
@@ -488,6 +530,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-kafka-quarkus/target/surefire-reports/*.xml"
 
   jaxrs-memcached-quarkus:
     needs: init-build
@@ -548,6 +596,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-memcached-quarkus/target/surefire-reports/*.xml"
 
   jaxrs-mongodb-quarkus:
     needs: init-build
@@ -608,6 +662,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-mongodb-quarkus/target/surefire-reports/*.xml"
 
   jaxrs-mysql-quarkus:
     needs: init-build
@@ -668,6 +728,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-mysql-quarkus/target/surefire-reports/*.xml"
 
   jaxrs-postgres-quarkus:
     needs: init-build
@@ -728,6 +794,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-postgres-quarkus/target/surefire-reports/*.xml"
 
   jaxrs-rabbitmq-quarkus:
     needs: init-build
@@ -788,6 +860,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-rabbitmq-quarkus/target/surefire-reports/*.xml"
 
   jaxrs-redis-quarkus:
     needs: init-build
@@ -848,6 +926,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-redis-quarkus/target/surefire-reports/*.xml"
 
   consumer-rabbitmq-quarkus:
     needs: [init-build, jaxrs-rabbitmq-quarkus]
@@ -908,6 +992,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/consumer-rabbitmq-quarkus/target/surefire-reports/*.xml"
 
   producer-kafka-quarkus:
     needs: [init-build, jaxrs-kafka-quarkus]
@@ -968,6 +1058,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/producer-kafka-quarkus/target/surefire-reports/*.xml"
 
   randompublish-quarkus:
     needs: init-build
@@ -1028,6 +1124,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/randompublish-quarkus/target/surefire-reports/*.xml"
 
   redis-mysql-helidon:
     needs: init-build
@@ -1071,6 +1173,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/redis-mysql-helidon/target/surefire-reports/*.xml"
 
   consumer-redis-quarkus:
     needs: [init-build, jaxrs-redis-quarkus]
@@ -1131,6 +1239,12 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/consumer-redis-quarkus/target/surefire-reports/*.xml"
 
   wlp-web-java-spring:
     runs-on: ubuntu-latest
@@ -1193,3 +1307,9 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/wlp-web-java-spring/target/surefire-reports/*.xml"
