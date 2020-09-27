@@ -27,46 +27,47 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready-blue?logo=gitpod)](https://gitpod.io/#https://github.com/yurake/k8s-3tier-webapp)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-----
+---
 
 Sample web application based on k8s.  
-Focus on connecting components, setting k8s resources, and aiming to microservices.  
+Focus on connecting components, setting k8s resources, and aiming to
+microservices.  
 The k8s-3tier-webapp service is for PoC, not production ready.
 
-----
+---
 
-| Tier | Name | Description |
-|:-:|:-:|:-:|
-| 1 | Frontend | Web page, Application logic, Static file
-| 2 | Backend | Database, Cache, Messaging
-| 3 | Management | Monitoring, CI/CD, Tracing
+| Tier |    Name    |               Description                |
+| :--: | :--------: | :--------------------------------------: |
+|  1   |  Frontend  | Web page, Application logic, Static file |
+|  2   |  Backend   |        Database, Cache, Messaging        |
+|  3   | Management |        Monitoring, CI/CD, Tracing        |
 
 ![LayardArchitecturalOverview.png](./docs/LayardArchitecturalOverview.png)
 
 ## Concepts
 
-* Choice better architecture what you expect based on k8s
-* Help understanding k8s resources based on yaml
-* Test automation on Github Actions for free
-* Expand test automation - unit, end-to-end, performance, recovery, security
-* Keep observability for monitoring services
-* Improve application quality using public CI services that following Github
+- Choice better architecture what you expect based on k8s
+- Help understanding k8s resources based on yaml
+- Test automation on Github Actions for free
+- Expand test automation - unit, end-to-end, performance, recovery, security
+- Keep observability for monitoring services
+- Improve application quality using public CI services that following Github
 
 ## Features
 
-* All docker components run on k8s
-* All application written by Java mostly Quarkus
-* k8s resources written by yaml, try not to use helm, operator
-* Use only public software, not commercial
-* Use Github Actions for build, test, release
-
+- All docker components run on k8s
+- All application written by Java mostly Quarkus
+- k8s resources written by yaml, try not to use helm, operator
+- Use only public software, not commercial
+- Use Github Actions for build, test, release
 
 ## Requirements
 
 Installed CLI commands.
-* :computer: docker
-* :computer: kubectl
-* :computer: minikube
+
+- :computer: docker
+- :computer: kubectl
+- :computer: minikube
 
 ## Run on Minikube
 
@@ -97,6 +98,7 @@ minikube docker-env --shell powershell | Invoke-Expression
 ## Build & Apply
 
 `apply.sh` supports `kubectl apply` to k8s clusters.
+
 ```
 ./kubernetes/apply.sh
 ```
@@ -106,6 +108,7 @@ minikube docker-env --shell powershell | Invoke-Expression
 ### Add hosts
 
 Add IP, domain in /etc/hosts
+
 ```
 echo `minikube ip` k8s.3tier.webapp wlp.minikube api.server.minikube rabbitmq.management.minikube \
 jenkins.minikube alertmanager.minikube prometheus.minikube grafana.minikube jupyter.minikube \
@@ -114,12 +117,12 @@ hazelcast.manager.minikube activemq.management.minikube jaeger.minikube argo.min
 
 ### Web Console list
 
-| Service | URL |
-|:-|:-|
-| Top Page | <http://k8s.3tier.webapp/>
-| Ppen Liberty | <http://wlp.minikube>  
-| Rabbitmq Management Console | <http://rabbitmq.management.minikube>
-| Activemq Management Console | <http://activemq.management.minikube>
+| Service                     | URL                                   |
+| :-------------------------- | :------------------------------------ |
+| Top Page                    | <http://k8s.3tier.webapp/>            |
+| Ppen Liberty                | <http://wlp.minikube>                 |
+| Rabbitmq Management Console | <http://rabbitmq.management.minikube> |
+| Activemq Management Console | <http://activemq.management.minikube> |
 
 ![top.png](./docs/top.png)
 
@@ -140,7 +143,9 @@ Set up [monitoring](kubernetes/monitoring/README.md) for Tier 3
 ## Contribution
 
 1. [Fork](https://github.com/yurake/k8s-3tier-webapp/fork) this repo
-1. Create a feature branch named like feature/enhancement from [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
+1. Create a feature branch named like feature/enhancement from
+   [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
 1. Commit your changes
-1. Rebase your local changes against the [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
+1. Rebase your local changes against the
+   [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
 1. Create new Pull Request
