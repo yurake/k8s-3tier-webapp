@@ -92,7 +92,7 @@ items:
           http:
             paths:
               - path: /
-                pathType: Prefix 
+                pathType: Prefix
                 backend:
                   service:
                     name: jaeger-query
