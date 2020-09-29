@@ -47,10 +47,6 @@ $(function () {
 	$(respmongodb).html(initialvalue);
 
 	var sse;
-	var wsrabbitmq;
-	var wsactivemq;
-	var wshazelcast;
-	var wsredis;
 
 	function dispMsgFromString(type, url, respid) {
 		$.ajax({
@@ -175,11 +171,11 @@ $(function () {
 	});
 
 	$("#subscriberedis").click(function () {
-		subscribeWebSocket(redis);
+		subscribeWebSocket("redis");
 	});
 
 	$("#stopredis").click(function () {
-		stopSweSocket(redis);
+		stopSweSocket("redis");
 	});
 
 	$("#publishredis").click(function () {
@@ -199,11 +195,11 @@ $(function () {
 	});
 
 	$("#subscriberabbitmq").click(function () {
-		subscribeWebSocket(rabbitmq);
+		subscribeWebSocket("rabbitmq");
 	});
 
 	$("#stoprabbitmq").click(function () {
-		stopSweSocket(rabbitmq);
+		stopSweSocket("rabbitmq");
 	});
 
 	$("#putactivemq").click(function () {
@@ -219,11 +215,11 @@ $(function () {
 	});
 
 	$("#subscribeactivemq").click(function () {
-		subscribeWebSocket(activemq);
+		subscribeWebSocket("activemq");
 	});
 
 	$("#stopactivemq").click(function () {
-		stopSweSocket(activemq);
+		stopSweSocket("activemq");
 	});
 
 	$("#setcachehazelcast").click(function () {
@@ -239,11 +235,11 @@ $(function () {
 	});
 
 	$("#subscribehazelcast").click(function () {
-		subscribeWebSocket(hazelcast);
+		subscribeWebSocket("hazelcast");
 	});
 
 	$("#stophazelcast").click(function () {
-		stopSweSocket(hazelcast);
+		stopSweSocket("hazelcast");
 	});
 
 	$("#putqueuehazelcast").click(function () {
