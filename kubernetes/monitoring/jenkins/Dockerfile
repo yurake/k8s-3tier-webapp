@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.257-alpine
+FROM jenkins/jenkins:2.259-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
