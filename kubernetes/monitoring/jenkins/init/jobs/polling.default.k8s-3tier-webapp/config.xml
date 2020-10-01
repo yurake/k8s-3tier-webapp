@@ -59,4 +59,4 @@ kubectl get po -n default
       <credentialsId>31819fb9-eaff-4bf9-a440-679e53d2cee5</credentialsId>
     </org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper>
   </buildWrappers>
-</project
+</project>
