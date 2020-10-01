@@ -74,6 +74,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/webapp-service/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-activemq-quarkus:
     needs: init-build
