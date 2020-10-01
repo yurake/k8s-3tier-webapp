@@ -28,7 +28,7 @@
 		<mysql.version>8.0.21</mysql.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
 		<jedis-mock.version>0.1.16</jedis-mock.version>
-		<mockito.junit.jupiter>3.5.11</mockito.junit.jupiter>
+		<mockito.junit.jupiter>3.5.13</mockito.junit.jupiter>
 	</properties>
 
 	<dependencies>
