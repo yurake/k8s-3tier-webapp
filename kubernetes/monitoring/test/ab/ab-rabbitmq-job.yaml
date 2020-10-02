@@ -15,6 +15,6 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             [
-              "/usr/bin/ab -n 100 -c 10 -p /home/sample.json -T application/json http://jaxrs-rabbitmq-quarkus-monitoring:8080/quarkus/rabbitmq/publish",
+              "/usr/bin/ab -n 100 -c 10 -p /home/sample.json -T application/json http://jaxrs-rabbitmq-quarkus-monitoring:8080/quarkus/rabbitmq/publish; echo '---'; cat out.data",
             ]
       restartPolicy: OnFailure
