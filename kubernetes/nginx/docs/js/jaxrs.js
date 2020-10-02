@@ -29,10 +29,6 @@ var respmysql = "#respmysql";
 var resppostgres = "#resppostgres";
 var respmongodb = "#respmongodb";
 var isopenkafka = false;
-var isopenredis = false;
-var isopenrabbitmq = false;
-var isopenactivemq = false;
-var isopenhazelcast = false;
 
 $(function () {
   $(respkafka).html(initialvalue);
