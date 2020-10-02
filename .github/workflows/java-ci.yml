@@ -15,12 +15,15 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
           graalvm-version: 20.2.0.java11
       - run: java -version
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
 
       - name: Cache local Maven repository
         uses: actions/cache@v2
@@ -29,14 +32,12 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/parent-pom/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-parent-pom
-
       - name: Maven Deploy POM to Github Package Registry
         working-directory: ./application/parent-pom/
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
-
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -44,7 +45,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/webapp-service/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-webapp-service
-
       - name: Maven Deploy to Github Package Registry
         working-directory: ./application/webapp-service
         env:
@@ -74,6 +74,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/webapp-service/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-activemq-quarkus:
     needs: init-build
@@ -81,7 +83,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -90,13 +91,15 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
-
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -140,6 +143,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/jaxrs-activemq-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   consumer-activemq-quarkus:
     needs: [init-build, jaxrs-activemq-quarkus]
@@ -147,7 +152,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -156,7 +160,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -170,7 +177,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-activemq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-activemq-quarkus
-
       - name: Maven Build
         working-directory: ./application/consumer-activemq-quarkus
         env:
@@ -206,6 +212,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/consumer-activemq-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   consumer-hazelcast-quarkus:
     needs: [init-build, jaxrs-hazelcast-quarkus]
@@ -213,7 +221,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -222,7 +229,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -236,7 +246,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-hazelcast-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-hazelcast-quarkus
-
       - name: Maven Build
         working-directory: ./application/consumer-hazelcast-quarkus
         env:
@@ -272,6 +281,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/consumer-hazelcast-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   consumer-kafka-quarkus:
     needs: [init-build, jaxrs-kafka-quarkus]
@@ -279,7 +290,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -288,7 +298,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -302,7 +315,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-kafka-quarkus
-
       - name: Maven Build
         working-directory: ./application/consumer-kafka-quarkus
         env:
@@ -338,6 +350,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/consumer-kafka-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   scheduled-quarkus:
     needs: init-build
@@ -345,7 +359,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -354,7 +367,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -368,7 +384,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/scheduled-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-scheduled-quarkus
-
       - name: Maven Build
         working-directory: ./application/scheduled-quarkus
         env:
@@ -404,6 +419,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/scheduled-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-hazelcast-quarkus:
     needs: init-build
@@ -411,7 +428,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -420,7 +436,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -434,7 +453,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-hazelcast-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-hazelcast-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
@@ -470,6 +488,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/jaxrs-hazelcast-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-kafka-quarkus:
     needs: init-build
@@ -477,7 +497,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -486,7 +505,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -500,7 +522,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-kafka-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-kafka-quarkus
         env:
@@ -536,6 +557,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/jaxrs-kafka-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-memcached-quarkus:
     needs: init-build
@@ -543,7 +566,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -552,7 +574,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -566,7 +591,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-memcached-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-memcached-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-memcached-quarkus
         env:
@@ -602,6 +626,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/jaxrs-memcached-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-mongodb-quarkus:
     needs: init-build
@@ -609,7 +635,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -618,7 +643,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -632,7 +660,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mongodb-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-mongodb-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-mongodb-quarkus
         env:
@@ -668,6 +695,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/jaxrs-mongodb-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-mysql-quarkus:
     needs: init-build
@@ -675,7 +704,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -684,7 +712,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -698,7 +729,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mysql-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-mysql-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
@@ -734,6 +764,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/jaxrs-mysql-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-postgres-quarkus:
     needs: init-build
@@ -741,7 +773,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -750,7 +781,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -764,7 +798,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-postgres-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-postgres-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-postgres-quarkus
         env:
@@ -800,6 +833,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/jaxrs-postgres-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-rabbitmq-quarkus:
     needs: init-build
@@ -807,7 +842,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -816,7 +850,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -830,7 +867,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-rabbitmq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-rabbitmq-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
@@ -866,6 +902,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/jaxrs-rabbitmq-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   jaxrs-redis-quarkus:
     needs: init-build
@@ -873,7 +911,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -882,7 +919,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -896,7 +936,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-redis-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-redis-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-redis-quarkus
         env:
@@ -932,6 +971,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/jaxrs-redis-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   consumer-rabbitmq-quarkus:
     needs: [init-build, jaxrs-rabbitmq-quarkus]
@@ -939,7 +980,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -948,7 +988,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -962,7 +1005,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-rabbitmq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-rabbitmq-quarkus
-
       - name: Maven Build
         working-directory: ./application/consumer-rabbitmq-quarkus
         env:
@@ -998,6 +1040,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/consumer-rabbitmq-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   producer-kafka-quarkus:
     needs: [init-build, jaxrs-kafka-quarkus]
@@ -1005,7 +1049,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -1014,7 +1057,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -1028,7 +1074,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/producer-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-producer-kafka-quarkus
-
       - name: Maven Build
         working-directory: ./application/producer-kafka-quarkus
         env:
@@ -1064,6 +1109,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/producer-kafka-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   randompublish-quarkus:
     needs: init-build
@@ -1071,7 +1118,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -1080,7 +1126,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -1094,7 +1143,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/randompublish-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-randompublish-quarkus
-
       - name: Maven Build
         working-directory: ./application/randompublish-quarkus
         env:
@@ -1130,6 +1178,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/randompublish-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   redis-mysql-helidon:
     needs: init-build
@@ -1137,13 +1187,15 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
           graalvm-version: 20.2.0.java11
       - run: java -version
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -1179,6 +1231,8 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/redis-mysql-helidon/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   consumer-redis-quarkus:
     needs: [init-build, jaxrs-redis-quarkus]
@@ -1186,7 +1240,6 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -1195,7 +1248,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -1209,7 +1265,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-redis-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-redis-quarkus
-
       - name: Maven Build
         working-directory: ./application/consumer-redis-quarkus
         env:
@@ -1245,13 +1300,14 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/consumer-redis-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
   wlp-web-java-spring:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -1260,7 +1316,10 @@ jobs:
       - name: setup-native-image
         run: |
           gu install native-image
-
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
       - name: docker login
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
@@ -1274,7 +1333,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/wlp-web-java-spring/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-wlp-web-java-spring
-
       - name: Maven Build
         working-directory: ./application/wlp-web-java-spring
         run: mvn -B verify package --settings ../.m2/settings.xml
@@ -1313,3 +1371,5 @@ jobs:
         with:
           token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
           report: "application/wlp-web-java-spring/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
