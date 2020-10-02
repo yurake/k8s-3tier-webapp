@@ -1,6 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
-  <actions/>
+  <actions />
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -22,7 +22,7 @@
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.4.4">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -35,14 +35,14 @@
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
-    <extensions/>
+    <submoduleCfg class="list" />
+    <extensions />
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers />
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -52,15 +52,54 @@ kubectl apply -f ab-${SERVICE}-job.yaml
 kubectl -n monitoring wait --for=condition=complete --timeout=600s job/ab-${SERVICE}
 kubectl -n monitoring describe job ab-${SERVICE}
 kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk &apos;{print $1}&apos; | grep ab-${SERVICE})
+kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk &apos;{print $1}&apos; | grep ab-${SERVICE}) &gt; ../../../../out.data
 kubectl delete -f ab-${SERVICE}-job.yaml
 </command>
+      <configuredLocalRules />
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>cat &gt; apache-benchmark.p &lt;&lt; &quot;EOF&quot;
+# output as png image
+set terminal png
+
+# save file to &quot;benchmark.png&quot;
+set output &quot;benchmark-SERVICE-DATE.png&quot;
+
+# graph title
+set title &quot;ab -n 100 -c 10 http://k8s.3tier.webapp/quarkus/SERVICE/publish&quot;
+
+#nicer aspect ratio for image size
+set size 1,0.7
+
+# y-axis grid
+set grid y
+
+#x-axis label
+set xlabel &quot;request&quot;
+
+#y-axis label
+set ylabel &quot;response time (ms)&quot;
+
+#plot data from &quot;out.data&quot; using column 9 with smooth sbezier lines
+plot &quot;out.data&quot; using 9 smooth sbezier with lines title &quot;something&quot;</command>
+      <configuredLocalRules />
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>sed -i -n &apos;/---/,$p&apos; out.data
+
+DATE=`date &quot;+%Y%m%d-%H%M%S&quot;`
+sed -i -e &quot;s/SERVICE/${SERVICE}/g&quot; apache-benchmark.p
+sed -i -e &quot;s/DATE/${DATE}/g&quot; apache-benchmark.p
+
+gnuplot apache-benchmark.p</command>
+      <configuredLocalRules />
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers />
   <buildWrappers>
-    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.25.1">
+    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.27.1.1">
       <serverUrl>https://kubernetes.default.svc.cluster.local</serverUrl>
-      <credentialsId>eb6e9a5c-ba7e-4ed0-ab16-63316f87b60b</credentialsId>
+      <credentialsId>07cebead-3f49-4977-93ec-b5cd52846b7a</credentialsId>
     </org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper>
   </buildWrappers>
 </project>
