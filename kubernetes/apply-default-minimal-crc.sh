@@ -91,6 +91,13 @@ kubectl apply -f ./nginx-ingress.yaml
 echo "###"
 echo ""
 
+echo "### default-http-backend"
+cd "${ROOT_DIR}"/default-http-backend
+kubectl apply -f ./default-http-backend-deployment.yaml
+kubectl apply -f ./default-http-backend-service.yaml
+echo "###"
+echo ""
+
 echo "## jaeger"
 cd "${ROOT_DIR}"/jaeger
 kubectl apply -f ./jaeger-all-in-one-template.yml
