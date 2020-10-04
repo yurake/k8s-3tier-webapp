@@ -62,7 +62,8 @@ public class MysqlService implements Database {
 	@Override
 	public MsgBean insertMsg() throws SQLException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
-		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId())).replace(sqlbody, msgbean.getMessage());
+		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId())).replace(sqlbody,
+				msgbean.getMessage());
 
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {

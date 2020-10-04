@@ -39,7 +39,7 @@ public class PostgresService implements Database {
 	String selectsql;
 
 	@ConfigProperty(name = "postgres.delete.msg")
-	String deletesql = "postgres.delete.msg";
+	String deletesql;
 
 	@ConfigProperty(name = "postgres.id")
 	String sqlkey;
