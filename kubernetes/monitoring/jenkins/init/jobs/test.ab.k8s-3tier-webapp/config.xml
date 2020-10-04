@@ -85,7 +85,7 @@ plot &quot;out.data&quot; using 9 smooth sbezier with lines title &quot;somethin
       <configuredLocalRules />
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>sed -i -n &apos;/---/,$p&apos; out.data
+      <command>sed -i -n &apos;/starttime/,$p&apos; out.data
 
 DATE=`date &quot;+%Y%m%d-%H%M%S&quot;`
 sed -i -e &quot;s/SERVICE/${SERVICE}/g&quot; apache-benchmark.p
