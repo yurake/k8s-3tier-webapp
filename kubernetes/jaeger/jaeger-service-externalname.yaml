@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger-monitoring
+  namespace: monitoring
+spec:
+  type: ExternalName
+  externalName: jaeger.default.svc.cluster.local
