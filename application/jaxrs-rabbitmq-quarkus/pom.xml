@@ -24,10 +24,6 @@
 			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-smallrye-fault-tolerance</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.rabbitmq</groupId>
 			<artifactId>amqp-client</artifactId>
 			<version>${amqp-client.version}</version>
@@ -44,4 +40,3 @@
 		</dependency>
 	</dependencies>
 </project>
-
