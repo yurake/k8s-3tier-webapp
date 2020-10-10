@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.sse.Sse;
 
+import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.jboss.resteasy.annotations.SseElementType;
 import org.reactivestreams.Publisher;
@@ -43,6 +44,7 @@ public class KafkaResource {
 
 	@GET
 	@Path("/get")
+    @Retry(maxRetries = 3)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() {
 		return Response.ok(LatestMessage.getLatestMsg()).build();
