@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ab-kafka
+  namespace: monitoring
+spec:
+  completions: 1
+  parallelism: 1
+  backoffLimit: 10
+  template:
+    spec:
+      containers:
+        - name: ab-kafka
+          image: yurak/ab:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            [
+              "/usr/bin/ab -n 100 -c 10 -p /home/sample.json -T application/json -g out.data http://jaxrs-kafka-quarkus-monitoring:8080/quarkus/kafka/publish; echo '---'; cat out.data",
+            ]
+      restartPolicy: OnFailure
