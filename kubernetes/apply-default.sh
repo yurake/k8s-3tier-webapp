@@ -22,14 +22,6 @@ kubectl apply -f ./kafka-service.yaml
 echo "###"
 echo ""
 
-echo "### jaxrs-kafka-quarkus"
-cd "${ROOT_DIR}"/jaxrs-kafka-quarkus
-kubectl apply -f ./jaxrs-kafka-quarkus-deployment.yaml
-kubectl apply -f ./jaxrs-kafka-quarkus-service.yaml
-kubectl apply -f ./jaxrs-kafka-quarkus-service-externalname.yaml
-echo "###"
-echo ""
-
 echo "### producer-kafka-quarkus"
 cd "${ROOT_DIR}"/producer-kafka-quarkus
 kubectl apply -f ./producer-kafka-quarkus-deployment.yaml
