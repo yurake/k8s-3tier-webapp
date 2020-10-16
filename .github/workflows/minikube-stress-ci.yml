@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         minikube: [1.13.1, 1.14.0]
-        kubernetes: [1.19.1, 1.19.2]
+        kubernetes: [1.19.2, 1.19.3]
         app: [redis, activemq, rabbitmq, hazelcast, kafka]
       fail-fast: false
     steps:
