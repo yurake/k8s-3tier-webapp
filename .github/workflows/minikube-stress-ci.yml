@@ -1,0 +1,119 @@
+name: Minikube Stress CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "application/**"
+      - "kubernetes/**"
+      - ".github/workflows/minikube-stress-ci.yml"
+  issues:
+    types: [closed]
+
+jobs:
+  stress-ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        minikube: [1.13.1, 1.14.0]
+        kubernetes: [1.19.1, 1.19.2]
+        app: [redis, activemq, rabbitmq, hazelcast, kafka]
+      fail-fast: false
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup minikube
+        uses: opsgang/ga-setup-minikube@v0.1.1
+        with:
+          minikube-version: ${{ matrix.minikube }}
+          k8s-version: ${{ matrix.kubernetes }}
+      - name: minikube settings
+        run: |
+          sudo apt install conntrack
+          minikube config set vm-driver docker
+          minikube config set cpus 2
+          minikube config set memory 6144
+          minikube start
+          minikube update-context
+          minikube addons enable ingress
+          minikube addons list
+          # https://minikube.sigs.k8s.io/docs/drivers/docker/#troubleshooting
+          sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+          sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+      - name: wait for set up ingress
+        run: |
+          kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
+      - name: apply activemq resource
+        if: matrix.app == 'activemq'
+        run: |
+          kubectl apply -f kubernetes/activemq/activemq-pv.yaml
+          kubectl apply -f kubernetes/activemq/activemq-pvc.yaml
+          kubectl apply -f kubernetes/activemq/activemq-deployment.yaml
+          kubectl apply -f kubernetes/activemq/activemq-service.yaml
+          kubectl apply -f kubernetes/activemq/activemq-ingress.yaml
+      - name: apply hazelcast resource
+        if: matrix.app == 'hazelcast'
+        run: |
+          kubectl apply -f kubernetes/hazelcast/hazelcast-configmap.yaml
+          kubectl apply -f kubernetes/hazelcast/hazelcast-statefulset.yaml
+          kubectl apply -f kubernetes/hazelcast/hazelcast-service.yaml
+      - name: apply rabbitmq resource
+        if: matrix.app == 'rabbitmq'
+        run: |
+          kubectl apply -f kubernetes/rabbitmq/rabbitmq-configmap.yaml
+          kubectl apply -f kubernetes/rabbitmq/rabbitmq-secret.yaml
+          kubectl apply -f kubernetes/rabbitmq/rabbitmq-deployment.yaml
+          kubectl apply -f kubernetes/rabbitmq/rabbitmq-service.yaml
+          kubectl apply -f kubernetes/rabbitmq/rabbitmq-ingress.yaml
+      - name: apply redis resource
+        if: matrix.app == 'redis'
+        run: |
+          kubectl apply -f kubernetes/redis/redis-deployment.yaml
+          kubectl apply -f kubernetes/redis/redis-service.yaml
+      - name: apply kafka resource
+        if: matrix.app == 'kafka'
+        run: |
+          kubectl apply -f kubernetes/zookeeper/zookeeper-statefulset.yaml
+          kubectl apply -f kubernetes/zookeeper/zookeeper-service.yaml
+          kubectl apply -f kubernetes/kafka/kafka-statefulset.yaml
+          kubectl apply -f kubernetes/kafka/kafka-service.yaml
+          kubectl apply -f kubernetes/producer-kafka-quarkus/producer-kafka-quarkus-deployment.yaml
+      - name: apply minimal service
+        run: |
+          kubectl apply -f kubernetes/monitoring/monitoring-namespace.yaml
+          kubectl apply -f kubernetes/jaeger/jaeger-all-in-one-template.yml
+          kubectl apply -f kubernetes/jaxrs-${{ matrix.app }}-quarkus/jaxrs-${{ matrix.app }}-quarkus-deployment.yaml
+          kubectl apply -f kubernetes/jaxrs-${{ matrix.app }}-quarkus/jaxrs-${{ matrix.app }}-quarkus-service.yaml
+          kubectl apply -f kubernetes/jaxrs-${{ matrix.app }}-quarkus/jaxrs-${{ matrix.app }}-quarkus-service-externalname.yaml
+          sleep 10
+      - name: run e2e test
+        run: |
+          kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app=jaxrs-${{ matrix.app }}-quarkus --timeout=10m
+          kubectl apply -f kubernetes/monitoring/test/ab/ab-${{ matrix.app }}-job.yaml
+      - name: wait for complete e2e job
+        run: |
+          kubectl -n monitoring wait --for=condition=complete --timeout=15m job/ab-${{ matrix.app }}
+          kubectl -n monitoring describe job ab-${{ matrix.app }}
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep ab-${{ matrix.app }})
+      - name: check log jaxrs-${{ matrix.app }}
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-${{ matrix.app }})
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-${{ matrix.app }})
+      - name: check after test ab-${{ matrix.app }}
+        if: always()
+        run: |
+          kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep ab-${{ matrix.app }})
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep ab-${{ matrix.app }})
+      - name: check minikube status
+        if: always()
+        run: |
+          kubectl get po --all-namespaces=true
+          kubectl get nodes
+          kubectl get pv
+          kubectl get pvc
+          kubectl get all
+          kubectl get all -n monitoring
+          kubectl get ingress
+          df -h /
