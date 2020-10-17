@@ -12,7 +12,7 @@ on:
     types: [closed]
 
 jobs:
-  stress-ci:
+  security-ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
