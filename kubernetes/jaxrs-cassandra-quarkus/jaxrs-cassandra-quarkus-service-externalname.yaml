@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaxrs-cassandra-quarkus-monitoring
+  namespace: monitoring
+spec:
+  type: ExternalName
+  externalName: jaxrs-cassandra-quarkus.default.svc.cluster.local
