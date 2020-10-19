@@ -18,7 +18,6 @@ jobs:
       matrix:
         minikube: [1.13.1, 1.14.0]
         kubernetes: [1.19.2, 1.19.3]
-        app: [redis, activemq, rabbitmq, hazelcast, kafka]
       fail-fast: false
     steps:
       - name: checkout
@@ -46,62 +45,17 @@ jobs:
           kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
       - name: add hosts
         run: echo `minikube ip` k8s.3tier.webapp | sudo tee -a /etc/hosts
-      - name: apply activemq resource
-        if: matrix.app == 'activemq'
-        run: |
-          kubectl apply -f kubernetes/activemq/activemq-pv.yaml
-          kubectl apply -f kubernetes/activemq/activemq-pvc.yaml
-          kubectl apply -f kubernetes/activemq/activemq-deployment.yaml
-          kubectl apply -f kubernetes/activemq/activemq-service.yaml
-          kubectl apply -f kubernetes/activemq/activemq-ingress.yaml
-      - name: apply hazelcast resource
-        if: matrix.app == 'hazelcast'
-        run: |
-          kubectl apply -f kubernetes/hazelcast/hazelcast-configmap.yaml
-          kubectl apply -f kubernetes/hazelcast/hazelcast-statefulset.yaml
-          kubectl apply -f kubernetes/hazelcast/hazelcast-service.yaml
-      - name: apply rabbitmq resource
-        if: matrix.app == 'rabbitmq'
-        run: |
-          kubectl apply -f kubernetes/rabbitmq/rabbitmq-configmap.yaml
-          kubectl apply -f kubernetes/rabbitmq/rabbitmq-secret.yaml
-          kubectl apply -f kubernetes/rabbitmq/rabbitmq-deployment.yaml
-          kubectl apply -f kubernetes/rabbitmq/rabbitmq-service.yaml
-          kubectl apply -f kubernetes/rabbitmq/rabbitmq-ingress.yaml
-      - name: apply redis resource
-        if: matrix.app == 'redis'
-        run: |
-          kubectl apply -f kubernetes/redis/redis-deployment.yaml
-          kubectl apply -f kubernetes/redis/redis-service.yaml
-      - name: apply kafka resource
-        if: matrix.app == 'kafka'
-        run: |
-          kubectl apply -f kubernetes/zookeeper/zookeeper-statefulset.yaml
-          kubectl apply -f kubernetes/zookeeper/zookeeper-service.yaml
-          kubectl apply -f kubernetes/kafka/kafka-statefulset.yaml
-          kubectl apply -f kubernetes/kafka/kafka-service.yaml
-          kubectl apply -f kubernetes/producer-kafka-quarkus/producer-kafka-quarkus-deployment.yaml
       - name: apply minimal service
         run: |
           kubectl apply -f kubernetes/nginx/nginx-ingress.yaml
           kubectl apply -f kubernetes/nginx/nginx-deployment.yaml
           kubectl apply -f kubernetes/nginx/nginx-service.yaml
-          kubectl apply -f kubernetes/monitoring/monitoring-namespace.yaml
-          kubectl apply -f kubernetes/jaeger/jaeger-all-in-one-template.yml
-          kubectl apply -f kubernetes/jaxrs-${{ matrix.app }}-quarkus/jaxrs-${{ matrix.app }}-quarkus-deployment.yaml
-          kubectl apply -f kubernetes/jaxrs-${{ matrix.app }}-quarkus/jaxrs-${{ matrix.app }}-quarkus-service.yaml
-          kubectl apply -f kubernetes/jaxrs-${{ matrix.app }}-quarkus/jaxrs-${{ matrix.app }}-quarkus-service-externalname.yaml
           sleep 10
-      - name: ZAP Scan top
-        uses: zaproxy/action-baseline@v0.4.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          target: "http://k8s.3tier.webapp/"
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.4.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          target: "http://k8s.3tier.webapp/api/${{ matrix.app }}/get"
+          target: "http://k8s.3tier.webapp/"
       - name: check minikube status
         if: always()
         run: |
