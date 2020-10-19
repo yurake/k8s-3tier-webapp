@@ -51,10 +51,8 @@ spec:
               value: "webapp-rack"
             - name: CASSANDRA_ENDPOINT_SNITCH
               value: "GossipingPropertyFileSnitch"
-            - name: POD_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.podIP
+            - name: CASSANDRA_KEYSPACE
+              value: "webapp"
           readinessProbe:
             exec:
               command:
