@@ -1,9 +1,10 @@
 package org.acme.getting.started;
 
+import java.util.Objects;
+
 import com.datastax.oss.driver.api.mapper.annotations.ClusteringColumn;
 import com.datastax.oss.driver.api.mapper.annotations.Entity;
 import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;
-import java.util.Objects;
 
 @Entity
 public class Fruit {
@@ -22,7 +23,6 @@ public class Fruit {
     this.storeId = storeId;
   }
 
-  /** @return The store id for which this fruit was defined. */
   public String getStoreId() {
     return storeId;
   }
@@ -31,7 +31,6 @@ public class Fruit {
     this.storeId = storeId;
   }
 
-  /** @return The fruit name. */
   public String getName() {
     return name;
   }
@@ -40,7 +39,6 @@ public class Fruit {
     this.name = name;
   }
 
-  /** @return The fruit description. */
   public String getDescription() {
     return description;
   }

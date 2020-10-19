@@ -7,9 +7,10 @@ import com.datastax.oss.driver.api.mapper.annotations.Update;
 
 @Dao
 public interface FruitDao {
-  @Update
-  void update(Fruit fruit);
 
-  @Select
-  PagingIterable<Fruit> findById(String id);
+	@Update
+	void update(Fruit fruit);
+
+	@Select
+	PagingIterable<Fruit> findById(String storeId);
 }
