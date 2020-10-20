@@ -12,10 +12,11 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-cassandra-quarkus</artifactId>
 	<properties>
-		<quarkus.platform.version>1.9.0.CR1</quarkus.platform.version>
+		<quarkus.platform.version>1.8.3.Final</quarkus.platform.version>
+		<cassandra.version>1.0.0-alpha3</cassandra.version>
 		<datastax-java-driver.version>4.9.0</datastax-java-driver.version>
-		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-		<project.cassandra.version>1.0.0-alpha3</project.cassandra.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -29,17 +30,13 @@
 			<dependency>
 				<groupId>com.datastax.oss.quarkus</groupId>
 				<artifactId>cassandra-quarkus-bom</artifactId>
-				<version>${project.cassandra.version}</version>
+				<version>${cassandra.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-		<dependency>
-			<groupId>webapp.3tier.k8s</groupId>
-			<artifactId>webapp-service</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>com.datastax.oss.quarkus</groupId>
 			<artifactId>cassandra-quarkus-client</artifactId>
@@ -53,11 +50,6 @@
 			<artifactId>java-driver-mapper-runtime</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.datastax.oss.quarkus</groupId>
-			<artifactId>cassandra-quarkus-test-framework</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy</artifactId>
 		</dependency>
@@ -68,6 +60,34 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy-mutiny</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-health</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-metrics</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.datastax.oss.quarkus</groupId>
+			<artifactId>cassandra-quarkus-test-framework</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -87,6 +107,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-	</profiles>
 </project>
