@@ -55,6 +55,12 @@ public class CassandraService {
 	}
 
 	public String deleteMsg() {
+		try {
+			dao.deleteById(new Msg());
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "Delete Errorr.", e);
+			throw new WebappServiceException("Delete Error.");
+		}
 		return "Delete Msg Records";
 	}
 
