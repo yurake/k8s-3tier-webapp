@@ -1,8 +1,9 @@
 package webapp.tier.resource;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.when;
+
+import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,47 +11,45 @@ import com.datastax.oss.quarkus.test.CassandraTestResource;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
-import webapp.tier.bean.MsgBean;
+import io.quarkus.test.junit.mockito.InjectMock;
+import webapp.tier.service.CassandraService;
 
 @QuarkusTest
 @QuarkusTestResource(CassandraTestResource.class)
-class CassandraResourceTest {
+class CassandraResourceErrorTest {
+
+	@InjectMock
+	CassandraService svc;
 
 	@Test
-	void testInsert() {
+	void testInsertError() throws NoSuchAlgorithmException {
+		when(svc.insertMsg()).thenThrow(new NoSuchAlgorithmException());
 		given()
 				.when()
 				.contentType("application/json")
 				.post("/quarkus/cassandra/insert")
 				.then()
-				.statusCode(200)
-				.body(containsString("Hello k8s-3tier-webapp with quarkus"))
-				.extract()
-				.body()
-				.as(MsgBean.class);
+				.statusCode(500);
 	}
 
 	@Test
-	void testSelect() {
+	void testSelectError() {
+		when(svc.selectMsg()).thenThrow(new RuntimeException());
 		given()
 				.when()
 				.get("/quarkus/cassandra/select")
 				.then()
-				.statusCode(200)
-				.body(containsString("No Data."))
-				.extract()
-				.body()
-				.as(MsgBean[].class);
+				.statusCode(500);
 	}
 
 	@Test
-	void testDelete() {
+	void testDeleteError() {
+		when(svc.deleteMsg()).thenThrow(new RuntimeException());
 		given()
 				.when()
 				.contentType("application/json")
 				.post("/quarkus/cassandra/delete")
 				.then()
-				.statusCode(200)
-				.body(is("Delete Msg Records"));
+				.statusCode(500);
 	}
 }
