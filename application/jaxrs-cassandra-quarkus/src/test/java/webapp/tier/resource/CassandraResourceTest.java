@@ -9,6 +9,7 @@ import com.datastax.oss.quarkus.test.CassandraTestResource;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.bean.MsgBean;
 
 @QuarkusTest
 @QuarkusTestResource(CassandraTestResource.class)
@@ -22,6 +23,9 @@ class CassandraResourceTest {
 				.post("/quarkus/cassandra/insert")
 				.then()
 				.statusCode(200)
-                .body(containsString("Hello k8s-3tier-webapp with quarkus"));
+				.body(containsString("Hello k8s-3tier-webapp with quarkus"))
+				.extract()
+				.body()
+				.as(MsgBean.class);
 	}
 }
