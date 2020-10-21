@@ -15,3 +15,10 @@ jobs:
         uses: styfle/cancel-workflow-action@0.5.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: cancel running workflows
+        uses: everphone-gmbh/cancel-previous-workflows@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: n1hility/cancel-previous-runs@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
