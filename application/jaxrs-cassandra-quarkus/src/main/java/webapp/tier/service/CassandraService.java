@@ -31,11 +31,11 @@ public class CassandraService {
 	public MsgBean insertMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
 		try {
-			dao.update(new Msg());
+			dao.update(new Msg(msgbean.getId(), msgbean.getMessage()));
 			LOG.log(Level.INFO, msgbean.getFullmsg());
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Insert Errorr.", e);
-			throw new WebappServiceException("Insert Error.");
+			throw new WebappServiceException("Insert Error.", e);
 		}
 		return msgbean;
 	}
@@ -43,23 +43,30 @@ public class CassandraService {
 	public List<MsgBean> selectMsg() {
 		List<MsgBean> msglist = new ArrayList<>();
 		try {
-			dao.selectAll();
+			for (Msg msg : dao.findAll()) {
+				MsgBean msgbean = new MsgBean(msg.getId(), msg.getMsg(), "Select");
+				msglist.add(msgbean);
+				LOG.log(Level.INFO, msgbean.getFullmsg());
+			}
 			if (msglist.isEmpty()) {
 				msglist.add(new MsgBean(0, "No Data.", "Select"));
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Select Errorr.", e);
-			throw new WebappServiceException("Select Error.");
+			throw new WebappServiceException("Select Error.", e);
 		}
 		return msglist;
 	}
 
 	public String deleteMsg() {
 		try {
-			dao.deleteById(new Msg());
+			for (MsgBean msgbean : selectMsg()) {
+				dao.deleteById(msgbean.getId());
+				LOG.log(Level.INFO, "Deleted: {0}", msgbean.getFullmsg());
+			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Delete Errorr.", e);
-			throw new WebappServiceException("Delete Error.");
+			throw new WebappServiceException("Delete Error.", e);
 		}
 		return "Delete Msg Records";
 	}

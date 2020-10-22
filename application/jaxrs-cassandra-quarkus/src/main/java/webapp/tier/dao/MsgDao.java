@@ -12,12 +12,15 @@ import webapp.tier.entity.Msg;
 public interface MsgDao {
 
 	@Update
-	void update(Msg msg);
+	Boolean update(Msg msg);
 
 	@Select
-	PagingIterable<Msg> selectAll();
+	Msg findById(int id);
 
-	@Delete
-	void deleteById(Msg msg);
+	@Select
+	PagingIterable<Msg> findAll();
+
+	@Delete(entityClass = Msg.class)
+	Boolean deleteById(int id);
 
 }
