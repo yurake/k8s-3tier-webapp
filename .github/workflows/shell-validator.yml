@@ -16,7 +16,7 @@ jobs:
       - name: Run shellcheck
         uses: ludeeus/action-shellcheck@master
       - name: Run sh-checker
-        uses: luizm/action-sh-checker@v0.1.4
+        uses: luizm/action-sh-checker@v0.1.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
