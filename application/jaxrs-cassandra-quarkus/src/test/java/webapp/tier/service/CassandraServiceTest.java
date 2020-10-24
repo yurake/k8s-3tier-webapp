@@ -24,6 +24,8 @@ import webapp.tier.bean.MsgBean;
 @QuarkusTestResource(CassandraTestResource.class)
 class CassandraServiceTest {
 
+	private static final String respbody = "message: Hello k8s-3tier-webapp with quarkus";
+
 	@Inject
 	CassandraService svc;
 
@@ -31,8 +33,6 @@ class CassandraServiceTest {
     void afterEach() {
     	svc.deleteMsg();
     }
-
-	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@Test
 	void testInsertMsg() {
