@@ -1,7 +1,7 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -49,7 +49,7 @@ class MysqlResourceTest {
 				.post("/quarkus/mysql/insert")
 				.then()
 				.statusCode(200)
-                .body(containsString("Hello k8s-3tier-webapp with quarkus"));
+				.body(containsString("Hello k8s-3tier-webapp with quarkus"));
 	}
 
 	@Test
@@ -59,7 +59,7 @@ class MysqlResourceTest {
 				.get("/quarkus/mysql/select")
 				.then()
 				.statusCode(200)
-                .body(containsString("No Data."));
+				.body(containsString("No Data."));
 	}
 
 	@Test
@@ -70,8 +70,7 @@ class MysqlResourceTest {
 				.post("/quarkus/mysql/delete")
 				.then()
 				.statusCode(200)
-                .body(containsString("Delete Msg Records"));
+				.body(containsString("Delete Msg Records"));
 	}
 
 }
-

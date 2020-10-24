@@ -77,6 +77,15 @@ jobs:
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/mongodb/UMosuG9BuAvvnGJ9gWcSzgBjC5k=
 
+      - name: Build image - cassandra
+        working-directory: ./kubernetes/cassandra
+        run: docker build -t yurak/cassandra:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
+      - name: Push Image - cassandra
+        if: github.event_name == 'push'
+        run: docker push yurak/cassandra:latest
+
       - name: Build image - rabbitmq
         working-directory: ./kubernetes/rabbitmq
         run: docker build -t yurak/rabbitmq:latest

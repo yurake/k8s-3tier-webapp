@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaxrs-cassandra-quarkus
+spec:
+  type: ClusterIP
+  selector:
+    app: jaxrs-cassandra-quarkus
+  ports:
+    - protocol: TCP
+      port: 8080

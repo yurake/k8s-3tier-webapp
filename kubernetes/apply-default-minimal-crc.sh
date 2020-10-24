@@ -42,6 +42,14 @@ kubectl apply -f ./mongodb-service.yaml
 echo "###"
 echo ""
 
+echo "### cassandra"
+cd "$ROOT_DIR"/cassandra
+kubectl apply -f ./cassandra-configmap.yaml
+kubectl apply -f ./cassandra-statefulset.yaml
+kubectl apply -f ./cassandra-service.yaml
+echo "###"
+echo ""
+
 echo "### redis"
 cd "$ROOT_DIR"/redis
 kubectl apply -f ./redis-deployment.yaml
@@ -133,6 +141,14 @@ cd "$ROOT_DIR"/jaxrs-mongodb-quarkus
 kubectl apply -f ./jaxrs-mongodb-quarkus-deployment.yaml
 kubectl apply -f ./jaxrs-mongodb-quarkus-service.yaml
 kubectl apply -f ./jaxrs-mongodb-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-cassandra-quarkus"
+cd "$ROOT_DIR"/jaxrs-cassandra-quarkus
+kubectl apply -f ./jaxrs-cassandra-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-cassandra-quarkus-service.yaml
+kubectl apply -f ./jaxrs-cassandra-quarkus-service-externalname.yaml
 echo "###"
 echo ""
 

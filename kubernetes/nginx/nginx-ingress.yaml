@@ -84,3 +84,10 @@ spec:
                 name: jaxrs-redis-quarkus
                 port:
                   number: 8080
+          - path: /quarkus/cassandra
+            pathType: Prefix
+            backend:
+              service:
+                name: jaxrs-cassandra-quarkus
+                port:
+                  number: 8080

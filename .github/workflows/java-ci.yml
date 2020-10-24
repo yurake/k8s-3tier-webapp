@@ -215,6 +215,75 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
+  jaxrs-cassandra-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: 20.2.0.java11
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-cassandra-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-cassandra-quarkus
+
+      - name: Maven Build
+        working-directory: ./application/jaxrs-cassandra-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+      - name: Build Image
+        working-directory: ./application/jaxrs-cassandra-quarkus
+        run: docker build -t yurak/jaxrs-cassandra-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        if: github.event_name == 'push'
+        run: docker push yurak/jaxrs-cassandra-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-cassandra-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw sonar:sonar
+          -Dsonar.projectKey=yurake_jaxrs-cassandra-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Upload test and style results to Check Run Reporter
+        uses: check-run-reporter/action@v2.0.0
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
+          report: "application/jaxrs-cassandra-quarkus/target/surefire-reports/*.xml"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+
   consumer-hazelcast-quarkus:
     needs: [init-build, jaxrs-hazelcast-quarkus]
     runs-on: ubuntu-latest

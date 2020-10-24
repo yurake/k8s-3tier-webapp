@@ -9,6 +9,7 @@ var hazelcasturl = url + "/hazelcast/";
 var mysqlurl = url + "/mysql/";
 var postgresurl = url + "/postgres/";
 var mongodburl = url + "/mongodb/";
+var cassandraurl = url + "/cassandra/";
 var initialvalue = "Response Values";
 var set = "set";
 var put = "put";
@@ -28,6 +29,7 @@ var respqueuehazelcast = "#respqueuehazelcast";
 var respmysql = "#respmysql";
 var resppostgres = "#resppostgres";
 var respmongodb = "#respmongodb";
+var respcassandra = "#respcassandra";
 var isopenkafka = false;
 
 $(function () {
@@ -41,6 +43,7 @@ $(function () {
   $(respmysql).html(initialvalue);
   $(resppostgres).html(initialvalue);
   $(respmongodb).html(initialvalue);
+  $(respcassandra).html(initialvalue);
 
   var sse;
 
@@ -281,4 +284,16 @@ $(function () {
   $("#deletemongodb").click(function () {
     dispMsgFromString(post, mongodburl + delt, respmongodb);
   });
-});
+
+  $("#insertcassandra").click(function () {
+    dispMsgFromJson(post, cassandraurl + insert, respcassandra);
+  });
+
+  $("#selectcassandra").click(function () {
+    dispMsgFromJsonArray(get, cassandraurl + select, respcassandra);
+  });
+
+  $("#deletecassandra").click(function () {
+    dispMsgFromString(post, cassandraurl + delt, respcassandra);
+  });
+})
