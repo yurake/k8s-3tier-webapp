@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.262-alpine
+FROM jenkins/jenkins:2.263-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
@@ -21,7 +21,7 @@ COPY init/executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
 
 # change timezone
 RUN apk update && \
-    apk --no-cache add tzdata=2020a-r0 && \
+    apk --no-cache add tzdata=2020c-r0 && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     apk del tzdata
 ENV JAVA_OPTS -Duser.timezone=Asia/Tokyo
