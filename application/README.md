@@ -41,6 +41,8 @@
 
 ## jaxrs-mongodb-quarkus
 
+## jaxrs-cassandra-quarkus
+
 ## jaxrs-mysql-quarkus
 
 ## jaxrs-postgres-quarkus
