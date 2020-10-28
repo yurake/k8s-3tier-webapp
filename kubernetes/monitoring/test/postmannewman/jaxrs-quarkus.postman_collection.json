@@ -642,6 +642,146 @@
 			"response": []
 		},
 		{
+			"name": "cassandra/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a31e6e6-3c44-415d-ad28-cfc5fd244b61",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Insert\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_CASS}}/quarkus/cassandra/insert",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_CASS}}"
+					],
+					"path": [
+						"quarkus",
+						"cassandra",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cassandra/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6dd3684-19b1-4bcf-bba0-37a3e2382a6b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Select\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_CASS}}/quarkus/cassandra/select",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_CASS}}"
+					],
+					"path": [
+						"quarkus",
+						"cassandra",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cassandra/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d084648-d125-4818-8e79-3724ee112168",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Delete Msg Records\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_CASS}}/quarkus/cassandra/delete",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_CASS}}"
+					],
+					"path": [
+						"quarkus",
+						"cassandra",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "mysql/insert",
 			"event": [
 				{
