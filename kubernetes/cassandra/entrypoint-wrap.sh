@@ -11,10 +11,10 @@ if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
 fi
 
 # allow the container to be started with `--user`
-if [ "$1" = 'cassandra' -a "$(id -u)" = '0' ]; then
+if [ "$1" = 'cassandra' ] && [ "$(id -u)" = '0' ]; then
   find "$CASSANDRA_CONF" /var/lib/cassandra /var/log/cassandra \
     \! -user cassandra -exec chown cassandra '{}' +
-  exec gosu cassandra "$BASH_SOURCE" "$@"
+  exec gosu cassandra "$BASH_SOURCE[@]" "$@"
 fi
 
 _ip_address() {
@@ -41,24 +41,24 @@ _sed-in-place() {
 }
 
 if [ "$1" = 'cassandra' ]; then
-  : ${CASSANDRA_RPC_ADDRESS='0.0.0.0'}
+  : "${CASSANDRA_RPC_ADDRESS='0.0.0.0'}"
 
-  : ${CASSANDRA_LISTEN_ADDRESS='auto'}
+  : "${CASSANDRA_LISTEN_ADDRESS='auto'}"
   if [ "$CASSANDRA_LISTEN_ADDRESS" = 'auto' ]; then
     CASSANDRA_LISTEN_ADDRESS="$(_ip_address)"
   fi
 
-  : ${CASSANDRA_BROADCAST_ADDRESS="$CASSANDRA_LISTEN_ADDRESS"}
+  : "${CASSANDRA_BROADCAST_ADDRESS="$CASSANDRA_LISTEN_ADDRESS"}"
 
   if [ "$CASSANDRA_BROADCAST_ADDRESS" = 'auto' ]; then
     CASSANDRA_BROADCAST_ADDRESS="$(_ip_address)"
   fi
-  : ${CASSANDRA_BROADCAST_RPC_ADDRESS:=$CASSANDRA_BROADCAST_ADDRESS}
+  : "${CASSANDRA_BROADCAST_RPC_ADDRESS:=$CASSANDRA_BROADCAST_ADDRESS}"
 
   if [ -n "${CASSANDRA_NAME:+1}" ]; then
-    : ${CASSANDRA_SEEDS:="cassandra"}
+    : "${CASSANDRA_SEEDS:="cassandra"}"
   fi
-  : ${CASSANDRA_SEEDS:="$CASSANDRA_BROADCAST_ADDRESS"}
+  : "${CASSANDRA_SEEDS:="$CASSANDRA_BROADCAST_ADDRESS"}"
 
   _sed-in-place "$CASSANDRA_CONF/cassandra.yaml" \
     -r 's/(- seeds:).*/\1 "'"$CASSANDRA_SEEDS"'"/'
@@ -97,6 +97,7 @@ for f in docker-entrypoint-initdb.d/*; do
   case "$f" in
   *.sh)
     echo "$0: running $f"
+    # shellcheck source=/dev/null
     . "$f"
     ;;
   *.cql) echo "$0: running $f" && until cqlsh -f "$f"; do
