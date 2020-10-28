@@ -6,6 +6,7 @@ set -e
 
 # first arg is `-f` or `--some-option`
 # or there are no args
+# shellcheck disable=SC2166
 if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
   set -- cassandra -f "$@"
 fi
@@ -42,21 +43,26 @@ _sed-in-place() {
 }
 
 if [ "$1" = 'cassandra' ]; then
+  # shellcheck disable=SC2223
   : ${CASSANDRA_RPC_ADDRESS='0.0.0.0'}
 
+  # shellcheck disable=SC2223
   : ${CASSANDRA_LISTEN_ADDRESS='auto'}
   if [ "$CASSANDRA_LISTEN_ADDRESS" = 'auto' ]; then
     CASSANDRA_LISTEN_ADDRESS="$(_ip_address)"
   fi
 
+  # shellcheck disable=SC2223
   : ${CASSANDRA_BROADCAST_ADDRESS="$CASSANDRA_LISTEN_ADDRESS"}
 
   if [ "$CASSANDRA_BROADCAST_ADDRESS" = 'auto' ]; then
     CASSANDRA_BROADCAST_ADDRESS="$(_ip_address)"
   fi
+  # shellcheck disable=SC2223
   : ${CASSANDRA_BROADCAST_RPC_ADDRESS:=$CASSANDRA_BROADCAST_ADDRESS}
 
   if [ -n "${CASSANDRA_NAME:+1}" ]; then
+    # shellcheck disable=SC2223
     : ${CASSANDRA_SEEDS:="cassandra"}
   fi
   : ${CASSANDRA_SEEDS:="$CASSANDRA_BROADCAST_ADDRESS"}
@@ -98,6 +104,7 @@ for f in docker-entrypoint-initdb.d/*; do
   case "$f" in
   *.sh)
     echo "$0: running $f"
+    # shellcheck disable=SC1090
     . "$f"
     ;;
   *.cql) echo "$0: running $f" && until cqlsh -f "$f"; do
