@@ -25,6 +25,12 @@
 [![Image Info](https://images.microbadger.com/badges/image/yurak/mongodb.svg)](https://microbadger.com/images/yurak/mongodb)
 [![Image Version](https://images.microbadger.com/badges/version/yurak/mongodb.svg)](https://microbadger.com/images/yurak/mongodb)
 
+## cassandra
+
+[![DockerHub](https://img.shields.io/docker/pulls/yurak/rabbitmq.svg)](https://hub.docker.com/r/yurak/cassandra)
+[![Image Info](https://images.microbadger.com/badges/image/yurak/cassandra.svg)](https://microbadger.com/images/yurak/cassandra)
+[![Image Version](https://images.microbadger.com/badges/version/yurak/cassandra.svg)](https://microbadger.com/images/yurak/cassandra)
+
 ## rabbitmq
 
 [![DockerHub](https://img.shields.io/docker/pulls/yurak/rabbitmq.svg)](https://hub.docker.com/r/yurak/rabbitmq)

@@ -85,6 +85,9 @@ jobs:
       - name: Push Image - cassandra
         if: github.event_name == 'push'
         run: docker push yurak/cassandra:latest
+      - name: Update Microbadger
+        if: github.event_name == 'push'
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/cassandra/_v7rgss4iVQ4LkK4zscW7RKQGB8=
 
       - name: Build image - rabbitmq
         working-directory: ./kubernetes/rabbitmq
