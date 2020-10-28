@@ -14,7 +14,8 @@ fi
 if [ "$1" = 'cassandra' ] && [ "$(id -u)" = '0' ]; then
   find "$CASSANDRA_CONF" /var/lib/cassandra /var/log/cassandra \
     \! -user cassandra -exec chown cassandra '{}' +
-  exec gosu cassandra "$BASH_SOURCE[@]" "$@"
+  # shellcheck disable=SC2128
+  exec gosu cassandra "$BASH_SOURCE" "$@"
 fi
 
 _ip_address() {
