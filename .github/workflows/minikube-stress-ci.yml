@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        minikube: [1.14.0, 1.14.1]
+        minikube: [1.14.1, 1.14.2]
         kubernetes: [1.19.2, 1.19.3]
         app: [redis, activemq, rabbitmq, hazelcast, kafka]
       fail-fast: false
