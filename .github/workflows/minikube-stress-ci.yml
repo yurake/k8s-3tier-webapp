@@ -8,8 +8,6 @@ on:
       - "application/**"
       - "kubernetes/**"
       - ".github/workflows/minikube-stress-ci.yml"
-  issues:
-    types: [closed]
 
 jobs:
   stress-ci:
