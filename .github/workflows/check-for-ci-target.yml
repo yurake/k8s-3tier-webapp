@@ -15,10 +15,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: get the current number of java pcojects
         working-directory: ./application
-        run: echo ::set-env name=SOURCE_PROJECT::$(find . -name "pom.xml" | grep -v -e target -e src | wc -l | tr -d ' ')
+        run: echo "SOURCE_PROJECT=$(find . -name "pom.xml" | grep -v -e target -e src | wc -l | tr -d ' ')" >> $GITHUB_ENV
       - name: get java-ci.yml
         working-directory: ./.github/workflows
-        run: echo ::set-env name=JAVACI_PROJECT::$(grep verify java-ci.yml | wc -l | tr -d ' ')
+        run: echo "JAVACI_PROJECT=$(grep verify java-ci.yml | wc -l | tr -d ' ')" >> $GITHUB_ENV
       - name: check java-ci.yml
         run: |
           echo CURRENT: ${SOURCE_PROJECT}
