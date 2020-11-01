@@ -20,8 +20,8 @@ jobs:
         env:
           TZ: "Asia/Tokyo"
         run: |
-          echo ::set-env name=BUILD_DATE::$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          echo ::set-env name=VCS_REF::$(echo ${GITHUB_SHA} | cut -c1-8)
+          echo "BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
+          echo "VCS_REF=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
 
       - name: docker login
         env:
