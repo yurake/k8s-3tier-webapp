@@ -1,6 +1,7 @@
-## Add Datasource
-URL: http://prometheus:9090  
-Access: Server
+## Grafana dashboard settings
+Choose data source type > Loki  
+[HTTP] > [URL] > `http://prometheus:9090`  
+[HTTP] > [Access] > `Server(default)`  
 
 ## Recommended grafana dashboards
 https://grafana.com/grafana/dashboards
