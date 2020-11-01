@@ -23,6 +23,22 @@ jobs:
           echo CURRENT: ${SOURCE_VERSION}
           echo TARGET: ${TARGET_VERSION}
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
+      - name: check current minikube stress version
+        working-directory: ./.github/workflows
+        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+      - name: check diff stress
+        run: |
+          echo CURRENT: ${SOURCE_VERSION}
+          echo TARGET: ${TARGET_VERSION}
+          test ${SOURCE_VERSION} = ${TARGET_VERSION}
+      - name: check current minikube security version
+        working-directory: ./.github/workflows
+        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+      - name: check diff security
+        run: |
+          echo CURRENT: ${SOURCE_VERSION}
+          echo TARGET: ${TARGET_VERSION}
+          test ${SOURCE_VERSION} = ${TARGET_VERSION}
   kubernetes-version:
     runs-on: ubuntu-latest
     steps:
@@ -33,6 +49,22 @@ jobs:
       - name: check latest tag kubernetes version
         run: echo "TARGET_VERSION=$(curl -s https://api.github.com/repos/kubernetes/kubernetes/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
       - name: check diff
+        run: |
+          echo CURRENT: ${SOURCE_VERSION}
+          echo TARGET: ${TARGET_VERSION}
+          test ${SOURCE_VERSION} = ${TARGET_VERSION}
+      - name: check current minikube stress version
+        working-directory: ./.github/workflows
+        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+      - name: check diff stress
+        run: |
+          echo CURRENT: ${SOURCE_VERSION}
+          echo TARGET: ${TARGET_VERSION}
+          test ${SOURCE_VERSION} = ${TARGET_VERSION}
+      - name: check current minikube security version
+        working-directory: ./.github/workflows
+        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+      - name: check diff security
         run: |
           echo CURRENT: ${SOURCE_VERSION}
           echo TARGET: ${TARGET_VERSION}
