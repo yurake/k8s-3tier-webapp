@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties />
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.3.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.4.5">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -39,6 +39,11 @@ application/.*</includedRegions>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
+      <command>cd kubernetes
+# ./apply.sh</command>
+      <configuredLocalRules />
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
       <command>_PODS=`kubectl get pods -n default | awk &apos;{print $1}&apos; | grep -v NAME`
 
 while read line
@@ -50,13 +55,14 @@ END
 
 kubectl get po -n default
 </command>
+      <configuredLocalRules />
     </hudson.tasks.Shell>
   </builders>
   <publishers />
   <buildWrappers>
-    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.26.1">
+    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.27.3">
       <serverUrl>https://kubernetes.default.svc.cluster.local</serverUrl>
-      <credentialsId>31819fb9-eaff-4bf9-a440-679e53d2cee5</credentialsId>
+      <credentialsId>1fd27e80-81ad-45be-a952-fe5e0d217074</credentialsId>
     </org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper>
   </buildWrappers>
 </project>

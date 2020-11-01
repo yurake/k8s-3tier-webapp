@@ -16,13 +16,14 @@
               <string>rabbitmq</string>
               <string>hazelcast</string>
               <string>redis</string>
+              <string>kafka</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.4.4">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.4.5">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -94,12 +95,16 @@ sed -i -e &quot;s/DATE/${DATE}/g&quot; apache-benchmark.p
 gnuplot apache-benchmark.p</command>
       <configuredLocalRules />
     </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>find ${WORKSPACE} -name &quot;benchmark-*.png&quot; -mtime +3 -exec rm {} \;</command>
+      <configuredLocalRules />
+    </hudson.tasks.Shell>
   </builders>
   <publishers />
   <buildWrappers>
-    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.27.1.1">
+    <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.27.3">
       <serverUrl>https://kubernetes.default.svc.cluster.local</serverUrl>
-      <credentialsId>07cebead-3f49-4977-93ec-b5cd52846b7a</credentialsId>
+      <credentialsId>1fd27e80-81ad-45be-a952-fe5e0d217074</credentialsId>
     </org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper>
   </buildWrappers>
 </project>
