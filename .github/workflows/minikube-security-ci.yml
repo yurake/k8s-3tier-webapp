@@ -8,25 +8,18 @@ on:
       - "application/**"
       - "kubernetes/**"
       - ".github/workflows/minikube-security-ci.yml"
-  issues:
-    types: [closed]
 
 jobs:
   security-ci:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        minikube: [1.14.1, 1.14.2]
-        kubernetes: [1.19.2, 1.19.3]
-      fail-fast: false
     steps:
       - name: checkout
         uses: actions/checkout@v2
       - name: setup minikube
         uses: opsgang/ga-setup-minikube@v0.1.1
         with:
-          minikube-version: ${{ matrix.minikube }}
-          k8s-version: ${{ matrix.kubernetes }}
+          minikube-version: 1.14.2
+          k8s-version: 1.19.3
       - name: minikube settings
         run: |
           sudo apt install conntrack
