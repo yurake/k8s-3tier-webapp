@@ -6,6 +6,30 @@ ROOT_DIR="$(
   pwd
 )"
 
+function usage() {
+  cat <<EOF
+
+Script:
+    Apply minimal service to Minikube
+
+Usage:
+    $(basename ${0}) [<options>]
+
+Options:
+    crc     Apply to Code Rady Container
+EOF
+}
+
+if [ $# -gt 1 ]; then
+  echo "too many arguments"
+  usage
+  exit 1
+elif [ $1 != "crc" ]; then
+  echo "incorrect argument: $1"
+  usage
+  exit 1
+fi
+
 echo "### monitoring namespace"
 cd "$ROOT_DIR"/monitoring
 kubectl apply -f ./monitoring-namespace.yaml
@@ -15,7 +39,11 @@ echo ""
 echo "### mysql"
 cd "$ROOT_DIR"/mysql
 kubectl apply -f ./mysql-pv.yaml
-kubectl apply -f ./mysql-pvc.yaml
+if [ $1 != "crc" ]; then
+  kubectl apply -f ./mysql-pvc-crc.yaml
+else
+  kubectl apply -f ./mysql-pvc.yaml
+fi
 kubectl apply -f ./mysql-configmap.yaml
 kubectl apply -f ./mysql-secret.yaml
 kubectl apply -f ./mysql-deployment.yaml
@@ -26,7 +54,11 @@ echo ""
 echo "### postgres"
 cd "$ROOT_DIR"/postgres
 kubectl apply -f ./postgres-pv.yaml
-kubectl apply -f ./postgres-pvc.yaml
+if [ $1 != "crc" ]; then
+  kubectl apply -f ./postgres-pvc-crc.yaml
+else
+  kubectl apply -f ./postgres-pvc.yaml
+fi
 kubectl apply -f ./postgres-configmap.yaml
 kubectl apply -f ./postgres-secret.yaml
 kubectl apply -f ./postgres-deployment.yaml
@@ -37,7 +69,11 @@ echo ""
 echo "### mongodb"
 cd "$ROOT_DIR"/mongodb
 kubectl apply -f ./mongodb-pv.yaml
-kubectl apply -f ./mongodb-pvc.yaml
+if [ $1 != "crc" ]; then
+  kubectl apply -f ./mongodb-pvc-crc.yaml
+else
+  kubectl apply -f ./mongodb-pvc.yaml
+fi
 kubectl apply -f ./mongodb-configmap.yaml
 kubectl apply -f ./mongodb-secret.yaml
 kubectl apply -f ./mongodb-deployment.yaml
@@ -73,7 +109,11 @@ echo ""
 echo "### activemq"
 cd "$ROOT_DIR"/activemq
 kubectl apply -f ./activemq-pv.yaml
-kubectl apply -f ./activemq-pvc.yaml
+if [ $1 != "crc" ]; then
+  kubectl apply -f ./activemq-pvc-crc.yaml
+else
+  kubectl apply -f ./activemq-pvc.yaml
+fi
 kubectl apply -f ./activemq-deployment.yaml
 kubectl apply -f ./activemq-service.yaml
 kubectl apply -f ./activemq-ingress.yaml
