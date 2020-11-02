@@ -1,18 +1,18 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<flow-definition plugin="workflow-job@2.37">
+<flow-definition plugin="workflow-job@2.40">
   <actions>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
-      <jobProperties/>
-      <triggers/>
-      <parameters/>
-      <options/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.7.2" />
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.7.2">
+      <jobProperties />
+      <triggers />
+      <parameters />
+      <options />
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
   </actions>
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty/>
+    <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty />
     <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
       <triggers>
         <hudson.triggers.TimerTrigger>
@@ -21,7 +21,7 @@
       </triggers>
     </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
   </properties>
-  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.80">
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.83">
     <script>pipeline {
 
     agent any
@@ -42,6 +42,9 @@
                     &quot;test.ab.redis.k8s-3tier-webapp&quot;: {
                         build &apos;test.ab.redis.k8s-3tier-webapp&apos;
                     },
+                    &quot;test.ab.kafka.k8s-3tier-webapp&quot;: {
+                        build &apos;test.ab.kafka.k8s-3tier-webapp&apos;
+                    },
                 )
             }
         }
@@ -49,6 +52,6 @@
 }</script>
     <sandbox>true</sandbox>
   </definition>
-  <triggers/>
+  <triggers />
   <disabled>false</disabled>
 </flow-definition>
