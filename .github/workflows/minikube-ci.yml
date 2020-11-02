@@ -57,6 +57,12 @@ jobs:
         run: |
           sh ./kubernetes/apply-default-minimal.sh
           sleep 10
+      - name: Setup bats
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.2.1
+      - name: Run bats
+        run: bats -r kubernetes/test/bats
       - name: run e2e test
         run: |
           kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
