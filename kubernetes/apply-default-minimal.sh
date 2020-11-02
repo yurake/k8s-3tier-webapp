@@ -8,7 +8,9 @@ ROOT_DIR="$(
 
 echo "### monitoring namespace"
 cd "$ROOT_DIR"/monitoring
+set +e
 kubectl apply -f ./monitoring-namespace.yaml
+set -eu
 echo "###"
 echo ""
 
