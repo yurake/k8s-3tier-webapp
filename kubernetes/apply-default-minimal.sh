@@ -6,7 +6,7 @@ ROOT_DIR="$(
   pwd
 )"
 
-function usage() {
+usage() {
   cat <<EOF
 
 Script:
