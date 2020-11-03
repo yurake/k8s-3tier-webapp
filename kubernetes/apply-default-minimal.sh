@@ -13,7 +13,7 @@ Script:
     Apply minimal service to Minikube
 
 Usage:
-    $(basename ${0}) [<options>]
+    "$(basename ${0})" [<options>]
 
 Options:
     crc     Apply to Code Rady Container
@@ -24,7 +24,7 @@ if [ $# -gt 1 ]; then
   echo "too many arguments"
   usage
   exit 1
-elif [ $1 != "crc" ]; then
+elif [ "$1" != "crc" ]; then
   echo "incorrect argument: $1"
   usage
   exit 1
