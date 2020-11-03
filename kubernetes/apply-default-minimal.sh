@@ -13,7 +13,7 @@ Script:
     Apply minimal service to Minikube
 
 Usage:
-    "$(basename ${0})" "[<options>]"
+    "$(basename "$0")" "[<options>]"
 
 Options:
     crc     Apply to Code Rady Container
