@@ -27,7 +27,7 @@
 		<jedis.version>3.3.0</jedis.version>
 		<hazelcast-client.version>3.12.10</hazelcast-client.version>
 		<hazelcast.version>4.0.3</hazelcast.version>
-		<hazelcast-kubernetes.version>2.1</hazelcast-kubernetes.version>
+		<hazelcast-kubernetes.version>2.2</hazelcast-kubernetes.version>
 
 		<javaee-api.version>8.0.1</javaee-api.version>
 
