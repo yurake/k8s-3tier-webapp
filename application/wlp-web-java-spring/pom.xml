@@ -29,7 +29,7 @@
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<mysql-connector-java.version>8.0.22</mysql-connector-java.version>
 		<jedis.version>3.3.0</jedis.version>
-		<hazelcast.version>4.0.3</hazelcast.version>
+		<hazelcast.version>4.1</hazelcast.version>
 		<javaee-api.version>8.0.1</javaee-api.version>
 
 		<!-- Spring -->
