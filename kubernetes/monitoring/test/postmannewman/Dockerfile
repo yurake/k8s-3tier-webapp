@@ -1,4 +1,4 @@
-FROM postman/newman:5.2.0-alpine
+FROM postman/newman:5.2.1-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
