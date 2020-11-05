@@ -24,10 +24,14 @@ if [ $# -gt 1 ]; then
   echo "too many arguments"
   usage
   exit 1
-elif [ "$1" != "crc" ]; then
+elif [ $# -eq 1 ] && [ "$1" != "crc" ]; then
   echo "incorrect argument: $1"
   usage
   exit 1
+elif [ $# -eq 1 ] && [ "$1" = "crc" ]; then
+  readonly is_crc=true
+else
+  readonly is_crc=false
 fi
 
 echo "### monitoring namespace"
@@ -39,7 +43,7 @@ echo ""
 echo "### mysql"
 cd "$ROOT_DIR"/mysql
 kubectl apply -f ./mysql-pv.yaml
-if [ "$1" != "crc" ]; then
+if "${is_crc}"; then
   kubectl apply -f ./mysql-pvc-crc.yaml
 else
   kubectl apply -f ./mysql-pvc.yaml
@@ -54,7 +58,7 @@ echo ""
 echo "### postgres"
 cd "$ROOT_DIR"/postgres
 kubectl apply -f ./postgres-pv.yaml
-if [ "$1" != "crc" ]; then
+if "${is_crc}"; then
   kubectl apply -f ./postgres-pvc-crc.yaml
 else
   kubectl apply -f ./postgres-pvc.yaml
@@ -69,7 +73,7 @@ echo ""
 echo "### mongodb"
 cd "$ROOT_DIR"/mongodb
 kubectl apply -f ./mongodb-pv.yaml
-if [ "$1" != "crc" ]; then
+if "${is_crc}"; then
   kubectl apply -f ./mongodb-pvc-crc.yaml
 else
   kubectl apply -f ./mongodb-pvc.yaml
@@ -109,7 +113,7 @@ echo ""
 echo "### activemq"
 cd "$ROOT_DIR"/activemq
 kubectl apply -f ./activemq-pv.yaml
-if [ "$1" != "crc" ]; then
+if "${is_crc}"; then
   kubectl apply -f ./activemq-pvc-crc.yaml
 else
   kubectl apply -f ./activemq-pvc.yaml
