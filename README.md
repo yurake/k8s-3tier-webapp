@@ -5,6 +5,8 @@
 [![Docker Vulnerability Scan](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Vulnerability%20Scan/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Docker+Vulnerability+Scan%22)
 [![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/workflows/Yaml%20Validator/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Yaml+Validator%22)
 [![Minikube CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Minikube%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
+[![Minikube Stress CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Minikube%20Stress%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+Stress+CI%22)
+[![Minikube Security CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Minikube%20Security%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+Security+CI%22)
 [![Check for Update](https://github.com/yurake/k8s-3tier-webapp/workflows/Check%20for%20Update/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Check+for+Update%22)
 [![Dockerfile Lint](https://github.com/yurake/k8s-3tier-webapp/workflows/Dockerfile%20Lint/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Dockerfile+Lint%22)
 [![Check for CI Target](https://github.com/yurake/k8s-3tier-webapp/workflows/Check%20for%20CI%20Target/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Check+for+CI+Target%22)
