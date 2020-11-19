@@ -18,7 +18,7 @@ jobs:
       - name: setup minikube
         uses: opsgang/ga-setup-minikube@v0.1.1
         with:
-          minikube-version: 1.15.2
+          minikube-version: 1.15.1
           k8s-version: 1.19.3
       - name: minikube settings
         run: |
