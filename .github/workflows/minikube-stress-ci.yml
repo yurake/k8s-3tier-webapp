@@ -20,10 +20,12 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: setup minikube
-        uses: opsgang/ga-setup-minikube@v0.1.1
+        uses: manusa/actions-setup-minikube@v2.3.0
         with:
-          minikube-version: 1.15.1
-          k8s-version: 1.19.4
+          minikube-version: v1.16.0
+          k8s-version: v1.20.1
+          driver: docker
+          github token: ${{ secrets.GITHUB_TOKEN }}
       - name: minikube settings
         run: |
           sudo apt install conntrack
