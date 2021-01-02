@@ -25,7 +25,7 @@ jobs:
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
       - name: check current minikube stress version
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+        run: echo "SOURCE_VERSION=$(grep "minikube version" minikube-stress-ci.yml | awk '{print $3}')" >> $GITHUB_ENV
       - name: check diff stress
         run: |
           echo CURRENT: ${SOURCE_VERSION}
@@ -33,7 +33,7 @@ jobs:
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
       - name: check current minikube security version
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+        run: echo "SOURCE_VERSION=$(grep "minikube version" minikube-security-ci.yml | awk '{print $3}')" >> $GITHUB_ENV
       - name: check diff security
         run: |
           echo CURRENT: ${SOURCE_VERSION}
@@ -55,7 +55,7 @@ jobs:
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
       - name: check current minikube stress version
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+        run: echo "SOURCE_VERSION=$(grep "kubernetes version" minikube-stress-ci.yml | awk '{print $3}')" >> $GITHUB_ENV
       - name: check diff stress
         run: |
           echo CURRENT: ${SOURCE_VERSION}
@@ -63,7 +63,7 @@ jobs:
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
       - name: check current minikube security version
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+        run: echo "SOURCE_VERSION=$(grep "kubernetes version" minikube-security-ci.yml | awk '{print $3}')" >> $GITHUB_ENV
       - name: check diff security
         run: |
           echo CURRENT: ${SOURCE_VERSION}
