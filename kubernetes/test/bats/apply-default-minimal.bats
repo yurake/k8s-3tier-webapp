@@ -11,6 +11,7 @@
 }
 
 @test "When incorrect argument provided, it should fail with exit code 1" {
+  run kubernetes/apply-default-minimal.sh error
   [ "$status" -eq 1 ]
 }
 
