@@ -36,7 +36,7 @@
 		<spring-framework.version>5.3.1</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>5.4.23.Final</hibernate.version>
+		<hibernate.version>5.4.24.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
@@ -47,7 +47,7 @@
 		<junit.version>${junit.jupiter.version}</junit.version>
 		<jersey.version>3.0.0</jersey.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-		<mockito.junit.jupiter>3.6.0</mockito.junit.jupiter>
+		<mockito.junit.jupiter>3.6.28</mockito.junit.jupiter>
 		<activemq-broker.version>5.16.0</activemq-broker.version>
 		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 		<jedis-mock.version>0.1.16</jedis-mock.version>
