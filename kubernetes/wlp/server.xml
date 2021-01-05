@@ -15,22 +15,22 @@
   <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint" />
   <applicationManager autoExpand="true" />
   <applicationMonitor updateTrigger="mbean" />
-  
-  <dataSource jndiName="jdbc/mysql" transactional="false">
-		<jdbcDriver libraryRef="mysqllib" />
-		<properties databaseName="webapp" user="webapp" password="webapp" portNumber="3306" serverName="mysql" allowPublicKeyRetrieval="true" useSSL="false" />
-	</dataSource>
-	<library id="mysqllib">
-		<fileset dir="${server.config.dir}/resources/mysql" includes="*.jar" />
-	</library>
 
-	<dataSource jndiName="jdbc/postgres" transactional="false">
-		<jdbcDriver libraryRef="postgreslib" />
-		<properties databaseName="webapp" user="webapp" password="webapp" portNumber="5432" serverName="postgres" />
-	</dataSource>
-	<library id="postgreslib">
-		<fileset dir="${server.config.dir}/resources/postgres" includes="*.jar" />
-	</library>
+  <dataSource jndiName="jdbc/mysql" transactional="false">
+    <jdbcDriver libraryRef="mysqllib" />
+    <properties databaseName="webapp" user="webapp" password="webapp" portNumber="3306" serverName="mysql" allowPublicKeyRetrieval="true" useSSL="false" />
+  </dataSource>
+  <library id="mysqllib">
+    <fileset dir="${server.config.dir}/resources/mysql" includes="*.jar" />
+  </library>
+
+  <dataSource jndiName="jdbc/postgres" transactional="false">
+    <jdbcDriver libraryRef="postgreslib" />
+    <properties databaseName="webapp" user="webapp" password="webapp" portNumber="5432" serverName="postgres" />
+  </dataSource>
+  <library id="postgreslib">
+    <fileset dir="${server.config.dir}/resources/postgres" includes="*.jar" />
+  </library>
 
   <resourceAdapter id="activemq" location="${server.config.dir}/resources/activemq/activemq-rar-5.15.11.rar">
     <properties.activemq userName="artemis" password="simetraehcapa" serverUrl="tcp://activemq:61616" />
