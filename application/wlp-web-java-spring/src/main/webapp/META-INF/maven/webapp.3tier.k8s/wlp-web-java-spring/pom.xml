@@ -24,19 +24,19 @@
 		<amqp-client.version>5.10.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<mysql-connector-java.version>8.0.22</mysql-connector-java.version>
-		<jedis.version>3.3.0</jedis.version>
+		<jedis.version>3.4.1</jedis.version>
 		<hazelcast-client.version>3.12.10</hazelcast-client.version>
 		<hazelcast.version>4.1</hazelcast.version>
-		<hazelcast-kubernetes.version>2.2</hazelcast-kubernetes.version>
+		<hazelcast-kubernetes.version>2.2.1</hazelcast-kubernetes.version>
 
 		<javaee-api.version>8.0.1</javaee-api.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
 
 		<!-- Spring -->
-		<spring-framework.version>5.3.0</spring-framework.version>
+		<spring-framework.version>5.3.1</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>5.4.23.Final</hibernate.version>
+		<hibernate.version>5.4.24.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>

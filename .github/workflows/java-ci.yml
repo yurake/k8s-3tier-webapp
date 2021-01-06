@@ -68,12 +68,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/webapp-service/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -137,12 +131,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-activemq-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -206,12 +194,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/consumer-activemq-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -275,12 +257,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-cassandra-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -344,12 +320,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/consumer-hazelcast-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -413,12 +383,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/consumer-kafka-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -482,12 +446,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/scheduled-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -551,12 +509,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-hazelcast-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -620,12 +572,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-kafka-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -689,12 +635,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-memcached-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -758,12 +698,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-mongodb-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -827,12 +761,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-mysql-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -896,12 +824,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-postgres-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -965,12 +887,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-rabbitmq-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -1033,13 +949,6 @@ jobs:
           -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/jaxrs-redis-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -1103,12 +1012,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/consumer-rabbitmq-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -1172,12 +1075,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/producer-kafka-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -1241,12 +1138,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/randompublish-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -1294,12 +1185,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/redis-mysql-helidon/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -1363,12 +1248,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/consumer-redis-quarkus/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
@@ -1434,11 +1313,5 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Upload test and style results to Check Run Reporter
-        uses: check-run-reporter/action@v2.0.0
-        if: ${{ always() }}
-        with:
-          token: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
-          report: "application/wlp-web-java-spring/target/surefire-reports/*.xml"
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
