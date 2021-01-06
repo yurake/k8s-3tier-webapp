@@ -25,6 +25,72 @@ spec:
             requests:
               memory: 100Mi
               cpu: 100m
+          env:
+            - name: MYSQL_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: mysql-databaseName
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: mysql-user
+            - name: MYSQL_PORTNUM
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: mysql-portNumber
+            - name: MYSQL_SERVERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: mysql-serverName
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: wlp-secret
+                  key: mysql-password
+            - name: PG_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: pg-databaseName
+            - name: PG_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: pg-user
+            - name: PG_PORTNUM
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: pg-portNumber
+            - name: PG_SERVERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: pg-serverName
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: wlp-secret
+                  key: pg-password
+            - name: AMQ_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: amq-user
+            - name: AMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: wlp-secret
+                  key: amq-password
+            - name: AMQ_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: wlp-configmap
+                  key: amq-url
           volumeMounts:
             - name: wlp-config-volume
               mountPath: /config/jvm.options
