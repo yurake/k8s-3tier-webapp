@@ -28,7 +28,7 @@ spec:
           volumeMounts:
             - name: wlp-config-volume
               mountPath: /config/jvm.options
-              subPath: jvm.options
+              subPath: jvm-options
       volumes:
         - name: wlp-config-volume
           configMap:
