@@ -33,7 +33,7 @@
 		<spring-framework.version>5.3.1</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>5.4.24.Final</hibernate.version>
+		<hibernate.version>5.4.27.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
