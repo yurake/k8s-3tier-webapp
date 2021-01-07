@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.265-alpine
+FROM jenkins/jenkins:2.273-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
@@ -11,7 +11,7 @@ RUN echo "http://dl-2.alpinelinux.org/alpine/edge/community" >> /etc/apk/reposit
 RUN echo "http://dl-2.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 # install docker
-RUN apk -U --no-cache --allow-untrusted add gcc=10.2.1_pre1-r1 docker=20.10.1-r0 python3=3.8.7-r0 gnuplot=5.4.1-r0
+RUN apk -U --no-cache --allow-untrusted add gcc=10.2.1_pre1-r1 docker=20.10.2-r0 python3=3.8.7-r0 gnuplot=5.4.1-r0
 
 # install kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/"$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)"/bin/linux/amd64/kubectl; chmod +x ./kubectl; mv ./kubectl /usr/local/bin/kubectl
@@ -21,7 +21,7 @@ COPY init/executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
 
 # change timezone
 RUN apk update && \
-    apk --no-cache add tzdata=2020c-r0 && \
+    apk --no-cache add tzdata=2020c-r1 && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     apk del tzdata
 ENV JAVA_OPTS -Duser.timezone=Asia/Tokyo
