@@ -24,7 +24,7 @@
 		<mysql-connector-java.version>8.0.22</mysql-connector-java.version>
 		<jedis.version>3.4.1</jedis.version>
 		<hazelcast-client.version>3.12.11</hazelcast-client.version>
-		<hazelcast.version>4.1</hazelcast.version>
+		<hazelcast.version>4.1.1</hazelcast.version>
 		<hazelcast-kubernetes.version>2.2.1</hazelcast-kubernetes.version>
 
 		<javaee-api.version>8.0.1</javaee-api.version>
