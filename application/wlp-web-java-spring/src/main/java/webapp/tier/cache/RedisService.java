@@ -8,12 +8,14 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
+@Service
 public class RedisService {
 	Logger logger = LoggerFactory.getLogger(RedisService.class);
 	private static String message = GetConfig.getResourceBundle("common.message");

@@ -6,6 +6,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.rabbitmq.client.Channel;
@@ -16,6 +17,7 @@ import com.rabbitmq.client.GetResponse;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
+@Service
 public class RabbitmqService {
 	Logger logger = LoggerFactory.getLogger(RabbitmqService.class);
 	private static String queuename = GetConfig.getResourceBundle("rabbitmq.queue.name");
