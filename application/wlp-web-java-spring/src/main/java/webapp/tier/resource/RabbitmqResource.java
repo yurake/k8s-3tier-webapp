@@ -1,4 +1,4 @@
-package webapp.resource;
+package webapp.tier.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -8,23 +8,23 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import webapp.tier.mq.ActiveMqService;
+import webapp.tier.mq.RabbitmqService;
 
-@Path("/activemq")
+@Path("/rabbitmq")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ActiveMqResource {
+public class RabbitmqResource {
 
-	ActiveMqService createActiveMqService() {
-		return new ActiveMqService();
+	RabbitmqService createRabbitmqService() {
+		return new RabbitmqService();
 	}
 
 	@POST
 	@Path("/put")
-	public Response putcache() {
-		ActiveMqService svc = createActiveMqService();
+	public Response put() {
+		RabbitmqService svc = createRabbitmqService();
 		try {
-			return Response.ok().entity(svc.putActiveMq()).build();
+			return Response.ok().entity(svc.put()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -33,10 +33,10 @@ public class ActiveMqResource {
 
 	@GET
 	@Path("/get")
-	public Response getcache() {
-		ActiveMqService svc = createActiveMqService();
+	public Response get() {
+		RabbitmqService svc = createRabbitmqService();
 		try {
-			return Response.ok().entity(svc.getActiveMq()).build();
+			return Response.ok().entity(svc.get()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -46,9 +46,9 @@ public class ActiveMqResource {
 	@POST
 	@Path("/publish")
 	public Response publish() {
-		ActiveMqService svc = createActiveMqService();
+		RabbitmqService svc = createRabbitmqService();
 		try {
-			return Response.ok().entity(svc.publishActiveMq()).build();
+			return Response.ok().entity(svc.publish()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();

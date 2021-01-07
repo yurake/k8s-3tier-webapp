@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier.controller;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;

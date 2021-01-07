@@ -1,4 +1,4 @@
-package webapp.config;
+package webapp.tier.config;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+
+import webapp.tier.config.MvcWebConfig;
 
 class MvcWebConfigTest {
 

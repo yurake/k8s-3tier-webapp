@@ -1,4 +1,4 @@
-package webapp.config;
+package webapp.tier.config;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,13 +6,13 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import webapp.resource.ActiveMqResource;
-import webapp.resource.HazelcastResource;
-import webapp.resource.MemcachedResource;
-import webapp.resource.MysqlResource;
-import webapp.resource.PostgresResource;
-import webapp.resource.RabbitmqResource;
-import webapp.resource.RedisResource;
+import webapp.tier.resource.ActiveMqResource;
+import webapp.tier.resource.HazelcastResource;
+import webapp.tier.resource.MemcachedResource;
+import webapp.tier.resource.MysqlResource;
+import webapp.tier.resource.PostgresResource;
+import webapp.tier.resource.RabbitmqResource;
+import webapp.tier.resource.RedisResource;
 
 @ApplicationPath("/api/*")
 public class JaxrsConfig extends Application {

@@ -1,4 +1,4 @@
-package webapp.config;
+package webapp.tier.config;
 
 import javax.servlet.ServletRegistration;
 

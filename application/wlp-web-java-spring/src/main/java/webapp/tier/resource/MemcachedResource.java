@@ -1,4 +1,4 @@
-package webapp.resource;
+package webapp.tier.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -8,21 +8,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import webapp.tier.cache.RedisService;
+import webapp.tier.cache.MemcachedService;
 
-@Path("/redis")
+@Path("/memcached")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RedisResource {
+public class MemcachedResource {
 
-	RedisService createRedisService() {
-		return new RedisService();
+	MemcachedService createMemcachedService() {
+		return new MemcachedService();
 	}
 
 	@POST
 	@Path("/set")
 	public Response set() {
-		RedisService svc = createRedisService();
+		MemcachedService svc = createMemcachedService();
 		try {
 			return Response.ok().entity(svc.set()).build();
 		} catch (Exception e) {
@@ -34,21 +34,9 @@ public class RedisResource {
 	@GET
 	@Path("/get")
 	public Response get() {
-		RedisService svc = createRedisService();
+		MemcachedService svc = createMemcachedService();
 		try {
 			return Response.ok().entity(svc.get()).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(500).build();
-		}
-	}
-
-	@POST
-	@Path("/publish")
-	public Response publish() {
-		RedisService svc = createRedisService();
-		try {
-			return Response.ok().entity(svc.publish()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();

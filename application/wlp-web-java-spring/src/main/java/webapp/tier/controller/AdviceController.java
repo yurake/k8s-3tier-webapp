@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier.controller;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

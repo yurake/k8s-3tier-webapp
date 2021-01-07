@@ -1,4 +1,4 @@
-package webapp.resource;
+package webapp.tier.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
