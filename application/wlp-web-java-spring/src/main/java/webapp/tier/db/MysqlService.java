@@ -14,10 +14,12 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
+@Service
 public class MysqlService {
 
 	private static Logger logger = LoggerFactory.getLogger(MysqlService.class);
