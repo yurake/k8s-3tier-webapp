@@ -21,7 +21,7 @@ COPY init/executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
 
 # change timezone
 RUN apk update && \
-    apk --no-cache add tzdata-2020f-r0 && \
+    apk --no-cache add tzdata=2020f-r0 && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     apk del tzdata
 ENV JAVA_OPTS -Duser.timezone=Asia/Tokyo
