@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>wlp-web-java-spring</artifactId>
@@ -28,15 +26,15 @@
 		<amqp-client.version>5.10.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<mysql-connector-java.version>8.0.22</mysql-connector-java.version>
-		<jedis.version>3.3.0</jedis.version>
+		<jedis.version>3.4.1</jedis.version>
 		<hazelcast.version>4.1</hazelcast.version>
 		<javaee-api.version>8.0.1</javaee-api.version>
 
 		<!-- Spring -->
-		<spring-framework.version>5.3.1</spring-framework.version>
+		<spring-framework.version>5.3.2</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>5.4.24.Final</hibernate.version>
+		<hibernate.version>5.4.27.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
@@ -47,7 +45,7 @@
 		<junit.version>${junit.jupiter.version}</junit.version>
 		<jersey.version>3.0.0</jersey.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-		<mockito.junit.jupiter>3.6.28</mockito.junit.jupiter>
+		<mockito.junit.jupiter>3.7.0</mockito.junit.jupiter>
 		<activemq-broker.version>5.16.0</activemq-broker.version>
 		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 		<jedis-mock.version>0.1.16</jedis-mock.version>
