@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         minikube: [1.15.1, 1.16.0]
-        kubernetes: [1.19.6, 1.20.1]
+        kubernetes: [1.20.1, 1.20.2]
       fail-fast: false
     steps:
       - name: checkout
