@@ -8,9 +8,7 @@
 	OF ANY KIND, either express or implied. See the License for the specific
 	language governing permissions and limitations under the License. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>io.helidon.applications</groupId>
@@ -24,11 +22,11 @@
 
 	<properties>
 		<mainClass>webapp.tier.events.TaskServiceMain</mainClass>
-		<jedis.version>3.3.0</jedis.version>
+		<jedis.version>3.4.1</jedis.version>
 		<mysql.version>8.0.22</mysql.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
 		<jedis-mock.version>0.1.16</jedis-mock.version>
-		<mockito.junit.jupiter>3.7.0</mockito.junit.jupiter>
+		<mockito.junit.jupiter>3.7.7</mockito.junit.jupiter>
 	</properties>
 
 	<dependencies>
