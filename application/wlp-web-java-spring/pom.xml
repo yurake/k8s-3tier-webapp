@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -26,6 +24,18 @@
 		<rabbitmq-jms.version>2.2.0</rabbitmq-jms.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<javaee-api.version>8.0.1</javaee-api.version>
+
+		<!-- Spring -->
+		<spring-framework.version>5.3.3</spring-framework.version>
+
+		<!-- Hibernate / JPA -->
+		<hibernate.version>5.4.27.Final</hibernate.version>
+
+		<!-- Logging -->
+		<logback.version>1.2.3</logback.version>
+		<slf4j.version>1.7.30</slf4j.version>
+
+		<!-- Test -->
 		<junit.jupiter.version>5.7.0</junit.jupiter.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
 		<mockito.junit.jupiter>3.7.0</mockito.junit.jupiter>
