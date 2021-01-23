@@ -1,6 +1,7 @@
 <server description="new server">
   <featureManager>
-    <feature>webProfile-8.0</feature>
+    <feature>springBoot-2.0</feature>
+    <feature>servlet-4.0</feature>
     <feature>localConnector-1.0</feature>
     <feature>monitor-1.0</feature>
     <feature>jndi-1.0</feature>
@@ -10,6 +11,10 @@
     <feature>mpOpenTracing-1.3</feature>
     <feature>usr:opentracingZipkin-0.31</feature>
   </featureManager>
+
+  <springBootApplication location="spring.war">
+    <applicationArgument>--server.servlet.context-path=/spring</applicationArgument>
+  </springBootApplication>
 
   <mpMetrics authentication="false" />
   <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint" />
