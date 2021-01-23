@@ -22,7 +22,7 @@ public class ActiveMqDeliverConsumer extends ActiveMqConsumer {
 	@RestClient
 	DeliverService deliversvc;
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqDeliverConsumer.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
 	public void consume(JMSConsumer consumer) throws JMSException {

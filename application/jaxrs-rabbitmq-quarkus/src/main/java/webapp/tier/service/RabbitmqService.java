@@ -29,7 +29,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class RabbitmqService implements Runnable {
 
-	private static final Logger LOG = Logger.getLogger(RabbitmqService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	static boolean isEnableReceived = true;
 

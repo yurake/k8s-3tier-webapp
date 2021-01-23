@@ -17,7 +17,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class HazelcastDeliverSubscriber extends HazelcastMessageListener {
 
-	private static final Logger LOG = Logger.getLogger(HazelcastDeliverSubscriber.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
 	@Override

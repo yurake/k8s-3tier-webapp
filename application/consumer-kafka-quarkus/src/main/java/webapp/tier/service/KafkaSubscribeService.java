@@ -18,7 +18,7 @@ public class KafkaSubscribeService {
 	@RestClient
 	DeliverService deliversvc;
 
-	private static final Logger LOG = Logger.getLogger(KafkaSubscribeService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Incoming("message")
 	@Merge(Merge.Mode.MERGE)

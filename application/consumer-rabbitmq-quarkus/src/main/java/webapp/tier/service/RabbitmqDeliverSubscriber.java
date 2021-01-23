@@ -19,7 +19,7 @@ import webapp.tier.util.MsgUtils;
 
 public class RabbitmqDeliverSubscriber extends RabbitmqConsumer {
 
-	private static final Logger LOG = Logger.getLogger(RabbitmqConsumer.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
 
 	public RabbitmqDeliverSubscriber(Channel channel) {

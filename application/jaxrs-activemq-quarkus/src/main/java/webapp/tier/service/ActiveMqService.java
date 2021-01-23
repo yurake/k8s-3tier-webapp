@@ -42,7 +42,7 @@ public class ActiveMqService implements Messaging, Runnable {
 	@ConfigProperty(name = "activemq.topic.name")
 	String topicname;
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	static boolean isEnableReceived = true;
 

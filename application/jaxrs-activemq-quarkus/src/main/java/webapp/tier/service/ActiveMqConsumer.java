@@ -21,7 +21,7 @@ public class ActiveMqConsumer {
 	@ConfigProperty(name = "activemq.split.key")
 	String splitkey;
 
-	protected static final Logger LOG = Logger.getLogger(ActiveMqConsumer.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	ActiveMqSocket amqsock = new ActiveMqSocket();
 
 	public void consume(JMSConsumer consumer) throws JMSException {

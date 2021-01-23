@@ -26,7 +26,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class RedisService implements Runnable {
 
-	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);

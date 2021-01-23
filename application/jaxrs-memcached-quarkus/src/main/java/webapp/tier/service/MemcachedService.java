@@ -20,7 +20,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class MemcachedService {
 
-	private static final Logger LOG = Logger.getLogger(MemcachedService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String serverconf = ConfigProvider.getConfig().getValue("memcached.server.conf", String.class);
 

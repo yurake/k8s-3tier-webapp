@@ -12,7 +12,7 @@ import io.smallrye.reactive.messaging.annotations.Merge;
 @ApplicationScoped
 public class ChannelEmitter {
 
-	private static final Logger LOG = Logger.getLogger(ChannelEmitter.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	static String respmsg;
 

@@ -23,7 +23,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class KafkaService {
 
-	private static final Logger LOG = Logger.getLogger(KafkaService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	@ConfigProperty(name = "common.message")
 	String message;

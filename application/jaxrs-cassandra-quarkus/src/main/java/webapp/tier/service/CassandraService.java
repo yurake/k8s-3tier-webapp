@@ -26,7 +26,7 @@ public class CassandraService {
 	@Inject
 	MsgDao dao;
 
-	private static final Logger LOG = Logger.getLogger(CassandraService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	public MsgBean insertMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");

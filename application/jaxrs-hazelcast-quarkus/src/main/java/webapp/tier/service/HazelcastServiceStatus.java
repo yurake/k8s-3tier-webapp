@@ -10,7 +10,7 @@ import com.hazelcast.core.HazelcastInstance;
 @ApplicationScoped
 public class HazelcastServiceStatus {
 
-	private static final Logger LOG = Logger.getLogger(HazelcastServiceStatus.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	public boolean isActive() {
 		boolean status = false;

@@ -17,7 +17,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class MessageGenerator {
 
-	private static final Logger LOG = Logger.getLogger(MessageGenerator.class);
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	@ConfigProperty(name = "common.message")
 	String message;

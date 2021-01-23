@@ -17,7 +17,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class HazelcastMessageListener implements MessageListener<Object> {
 
-	private static final Logger LOG = Logger.getLogger(HazelcastMessageListener.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 	private HazelcastSocket hazsock = new HazelcastSocket();
 

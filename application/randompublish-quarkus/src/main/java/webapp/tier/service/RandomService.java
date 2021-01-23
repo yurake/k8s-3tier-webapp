@@ -42,7 +42,7 @@ public class RandomService {
 	@RestClient
 	MongodbClientService mongodbResource;
 
-	private static final Logger LOG = Logger.getLogger(RandomService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	public String deliverrandom(Integer id) throws Exception {
 		String response;
@@ -80,6 +80,6 @@ public class RandomService {
 	}
 
 	public int getNum(Integer i) {
-		 return (int) (Math.random() * i);
+		return (int) (Math.random() * i);
 	}
 }

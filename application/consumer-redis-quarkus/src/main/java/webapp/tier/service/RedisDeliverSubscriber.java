@@ -15,7 +15,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class RedisDeliverSubscriber extends RedisSubscriber {
 
-	private static final Logger LOG = Logger.getLogger(RedisSubscriber.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
 
 	@Override

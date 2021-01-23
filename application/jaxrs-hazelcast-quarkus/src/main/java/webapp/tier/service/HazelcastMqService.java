@@ -25,7 +25,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class HazelcastMqService implements Runnable {
 
-	private static final Logger LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
 

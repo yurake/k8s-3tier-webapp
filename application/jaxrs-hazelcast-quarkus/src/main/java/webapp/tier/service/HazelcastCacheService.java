@@ -20,7 +20,7 @@ import webapp.tier.util.CreateId;
 public class HazelcastCacheService {
 
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
-	private static Logger LOG = Logger.getLogger(HazelcastCacheService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 

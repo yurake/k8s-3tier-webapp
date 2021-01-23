@@ -32,7 +32,7 @@ public class MongodbService {
 	@ConfigProperty(name = "mongodb.collection.name")
 	String collectionname;
 
-	private static final Logger LOG = Logger.getLogger(MongodbService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	public MsgBean insertMsg(MongoCollection<Document> collection) throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");

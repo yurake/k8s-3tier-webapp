@@ -15,7 +15,7 @@ import javax.websocket.Session;
 @ApplicationScoped
 public class ServiceSocket {
 
-	private static final Logger LOG = Logger.getLogger(ServiceSocket.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private static final Map<String, Session> sessions = new ConcurrentHashMap<>();
 
 	public Map<String, Session> getSessions() {

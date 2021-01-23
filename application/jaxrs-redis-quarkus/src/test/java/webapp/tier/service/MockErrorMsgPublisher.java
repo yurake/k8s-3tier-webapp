@@ -7,7 +7,7 @@ import redis.clients.jedis.Jedis;
 
 public class MockErrorMsgPublisher extends Thread {
 
-	private static final Logger LOG = Logger.getLogger(MockErrorMsgPublisher.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
 	public void run() {

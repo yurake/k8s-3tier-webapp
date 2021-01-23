@@ -16,7 +16,7 @@ public class RedisSubscriberToMysql extends JedisPubSub {
 	@Inject
 	MysqlInsertService mysqlsvc;
 
-	private static final Logger LOG = Logger.getLogger(RedisSubscriberToMysql.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = GetConfig.getResourceBundle("redis.splitkey");
 
 	@Override

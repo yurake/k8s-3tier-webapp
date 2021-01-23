@@ -24,7 +24,7 @@ public class ActiveMqSubscribeService extends ActiveMqService {
 	@ConfigProperty(name = "activemq.topic.name")
 	String topicname;
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqSubscribeService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
 	public void run() {

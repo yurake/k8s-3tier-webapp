@@ -17,7 +17,7 @@ import javax.websocket.server.ServerEndpoint;
 @ApplicationScoped
 public class ActiveMqSocket {
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqSocket.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	Map<String, Session> sessions = new ConcurrentHashMap<>();
 
 	public Map<String, Session> getSessions() {

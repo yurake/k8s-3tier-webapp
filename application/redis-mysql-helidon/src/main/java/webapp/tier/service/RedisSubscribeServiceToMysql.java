@@ -11,7 +11,7 @@ import webapp.tier.util.GetConfig;
 @ApplicationScoped
 public class RedisSubscribeServiceToMysql implements Runnable {
 
-	private static final Logger LOG = Logger.getLogger(RedisSubscribeServiceToMysql.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 	private static String servername = GetConfig.getResourceBundle("redis.server");
 	private static int serverport = Integer.parseInt(GetConfig.getResourceBundle("redis.port"));
 	private static String channel = GetConfig.getResourceBundle("redis.channel");

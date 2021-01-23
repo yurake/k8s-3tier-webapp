@@ -32,7 +32,7 @@ public class CallRandomPublshSchedule {
 	@RestClient
 	MongodbService mongodbsvc;
 
-	private static final Logger LOG = Logger.getLogger(CallRandomPublshSchedule.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Scheduled(every = "10s")
 	void callRandomPublsh() {

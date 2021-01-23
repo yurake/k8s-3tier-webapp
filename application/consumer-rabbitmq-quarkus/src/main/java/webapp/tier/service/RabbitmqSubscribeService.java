@@ -11,7 +11,7 @@ import com.rabbitmq.client.Connection;
 @ApplicationScoped
 public class RabbitmqSubscribeService extends RabbitmqService {
 
-	private static final Logger LOG = Logger.getLogger(RabbitmqSubscribeService.class.getSimpleName());
+	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
 
 	protected RabbitmqDeliverSubscriber createRabbitmqDeliverSubscriber(Channel channel) {
 		return new RabbitmqDeliverSubscriber(channel);
