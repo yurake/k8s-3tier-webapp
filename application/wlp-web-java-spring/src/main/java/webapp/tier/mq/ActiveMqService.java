@@ -25,7 +25,7 @@ import webapp.tier.util.GetConfig;
 @ComponentScan
 public class ActiveMqService {
 
-	Logger logger = LoggerFactory.getLogger(ActiveMqService.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String msg = GetConfig.getResourceBundle("common.message");
 	private static String pubmessage = GetConfig.getResourceBundle("activemq.publisher.message");
 	private static String splitkey = GetConfig.getResourceBundle("activemq.split.key");

@@ -14,7 +14,7 @@ import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
 public class HazelcastCacheService {
-	private static Logger logger = LoggerFactory.getLogger(HazelcastCacheService.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String message = GetConfig.getResourceBundle("common.message");
 	private static String cachename = GetConfig.getResourceBundle("hazelcast.cache.name");
 

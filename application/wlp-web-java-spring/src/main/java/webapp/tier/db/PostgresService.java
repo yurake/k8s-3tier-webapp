@@ -20,7 +20,7 @@ import webapp.tier.util.GetConfig;
 
 public class PostgresService {
 
-	private static Logger logger = LoggerFactory.getLogger(PostgresService.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String jndiname = GetConfig.getResourceBundle("postgres.jndi.name");
 	private static String sqlkey = GetConfig.getResourceBundle("postgres.insert.msg.id");
 	private static String sqlbody = GetConfig.getResourceBundle("postgres.insert.msg.body");

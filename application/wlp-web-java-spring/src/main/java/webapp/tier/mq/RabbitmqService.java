@@ -17,7 +17,8 @@ import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
 public class RabbitmqService {
-	Logger logger = LoggerFactory.getLogger(RabbitmqService.class);
+
+	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String queuename = GetConfig.getResourceBundle("rabbitmq.queue.name");
 	private static String batchqueuename = GetConfig.getResourceBundle("rabbitmq.batch.queue.name");
 	private static String username = GetConfig.getResourceBundle("rabbitmq.username");

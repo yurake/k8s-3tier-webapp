@@ -15,7 +15,7 @@ import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
 public class RedisService {
-	Logger logger = LoggerFactory.getLogger(RedisService.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String message = GetConfig.getResourceBundle("common.message");
 	private static String servername = GetConfig.getResourceBundle("redis.server.name");
 	private static int serverport = Integer.parseInt(GetConfig.getResourceBundle("redis.server.port"));

@@ -18,7 +18,7 @@ import webapp.tier.util.GetConfig;
 
 @Service
 public class MemcachedService extends HttpServlet {
-	Logger logger = LoggerFactory.getLogger(MemcachedService.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String serverconf = GetConfig.getResourceBundle("memcached.server.conf");
 	private static String message = GetConfig.getResourceBundle("common.message");
 
