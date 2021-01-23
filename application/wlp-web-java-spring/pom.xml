@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -12,75 +14,13 @@
 	<packaging>war</packaging>
 
 	<properties>
-
-		<!-- Generic properties -->
-		<java.version>1.11</java.version>
-		<compiler-plugin.version>3.8.1</compiler-plugin.version>
-		<maven.compiler.parameters>true</maven.compiler.parameters>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<rabbitmq-jms.version>2.2.0</rabbitmq-jms.version>
+		<java.version>11</java.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
-		<javaee-api.version>8.0.1</javaee-api.version>
+		<rabbitmq-jms.version>2.2.0</rabbitmq-jms.version>
 
-		<!-- Spring -->
-		<spring-framework.version>5.3.3</spring-framework.version>
-
-		<!-- Hibernate / JPA -->
-		<hibernate.version>5.4.27.Final</hibernate.version>
-
-		<!-- Logging -->
-		<logback.version>1.2.3</logback.version>
-		<slf4j.version>1.7.30</slf4j.version>
-
-		<!-- Test -->
-		<junit.jupiter.version>5.7.0</junit.jupiter.version>
-		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-		<mockito.junit.jupiter>3.7.0</mockito.junit.jupiter>
-		<activemq-broker.version>5.16.0</activemq-broker.version>
-		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 		<jedis-mock.version>0.1.16</jedis-mock.version>
+		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 	</properties>
-
-	<build>
-		<finalName>spring</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 	<dependencies>
 		<dependency>
@@ -105,28 +45,19 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>provided</scope>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
+			<groupId>com.whalin</groupId>
+			<artifactId>Memcached-Java-Client</artifactId>
+			<version>${memcached-Java-Client.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.rabbitmq</groupId>
@@ -137,52 +68,11 @@
 			<artifactId>rabbitmq-jms</artifactId>
 			<version>${rabbitmq-jms.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>com.whalin</groupId>
-			<artifactId>Memcached-Java-Client</artifactId>
-			<version>${memcached-Java-Client.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>${javaee-api.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-broker</artifactId>
+			<groupId>com.github.fppt</groupId>
+			<artifactId>jedis-mock</artifactId>
+			<version>${jedis-mock.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -191,11 +81,16 @@
 			<version>${rabbitmq-mock.verison}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.github.fppt</groupId>
-			<artifactId>jedis-mock</artifactId>
-			<version>${jedis-mock.version}</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
+
+	<build>
+		<finalName>spring</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
