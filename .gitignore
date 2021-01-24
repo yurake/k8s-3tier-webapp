@@ -4,6 +4,7 @@
 # Java
 *.class
 application/**/*.jar
+kubernetes/**/*.jar
 *.war
 *.ear
 
