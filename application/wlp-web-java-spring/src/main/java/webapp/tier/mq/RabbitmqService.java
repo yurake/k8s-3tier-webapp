@@ -6,7 +6,6 @@ import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -79,7 +78,8 @@ public class RabbitmqService {
 			boolean durable = true;
 			channel.queueDeclare(queuename, durable, false, false, null);
 			GetResponse resp = channel.basicGet(queuename, true);
-			if (StringUtils.isEmpty(resp)) {
+
+			if (resp.toString().isEmpty()) {
 				fullmsg = "No Data";
 			} else {
 				String jmsbody = new String(resp.getBody(), "UTF-8");

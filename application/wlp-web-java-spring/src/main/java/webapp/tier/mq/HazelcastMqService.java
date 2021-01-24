@@ -4,7 +4,6 @@ import java.util.concurrent.BlockingQueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.topic.ITopic;
@@ -47,9 +46,9 @@ public class HazelcastMqService {
 		String fullmsg = null;
 
 		try {
-			Object resp = queue.poll();
+			 String resp = queue.poll();
 
-			if (StringUtils.isEmpty(resp)) {
+			if (resp.isEmpty()) {
 				fullmsg = "No Data";
 				logger.info(fullmsg);
 				return fullmsg;
