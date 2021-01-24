@@ -15,7 +15,7 @@ spec:
       containers:
         - name: wlp
           image: yurak/wlp:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9080
           resources:
@@ -25,6 +25,20 @@ spec:
             requests:
               memory: 100Mi
               cpu: 100m
+          livenessProbe:
+            httpGet:
+              port: 9080
+              path: /spring/actuator/health/liveness
+            initialDelaySeconds: 300
+            periodSeconds: 10
+            failureThreshold: 5
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              port: 9080
+              path: /spring/actuator/health/readiness
+            initialDelaySeconds: 300
+            periodSeconds: 30
           env:
             - name: MYSQL_DBNAME
               valueFrom:
