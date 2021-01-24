@@ -2,6 +2,7 @@ package webapp.tier.mq;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
@@ -79,7 +80,7 @@ public class RabbitmqService {
 			channel.queueDeclare(queuename, durable, false, false, null);
 			GetResponse resp = channel.basicGet(queuename, true);
 
-			if (resp.toString().isEmpty()) {
+			if (Objects.isNull(resp) || resp.toString().isEmpty()) {
 				fullmsg = "No Data";
 			} else {
 				String jmsbody = new String(resp.getBody(), "UTF-8");

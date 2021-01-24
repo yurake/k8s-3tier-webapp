@@ -1,5 +1,6 @@
 package webapp.tier.mq;
 
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ public class HazelcastMqService {
 		try {
 			 String resp = queue.poll();
 
-			if (resp.isEmpty()) {
+				if (Objects.isNull(resp) || resp.isEmpty()) {
 				fullmsg = "No Data";
 				logger.info(fullmsg);
 				return fullmsg;
