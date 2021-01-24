@@ -7,7 +7,7 @@
 		<version>2.4.1</version>
 	</parent>
 	<groupId>webapp.3tier.k8s</groupId>
-	<artifactId>wlp-web-java-spring</artifactId>
+	<artifactId>web-java-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
