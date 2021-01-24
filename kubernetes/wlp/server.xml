@@ -9,10 +9,7 @@
     <feature>jms-2.0</feature>
   </featureManager>
 
-  <springBootApplication location="spring.war">
-    <applicationArgument>--server.servlet.context-path=/spring</applicationArgument>
-  </springBootApplication>
-
+  <springBootApplication location="spring.war" />
   <mpMetrics authentication="false" />
   <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint" />
   <applicationManager autoExpand="true" />
