@@ -25,7 +25,7 @@
 		<rabbitmq-jms.version>2.2.0</rabbitmq-jms.version>
 		<amqp-client.version>5.10.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
-		<mysql-connector-java.version>8.0.22</mysql-connector-java.version>
+		<mysql-connector-java.version>8.0.23</mysql-connector-java.version>
 		<jedis.version>3.4.1</jedis.version>
 		<hazelcast.version>4.1</hazelcast.version>
 		<javaee-api.version>8.0.1</javaee-api.version>
@@ -45,7 +45,7 @@
 		<junit.version>${junit.jupiter.version}</junit.version>
 		<jersey.version>2.33</jersey.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-		<mockito.junit.jupiter>3.7.0</mockito.junit.jupiter>
+		<mockito.junit.jupiter>3.7.7</mockito.junit.jupiter>
 		<activemq-broker.version>5.16.0</activemq-broker.version>
 		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 		<jedis-mock.version>0.1.16</jedis-mock.version>
