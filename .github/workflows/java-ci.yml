@@ -1353,7 +1353,7 @@ jobs:
         uses: canastro/copy-file-action@master
         with:
           source: "application/web-java-openliberty/target/openliberty.war"
-          target: "kubernetes/openliberty/spring.war"
+          target: "kubernetes/openliberty/openliberty.war"
       - name: Build image
         working-directory: ./kubernetes/openliberty
         run: docker build -t yurak/openliberty:latest .
