@@ -28,7 +28,7 @@ spec:
           livenessProbe:
             httpGet:
               port: 9080
-              path: /spring/actuator/health/liveness
+              path: /health/live
             initialDelaySeconds: 300
             periodSeconds: 10
             failureThreshold: 5
@@ -36,7 +36,7 @@ spec:
           readinessProbe:
             httpGet:
               port: 9080
-              path: /spring/actuator/health/readiness
+              path: /health/ready
             initialDelaySeconds: 300
             periodSeconds: 30
           env:

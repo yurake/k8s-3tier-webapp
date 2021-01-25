@@ -3,5 +3,5 @@ COPY lib/ /config/resources/
 COPY extension/ /opt/ol/wlp/usr/extension/
 COPY --chown=1001:0 server.xml /config/
 COPY --chown=1001:0 jvm.options /config/
-COPY --chown=1001:0 spring.war /config/apps/
+COPY --chown=1001:0 openliberty.war /config/apps/
 RUN configure.sh
