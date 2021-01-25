@@ -1,16 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: wlp
+  name: openliberty
 spec:
   rules:
-    - host: wlp.minikube
+    - host: openliberty.minikube
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: wlp
+                name: openliberty
                 port:
                   number: 9080

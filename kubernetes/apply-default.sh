@@ -48,12 +48,12 @@ kubectl apply -f ./consumer-rabbitmq-quarkus-deployment.yaml
 echo "###"
 echo ""
 
-echo "### wlp"
-cd "$ROOT_DIR"/wlp
-kubectl apply -f ./wlp-configmap.yaml
-kubectl apply -f ./wlp-deployment.yaml
-kubectl apply -f ./wlp-service.yaml
-kubectl apply -f ./wlp-ingress.yaml
+echo "### openliberty"
+cd "$ROOT_DIR"/openliberty
+kubectl apply -f ./openliberty-configmap.yaml
+kubectl apply -f ./openliberty-deployment.yaml
+kubectl apply -f ./openliberty-service.yaml
+kubectl apply -f ./openliberty-ingress.yaml
 echo "###"
 echo ""
 

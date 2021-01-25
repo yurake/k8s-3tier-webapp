@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: wlp-configmap
+  name: openliberty-configmap
 data:
   jvm-options: -Disk8s=true
   mysql-databaseName: webapp
