@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx, wlp]
+        dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx, openliberty, spring]
     steps:
       - uses: actions/checkout@v2
       - name: lint ${{ matrix.dockerfile_default }}
