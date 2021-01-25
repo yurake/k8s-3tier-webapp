@@ -1,19 +1,16 @@
-package webapp.controller;
+package webapp.tier.resource;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import webapp.tier.db.PostgresService;
 
-@RestController
-@RequestMapping("/postgres")
+@Path("/postgres")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PostgresResource {
@@ -23,7 +20,8 @@ public class PostgresResource {
 		return new PostgresService();
 	}
 
-	@PostMapping("/insert")
+	@POST
+	@Path("/insert")
 	public Response insert() {
 		PostgresService postgres = createPostgresService();
 		try {
@@ -34,7 +32,8 @@ public class PostgresResource {
 		}
 	}
 
-	@GetMapping("/select")
+	@GET
+	@Path("/select")
 	public Response select() {
 		PostgresService postgres = createPostgresService();
 		try {
@@ -45,7 +44,8 @@ public class PostgresResource {
 		}
 	}
 
-	@PostMapping("/delete")
+	@POST
+	@Path("/delete")
 	public Response delete() {
 		PostgresService postgres = createPostgresService();
 		try {

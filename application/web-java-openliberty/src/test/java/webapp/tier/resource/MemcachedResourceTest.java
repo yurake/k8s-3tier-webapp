@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier.resource;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -13,21 +13,21 @@ import org.junit.jupiter.api.Test;
 
 import webapp.tier.cache.MemcachedService;
 
-public class MemcachedControllerTest {
+public class MemcachedResourceTest {
 
-	private MemcachedController createMemcachedService() throws Exception {
+	private MemcachedResource createMemcachedService() throws Exception {
 		MemcachedService svc = mock(MemcachedService.class);
 		when(svc.set()).thenReturn("OK");
 		when(svc.get()).thenReturn("OK");
-		return new MemcachedController() {
+		return new MemcachedResource() {
 			MemcachedService createMemcachedService() {
 				return svc;
 			}
 		};
 	}
 
-	private MemcachedController createMemcachedServiceNull() throws Exception {
-		return new MemcachedController() {
+	private MemcachedResource createMemcachedServiceNull() throws Exception {
+		return new MemcachedResource() {
 			MemcachedService createMemcachedService() {
 				return null;
 			}
@@ -37,7 +37,7 @@ public class MemcachedControllerTest {
 	@Test
 	public void testcreateMemcachedService() {
 		try {
-			MemcachedController rsc = new MemcachedController();
+			MemcachedResource rsc = new MemcachedResource();
 			assertThat(rsc.createMemcachedService(), is(instanceOf(MemcachedService.class)));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class MemcachedControllerTest {
 	@Test
 	public void testPutcache() {
 		try {
-			MemcachedController rsc = createMemcachedService();
+			MemcachedResource rsc = createMemcachedService();
 			Response resp = rsc.set();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
@@ -61,7 +61,7 @@ public class MemcachedControllerTest {
 	@Test
 	public void testPutcacheError() {
 		try {
-			MemcachedController rsc = createMemcachedServiceNull();
+			MemcachedResource rsc = createMemcachedServiceNull();
 			Response resp = rsc.set();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -73,7 +73,7 @@ public class MemcachedControllerTest {
 	@Test
 	public void testgetcache() {
 		try {
-			MemcachedController rsc = createMemcachedService();
+			MemcachedResource rsc = createMemcachedService();
 			Response resp = rsc.get();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
@@ -86,7 +86,7 @@ public class MemcachedControllerTest {
 	@Test
 	public void testgetcacheError() {
 		try {
-			MemcachedController rsc = createMemcachedServiceNull();
+			MemcachedResource rsc = createMemcachedServiceNull();
 			Response resp = rsc.get();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {

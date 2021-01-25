@@ -12,18 +12,17 @@ import org.eclipse.microprofile.health.Liveness;
 @Liveness
 @ApplicationScoped
 public class LivenessMemoryCheck implements HealthCheck {
- @Override
- public HealthCheckResponse call() {
-        // status is up if used memory is < 90% of max
-        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-        long memUsed = memoryBean.getHeapMemoryUsage().getUsed();
-        long memMax = memoryBean.getHeapMemoryUsage().getMax();
 
-        HealthCheckResponse response = HealthCheckResponse.named("heap-memory")
-                .withData("used", memUsed)
-                .withData("max", memMax)
-                .state(memUsed < memMax * 0.9)
-                .build();
-        return response;
+    @Override
+    public HealthCheckResponse call() {
+        MemoryMXBean memBean = ManagementFactory.getMemoryMXBean();
+        long memUsed = memBean.getHeapMemoryUsage().getUsed();
+        long memMax = memBean.getHeapMemoryUsage().getMax();
+
+        return HealthCheckResponse.named(
+            this.getClass().getSimpleName() + " Memory Check")
+                                  .withData("memory used", memUsed)
+                                  .withData("memory max", memMax)
+                                  .state(memUsed < memMax * 0.9).build();
     }
 }

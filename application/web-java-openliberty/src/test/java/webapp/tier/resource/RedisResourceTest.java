@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier.resource;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,37 +14,37 @@ import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 
-import webapp.tier.db.MysqlService;
+import webapp.tier.cache.RedisService;
 
-public class MysqlControllerTest {
+public class RedisResourceTest {
 
-	private MysqlController createMysqlService() throws Exception {
-		MysqlService svc = mock(MysqlService.class);
+	private RedisResource createRedisService() throws Exception {
+		RedisService svc = mock(RedisService.class);
 		List<String> allmsg = new ArrayList<>();
 		allmsg.add("OK");
-		when(svc.select()).thenReturn(allmsg);
-		when(svc.insert()).thenReturn("OK");
-		when(svc.delete()).thenReturn("OK");
-		return new MysqlController() {
-			MysqlService createMysqlService() {
+		when(svc.set()).thenReturn("OK");
+		when(svc.get()).thenReturn(allmsg);
+		when(svc.publish()).thenReturn("OK");
+		return new RedisResource() {
+			RedisService createRedisService() {
 				return svc;
 			}
 		};
 	}
 
-	private MysqlController createMysqlServiceNull() throws Exception {
-		return new MysqlController() {
-			MysqlService createMysqlService() {
+	private RedisResource createRedisServiceNull() throws Exception {
+		return new RedisResource() {
+			RedisService createRedisService() {
 				return null;
 			}
 		};
 	}
 
 	@Test
-	public void testcreateMysqlService() {
+	public void testcreateRedisService() {
 		try {
-			MysqlController rsc = new MysqlController();
-			assertThat(rsc.createMysqlService(), is(instanceOf(MysqlService.class)));
+			RedisResource rsc = new RedisResource();
+			assertThat(rsc.createRedisService(), is(instanceOf(RedisService.class)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -52,10 +52,10 @@ public class MysqlControllerTest {
 	}
 
 	@Test
-	public void testinsert() {
+	public void testsetcache() {
 		try {
-			MysqlController rsc = createMysqlService();
-			Response resp = rsc.insert();
+			RedisResource rsc = createRedisService();
+			Response resp = rsc.set();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -65,10 +65,10 @@ public class MysqlControllerTest {
 	}
 
 	@Test
-	public void testinsertError() {
+	public void testsetError() {
 		try {
-			MysqlController rsc = createMysqlServiceNull();
-			Response resp = rsc.insert();
+			RedisResource rsc = createRedisServiceNull();
+			Response resp = rsc.set();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,10 +77,10 @@ public class MysqlControllerTest {
 	}
 
 	@Test
-	public void testselect() {
+	public void testgetcache() {
 		try {
-			MysqlController rsc = createMysqlService();
-			Response resp = rsc.select();
+			RedisResource rsc = createRedisService();
+			Response resp = rsc.get();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("[OK]"));
 		} catch (Exception e) {
@@ -90,10 +90,10 @@ public class MysqlControllerTest {
 	}
 
 	@Test
-	public void testselectError() {
+	public void testgetcacheError() {
 		try {
-			MysqlController rsc = createMysqlServiceNull();
-			Response resp = rsc.select();
+			RedisResource rsc = createRedisServiceNull();
+			Response resp = rsc.get();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -102,10 +102,10 @@ public class MysqlControllerTest {
 	}
 
 	@Test
-	public void testdelete() {
+	public void testpublish() {
 		try {
-			MysqlController rsc = createMysqlService();
-			Response resp = rsc.delete();
+			RedisResource rsc = createRedisService();
+			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -115,10 +115,10 @@ public class MysqlControllerTest {
 	}
 
 	@Test
-	public void testdeleteError() {
+	public void testpublishError() {
 		try {
-			MysqlController rsc = createMysqlServiceNull();
-			Response resp = rsc.delete();
+			RedisResource rsc = createRedisServiceNull();
+			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();

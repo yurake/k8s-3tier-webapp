@@ -21,13 +21,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 
-import webapp.tier.util.BeforeAllTest;
-
 class PostgresServiceTest {
 
 	@BeforeAll
 	public static void setupAll() {
-		BeforeAllTest.getInstance();
 	}
 
 	@Test

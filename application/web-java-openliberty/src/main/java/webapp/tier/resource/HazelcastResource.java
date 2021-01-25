@@ -1,14 +1,12 @@
-package webapp.controller;
+package webapp.tier.resource;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.hazelcast.core.HazelcastInstance;
 
@@ -16,11 +14,10 @@ import webapp.tier.cache.HazelcastCacheService;
 import webapp.tier.mq.HazelcastMqService;
 import webapp.tier.util.HazelcastInstanceConfigurator;
 
-@RestController
-@RequestMapping("/hazelcast")
+@Path("/hazelcast")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class HazelcastController {
+public class HazelcastResource {
 
 	HazelcastCacheService createHazelcastCacheService() {
 		return new HazelcastCacheService();
@@ -30,7 +27,8 @@ public class HazelcastController {
 		return new HazelcastMqService();
 	}
 
-	@PostMapping("/setcache")
+	@POST
+	@Path("/putcache")
 	public Response putcache() {
 		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
@@ -42,7 +40,8 @@ public class HazelcastController {
 		}
 	}
 
-	@GetMapping("/getcache")
+	@GET
+	@Path("/getcache")
 	public Response getcache() {
 		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
@@ -54,7 +53,8 @@ public class HazelcastController {
 		}
 	}
 
-	@PostMapping("/putqueue")
+	@POST
+	@Path("/putqueue")
 	public Response putqueue() {
 		HazelcastMqService svc = createHazelcastMqService();
 		try {
@@ -66,7 +66,8 @@ public class HazelcastController {
 		}
 	}
 
-	@GetMapping("/getqueue")
+	@GET
+	@Path("/getqueue")
 	public Response getqueue() {
 		HazelcastMqService svc = createHazelcastMqService();
 		try {
@@ -78,7 +79,8 @@ public class HazelcastController {
 		}
 	}
 
-	@PostMapping("/publish")
+	@POST
+	@Path("/publish")
 	public Response publish() {
 		HazelcastMqService svc = createHazelcastMqService();
 		try {

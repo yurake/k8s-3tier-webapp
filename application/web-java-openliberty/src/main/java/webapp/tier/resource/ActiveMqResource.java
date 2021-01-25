@@ -1,28 +1,26 @@
-package webapp.controller;
+package webapp.tier.resource;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import webapp.tier.mq.ActiveMqService;
 
-@RestController
-@RequestMapping("/activemq")
+@Path("/activemq")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ActiveMqController {
+public class ActiveMqResource {
 
 	ActiveMqService createActiveMqService() {
 		return new ActiveMqService();
 	}
 
-	@PostMapping("/put")
+	@POST
+	@Path("/put")
 	public Response putcache() {
 		ActiveMqService svc = createActiveMqService();
 		try {
@@ -33,7 +31,8 @@ public class ActiveMqController {
 		}
 	}
 
-	@GetMapping("/get")
+	@GET
+	@Path("/get")
 	public Response getcache() {
 		ActiveMqService svc = createActiveMqService();
 		try {
@@ -44,7 +43,8 @@ public class ActiveMqController {
 		}
 	}
 
-	@PostMapping("/publish")
+	@POST
+	@Path("/publish")
 	public Response publish() {
 		ActiveMqService svc = createActiveMqService();
 		try {

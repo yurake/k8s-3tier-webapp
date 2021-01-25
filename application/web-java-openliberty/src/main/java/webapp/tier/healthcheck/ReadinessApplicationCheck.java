@@ -12,6 +12,6 @@ public class ReadinessApplicationCheck implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		return HealthCheckResponse.up("databaseReady");
+		return HealthCheckResponse.up(this.getClass().getSimpleName() + " Database Check");
 	}
 }

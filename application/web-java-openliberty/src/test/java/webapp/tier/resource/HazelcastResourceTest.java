@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier.resource;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -20,7 +20,7 @@ import com.hazelcast.core.HazelcastInstance;
 import webapp.tier.cache.HazelcastCacheService;
 import webapp.tier.mq.HazelcastMqService;
 
-public class HazelcastControllerTest {
+public class HazelcastResourceTest {
 
 	private static HazelcastInstance mockInstance;
 
@@ -34,16 +34,16 @@ public class HazelcastControllerTest {
 		mockInstance.shutdown();
 	}
 
-	private HazelcastController createHazelcastCacheServiceNull() throws Exception {
-		return new HazelcastController() {
+	private HazelcastResource createHazelcastCacheServiceNull() throws Exception {
+		return new HazelcastResource() {
 			HazelcastCacheService createHazelcastCacheService() {
 				return null;
 			}
 		};
 	}
 
-	private HazelcastController createHazelcastMqServiceNull() throws Exception {
-		return new HazelcastController() {
+	private HazelcastResource createHazelcastMqServiceNull() throws Exception {
+		return new HazelcastResource() {
 			HazelcastMqService createHazelcastMqService() {
 				return null;
 			}
@@ -53,7 +53,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testcreateHazelcastCacheService() {
 		try {
-			HazelcastController rsc = new HazelcastController();
+			HazelcastResource rsc = new HazelcastResource();
 			assertThat(rsc.createHazelcastCacheService(), is(instanceOf(HazelcastCacheService.class)));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,7 +64,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testcreateHazelcastMqService() {
 		try {
-			HazelcastController rsc = new HazelcastController();
+			HazelcastResource rsc = new HazelcastResource();
 			assertThat(rsc.createHazelcastMqService(), is(instanceOf(HazelcastMqService.class)));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testputcache() {
 		try {
-			HazelcastController rsc = new HazelcastController();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.putcache();
 			assertThat(resp.getStatus(), is(200));
 			String result = resp.getEntity().toString();
@@ -90,7 +90,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testputcacheError() {
 		try {
-			HazelcastController rsc = createHazelcastCacheServiceNull();
+			HazelcastResource rsc = createHazelcastCacheServiceNull();
 			Response resp = rsc.putcache();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -102,7 +102,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testgetcache() {
 		try {
-			HazelcastController rsc = new HazelcastController();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.getcache();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("[No Data]"));
@@ -115,7 +115,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testgetcacheError() {
 		try {
-			HazelcastController rsc = createHazelcastCacheServiceNull();
+			HazelcastResource rsc = createHazelcastCacheServiceNull();
 			Response resp = rsc.getcache();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -128,7 +128,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testputqueue() {
 		try {
-			HazelcastController rsc = new HazelcastController();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.putqueue();
 			assertThat(resp.getStatus(), is(200));
 			String result = resp.getEntity().toString();
@@ -143,7 +143,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testputqueueError() {
 		try {
-			HazelcastController rsc = createHazelcastMqServiceNull();
+			HazelcastResource rsc = createHazelcastMqServiceNull();
 			Response resp = rsc.putqueue();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -155,7 +155,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testgetqueue() {
 		try {
-			HazelcastController rsc = new HazelcastController();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.getqueue();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("No Data"));
@@ -168,7 +168,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testgetqueueError() {
 		try {
-			HazelcastController rsc = createHazelcastMqServiceNull();
+			HazelcastResource rsc = createHazelcastMqServiceNull();
 			Response resp = rsc.getqueue();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -180,7 +180,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testpublish() {
 		try {
-			HazelcastController rsc = new HazelcastController();
+			HazelcastResource rsc = new HazelcastResource();
 			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(200));
 			String result = resp.getEntity().toString();
@@ -195,7 +195,7 @@ public class HazelcastControllerTest {
 	@Test
 	public void testpublishError() {
 		try {
-			HazelcastController rsc = createHazelcastMqServiceNull();
+			HazelcastResource rsc = createHazelcastMqServiceNull();
 			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {

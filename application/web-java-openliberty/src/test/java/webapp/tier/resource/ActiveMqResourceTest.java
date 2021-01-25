@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier.resource;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -11,35 +11,35 @@ import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 
-import webapp.tier.mq.RabbitmqService;
+import webapp.tier.mq.ActiveMqService;
 
-public class RabbitmqControllerTest {
+public class ActiveMqResourceTest {
 
-	private RabbitmqResource createRabbitmqService() throws Exception {
-		RabbitmqService svc = mock(RabbitmqService.class);
-		when(svc.put()).thenReturn("OK");
-		when(svc.get()).thenReturn("OK");
-		when(svc.publish()).thenReturn("OK");
-		return new RabbitmqResource() {
-			RabbitmqService createRabbitmqService() {
+	private ActiveMqResource createActiveMqService() throws Exception {
+		ActiveMqService svc = mock(ActiveMqService.class);
+		when(svc.putActiveMq()).thenReturn("OK");
+		when(svc.getActiveMq()).thenReturn("OK");
+		when(svc.publishActiveMq()).thenReturn("OK");
+		return new ActiveMqResource() {
+			ActiveMqService createActiveMqService() {
 				return svc;
 			}
 		};
 	}
 
-	private RabbitmqResource createRabbitmqServiceNull() throws Exception {
-		return new RabbitmqResource() {
-			RabbitmqService createRabbitmqService() {
+	private ActiveMqResource createActiveMqServiceNull() throws Exception {
+		return new ActiveMqResource() {
+			ActiveMqService createActiveMqService() {
 				return null;
 			}
 		};
 	}
 
 	@Test
-	public void testcreateRabbitmqService() {
+	public void testcreateActiveMqService() {
 		try {
-			RabbitmqResource rsc = new RabbitmqResource();
-			assertThat(rsc.createRabbitmqService(), is(instanceOf(RabbitmqService.class)));
+			ActiveMqResource rsc = new ActiveMqResource();
+			assertThat(rsc.createActiveMqService(), is(instanceOf(ActiveMqService.class)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -49,8 +49,8 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testPutcache() {
 		try {
-			RabbitmqResource rsc = createRabbitmqService();
-			Response resp = rsc.put();
+			ActiveMqResource rsc = createActiveMqService();
+			Response resp = rsc.putcache();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -62,8 +62,8 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testPutcacheError() {
 		try {
-			RabbitmqResource rsc = createRabbitmqServiceNull();
-			Response resp = rsc.put();
+			ActiveMqResource rsc = createActiveMqServiceNull();
+			Response resp = rsc.putcache();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,8 +74,8 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testgetcache() {
 		try {
-			RabbitmqResource rsc = createRabbitmqService();
-			Response resp = rsc.get();
+			ActiveMqResource rsc = createActiveMqService();
+			Response resp = rsc.getcache();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -87,8 +87,8 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testgetcacheError() {
 		try {
-			RabbitmqResource rsc = createRabbitmqServiceNull();
-			Response resp = rsc.get();
+			ActiveMqResource rsc = createActiveMqServiceNull();
+			Response resp = rsc.getcache();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,7 +99,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testpublish() {
 		try {
-			RabbitmqResource rsc = createRabbitmqService();
+			ActiveMqResource rsc = createActiveMqService();
 			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
@@ -112,7 +112,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testpublishError() {
 		try {
-			RabbitmqResource rsc = createRabbitmqServiceNull();
+			ActiveMqResource rsc = createActiveMqServiceNull();
 			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {

@@ -15,14 +15,10 @@ import javax.naming.NamingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Service;
 
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
-@Service
-@ComponentScan
 public class ActiveMqService {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());

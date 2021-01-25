@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
@@ -16,7 +15,6 @@ import webapp.tier.exception.WebappServiceException;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
-@Service
 public class MemcachedService extends HttpServlet {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String serverconf = GetConfig.getResourceBundle("memcached.server.conf");

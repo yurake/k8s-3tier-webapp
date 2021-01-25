@@ -1,28 +1,26 @@
-package webapp.controller;
+package webapp.tier.resource;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import webapp.tier.db.MysqlService;
 
-@RestController
-@RequestMapping("/mysql")
+@Path("/mysql")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class MysqlController {
+public class MysqlResource {
 
 	MysqlService createMysqlService() {
 		return new MysqlService();
 	}
 
-	@PostMapping("/insert")
+	@POST
+	@Path("/insert")
 	public Response insert() {
 		MysqlService insmysql = createMysqlService();
 		try {
@@ -33,7 +31,8 @@ public class MysqlController {
 		}
 	}
 
-	@GetMapping("/select")
+	@GET
+	@Path("/select")
 	public Response select() {
 		MysqlService selmysql = createMysqlService();
 		try {
@@ -44,7 +43,8 @@ public class MysqlController {
 		}
 	}
 
-	@PostMapping("/delete")
+	@POST
+	@Path("/delete")
 	public Response delete() {
 		MysqlService delmysql = createMysqlService();
 		try {

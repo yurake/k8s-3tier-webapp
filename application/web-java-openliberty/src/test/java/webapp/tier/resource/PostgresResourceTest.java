@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier.resource;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,37 +14,37 @@ import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 
-import webapp.tier.cache.RedisService;
+import webapp.tier.db.PostgresService;
 
-public class RedisControllerTest {
+public class PostgresResourceTest {
 
-	private RedisResource createRedisService() throws Exception {
-		RedisService svc = mock(RedisService.class);
+	private PostgresResource createPostgresService() throws Exception {
+		PostgresService svc = mock(PostgresService.class);
 		List<String> allmsg = new ArrayList<>();
 		allmsg.add("OK");
-		when(svc.set()).thenReturn("OK");
-		when(svc.get()).thenReturn(allmsg);
-		when(svc.publish()).thenReturn("OK");
-		return new RedisResource() {
-			RedisService createRedisService() {
+		when(svc.select()).thenReturn(allmsg);
+		when(svc.insert()).thenReturn("OK");
+		when(svc.delete()).thenReturn("OK");
+		return new PostgresResource() {
+			PostgresService createPostgresService() {
 				return svc;
 			}
 		};
 	}
 
-	private RedisResource createRedisServiceNull() throws Exception {
-		return new RedisResource() {
-			RedisService createRedisService() {
+	private PostgresResource createPostgresServiceNull() throws Exception {
+		return new PostgresResource() {
+			PostgresService createPostgresService() {
 				return null;
 			}
 		};
 	}
 
 	@Test
-	public void testcreateRedisService() {
+	public void testcreatePostgresService() {
 		try {
-			RedisResource rsc = new RedisResource();
-			assertThat(rsc.createRedisService(), is(instanceOf(RedisService.class)));
+			PostgresResource rsc = new PostgresResource();
+			assertThat(rsc.createPostgresService(), is(instanceOf(PostgresService.class)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -52,10 +52,10 @@ public class RedisControllerTest {
 	}
 
 	@Test
-	public void testsetcache() {
+	public void testinsert() {
 		try {
-			RedisResource rsc = createRedisService();
-			Response resp = rsc.set();
+			PostgresResource rsc = createPostgresService();
+			Response resp = rsc.insert();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -65,10 +65,10 @@ public class RedisControllerTest {
 	}
 
 	@Test
-	public void testsetError() {
+	public void testinsertError() {
 		try {
-			RedisResource rsc = createRedisServiceNull();
-			Response resp = rsc.set();
+			PostgresResource rsc = createPostgresServiceNull();
+			Response resp = rsc.insert();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,10 +77,10 @@ public class RedisControllerTest {
 	}
 
 	@Test
-	public void testgetcache() {
+	public void testselect() {
 		try {
-			RedisResource rsc = createRedisService();
-			Response resp = rsc.get();
+			PostgresResource rsc = createPostgresService();
+			Response resp = rsc.select();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("[OK]"));
 		} catch (Exception e) {
@@ -90,10 +90,10 @@ public class RedisControllerTest {
 	}
 
 	@Test
-	public void testgetcacheError() {
+	public void testselectError() {
 		try {
-			RedisResource rsc = createRedisServiceNull();
-			Response resp = rsc.get();
+			PostgresResource rsc = createPostgresServiceNull();
+			Response resp = rsc.select();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -102,10 +102,10 @@ public class RedisControllerTest {
 	}
 
 	@Test
-	public void testpublish() {
+	public void testdelete() {
 		try {
-			RedisResource rsc = createRedisService();
-			Response resp = rsc.publish();
+			PostgresResource rsc = createPostgresService();
+			Response resp = rsc.delete();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -115,10 +115,10 @@ public class RedisControllerTest {
 	}
 
 	@Test
-	public void testpublishError() {
+	public void testdeleteError() {
 		try {
-			RedisResource rsc = createRedisServiceNull();
-			Response resp = rsc.publish();
+			PostgresResource rsc = createPostgresServiceNull();
+			Response resp = rsc.delete();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();

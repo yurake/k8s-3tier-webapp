@@ -9,13 +9,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import webapp.tier.util.BeforeAllTest;
-
 class ActiveMqServiceTest {
 
 	@BeforeAll
 	public static void setupEach() {
-		BeforeAllTest.getInstance();
 	}
 
 	@Test
