@@ -18,13 +18,13 @@ public class KafkaSubscribeService {
 	@RestClient
 	DeliverService deliversvc;
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Incoming("message")
 	@Merge(Merge.Mode.MERGE)
 	public void process(String message) {
-		LOG.log(Level.INFO, "Received: {0}", message);
+		logger.log(Level.INFO, "Received: {0}", message);
 		String response = deliversvc.random();
-		LOG.log(Level.INFO, "Call Random Publish: {0}", response);
+		logger.log(Level.INFO, "Call Random Publish: {0}", response);
 	}
 }
