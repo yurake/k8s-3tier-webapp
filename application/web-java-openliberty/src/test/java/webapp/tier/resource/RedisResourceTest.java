@@ -55,7 +55,7 @@ public class RedisResourceTest {
 	public void testsetcache() {
 		try {
 			RedisResource rsc = createRedisService();
-			Response resp = rsc.set();
+			Response resp = rsc.redset();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -68,7 +68,7 @@ public class RedisResourceTest {
 	public void testsetError() {
 		try {
 			RedisResource rsc = createRedisServiceNull();
-			Response resp = rsc.set();
+			Response resp = rsc.redset();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class RedisResourceTest {
 	public void testgetcache() {
 		try {
 			RedisResource rsc = createRedisService();
-			Response resp = rsc.get();
+			Response resp = rsc.redget();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("[OK]"));
 		} catch (Exception e) {
@@ -93,7 +93,7 @@ public class RedisResourceTest {
 	public void testgetcacheError() {
 		try {
 			RedisResource rsc = createRedisServiceNull();
-			Response resp = rsc.get();
+			Response resp = rsc.redget();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,7 +105,7 @@ public class RedisResourceTest {
 	public void testpublish() {
 		try {
 			RedisResource rsc = createRedisService();
-			Response resp = rsc.publish();
+			Response resp = rsc.redpublish();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -118,7 +118,7 @@ public class RedisResourceTest {
 	public void testpublishError() {
 		try {
 			RedisResource rsc = createRedisServiceNull();
-			Response resp = rsc.publish();
+			Response resp = rsc.redpublish();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -21,7 +21,7 @@ public class RedisResource {
 
 	@POST
 	@Path("/set")
-	public Response set() {
+	public Response redset() {
 		RedisService svc = createRedisService();
 		try {
 			return Response.ok().entity(svc.set()).build();
@@ -33,7 +33,7 @@ public class RedisResource {
 
 	@GET
 	@Path("/get")
-	public Response get() {
+	public Response redget() {
 		RedisService svc = createRedisService();
 		try {
 			return Response.ok().entity(svc.get()).build();
@@ -45,7 +45,7 @@ public class RedisResource {
 
 	@POST
 	@Path("/publish")
-	public Response publish() {
+	public Response redpublish() {
 		RedisService svc = createRedisService();
 		try {
 			return Response.ok().entity(svc.publish()).build();

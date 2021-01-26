@@ -21,7 +21,7 @@ public class MysqlResource {
 
 	@POST
 	@Path("/insert")
-	public Response insert() {
+	public Response mysinsert() {
 		MysqlService insmysql = createMysqlService();
 		try {
 			return Response.ok().entity(insmysql.insert()).build();
@@ -33,7 +33,7 @@ public class MysqlResource {
 
 	@GET
 	@Path("/select")
-	public Response select() {
+	public Response mysselect() {
 		MysqlService selmysql = createMysqlService();
 		try {
 			return Response.ok().entity(selmysql.select()).build();
@@ -45,7 +45,7 @@ public class MysqlResource {
 
 	@POST
 	@Path("/delete")
-	public Response delete() {
+	public Response mysdelete() {
 		MysqlService delmysql = createMysqlService();
 		try {
 			return Response.ok(delmysql.delete()).build();

@@ -50,7 +50,7 @@ public class RabbitmqResourceTest {
 	public void testPutcache() {
 		try {
 			RabbitmqResource rsc = createRabbitmqService();
-			Response resp = rsc.put();
+			Response resp = rsc.rabput();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -63,7 +63,7 @@ public class RabbitmqResourceTest {
 	public void testPutcacheError() {
 		try {
 			RabbitmqResource rsc = createRabbitmqServiceNull();
-			Response resp = rsc.put();
+			Response resp = rsc.rabput();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class RabbitmqResourceTest {
 	public void testgetcache() {
 		try {
 			RabbitmqResource rsc = createRabbitmqService();
-			Response resp = rsc.get();
+			Response resp = rsc.rabget();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -88,7 +88,7 @@ public class RabbitmqResourceTest {
 	public void testgetcacheError() {
 		try {
 			RabbitmqResource rsc = createRabbitmqServiceNull();
-			Response resp = rsc.get();
+			Response resp = rsc.rabget();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,7 +100,7 @@ public class RabbitmqResourceTest {
 	public void testpublish() {
 		try {
 			RabbitmqResource rsc = createRabbitmqService();
-			Response resp = rsc.publish();
+			Response resp = rsc.rabpublish();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -113,7 +113,7 @@ public class RabbitmqResourceTest {
 	public void testpublishError() {
 		try {
 			RabbitmqResource rsc = createRabbitmqServiceNull();
-			Response resp = rsc.publish();
+			Response resp = rsc.rabpublish();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();

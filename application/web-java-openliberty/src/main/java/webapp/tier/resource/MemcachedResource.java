@@ -21,7 +21,7 @@ public class MemcachedResource {
 
 	@POST
 	@Path("/set")
-	public Response set() {
+	public Response memset() {
 		MemcachedService svc = createMemcachedService();
 		try {
 			return Response.ok().entity(svc.set()).build();
@@ -33,7 +33,7 @@ public class MemcachedResource {
 
 	@GET
 	@Path("/get")
-	public Response get() {
+	public Response memget() {
 		MemcachedService svc = createMemcachedService();
 		try {
 			return Response.ok().entity(svc.get()).build();

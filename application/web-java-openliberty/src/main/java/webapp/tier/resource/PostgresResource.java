@@ -22,7 +22,7 @@ public class PostgresResource {
 
 	@POST
 	@Path("/insert")
-	public Response insert() {
+	public Response posinsert() {
 		PostgresService postgres = createPostgresService();
 		try {
 			return Response.ok().entity(postgres.insert()).build();
@@ -34,7 +34,7 @@ public class PostgresResource {
 
 	@GET
 	@Path("/select")
-	public Response select() {
+	public Response posselect() {
 		PostgresService postgres = createPostgresService();
 		try {
 			return Response.ok().entity(postgres.select()).build();
@@ -46,7 +46,7 @@ public class PostgresResource {
 
 	@POST
 	@Path("/delete")
-	public Response delete() {
+	public Response posdelete() {
 		PostgresService postgres = createPostgresService();
 		try {
 			return Response.ok(postgres.delete()).build();

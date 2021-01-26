@@ -49,7 +49,7 @@ public class MemcachedResourceTest {
 	public void testPutcache() {
 		try {
 			MemcachedResource rsc = createMemcachedService();
-			Response resp = rsc.set();
+			Response resp = rsc.memset();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -62,7 +62,7 @@ public class MemcachedResourceTest {
 	public void testPutcacheError() {
 		try {
 			MemcachedResource rsc = createMemcachedServiceNull();
-			Response resp = rsc.set();
+			Response resp = rsc.memset();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,7 +74,7 @@ public class MemcachedResourceTest {
 	public void testgetcache() {
 		try {
 			MemcachedResource rsc = createMemcachedService();
-			Response resp = rsc.get();
+			Response resp = rsc.memget();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -87,7 +87,7 @@ public class MemcachedResourceTest {
 	public void testgetcacheError() {
 		try {
 			MemcachedResource rsc = createMemcachedServiceNull();
-			Response resp = rsc.get();
+			Response resp = rsc.memget();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();

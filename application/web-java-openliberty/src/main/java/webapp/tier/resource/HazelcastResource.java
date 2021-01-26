@@ -29,7 +29,7 @@ public class HazelcastResource {
 
 	@POST
 	@Path("/putcache")
-	public Response putcache() {
+	public Response hazputcache() {
 		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
@@ -42,7 +42,7 @@ public class HazelcastResource {
 
 	@GET
 	@Path("/getcache")
-	public Response getcache() {
+	public Response hazgetcache() {
 		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
@@ -55,7 +55,7 @@ public class HazelcastResource {
 
 	@POST
 	@Path("/putqueue")
-	public Response putqueue() {
+	public Response hazputqueue() {
 		HazelcastMqService svc = createHazelcastMqService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
@@ -68,7 +68,7 @@ public class HazelcastResource {
 
 	@GET
 	@Path("/getqueue")
-	public Response getqueue() {
+	public Response hazgetqueue() {
 		HazelcastMqService svc = createHazelcastMqService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
@@ -81,7 +81,7 @@ public class HazelcastResource {
 
 	@POST
 	@Path("/publish")
-	public Response publish() {
+	public Response hazpublish() {
 		HazelcastMqService svc = createHazelcastMqService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();

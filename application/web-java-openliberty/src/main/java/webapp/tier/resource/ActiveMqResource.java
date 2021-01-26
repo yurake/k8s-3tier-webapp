@@ -21,7 +21,7 @@ public class ActiveMqResource {
 
 	@POST
 	@Path("/put")
-	public Response putcache() {
+	public Response actputcache() {
 		ActiveMqService svc = createActiveMqService();
 		try {
 			return Response.ok().entity(svc.putActiveMq()).build();
@@ -33,7 +33,7 @@ public class ActiveMqResource {
 
 	@GET
 	@Path("/get")
-	public Response getcache() {
+	public Response actgetcache() {
 		ActiveMqService svc = createActiveMqService();
 		try {
 			return Response.ok().entity(svc.getActiveMq()).build();
@@ -45,7 +45,7 @@ public class ActiveMqResource {
 
 	@POST
 	@Path("/publish")
-	public Response publish() {
+	public Response actpublish() {
 		ActiveMqService svc = createActiveMqService();
 		try {
 			return Response.ok().entity(svc.publishActiveMq()).build();

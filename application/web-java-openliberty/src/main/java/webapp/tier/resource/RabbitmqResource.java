@@ -21,7 +21,7 @@ public class RabbitmqResource {
 
 	@POST
 	@Path("/put")
-	public Response put() {
+	public Response rabput() {
 		RabbitmqService svc = createRabbitmqService();
 		try {
 			return Response.ok().entity(svc.put()).build();
@@ -33,7 +33,7 @@ public class RabbitmqResource {
 
 	@GET
 	@Path("/get")
-	public Response get() {
+	public Response rabget() {
 		RabbitmqService svc = createRabbitmqService();
 		try {
 			return Response.ok().entity(svc.get()).build();
@@ -45,7 +45,7 @@ public class RabbitmqResource {
 
 	@POST
 	@Path("/publish")
-	public Response publish() {
+	public Response rabpublish() {
 		RabbitmqService svc = createRabbitmqService();
 		try {
 			return Response.ok().entity(svc.publish()).build();

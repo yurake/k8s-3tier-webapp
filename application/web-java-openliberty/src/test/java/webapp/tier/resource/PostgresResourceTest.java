@@ -55,7 +55,7 @@ public class PostgresResourceTest {
 	public void testinsert() {
 		try {
 			PostgresResource rsc = createPostgresService();
-			Response resp = rsc.insert();
+			Response resp = rsc.posinsert();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -68,7 +68,7 @@ public class PostgresResourceTest {
 	public void testinsertError() {
 		try {
 			PostgresResource rsc = createPostgresServiceNull();
-			Response resp = rsc.insert();
+			Response resp = rsc.posinsert();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class PostgresResourceTest {
 	public void testselect() {
 		try {
 			PostgresResource rsc = createPostgresService();
-			Response resp = rsc.select();
+			Response resp = rsc.posselect();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("[OK]"));
 		} catch (Exception e) {
@@ -93,7 +93,7 @@ public class PostgresResourceTest {
 	public void testselectError() {
 		try {
 			PostgresResource rsc = createPostgresServiceNull();
-			Response resp = rsc.select();
+			Response resp = rsc.posselect();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,7 +105,7 @@ public class PostgresResourceTest {
 	public void testdelete() {
 		try {
 			PostgresResource rsc = createPostgresService();
-			Response resp = rsc.delete();
+			Response resp = rsc.posdelete();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -118,7 +118,7 @@ public class PostgresResourceTest {
 	public void testdeleteError() {
 		try {
 			PostgresResource rsc = createPostgresServiceNull();
-			Response resp = rsc.delete();
+			Response resp = rsc.posdelete();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();

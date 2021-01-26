@@ -50,7 +50,7 @@ public class ActiveMqResourceTest {
 	public void testPutcache() {
 		try {
 			ActiveMqResource rsc = createActiveMqService();
-			Response resp = rsc.putcache();
+			Response resp = rsc.actputcache();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -63,7 +63,7 @@ public class ActiveMqResourceTest {
 	public void testPutcacheError() {
 		try {
 			ActiveMqResource rsc = createActiveMqServiceNull();
-			Response resp = rsc.putcache();
+			Response resp = rsc.actputcache();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class ActiveMqResourceTest {
 	public void testgetcache() {
 		try {
 			ActiveMqResource rsc = createActiveMqService();
-			Response resp = rsc.getcache();
+			Response resp = rsc.actgetcache();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -88,7 +88,7 @@ public class ActiveMqResourceTest {
 	public void testgetcacheError() {
 		try {
 			ActiveMqResource rsc = createActiveMqServiceNull();
-			Response resp = rsc.getcache();
+			Response resp = rsc.actgetcache();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,7 +100,7 @@ public class ActiveMqResourceTest {
 	public void testpublish() {
 		try {
 			ActiveMqResource rsc = createActiveMqService();
-			Response resp = rsc.publish();
+			Response resp = rsc.actpublish();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -113,7 +113,7 @@ public class ActiveMqResourceTest {
 	public void testpublishError() {
 		try {
 			ActiveMqResource rsc = createActiveMqServiceNull();
-			Response resp = rsc.publish();
+			Response resp = rsc.actpublish();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();

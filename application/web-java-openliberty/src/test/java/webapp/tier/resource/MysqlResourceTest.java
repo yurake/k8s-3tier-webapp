@@ -55,7 +55,7 @@ public class MysqlResourceTest {
 	public void testinsert() {
 		try {
 			MysqlResource rsc = createMysqlService();
-			Response resp = rsc.insert();
+			Response resp = rsc.mysinsert();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -68,7 +68,7 @@ public class MysqlResourceTest {
 	public void testinsertError() {
 		try {
 			MysqlResource rsc = createMysqlServiceNull();
-			Response resp = rsc.insert();
+			Response resp = rsc.mysinsert();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class MysqlResourceTest {
 	public void testselect() {
 		try {
 			MysqlResource rsc = createMysqlService();
-			Response resp = rsc.select();
+			Response resp = rsc.mysselect();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("[OK]"));
 		} catch (Exception e) {
@@ -93,7 +93,7 @@ public class MysqlResourceTest {
 	public void testselectError() {
 		try {
 			MysqlResource rsc = createMysqlServiceNull();
-			Response resp = rsc.select();
+			Response resp = rsc.mysselect();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,7 +105,7 @@ public class MysqlResourceTest {
 	public void testdelete() {
 		try {
 			MysqlResource rsc = createMysqlService();
-			Response resp = rsc.delete();
+			Response resp = rsc.mysdelete();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -118,7 +118,7 @@ public class MysqlResourceTest {
 	public void testdeleteError() {
 		try {
 			MysqlResource rsc = createMysqlServiceNull();
-			Response resp = rsc.delete();
+			Response resp = rsc.mysdelete();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
