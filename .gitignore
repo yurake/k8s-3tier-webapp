@@ -3,7 +3,7 @@
 
 # Java
 *.class
-application/**/*.jar
+application/**/maven-wrapper.jar
 kubernetes/**/*.jar
 *.war
 *.ear
