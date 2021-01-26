@@ -31,8 +31,7 @@ public class MysqlService {
 	private DataSource ds = null;
 
 	public Connection getConnection() throws SQLException, NamingException {
-		InitialContext ctx = new InitialContext();
-		ds = (DataSource) ctx.lookup(jndiname);
+		ds = (DataSource) InitialContext.doLookup(jndiname);
 		return ds.getConnection();
 	}
 
