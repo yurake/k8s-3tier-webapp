@@ -3,6 +3,7 @@ set -eu
 
 ROOT_DIR="$(
   cd "$(dirname -- "$0")"
+  cd ..
   pwd
 )"
 
@@ -45,15 +46,6 @@ echo ""
 echo "### consumer-rabbitmq-quarkus"
 cd "$ROOT_DIR"/consumer-rabbitmq-quarkus
 kubectl apply -f ./consumer-rabbitmq-quarkus-deployment.yaml
-echo "###"
-echo ""
-
-echo "### openliberty"
-cd "$ROOT_DIR"/openliberty
-kubectl apply -f ./openliberty-configmap.yaml
-kubectl apply -f ./openliberty-deployment.yaml
-kubectl apply -f ./openliberty-service.yaml
-kubectl apply -f ./openliberty-ingress.yaml
 echo "###"
 echo ""
 
