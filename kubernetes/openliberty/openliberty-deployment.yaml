@@ -29,15 +29,15 @@ spec:
             httpGet:
               port: 9080
               path: /health/live
-            initialDelaySeconds: 300
+            initialDelaySeconds: 60
             periodSeconds: 10
-            failureThreshold: 5
-            timeoutSeconds: 30
+            failureThreshold: 10
+            timeoutSeconds: 60
           readinessProbe:
             httpGet:
               port: 9080
               path: /health/ready
-            initialDelaySeconds: 300
+            initialDelaySeconds: 60
             periodSeconds: 30
           env:
             - name: MYSQL_DBNAME
