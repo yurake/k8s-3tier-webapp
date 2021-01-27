@@ -23,6 +23,9 @@ public class ActiveMqService {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String msg = GetConfig.getResourceBundle("common.message");
+	private static String jndiqcf = GetConfig.getResourceBundle("activemq.jndi.qcf");
+	private static String jndiq = GetConfig.getResourceBundle("activemq.jndi.q");
+	private static String jndit = GetConfig.getResourceBundle("activemq.jndi.t");
 	private static String pubmessage = GetConfig.getResourceBundle("activemq.publisher.message");
 	private static String splitkey = GetConfig.getResourceBundle("activemq.split.key");
 	Connection conn = null;
@@ -33,7 +36,7 @@ public class ActiveMqService {
 	}
 
 	public Session getConnection() throws Exception {
-		ConnectionFactory cf = (ConnectionFactory) getInitialContext().lookup("jms/QueueConnectionFactory");
+		ConnectionFactory cf = (ConnectionFactory) getInitialContext().lookup(jndiqcf);
 		conn = cf.createConnection();
 		conn.start();
 		session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -41,11 +44,11 @@ public class ActiveMqService {
 	}
 
 	public Queue getQueue() throws Exception {
-		return (Queue) getInitialContext().lookup("jms/ActiveMQueue");
+		return (Queue) getInitialContext().lookup(jndiq);
 	}
 
 	public Topic getTopic() throws Exception {
-		return (Topic) getInitialContext().lookup("jms/ActiveMQTopic");
+		return (Topic) getInitialContext().lookup(jndit);
 	}
 
 	public void close() throws JMSException {
@@ -65,7 +68,6 @@ public class ActiveMqService {
 			StringBuilder buf = new StringBuilder();
 			String body = buf.append(id).append(splitkey).append(msg).toString();
 			getConnection();
-			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			TextMessage message = session.createTextMessage(body);
 			Queue q = getQueue();
 			session.createProducer(q).send(message);
@@ -82,7 +84,6 @@ public class ActiveMqService {
 
 		try {
 			getConnection();
-			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			MessageConsumer consumer = session.createConsumer(getQueue());
 			TextMessage message = (TextMessage) consumer.receive(1000);
 

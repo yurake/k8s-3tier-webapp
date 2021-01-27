@@ -17,30 +17,30 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 
 class PostgresServiceTest {
 
-	@BeforeAll
-	public static void setupAll() {
-	}
-
 	@Test
-	void testgetConnection() {
+	void testgetConnectionNullPointerException() {
 		PostgresService svc = new PostgresService();
 		try {
 			svc.getConnection();
+			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail();
 		}
 	}
 
 	@Test
 	void testconnectionStatusTrue() {
-		PostgresService svc = new PostgresService();
+		PostgresService svc = new PostgresService() {
+			public Connection getConnection() throws NamingException, SQLException {
+				Connection conn = mock(Connection.class);
+				return conn;
+			}
+		};
 		assertThat(svc.connectionStatus(), is(true));
 	}
 
@@ -70,8 +70,18 @@ class PostgresServiceTest {
 
 	@Test
 	void testinsert() {
-		PostgresService svc = new PostgresService();
 		try {
+			PostgresService svc = new PostgresService() {
+				public Connection getConnection() throws NamingException, SQLException {
+					Statement stmt = mock(Statement.class);
+					Connection conn = mock(Connection.class);
+					DataSource ds = mock(DataSource.class);
+					when(stmt.executeUpdate(ArgumentMatchers.any())).thenReturn(1);
+					when(conn.createStatement()).thenReturn(stmt);
+					when(ds.getConnection()).thenReturn(conn);
+					return ds.getConnection();
+				}
+			};
 			String result = svc.insert();
 			assertThat(result, containsString("INSERT INTO msg (id, msg) VALUES ("));
 			assertThat(result, containsString(", 'Hello k8s-3tier-webapp!')"));
@@ -112,7 +122,19 @@ class PostgresServiceTest {
 	@Test
 	void testselectWithNoData() {
 		try {
-			PostgresService svc = new PostgresService();
+			PostgresService svc = new PostgresService() {
+				public Connection getConnection() throws NamingException, SQLException {
+					ResultSet rs = mock(ResultSet.class);
+					Statement stmt = mock(Statement.class);
+					Connection conn = mock(Connection.class);
+					DataSource ds = mock(DataSource.class);
+					when(rs.next()).thenReturn(false);
+					when(stmt.executeQuery(ArgumentMatchers.any())).thenReturn(rs);
+					when(conn.createStatement()).thenReturn(stmt);
+					when(ds.getConnection()).thenReturn(conn);
+					return ds.getConnection();
+				}
+			};
 			String result = svc.select().get(0);
 			assertThat(result, is("No Data"));
 		} catch (Exception e) {
@@ -124,7 +146,19 @@ class PostgresServiceTest {
 	@Test
 	void testdelete() {
 		try {
-			PostgresService svc = new PostgresService();
+			PostgresService svc = new PostgresService(){
+				public Connection getConnection() throws NamingException, SQLException {
+					ResultSet rs = mock(ResultSet.class);
+					Statement stmt = mock(Statement.class);
+					Connection conn = mock(Connection.class);
+					DataSource ds = mock(DataSource.class);
+					when(rs.next()).thenReturn(false);
+					when(stmt.executeQuery(ArgumentMatchers.any())).thenReturn(rs);
+					when(conn.createStatement()).thenReturn(stmt);
+					when(ds.getConnection()).thenReturn(conn);
+					return ds.getConnection();
+				}
+			};
 			String result = svc.delete();
 			assertThat(result, is("Deleted"));
 		} catch (Exception e) {
