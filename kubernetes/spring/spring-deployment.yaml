@@ -29,7 +29,7 @@ spec:
             httpGet:
               port: 8080
               path: /spring/actuator/health/liveness
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             periodSeconds: 10
             failureThreshold: 5
             timeoutSeconds: 30
