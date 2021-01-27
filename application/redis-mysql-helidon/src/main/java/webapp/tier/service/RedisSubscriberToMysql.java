@@ -16,7 +16,7 @@ public class RedisSubscriberToMysql extends JedisPubSub {
 	@Inject
 	MysqlInsertService mysqlsvc;
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = GetConfig.getResourceBundle("redis.splitkey");
 
 	@Override
@@ -24,11 +24,11 @@ public class RedisSubscriberToMysql extends JedisPubSub {
 		String fullmsg = null;
 		String[] body = message.split(splitkey, 0);
 		fullmsg = "Received channel:" + channel + ", id: " + body[0] + ", msg: " + body[1];
-		LOG.info(fullmsg);
+		logger.info(fullmsg);
 		try {
 			mysqlsvc.insert(body);
 		} catch (SQLException e) {
-			LOG.log(Level.SEVERE, "Mysql Insert Error: ", e);
+			logger.log(Level.SEVERE, "Mysql Insert Error: ", e);
 		}
 	}
 }

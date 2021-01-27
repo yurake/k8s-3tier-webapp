@@ -13,7 +13,7 @@ import webapp.tier.util.GetConfig;
 @ApplicationScoped
 public class MysqlInsertService {
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String url = GetConfig.getResourceBundle("mysql.url");
 	private static String instersql = GetConfig.getResourceBundle("mysql.sql");
 	private static String sqlkey = GetConfig.getResourceBundle("mysql.id");
@@ -40,7 +40,7 @@ public class MysqlInsertService {
 
 		try (Connection con = getConnection();
 				Statement stmt = con.createStatement()) {
-			LOG.info("Execute SQL: " + sql);
+			logger.info("Execute SQL: " + sql);
 			stmt.executeUpdate(sql);
 		}
 		return sql;
