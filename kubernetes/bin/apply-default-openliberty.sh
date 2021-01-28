@@ -114,6 +114,7 @@ echo ""
 echo "### openliberty"
 cd "$ROOT_DIR"/openliberty
 kubectl apply -f ./openliberty-configmap.yaml
+kubectl apply -f ./openliberty-secret.yaml
 kubectl apply -f ./openliberty-deployment.yaml
 kubectl apply -f ./openliberty-service.yaml
 kubectl apply -f ./openliberty-ingress.yaml
