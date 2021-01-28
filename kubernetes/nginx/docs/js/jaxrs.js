@@ -66,9 +66,9 @@ $(function () {
       url: url,
       cache: false,
       timeout: 10000,
-    }).always(function (data, jqXHR) {
+    }).always(function (data, status, xhr) {
       console.log(data);
-      $(respid).html(data.fullmsg + "\nstatus: " + jqXHR.status);
+      $(respid).html(data.fullmsg + "\nstatus: " + xhr.status);
     });
   }
 
@@ -78,14 +78,14 @@ $(function () {
       url: url,
       cache: false,
       timeout: 10000,
-    }).always(function (data, jqXHR) {
+    }).always(function (data, status, xhr) {
       var resparray = "";
       for (i = 0; i < data.length; i++) {
         if (data[i] != null) {
           resparray += data[i].fullmsg + "\n";
         }
       }
-      $(respid).html(resparray + jqXHR.status);
+      $(respid).html(resparray + "\nstatus: " + xhr.status);
     });
   }
 

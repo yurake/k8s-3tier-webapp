@@ -15,17 +15,17 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class RedisDeliverSubscriber extends RedisSubscriber {
 
-	private static final Logger LOG = Logger.getLogger(RedisSubscriber.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
 
 	@Override
 	public void onMessage(String channel, String message) {
 		MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
 		msgbean.setFullmsg("Received");
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL).get();
 		String response = deliversvc.random();
-		LOG.log(Level.INFO, "Call Random Publish: {0}", response);
+		logger.log(Level.INFO, "Call Random Publish: {0}", response);
 	}
 
 }

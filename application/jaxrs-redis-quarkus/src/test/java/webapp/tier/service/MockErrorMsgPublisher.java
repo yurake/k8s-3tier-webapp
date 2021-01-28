@@ -7,7 +7,7 @@ import redis.clients.jedis.Jedis;
 
 public class MockErrorMsgPublisher extends Thread {
 
-	private static final Logger LOG = Logger.getLogger(MockErrorMsgPublisher.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
 	public void run() {
@@ -16,10 +16,10 @@ public class MockErrorMsgPublisher extends Thread {
 			Thread.sleep(1000);
 			jedis.publish("pubsub", "ErrorMsg");
 			jedis.expire("1111", 3600);
-			LOG.log(Level.INFO, "Test Publish");
+			logger.log(Level.INFO, "Test Publish");
 
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "Test Error", e);
+			logger.log(Level.SEVERE, "Test Error", e);
 		} finally {
 			jedis.close();
 		}

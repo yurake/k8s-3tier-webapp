@@ -1251,7 +1251,7 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
-  wlp-web-java-spring:
+  web-java-spring:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1278,23 +1278,23 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/wlp-web-java-spring/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/web-java-spring/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven-wlp-web-java-spring
+            ${{ runner.os }}-maven-web-java-spring
       - name: Maven Build
-        working-directory: ./application/wlp-web-java-spring
+        working-directory: ./application/web-java-spring
         run: mvn -B verify package --settings ../.m2/settings.xml
-      - name: Copy war file
+      - name: Copy jar file
         uses: canastro/copy-file-action@master
         with:
-          source: "application/wlp-web-java-spring/target/spring.war"
-          target: "kubernetes/wlp/spring.war"
+          source: "application/web-java-spring/target/spring.jar"
+          target: "kubernetes/spring/spring.jar"
       - name: Build image
-        working-directory: ./kubernetes/wlp
-        run: docker build -t yurak/wlp:latest .
+        working-directory: ./kubernetes/spring
+        run: docker build -t yurak/spring:latest .
       - name: Push Image
         if: github.event_name == 'push'
-        run: docker push yurak/wlp:latest
+        run: docker push yurak/spring:latest
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -1305,11 +1305,76 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
-        working-directory: ./application/wlp-web-java-spring
+        working-directory: ./application/web-java-spring
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn sonar:sonar
-          -Dsonar.projectKey=yurake_wlp-web-java-spring
+          -Dsonar.projectKey=yurake_web-java-spring
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+
+  web-java-openliberty:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        with:
+          graalvm-version: 20.2.0.java11
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
+      - name: docker login
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/web-java-openliberty/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-web-java-openliberty
+      - name: Maven Build
+        working-directory: ./application/web-java-openliberty
+        run: mvn -B verify package --settings ../.m2/settings.xml
+      - name: Copy war file
+        uses: canastro/copy-file-action@master
+        with:
+          source: "application/web-java-openliberty/target/openliberty.war"
+          target: "kubernetes/openliberty/openliberty.war"
+      - name: Build image
+        working-directory: ./kubernetes/openliberty
+        run: docker build -t yurak/openliberty:latest .
+      - name: Push Image
+        if: github.event_name == 'push'
+        run: docker push yurak/openliberty:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/web-java-openliberty
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn sonar:sonar
+          -Dsonar.projectKey=yurake_web-java-openliberty
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}

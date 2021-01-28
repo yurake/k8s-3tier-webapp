@@ -17,7 +17,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class MessageGenerator {
 
-	private static final Logger LOG = Logger.getLogger(MessageGenerator.class);
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@ConfigProperty(name = "common.message")
 	String message;
@@ -36,7 +36,7 @@ public class MessageGenerator {
 				.onBackpressureDrop()
 				.map(tick -> {
 					MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Generate");
-					LOG.info(msgbean.getFullmsg());
+					logger.info(msgbean.getFullmsg());
 					return MsgUtils.createBody(msgbean, splitkey);
 				});
 	}

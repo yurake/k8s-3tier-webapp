@@ -70,4 +70,4 @@
 
 ## webapp-service
 
-## wlp-web-java-spring
+## web-java-spring

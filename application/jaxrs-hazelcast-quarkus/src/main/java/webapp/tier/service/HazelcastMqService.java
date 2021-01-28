@@ -25,7 +25,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class HazelcastMqService implements Runnable {
 
-	private static final Logger LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
 
@@ -36,12 +36,12 @@ public class HazelcastMqService implements Runnable {
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
-		LOG.info("Subscribe is starting...");
+		logger.info("Subscribe is starting...");
 	}
 
 	void onStop(@Observes ShutdownEvent ev) {
 		scheduler.shutdown();
-		LOG.info("Subscribe is stopping...");
+		logger.info("Subscribe is stopping...");
 	}
 
 	protected HazelcastMessageListener createHazelcastMessageListener() {
@@ -56,7 +56,7 @@ public class HazelcastMqService implements Runnable {
 			BlockingQueue<Object> queue = client.getQueue(queuename);
 			queue.put(body);
 		} catch (IllegalStateException | InterruptedException | NoSuchAlgorithmException e) {
-			LOG.log(Level.SEVERE, "Put Error.", e);
+			logger.log(Level.SEVERE, "Put Error.", e);
 			e.printStackTrace();
 		    Thread.currentThread().interrupt();
 		} finally {
@@ -64,7 +64,7 @@ public class HazelcastMqService implements Runnable {
 				client.shutdown();
 			}
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -81,14 +81,14 @@ public class HazelcastMqService implements Runnable {
 				msgbean.setFullmsg("Get");
 			}
 		} catch (IllegalStateException e) {
-			LOG.log(Level.SEVERE, "Get Error.", e);
+			logger.log(Level.SEVERE, "Get Error.", e);
 			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -101,14 +101,14 @@ public class HazelcastMqService implements Runnable {
 			ITopic<Object> topic = client.getTopic(topicname);
 			topic.publish(body);
 		} catch (IllegalStateException | NoSuchAlgorithmException e) {
-			LOG.log(Level.SEVERE, "Publish Error.", e);
+			logger.log(Level.SEVERE, "Publish Error.", e);
 			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
