@@ -57,7 +57,7 @@ jobs:
           kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
       - name: apply minimal service
         run: |
-          sh ./kubernetes/apply-default-minimal.sh
+          sh ./kubernetes/apply-default-quarkus.sh
           sleep 10
       - name: Setup bats
         uses: mig4/setup-bats@v1
