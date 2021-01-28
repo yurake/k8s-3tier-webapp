@@ -15,7 +15,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class RedisSubscriber extends JedisPubSub {
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
 	RedisSocket redissock = new RedisSocket();
 
@@ -23,7 +23,7 @@ public class RedisSubscriber extends JedisPubSub {
 	public void onMessage(String channel, String message) {
 		MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
 		msgbean.setFullmsg("Subscribe");
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		redissock.onMessage(MsgUtils.createBody(msgbean, splitkey));
 	}
 }

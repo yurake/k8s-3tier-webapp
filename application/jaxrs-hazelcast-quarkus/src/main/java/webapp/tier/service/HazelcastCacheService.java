@@ -20,7 +20,7 @@ import webapp.tier.util.CreateId;
 public class HazelcastCacheService {
 
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
 
@@ -36,7 +36,7 @@ public class HazelcastCacheService {
 				client.shutdown();
 			}
 		}
-		LOG.info(msgbean.getFullmsg());
+		logger.info(msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -54,7 +54,7 @@ public class HazelcastCacheService {
 
 			for (Entry<Integer, String> entry : map.entrySet()) {
 				MsgBean msgbean = new MsgBean(entry.getKey(), entry.getValue(), "Get");
-				LOG.info(msgbean.getFullmsg());
+				logger.info(msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}
 			if (msglist.isEmpty()) {

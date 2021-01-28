@@ -22,17 +22,17 @@ public class ActiveMqDeliverConsumer extends ActiveMqConsumer {
 	@RestClient
 	DeliverService deliversvc;
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
 	public void consume(JMSConsumer consumer) throws JMSException {
-		LOG.log(Level.INFO, "Ready for receive message...");
+		logger.log(Level.INFO, "Ready for receive message...");
 		Message message = consumer.receive();
 		TextMessage textMessage = (TextMessage) message;
 		MsgBean msgbean = MsgUtils.splitBody(textMessage.getText(), splitkey);
 		msgbean.setFullmsg("Received");
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		String response = deliversvc.random();
-		LOG.log(Level.INFO, "Call Random Publish: {0}", response);
+		logger.log(Level.INFO, "Call Random Publish: {0}", response);
 	}
 }

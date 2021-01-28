@@ -19,7 +19,7 @@ import webapp.tier.util.MsgUtils;
 
 public class RabbitmqDeliverSubscriber extends RabbitmqConsumer {
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
 
 	public RabbitmqDeliverSubscriber(Channel channel) {
@@ -32,10 +32,10 @@ public class RabbitmqDeliverSubscriber extends RabbitmqConsumer {
 		long deliveryTag = envelope.getDeliveryTag();
 		MsgBean msgbean = MsgUtils.splitBody(new String(body, StandardCharsets.UTF_8), splitkey);
 		msgbean.setFullmsg("Received");
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL).get();
 		String response = deliversvc.random();
-		LOG.log(Level.INFO, "Call Random Publish: {0}", response);
+		logger.log(Level.INFO, "Call Random Publish: {0}", response);
 		super.getChannel().basicAck(deliveryTag, false);
 	}
 }

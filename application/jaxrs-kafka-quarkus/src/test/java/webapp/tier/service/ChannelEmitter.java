@@ -12,7 +12,7 @@ import io.smallrye.reactive.messaging.annotations.Merge;
 @ApplicationScoped
 public class ChannelEmitter {
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	static String respmsg;
 
@@ -23,7 +23,7 @@ public class ChannelEmitter {
 	@Incoming("message")
 	@Merge(Merge.Mode.MERGE)
 	public String consume(String msg) {
-		LOG.log(Level.INFO, "TEST Received: {0}", msg);
+		logger.log(Level.INFO, "TEST Received: {0}", msg);
 		respmsg = msg;
 		return msg;
 	}

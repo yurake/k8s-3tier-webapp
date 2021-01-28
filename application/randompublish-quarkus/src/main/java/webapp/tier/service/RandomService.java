@@ -42,40 +42,40 @@ public class RandomService {
 	@RestClient
 	MongodbClientService mongodbResource;
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	public String deliverrandom(Integer id) throws Exception {
 		String response;
 		switch (id) {
 		case 0:
-			LOG.log(Level.INFO, "Call: ActiveMQ Publish");
+			logger.log(Level.INFO, "Call: ActiveMQ Publish");
 			response = activemqresource.publish();
 			break;
 		case 1:
-			LOG.log(Level.INFO, "Call: RabbitMQ Publish");
+			logger.log(Level.INFO, "Call: RabbitMQ Publish");
 			response = rabbitmqresource.publish();
 			break;
 		case 2:
-			LOG.log(Level.INFO, "Call: Redis Publish");
+			logger.log(Level.INFO, "Call: Redis Publish");
 			response = redisresource.publish();
 			break;
 		case 3:
-			LOG.log(Level.INFO, "Call: Postgres Insert");
+			logger.log(Level.INFO, "Call: Postgres Insert");
 			response = postgresresource.insert();
 			break;
 		case 4:
-			LOG.log(Level.INFO, "Call: Hazelcast Publish");
+			logger.log(Level.INFO, "Call: Hazelcast Publish");
 			response = hazelcastresource.publish();
 			break;
 		case 5:
-			LOG.log(Level.INFO, "Call: Mongodb Insert");
+			logger.log(Level.INFO, "Call: Mongodb Insert");
 			response = mongodbResource.insert();
 			break;
 		default:
-			LOG.log(Level.SEVERE, "random Error.");
+			logger.log(Level.SEVERE, "random Error.");
 			throw new IllegalArgumentException("random error");
 		}
-		LOG.info(response);
+		logger.log(Level.INFO, response);
 		return response;
 	}
 

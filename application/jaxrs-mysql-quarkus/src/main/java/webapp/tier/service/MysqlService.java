@@ -47,14 +47,14 @@ public class MysqlService implements Database {
 	@ConfigProperty(name = "mysql.body")
 	String sqlbody;
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	public boolean connectionStatus() {
 		boolean status = false;
 		try (Connection con = ds.getConnection()) {
 			status = true;
 		} catch (SQLException | NullPointerException e) {
-			LOG.log(Level.SEVERE, "Status Check Error.", e);
+			logger.log(Level.SEVERE, "Status Check Error.", e);
 		}
 		return status;
 	}
@@ -67,13 +67,13 @@ public class MysqlService implements Database {
 
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {
-			LOG.log(Level.INFO, "Insert SQL: {0}", sql);
+			logger.log(Level.INFO, "Insert SQL: {0}", sql);
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			LOG.log(Level.SEVERE, "Insert Error.", e);
+			logger.log(Level.SEVERE, "Insert Error.", e);
 			throw new SQLException("Insert Error.");
 		}
-		LOG.info(msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -84,18 +84,18 @@ public class MysqlService implements Database {
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(selectsql)) {
-			LOG.log(Level.INFO, "Select SQL: {0}", selectsql);
+			logger.log(Level.INFO, "Select SQL: {0}", selectsql);
 			while (rs.next()) {
 				MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(rs.getString("id")),
 						rs.getString("msg"), "Select");
-				LOG.info(msgbean.getFullmsg());
+				logger.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}
 			if (msglist.isEmpty()) {
 				msglist.add(new MsgBean(0, "No Data.", "Select"));
 			}
 		} catch (SQLException e) {
-			LOG.log(Level.SEVERE, "Select Errorr.", e);
+			logger.log(Level.SEVERE, "Select Errorr.", e);
 			throw new SQLException("Select Error.");
 		}
 		return msglist;
@@ -106,10 +106,10 @@ public class MysqlService implements Database {
 
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {
-			LOG.log(Level.INFO, "Delete SQL: {0}", deletesql);
+			logger.log(Level.INFO, "Delete SQL: {0}", deletesql);
 			stmt.executeUpdate(deletesql);
 		} catch (SQLException e) {
-			LOG.log(Level.SEVERE, "Delete Errorr.", e);
+			logger.log(Level.SEVERE, "Delete Errorr.", e);
 			throw new SQLException("Delete Error.");
 		}
 		return "Delete Msg Records";

@@ -11,7 +11,7 @@ import com.rabbitmq.client.Connection;
 @ApplicationScoped
 public class RabbitmqSubscribeService extends RabbitmqService {
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	protected RabbitmqDeliverSubscriber createRabbitmqDeliverSubscriber(Channel channel) {
 		return new RabbitmqDeliverSubscriber(channel);
@@ -23,7 +23,7 @@ public class RabbitmqSubscribeService extends RabbitmqService {
 				Channel channel = conn.createChannel()) {
 			subscribeRabbitmq(conn, channel, createRabbitmqDeliverSubscriber(channel));
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "Subscribe Errorr.", e);
+			logger.log(Level.SEVERE, "Subscribe Errorr.", e);
 		}
 	}
 }

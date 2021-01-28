@@ -29,7 +29,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class RabbitmqService implements Runnable {
 
-	private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	static boolean isEnableReceived = true;
 
@@ -46,12 +46,12 @@ public class RabbitmqService implements Runnable {
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
-		LOG.log(Level.INFO, "Subscribe is starting...");
+		logger.log(Level.INFO, "Subscribe is starting...");
 	}
 
 	void onStop(@Observes ShutdownEvent ev) {
 		scheduler.shutdown();
-		LOG.log(Level.INFO, "Subscribe is stopping...");
+		logger.log(Level.INFO, "Subscribe is stopping...");
 	}
 
 	public static void startReceived() {
@@ -82,7 +82,7 @@ public class RabbitmqService implements Runnable {
 		try (Channel channel = conn.createChannel()) {
 			channel.basicPublish("", queuename, null, body.getBytes());
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 
 	}
@@ -102,7 +102,7 @@ public class RabbitmqService implements Runnable {
 				msgbean.setFullmsg("Get");
 			}
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -115,7 +115,7 @@ public class RabbitmqService implements Runnable {
 			channel.basicPublish(exchangename, routingkey, null, body.getBytes(StandardCharsets.UTF_8));
 		}
 
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -124,7 +124,7 @@ public class RabbitmqService implements Runnable {
 		try (Connection connection = getConnection()) {
 			status = true;
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "Connect Error.", e);
+			logger.log(Level.SEVERE, "Connect Error.", e);
 		}
 		return status;
 	}
@@ -135,7 +135,7 @@ public class RabbitmqService implements Runnable {
 				Channel channel = conn.createChannel()) {
 			subscribeRabbitmq(conn, channel, createRabbitmqConsumer(channel));
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "Subscribe Errorr.", e);
+			logger.log(Level.SEVERE, "Subscribe Errorr.", e);
 		}
 	}
 
