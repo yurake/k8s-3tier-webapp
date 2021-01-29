@@ -15,6 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+		<slf4j-log4j12.version>1.7.30</slf4j-log4j12.version>
 		<hazelcast.version>4.0.3</hazelcast.version>
 		<jedis.version>3.5.1</jedis.version>
 		<amqp-client.version>5.10.0</amqp-client.version>
@@ -31,6 +32,11 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-log4j12.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
