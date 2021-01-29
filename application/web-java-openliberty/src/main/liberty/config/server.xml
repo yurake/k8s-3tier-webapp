@@ -17,55 +17,37 @@
 	<variable name="default.http.port" defaultValue="9080" />
 	<variable name="default.https.port" defaultValue="9443" />
 
-	<webApplication location="openliberty.war"
-		contextRoot="/" />
+	<webApplication location="openliberty.war" contextRoot="/" />
 	<mpMetrics authentication="false" />
 
-	<httpEndpoint host="*" httpPort="${default.http.port}"
-		httpsPort="${default.https.port}" id="defaultHttpEndpoint" />
+	<httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint" />
 
-	<variable name="io_openliberty_guides_system_inMaintenance"
-		value="false" />
+	<variable name="io_openliberty_guides_system_inMaintenance" value="false" />
 
-	<dataSource id="mysql" jndiName="jdbc/mysql"
-		transactional="false">
+	<dataSource id="mysql" jndiName="jdbc/mysql" transactional="false">
 		<jdbcDriver libraryRef="mysqllib" />
-		<properties databaseName="${env.MYSQL_DBNAME}"
-			user="${env.MYSQL_USER}" password="${env.MYSQL_PASSWORD}"
-			portNumber="${env.MYSQL_PORTNUM}"
-			serverName="${env.MYSQL_SERVERNAME}" allowPublicKeyRetrieval="true"
-			useSSL="false" />
+		<properties databaseName="${env.MYSQL_DBNAME}" user="${env.MYSQL_USER}" password="${env.MYSQL_PASSWORD}" portNumber="${env.MYSQL_PORTNUM}" serverName="${env.MYSQL_SERVERNAME}" allowPublicKeyRetrieval="true" useSSL="false" />
 	</dataSource>
 	<library id="mysqllib">
-		<fileset dir="${server.config.dir}/resources/mysql"
-			includes="*.jar" />
+		<fileset dir="${server.config.dir}/resources/mysql" includes="*.jar" />
 	</library>
 
-	<dataSource id="postgres" jndiName="jdbc/postgres"
-		transactional="false">
+	<dataSource id="postgres" jndiName="jdbc/postgres" transactional="false">
 		<jdbcDriver libraryRef="postgreslib" />
-		<properties databaseName="${env.PG_DBNAME}"
-			user="${env.PG_USER}" password="${env.PG_PASSWORD}"
-			portNumber="${env.PG_PORTNUM}" serverName="${env.PG_SERVERNAME}" />
+		<properties databaseName="${env.PG_DBNAME}" user="${env.PG_USER}" password="${env.PG_PASSWORD}" portNumber="${env.PG_PORTNUM}" serverName="${env.PG_SERVERNAME}" />
 	</dataSource>
 	<library id="postgreslib">
-		<fileset dir="${server.config.dir}/resources/postgres"
-			includes="*.jar" />
+		<fileset dir="${server.config.dir}/resources/postgres" includes="*.jar" />
 	</library>
 
-	<resourceAdapter id="activemq"
-		location="${server.config.dir}/resources/activemq/activemq-rar-5.15.11.rar">
-		<properties.activemq userName="${env.AMQ_USER}"
-			password="${env.AMQ_PASSWORD}" serverUrl="${env.AMQ_URL}" />
+	<resourceAdapter id="activemq" location="${server.config.dir}/resources/activemq/activemq-rar-5.15.11.rar">
+		<properties.activemq userName="${env.AMQ_USER}" password="${env.AMQ_PASSWORD}" serverUrl="${env.AMQ_URL}" />
 	</resourceAdapter>
 	<jmsActivationSpec id="sample/SampleJMS">
-		<properties.activemq destinationRef="ActiveMQueue"
-			destinationType="javax.jms.Queue" />
-		<properties.activemq
-			destinationRef="ActiveMQTopic" destinationType="javax.jms.Queue" />
+		<properties.activemq destinationRef="ActiveMQueue" destinationType="javax.jms.Queue" />
+		<properties.activemq destinationRef="ActiveMQTopic" destinationType="javax.jms.Queue" />
 	</jmsActivationSpec>
-	<jmsQueueConnectionFactory
-		jndiName="jms/QueueConnectionFactory">
+	<jmsQueueConnectionFactory jndiName="jms/QueueConnectionFactory">
 		<properties.activemq serverUrl="${env.AMQ_URL}" />
 	</jmsQueueConnectionFactory>
 	<jmsQueue id="ActiveMQueue" jndiName="jms/ActiveMQueue">
