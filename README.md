@@ -121,7 +121,8 @@ jaeger.minikube argo.minikube >> /etc/hosts
 | Service                     | URL                                   |
 | :-------------------------- | :------------------------------------ |
 | Top Page                    | <http://k8s.3tier.webapp/>            |
-| Ppen Liberty                | <http://wlp.minikube>                 |
+| Open Liberty                | <http://openliberty.minikube>         |
+| Spring Boot                 | <http://spring.minikube>              |
 | Rabbitmq Management Console | <http://rabbitmq.management.minikube> |
 | Activemq Management Console | <http://activemq.management.minikube> |
 
