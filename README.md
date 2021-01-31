@@ -100,7 +100,7 @@ minikube docker-env --shell powershell | Invoke-Expression
 `apply.sh` supports `kubectl apply` to k8s clusters.
 
 ```
-./kubernetes/apply.sh
+./kubernetes/bin/apply.sh
 ```
 
 ## Web Console Access
