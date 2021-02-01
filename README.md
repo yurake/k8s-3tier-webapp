@@ -100,7 +100,7 @@ minikube docker-env --shell powershell | Invoke-Expression
 `apply.sh` supports `kubectl apply` to k8s clusters.
 
 ```
-./kubernetes/apply.sh
+./kubernetes/bin/apply.sh
 ```
 
 ## Web Console Access
@@ -110,9 +110,10 @@ minikube docker-env --shell powershell | Invoke-Expression
 Add IP, domain in /etc/hosts
 
 ```
-echo `minikube ip` k8s.3tier.webapp wlp.minikube api.server.minikube rabbitmq.management.minikube \
-jenkins.minikube alertmanager.minikube prometheus.minikube grafana.minikube jupyter.minikube \
-hazelcast.manager.minikube activemq.management.minikube jaeger.minikube argo.minikube >> /etc/hosts
+echo `minikube ip` k8s.3tier.webapp openliberty.minikube spring.minikube api.server.minikube \
+rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube \
+grafana.minikube jupyter.minikube hazelcast.manager.minikube activemq.management.minikube \
+jaeger.minikube argo.minikube >> /etc/hosts
 ```
 
 ### Web Console list
@@ -120,7 +121,8 @@ hazelcast.manager.minikube activemq.management.minikube jaeger.minikube argo.min
 | Service                     | URL                                   |
 | :-------------------------- | :------------------------------------ |
 | Top Page                    | <http://k8s.3tier.webapp/>            |
-| Ppen Liberty                | <http://wlp.minikube>                 |
+| Open Liberty                | <http://openliberty.minikube>         |
+| Spring Boot                 | <http://spring.minikube>              |
 | Rabbitmq Management Console | <http://rabbitmq.management.minikube> |
 | Activemq Management Console | <http://activemq.management.minikube> |
 
