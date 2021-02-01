@@ -100,7 +100,7 @@
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-rs-extension-providers</artifactId>
-			<version>3.3.6</version>
+			<version>3.4.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
