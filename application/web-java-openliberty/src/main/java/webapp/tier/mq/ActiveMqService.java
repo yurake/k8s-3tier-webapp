@@ -108,7 +108,7 @@ public class ActiveMqService {
 			getConnection();
 			TextMessage message = session.createTextMessage(body);
 			session.createProducer(getTopic()).send(message);
-			fullmsg = "Publish id: " + id + ", msg: " + message;
+			fullmsg = "Publish id: " + id + ", msg: " + pubmessage;
 			logger.info(fullmsg);
 		} finally {
 			close();
