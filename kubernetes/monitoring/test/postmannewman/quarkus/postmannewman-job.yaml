@@ -15,6 +15,6 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             [
-              "newman run -e hostname.postman_environment.json jaxrs-quarkus.postman_collection.json",
+              "newman run -e hostname-quarkus.postman_environment.json jaxrs-quarkus.postman_collection.json",
             ]
       restartPolicy: OnFailure
