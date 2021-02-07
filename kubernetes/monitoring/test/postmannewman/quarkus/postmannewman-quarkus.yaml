@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: postmannewman-job
+  name: postmannewman-quarkus
   namespace: monitoring
 spec:
   completions: 1
@@ -10,8 +10,8 @@ spec:
   template:
     spec:
       containers:
-        - name: postmannewman-job
-          image: yurak/postmannewman:latest
+        - name: postmannewman-quarkus
+          image: yurak/postmannewman-quarkus:latest
           command: ["/bin/sh", "-c"]
           args:
             [
