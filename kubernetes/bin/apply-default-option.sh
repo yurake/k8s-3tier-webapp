@@ -7,8 +7,6 @@ ROOT_DIR="$(
   pwd
 )"
 
-./apply-default-minimal.sh
-
 echo "### zookeeper"
 cd "$ROOT_DIR"/zookeeper
 kubectl apply -f ./zookeeper-statefulset.yaml
