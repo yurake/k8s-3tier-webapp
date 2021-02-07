@@ -227,6 +227,10 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-cassandra-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-cassandra-quarkus
+      - name: docker pull for maven build
+        run: |
+          docker pull quay.io/testcontainers/ryuk:0.2.3
+          docker images
 
       - name: Maven Build
         working-directory: ./application/jaxrs-cassandra-quarkus
