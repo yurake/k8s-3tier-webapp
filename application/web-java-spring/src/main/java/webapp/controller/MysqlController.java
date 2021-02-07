@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import webapp.tier.db.MysqlService;
 
 @RestController
-@RequestMapping("/mysql")
+@RequestMapping("/spring/mysql")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MysqlController {

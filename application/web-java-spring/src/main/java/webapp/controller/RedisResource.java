@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import webapp.tier.cache.RedisService;
 
 @RestController
-@RequestMapping("/redis")
+@RequestMapping("/spring/redis")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RedisResource {

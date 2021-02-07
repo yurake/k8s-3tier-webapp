@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import webapp.tier.cache.MemcachedService;
 
 @RestController
-@RequestMapping("/memcached")
+@RequestMapping("/spring/memcached")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MemcachedController {

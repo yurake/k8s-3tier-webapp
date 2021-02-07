@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import webapp.tier.db.PostgresService;
 
 @RestController
-@RequestMapping("/postgres")
+@RequestMapping("/spring/postgres")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PostgresResource {

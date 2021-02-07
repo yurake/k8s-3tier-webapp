@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import webapp.tier.mq.RabbitmqService;
 
 @RestController
-@RequestMapping("/rabbitmq")
+@RequestMapping("/spring/rabbitmq")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RabbitmqResource {

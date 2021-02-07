@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import webapp.tier.mq.ActiveMqService;
 
 @RestController
-@RequestMapping("/activemq")
+@RequestMapping("/spring/activemq")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ActiveMqController {
