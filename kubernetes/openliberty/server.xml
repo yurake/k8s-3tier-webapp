@@ -7,6 +7,9 @@
     <feature>jndi-1.0</feature>
     <feature>jdbc-4.3</feature>
     <feature>jms-2.0</feature>
+    <feature>jaxrs-2.1</feature>
+    <feature>jsonp-1.1</feature>
+    <feature>cdi-2.0</feature>
   </featureManager>
 
   <mpMetrics authentication="false" />
