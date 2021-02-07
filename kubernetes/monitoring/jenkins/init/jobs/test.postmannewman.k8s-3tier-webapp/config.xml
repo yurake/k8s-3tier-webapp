@@ -1,9 +1,9 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
-  <actions/>
+  <actions />
   <description></description>
   <keepDependencies>false</keepDependencies>
-  <properties/>
+  <properties />
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
@@ -17,8 +17,8 @@
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
-    <extensions/>
+    <submoduleCfg class="list" />
+    <extensions />
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
@@ -37,16 +37,16 @@
   <builders>
     <hudson.tasks.Shell>
       <command>#!/bin/sh -x
-cd kubernetes/monitoring/test/postmannewman
-kubectl apply -f postmannewman-job.yaml
-kubectl -n monitoring wait --for=condition=complete --timeout=600s job/postmannewman-job
-kubectl -n monitoring describe job postmannewman-job
-kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk &apos;{print $1}&apos; | grep postmannewman-job)
-kubectl delete -f postmannewman-job.yaml
+cd kubernetes/monitoring/test/postmannewman/quarkus
+kubectl apply -f postmannewman-quarkus.yaml
+kubectl -n monitoring wait --for=condition=complete --timeout=600s job/postmannewman-quarkus
+kubectl -n monitoring describe job postmannewman-quarkus
+kubectl -n monitoring logs -f $(kubectl get pods -n monitoring | awk &apos;{print $1}&apos; | grep postmannewman-quarkus)
+kubectl delete -f postmannewman-quarkus.yaml
 </command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers />
   <buildWrappers>
     <org.csanchez.jenkins.plugins.kubernetes.KubectlBuildWrapper plugin="kubernetes@1.25.1">
       <serverUrl>https://kubernetes.default.svc.cluster.local</serverUrl>
