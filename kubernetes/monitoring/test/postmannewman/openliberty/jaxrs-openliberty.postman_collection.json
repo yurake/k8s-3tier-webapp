@@ -1,0 +1,889 @@
+{
+	"info": {
+		"_postman_id": "d6b0e206-b560-4c4c-aeef-44a5aa270f26",
+		"name": "jaxrs-openliberty",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "memcached/set",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Set\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MEM}}/api/memcached/set",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MEM}}"
+					],
+					"path": [
+						"api",
+						"memcached",
+						"set"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "memcached/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MEM}}/api/memcached/get",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MEM}}"
+					],
+					"path": [
+						"api",
+						"memcached",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redis/put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Set\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_REDIS}}/api/redis/set",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_REDIS}}"
+					],
+					"path": [
+						"api",
+						"redis",
+						"set"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redis/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Selected\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_REDIS}}/api/redis/get",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_REDIS}}"
+					],
+					"path": [
+						"api",
+						"redis",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redis/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_REDIS}}/api/redis/publish",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_REDIS}}"
+					],
+					"path": [
+						"api",
+						"redis",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activemq/put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Set\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_ACT}}/api/activemq/put",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_ACT}}"
+					],
+					"path": [
+						"api",
+						"activemq",
+						"put"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activemq/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Received\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_ACT}}/api/activemq/get",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_ACT}}"
+					],
+					"path": [
+						"api",
+						"activemq",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activemq/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 600ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_ACT}}/api/activemq/publish",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_ACT}}"
+					],
+					"path": [
+						"api",
+						"activemq",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/setcache",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Set\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/api/hazelcast/putcache",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"api",
+						"hazelcast",
+						"putcache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/getcache",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Selected\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/api/hazelcast/getcache",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"api",
+						"hazelcast",
+						"getcache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/api/hazelcast/publish",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"api",
+						"hazelcast",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/putqueue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Set\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/api/hazelcast/putqueue",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"api",
+						"hazelcast",
+						"putqueue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/getqueue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Received\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/api/hazelcast/getqueue",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"api",
+						"hazelcast",
+						"getqueue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mysql/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"INSERT\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MYSQL}}/api/mysql/insert",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MYSQL}}"
+					],
+					"path": [
+						"api",
+						"mysql",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mysql/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Select\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MYSQL}}/api/mysql/select",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MYSQL}}"
+					],
+					"path": [
+						"api",
+						"mysql",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mysql/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Deleted\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MYSQL}}/api/mysql/delete",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MYSQL}}"
+					],
+					"path": [
+						"api",
+						"mysql",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postgres/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"INSERT\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"msg\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_PG}}/api/postgres/insert",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_PG}}"
+					],
+					"path": [
+						"api",
+						"postgres",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postgres/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Selected\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_PG}}/api/postgres/select",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_PG}}"
+					],
+					"path": [
+						"api",
+						"postgres",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postgres/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Deleted\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_PG}}/api/postgres/delete",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_PG}}"
+					],
+					"path": [
+						"api",
+						"postgres",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
