@@ -47,14 +47,26 @@ jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelca
         with:
           dockerfile: kubernetes/monitoring/${{ matrix.dockerfile_monitoring }}/Dockerfile
 
-  dockerfile_test:
+  dockerfile_ab:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile_test: [postmannewman, ab]
+        dockerfile_ab: [ab]
     steps:
       - uses: actions/checkout@v2
-      - name: lint ${{ matrix.dockerfile_test }}
+      - name: lint ${{ matrix.dockerfile_ab }}
         uses: brpaz/hadolint-action@master
         with:
-          dockerfile: kubernetes/monitoring/test/${{ matrix.dockerfile_test }}/Dockerfile
+          dockerfile: kubernetes/monitoring/test/${{ matrix.dockerfile_ab }}/Dockerfile
+
+  dockerfile_postmannewman:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile_postmannewman: [quarkus, openliberty]
+    steps:
+      - uses: actions/checkout@v2
+      - name: lint ${{ matrix.dockerfile_postmannewman }}
+        uses: brpaz/hadolint-action@master
+        with:
+          dockerfile: kubernetes/monitoring/test/postmannewman/${{ matrix.dockerfile_postmannewman }}/Dockerfile
