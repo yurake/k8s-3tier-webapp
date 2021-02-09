@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,13 +51,8 @@ public class MysqlController {
 	}
 
 	@PostMapping("/delete")
-	public Response delete() {
-		MysqlService delmysql = createMysqlService();
-		try {
-			return Response.ok(delmysql.delete()).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(500).build();
-		}
+	public @ResponseBody String delete() {
+		messageRepository.deleteAll();
+		return "Deleted";
 	}
 }

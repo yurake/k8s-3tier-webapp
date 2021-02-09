@@ -10,8 +10,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-
 import org.junit.jupiter.api.Test;
 
 import webapp.tier.db.MysqlService;
@@ -101,28 +99,28 @@ public class MysqlControllerTest {
 //		}
 //	}
 
-	@Test
-	public void testdelete() {
-		try {
-			MysqlController rsc = createMysqlService();
-			Response resp = rsc.delete();
-			assertThat(resp.getStatus(), is(200));
-			assertThat(resp.getEntity().toString(), is("OK"));
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
-
-	@Test
-	public void testdeleteError() {
-		try {
-			MysqlController rsc = createMysqlServiceNull();
-			Response resp = rsc.delete();
-			assertThat(resp.getStatus(), is(500));
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
+//	@Test
+//	public void testdelete() {
+//		try {
+//			MysqlController rsc = createMysqlService();
+//			Response resp = rsc.delete();
+//			assertThat(resp.getStatus(), is(200));
+//			assertThat(resp.getEntity().toString(), is("OK"));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			fail();
+//		}
+//	}
+//
+//	@Test
+//	public void testdeleteError() {
+//		try {
+//			MysqlController rsc = createMysqlServiceNull();
+//			Response resp = rsc.delete();
+//			assertThat(resp.getStatus(), is(500));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			fail();
+//		}
+//	}
 }
