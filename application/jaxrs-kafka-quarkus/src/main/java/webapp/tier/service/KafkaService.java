@@ -23,7 +23,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class KafkaService {
 
-	private static final Logger LOG = Logger.getLogger(KafkaService.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@ConfigProperty(name = "common.message")
 	String message;
@@ -39,14 +39,14 @@ public class KafkaService {
 	@Merge(Merge.Mode.MERGE)
 	@Broadcast
 	public String messegeToMemory(String msg) {
-		LOG.log(Level.INFO, "Received: {0}", msg);
+		logger.log(Level.INFO, "Received: {0}", msg);
 		LatestMessage.setLatestMsg(msg);
 		return msg;
 	}
 
 	public MsgBean publishMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
-		LOG.info(msgbean.getFullmsg());
+		logger.info(msgbean.getFullmsg());
 		emitmsg.send(MsgUtils.createBody(msgbean, splitkey));
 		return msgbean;
 	}

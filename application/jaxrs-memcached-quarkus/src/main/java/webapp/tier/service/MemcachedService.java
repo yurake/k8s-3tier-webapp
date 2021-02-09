@@ -20,7 +20,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class MemcachedService {
 
-	private static final Logger LOG = Logger.getLogger(MemcachedService.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String serverconf = ConfigProvider.getConfig().getValue("memcached.server.conf", String.class);
 
@@ -45,15 +45,15 @@ public class MemcachedService {
 			if (resultsetid && resultsetmsg) {
 				msgbean.setFullmsg("Set");
 			} else {
-				LOG.warning(errormsg);
+				logger.log(Level.WARNING, errormsg);
 				throw new WebappServiceException(errormsg);
 			}
 
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, errormsg, e);
+			logger.log(Level.SEVERE, errormsg, e);
 			throw new WebappServiceException(errormsg, e);
 		}
-		LOG.info(msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -71,10 +71,10 @@ public class MemcachedService {
 			}
 
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, errormsg, e);
+			logger.log(Level.SEVERE, errormsg, e);
 			throw new WebappServiceException(errormsg);
 		}
-		LOG.info(msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 }

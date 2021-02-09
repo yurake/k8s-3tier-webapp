@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        minikube: [1.15.1, 1.16.0]
+        minikube: [1.17.0, 1.17.1]
         kubernetes: [1.20.1, 1.20.2]
       fail-fast: false
     steps:
@@ -57,7 +57,7 @@ jobs:
           kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
       - name: apply minimal service
         run: |
-          sh ./kubernetes/apply-default-minimal.sh
+          sh ./kubernetes/bin/apply-default-quarkus.sh
           sleep 10
       - name: Setup bats
         uses: mig4/setup-bats@v1
@@ -67,12 +67,12 @@ jobs:
         run: bats -r kubernetes/test/bats
       - name: run e2e test
         run: |
-          kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
+          kubectl apply -f kubernetes/monitoring/test/postmannewman/quarkus/postmannewman-quarkus.yaml
       - name: wait for complete e2e job
         run: |
-          kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-job
-          kubectl -n monitoring describe job postmannewman-job
-          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
+          kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-quarkus
+          kubectl -n monitoring describe job postmannewman-quarkus
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
       - name: check minikube status
         if: always()
         run: |

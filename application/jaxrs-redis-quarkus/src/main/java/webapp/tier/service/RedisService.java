@@ -26,7 +26,7 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class RedisService implements Runnable {
 
-	private static final Logger LOG = Logger.getLogger(RedisService.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 
 	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
@@ -38,12 +38,12 @@ public class RedisService implements Runnable {
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
-		LOG.info("Subscribe is starting...");
+		logger.log(Level.INFO, "Subscribe is starting...");
 	}
 
 	void onStop(@Observes ShutdownEvent ev) {
 		scheduler.shutdown();
-		LOG.info("Subscribe is stopping...");
+		logger.log(Level.INFO, "Subscribe is stopping...");
 	}
 
 	public Jedis createJedis() {
@@ -64,7 +64,7 @@ public class RedisService implements Runnable {
 					status = true;
 				}
 			} catch (JedisConnectionException e) {
-				LOG.log(Level.SEVERE, "Status Check Error.", e);
+				logger.log(Level.SEVERE, "Status Check Error.", e);
 			} finally {
 				jedis.close();
 			}
@@ -82,7 +82,7 @@ public class RedisService implements Runnable {
 		} finally {
 			jedis.close();
 		}
-		LOG.info(msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -98,7 +98,7 @@ public class RedisService implements Runnable {
 			Set<String> keys = jedis.keys("*");
 			for (String key : keys) {
 				MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(key), jedis.get(key), "Get");
-				LOG.info(msgbean.getFullmsg());
+				logger.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}
 
@@ -121,7 +121,7 @@ public class RedisService implements Runnable {
 		} finally {
 			jedis.close();
 		}
-		LOG.info(msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -136,7 +136,7 @@ public class RedisService implements Runnable {
 		try {
 			jedis.subscribe(redissubsc, channel);
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "Subscribe Error.", e);
+			logger.log(Level.SEVERE, "Subscribe Error.", e);
 		} finally {
 			jedis.close();
 		}

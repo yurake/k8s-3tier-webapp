@@ -17,16 +17,16 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class HazelcastDeliverSubscriber extends HazelcastMessageListener {
 
-	private static final Logger LOG = Logger.getLogger(HazelcastDeliverSubscriber.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
 
 	@Override
 	public void onMessage(Message<Object> message) {
 		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject().toString(), splitkey);
 		msgbean.setFullmsg("Received");
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL).get();
 		String response = deliversvc.random();
-		LOG.log(Level.INFO, "Call Random Publish: {0}", response);
+		logger.log(Level.INFO, "Call Random Publish: {0}", response);
 	}
 }
