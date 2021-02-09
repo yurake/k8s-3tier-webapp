@@ -40,11 +40,10 @@ public class MysqlController {
 		int id = CreateId.createid();
 
 		Message m = new Message();
-	    m.setId(id);
-	    m.setMsg(message);
+		m.setId(id);
+		m.setMsg(message);
 
-	    return messageRepository.save(m);
-
+		return messageRepository.save(m);
 	}
 
 	@GetMapping("/select")
