@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -10,46 +10,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import webapp.tier.db.PostgresService;
+import webapp.tier.cache.RedisService;
 
 @RestController
-@RequestMapping("/spring/postgres")
+@RequestMapping("/spring/redis")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class PostgresResource {
+public class RedisResource {
 
-
-	PostgresService createPostgresService() {
-		return new PostgresService();
+	RedisService createRedisService() {
+		return new RedisService();
 	}
 
-	@PostMapping("/insert")
-	public Response insert() {
-		PostgresService postgres = createPostgresService();
+	@PostMapping("/put")
+	public Response set() {
+		RedisService svc = createRedisService();
 		try {
-			return Response.ok().entity(postgres.insert()).build();
+			return Response.ok().entity(svc.set()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
 	}
 
-	@GetMapping("/select")
-	public Response select() {
-		PostgresService postgres = createPostgresService();
+	@GetMapping("/get")
+	public Response get() {
+		RedisService svc = createRedisService();
 		try {
-			return Response.ok().entity(postgres.select()).build();
+			return Response.ok().entity(svc.get()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
 	}
 
-	@PostMapping("/delete")
-	public Response delete() {
-		PostgresService postgres = createPostgresService();
+	@PostMapping("/publish")
+	public Response publish() {
+		RedisService svc = createRedisService();
 		try {
-			return Response.ok(postgres.delete()).build();
+			return Response.ok().entity(svc.publish()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();

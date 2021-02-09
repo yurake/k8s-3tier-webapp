@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 
+import webapp.tier.ActiveMqController;
 import webapp.tier.mq.ActiveMqService;
 
 public class ActiveMqControllerTest {

@@ -1,9 +1,11 @@
-package webapp.controller;
+package webapp.tier;
 
 import org.junit.jupiter.api.Test;
 
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+
+import webapp.tier.WlpWebJavaSpringApplication;
 
 class WlpWebJavaSpringApplicationTest {
 

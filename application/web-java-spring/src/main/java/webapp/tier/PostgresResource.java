@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -10,45 +10,46 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import webapp.tier.mq.ActiveMqService;
+import webapp.tier.db.PostgresService;
 
 @RestController
-@RequestMapping("/spring/activemq")
+@RequestMapping("/spring/postgres")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ActiveMqController {
+public class PostgresResource {
 
-	ActiveMqService createActiveMqService() {
-		return new ActiveMqService();
+
+	PostgresService createPostgresService() {
+		return new PostgresService();
 	}
 
-	@PostMapping("/put")
-	public Response putcache() {
-		ActiveMqService svc = createActiveMqService();
+	@PostMapping("/insert")
+	public Response insert() {
+		PostgresService postgres = createPostgresService();
 		try {
-			return Response.ok().entity(svc.putActiveMq()).build();
+			return Response.ok().entity(postgres.insert()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
 	}
 
-	@GetMapping("/get")
-	public Response getcache() {
-		ActiveMqService svc = createActiveMqService();
+	@GetMapping("/select")
+	public Response select() {
+		PostgresService postgres = createPostgresService();
 		try {
-			return Response.ok().entity(svc.getActiveMq()).build();
+			return Response.ok().entity(postgres.select()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
 	}
 
-	@PostMapping("/publish")
-	public Response publish() {
-		ActiveMqService svc = createActiveMqService();
+	@PostMapping("/delete")
+	public Response delete() {
+		PostgresService postgres = createPostgresService();
 		try {
-			return Response.ok().entity(svc.publishActiveMq()).build();
+			return Response.ok(postgres.delete()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();

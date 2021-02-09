@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -7,39 +7,45 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 
-import webapp.tier.mq.RabbitmqService;
+import webapp.tier.RedisResource;
+import webapp.tier.cache.RedisService;
 
-public class RabbitmqControllerTest {
+public class RedisControllerTest {
 
-	private RabbitmqResource createRabbitmqService() throws Exception {
-		RabbitmqService svc = mock(RabbitmqService.class);
-		when(svc.put()).thenReturn("OK");
-		when(svc.get()).thenReturn("OK");
+	private RedisResource createRedisService() throws Exception {
+		RedisService svc = mock(RedisService.class);
+		List<String> allmsg = new ArrayList<>();
+		allmsg.add("OK");
+		when(svc.set()).thenReturn("OK");
+		when(svc.get()).thenReturn(allmsg);
 		when(svc.publish()).thenReturn("OK");
-		return new RabbitmqResource() {
-			RabbitmqService createRabbitmqService() {
+		return new RedisResource() {
+			RedisService createRedisService() {
 				return svc;
 			}
 		};
 	}
 
-	private RabbitmqResource createRabbitmqServiceNull() throws Exception {
-		return new RabbitmqResource() {
-			RabbitmqService createRabbitmqService() {
+	private RedisResource createRedisServiceNull() throws Exception {
+		return new RedisResource() {
+			RedisService createRedisService() {
 				return null;
 			}
 		};
 	}
 
 	@Test
-	public void testcreateRabbitmqService() {
+	public void testcreateRedisService() {
 		try {
-			RabbitmqResource rsc = new RabbitmqResource();
-			assertThat(rsc.createRabbitmqService(), is(instanceOf(RabbitmqService.class)));
+			RedisResource rsc = new RedisResource();
+			assertThat(rsc.createRedisService(), is(instanceOf(RedisService.class)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -47,10 +53,10 @@ public class RabbitmqControllerTest {
 	}
 
 	@Test
-	public void testPutcache() {
+	public void testsetcache() {
 		try {
-			RabbitmqResource rsc = createRabbitmqService();
-			Response resp = rsc.put();
+			RedisResource rsc = createRedisService();
+			Response resp = rsc.set();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
 		} catch (Exception e) {
@@ -60,10 +66,10 @@ public class RabbitmqControllerTest {
 	}
 
 	@Test
-	public void testPutcacheError() {
+	public void testsetError() {
 		try {
-			RabbitmqResource rsc = createRabbitmqServiceNull();
-			Response resp = rsc.put();
+			RedisResource rsc = createRedisServiceNull();
+			Response resp = rsc.set();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,10 +80,10 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testgetcache() {
 		try {
-			RabbitmqResource rsc = createRabbitmqService();
+			RedisResource rsc = createRedisService();
 			Response resp = rsc.get();
 			assertThat(resp.getStatus(), is(200));
-			assertThat(resp.getEntity().toString(), is("OK"));
+			assertThat(resp.getEntity().toString(), is("[OK]"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -87,7 +93,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testgetcacheError() {
 		try {
-			RabbitmqResource rsc = createRabbitmqServiceNull();
+			RedisResource rsc = createRedisServiceNull();
 			Response resp = rsc.get();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -99,7 +105,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testpublish() {
 		try {
-			RabbitmqResource rsc = createRabbitmqService();
+			RedisResource rsc = createRedisService();
 			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
@@ -112,7 +118,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testpublishError() {
 		try {
-			RabbitmqResource rsc = createRabbitmqServiceNull();
+			RedisResource rsc = createRedisServiceNull();
 			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {

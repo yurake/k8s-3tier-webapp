@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import webapp.tier.mq.RabbitmqService;
+import webapp.tier.mq.ActiveMqService;
 
 @RestController
-@RequestMapping("/spring/rabbitmq")
+@RequestMapping("/spring/activemq")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RabbitmqResource {
+public class ActiveMqController {
 
-	RabbitmqService createRabbitmqService() {
-		return new RabbitmqService();
+	ActiveMqService createActiveMqService() {
+		return new ActiveMqService();
 	}
 
 	@PostMapping("/put")
-	public Response put() {
-		RabbitmqService svc = createRabbitmqService();
+	public Response putcache() {
+		ActiveMqService svc = createActiveMqService();
 		try {
-			return Response.ok().entity(svc.put()).build();
+			return Response.ok().entity(svc.putActiveMq()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -34,10 +34,10 @@ public class RabbitmqResource {
 	}
 
 	@GetMapping("/get")
-	public Response get() {
-		RabbitmqService svc = createRabbitmqService();
+	public Response getcache() {
+		ActiveMqService svc = createActiveMqService();
 		try {
-			return Response.ok().entity(svc.get()).build();
+			return Response.ok().entity(svc.getActiveMq()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -46,9 +46,9 @@ public class RabbitmqResource {
 
 	@PostMapping("/publish")
 	public Response publish() {
-		RabbitmqService svc = createRabbitmqService();
+		ActiveMqService svc = createActiveMqService();
 		try {
-			return Response.ok().entity(svc.publish()).build();
+			return Response.ok().entity(svc.publishActiveMq()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();

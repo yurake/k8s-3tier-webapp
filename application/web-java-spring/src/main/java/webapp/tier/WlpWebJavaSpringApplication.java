@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

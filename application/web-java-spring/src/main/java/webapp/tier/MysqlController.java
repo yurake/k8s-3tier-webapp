@@ -1,16 +1,24 @@
-package webapp.controller;
+package webapp.tier;
+
+import java.security.NoSuchAlgorithmException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import webapp.tier.db.Message;
+import webapp.tier.db.MessageRepository;
 import webapp.tier.db.MysqlService;
+import webapp.tier.util.CreateId;
+import webapp.tier.util.GetConfig;
 
 @RestController
 @RequestMapping("/spring/mysql")
@@ -18,30 +26,30 @@ import webapp.tier.db.MysqlService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MysqlController {
 
+	private static String message = GetConfig.getResourceBundle("common.message");
+
+	@Autowired
+	private MessageRepository messageRepository;
+
 	MysqlService createMysqlService() {
 		return new MysqlService();
 	}
 
 	@PostMapping("/insert")
-	public Response insert() {
-		MysqlService insmysql = createMysqlService();
-		try {
-			return Response.ok().entity(insmysql.insert()).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(500).build();
-		}
+	public @ResponseBody Message insert() throws NoSuchAlgorithmException {
+		int id = CreateId.createid();
+
+		Message m = new Message();
+	    m.setId(id);
+	    m.setMsg(message);
+
+	    return messageRepository.save(m);
+
 	}
 
 	@GetMapping("/select")
-	public Response select() {
-		MysqlService selmysql = createMysqlService();
-		try {
-			return Response.ok().entity(selmysql.select()).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(500).build();
-		}
+	public @ResponseBody Iterable<Message> select() {
+		return messageRepository.findAll();
 	}
 
 	@PostMapping("/delete")

@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,37 +14,38 @@ import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 
-import webapp.tier.db.MysqlService;
+import webapp.tier.PostgresResource;
+import webapp.tier.db.PostgresService;
 
-public class MysqlControllerTest {
+public class PostgresControllerTest {
 
-	private MysqlController createMysqlService() throws Exception {
-		MysqlService svc = mock(MysqlService.class);
+	private PostgresResource createPostgresService() throws Exception {
+		PostgresService svc = mock(PostgresService.class);
 		List<String> allmsg = new ArrayList<>();
 		allmsg.add("OK");
 		when(svc.select()).thenReturn(allmsg);
 		when(svc.insert()).thenReturn("OK");
 		when(svc.delete()).thenReturn("OK");
-		return new MysqlController() {
-			MysqlService createMysqlService() {
+		return new PostgresResource() {
+			PostgresService createPostgresService() {
 				return svc;
 			}
 		};
 	}
 
-	private MysqlController createMysqlServiceNull() throws Exception {
-		return new MysqlController() {
-			MysqlService createMysqlService() {
+	private PostgresResource createPostgresServiceNull() throws Exception {
+		return new PostgresResource() {
+			PostgresService createPostgresService() {
 				return null;
 			}
 		};
 	}
 
 	@Test
-	public void testcreateMysqlService() {
+	public void testcreatePostgresService() {
 		try {
-			MysqlController rsc = new MysqlController();
-			assertThat(rsc.createMysqlService(), is(instanceOf(MysqlService.class)));
+			PostgresResource rsc = new PostgresResource();
+			assertThat(rsc.createPostgresService(), is(instanceOf(PostgresService.class)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -54,7 +55,7 @@ public class MysqlControllerTest {
 	@Test
 	public void testinsert() {
 		try {
-			MysqlController rsc = createMysqlService();
+			PostgresResource rsc = createPostgresService();
 			Response resp = rsc.insert();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
@@ -67,7 +68,7 @@ public class MysqlControllerTest {
 	@Test
 	public void testinsertError() {
 		try {
-			MysqlController rsc = createMysqlServiceNull();
+			PostgresResource rsc = createPostgresServiceNull();
 			Response resp = rsc.insert();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -79,7 +80,7 @@ public class MysqlControllerTest {
 	@Test
 	public void testselect() {
 		try {
-			MysqlController rsc = createMysqlService();
+			PostgresResource rsc = createPostgresService();
 			Response resp = rsc.select();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("[OK]"));
@@ -92,7 +93,7 @@ public class MysqlControllerTest {
 	@Test
 	public void testselectError() {
 		try {
-			MysqlController rsc = createMysqlServiceNull();
+			PostgresResource rsc = createPostgresServiceNull();
 			Response resp = rsc.select();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -104,7 +105,7 @@ public class MysqlControllerTest {
 	@Test
 	public void testdelete() {
 		try {
-			MysqlController rsc = createMysqlService();
+			PostgresResource rsc = createPostgresService();
 			Response resp = rsc.delete();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
@@ -117,7 +118,7 @@ public class MysqlControllerTest {
 	@Test
 	public void testdeleteError() {
 		try {
-			MysqlController rsc = createMysqlServiceNull();
+			PostgresResource rsc = createPostgresServiceNull();
 			Response resp = rsc.delete();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
