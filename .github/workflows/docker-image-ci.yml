@@ -125,14 +125,26 @@ jobs:
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/ab/Rd4WPZ1EPQWA2KTQwML6JyKoNgc=
 
-      - name: Build image - postmannewman
-        working-directory: ./kubernetes/monitoring/test/postmannewman
-        run: docker build -t yurak/postmannewman:latest
+      - name: Build image - postmannewman-quarkus
+        working-directory: ./kubernetes/monitoring/test/postmannewman/quarkus
+        run: docker build -t yurak/postmannewman-quarkus:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - postmannewman
+      - name: Push Image - postmannewman-quarkus
         if: github.event_name == 'push'
-        run: docker push yurak/postmannewman:latest
+        run: docker push yurak/postmannewman-quarkus:latest
+      - name: Update Microbadger
+        if: github.event_name == 'push'
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman/JYNTOrYaF6nvNQVKCj1BGP1yBpM=
+
+      - name: Build image - postmannewman-openliberty
+        working-directory: ./kubernetes/monitoring/test/postmannewman/openliberty
+        run: docker build -t yurak/postmannewman-openliberty:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
+      - name: Push Image - postmannewman-openliberty
+        if: github.event_name == 'push'
+        run: docker push yurak/postmannewman-openliberty:latest
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman/JYNTOrYaF6nvNQVKCj1BGP1yBpM=
