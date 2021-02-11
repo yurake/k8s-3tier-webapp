@@ -3,13 +3,15 @@ package webapp.tier;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.cache.RedisService;
 
 @RestController
@@ -18,40 +20,24 @@ import webapp.tier.cache.RedisService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RedisController {
 
-	RedisService createRedisService() {
-		return new RedisService();
-	}
+	@Autowired
+	RedisService svc;
 
 	@PostMapping("/put")
-	public Response set() {
-		RedisService svc = createRedisService();
-		try {
-			return Response.ok().entity(svc.set()).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(500).build();
-		}
+	@ResponseBody
+	public MsgBean set() {
+		return svc.set();
 	}
 
 	@GetMapping("/get")
-	public Response get() {
-		RedisService svc = createRedisService();
-		try {
-			return Response.ok().entity(svc.get()).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(500).build();
-		}
+	@ResponseBody
+	public Iterable<MsgBean> get() {
+		return svc.get();
 	}
 
 	@PostMapping("/publish")
-	public Response publish() {
-		RedisService svc = createRedisService();
-		try {
-			return Response.ok().entity(svc.publish()).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(500).build();
-		}
+	@ResponseBody
+	public MsgBean publish() {
+		return svc.publish();
 	}
 }

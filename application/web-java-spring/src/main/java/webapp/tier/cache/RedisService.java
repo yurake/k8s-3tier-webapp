@@ -1,6 +1,5 @@
 package webapp.tier.cache;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,12 +7,14 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
-import webapp.tier.util.CreateId;
+import webapp.tier.bean.MsgBean;
 import webapp.tier.util.GetConfig;
 
+@Service
 public class RedisService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String message = GetConfig.getResourceBundle("common.message");
@@ -45,67 +46,54 @@ public class RedisService {
 		return status;
 	}
 
-	public String set() throws NoSuchAlgorithmException {
-		String fullmsg = null;
+	public MsgBean set() {
+		MsgBean msgbean = new MsgBean(message);
 		Jedis jedis = null;
-		String id;
 		try {
-			id = String.valueOf(CreateId.createid());
 			jedis = createJedis();
-			jedis.set(id, message);
-			jedis.expire(id, setexpire);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+			jedis.set(msgbean.idtoString(), msgbean.getMessage());
+			jedis.expire(msgbean.idtoString(), setexpire);
+			logger.info(msgbean.logMessageOut("set"));
 		} finally {
 			jedis.close();
 		}
-		return fullmsg;
+		return msgbean;
 	}
 
-	public List<String> get() {
-		List<String> allmsg = new ArrayList<>();
+	public Iterable<MsgBean> get() {
+		List<MsgBean> allmsg = new ArrayList<>();
 		Jedis jedis = null;
-
 		try {
 			jedis = createJedis();
 			Set<String> keys = jedis.keys("*");
 			for (String key : keys) {
 				String msg = jedis.get(key);
-				String fullmsg = "Selected Msg: id: " + key + ", message: " + msg;
-				logger.info(fullmsg);
-				allmsg.add(fullmsg);
+				MsgBean msgbean = new MsgBean(key, msg);
+				logger.info(msgbean.logMessageOut("get"));
+				allmsg.add(msgbean);
 			}
 
 			if (allmsg.isEmpty()) {
-				allmsg.add("No Data");
+				allmsg.add(new MsgBean(0, "No Data"));
 			}
-
 		} finally {
 			jedis.close();
 		}
 		return allmsg;
 	}
 
-	public String publish() throws NoSuchAlgorithmException {
-		String fullmsg = null;
+	public MsgBean publish() {
+		MsgBean msgbean = new MsgBean(message);
+		String body = msgbean.createBody(splitkey);
 		Jedis jedis = null;
-		String id;
 		try {
 			jedis = createJedis();
-			id = String.valueOf(CreateId.createid());
-			StringBuilder buf = new StringBuilder();
-			buf.append(id);
-			buf.append(splitkey);
-			buf.append(message);
-			String body = buf.toString();
-
 			jedis.publish(channel, body);
-			jedis.expire(id, setexpire);
-			fullmsg = "Publish channel:" + channel + ", id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+			jedis.expire(msgbean.idtoString(), setexpire);
+			logger.info(msgbean.logMessageOut("publish"));
 		} finally {
 			jedis.close();
 		}
-		return fullmsg;
+		return msgbean;
 	}
 }

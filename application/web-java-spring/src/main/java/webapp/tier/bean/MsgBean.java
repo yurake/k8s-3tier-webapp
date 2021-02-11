@@ -30,7 +30,7 @@ public class MsgBean {
 		this.message = message;
 	}
 
-	public String getIdtoString() {
+	public String idtoString() {
 		return String.valueOf(id);
 	}
 
