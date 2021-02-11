@@ -4,30 +4,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name="msg")
+@Getter
+@Setter
 public class Message {
-
 
     @Id
 //    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String msg;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getMsg() {
-		return msg;
-	}
-
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
 
 }
