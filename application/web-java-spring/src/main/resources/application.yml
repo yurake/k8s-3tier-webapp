@@ -1,0 +1,22 @@
+server.servlet.context-path: /
+management.endpoint.health.show-details: always
+
+spring.jpa:
+  hibernate.ddl-auto: update
+  open-in-view: false
+
+spring.datasource:
+  mysql:
+    url: jdbc:mysql://mysql:3306/webapp?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    username: webapp
+    password: webapp
+    driverClassName: com.mysql.cj.jdbc.Driver
+  postgres:
+    url: jdbc:postgresql://postgres:5432/webapp?user=webapp&password=webapp
+    username: webapp
+    password: webapp
+    driverClassName: org.postgresql.Driver
+
+spring.redis:
+  host: redis
+  port: 6379
