@@ -1,10 +1,8 @@
 package webapp.tier.util;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.security.NoSuchAlgorithmException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,14 +10,8 @@ class CreateIdTest {
 
 	@Test
 	void testCreateid() {
-		int expected;
-		try {
-			expected = CreateId.createid();
-			assertThat(expected, is(notNullValue()));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			fail();
-		}
+		int expected = CreateId.createid();
+		assertThat(expected, is(notNullValue()));
 	}
 
 	@Test

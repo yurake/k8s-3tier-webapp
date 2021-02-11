@@ -1,6 +1,5 @@
 package webapp.tier.cache;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServlet;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.exception.WebappServiceException;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
@@ -22,7 +22,6 @@ public class MemcachedService extends HttpServlet {
 	private static String serverconf = GetConfig.getResourceBundle("memcached.server.conf");
 	private static String message = GetConfig.getResourceBundle("common.message");
 
-	// コネクションプールの初期化
 	static {
 		SockIOPool pool = SockIOPool.getInstance();
 		pool.setServers(new String[] { serverconf });
@@ -33,42 +32,40 @@ public class MemcachedService extends HttpServlet {
 		return new MemCachedClient();
 	}
 
-	public String get() {
-		String fullmsg = "Error";
+	public MsgBean get() {
+
 		MemCachedClient mcc = createMemCachedClient();
 
-		String id = (String) mcc.get("id");
-		String message = (String) mcc.get("msg");
+		int id = (int) mcc.get("id");
+		String msg = (String) mcc.get("msg");
 
 		if (Objects.isNull(id) || Objects.isNull(message)) {
-			fullmsg = "Failed get from Memcached";
-			logger.warn(fullmsg);
-			throw new WebappServiceException(fullmsg);
+			String errormsg = "Failed get from Memcached";
+			logger.warn(errormsg);
+			throw new WebappServiceException(errormsg);
 		} else {
-			fullmsg = "Get id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+			MsgBean msgbean = new MsgBean(id, msg);
+			logger.info(msgbean.logMessageOut("get"));
+			return msgbean;
 		}
-		return fullmsg;
 	}
 
-	public String set() throws NoSuchAlgorithmException {
-		String fullmsg = "Error";
-		String id = String.valueOf(CreateId.createid());
+	public MsgBean set() {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message);
 		boolean resultid = false;
 		boolean resultmsg = false;
 
 		MemCachedClient mcc = createMemCachedClient();
-		resultid = mcc.set("id", id);
+		resultid = mcc.set("id", msgbean.getId());
 		resultmsg = mcc.set("msg", message);
 
 		if (resultid && resultmsg) {
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
+			logger.info(msgbean.logMessageOut("set"));
 		} else {
-			fullmsg = "Failed set to Memcached";
-			logger.warn(fullmsg);
-			throw new WebappServiceException(fullmsg);
+			String errormsg = "Failed set to Memcached";
+			logger.warn(errormsg);
+			throw new WebappServiceException(errormsg);
 		}
-		return fullmsg;
+		return msgbean;
 	}
 }
