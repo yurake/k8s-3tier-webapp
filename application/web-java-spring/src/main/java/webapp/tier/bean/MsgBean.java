@@ -3,6 +3,7 @@ package webapp.tier.bean;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import webapp.tier.util.CreateId;
 
 @Getter
 @EqualsAndHashCode
@@ -14,10 +15,31 @@ public class MsgBean {
 
 	public MsgBean() {
 	}
+	public MsgBean(String message) {
+		this.id = CreateId.createid();
+		this.message = message;
+	}
 
 	public MsgBean(int id, String message) {
 		this.id = id;
 		this.message = message;
+	}
+
+	public MsgBean(String id, String message) {
+		this.id = Integer.parseInt(id);
+		this.message = message;
+	}
+
+	public String getIdtoString() {
+		return String.valueOf(id);
+	}
+
+	public String createBody(String splitkey) {
+		StringBuilder buf = new StringBuilder();
+		buf.append(id);
+		buf.append(splitkey);
+		buf.append(message);
+		return buf.toString();
 	}
 
 	public String logMessageOut(String type) {

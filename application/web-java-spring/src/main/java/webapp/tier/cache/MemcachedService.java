@@ -13,7 +13,6 @@ import com.whalin.MemCached.SockIOPool;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.exception.WebappServiceException;
-import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
 @Service
@@ -51,7 +50,7 @@ public class MemcachedService extends HttpServlet {
 	}
 
 	public MsgBean set() {
-		MsgBean msgbean = new MsgBean(CreateId.createid(), message);
+		MsgBean msgbean = new MsgBean(message);
 		boolean resultid = false;
 		boolean resultmsg = false;
 
