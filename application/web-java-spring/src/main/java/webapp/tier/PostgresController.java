@@ -1,6 +1,5 @@
 package webapp.tier;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +34,10 @@ public class PostgresController {
 	private PostgresMessageRepository messageRepository;
 
 	@PostMapping("/insert")
-	public @ResponseBody PostgresMessage insert() throws NoSuchAlgorithmException {
-		int id = CreateId.createid();
-
+	@ResponseBody
+	public PostgresMessage insert() {
 		PostgresMessage m = new PostgresMessage();
-		m.setId(id);
+		m.setId(CreateId.createid());
 		m.setMsg(message);
 		logger.info(logMessageOut("insert", m.getId(), m.getMsg()));
 
@@ -47,7 +45,8 @@ public class PostgresController {
 	}
 
 	@GetMapping("/select")
-	public @ResponseBody Iterable<PostgresMessage> select() {
+	@ResponseBody
+	public Iterable<PostgresMessage> select() {
 		List<PostgresMessage> allmsg = new ArrayList<>();
 		allmsg = messageRepository.findAll();
 
@@ -66,9 +65,12 @@ public class PostgresController {
 	}
 
 	@PostMapping("/delete")
-	public @ResponseBody String delete() {
+	@ResponseBody
+	public String delete() {
 		messageRepository.deleteAll();
-		return "Deleted";
+		String msg = "Deleted";
+		logger.info(msg);
+		return msg;
 	}
 
 	private String logMessageOut(String type, int id, String msg) {

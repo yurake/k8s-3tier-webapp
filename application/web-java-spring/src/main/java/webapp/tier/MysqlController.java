@@ -1,6 +1,5 @@
 package webapp.tier;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +34,10 @@ public class MysqlController {
 	private MysqlMessageRepository messageRepository;
 
 	@PostMapping("/insert")
-	public @ResponseBody MysqlMessage insert() throws NoSuchAlgorithmException {
-		int id = CreateId.createid();
-
+	@ResponseBody
+	public MysqlMessage insert() {
 		MysqlMessage m = new MysqlMessage();
-		m.setId(id);
+		m.setId(CreateId.createid());
 		m.setMsg(message);
 		logger.info(logMessageOut("insert", m.getId(), m.getMsg()));
 
@@ -47,7 +45,8 @@ public class MysqlController {
 	}
 
 	@GetMapping("/select")
-	public @ResponseBody Iterable<MysqlMessage> select() {
+	@ResponseBody
+	public Iterable<MysqlMessage> select() {
 		List<MysqlMessage> allmsg = new ArrayList<>();
 		allmsg = messageRepository.findAll();
 
@@ -66,9 +65,12 @@ public class MysqlController {
 	}
 
 	@PostMapping("/delete")
-	public @ResponseBody String delete() {
+	@ResponseBody
+	public String delete() {
 		messageRepository.deleteAll();
-		return "Deleted";
+		String msg = "Deleted";
+		logger.info(msg);
+		return msg;
 	}
 
 	private String logMessageOut(String type, int id, String msg) {
