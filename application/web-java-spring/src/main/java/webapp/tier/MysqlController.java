@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import webapp.tier.db.Message;
 import webapp.tier.db.MessageRepository;
-import webapp.tier.db.MysqlService;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
@@ -34,10 +33,6 @@ public class MysqlController {
 
 	@Autowired
 	private MessageRepository messageRepository;
-
-	MysqlService createMysqlService() {
-		return new MysqlService();
-	}
 
 	@PostMapping("/insert")
 	public @ResponseBody Message insert() throws NoSuchAlgorithmException {

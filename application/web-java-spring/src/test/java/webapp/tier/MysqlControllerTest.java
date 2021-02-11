@@ -1,53 +1,6 @@
 package webapp.tier;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
-import webapp.tier.db.MysqlService;
-
 public class MysqlControllerTest {
-
-	private MysqlController createMysqlService() throws Exception {
-		MysqlService svc = mock(MysqlService.class);
-		List<String> allmsg = new ArrayList<>();
-		allmsg.add("OK");
-		when(svc.select()).thenReturn(allmsg);
-		when(svc.insert()).thenReturn("OK");
-		when(svc.delete()).thenReturn("OK");
-		return new MysqlController() {
-			MysqlService createMysqlService() {
-				return svc;
-			}
-		};
-	}
-
-	private MysqlController createMysqlServiceNull() throws Exception {
-		return new MysqlController() {
-			MysqlService createMysqlService() {
-				return null;
-			}
-		};
-	}
-
-	@Test
-	public void testcreateMysqlService() {
-		try {
-			MysqlController rsc = new MysqlController();
-			assertThat(rsc.createMysqlService(), is(instanceOf(MysqlService.class)));
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
 
 //	@Test
 //	public void testinsert() {
