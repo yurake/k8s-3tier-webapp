@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import webapp.tier.db.Message;
-import webapp.tier.db.MessageRepository;
+import webapp.tier.db.mysql.MysqlMessage;
+import webapp.tier.db.mysql.MysqlMessageRepository;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.GetConfig;
 
@@ -32,13 +32,13 @@ public class MysqlController {
 	private static String message = GetConfig.getResourceBundle("common.message");
 
 	@Autowired
-	private MessageRepository messageRepository;
+	private MysqlMessageRepository messageRepository;
 
 	@PostMapping("/insert")
-	public @ResponseBody Message insert() throws NoSuchAlgorithmException {
+	public @ResponseBody MysqlMessage insert() throws NoSuchAlgorithmException {
 		int id = CreateId.createid();
 
-		Message m = new Message();
+		MysqlMessage m = new MysqlMessage();
 		m.setId(id);
 		m.setMsg(message);
 		logger.info(logMessageOut("insert", m.getId(), m.getMsg()));
@@ -47,18 +47,18 @@ public class MysqlController {
 	}
 
 	@GetMapping("/select")
-	public @ResponseBody Iterable<Message> select() {
-		List<Message> allmsg = new ArrayList<>();
+	public @ResponseBody Iterable<MysqlMessage> select() {
+		List<MysqlMessage> allmsg = new ArrayList<>();
 		allmsg = messageRepository.findAll();
 
 		if (allmsg.isEmpty()) {
-			Message m = new Message();
+			MysqlMessage m = new MysqlMessage();
 			m.setId(0);
 			m.setMsg("No Data");
 			allmsg.add(m);
 		}
 
-		for(Message value : allmsg) {
+		for(MysqlMessage value : allmsg) {
 			logger.info(logMessageOut("select", value.getId(), value.getMsg()));
 		}
 

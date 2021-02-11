@@ -1,4 +1,4 @@
-package webapp.tier.db;
+package webapp.tier.db.mysql;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Table(name="msg")
 @Getter
 @Setter
-public class Message {
+public class MysqlMessage {
 
     @Id
 //    @GeneratedValue(strategy=GenerationType.IDENTITY)
