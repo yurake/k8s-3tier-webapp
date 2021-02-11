@@ -11,25 +11,25 @@ import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
 
-import webapp.tier.RabbitmqResource;
+import webapp.tier.RabbitmqController;
 import webapp.tier.mq.RabbitmqService;
 
 public class RabbitmqControllerTest {
 
-	private RabbitmqResource createRabbitmqService() throws Exception {
+	private RabbitmqController createRabbitmqService() throws Exception {
 		RabbitmqService svc = mock(RabbitmqService.class);
 		when(svc.put()).thenReturn("OK");
 		when(svc.get()).thenReturn("OK");
 		when(svc.publish()).thenReturn("OK");
-		return new RabbitmqResource() {
+		return new RabbitmqController() {
 			RabbitmqService createRabbitmqService() {
 				return svc;
 			}
 		};
 	}
 
-	private RabbitmqResource createRabbitmqServiceNull() throws Exception {
-		return new RabbitmqResource() {
+	private RabbitmqController createRabbitmqServiceNull() throws Exception {
+		return new RabbitmqController() {
 			RabbitmqService createRabbitmqService() {
 				return null;
 			}
@@ -39,7 +39,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testcreateRabbitmqService() {
 		try {
-			RabbitmqResource rsc = new RabbitmqResource();
+			RabbitmqController rsc = new RabbitmqController();
 			assertThat(rsc.createRabbitmqService(), is(instanceOf(RabbitmqService.class)));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testPutcache() {
 		try {
-			RabbitmqResource rsc = createRabbitmqService();
+			RabbitmqController rsc = createRabbitmqService();
 			Response resp = rsc.put();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
@@ -63,7 +63,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testPutcacheError() {
 		try {
-			RabbitmqResource rsc = createRabbitmqServiceNull();
+			RabbitmqController rsc = createRabbitmqServiceNull();
 			Response resp = rsc.put();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -75,7 +75,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testgetcache() {
 		try {
-			RabbitmqResource rsc = createRabbitmqService();
+			RabbitmqController rsc = createRabbitmqService();
 			Response resp = rsc.get();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
@@ -88,7 +88,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testgetcacheError() {
 		try {
-			RabbitmqResource rsc = createRabbitmqServiceNull();
+			RabbitmqController rsc = createRabbitmqServiceNull();
 			Response resp = rsc.get();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {
@@ -100,7 +100,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testpublish() {
 		try {
-			RabbitmqResource rsc = createRabbitmqService();
+			RabbitmqController rsc = createRabbitmqService();
 			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(200));
 			assertThat(resp.getEntity().toString(), is("OK"));
@@ -113,7 +113,7 @@ public class RabbitmqControllerTest {
 	@Test
 	public void testpublishError() {
 		try {
-			RabbitmqResource rsc = createRabbitmqServiceNull();
+			RabbitmqController rsc = createRabbitmqServiceNull();
 			Response resp = rsc.publish();
 			assertThat(resp.getStatus(), is(500));
 		} catch (Exception e) {

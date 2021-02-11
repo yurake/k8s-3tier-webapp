@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import webapp.tier.mq.RabbitmqService;
+import webapp.tier.cache.RedisService;
 
 @RestController
-@RequestMapping("/spring/rabbitmq")
+@RequestMapping("/spring/redis")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RabbitmqResource {
+public class RedisController {
 
-	RabbitmqService createRabbitmqService() {
-		return new RabbitmqService();
+	RedisService createRedisService() {
+		return new RedisService();
 	}
 
 	@PostMapping("/put")
-	public Response put() {
-		RabbitmqService svc = createRabbitmqService();
+	public Response set() {
+		RedisService svc = createRedisService();
 		try {
-			return Response.ok().entity(svc.put()).build();
+			return Response.ok().entity(svc.set()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -35,7 +35,7 @@ public class RabbitmqResource {
 
 	@GetMapping("/get")
 	public Response get() {
-		RabbitmqService svc = createRabbitmqService();
+		RedisService svc = createRedisService();
 		try {
 			return Response.ok().entity(svc.get()).build();
 		} catch (Exception e) {
@@ -46,7 +46,7 @@ public class RabbitmqResource {
 
 	@PostMapping("/publish")
 	public Response publish() {
-		RabbitmqService svc = createRabbitmqService();
+		RedisService svc = createRedisService();
 		try {
 			return Response.ok().entity(svc.publish()).build();
 		} catch (Exception e) {
