@@ -10,8 +10,6 @@
     <feature>jaxrs-2.1</feature>
     <feature>jsonp-1.1</feature>
     <feature>cdi-2.0</feature>
-    <feature>mpOpenTracing-1.3</feature>
-    <feature>usr:opentracingZipkin-0.31</feature>
   </featureManager>
 
   <mpMetrics authentication="false" />
@@ -51,7 +49,5 @@
   <jmsTopic id="ActiveMQTopic" jndiName="jms/ActiveMQTopic">
     <properties.activemq PhysicalName="ActiveMQTopic" />
   </jmsTopic>
-
-  <opentracingZipkin />
 
 </server>

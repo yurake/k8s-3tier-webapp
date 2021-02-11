@@ -67,12 +67,12 @@ jobs:
         run: bats -r kubernetes/test/bats
       - name: run e2e test
         run: |
-          kubectl apply -f kubernetes/monitoring/test/postmannewman/postmannewman-job.yaml
+          kubectl apply -f kubernetes/monitoring/test/postmannewman/quarkus/postmannewman-quarkus.yaml
       - name: wait for complete e2e job
         run: |
-          kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-job
-          kubectl -n monitoring describe job postmannewman-job
-          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
+          kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-quarkus
+          kubectl -n monitoring describe job postmannewman-quarkus
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
       - name: check minikube status
         if: always()
         run: |
@@ -131,11 +131,11 @@ jobs:
         run: |
           kubectl -n kube-system describe po $(kubectl get pods -n kube-system | awk '{print $1}' | grep storage-provisioner)
           kubectl -n kube-system logs $(kubectl get pods -n kube-system | awk '{print $1}' | grep storage-provisioner)
-      - name: check after test postmannewman-job
+      - name: check after test postmannewman-quarkus
         if: always()
         run: |
-          kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
-          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-job)
+          kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
       - name: check minikube status
         if: always()
         run: |
