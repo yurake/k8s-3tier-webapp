@@ -1,5 +1,6 @@
 server.servlet.context-path: /
 management.endpoint.health.show-details: always
+common.message: Hello k8s-3tier-webapp!
 
 spring.jpa:
   hibernate.ddl-auto: update
@@ -20,3 +21,6 @@ spring.datasource:
 spring.redis:
   host: redis
   port: 6379
+  set.expire: 3600
+  channel.name: pubsub
+  split.key: ","

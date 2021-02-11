@@ -8,11 +8,11 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import webapp.tier.bean.MsgBean;
-import webapp.tier.util.GetConfig;
 
 @Service
 public class RedisService {
@@ -20,11 +20,19 @@ public class RedisService {
 	@Autowired
 	private StringRedisTemplate redisTemplate;
 
+	@Value("${common.message}")
+	private String message;
+
+	@Value("${spring.redis.channel.name}")
+	private String channel;
+
+	@Value("${spring.redis.set.expire}")
+	private int setexpire;
+
+	@Value("${spring.redis.split.key}")
+	private String splitkey;
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-	private static String message = GetConfig.getResourceBundle("common.message");
-	private static String splitkey = GetConfig.getResourceBundle("redis.split.key");
-	private static String channel = GetConfig.getResourceBundle("redis.channel.name");
-	private static int setexpire = Integer.parseInt(GetConfig.getResourceBundle("redis.set.expire"));
 
 	public MsgBean set() {
 		MsgBean msgbean = new MsgBean(message);
