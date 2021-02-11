@@ -23,20 +23,14 @@ public class MemcachedController {
 	@Autowired
 	MemcachedService svc;
 
-	MemcachedService createMemcachedService() {
-		return new MemcachedService();
-	}
-
 	@PostMapping("/set")
 	@ResponseBody
 	public MsgBean set() {
-		MemcachedService svc = createMemcachedService();
 		return svc.set();
 	}
 
 	@GetMapping("/get")
 	public MsgBean get() {
-		MemcachedService svc = createMemcachedService();
 		return svc.get();
 	}
 }
