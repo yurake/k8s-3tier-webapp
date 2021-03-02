@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        minikube: [1.17.0, 1.17.1]
+        minikube: [1.17.1, 1.18.0]
         kubernetes: [1.20.1, 1.20.2]
       fail-fast: false
     steps:
