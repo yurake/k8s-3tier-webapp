@@ -1,4 +1,4 @@
-FROM rabbitmq:3.8.11-management-alpine
+FROM rabbitmq:3.8.13-management-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
