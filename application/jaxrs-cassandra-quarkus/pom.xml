@@ -13,7 +13,7 @@
 	<artifactId>jaxrs-cassandra-quarkus</artifactId>
 	<properties>
 		<quarkus.platform.version>1.8.3.Final</quarkus.platform.version>
-		<cassandra.version>1.0.0</cassandra.version>
+		<cassandra.version>1.0.1</cassandra.version>
 		<datastax-java-driver.version>4.11.0</datastax-java-driver.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
