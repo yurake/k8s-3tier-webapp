@@ -16,7 +16,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<slf4j-log4j12.version>1.7.30</slf4j-log4j12.version>
-		<hazelcast.version>4.0.3</hazelcast.version>
+		<hazelcast.version>4.2</hazelcast.version>
 		<jedis.version>3.5.1</jedis.version>
 		<amqp-client.version>5.11.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
