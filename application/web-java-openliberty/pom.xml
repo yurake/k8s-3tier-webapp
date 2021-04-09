@@ -16,9 +16,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<slf4j-log4j12.version>1.7.30</slf4j-log4j12.version>
-		<hazelcast.version>4.0.3</hazelcast.version>
+		<hazelcast.version>4.2</hazelcast.version>
 		<jedis.version>3.5.1</jedis.version>
-		<amqp-client.version>5.10.0</amqp-client.version>
+		<amqp-client.version>5.11.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<rabbitmq-jms.version>2.2.0</rabbitmq-jms.version>
 
@@ -142,7 +142,7 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>3.7.7</version>
+			<version>3.8.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

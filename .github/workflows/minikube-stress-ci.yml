@@ -24,8 +24,8 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: 1.17.1
-          k8s-version: 1.20.2
+          minikube-version: 1.18.1
+          k8s-version: 1.20.5
       - name: minikube settings
         run: |
           sudo apt install conntrack
