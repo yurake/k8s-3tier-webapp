@@ -32,21 +32,27 @@ public class MemcachedService extends HttpServlet {
 	}
 
 	public MsgBean get() {
-
+		MsgBean msgbean = null;
+		String errormsg = "Failed get from Memcached";
 		MemCachedClient mcc = createMemCachedClient();
 
-		int id = (int) mcc.get("id");
-		String msg = (String) mcc.get("msg");
+		try {
+			int id = (int) mcc.get("id");
+			String msg = (String) mcc.get("msg");
 
-		if (Objects.isNull(id) || Objects.isNull(message)) {
-			String errormsg = "Failed get from Memcached";
-			logger.warn(errormsg);
+			if (Objects.isNull(id) || Objects.isNull(message)) {
+				logger.warn(errormsg);
+				throw new WebappServiceException(errormsg);
+			} else {
+				msgbean = new MsgBean(id, msg);
+			}
+		} catch (Exception e) {
+			logger.warn(errormsg, e);
 			throw new WebappServiceException(errormsg);
-		} else {
-			MsgBean msgbean = new MsgBean(id, msg);
-			logger.info(msgbean.logMessageOut("get"));
-			return msgbean;
 		}
+
+		logger.info(msgbean.logMessageOut("get"));
+		return msgbean;
 	}
 
 	public MsgBean set() {
