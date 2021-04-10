@@ -12,7 +12,7 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-rabbitmq-quarkus</artifactId>
 	<properties>
-		<amqp-client.version>5.10.0</amqp-client.version>
+		<amqp-client.version>5.11.0</amqp-client.version>
 	</properties>
 	<dependencies>
 		<dependency>
