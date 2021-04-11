@@ -31,6 +31,14 @@ public class MemcachedService extends HttpServlet {
 		return new MemCachedClient();
 	}
 
+	protected MsgBean checkResult(int id, String msg, String errormsg) {
+		if (Objects.isNull(id) || Objects.isNull(msg)) {
+			logger.warn(errormsg);
+			throw new WebappServiceException(errormsg);
+		}
+		return new MsgBean(id, msg);
+	}
+
 	public MsgBean get() {
 		MsgBean msgbean = null;
 		String errormsg = "Failed get from Memcached";
@@ -39,13 +47,7 @@ public class MemcachedService extends HttpServlet {
 		try {
 			int id = (int) mcc.get("id");
 			String msg = (String) mcc.get("msg");
-
-			if (Objects.isNull(id) || Objects.isNull(message)) {
-				logger.warn(errormsg);
-				throw new WebappServiceException(errormsg);
-			} else {
-				msgbean = new MsgBean(id, msg);
-			}
+			msgbean = checkResult(id, msg, errormsg);
 		} catch (Exception e) {
 			logger.warn(errormsg, e);
 			throw new WebappServiceException(errormsg);
