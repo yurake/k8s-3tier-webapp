@@ -39,3 +39,14 @@ spec:
               path: /actuator/health/readiness
             initialDelaySeconds: 30
             periodSeconds: 10
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-secret
+                  key: mysql-password
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-secret
+                  key: pg-password
