@@ -4,7 +4,7 @@ import webapp.tier.cache.MemcachedService;
 
 public class MemcachedControllerTest {
 
-//	private MemcachedController createMemcachedService() throws Exception {
+//	MemcachedController createMemcachedService() throws Exception {
 //		MemcachedService svc = mock(MemcachedService.class);
 //		when(svc.set()).thenReturn("OK");
 //		when(svc.get()).thenReturn("OK");
@@ -15,7 +15,7 @@ public class MemcachedControllerTest {
 //		};
 //	}
 
-	private MemcachedController createMemcachedServiceNull() throws Exception {
+	MemcachedController createMemcachedServiceNull() throws Exception {
 		return new MemcachedController() {
 			MemcachedService createMemcachedService() {
 				return null;
