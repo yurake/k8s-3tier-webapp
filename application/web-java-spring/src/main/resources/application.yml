@@ -13,7 +13,7 @@ spring.datasource:
     password: ${MYSQL_PASSWORD}
     driverClassName: com.mysql.cj.jdbc.Driver
   postgres:
-    url: jdbc:postgresql://postgres:5432/webapp?user=webapp&password=webapp
+    url: jdbc:postgresql://postgres:5432/webapp?user=webapp&password=${PG_PASSWORD}
     username: webapp
     password: ${PG_PASSWORD}
     driverClassName: org.postgresql.Driver
