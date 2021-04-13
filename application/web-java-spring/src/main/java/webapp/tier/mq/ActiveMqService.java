@@ -5,6 +5,7 @@ import java.util.Objects;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Queue;
 import javax.jms.Session;
@@ -13,26 +14,83 @@ import javax.jms.Topic;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.apache.activemq.artemis.jms.client.ActiveMQQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.GetConfig;
 
 @Service
-@ComponentScan
 public class ActiveMqService {
 
+	@Autowired
+	private Queue queue;
+
+	@Autowired
+	private JmsTemplate jmsTemplate;
+
+	@Value("${common.message}")
+	private String message;
+
+	@Value("${activemq.publisher.message}")
+	private String pubmessage;
+
+	@Value("${activemq.split.key}")
+	private String splitkey;
+
+	@Value("${activemq.queue.name}")
+	private String queuename;
+
+	@Value("${activemq.topic.name}")
+	private String topicname;
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-	private static String msg = GetConfig.getResourceBundle("common.message");
-	private static String pubmessage = GetConfig.getResourceBundle("activemq.publisher.message");
-	private static String splitkey = GetConfig.getResourceBundle("activemq.split.key");
 	Connection conn = null;
 	Session session = null;
 
-	private 	InitialContext getInitialContext() throws NamingException {
+	@Bean
+	Queue queue() {
+		return new ActiveMQQueue("remotingQueue");
+	}
+
+	public MsgBean put() {
+		MsgBean msgbean = new MsgBean(message);
+		String body = msgbean.createBody(splitkey);
+		jmsTemplate.convertAndSend(body, queuename);
+		logger.info(msgbean.logMessageOut("put"));
+		return msgbean;
+	}
+
+	public MsgBean get() throws JMSException {
+		MsgBean msgbean = null;
+		Message msg = jmsTemplate.receive(queue);
+		if (Objects.isNull(msg)) {
+			msgbean = new MsgBean(0, "No Data.");
+		} else {
+			TextMessage textMessage = (TextMessage) msg;
+			String[] body = textMessage.getText().split(splitkey, 0);
+			msgbean = new MsgBean(body[0], body[1]);
+		}
+		logger.info(msgbean.logMessageOut("get"));
+		return msgbean;
+	}
+
+	public MsgBean publish() {
+		MsgBean msgbean = new MsgBean(message);
+		String body = msgbean.createBody(splitkey);
+		jmsTemplate.setPubSubDomain(true);
+		jmsTemplate.convertAndSend(body, topicname);
+		logger.info(msgbean.logMessageOut("put"));
+		return msgbean;
+	}
+
+	private InitialContext getInitialContext() throws NamingException {
 		return new InitialContext();
 	}
 
@@ -67,7 +125,7 @@ public class ActiveMqService {
 
 		try {
 			StringBuilder buf = new StringBuilder();
-			String body = buf.append(id).append(splitkey).append(msg).toString();
+			String body = buf.append(id).append(splitkey).append(message).toString();
 			getConnection();
 			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			TextMessage message = session.createTextMessage(body);

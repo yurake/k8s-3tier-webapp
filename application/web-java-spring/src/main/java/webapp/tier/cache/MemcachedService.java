@@ -2,8 +2,6 @@ package webapp.tier.cache;
 
 import java.util.Objects;
 
-import javax.servlet.http.HttpServlet;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,7 @@ import webapp.tier.exception.WebappServiceException;
 import webapp.tier.util.GetConfig;
 
 @Service
-public class MemcachedService extends HttpServlet {
+public class MemcachedService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private static String serverconf = GetConfig.getResourceBundle("memcached.server.conf");
 	private static String message = GetConfig.getResourceBundle("common.message");

@@ -24,3 +24,7 @@ spring.redis:
   set.expire: 3600
   channel.name: pubsub
   split.key: ","
+
+spring.activemq:
+  broker-url: tcp://localhost:61616
+ 
