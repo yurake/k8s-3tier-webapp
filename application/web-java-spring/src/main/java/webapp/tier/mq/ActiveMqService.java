@@ -38,9 +38,6 @@ public class ActiveMqService {
 	@Value("${common.message}")
 	private String message;
 
-	@Value("${activemq.publisher.message}")
-	private String pubmessage;
-
 	@Value("${activemq.split.key}")
 	private String splitkey;
 
@@ -165,7 +162,7 @@ public class ActiveMqService {
 
 		try {
 			StringBuilder buf = new StringBuilder();
-			String body = buf.append(id).append(splitkey).append(pubmessage).toString();
+			String body = buf.append(id).append(splitkey).append(message).toString();
 			getConnection();
 			TextMessage message = session.createTextMessage(body);
 			session.createProducer(getTopic()).send(message);
