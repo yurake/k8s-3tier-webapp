@@ -171,6 +171,6 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Add new issue:
-            ${{ steps.create-issue-minikube-ci.outputs.number }}
+            #${{ steps.create-issue-minikube-ci.outputs.number }}
             Please see failure log:
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
