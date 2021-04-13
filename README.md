@@ -79,6 +79,7 @@ minikube config set cpus 6
 minikube config set disk-size 80g
 minikube start
 minikube addons enable ingress
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 
 eval $(minikube docker-env)
 ```
@@ -91,6 +92,7 @@ minikube config set cpus 6
 minikube config set disk-size 80g
 minikube start
 minikube addons enable ingress
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 
 minikube docker-env --shell powershell | Invoke-Expression
 ```
