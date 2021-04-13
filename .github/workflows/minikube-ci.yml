@@ -52,6 +52,7 @@ jobs:
           # https://minikube.sigs.k8s.io/docs/drivers/docker/#troubleshooting
           sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
           sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+          kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
       - name: wait for set up ingress
         run: |
           kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
@@ -124,8 +125,6 @@ jobs:
         run: |
           kubectl get ingress
           kubectl describe ingress nginx
-          kubectl -n kube-system describe po $(kubectl get pods -n kube-system | awk '{print $1}' | grep ingress-nginx-controller)
-          kubectl -n kube-system logs $(kubectl get pods -n kube-system | awk '{print $1}' | grep ingress-nginx-controller)
       - name: check log storage-provisioner
         if: always()
         run: |
@@ -172,6 +171,6 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Add new issue:
-            ${{ steps.create-issue-minikube-ci.outputs.number }}
+            #${{ steps.create-issue-minikube-ci.outputs.number }}
             Please see failure log:
             https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
