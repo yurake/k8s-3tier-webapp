@@ -14,7 +14,7 @@ import webapp.tier.mq.ActiveMqService;
 
 public class ActiveMqControllerTest {
 
-	private ActiveMqController createActiveMqService() throws Exception {
+	ActiveMqController createActiveMqService() throws Exception {
 		ActiveMqService svc = mock(ActiveMqService.class);
 		when(svc.putActiveMq()).thenReturn("OK");
 		when(svc.getActiveMq()).thenReturn("OK");
@@ -26,7 +26,7 @@ public class ActiveMqControllerTest {
 		};
 	}
 
-	private ActiveMqController createActiveMqServiceNull() throws Exception {
+	ActiveMqController createActiveMqServiceNull() throws Exception {
 		return new ActiveMqController() {
 			ActiveMqService createActiveMqService() {
 				return null;
