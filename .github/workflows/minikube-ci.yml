@@ -125,8 +125,6 @@ jobs:
         run: |
           kubectl get ingress
           kubectl describe ingress nginx
-          kubectl -n kube-system describe po $(kubectl get pods -n kube-system | awk '{print $1}' | grep ingress-nginx-controller)
-          kubectl -n kube-system logs $(kubectl get pods -n kube-system | awk '{print $1}' | grep ingress-nginx-controller)
       - name: check log storage-provisioner
         if: always()
         run: |
