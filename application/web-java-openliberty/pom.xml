@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>web-java-openliberty</artifactId>
@@ -17,7 +15,7 @@
 
 		<slf4j-log4j12.version>1.7.30</slf4j-log4j12.version>
 		<hazelcast.version>4.2</hazelcast.version>
-		<jedis.version>3.5.1</jedis.version>
+		<jedis.version>3.5.2</jedis.version>
 		<amqp-client.version>5.12.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<rabbitmq-jms.version>2.2.0</rabbitmq-jms.version>
