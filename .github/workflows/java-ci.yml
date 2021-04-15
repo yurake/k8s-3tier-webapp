@@ -16,9 +16,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2.3.4
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
@@ -79,9 +81,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -143,9 +147,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -207,9 +213,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -275,9 +283,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -339,9 +349,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -403,9 +415,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -467,9 +481,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -531,9 +547,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -595,9 +613,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -659,9 +679,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -723,9 +745,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -787,9 +811,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -851,9 +877,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -915,9 +943,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -978,9 +1008,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -1042,9 +1074,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -1106,9 +1140,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -1170,9 +1206,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
@@ -1218,9 +1256,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -1281,9 +1321,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
@@ -1347,9 +1389,11 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
