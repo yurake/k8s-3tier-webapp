@@ -15,7 +15,7 @@ import webapp.tier.cache.MemcachedService;
 
 public class MemcachedResourceTest {
 
-	private MemcachedResource createMemcachedService() throws Exception {
+	MemcachedResource createMemcachedService() throws Exception {
 		MemcachedService svc = mock(MemcachedService.class);
 		when(svc.set()).thenReturn("OK");
 		when(svc.get()).thenReturn("OK");
@@ -26,7 +26,7 @@ public class MemcachedResourceTest {
 		};
 	}
 
-	private MemcachedResource createMemcachedServiceNull() throws Exception {
+	MemcachedResource createMemcachedServiceNull() throws Exception {
 		return new MemcachedResource() {
 			MemcachedService createMemcachedService() {
 				return null;

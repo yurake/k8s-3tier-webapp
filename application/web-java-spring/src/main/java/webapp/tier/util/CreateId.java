@@ -1,6 +1,5 @@
 package webapp.tier.util;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public final class CreateId {
@@ -13,9 +12,8 @@ public final class CreateId {
 	/**
 	 * 5桁の正の整数を返す.
 	 * @return 5桁の整数
-	 * @throws NoSuchAlgorithmException This exception is thrown when a particular cryptographic algorithm is requested but is not available in the environment.
 	 */
-	public static int createid() throws NoSuchAlgorithmException {
+	public static int createid() {
 		int id = 0;
 		while (id < 10000) {
 			id = rand.nextInt(99999);

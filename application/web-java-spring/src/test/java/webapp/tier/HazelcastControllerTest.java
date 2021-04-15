@@ -1,4 +1,4 @@
-package webapp.controller;
+package webapp.tier;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
+import webapp.tier.HazelcastController;
 import webapp.tier.cache.HazelcastCacheService;
 import webapp.tier.mq.HazelcastMqService;
 

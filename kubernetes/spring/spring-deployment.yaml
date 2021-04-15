@@ -28,7 +28,7 @@ spec:
           livenessProbe:
             httpGet:
               port: 8080
-              path: /spring/actuator/health/liveness
+              path: /actuator/health/liveness
             initialDelaySeconds: 30
             periodSeconds: 10
             failureThreshold: 5
@@ -36,6 +36,17 @@ spec:
           readinessProbe:
             httpGet:
               port: 8080
-              path: /spring/actuator/health/readiness
-            initialDelaySeconds: 60
-            periodSeconds: 30
+              path: /actuator/health/readiness
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-secret
+                  key: mysql-password
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-secret
+                  key: pg-password

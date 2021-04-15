@@ -1,111 +1,64 @@
 package webapp.tier.cache;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.exceptions.JedisConnectionException;
-import webapp.tier.util.CreateId;
-import webapp.tier.util.GetConfig;
+import webapp.tier.bean.MsgBean;
 
+@Service
 public class RedisService {
+
+	@Autowired
+	private StringRedisTemplate redisTemplate;
+
+	@Value("${common.message}")
+	private String message;
+
+	@Value("${spring.redis.channel.name}")
+	private String channel;
+
+	@Value("${spring.redis.set.expire}")
+	private int setexpire;
+
+	@Value("${spring.redis.split.key}")
+	private String splitkey;
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-	private static String message = GetConfig.getResourceBundle("common.message");
-	private static String servername = GetConfig.getResourceBundle("redis.server.name");
-	private static int serverport = Integer.parseInt(GetConfig.getResourceBundle("redis.server.port"));
-	private static String splitkey = GetConfig.getResourceBundle("redis.split.key");
-	private static String channel = GetConfig.getResourceBundle("redis.channel.name");
-	private static int setexpire = Integer.parseInt(GetConfig.getResourceBundle("redis.set.expire"));
 
-	public Jedis createJedis() {
-		return new Jedis(servername, serverport);
+	public MsgBean set() {
+		MsgBean msgbean = new MsgBean(message);
+		redisTemplate.opsForValue().set(msgbean.idtoString(), msgbean.getMessage());
+		redisTemplate.expire(msgbean.idtoString(), setexpire, TimeUnit.SECONDS);
+		logger.info(msgbean.logMessageOut("set"));
+		return msgbean;
 	}
 
-	public boolean ping() {
-		Jedis jedis = createJedis();
-		boolean status = false;
-
-		if (Objects.nonNull(jedis)) {
-			try {
-				if (jedis.ping().equalsIgnoreCase("PONG")) {
-					status = true;
-				}
-			} catch (JedisConnectionException e) {
-				logger.error("Status Check Error.", e);
-			} finally {
-				jedis.close();
-			}
-		}
-		return status;
-	}
-
-	public String set() throws NoSuchAlgorithmException {
-		String fullmsg = null;
-		Jedis jedis = null;
-		String id;
-		try {
-			id = String.valueOf(CreateId.createid());
-			jedis = createJedis();
-			jedis.set(id, message);
-			jedis.expire(id, setexpire);
-			fullmsg = "Set id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
-		} finally {
-			jedis.close();
-		}
-		return fullmsg;
-	}
-
-	public List<String> get() {
-		List<String> allmsg = new ArrayList<>();
-		Jedis jedis = null;
-
-		try {
-			jedis = createJedis();
-			Set<String> keys = jedis.keys("*");
-			for (String key : keys) {
-				String msg = jedis.get(key);
-				String fullmsg = "Selected Msg: id: " + key + ", message: " + msg;
-				logger.info(fullmsg);
-				allmsg.add(fullmsg);
-			}
-
-			if (allmsg.isEmpty()) {
-				allmsg.add("No Data");
-			}
-
-		} finally {
-			jedis.close();
+	public Iterable<MsgBean> get() {
+		List<MsgBean> allmsg = new ArrayList<>();
+		Set<String> keys = redisTemplate.keys("*");
+		for (String key : keys) {
+			String msg = redisTemplate.opsForValue().get(key);
+			MsgBean msgbean = new MsgBean(key, msg);
+			logger.info(msgbean.logMessageOut("get"));
+			allmsg.add(msgbean);
 		}
 		return allmsg;
 	}
 
-	public String publish() throws NoSuchAlgorithmException {
-		String fullmsg = null;
-		Jedis jedis = null;
-		String id;
-		try {
-			jedis = createJedis();
-			id = String.valueOf(CreateId.createid());
-			StringBuilder buf = new StringBuilder();
-			buf.append(id);
-			buf.append(splitkey);
-			buf.append(message);
-			String body = buf.toString();
-
-			jedis.publish(channel, body);
-			jedis.expire(id, setexpire);
-			fullmsg = "Publish channel:" + channel + ", id: " + id + ", msg: " + message;
-			logger.info(fullmsg);
-		} finally {
-			jedis.close();
-		}
-		return fullmsg;
+	public MsgBean publish() {
+		MsgBean msgbean = new MsgBean(message);
+		redisTemplate.convertAndSend(channel, msgbean.createBody(splitkey));
+		redisTemplate.expire(msgbean.idtoString(), setexpire, TimeUnit.SECONDS);
+		logger.info(msgbean.logMessageOut("publish"));
+		return msgbean;
 	}
 }
