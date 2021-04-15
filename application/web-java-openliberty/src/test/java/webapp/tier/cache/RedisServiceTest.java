@@ -25,11 +25,13 @@ class RedisServiceTest {
 	public void setup() throws IOException {
 		server = RedisServer.newRedisServer();
 		server.start();
+		System.out.println("start server");
 	}
 
 	@AfterEach
 	public void after() {
 		server.stop();
+		System.out.println("stop server");
 	}
 
 	static RedisService createRedisServiceMock() {
@@ -71,6 +73,7 @@ class RedisServiceTest {
 
 	@Test
 	void testpingTrue() {
+		System.out.println("start testpingTrue");
 		RedisService svc = createRedisServiceMock();
 		try {
 			assertThat(svc.ping(), is(true));
@@ -78,10 +81,12 @@ class RedisServiceTest {
 			e.printStackTrace();
 			fail();
 		}
+		System.out.println("end testpingTrue");
 	}
 
 	@Test
 	void testpingFalse() {
+		System.out.println("start testpingFalse");
 		RedisService svc = createRedisServiceErrorMock();
 		try {
 			assertThat(svc.ping(), is(false));
@@ -89,6 +94,7 @@ class RedisServiceTest {
 			e.printStackTrace();
 			fail();
 		}
+		System.out.println("end testpingTrue");
 	}
 
 	@Test
