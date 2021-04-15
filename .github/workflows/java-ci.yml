@@ -1351,7 +1351,7 @@ jobs:
         working-directory: ./application/web-java-spring
         run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Copy jar file
-        uses: canastro/copy-file-action@master
+        uses: canastro/copy-file-action@0.0.2
         with:
           source: "application/web-java-spring/target/spring.jar"
           target: "kubernetes/spring/spring.jar"
@@ -1419,7 +1419,7 @@ jobs:
         working-directory: ./application/web-java-openliberty
         run: mvn -B verify package --settings ../.m2/settings.xml
       - name: Copy war file
-        uses: canastro/copy-file-action@master
+        uses: canastro/copy-file-action@0.0.2
         with:
           source: "application/web-java-openliberty/target/openliberty.war"
           target: "kubernetes/openliberty/openliberty.war"
