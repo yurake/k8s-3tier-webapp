@@ -11,6 +11,8 @@ import java.io.IOException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.fppt.jedismock.RedisServer;
 
@@ -19,19 +21,20 @@ import redis.clients.jedis.Jedis;
 class RedisServiceTest {
 
 	private static RedisServer server = null;
+	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@BeforeEach
 	public void setup() throws IOException {
 		server = RedisServer.newRedisServer(6370);
 		server.start();
-		System.out.println("start server: " + server.getHost() + ", " + server.getBindPort());
+		logger.info("start server: " + server.getHost() + ", " + server.getBindPort());
 	}
 
 	@AfterEach
 	public void after() {
 		server.stop();
-		System.out.println("stop server");
+		logger.info("stop server");
 	}
 
 	static RedisService createRedisServiceMock() {
@@ -73,7 +76,7 @@ class RedisServiceTest {
 
 	@Test
 	void testpingTrue() {
-		System.out.println("start testpingTrue");
+		logger.info("start testpingTrue");
 		RedisService svc = createRedisServiceMock();
 		try {
 			assertThat(svc.ping(), is(true));
@@ -81,12 +84,12 @@ class RedisServiceTest {
 			e.printStackTrace();
 			fail();
 		}
-		System.out.println("end testpingTrue");
+		logger.info("end testpingTrue");
 	}
 
 	@Test
 	void testpingFalse() {
-		System.out.println("start testpingFalse");
+		logger.info("start testpingFalse");
 		RedisService svc = createRedisServiceErrorMock();
 		try {
 			assertThat(svc.ping(), is(false));
@@ -94,7 +97,7 @@ class RedisServiceTest {
 			e.printStackTrace();
 			fail();
 		}
-		System.out.println("end testpingTrue");
+		logger.info("end testpingTrue");
 	}
 
 	@Test
