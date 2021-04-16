@@ -56,6 +56,8 @@ public class RedisService {
 			jedis.expire(id, setexpire);
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
+		} catch(Exception e) {
+			e.printStackTrace();
 		} finally {
 			jedis.close();
 		}

@@ -6,38 +6,36 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.github.fppt.jedismock.RedisServer;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import redis.clients.jedis.Jedis;
 
-class RedisServiceTest {
+@Testcontainers
+public class RedisServiceTest {
 
-	private static RedisServer server = null;
+	private static Jedis jedis = null;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
+	@SuppressWarnings("rawtypes")
+	@Container
+	public GenericContainer redis = new GenericContainer(DockerImageName.parse("redis:5.0.3-alpine"))
+			.withExposedPorts(6379);
+
 	@BeforeEach
-	public void setup() throws IOException {
-		server = RedisServer.newRedisServer(6370);
-		server.start();
-		logger.info("start server: " + server.getHost() + ", " + server.getBindPort());
+	public void setUp() throws Exception {
+		logger.info("start server");
+		jedis = new Jedis(redis.getHost(), redis.getFirstMappedPort());
 	}
 
-	@AfterEach
-	public void after() {
-		server.stop();
-		logger.info("stop server");
-	}
-
-	static RedisService createRedisServiceMock() {
+	RedisService createRedisServiceMock() {
 		return new RedisService() {
 			public Jedis createJedis() {
 				Jedis jedis = createJedisMock();
@@ -46,7 +44,7 @@ class RedisServiceTest {
 		};
 	}
 
-	static RedisService createRedisServiceErrorMock() {
+	RedisService createRedisServiceErrorMock() {
 		return new RedisService() {
 			public Jedis createJedis() {
 				Jedis jedis = createJedisErrorMock();
@@ -55,12 +53,12 @@ class RedisServiceTest {
 		};
 	}
 
-	static Jedis createJedisMock() {
-		return new Jedis(server.getHost(), server.getBindPort());
+	Jedis createJedisMock() {
+		return jedis;
 	}
 
-	static Jedis createJedisErrorMock() {
-		return new Jedis(server.getHost(), 9999);
+	Jedis createJedisErrorMock() {
+		return null;
 	}
 
 	@Test

@@ -22,7 +22,6 @@
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<rabbitmq-jms.version>2.2.0</rabbitmq-jms.version>
 
-		<jedis-mock.version>0.1.16</jedis-mock.version>
 		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
 
@@ -30,6 +29,18 @@
 		<liberty.var.default.http.port>9080</liberty.var.default.http.port>
 		<liberty.var.default.https.port>9443</liberty.var.default.https.port>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>1.15.2</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -110,12 +121,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.fppt</groupId>
-			<artifactId>jedis-mock</artifactId>
-			<version>${jedis-mock.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.github.fridujo</groupId>
 			<artifactId>rabbitmq-mock</artifactId>
 			<version>${rabbitmq-mock.verison}</version>
@@ -149,6 +154,16 @@
 			<groupId>com.github.h-thurow</groupId>
 			<artifactId>simple-jndi</artifactId>
 			<version>0.23.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 
