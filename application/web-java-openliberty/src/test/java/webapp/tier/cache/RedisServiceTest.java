@@ -23,9 +23,9 @@ class RedisServiceTest {
 
 	@BeforeEach
 	public void setup() throws IOException {
-		server = RedisServer.newRedisServer();
+		server = RedisServer.newRedisServer(6370);
 		server.start();
-		System.out.println("start server");
+		System.out.println("start server: " + server.getHost() + ", " + server.getBindPort());
 	}
 
 	@AfterEach
