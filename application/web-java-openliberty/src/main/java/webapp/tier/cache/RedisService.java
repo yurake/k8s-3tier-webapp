@@ -37,7 +37,7 @@ public class RedisService {
 					status = true;
 				}
 			} catch (JedisConnectionException e) {
-				logger.error("Status Check Error.", e);
+				logger.error("Status Check Error. ", e);
 			} finally {
 				jedis.close();
 			}
@@ -57,7 +57,7 @@ public class RedisService {
 			fullmsg = "Set id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
 		} catch(Exception e) {
-			e.printStackTrace();
+			logger.error("Set Error. ", e);
 		} finally {
 			jedis.close();
 		}
@@ -82,6 +82,8 @@ public class RedisService {
 				allmsg.add("No Data");
 			}
 
+		} catch(Exception e) {
+			logger.error("Get Error. ", e);
 		} finally {
 			jedis.close();
 		}
@@ -105,6 +107,8 @@ public class RedisService {
 			jedis.expire(id, setexpire);
 			fullmsg = "Publish channel:" + channel + ", id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
+		} catch(Exception e) {
+			logger.error("Publish Error. ", e);
 		} finally {
 			jedis.close();
 		}
