@@ -44,7 +44,7 @@ public class RandomService {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	public String deliverrandom(Integer id) throws Exception {
+	public String deliverrandom(Integer id) {
 		String response;
 		switch (id) {
 		case 0:
