@@ -1,0 +1,29 @@
+name: K8S Security Config Watch
+
+on:
+  pull_request:
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout Master branch
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: master
+          path: master
+      # checkout PR branch
+      - uses: actions/checkout@v2.3.4
+        with:
+          path: candidate
+          ref: ${{ github.event.pull_request.head.sha }}
+      # pass the yamls directory to k8s-privilege-check git action
+      - name: Kubernetes Security Lint
+        uses: sysdiglabs/k8s-security-lint@v1.0.0
+        with:
+          sourceDir: "/master/kubernetes"
+          targetDir: "/candidate/kubernetes"
+      # evaluate escalation report
+      - name: Post Privilege Check
+        run: |
+          echo ${{ toJSON(steps.k8s_privilege_check.outputs.escalation_report) }}

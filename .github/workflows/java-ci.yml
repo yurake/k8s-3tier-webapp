@@ -94,11 +94,12 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
         with:
@@ -106,7 +107,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-activemq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-activemq-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
@@ -160,11 +160,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -226,11 +226,12 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
         with:
@@ -242,7 +243,6 @@ jobs:
         run: |
           docker pull quay.io/testcontainers/ryuk:0.2.3
           docker images
-
       - name: Maven Build
         working-directory: ./application/jaxrs-cassandra-quarkus
         env:
@@ -296,11 +296,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -343,7 +343,7 @@ jobs:
         continue-on-error: true
 
   consumer-kafka-quarkus:
-    needs: [init-build, jaxrs-kafka-quarkus]
+    needs: [init-build]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -362,11 +362,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -428,11 +428,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -494,11 +494,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -560,11 +560,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -626,11 +626,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -692,11 +692,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -758,11 +758,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -824,11 +824,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -890,11 +890,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -956,11 +956,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -1021,11 +1021,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -1068,7 +1068,7 @@ jobs:
         continue-on-error: true
 
   producer-kafka-quarkus:
-    needs: [init-build, jaxrs-kafka-quarkus]
+    needs: [init-build]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1087,11 +1087,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -1153,11 +1153,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -1269,11 +1269,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -1334,11 +1334,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
@@ -1402,11 +1402,11 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
