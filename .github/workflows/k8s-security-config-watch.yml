@@ -21,8 +21,8 @@ jobs:
       - name: Kubernetes Security Lint
         uses: sysdiglabs/k8s-security-lint@v1.0.0
         with:
-          sourceDir: "/master/yamls"
-          targetDir: "/candidate/yamls"
+          sourceDir: "/master/kubernetes"
+          targetDir: "/candidate/kubernetes"
       # evaluate escalation report
       - name: Post Privilege Check
         run: |
