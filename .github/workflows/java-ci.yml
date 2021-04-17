@@ -343,7 +343,7 @@ jobs:
         continue-on-error: true
 
   consumer-kafka-quarkus:
-    needs: [init-build, jaxrs-kafka-quarkus]
+    needs: [init-build]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1068,7 +1068,7 @@ jobs:
         continue-on-error: true
 
   producer-kafka-quarkus:
-    needs: [init-build, jaxrs-kafka-quarkus]
+    needs: [init-build]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
