@@ -46,30 +46,37 @@ public class RandomService {
 
 	public String deliverrandom(Integer id) {
 		String response;
+		String log;
 		switch (id) {
 		case 0:
-			logger.log(Level.INFO, "Call: ActiveMQ Publish");
-			response = activemqresource.publish();
+			log = "Call: ActiveMQ Publish";
+			logger.log(Level.INFO, log);
+			response = StringBuild(log, activemqresource.publish());
 			break;
 		case 1:
-			logger.log(Level.INFO, "Call: RabbitMQ Publish");
-			response = rabbitmqresource.publish();
+			log = "Call: RabbitMQ Publish";
+			logger.log(Level.INFO, log);
+			response = StringBuild(log, rabbitmqresource.publish());
 			break;
 		case 2:
-			logger.log(Level.INFO, "Call: Redis Publish");
-			response = redisresource.publish();
+			log = "Call: Redis Publish";
+			logger.log(Level.INFO, log);
+			response = StringBuild(log, redisresource.publish());
 			break;
 		case 3:
-			logger.log(Level.INFO, "Call: Postgres Insert");
-			response = postgresresource.insert();
+			log = "Call: Postgres Publish";
+			logger.log(Level.INFO, log);
+			response = StringBuild(log, postgresresource.insert());
 			break;
 		case 4:
-			logger.log(Level.INFO, "Call: Hazelcast Publish");
-			response = hazelcastresource.publish();
+			log = "Call: Hazelcast Publish";
+			logger.log(Level.INFO, log);
+			response = StringBuild(log, hazelcastresource.publish());
 			break;
 		case 5:
-			logger.log(Level.INFO, "Call: Mongodb Insert");
-			response = mongodbResource.insert();
+			log = "Call: Mongodb Publish";
+			logger.log(Level.INFO, log);
+			response = StringBuild(log, mongodbResource.insert());
 			break;
 		default:
 			logger.log(Level.SEVERE, "random Error.");
@@ -81,5 +88,13 @@ public class RandomService {
 
 	public int getNum(Integer i) {
 		return (int) (Math.random() * i);
+	}
+
+	public String StringBuild(String subject, String response) {
+		StringBuilder buf = new StringBuilder();
+		buf.append(subject);
+		buf.append(": ");
+		buf.append(response);
+		return buf.toString();
 	}
 }
