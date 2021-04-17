@@ -96,9 +96,10 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
         with:
@@ -106,7 +107,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-activemq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-activemq-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
@@ -162,7 +162,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -228,9 +228,10 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+
       - name: Cache local Maven repository
         uses: actions/cache@v2.1.5
         with:
@@ -242,7 +243,6 @@ jobs:
         run: |
           docker pull quay.io/testcontainers/ryuk:0.2.3
           docker images
-
       - name: Maven Build
         working-directory: ./application/jaxrs-cassandra-quarkus
         env:
@@ -298,7 +298,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -364,7 +364,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -430,7 +430,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -496,7 +496,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -562,7 +562,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -628,7 +628,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -694,7 +694,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -760,7 +760,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -826,7 +826,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -892,7 +892,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -958,7 +958,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -1023,7 +1023,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -1089,7 +1089,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -1155,7 +1155,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -1271,7 +1271,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -1336,7 +1336,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
@@ -1404,7 +1404,7 @@ jobs:
           languages: java
       - name: Login to Docker Hub
         uses: docker/login-action@v1.8.0
-        env:
+        with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
