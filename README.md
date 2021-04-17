@@ -27,6 +27,7 @@
 [![Support Minikube Version](https://img.shields.io/badge/Minikube-v1.19-yellow.svg?style=flat&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
 [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-blue?style=flat&logo=cypress)](https://dashboard.cypress.io/projects/7rgxn6/runs)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready-blue?logo=gitpod)](https://gitpod.io/#https://github.com/yurake/k8s-3tier-webapp)
+[![MDDocs ready](https://img.shields.io/badge/mddocs-ready-blue.svg?style=flat)](https://yurake.mddocs.io/)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 ---
