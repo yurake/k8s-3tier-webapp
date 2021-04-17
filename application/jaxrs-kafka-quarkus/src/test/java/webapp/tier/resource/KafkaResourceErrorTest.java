@@ -2,9 +2,6 @@ package webapp.tier.resource;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.mockito.Mockito.when;
-
-import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,14 +25,14 @@ class KafkaResourceErrorTest {
 				.body(containsString(""));
 	}
 
-	@Test
-	void testPublishError() throws NoSuchAlgorithmException {
-		when(svc.publishMsg()).thenThrow(new NoSuchAlgorithmException());
-		given()
-				.when()
-				.contentType("application/json")
-				.post("/quarkus/kafka/publish")
-				.then()
-				.statusCode(500);
-	}
+//	@Test
+//	void testPublishError() throws NoSuchAlgorithmException {
+//		when(svc.publishMsg()).thenThrow(new NoSuchAlgorithmException());
+//		given()
+//				.when()
+//				.contentType("application/json")
+//				.post("/quarkus/kafka/publish")
+//				.then()
+//				.statusCode(500);
+//	}
 }
