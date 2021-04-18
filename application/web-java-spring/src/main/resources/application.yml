@@ -30,3 +30,10 @@ spring.activemq:
   queue.name: ActiveMQueue
   topic.name: ActiveMQTopic
   split.key: ","
+
+spring.artemis:
+  mode: native
+  host: activemq
+  port: 61616
+  user: artemis
+  password: simetraehcapa

@@ -14,12 +14,10 @@ import javax.jms.Topic;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.activemq.artemis.jms.client.ActiveMQQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +36,9 @@ public class ActiveMqService {
 	@Value("${common.message}")
 	private String message;
 
+	@Value("${spring.activemq.broker-url}")
+	private String url;
+
 	@Value("${spring.activemq.split.key}")
 	private String splitkey;
 
@@ -51,22 +52,17 @@ public class ActiveMqService {
 	Connection conn = null;
 	Session session = null;
 
-	@Bean
-	Queue queue() {
-		return new ActiveMQQueue("remotingQueue");
-	}
-
 	public MsgBean put() {
 		MsgBean msgbean = new MsgBean(message);
 		String body = msgbean.createBody(splitkey);
-		jmsTemplate.convertAndSend(body, queuename);
+		jmsTemplate.convertAndSend(queuename, body);
 		logger.info(msgbean.logMessageOut("put"));
 		return msgbean;
 	}
 
 	public MsgBean get() throws JMSException {
 		MsgBean msgbean = null;
-		Message msg = jmsTemplate.receive(queue);
+		Message msg = jmsTemplate.receive(queuename);
 		if (Objects.isNull(msg)) {
 			msgbean = new MsgBean(0, "No Data.");
 		} else {
@@ -82,8 +78,8 @@ public class ActiveMqService {
 		MsgBean msgbean = new MsgBean(message);
 		String body = msgbean.createBody(splitkey);
 		jmsTemplate.setPubSubDomain(true);
-		jmsTemplate.convertAndSend(body, topicname);
-		logger.info(msgbean.logMessageOut("put"));
+		jmsTemplate.convertAndSend(topicname, body);
+		logger.info(msgbean.logMessageOut("publish"));
 		return msgbean;
 	}
 
