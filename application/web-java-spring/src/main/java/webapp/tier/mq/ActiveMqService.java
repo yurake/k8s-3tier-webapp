@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.support.destination.JmsDestinationAccessor;
 import org.springframework.stereotype.Service;
 
 import webapp.tier.bean.MsgBean;
@@ -49,6 +50,7 @@ public class ActiveMqService {
 
 	public MsgBean get() throws JMSException {
 		MsgBean msgbean = null;
+		jmsTemplate.setReceiveTimeout(JmsDestinationAccessor.RECEIVE_TIMEOUT_NO_WAIT);
 		Message msg = jmsTemplate.receive(queuename);
 		if (Objects.isNull(msg)) {
 			msgbean = new MsgBean(0, "No Data.");
