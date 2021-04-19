@@ -3,8 +3,6 @@ package webapp.tier;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import javax.ws.rs.core.Response;
 
@@ -14,17 +12,17 @@ import webapp.tier.mq.ActiveMqService;
 
 public class ActiveMqControllerTest {
 
-	ActiveMqController createActiveMqService() throws Exception {
-		ActiveMqService svc = mock(ActiveMqService.class);
-		when(svc.putActiveMq()).thenReturn("OK");
-		when(svc.getActiveMq()).thenReturn("OK");
-		when(svc.publishActiveMq()).thenReturn("OK");
-		return new ActiveMqController() {
-			ActiveMqService createActiveMqService() {
-				return svc;
-			}
-		};
-	}
+//	ActiveMqController createActiveMqService() throws Exception {
+//		ActiveMqService svc = mock(ActiveMqService.class);
+//		when(svc.put()).thenReturn("OK");
+//		when(svc.getActiveMq()).thenReturn("OK");
+//		when(svc.publishActiveMq()).thenReturn("OK");
+//		return new ActiveMqController() {
+//			ActiveMqService createActiveMqService() {
+//				return svc;
+//			}
+//		};
+//	}
 
 	ActiveMqController createActiveMqServiceNull() throws Exception {
 		return new ActiveMqController() {
