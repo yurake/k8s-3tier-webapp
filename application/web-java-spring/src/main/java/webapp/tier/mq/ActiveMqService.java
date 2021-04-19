@@ -26,13 +26,13 @@ public class ActiveMqService {
 	@Value("${common.message}")
 	private String message;
 
-	@Value("${spring.activemq.split.key}")
+	@Value("${spring.artemis.split.key}")
 	private String splitkey;
 
-	@Value("${spring.activemq.queue.name}")
+	@Value("${spring.artemis.queue.name}")
 	private String queuename;
 
-	@Value("${spring.activemq.topic.name}")
+	@Value("${spring.artemis.topic.name}")
 	private String topicname;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
