@@ -24,7 +24,7 @@
 
 	<properties>
 		<mainClass>webapp.tier.events.TaskServiceMain</mainClass>
-		<jedis.version>3.5.2</jedis.version>
+		<jedis.version>3.6.0</jedis.version>
 		<mysql.version>8.0.24</mysql.version>
 		<jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
 		<jedis-mock.version>0.1.17</jedis-mock.version>
