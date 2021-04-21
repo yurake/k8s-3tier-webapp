@@ -7,6 +7,8 @@ on:
     paths:
       - "**.sh"
   pull_request:
+    paths:
+      - "**.sh"
 
 jobs:
   validation:
