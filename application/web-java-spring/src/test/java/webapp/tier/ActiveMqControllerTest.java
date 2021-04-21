@@ -1,13 +1,5 @@
 package webapp.tier;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import javax.ws.rs.core.Response;
-
-import org.junit.jupiter.api.Test;
-
 import webapp.tier.mq.ActiveMqService;
 
 public class ActiveMqControllerTest {
@@ -81,17 +73,17 @@ public class ActiveMqControllerTest {
 //		}
 //	}
 
-	@Test
-	public void testgetError() {
-		try {
-			ActiveMqController rsc = createActiveMqServiceNull();
-			Response resp = rsc.get();
-			assertThat(resp.getStatus(), is(500));
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
+//	@Test
+//	public void testgetError() {
+//		try {
+//			ActiveMqController rsc = createActiveMqServiceNull();
+//			Response resp = rsc.get();
+//			assertThat(resp.getStatus(), is(500));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			fail();
+//		}
+//	}
 
 //	@Test
 //	public void testpublish() {
