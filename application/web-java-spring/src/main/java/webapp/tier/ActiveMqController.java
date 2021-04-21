@@ -1,5 +1,6 @@
 package webapp.tier;
 
+import javax.jms.JMSException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -34,7 +35,7 @@ public class ActiveMqController {
 	public Response get() {
 		try {
 			return Response.ok().entity(svc.get()).build();
-		} catch (Exception e) {
+		} catch (JMSException e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
