@@ -8,6 +8,9 @@ on:
       - "kubernetes/**"
       - ".github/workflows/yaml-validator.yml"
   pull_request:
+    paths:
+      - "kubernetes/**"
+      - ".github/workflows/yaml-validator.yml"
 
 jobs:
   validation:

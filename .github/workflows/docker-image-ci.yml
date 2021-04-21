@@ -8,6 +8,9 @@ on:
       - "kubernetes/**"
       - ".github/workflows/docker-image-ci.yml"
   pull_request:
+    paths:
+      - "kubernetes/**"
+      - ".github/workflows/docker-image-ci.yml"
 
 jobs:
   build:

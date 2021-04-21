@@ -8,6 +8,9 @@ on:
       - "application/**"
       - ".github/workflows/java-ci.yml"
   pull_request:
+    paths:
+      - "application/**"
+      - ".github/workflows/java-ci.yml"
 
 jobs:
   init-build:
