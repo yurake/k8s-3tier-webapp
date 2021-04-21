@@ -5,8 +5,7 @@ pull_request_rules:
       - "#review-requested=0"
       - "#changes-requested-reviews-by=0"
       - base=master
-      - check-success=Docker Image CI
-      - check-success=Java CI
+      - label=force merge
     actions:
       merge:
         method: merge
