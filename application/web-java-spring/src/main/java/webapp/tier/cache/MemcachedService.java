@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.whalin.MemCached.MemCachedClient;
@@ -12,18 +11,17 @@ import com.whalin.MemCached.SockIOPool;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.exception.WebappServiceException;
+import webapp.tier.util.GetConfig;
 
 @Service
 public class MemcachedService {
-
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-
-	@Value("${common.message}")
-	private String message;
+	private static String serverconf = GetConfig.getResourceBundle("memcached.server.conf");
+	private static String message = GetConfig.getResourceBundle("common.message");
 
 	static {
 		SockIOPool pool = SockIOPool.getInstance();
-		pool.setServers(new String[] { "memcached:11211" });
+		pool.setServers(new String[] { serverconf });
 		pool.initialize();
 	}
 
