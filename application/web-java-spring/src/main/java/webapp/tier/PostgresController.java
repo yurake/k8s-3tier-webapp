@@ -10,7 +10,6 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import webapp.tier.db.postgres.PostgresMessage;
 import webapp.tier.db.postgres.PostgresMessageRepository;
 import webapp.tier.util.CreateId;
+import webapp.tier.util.GetConfig;
 
 @RestController
 @RequestMapping("/spring/postgres")
@@ -28,9 +28,7 @@ import webapp.tier.util.CreateId;
 public class PostgresController {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-
-	@Value("${common.message}")
-	private String message;
+	private static String message = GetConfig.getResourceBundle("common.message");
 
 	@Autowired
 	private PostgresMessageRepository messageRepository;
@@ -75,7 +73,7 @@ public class PostgresController {
 		return msg;
 	}
 
-	String logMessageOut(String type, int id, String msg) {
+	private String logMessageOut(String type, int id, String msg) {
 		return type + ": id: " + id + ", msg: " + msg;
 	}
 }
