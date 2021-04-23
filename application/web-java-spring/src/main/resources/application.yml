@@ -34,3 +34,21 @@ spring.artemis:
   queue.name: ActiveMQueue
   topic.name: ActiveMQTopic
   split.key: ","
+
+rabbitmq: 
+  queue.name: queue1
+  queue.batch.name: queue2
+  username: ossapl
+  password: ossapl
+  host: rabbitmq
+  vhost: vhost1
+  split.key: ","
+
+hazelcast:
+  address: hazelcast:5701
+  group.name: dev
+  service.name: hazelcast.default.svc.cluster.local
+  cache.name: hazcache
+  queue.name: hazqueue
+  topic.name: haztopic
+  split.key: ","
