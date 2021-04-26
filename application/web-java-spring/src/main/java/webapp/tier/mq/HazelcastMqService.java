@@ -5,21 +5,30 @@ import java.util.concurrent.BlockingQueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.topic.ITopic;
 
 import webapp.tier.util.CreateId;
-import webapp.tier.util.GetConfig;
 
+@Service
 public class HazelcastMqService {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-	private static String message = GetConfig.getResourceBundle("common.message");
-	private static String pubmessage = GetConfig.getResourceBundle("hazelcast.publisher.message");
-	private static String queuename = GetConfig.getResourceBundle("hazelcast.queue.name");
-	private static String topicname = GetConfig.getResourceBundle("hazelcast.topic.name");
-	private static String splitkey = GetConfig.getResourceBundle("hazelcast.split.key");
+
+	@Value("${common.message}")
+	private String message;
+
+	@Value("${hazelcast.queue.name}")
+	private String queuename;
+
+	@Value("${hazelcast.topic.name}")
+	private String topicname;
+
+	@Value("${hazelcast.split.key}")
+	private String splitkey;
 
 	public String putQueueHazelcast(HazelcastInstance client) throws Exception {
 		String fullmsg = null;
@@ -74,12 +83,12 @@ public class HazelcastMqService {
 		StringBuilder buf = new StringBuilder();
 		buf.append(id);
 		buf.append(splitkey);
-		buf.append(pubmessage);
+		buf.append(message);
 		String body = buf.toString();
 
 		try {
 			topic.publish(body);
-			fullmsg = "Publish id: " + id + ", msg: " + pubmessage;
+			fullmsg = "Publish id: " + id + ", msg: " + message;
 			logger.info(fullmsg);
 		} finally {
 			client.shutdown();

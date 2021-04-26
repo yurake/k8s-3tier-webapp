@@ -45,7 +45,6 @@ rabbitmq:
   split.key: ","
 
 hazelcast:
-  address: hazelcast:5701
   group.name: dev
   service.name: hazelcast.default.svc.cluster.local
   cache.name: hazcache

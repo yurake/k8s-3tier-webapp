@@ -5,6 +5,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,20 +23,18 @@ import webapp.tier.util.HazelcastInstanceConfigurator;
 @Consumes(MediaType.APPLICATION_JSON)
 public class HazelcastController {
 
-	HazelcastCacheService createHazelcastCacheService() {
-		return new HazelcastCacheService();
-	}
+	@Autowired
+	HazelcastCacheService cachesvc;
 
-	HazelcastMqService createHazelcastMqService() {
-		return new HazelcastMqService();
-	}
+	@Autowired
+	HazelcastMqService mqsvc;
+
 
 	@PostMapping("/setcache")
 	public Response putcache() {
-		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
-			return Response.ok().entity(svc.putMapHazelcast(client)).build();
+			return Response.ok().entity(cachesvc.putMapHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -44,10 +43,9 @@ public class HazelcastController {
 
 	@GetMapping("/getcache")
 	public Response getcache() {
-		HazelcastCacheService svc = createHazelcastCacheService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
-			return Response.ok().entity(svc.getMapHazelcast(client)).build();
+			return Response.ok().entity(cachesvc.getMapHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -56,10 +54,9 @@ public class HazelcastController {
 
 	@PostMapping("/putqueue")
 	public Response putqueue() {
-		HazelcastMqService svc = createHazelcastMqService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
-			return Response.ok().entity(svc.putQueueHazelcast(client)).build();
+			return Response.ok().entity(mqsvc.putQueueHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -68,10 +65,9 @@ public class HazelcastController {
 
 	@GetMapping("/getqueue")
 	public Response getqueue() {
-		HazelcastMqService svc = createHazelcastMqService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
-			return Response.ok().entity(svc.getQueueHazelcast(client)).build();
+			return Response.ok().entity(mqsvc.getQueueHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
@@ -80,10 +76,9 @@ public class HazelcastController {
 
 	@PostMapping("/publish")
 	public Response publish() {
-		HazelcastMqService svc = createHazelcastMqService();
 		try {
 			HazelcastInstance client = HazelcastInstanceConfigurator.getInstance();
-			return Response.ok().entity(svc.publishHazelcast(client)).build();
+			return Response.ok().entity(mqsvc.publishHazelcast(client)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).build();
