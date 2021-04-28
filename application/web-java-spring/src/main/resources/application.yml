@@ -39,7 +39,7 @@ rabbitmq:
   queue.name: queue1
   queue.batch.name: queue2
   username: ossapl
-  password: ossapl
+  password: ${RABBITMQ_PASSWORD}
   host: rabbitmq
   vhost: vhost1
   split.key: ","
