@@ -35,7 +35,7 @@ spring.artemis:
   topic.name: ActiveMQTopic
   split.key: ","
 
-rabbitmq: 
+rabbitmq:
   queue.name: queue1
   queue.batch.name: queue2
   username: ossapl
