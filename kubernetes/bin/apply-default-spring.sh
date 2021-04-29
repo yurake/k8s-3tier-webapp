@@ -35,6 +35,9 @@ else
   readonly is_crc=false
 fi
 
+cd "$ROOT_DIR"/bin
+./apply-monitoring-namespace.sh
+
 echo "### mysql"
 cd "$ROOT_DIR"/mysql
 kubectl apply -f ./mysql-pv.yaml

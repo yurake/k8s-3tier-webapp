@@ -7,13 +7,8 @@ ROOT_DIR="$(
   pwd
 )"
 
-echo "### monitoring namespace"
-cd "${ROOT_DIR}"/monitoring
-set +e
-kubectl apply -f ./monitoring-namespace.yaml
-set -eu
-echo "###"
-echo ""
+cd "$ROOT_DIR"/bin
+./apply-monitoring-namespace.sh
 
 echo "### jenkins"
 cd "${ROOT_DIR}"/monitoring/jenkins
