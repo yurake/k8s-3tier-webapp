@@ -5,11 +5,11 @@ on:
     branches:
       - master
     paths:
-      - "kubernetes/**"
+      - "**.yaml"
       - ".github/workflows/yaml-validator.yml"
   pull_request:
     paths:
-      - "kubernetes/**"
+      - "**.yaml"
       - ".github/workflows/yaml-validator.yml"
 
 jobs:

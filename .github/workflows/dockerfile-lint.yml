@@ -6,10 +6,12 @@ on:
       - master
     paths:
       - "kubernetes/**"
+      - "!kubernetes/bin/**"
       - ".github/workflows/dockerfile-lint.yml"
   pull_request:
     paths:
       - "kubernetes/**"
+      - "!kubernetes/bin/**"
       - ".github/workflows/dockerfile-lint.yml"
 
 jobs:
