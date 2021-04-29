@@ -19,7 +19,7 @@ spec:
       containers:
         - name: cassandra
           image: yurak/cassandra:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 7000
               name: intra-node
