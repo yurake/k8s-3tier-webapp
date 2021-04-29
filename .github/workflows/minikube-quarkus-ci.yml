@@ -1,4 +1,4 @@
-name: Minikube CI
+name: Minikube Quarkus CI
 
 on:
   push:
