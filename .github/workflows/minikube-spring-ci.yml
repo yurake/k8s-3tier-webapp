@@ -64,6 +64,11 @@ jobs:
           kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-spring
           kubectl -n monitoring describe job postmannewman-spring
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-spring)
+      - name: check log spring
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep spring)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep spring)
       - name: check minikube status
         if: always()
         run: |

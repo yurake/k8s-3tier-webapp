@@ -64,6 +64,11 @@ jobs:
           kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-openliberty
           kubectl -n monitoring describe job postmannewman-openliberty
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-openliberty)
+      - name: check log openliberty
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep openliberty)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep openliberty)
       - name: check minikube status
         if: always()
         run: |
