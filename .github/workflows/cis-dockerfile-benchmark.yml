@@ -2,6 +2,10 @@ name: CIS Dockerfile benchmark
 
 on:
   pull_request:
+    paths:
+      - "kubernetes/**"
+      - "!kubernetes/bin/**"
+      - ".github/workflows/cis-dockerfile-benchmark.yml"
 
 jobs:
   validation:
