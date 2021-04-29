@@ -119,6 +119,7 @@ cd "$ROOT_DIR"/spring
 kubectl apply -f ./spring-secret.yaml
 kubectl apply -f ./spring-deployment.yaml
 kubectl apply -f ./spring-service.yaml
+kubectl apply -f ./spring-service-externalname.yaml
 kubectl apply -f ./spring-ingress.yaml
 echo "###"
 echo ""
