@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: lint ${{ matrix.dockerfile_default }}
-        uses: brpaz/hadolint-action@master
+        uses: brpaz/hadolint-action@v1.4.0
         with:
           dockerfile: kubernetes/${{ matrix.dockerfile_default }}/Dockerfile
 
@@ -34,7 +34,7 @@ jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelca
     steps:
       - uses: actions/checkout@v2
       - name: lint ${{ matrix.dockerfile_application }}
-        uses: brpaz/hadolint-action@master
+        uses: brpaz/hadolint-action@v1.4.0
         with:
           dockerfile: application/${{ matrix.dockerfile_application }}/src/main/docker/Dockerfile.jvm
 
@@ -46,7 +46,7 @@ jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelca
     steps:
       - uses: actions/checkout@v2
       - name: lint ${{ matrix.dockerfile_monitoring }}
-        uses: brpaz/hadolint-action@master
+        uses: brpaz/hadolint-action@v1.4.0
         with:
           dockerfile: kubernetes/monitoring/${{ matrix.dockerfile_monitoring }}/Dockerfile
 
@@ -58,7 +58,7 @@ jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelca
     steps:
       - uses: actions/checkout@v2
       - name: lint ${{ matrix.dockerfile_ab }}
-        uses: brpaz/hadolint-action@master
+        uses: brpaz/hadolint-action@v1.4.0
         with:
           dockerfile: kubernetes/monitoring/test/${{ matrix.dockerfile_ab }}/Dockerfile
 
@@ -70,6 +70,6 @@ jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelca
     steps:
       - uses: actions/checkout@v2
       - name: lint ${{ matrix.dockerfile_postmannewman }}
-        uses: brpaz/hadolint-action@master
+        uses: brpaz/hadolint-action@v1.4.0
         with:
           dockerfile: kubernetes/monitoring/test/postmannewman/${{ matrix.dockerfile_postmannewman }}/Dockerfile
