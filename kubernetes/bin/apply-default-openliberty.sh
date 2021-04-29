@@ -35,6 +35,9 @@ else
   readonly is_crc=false
 fi
 
+cd "$ROOT_DIR"/bin
+./apply-monitoring-namespace.sh
+
 echo "### mysql"
 cd "$ROOT_DIR"/mysql
 kubectl apply -f ./mysql-pv.yaml
@@ -117,6 +120,7 @@ kubectl apply -f ./openliberty-configmap.yaml
 kubectl apply -f ./openliberty-secret.yaml
 kubectl apply -f ./openliberty-deployment.yaml
 kubectl apply -f ./openliberty-service.yaml
+kubectl apply -f ./openliberty-service-externalname.yaml
 kubectl apply -f ./openliberty-ingress.yaml
 echo "###"
 echo ""

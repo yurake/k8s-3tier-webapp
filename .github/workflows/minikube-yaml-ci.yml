@@ -1,13 +1,16 @@
-name: Minikube Security CI
+name: Minikube Yaml CI
 
 on:
   push:
     branches:
       - master
     paths:
-      - "application/**"
-      - "kubernetes/**"
-      - ".github/workflows/minikube-security-ci.yml"
+      - "**.yaml"
+      - ".github/workflows/minikube-yaml-ci.yml"
+  pull_request:
+    paths:
+      - "**.yaml"
+      - ".github/workflows/minikube-yaml-ci.yml"
 
 jobs:
   security-ci:
@@ -41,25 +44,7 @@ jobs:
           kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
       - name: add hosts
         run: echo `minikube ip` k8s.3tier.webapp | sudo tee -a /etc/hosts
-      - name: apply minimal service
+      - name: apply all service
         run: |
-          kubectl apply -f kubernetes/nginx/nginx-ingress.yaml
-          kubectl apply -f kubernetes/nginx/nginx-deployment.yaml
-          kubectl apply -f kubernetes/nginx/nginx-service.yaml
-          sleep 10
-      - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.4.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          target: "http://k8s.3tier.webapp/"
-      - name: check minikube status
-        if: always()
-        run: |
-          kubectl get po --all-namespaces=true
-          kubectl get nodes
-          kubectl get pv
-          kubectl get pvc
-          kubectl get all
-          kubectl get all -n monitoring
-          kubectl get ingress
-          df -h /
+          ls -ltr
+          sh ./kubernetes/bin/apply.sh

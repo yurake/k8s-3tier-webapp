@@ -35,6 +35,9 @@ else
   readonly is_crc=false
 fi
 
+cd "$ROOT_DIR"/bin
+./apply-monitoring-namespace.sh
+
 echo "### mysql"
 cd "$ROOT_DIR"/mysql
 kubectl apply -f ./mysql-pv.yaml
@@ -116,6 +119,7 @@ cd "$ROOT_DIR"/spring
 kubectl apply -f ./spring-secret.yaml
 kubectl apply -f ./spring-deployment.yaml
 kubectl apply -f ./spring-service.yaml
+kubectl apply -f ./spring-service-externalname.yaml
 kubectl apply -f ./spring-ingress.yaml
 echo "###"
 echo ""

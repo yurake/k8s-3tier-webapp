@@ -37,10 +37,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_MEM}}/spring/memcached/set",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/memcached/set",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_MEM}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -83,10 +83,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_MEM}}/spring/memcached/get",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/memcached/get",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_MEM}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -129,10 +129,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_REDIS}}/spring/redis/put",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/redis/put",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_REDIS}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -175,10 +175,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_REDIS}}/spring/redis/get",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/redis/get",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_REDIS}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -221,10 +221,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_REDIS}}/spring/redis/publish",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/redis/publish",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_REDIS}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -266,10 +266,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_ACT}}/spring/activemq/put",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/activemq/put",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_ACT}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -311,10 +311,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_ACT}}/spring/activemq/get",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/activemq/get",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_ACT}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -360,10 +360,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_ACT}}/spring/activemq/publish",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/activemq/publish",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_ACT}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -407,10 +407,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_HAZ}}/spring/hazelcast/setcache",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/hazelcast/setcache",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_HAZ}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -454,10 +454,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_HAZ}}/spring/hazelcast/getcache",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/hazelcast/getcache",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_HAZ}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -501,10 +501,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_HAZ}}/spring/hazelcast/publish",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/hazelcast/publish",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_HAZ}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -547,10 +547,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_HAZ}}/spring/hazelcast/putqueue",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/hazelcast/putqueue",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_HAZ}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -593,10 +593,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_HAZ}}/spring/hazelcast/getqueue",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/hazelcast/getqueue",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_HAZ}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -638,10 +638,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_MYSQL}}/spring/mysql/insert",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/mysql/insert",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_MYSQL}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -683,10 +683,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_MYSQL}}/spring/mysql/select",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/mysql/select",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_MYSQL}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -726,10 +726,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_MYSQL}}/spring/mysql/delete",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/mysql/delete",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_MYSQL}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -771,10 +771,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_PG}}/spring/postgres/insert",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/postgres/insert",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_PG}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -816,10 +816,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_PG}}/spring/postgres/select",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/postgres/select",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_PG}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",
@@ -859,10 +859,10 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{HOST_NAME_PG}}/spring/postgres/delete",
+					"raw": "http://{{HOST_NAME_SPRING}}/spring/postgres/delete",
 					"protocol": "http",
 					"host": [
-						"{{HOST_NAME_PG}}"
+						"{{HOST_NAME_SPRING}}"
 					],
 					"path": [
 						"spring",

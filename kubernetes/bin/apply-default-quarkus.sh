@@ -35,13 +35,8 @@ else
   readonly is_crc=false
 fi
 
-echo "### monitoring namespace"
-cd "$ROOT_DIR"/monitoring
-set +e
-kubectl apply -f ./monitoring-namespace.yaml
-set -eu
-echo "###"
-echo ""
+cd "$ROOT_DIR"/bin
+./apply-monitoring-namespace.sh
 
 echo "### mysql"
 cd "$ROOT_DIR"/mysql
