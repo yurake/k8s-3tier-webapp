@@ -1,0 +1,93 @@
+name: Minikube Open Liberty CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "application/**"
+      - "kubernetes/**"
+      - ".github/workflows/minikube-openliberty-ci.yml"
+  issues:
+    types: [closed]
+  pull_request:
+
+jobs:
+  minikube-k8s:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: delete installed software not use
+        run: |
+          df -h /
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /opt/hostedtoolcache/Python
+          sudo rm -rf /opt/hostedtoolcache/Ruby
+          df -h /
+      - name: setup minikube
+        uses: opsgang/ga-setup-minikube@v0.1.2
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+        with:
+          minikube-version: 1.19.0
+          k8s-version: 1.21.0
+      - name: minikube settings
+        run: |
+          sudo apt install conntrack
+          minikube config set vm-driver docker
+          minikube config set cpus 2
+          minikube config set memory 6144
+          minikube start
+          minikube update-context
+          minikube addons enable ingress
+          minikube addons list
+          # https://minikube.sigs.k8s.io/docs/drivers/docker/#troubleshooting
+          sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+          sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+          kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+      - name: wait for set up ingress
+        run: |
+          kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
+      - name: apply minimal service
+        run: |
+          sh ./kubernetes/bin/apply-default-openliberty.sh
+          sleep 10
+      - name: run e2e test
+        run: |
+          kubectl apply -f kubernetes/monitoring/test/postmannewman/openliberty/postmannewman-openliberty.yaml
+      - name: wait for complete e2e job
+        run: |
+          kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-openliberty
+          kubectl -n monitoring describe job postmannewman-openliberty
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-openliberty)
+      - name: check minikube status
+        if: always()
+        run: |
+          kubectl get po --all-namespaces=true
+          kubectl get nodes
+          kubectl get pv
+          kubectl get pvc
+          kubectl get all
+          kubectl get all -n monitoring
+          kubectl get ingress
+          df -h /
+      - name: check after test postmannewman-openliberty
+        if: always()
+        run: |
+          kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-openliberty)
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-openliberty)
+      - name: check minikube status
+        if: always()
+        run: |
+          kubectl get po --all-namespaces=true
+          kubectl get nodes
+          kubectl get pv
+          kubectl get pvc
+          kubectl get all
+          kubectl get all -n monitoring
+          kubectl get ingress
+          df -h /
