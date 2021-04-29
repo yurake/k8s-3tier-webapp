@@ -5,7 +5,7 @@ ARG VCS_REF
 # renovate: datasource=repology depName=alpine_3_12/tzdata versioning=loose
 ENV TZDATA_VERSION="2021a-r0"
 # renovate: datasource=repology depName=alpine_3_12/gcc versioning=loose
-ENV GCC_VERSION="10.3.1_git20210409-r1"
+ENV GCC_VERSION="10.3.1_git20210424-r0"
 # renovate: datasource=repology depName=alpine_3_12/docker versioning=loose
 ENV DOCKER_VERSION="20.10.6-r0"
 # renovate: datasource=repology depName=alpine_3_12/python3 versioning=loose

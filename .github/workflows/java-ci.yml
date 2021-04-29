@@ -5,10 +5,12 @@ on:
     branches:
       - master
     paths:
+      - "**.java"
       - "application/**"
       - ".github/workflows/java-ci.yml"
   pull_request:
     paths:
+      - "**.java"
       - "application/**"
       - ".github/workflows/java-ci.yml"
 

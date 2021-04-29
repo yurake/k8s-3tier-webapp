@@ -7,6 +7,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -14,19 +15,34 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.GetResponse;
 
 import webapp.tier.util.CreateId;
-import webapp.tier.util.GetConfig;
 
 public class RabbitmqService {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-	private static String queuename = GetConfig.getResourceBundle("rabbitmq.queue.name");
-	private static String batchqueuename = GetConfig.getResourceBundle("rabbitmq.batch.queue.name");
-	private static String username = GetConfig.getResourceBundle("rabbitmq.username");
-	private static String password = GetConfig.getResourceBundle("rabbitmq.password");
-	private static String host = GetConfig.getResourceBundle("rabbitmq.host");
-	private static String vhost = GetConfig.getResourceBundle("rabbitmq.vhost");
-	private static String message = GetConfig.getResourceBundle("common.message");
-	private static String splitkey = GetConfig.getResourceBundle("rabbitmq.split.key");
+
+	@Value("${common.message}")
+	private String message;
+
+	@Value("${rabbitmq.queue.name}")
+	private String queuename;
+
+	@Value("${rabbitmq.queue.batch.name}")
+	private String batchqueuename;
+
+	@Value("${rabbitmq.username}")
+	private String username;
+
+	@Value("${rabbitmq.password}")
+	private String password;
+
+	@Value("${rabbitmq.host}")
+	private String host;
+
+	@Value("${rabbitmq.vhost}")
+	private String vhost;
+
+	@Value("${rabbitmq.split.key}")
+	private String splitkey;
 
 	public Connection getConnection() throws IOException, TimeoutException {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
