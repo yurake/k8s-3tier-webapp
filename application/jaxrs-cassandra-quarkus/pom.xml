@@ -53,6 +53,10 @@
 			<artifactId>java-driver-mapper-runtime</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.datastax.oss</groupId>
+			<artifactId>java-driver-metrics-microprofile</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
@@ -79,9 +83,9 @@
 				<configuration>
 					<annotationProcessorPaths>
 						<path>
-							<groupId>com.datastax.oss</groupId>
-							<artifactId>java-driver-mapper-processor</artifactId>
-							<version>${datastax-java-driver.version}</version>
+							<groupId>com.datastax.oss.quarkus</groupId>
+							<artifactId>cassandra-quarkus-mapper-processor</artifactId>
+							<version>1.0.1</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
