@@ -10,7 +10,6 @@ on:
       - ".github/workflows/minikube-spring-ci.yml"
   issues:
     types: [closed]
-  pull_request:
 
 jobs:
   minikube-k8s:
