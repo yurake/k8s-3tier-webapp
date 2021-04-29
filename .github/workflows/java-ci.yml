@@ -252,10 +252,10 @@ jobs:
         working-directory: ./application/jaxrs-cassandra-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-cassandra-quarkus
-        run: docker build -t yurak/jaxrs-cassandra-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-cassandra-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-cassandra-quarkus:latest
