@@ -1,4 +1,4 @@
-name: Minikube CI
+name: Minikube Quarkus CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     paths:
       - "application/**"
       - "kubernetes/**"
-      - ".github/workflows/minikube-ci.yml"
+      - ".github/workflows/minikube-quarkus-ci.yml"
   issues:
     types: [closed]
 
@@ -33,7 +33,7 @@ jobs:
           sudo rm -rf /opt/hostedtoolcache/Ruby
           df -h /
       - name: setup minikube
-        uses: opsgang/ga-setup-minikube@master
+        uses: opsgang/ga-setup-minikube@v0.1.2
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
@@ -146,31 +146,3 @@ jobs:
           kubectl get all -n monitoring
           kubectl get ingress
           df -h /
-      - name: create issue if failure
-        if: failure()
-        uses: maxkomarychev/oction-create-issue@v0.7.1
-        id: create-issue-minikube-ci
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: Minikube CI Failure
-          labels: ci failure
-          body: |
-            Please see failure log:
-            https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
-      - name: Create or Update Project Card
-        uses: peter-evans/create-or-update-project-card@v1
-        if: failure()
-        with:
-          project-number: 1
-          column-name: To do
-          issue-number: ${{ steps.create-issue-minikube-ci.outputs.number }}
-      - name: Add issue comment if failure
-        if: failure()
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            Add new issue:
-            #${{ steps.create-issue-minikube-ci.outputs.number }}
-            Please see failure log:
-            https://github.com/yurake/k8s-3tier-webapp/actions/runs/${{ github.run_id }}
