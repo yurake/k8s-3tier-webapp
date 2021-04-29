@@ -23,6 +23,6 @@ public class LivenessMemoryCheck implements HealthCheck {
             this.getClass().getSimpleName() + " Memory Check")
                                   .withData("memory used", memUsed)
                                   .withData("memory max", memMax)
-                                  .status(memUsed < memMax * 0.9).build();
+                                  .state(memUsed < memMax * 0.9).build();
     }
 }
