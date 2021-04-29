@@ -153,3 +153,15 @@ jobs:
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman/JYNTOrYaF6nvNQVKCj1BGP1yBpM=
+
+      - name: Build image - postmannewman-spring
+        working-directory: ./kubernetes/monitoring/test/postmannewman/spring
+        run: docker build -t yurak/postmannewman-spring:latest
+          --build-arg VCS_REF=${VCS_REF}
+          --build-arg BUILD_DATE=${BUILD_DATE} .
+      - name: Push Image - postmannewman-spring
+        if: github.event_name == 'push'
+        run: docker push yurak/postmannewman-spring:latest
+      - name: Update Microbadger
+        if: github.event_name == 'push'
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman/JYNTOrYaF6nvNQVKCj1BGP1yBpM=
