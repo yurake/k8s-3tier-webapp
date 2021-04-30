@@ -85,6 +85,12 @@ echo ""
 
 echo "### cassandra"
 cd "$ROOT_DIR"/cassandra
+kubectl apply -f ./cassandra-pv.yaml
+if "${is_crc}"; then
+  kubectl apply -f ./cassandra-pvc-crc.yaml
+else
+  kubectl apply -f ./cassandra-pvc.yaml
+fi
 kubectl apply -f ./cassandra-configmap.yaml
 kubectl apply -f ./cassandra-statefulset.yaml
 kubectl apply -f ./cassandra-service.yaml
