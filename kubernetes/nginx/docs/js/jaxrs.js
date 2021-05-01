@@ -154,7 +154,7 @@ $(function () {
     }
   }
 
-  function stopSweSocketRedis(svc) {
+  function stopSweSocketRedis() {
     if (isopenredis) {
       ws.close();
       console.log("Connection to server closed.");
@@ -165,7 +165,7 @@ $(function () {
     }
   }
 
-  function stopSweSocketRabbitmq(svc) {
+  function stopSweSocketRabbitmq() {
     if (isopenrabbitmq) {
       ws.close();
       console.log("Connection to server closed.");
@@ -176,7 +176,7 @@ $(function () {
     }
   }
 
-  function stopSweSocketActivemq(svc) {
+  function stopSweSocketActivemq() {
     if (isopenactivemq) {
       ws.close();
       console.log("Connection to server closed.");
@@ -187,7 +187,7 @@ $(function () {
     }
   }
 
-  function stopSweSocketHazelcast(svc) {
+  function stopSweSocketHazelcast() {
     if (isopenhazelcast) {
       ws.close();
       console.log("Connection to server closed.");
