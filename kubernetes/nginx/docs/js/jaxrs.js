@@ -251,7 +251,7 @@ $(function () {
   });
 
   $("#stopredis").click(function () {
-    stopSweSocketRedis("redis");
+    stopSweSocketRedis();
   });
 
   $("#publishredis").click(function () {
@@ -275,7 +275,7 @@ $(function () {
   });
 
   $("#stoprabbitmq").click(function () {
-    stopSweSocketRabbitmq("rabbitmq");
+    stopSweSocketRabbitmq();
   });
 
   $("#putactivemq").click(function () {
@@ -295,7 +295,7 @@ $(function () {
   });
 
   $("#stopactivemq").click(function () {
-    stopSweSocketActivemq("activemq");
+    stopSweSocketActivemq();
   });
 
   $("#setcachehazelcast").click(function () {
@@ -315,7 +315,7 @@ $(function () {
   });
 
   $("#stophazelcast").click(function () {
-    stopSweSocketHazelcast("hazelcast");
+    stopSweSocketHazelcast();
   });
 
   $("#putqueuehazelcast").click(function () {
