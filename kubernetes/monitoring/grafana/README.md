@@ -4,7 +4,7 @@ Choose data source type > Prometheus
 [HTTP] > [Access] > `Server(default)`  
 
 Choose data source type > Jaeger  
-[HTTP] > [URL] > `http://jaeger-query.default.svc.cluster.local`  
+[HTTP] > [URL] > `http://jaeger-query-monitoring`  
 
 ## Recommended grafana dashboards
 https://grafana.com/grafana/dashboards

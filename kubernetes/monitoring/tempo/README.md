@@ -17,7 +17,7 @@ kubectl apply -f tempo-service-externalname-default.yaml
 ## Grafana dashboard settings
 
 Choose data source type > Loki  
-[HTTP] > [URL] > `http://tempo.default.svc.cluster.local:3100`
+[HTTP] > [URL] > `http://tempo-monitoring:3100`
 
 ## Change Trace Settings in Qruarkus Application
 
