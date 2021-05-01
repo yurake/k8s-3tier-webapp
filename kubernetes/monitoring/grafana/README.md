@@ -1,7 +1,10 @@
 ## Grafana dashboard settings
-Choose data source type > Loki  
+Choose data source type > Prometheus  
 [HTTP] > [URL] > `http://prometheus:9090`  
 [HTTP] > [Access] > `Server(default)`  
+
+Choose data source type > Jaeger  
+[HTTP] > [URL] > `http://jaeger-query.default.svc.cluster.local`  
 
 ## Recommended grafana dashboards
 https://grafana.com/grafana/dashboards
