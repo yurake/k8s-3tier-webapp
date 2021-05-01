@@ -8,13 +8,11 @@ helm repo update
 helm upgrade --install tempo grafana/tempo
 ```
 
-
 ## Add ExternalName Resource
 
 ```bash
 kubectl apply -f tempo-service-externalname-default.yaml
 ```
-
 
 ## Grafana dashboard settings
 
