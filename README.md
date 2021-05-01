@@ -16,6 +16,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp/badge)](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp)
 [![Maintainability](https://api.codeclimate.com/v1/badges/64a1de96c5eb777b9db1/maintainability)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/maintainability)
 [![codebeat badge](https://codebeat.co/badges/e0bfc464-3370-467d-910f-ade9d83265b1)](https://codebeat.co/projects/github-com-yurake-k8s-3tier-webapp-master)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/yurake/k8s-3tier-webapp.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/yurake/k8s-3tier-webapp/alerts/)
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=yurake_k8s-3tier-webapp&metric=alert_status)](https://sonarcloud.io/organizations/yurak/projects)
 [![GuardRails badge](https://api.guardrails.io/v2/badges/yurake/k8s-3tier-webapp.svg?token=e6dc8e9c2054b748ab840b3303cdbd08715473d23bcc30e1bbc8b91760963828&provider=github)](https://dashboard.guardrails.io/gh/yurake/49149)
