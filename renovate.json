@@ -56,6 +56,11 @@
       "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
     }
   ],
+  "kubernetes": {
+    "fileMatch": [
+      "(^|/)[^/]*\\.yaml$"
+    ]
+  },
   "assignees": [
     "yurake"
   ],
