@@ -161,6 +161,7 @@ echo ""
 echo "## jaeger"
 cd "$ROOT_DIR"/jaeger
 kubectl apply -f ./jaeger-all-in-one-template.yml
+kubectl apply -f ./jaeger-service-externalname.yaml
 echo "###"
 echo ""
 
