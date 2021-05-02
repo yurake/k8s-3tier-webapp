@@ -140,7 +140,7 @@ jobs:
         run: docker push yurak/postmannewman-quarkus:latest
       - name: Update Microbadger
         if: github.event_name == 'push'
-        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman/JYNTOrYaF6nvNQVKCj1BGP1yBpM=
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman-quarkus/ScB7rLkqI14vMhZr1-hP3sE8DeE=
 
       - name: Build image - postmannewman-openliberty
         working-directory: ./kubernetes/monitoring/test/postmannewman/openliberty
@@ -152,7 +152,7 @@ jobs:
         run: docker push yurak/postmannewman-openliberty:latest
       - name: Update Microbadger
         if: github.event_name == 'push'
-        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman/JYNTOrYaF6nvNQVKCj1BGP1yBpM=
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman-openliberty/fLwDBaCVSQzHLIvC5ee93a2qSds=
 
       - name: Build image - postmannewman-spring
         working-directory: ./kubernetes/monitoring/test/postmannewman/spring
@@ -164,4 +164,4 @@ jobs:
         run: docker push yurak/postmannewman-spring:latest
       - name: Update Microbadger
         if: github.event_name == 'push'
-        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman/JYNTOrYaF6nvNQVKCj1BGP1yBpM=
+        run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman-spring/wZ4---KmwQW_d4R3Y6uaN-DM7zw=
