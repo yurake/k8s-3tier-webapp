@@ -17,6 +17,8 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import io.agroal.api.AgroalDataSource;
 import io.quarkus.agroal.DataSource;
+import io.quarkus.cache.CacheInvalidate;
+import io.quarkus.cache.CacheResult;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.interfaces.Database;
 import webapp.tier.util.CreateId;
@@ -78,6 +80,7 @@ public class MysqlService implements Database {
 	}
 
 	@Override
+	@CacheResult(cacheName = "mysql_select_msg")
 	public List<MsgBean> selectMsg() throws SQLException {
 		List<MsgBean> msglist = new ArrayList<>();
 
@@ -100,6 +103,10 @@ public class MysqlService implements Database {
 		}
 		return msglist;
 	}
+
+    @CacheInvalidate(cacheName = "mysql_select_msg")
+    public void invalidateCache() {
+    }
 
 	@Override
 	public String deleteMsg() throws SQLException {
