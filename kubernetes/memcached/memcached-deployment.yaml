@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: memcached
-          image: memcached:1.5
+          image: memcached:1.6
           imagePullPolicy: Always
           ports:
             - containerPort: 11211
