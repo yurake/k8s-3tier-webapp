@@ -85,6 +85,12 @@ echo ""
 
 echo "### cassandra"
 cd "$ROOT_DIR"/cassandra
+kubectl apply -f ./cassandra-pv.yaml
+if "${is_crc}"; then
+  kubectl apply -f ./cassandra-pvc-crc.yaml
+else
+  kubectl apply -f ./cassandra-pvc.yaml
+fi
 kubectl apply -f ./cassandra-configmap.yaml
 kubectl apply -f ./cassandra-statefulset.yaml
 kubectl apply -f ./cassandra-service.yaml
@@ -155,6 +161,7 @@ echo ""
 echo "## jaeger"
 cd "$ROOT_DIR"/jaeger
 kubectl apply -f ./jaeger-all-in-one-template.yml
+kubectl apply -f ./jaeger-service-externalname.yaml
 echo "###"
 echo ""
 

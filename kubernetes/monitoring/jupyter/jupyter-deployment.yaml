@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: jupyter
-          image: jupyter/datascience-notebook:ad3574d3c5c7
-          imagePullPolicy: IfNotPresent
+          image: jupyter/datascience-notebook:notebook-6.3.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8888
           env:
