@@ -22,6 +22,6 @@ spec:
           ports:
             - containerPort: 11211
         - name: memcached-exporter
-          image: prom/memcached-exporter:v0.6.0
+          image: prom/memcached-exporter:v0.9.0
           ports:
             - containerPort: 9150
