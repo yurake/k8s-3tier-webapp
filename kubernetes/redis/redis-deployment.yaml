@@ -22,6 +22,6 @@ spec:
           ports:
             - containerPort: 6379
         - name: redis-exporter
-          image: oliver006/redis_exporter:v1.3.5-alpine
+          image: oliver006/redis_exporter:v1.23.0-alpine
           ports:
             - containerPort: 9121
