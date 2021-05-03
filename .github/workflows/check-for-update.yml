@@ -102,7 +102,6 @@ jobs:
           echo TARGET: ${TARGET_VERSION}
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
       - name: check current minikube stress version
-      - name: check current minikube stress version
         working-directory: ./.github/workflows
         run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
       - name: check diff stress
