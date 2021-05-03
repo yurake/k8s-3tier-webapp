@@ -49,7 +49,7 @@ spec:
             - name: mongodb-persistent-storage
               mountPath: /data/db
         - name: mongodb-exporter
-          image: ssheehy/mongodb-exporter:0.10.0
+          image: ssheehy/mongodb-exporter:0.11.0
           ports:
             - containerPort: 9216
           env:
