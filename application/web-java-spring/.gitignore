@@ -26,7 +26,11 @@ Thumbs.db
 !gradle-wrapper.jar
 
 # Maven
-target
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
 
 # Build
 out

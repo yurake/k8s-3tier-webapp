@@ -36,132 +36,132 @@ jobs:
 
       - name: Build image - nginx
         working-directory: ./kubernetes/nginx
-        run: docker build -t yurak/nginx:latest
+        run: docker build -t yurak/nginx:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - nginx
         if: github.event_name == 'push'
-        run: docker push yurak/nginx:latest
+        run: docker push yurak/nginx:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/nginx/7QCS0ho29O-wTHs3nIw5N2XZls8=
 
       - name: Build image - mysql
         working-directory: ./kubernetes/mysql
-        run: docker build -t yurak/mysql:latest
+        run: docker build -t yurak/mysql:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - mysql
         if: github.event_name == 'push'
-        run: docker push yurak/mysql:latest
+        run: docker push yurak/mysql:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/mysql/VdV3GfTNPegsi3iEgCzrSp7fcso=
 
       - name: Build image - postgres
         working-directory: ./kubernetes/postgres
-        run: docker build -t yurak/postgres:latest
+        run: docker build -t yurak/postgres:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postgres
         if: github.event_name == 'push'
-        run: docker push yurak/postgres:latest
+        run: docker push yurak/postgres:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postgres/buxVcrUNzGrKjvWm2_-mvfW5OHc=
 
       - name: Build image - mongodb
         working-directory: ./kubernetes/mongodb
-        run: docker build -t yurak/mongodb:latest
+        run: docker build -t yurak/mongodb:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - mongodb
         if: github.event_name == 'push'
-        run: docker push yurak/mongodb:latest
+        run: docker push yurak/mongodb:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/mongodb/UMosuG9BuAvvnGJ9gWcSzgBjC5k=
 
       - name: Build image - cassandra
         working-directory: ./kubernetes/cassandra
-        run: docker build -t yurak/cassandra:latest
+        run: docker build -t yurak/cassandra:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - cassandra
         if: github.event_name == 'push'
-        run: docker push yurak/cassandra:latest
+        run: docker push yurak/cassandra:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/cassandra/_v7rgss4iVQ4LkK4zscW7RKQGB8=
 
       - name: Build image - rabbitmq
         working-directory: ./kubernetes/rabbitmq
-        run: docker build -t yurak/rabbitmq:latest
+        run: docker build -t yurak/rabbitmq:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - rabbitmq
         if: github.event_name == 'push'
-        run: docker push yurak/rabbitmq:latest
+        run: docker push yurak/rabbitmq:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/rabbitmq/aN6TGvG8Z9g5SxT7PsSAS5ruys0=
 
       - name: Build image - jenkins
         working-directory: ./kubernetes/monitoring/jenkins
-        run: docker build -t yurak/jenkins:latest
+        run: docker build -t yurak/jenkins:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - jenkins
         if: github.event_name == 'push'
-        run: docker push yurak/jenkins:latest
+        run: docker push yurak/jenkins:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/jenkins/9IhdDnEDW1zwZc2v7l7DWfYTZ4E=
 
       - name: Build image - ab
         working-directory: ./kubernetes/monitoring/test/ab
-        run: docker build -t yurak/ab:latest
+        run: docker build -t yurak/ab:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - ab
         if: github.event_name == 'push'
-        run: docker push yurak/ab:latest
+        run: docker push yurak/ab:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/ab/Rd4WPZ1EPQWA2KTQwML6JyKoNgc=
 
       - name: Build image - postmannewman-quarkus
         working-directory: ./kubernetes/monitoring/test/postmannewman/quarkus
-        run: docker build -t yurak/postmannewman-quarkus:latest
+        run: docker build -t yurak/postmannewman-quarkus:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postmannewman-quarkus
         if: github.event_name == 'push'
-        run: docker push yurak/postmannewman-quarkus:latest
+        run: docker push yurak/postmannewman-quarkus:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman-quarkus/ScB7rLkqI14vMhZr1-hP3sE8DeE=
 
       - name: Build image - postmannewman-openliberty
         working-directory: ./kubernetes/monitoring/test/postmannewman/openliberty
-        run: docker build -t yurak/postmannewman-openliberty:latest
+        run: docker build -t yurak/postmannewman-openliberty:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postmannewman-openliberty
         if: github.event_name == 'push'
-        run: docker push yurak/postmannewman-openliberty:latest
+        run: docker push yurak/postmannewman-openliberty:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman-openliberty/fLwDBaCVSQzHLIvC5ee93a2qSds=
 
       - name: Build image - postmannewman-spring
         working-directory: ./kubernetes/monitoring/test/postmannewman/spring
-        run: docker build -t yurak/postmannewman-spring:latest
+        run: docker build -t yurak/postmannewman-spring:v0.4.2
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postmannewman-spring
         if: github.event_name == 'push'
-        run: docker push yurak/postmannewman-spring:latest
+        run: docker push yurak/postmannewman-spring:v0.4.2
       - name: Update Microbadger
         if: github.event_name == 'push'
         run: curl -X POST -d {} https://hooks.microbadger.com/images/yurak/postmannewman-spring/wZ4---KmwQW_d4R3Y6uaN-DM7zw=

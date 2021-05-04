@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: postmannewman-openliberty
-          image: yurak/postmannewman-openliberty:latest
+          image: yurak/postmannewman-openliberty:v0.4.2
           command: ["/bin/sh", "-c"]
           args:
             [

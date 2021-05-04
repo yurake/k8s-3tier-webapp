@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: yurak/mysql:latest
+          image: yurak/mysql:v0.4.2
           imagePullPolicy: Always
           args:
             - --character-set-server=utf8mb4
