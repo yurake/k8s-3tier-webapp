@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: postmannewman-spring
-          image: yurak/postmannewman-spring:v0.4.2
+          image: yurak/postmannewman-spring:latest
           command: ["/bin/sh", "-c"]
           args:
             [
