@@ -1204,6 +1204,72 @@ jobs:
         uses: github/codeql-action/analyze@v1
         continue-on-error: true
 
+  implementer-grpc-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@4.0
+        with:
+          graalvm: "21.0.0.2"
+          java: "java11"
+          arch: "amd64"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1.9.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2.1.5
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/implementer-grpc-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-implementer-grpc-quarkus
+      - name: Maven Build
+        working-directory: ./application/implementer-grpc-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
+      - name: Build Image
+        working-directory: ./application/implementer-grpc-quarkus
+        run: docker build -t yurak/implementer-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        if: github.event_name == 'push'
+        run: docker push yurak/implementer-grpc-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@1.0.1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/implementer-grpc-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw sonar:sonar
+          -Dsonar.projectKey=yurake_implementer-grpc-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+        continue-on-error: true
+
   redis-mysql-helidon:
     needs: init-build
     runs-on: ubuntu-latest
