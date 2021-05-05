@@ -7,6 +7,8 @@ on:
     paths:
       - "**.sh"
   pull_request:
+    paths:
+      - "**.sh"
 
 jobs:
   validation:
@@ -14,9 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run shellcheck
-        uses: ludeeus/action-shellcheck@master
+        uses: ludeeus/action-shellcheck@1.1.0
       - name: Run sh-checker
-        uses: luizm/action-sh-checker@v0.1.11
+        uses: luizm/action-sh-checker@v0.2.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

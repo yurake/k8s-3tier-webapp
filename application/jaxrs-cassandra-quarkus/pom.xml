@@ -6,20 +6,26 @@
 	<parent>
 		<groupId>webapp.3tier.k8s.parent</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.4.2-SNAPSHOT</version>
+		<version>0.4.3-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-cassandra-quarkus</artifactId>
 	<properties>
-		<quarkus.platform.version>1.8.3.Final</quarkus.platform.version>
-		<cassandra.version>1.0.0</cassandra.version>
-		<datastax-java-driver.version>4.10.0</datastax-java-driver.version>
+		<cassandra.version>1.0.1</cassandra.version>
+		<datastax-java-driver.version>4.11.1</datastax-java-driver.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.datastax.oss</groupId>
+				<artifactId>java-driver-bom</artifactId>
+				<version>4.11.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<dependency>
 				<groupId>${quarkus.platform.group-id}</groupId>
 				<artifactId>${quarkus.platform.artifact-id}</artifactId>
@@ -54,6 +60,10 @@
 			<artifactId>java-driver-mapper-runtime</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.datastax.oss</groupId>
+			<artifactId>java-driver-metrics-microprofile</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
@@ -80,9 +90,9 @@
 				<configuration>
 					<annotationProcessorPaths>
 						<path>
-							<groupId>com.datastax.oss</groupId>
-							<artifactId>java-driver-mapper-processor</artifactId>
-							<version>${datastax-java-driver.version}</version>
+							<groupId>com.datastax.oss.quarkus</groupId>
+							<artifactId>cassandra-quarkus-mapper-processor</artifactId>
+							<version>1.0.1</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>

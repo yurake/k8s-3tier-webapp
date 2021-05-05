@@ -8,14 +8,12 @@ import com.hazelcast.core.HazelcastInstance;
 
 public class HazelcastInstanceConfigurator {
 
-	private static String address = GetConfig.getResourceBundle("hazelcast.address");
-
 	private HazelcastInstanceConfigurator() {
 	}
 
 	public static HazelcastInstance getInstance() throws IOException {
 		ClientConfig clientConfig = new ClientConfig();
-		clientConfig.getNetworkConfig().addAddress(address);
+		clientConfig.getNetworkConfig().addAddress("hazelcast:5701");
 		clientConfig.getConnectionStrategyConfig().getConnectionRetryConfig()
 				.setClusterConnectTimeoutMillis(1000)
 				.setMaxBackoffMillis(2000);

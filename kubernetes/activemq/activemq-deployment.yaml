@@ -20,7 +20,7 @@ spec:
         runAsUser: 0
       containers:
         - name: activemq
-          image: vromero/activemq-artemis:2.12.0-alpine
+          image: vromero/activemq-artemis:2.16.0-alpine
           imagePullPolicy: Always
           ports:
             - containerPort: 8161

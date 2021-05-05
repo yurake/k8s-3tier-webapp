@@ -4,24 +4,23 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
 class HazelcastInstanceConfiguratorTest {
 
-	@Test
-	void testGetInstance() {
-		HazelcastInstance mockInstance = null;
-		try {
-			mockInstance = Hazelcast.newHazelcastInstance();
-			HazelcastInstanceConfigurator.getInstance();
-		} catch (Exception expected) {
-			expected.fillInStackTrace();
-			fail();
-		} finally {
-			mockInstance.shutdown();
-		}
-	}
+//	@Test
+//	void testGetInstance() {
+//		HazelcastInstance mockInstance = null;
+//		try {
+//			mockInstance = Hazelcast.newHazelcastInstance();
+//			HazelcastInstanceConfigurator.getInstance();
+//		} catch (Exception expected) {
+//			expected.fillInStackTrace();
+//			fail();
+//		} finally {
+//			mockInstance.shutdown();
+//		}
+//	}
 
 	@Test
 	void testGetInstanceError() {

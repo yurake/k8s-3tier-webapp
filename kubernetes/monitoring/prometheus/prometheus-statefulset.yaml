@@ -24,9 +24,9 @@ spec:
     spec:
       serviceAccountName: prometheus
       initContainers:
-        - name: "init-chown-data"
-          image: "busybox:latest"
-          imagePullPolicy: "IfNotPresent"
+        - name: init-chown-data
+          image: busybox:latest
+          imagePullPolicy: Always
           command: ["chown", "-R", "65534:65534", "/data"]
           volumeMounts:
             - name: prometheus-persistent-storage
@@ -34,8 +34,8 @@ spec:
               subPath: ""
       containers:
         - name: prometheus-server
-          image: "prom/prometheus:v2.2.1"
-          imagePullPolicy: "IfNotPresent"
+          image: prom/prometheus:v2.26.0
+          imagePullPolicy: Always
           args:
             - --config.file=/etc/config/prometheus.yml
             - --storage.tsdb.path=/data

@@ -20,12 +20,12 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: setup minikube
-        uses: opsgang/ga-setup-minikube@master
+        uses: opsgang/ga-setup-minikube@v0.1.2
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: 1.18.1
-          k8s-version: 1.20.5
+          minikube-version: 1.19.0
+          k8s-version: 1.21.0
       - name: minikube settings
         run: |
           sudo apt install conntrack
@@ -39,6 +39,7 @@ jobs:
           # https://minikube.sigs.k8s.io/docs/drivers/docker/#troubleshooting
           sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
           sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+          kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
       - name: wait for set up ingress
         run: |
           kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m

@@ -7,16 +7,22 @@ import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.hazelcast.core.HazelcastInstance;
 
 import webapp.tier.util.CreateId;
-import webapp.tier.util.GetConfig;
 
+@Service
 public class HazelcastCacheService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-	private static String message = GetConfig.getResourceBundle("common.message");
-	private static String cachename = GetConfig.getResourceBundle("hazelcast.cache.name");
+
+	@Value("${common.message}")
+	private String message;
+
+	@Value("${hazelcast.cache.name}")
+	private String cachename;
 
 	public String putMapHazelcast(HazelcastInstance client) throws Exception {
 		String fullmsg = null;

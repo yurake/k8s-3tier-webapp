@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>webapp.3tier.k8s.parent</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.4.2-SNAPSHOT</version>
+		<version>0.4.3-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>consumer-rabbitmq-quarkus</artifactId>
 	<properties>
-		<amqp-client.version>5.10.0</amqp-client.version>
+		<amqp-client.version>5.12.0</amqp-client.version>
 		<rabbitmq-mock.version>1.1.1</rabbitmq-mock.version>
 	</properties>
 	<dependencies>
