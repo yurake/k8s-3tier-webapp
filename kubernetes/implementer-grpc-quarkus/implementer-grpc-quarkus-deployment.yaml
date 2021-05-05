@@ -19,6 +19,9 @@ spec:
         - name: implementer-grpc-quarkus
           image: yurak/implementer-grpc-quarkus:latest
           imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+            - containerPort: 9000
           livenessProbe:
             httpGet:
               port: 8080

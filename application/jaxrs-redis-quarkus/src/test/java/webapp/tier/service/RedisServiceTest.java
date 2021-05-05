@@ -49,16 +49,16 @@ class RedisServiceTest {
 		return new Jedis(server.getHost(), 9999);
 	}
 
-//	@Test
-//	void testPingTrue() {
-//		RedisService rsvc = new RedisService() {
-//			public Jedis createJedis() {
-//				Jedis jedis = createJedisMock();
-//				return jedis;
-//			}
-//		};
-//		assertThat(rsvc.ping(), is(true));
-//	}
+	//	@Test
+	//	void testPingTrue() {
+	//		RedisService rsvc = new RedisService() {
+	//			public Jedis createJedis() {
+	//				Jedis jedis = createJedisMock();
+	//				return jedis;
+	//			}
+	//		};
+	//		assertThat(rsvc.ping(), is(true));
+	//	}
 
 	@Test
 	void testPingFalseNull() {
@@ -71,19 +71,30 @@ class RedisServiceTest {
 	}
 
 	@Test
-	void testPingFalse() {
-		assertThat(svc.ping(), is(false));
+	void testPingFalseError() {
+		try {
+			svc.ping();
+			fail();
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertThat(e.getClass(), is(JedisConnectionException.class));
+		}
 	}
 
-//	@Test
-//	void testGetMsg() throws NoSuchAlgorithmException, RuntimeException {
-//		Jedis jedis = createJedisMock();
-//		MsgBean expected = svc.putMsg(jedis);
-//		MsgBean msgbean = svc.getMsg(jedis);
-//		svc.flushAll(jedis);
-//		assertThat(msgbean.getFullmsg(), containsString(respbody));
-//		assertThat(msgbean.getId(), is(expected.getId()));
-//	}
+	//	@Test
+	//	void testPingFalse() {
+	//		assertThat(svc.ping(), is(false));
+	//	}
+
+	//	@Test
+	//	void testGetMsg() throws NoSuchAlgorithmException, RuntimeException {
+	//		Jedis jedis = createJedisMock();
+	//		MsgBean expected = svc.putMsg(jedis);
+	//		MsgBean msgbean = svc.getMsg(jedis);
+	//		svc.flushAll(jedis);
+	//		assertThat(msgbean.getFullmsg(), containsString(respbody));
+	//		assertThat(msgbean.getId(), is(expected.getId()));
+	//	}
 
 	@Test
 	void testGetMsgError() {
@@ -97,34 +108,34 @@ class RedisServiceTest {
 		}
 	}
 
-//	@Test
-//	void testGetMsgList10() throws NoSuchAlgorithmException, RuntimeException {
-//		Jedis jedis = createJedisMock();
-//
-//		List<Integer> expecteds = new ArrayList<>();
-//		for (int i = 0; i < 10; i++) {
-//			expecteds.add(svc.putMsg(jedis).getId());
-//		}
-//
-//		List<MsgBean> msgbeans = svc.getMsgList(jedis);
-//		svc.flushAll(jedis);
-//		msgbeans.forEach(s -> {
-//			assertThat(s.getFullmsg(), containsString(respbody));
-//			assertThat(expecteds.contains(s.getId()), is(true));
-//		});
-//	}
+	//	@Test
+	//	void testGetMsgList10() throws NoSuchAlgorithmException, RuntimeException {
+	//		Jedis jedis = createJedisMock();
+	//
+	//		List<Integer> expecteds = new ArrayList<>();
+	//		for (int i = 0; i < 10; i++) {
+	//			expecteds.add(svc.putMsg(jedis).getId());
+	//		}
+	//
+	//		List<MsgBean> msgbeans = svc.getMsgList(jedis);
+	//		svc.flushAll(jedis);
+	//		msgbeans.forEach(s -> {
+	//			assertThat(s.getFullmsg(), containsString(respbody));
+	//			assertThat(expecteds.contains(s.getId()), is(true));
+	//		});
+	//	}
 
-//	@Test
-//	void testGetMsgList0() throws NoSuchAlgorithmException, RuntimeException {
-//		Jedis jedis = createJedisMock();
-//
-//		List<MsgBean> msgbeans = svc.getMsgList(jedis);
-//		svc.flushAll(jedis);
-//		msgbeans.forEach(s -> {
-//			assertThat(s.getId(), is(0));
-//			assertThat(s.getMessage(), is("No Data."));
-//		});
-//	}
+	//	@Test
+	//	void testGetMsgList0() throws NoSuchAlgorithmException, RuntimeException {
+	//		Jedis jedis = createJedisMock();
+	//
+	//		List<MsgBean> msgbeans = svc.getMsgList(jedis);
+	//		svc.flushAll(jedis);
+	//		msgbeans.forEach(s -> {
+	//			assertThat(s.getId(), is(0));
+	//			assertThat(s.getMessage(), is("No Data."));
+	//		});
+	//	}
 
 	@Test
 	void testGetMsgListError() {
@@ -138,13 +149,13 @@ class RedisServiceTest {
 		}
 	}
 
-//	@Test
-//	void testPutMsg() throws NoSuchAlgorithmException, RuntimeException {
-//		Jedis jedis = createJedisMock();
-//		MsgBean msgbean = svc.putMsg(jedis);
-//		svc.flushAll(jedis);
-//		assertThat(msgbean.getFullmsg(), containsString(respbody));
-//	}
+	//	@Test
+	//	void testPutMsg() throws NoSuchAlgorithmException, RuntimeException {
+	//		Jedis jedis = createJedisMock();
+	//		MsgBean msgbean = svc.putMsg(jedis);
+	//		svc.flushAll(jedis);
+	//		assertThat(msgbean.getFullmsg(), containsString(respbody));
+	//	}
 
 	@Test
 	void testPutMsgError() {
@@ -158,13 +169,13 @@ class RedisServiceTest {
 		}
 	}
 
-//	@Test
-//	void testPublishMsg() throws NoSuchAlgorithmException, RuntimeException {
-//		Jedis jedis = createJedisMock();
-//		MsgBean msgbean = svc.publishMsg(jedis);
-//		svc.flushAll(jedis);
-//		assertThat(msgbean.getFullmsg(), containsString(respbody));
-//	}
+	//	@Test
+	//	void testPublishMsg() throws NoSuchAlgorithmException, RuntimeException {
+	//		Jedis jedis = createJedisMock();
+	//		MsgBean msgbean = svc.publishMsg(jedis);
+	//		svc.flushAll(jedis);
+	//		assertThat(msgbean.getFullmsg(), containsString(respbody));
+	//	}
 
 	@Test
 	void testPublishMsgError() {

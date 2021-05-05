@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
@@ -20,6 +21,7 @@ import io.quarkus.runtime.StartupEvent;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import webapp.tier.bean.MsgBean;
+import webapp.tier.service.client.WebappClientService;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
@@ -35,6 +37,9 @@ public class RedisService implements Runnable {
 	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
 	private static int setexpire = ConfigProvider.getConfig().getValue("redis.set.expire", Integer.class);
+
+	@Inject
+	WebappClientService webappcltsvc;
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
@@ -65,6 +70,7 @@ public class RedisService implements Runnable {
 				}
 			} catch (JedisConnectionException e) {
 				logger.log(Level.SEVERE, "Status Check Error.", e);
+				throw e;
 			} finally {
 				jedis.close();
 			}
@@ -72,13 +78,20 @@ public class RedisService implements Runnable {
 		return status;
 	}
 
+	@SuppressWarnings("deprecation")
 	public MsgBean putMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
-		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
+		int grpcid = webappcltsvc.getId();
+		String grpcMsg = webappcltsvc.getMsg();
+
+		MsgBean msgbean = new MsgBean(grpcid, grpcMsg, "Put");
 
 		try {
 			String id = MsgUtils.intToString(msgbean.getId());
 			jedis.set(id, msgbean.getMessage());
 			jedis.expire(id, setexpire);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Put Error. ", e);
+			throw e;
 		} finally {
 			jedis.close();
 		}
@@ -105,12 +118,16 @@ public class RedisService implements Runnable {
 			if (msglist.isEmpty()) {
 				msglist.add(new MsgBean(0, "No Data."));
 			}
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Get Error. ", e);
+			throw e;
 		} finally {
 			jedis.close();
 		}
 		return msglist;
 	}
 
+	@SuppressWarnings("deprecation")
 	public MsgBean publishMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
@@ -118,6 +135,9 @@ public class RedisService implements Runnable {
 		try {
 			jedis.publish(channel, body);
 			jedis.expire(MsgUtils.intToString(msgbean.getId()), setexpire);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Publish Error. ", e);
+			throw e;
 		} finally {
 			jedis.close();
 		}
@@ -137,6 +157,7 @@ public class RedisService implements Runnable {
 			jedis.subscribe(redissubsc, channel);
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Subscribe Error.", e);
+			throw e;
 		} finally {
 			jedis.close();
 		}

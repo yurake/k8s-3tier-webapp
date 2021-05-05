@@ -7,5 +7,9 @@ spec:
   selector:
     app: implementer-grpc-quarkus
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 8080
+    - name: grpc-server
+      protocol: TCP
+      port: 9000

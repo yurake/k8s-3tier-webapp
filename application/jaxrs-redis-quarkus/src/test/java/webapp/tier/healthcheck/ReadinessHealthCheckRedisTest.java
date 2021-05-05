@@ -1,6 +1,6 @@
 package webapp.tier.healthcheck;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -17,7 +17,13 @@ class ReadinessHealthCheckRedisTest {
 
 	@Test
 	void testCallDown() {
-		ReadinessHealthCheckRedis hc = new ReadinessHealthCheckRedis();
+		ReadinessHealthCheckRedis hc = new ReadinessHealthCheckRedis() {
+			protected RedisService createRedisService() {
+				RedisService mock = Mockito.mock(RedisService.class);
+				Mockito.when(mock.ping()).thenReturn(false);
+				return mock;
+			}
+		};
 		assertEquals(State.DOWN, hc.call().getState(), "Unexpected status");
 	}
 
