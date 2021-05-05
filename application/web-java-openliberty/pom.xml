@@ -18,7 +18,7 @@
 		<jedis.version>3.6.0</jedis.version>
 		<amqp-client.version>5.12.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
-		<rabbitmq-jms.version>2.2.0</rabbitmq-jms.version>
+		<rabbitmq-jms.version>2.3.0</rabbitmq-jms.version>
 
 		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 		<jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
