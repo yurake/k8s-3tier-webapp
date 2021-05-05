@@ -9,15 +9,16 @@ import io.grpc.stub.StreamObserver;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class IdServiceTest {
+class MsgServiceTest {
 
 	@Inject
-	IdService idsvc;
+	MsgService msgsvc;
 
 	@Test
-	public void testGetId() {
+	void testGetMsg() {
 		@SuppressWarnings("unchecked")
-		StreamObserver<IdReply> responseObserverMock = Mockito.mock(StreamObserver.class);
-		idsvc.getId(null, responseObserverMock);
+		StreamObserver<MsgReply> responseObserverMock = Mockito.mock(StreamObserver.class);
+		msgsvc.getMsg(null, responseObserverMock);
 	}
+
 }
