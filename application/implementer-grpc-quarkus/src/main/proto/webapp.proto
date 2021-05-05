@@ -4,16 +4,14 @@ option java_multiple_files = true;
 option java_package = "webapp.tier.grpc";
 option java_outer_classname = "WebappProto";
 
+import "google/protobuf/empty.proto";
+
 package grpc;
 
 // The Id service definition.
 service Id {
     // Sends a id
-    rpc getId (IdRequest) returns (IdReply) {}
-}
-
-// The request id.
-message IdRequest {
+    rpc getId (google.protobuf.Empty) returns (IdReply) {}
 }
 
 // The response message containing the id
@@ -24,11 +22,7 @@ message IdReply {
 // The Msg service definition.
 service Msg {
     // Sends a message
-    rpc getMsg (MsgRequest) returns (MsgReply) {}
-}
-
-// The request message.
-message MsgRequest {
+    rpc getMsg (google.protobuf.Empty) returns (MsgReply) {}
 }
 
 // The response message containing the message

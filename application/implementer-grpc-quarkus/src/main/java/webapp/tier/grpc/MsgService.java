@@ -7,6 +7,8 @@ import javax.inject.Singleton;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import com.google.protobuf.Empty;
+
 import io.grpc.stub.StreamObserver;
 
 @Singleton
@@ -18,7 +20,7 @@ public class MsgService extends MsgGrpc.MsgImplBase {
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
-	public void getMsg(MsgRequest request, StreamObserver<MsgReply> responseObserver) {
+	public void getMsg(Empty request, StreamObserver<MsgReply> responseObserver) {
 		logger.log(Level.INFO, "Return msg: " + message);
 		responseObserver.onNext(MsgReply.newBuilder().setMessage(message).build());
 		responseObserver.onCompleted();

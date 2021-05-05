@@ -8,6 +8,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.google.protobuf.Empty;
+
 import io.quarkus.grpc.runtime.annotations.GrpcService;
 
 @ApplicationScoped
@@ -27,12 +29,12 @@ public class MockWebappResource {
 	@GET
 	@Path("/id")
 	public int getId() {
-		return idService.getId(IdRequest.newBuilder().build()).getId();
+		return idService.getId(Empty.newBuilder().build()).getId();
 	}
 
 	@GET
 	@Path("/msg")
 	public String getMsg() {
-		return msgclient.getMsg(MsgRequest.newBuilder().build()).getMessage();
+		return msgclient.getMsg(Empty.newBuilder().build()).getMessage();
 	}
 }

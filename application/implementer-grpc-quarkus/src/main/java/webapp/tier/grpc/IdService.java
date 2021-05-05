@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 
 import javax.inject.Singleton;
 
+import com.google.protobuf.Empty;
+
 import io.grpc.stub.StreamObserver;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
@@ -16,7 +18,7 @@ public class IdService extends IdGrpc.IdImplBase {
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
-	public void getId(IdRequest request, StreamObserver<IdReply> responseObserver) {
+	public void getId(Empty request, StreamObserver<IdReply> responseObserver) {
 		try {
 			int id = CreateId.createid();
 			logger.log(Level.INFO, "Return id: " + MsgUtils.intToString(id));
