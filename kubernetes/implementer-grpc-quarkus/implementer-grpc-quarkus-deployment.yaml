@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: implementer-grpc-quarkus
+spec:
+  selector:
+    matchLabels:
+      app: implementer-grpc-quarkus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: implementer-grpc-quarkus
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+        - name: implementer-grpc-quarkus
+          image: yurak/implementer-grpc-quarkus:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /health/live
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 5
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /health/ready
+            initialDelaySeconds: 10
+            periodSeconds: 30
