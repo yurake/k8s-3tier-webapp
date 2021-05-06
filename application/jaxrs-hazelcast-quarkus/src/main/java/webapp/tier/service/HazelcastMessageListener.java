@@ -4,8 +4,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.hazelcast.topic.Message;
 import com.hazelcast.topic.MessageListener;
@@ -18,8 +19,12 @@ import webapp.tier.util.MsgUtils;
 public class HazelcastMessageListener implements MessageListener<Object> {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
-	private HazelcastSocket hazsock = new HazelcastSocket();
+
+	@ConfigProperty(name = "hazelcast.split.key")
+	String splitkey;
+
+	@Inject
+	HazelcastSocket hazsock;
 
 	@Override
 	public void onMessage(Message<Object> message) {

@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.hazelcast.core.HazelcastInstance;
 
@@ -21,8 +21,12 @@ public class HazelcastCacheService {
 
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
-	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
+
+	@ConfigProperty(name = "common.message")
+	String message;
+
+	@ConfigProperty(name = "hazelcast.cache.name")
+	String cachename;
 
 	public MsgBean setMsg(HazelcastInstance client) throws NoSuchAlgorithmException {
 		MsgBean msgbean = errormsg;
