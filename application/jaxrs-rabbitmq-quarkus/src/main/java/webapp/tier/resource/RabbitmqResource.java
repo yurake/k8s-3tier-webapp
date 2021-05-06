@@ -1,5 +1,8 @@
 package webapp.tier.resource;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -21,6 +24,8 @@ import webapp.tier.service.RabbitmqService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RabbitmqResource {
 
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
 	@Inject
 	RabbitmqService svc;
 
@@ -32,6 +37,7 @@ public class RabbitmqResource {
 		try {
 			return Response.ok().entity(svc.putMsg(svc.getConnection())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Put Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -45,6 +51,7 @@ public class RabbitmqResource {
 		try {
 			return Response.ok().entity(svc.getMsg(svc.getConnection())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Get Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -57,6 +64,7 @@ public class RabbitmqResource {
 		try {
 			return Response.ok().entity(svc.publishMsg(svc.getConnection())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Publish Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
