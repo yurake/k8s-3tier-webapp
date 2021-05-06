@@ -2,13 +2,13 @@
 set -eu
 
 ROOT_DIR="$(
-  cd "$(dirname -- "$0")"
-  cd ..
-  pwd
+	cd "$(dirname -- "$0")"
+	cd ..
+	pwd
 )"
 
 usage() {
-  cat <<EOF
+	cat <<EOF
 
 Script:
     Apply minimal service to Minikube
@@ -22,17 +22,17 @@ EOF
 }
 
 if [ $# -gt 1 ]; then
-  echo "too many arguments"
-  usage
-  exit 1
+	echo "too many arguments"
+	usage
+	exit 1
 elif [ $# -eq 1 ] && [ "$1" != "crc" ]; then
-  echo "incorrect argument: $1"
-  usage
-  exit 1
+	echo "incorrect argument: $1"
+	usage
+	exit 1
 elif [ $# -eq 1 ] && [ "$1" = "crc" ]; then
-  readonly is_crc=true
+	readonly is_crc=true
 else
-  readonly is_crc=false
+	readonly is_crc=false
 fi
 
 cd "$ROOT_DIR"/bin
@@ -42,9 +42,9 @@ echo "### mysql"
 cd "$ROOT_DIR"/mysql
 kubectl apply -f ./mysql-pv.yaml
 if "${is_crc}"; then
-  kubectl apply -f ./mysql-pvc-crc.yaml
+	kubectl apply -f ./mysql-pvc-crc.yaml
 else
-  kubectl apply -f ./mysql-pvc.yaml
+	kubectl apply -f ./mysql-pvc.yaml
 fi
 kubectl apply -f ./mysql-configmap.yaml
 kubectl apply -f ./mysql-secret.yaml
@@ -57,9 +57,9 @@ echo "### postgres"
 cd "$ROOT_DIR"/postgres
 kubectl apply -f ./postgres-pv.yaml
 if "${is_crc}"; then
-  kubectl apply -f ./postgres-pvc-crc.yaml
+	kubectl apply -f ./postgres-pvc-crc.yaml
 else
-  kubectl apply -f ./postgres-pvc.yaml
+	kubectl apply -f ./postgres-pvc.yaml
 fi
 kubectl apply -f ./postgres-configmap.yaml
 kubectl apply -f ./postgres-secret.yaml
@@ -89,9 +89,9 @@ echo "### activemq"
 cd "$ROOT_DIR"/activemq
 kubectl apply -f ./activemq-pv.yaml
 if "${is_crc}"; then
-  kubectl apply -f ./activemq-pvc-crc.yaml
+	kubectl apply -f ./activemq-pvc-crc.yaml
 else
-  kubectl apply -f ./activemq-pvc.yaml
+	kubectl apply -f ./activemq-pvc.yaml
 fi
 kubectl apply -f ./activemq-deployment.yaml
 kubectl apply -f ./activemq-service.yaml
