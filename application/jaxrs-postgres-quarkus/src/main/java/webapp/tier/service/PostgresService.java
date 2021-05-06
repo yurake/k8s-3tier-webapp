@@ -49,13 +49,12 @@ public class PostgresService implements Database {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	public boolean connectionStatus() throws Exception {
+	public boolean connectionStatus() {
 		boolean status = false;
 		try (Connection con = ds.getConnection()) {
 			status = true;
 		} catch (SQLException | NullPointerException e) {
 			logger.log(Level.SEVERE, "Status Check Error.", e);
-			throw e;
 		}
 		return status;
 	}
