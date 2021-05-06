@@ -9,6 +9,7 @@ public class MockPublisher extends Thread {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		Jedis jedis = RedisSubscribeServiceTest.createJedisMock();

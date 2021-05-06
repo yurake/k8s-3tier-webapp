@@ -44,9 +44,9 @@ class RedisSubscribeServiceTest {
 		try {
 			RedisSubscribeService svc = new RedisSubscribeService();
 			svc.run();
+			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail();
 		}
 	}
 
