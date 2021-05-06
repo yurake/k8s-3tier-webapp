@@ -1,7 +1,7 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +23,11 @@ class MysqlResourceErrorTest {
 
 	@Test
 	void testSelectError() {
+		try {
+			Thread.sleep(1000L);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		given()
 				.when()
 				.get("/quarkus/mysql/select")
@@ -43,4 +48,3 @@ class MysqlResourceErrorTest {
 	}
 
 }
-

@@ -54,6 +54,11 @@ class MysqlResourceTest {
 
 	@Test
 	void testSelect() {
+		try {
+			Thread.sleep(1000L);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		given()
 				.when()
 				.get("/quarkus/mysql/select")
