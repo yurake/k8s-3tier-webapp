@@ -25,9 +25,5 @@
 			<artifactId>quarkus-test-artemis</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-undertow-websockets</artifactId>
-		</dependency>
 	</dependencies>
 </project>

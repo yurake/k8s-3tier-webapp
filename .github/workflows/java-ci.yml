@@ -116,10 +116,10 @@ jobs:
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-activemq-quarkus
-        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-activemq-quarkus:latest
@@ -182,10 +182,10 @@ jobs:
         working-directory: ./application/consumer-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/consumer-activemq-quarkus
-        run: docker build -t yurak/consumer-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/consumer-activemq-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/consumer-activemq-quarkus:latest
@@ -714,10 +714,10 @@ jobs:
         working-directory: ./application/jaxrs-mongodb-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-mongodb-quarkus
-        run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-mongodb-quarkus:latest
@@ -780,10 +780,10 @@ jobs:
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-mysql-quarkus
-        run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-mysql-quarkus:latest
@@ -846,10 +846,10 @@ jobs:
         working-directory: ./application/jaxrs-postgres-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
         working-directory: ./application/jaxrs-postgres-quarkus
-        run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+        run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
         run: docker push yurak/jaxrs-postgres-quarkus:latest

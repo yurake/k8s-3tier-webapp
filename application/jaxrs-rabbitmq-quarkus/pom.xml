@@ -13,6 +13,7 @@
 	<artifactId>jaxrs-rabbitmq-quarkus</artifactId>
 	<properties>
 		<amqp-client.version>5.12.0</amqp-client.version>
+		<rabbitmq-mock.version>1.1.1</rabbitmq-mock.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -25,13 +26,9 @@
 			<version>${amqp-client.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-undertow-websockets</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.github.fridujo</groupId>
 			<artifactId>rabbitmq-mock</artifactId>
-			<version>1.1.1</version>
+			<version>${rabbitmq-mock.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
