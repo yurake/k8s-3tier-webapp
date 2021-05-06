@@ -18,9 +18,9 @@ jobs:
       - name: Run shellcheck
         uses: ludeeus/action-shellcheck@1.1.0
       - name: Run sh-checker
-        uses: luizm/action-sh-checker@v0.2.1
+        uses: luizm/action-sh-checker@v0.2.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           sh_checker_comment: true
-          sh_checker_exclude: "**/mvnw"
+          sh_checker_exclude: "\/mvnw$"
