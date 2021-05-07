@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.spi.CDI;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import webapp.tier.bean.MsgBean;
@@ -17,8 +17,7 @@ public class RedisDeliverSubscriber extends RedisSubscriber {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	@ConfigProperty(name = "redis.split.key")
-	String splitkey;
+	private static String splitkey = ConfigProvider.getConfig().getValue("redis.split.key", String.class);
 
 	@Override
 	public void onMessage(String channel, String message) {
