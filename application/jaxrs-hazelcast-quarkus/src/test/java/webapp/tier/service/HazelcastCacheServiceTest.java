@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +27,16 @@ import com.hazelcast.core.HazelcastInstance;
 
 import io.quarkus.test.junit.QuarkusTest;
 import webapp.tier.bean.MsgBean;
+import webapp.tier.util.CreateId;
 
 @QuarkusTest
 class HazelcastCacheServiceTest {
 
 	@Inject
-	private HazelcastCacheService svc;
+	HazelcastCacheService svc;
+
+	@ConfigProperty(name = "hazelcast.cache.name")
+	String cachename;
 
 	private static HazelcastInstance mockInstance;
 	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
@@ -109,8 +115,11 @@ class HazelcastCacheServiceTest {
 	@Test
 	void testGetMsgList2() throws NoSuchAlgorithmException {
 		List<Integer> expecteds = new ArrayList<>();
+		Map<Integer, String> map = mockInstance.getMap(cachename);
 		for (int i = 0; i < 2; i++) {
-			expecteds.add(svc.setMsg(Hazelcast.newHazelcastInstance()).getId());
+			MsgBean msgbean = new MsgBean(CreateId.createid(),respbody , "Set");
+			map.put(msgbean.getId(), msgbean.getMessage());
+			expecteds.add(msgbean.getId());
 		}
 
 		List<MsgBean> msgbeans = svc.getMsgList(mockInstance);

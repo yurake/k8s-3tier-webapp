@@ -4,8 +4,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import redis.clients.jedis.JedisPubSub;
 import webapp.tier.bean.MsgBean;
@@ -16,8 +17,12 @@ import webapp.tier.util.MsgUtils;
 public class RedisSubscriber extends JedisPubSub {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
-	RedisSocket redissock = new RedisSocket();
+
+	@Inject
+	RedisSocket redissock;
+
+	@ConfigProperty(name = "redis.splitkey")
+	String splitkey;
 
 	@Override
 	public void onMessage(String channel, String message) {

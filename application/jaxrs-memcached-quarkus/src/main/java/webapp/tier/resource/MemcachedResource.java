@@ -1,5 +1,8 @@
 package webapp.tier.resource;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -22,6 +25,8 @@ import webapp.tier.service.MemcachedService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MemcachedResource {
 
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
 	@Inject
 	MemcachedService svc;
 
@@ -33,6 +38,7 @@ public class MemcachedResource {
 		try {
 			return Response.ok().entity(svc.setMsg(svc.createMemCachedClient())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Set Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -46,6 +52,7 @@ public class MemcachedResource {
 		try {
 			return Response.ok().entity(svc.getMsg(svc.createMemCachedClient())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Get Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
