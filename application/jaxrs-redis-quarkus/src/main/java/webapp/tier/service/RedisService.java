@@ -14,7 +14,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.config.ConfigProvider;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -31,26 +31,15 @@ public class RedisService implements Runnable {
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 
+	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
+	private static String servername = ConfigProvider.getConfig().getValue("redis.server", String.class);
+	private static int serverport = ConfigProvider.getConfig().getValue("redis.port.num", Integer.class);
+	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
+	private static int setexpire = ConfigProvider.getConfig().getValue("redis.set.expire", Integer.class);
+
 	@Inject
 	WebappClientServiceMegBean svcmsgbean;
-
-	@ConfigProperty(name = "common.message")
-	String message;
-
-	@ConfigProperty(name = "redis.server")
-	String servername;
-
-	@ConfigProperty(name = "redis.port.num")
-	int serverport;
-
-	@ConfigProperty(name = "redis.channel")
-	String channel;
-
-	@ConfigProperty(name = "redis.splitkey")
-	String splitkey;
-
-	@ConfigProperty(name = "redis.set.expire")
-	int setexpire;
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
