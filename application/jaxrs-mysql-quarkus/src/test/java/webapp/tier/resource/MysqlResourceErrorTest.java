@@ -1,14 +1,20 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+
+import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.service.MysqlService;
 
 @QuarkusTest
 class MysqlResourceErrorTest {
+
+	@Inject
+	MysqlService svc;
 
 	@Test
 	void testInsertError() {
@@ -23,6 +29,7 @@ class MysqlResourceErrorTest {
 
 	@Test
 	void testSelectError() {
+		svc.invalidateCache();
 		given()
 				.when()
 				.get("/quarkus/mysql/select")
@@ -43,4 +50,3 @@ class MysqlResourceErrorTest {
 	}
 
 }
-

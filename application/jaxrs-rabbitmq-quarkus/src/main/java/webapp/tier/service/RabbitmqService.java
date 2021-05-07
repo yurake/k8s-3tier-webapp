@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -33,16 +33,32 @@ public class RabbitmqService implements Runnable {
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	static boolean isEnableReceived = true;
 
-	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
-	private static String queuename = ConfigProvider.getConfig().getValue("rabbitmq.queue.name", String.class);
-	private static String exchangename = ConfigProvider.getConfig().getValue("rabbitmq.exchange.name", String.class);
-	private static String routingkey = ConfigProvider.getConfig().getValue("rabbitmq.exchange.routingkey",
-			String.class);
-	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username", String.class);
-	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password", String.class);
-	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
-	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
+	@ConfigProperty(name = "common.message")
+	String message;
+
+	@ConfigProperty(name = "rabbitmq.queue.name")
+	String queuename;
+
+	@ConfigProperty(name = "rabbitmq.exchange.name")
+	String exchangename;
+
+	@ConfigProperty(name = "rabbitmq.exchange.routingkey")
+	String routingkey;
+
+	@ConfigProperty(name = "rabbitmq.username")
+	String username;
+
+	@ConfigProperty(name = "rabbitmq.password")
+	String password;
+
+	@ConfigProperty(name = "rabbitmq.host")
+	String host;
+
+	@ConfigProperty(name = "rabbitmq.vhost")
+	String vhost;
+
+	@ConfigProperty(name = "rabbitmq.split.key")
+	String splitkey;
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);

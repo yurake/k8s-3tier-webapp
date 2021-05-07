@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
@@ -21,8 +22,10 @@ import webapp.tier.util.MsgUtils;
 public class MemcachedService {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
 	private static String serverconf = ConfigProvider.getConfig().getValue("memcached.server.conf", String.class);
+
+	@ConfigProperty(name = "common.message")
+	String message;
 
 	static {
 		SockIOPool pool = SockIOPool.getInstance();

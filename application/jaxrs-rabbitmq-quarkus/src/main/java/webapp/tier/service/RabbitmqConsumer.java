@@ -5,7 +5,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import javax.inject.Inject;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
@@ -19,8 +21,12 @@ import webapp.tier.util.MsgUtils;
 public class RabbitmqConsumer extends DefaultConsumer {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
-	RabbitmqSocket rmqsock = new RabbitmqSocket();
+
+	@Inject
+	RabbitmqSocket rmqsock;
+
+	@ConfigProperty(name = "rabbitmq.split.key")
+	String splitkey;
 
 	public RabbitmqConsumer(Channel channel) {
 		super(channel);

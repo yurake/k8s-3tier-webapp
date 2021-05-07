@@ -8,14 +8,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.inject.Inject;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.service.MysqlService;
 
 @QuarkusTest
 class MysqlResourceTest {
+
+	@Inject
+	MysqlService svc;
 
 	@BeforeEach
 	public void createTable() {
@@ -54,6 +60,7 @@ class MysqlResourceTest {
 
 	@Test
 	void testSelect() {
+		svc.invalidateCache();
 		given()
 				.when()
 				.get("/quarkus/mysql/select")

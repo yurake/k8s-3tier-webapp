@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.topic.ITopic;
@@ -29,12 +29,19 @@ public class HazelcastMqService implements Runnable {
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
 
-	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
-	private static String queuename = ConfigProvider.getConfig().getValue("hazelcast.queue.name", String.class);
-	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topic.name", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
+	@ConfigProperty(name = "common.message")
+	String message;
 
-	void onStart(@Observes StartupEvent ev) {
+	@ConfigProperty(name = "hazelcast.queue.name")
+	String queuename;
+
+	@ConfigProperty(name = "hazelcast.topic.name")
+	String topicname;
+
+	@ConfigProperty(name = "hazelcast.split.key")
+	String splitkey;
+
+		void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
 		logger.info("Subscribe is starting...");
 	}

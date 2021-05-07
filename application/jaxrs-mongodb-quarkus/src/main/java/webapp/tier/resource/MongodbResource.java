@@ -1,5 +1,8 @@
 package webapp.tier.resource;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -24,6 +27,8 @@ import webapp.tier.service.MongodbService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MongodbResource {
 
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
 	@Inject
 	MongodbService mongosvc;
 
@@ -36,6 +41,7 @@ public class MongodbResource {
 			MongoCollection<Document> collection = mongosvc.getCollection();
 			return Response.ok().entity(mongosvc.insertMsg(collection)).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Insert Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -50,6 +56,7 @@ public class MongodbResource {
 			MongoCollection<Document> collection = mongosvc.getCollection();
 			return Response.ok().entity(mongosvc.selectMsg(collection)).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Select Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -63,6 +70,7 @@ public class MongodbResource {
 			MongoCollection<Document> collection = mongosvc.getCollection();
 			return Response.ok().entity(mongosvc.deleteMsg(collection)).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Delete Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
