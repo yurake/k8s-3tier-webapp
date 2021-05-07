@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import javax.enterprise.inject.spi.CDI;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import com.rabbitmq.client.AMQP;
@@ -20,9 +20,7 @@ import webapp.tier.util.MsgUtils;
 public class RabbitmqDeliverSubscriber extends RabbitmqConsumer {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-
-	@ConfigProperty(name = "rabbitmq.split.key")
-	String splitkey;
+	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
 
 	public RabbitmqDeliverSubscriber(Channel channel) {
 		super(channel);
