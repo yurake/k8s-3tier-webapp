@@ -13,7 +13,7 @@
 	<artifactId>jaxrs-redis-quarkus</artifactId>
 	<properties>
 		<jedis.version>3.6.0</jedis.version>
-		<jedis-mock.version>0.1.17</jedis-mock.version>
+		<jedis-mock.version>0.1.18</jedis-mock.version>
 	</properties>
 	<dependencies>
 		<dependency>
