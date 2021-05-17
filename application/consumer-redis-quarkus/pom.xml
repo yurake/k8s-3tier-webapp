@@ -12,7 +12,7 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>consumer-redis-quarkus</artifactId>
 	<properties>
-		<jedis-mock.version>0.1.19</jedis-mock.version>
+		<jedis-mock.version>0.1.20</jedis-mock.version>
 	</properties>
 	<dependencies>
 		<dependency>
