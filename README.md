@@ -33,6 +33,7 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready-blue?logo=gitpod)](https://gitpod.io/#https://github.com/yurake/k8s-3tier-webapp)
 [![MDDocs ready](https://img.shields.io/badge/mddocs-ready-blue.svg?style=flat)](https://yurake.mddocs.io/)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_shield)
 
 ---
 
@@ -149,6 +150,12 @@ Yaml based kubernetes manifests for [kubernetes](kubernetes/README.md)
 ### Monitoring
 
 Set up [monitoring](kubernetes/monitoring/README.md) for Tier 3
+
+## License
+
+k8s-3tier-webapp is licensed under the MIT License. See [LICENSE](./LICENSE) for the full license text.
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_large)
 
 ## Contribution
 
