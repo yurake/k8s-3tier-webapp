@@ -9,9 +9,9 @@ ENV GCC_VERSION="9.3.0-r2"
 # renovate: datasource=repology depName=alpine_3_12/docker versioning=loose
 ENV DOCKER_VERSION="20.10.3-r0"
 # renovate: datasource=repology depName=alpine_3_12/python3 versioning=loose
-ENV PYTHON3_VERSION="3.9.5-r0"
+ENV PYTHON3_VERSION="3.8.10-r0"
 # renovate: datasource=repology depName=alpine_3_12/gnuplot versioning=loose
-ENV GUNPLOT_VERSION="5.4.1-r0"
+ENV GUNPLOT_VERSION="5.2.8-r0"
 
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.vcs-url="https://github.com/yurake/k8s-3tier-webapp"
