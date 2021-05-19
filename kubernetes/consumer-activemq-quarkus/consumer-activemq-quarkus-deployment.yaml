@@ -5,13 +5,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      tier: frontend
-      component: quarkus
       app: consumer-activemq-quarkus
   replicas: 1
   template:
     metadata:
       labels:
+        tier: frontend
+        component: quarkus
         app: consumer-activemq-quarkus
       annotations:
         prometheus.io/scrape: "true"
