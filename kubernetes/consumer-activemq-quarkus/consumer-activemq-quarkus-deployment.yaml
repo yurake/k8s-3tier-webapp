@@ -5,6 +5,8 @@ metadata:
 spec:
   selector:
     matchLabels:
+      tier: frontend
+      component: quarkus
       app: consumer-activemq-quarkus
   replicas: 1
   template:

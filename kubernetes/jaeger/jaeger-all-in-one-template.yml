@@ -33,6 +33,8 @@ items:
       template:
         metadata:
           labels:
+            tier: management
+            component: tracing
             app: jaeger
             app.kubernetes.io/name: jaeger
             app.kubernetes.io/component: all-in-one

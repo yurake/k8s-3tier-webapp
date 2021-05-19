@@ -13,6 +13,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: management
+        component: monitoring
         app: kube-state-metrics
     spec:
       containers:

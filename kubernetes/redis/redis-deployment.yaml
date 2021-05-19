@@ -10,6 +10,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: backend
+        component: cache
         app: redis
         role: master
       annotations:

@@ -10,6 +10,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: backend
+        component: messaging
         app: rabbitmq
       annotations:
         prometheus.io/scrape: "true"
