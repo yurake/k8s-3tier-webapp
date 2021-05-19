@@ -12,7 +12,7 @@ on:
     types: [closed]
 
 jobs:
-  minikube-k8s:
+  openliberty-ci:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
