@@ -12,7 +12,7 @@ on:
     types: [closed]
 
 jobs:
-  minikube-k8s:
+  spring-ci:
     runs-on: ubuntu-latest
     steps:
       - name: checkout

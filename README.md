@@ -151,6 +151,12 @@ Yaml based kubernetes manifests for [kubernetes](kubernetes/README.md)
 
 Set up [monitoring](kubernetes/monitoring/README.md) for Tier 3
 
+## License
+
+k8s-3tier-webapp is licensed under the MIT License. See [LICENSE](./LICENSE) for the full license text.
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_large)
+
 ## Contribution
 
 1. [Fork](https://github.com/yurake/k8s-3tier-webapp/fork) this repo
@@ -160,7 +166,3 @@ Set up [monitoring](kubernetes/monitoring/README.md) for Tier 3
 1. Rebase your local changes against the
    [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
 1. Create new Pull Request
-
-
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_large)

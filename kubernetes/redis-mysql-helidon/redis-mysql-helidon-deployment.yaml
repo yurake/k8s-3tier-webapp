@@ -10,6 +10,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: frontend
+        component: web
         app: redis-mysql-helidon
     spec:
       containers:

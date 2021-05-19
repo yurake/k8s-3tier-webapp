@@ -13,6 +13,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: backend
+        component: cache
         app: hazelcast
     spec:
       containers:

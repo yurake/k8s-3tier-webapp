@@ -16,6 +16,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: management
+        component: monitoring
         app: node-exporter
     spec:
       containers:

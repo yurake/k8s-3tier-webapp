@@ -12,7 +12,7 @@ on:
     types: [closed]
 
 jobs:
-  minikube-k8s:
+  quarkus-ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
