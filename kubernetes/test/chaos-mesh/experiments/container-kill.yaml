@@ -1,15 +1,16 @@
 apiVersion: chaos-mesh.org/v1alpha1
 kind: PodChaos
 metadata:
-  name: pod-kill
+  name: container-kill
   namespace: chaos-testing
 spec:
-  action: pod-kill
+  action: container-kill
   mode: one
+  containerName: "mysql"
   selector:
     namespaces:
       - default
     labelSelectors:
-      "component": "quarkus"
+      "app": "mysql"
   scheduler:
-    cron: "@every 2m"
+    cron: "@every 10m"

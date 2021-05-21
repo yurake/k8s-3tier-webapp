@@ -1,15 +1,18 @@
 apiVersion: chaos-mesh.org/v1alpha1
-kind: PodChaos
+kind: StressChaos
 metadata:
-  name: pod-kill
+  name: burn-cpu
   namespace: chaos-testing
 spec:
-  action: pod-kill
   mode: one
   selector:
     namespaces:
       - default
     labelSelectors:
       "component": "quarkus"
+  stressors:
+    cpu:
+      workers: 1
+  duration: "30s"
   scheduler:
     cron: "@every 2m"
