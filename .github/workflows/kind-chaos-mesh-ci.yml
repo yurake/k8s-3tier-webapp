@@ -47,9 +47,12 @@ jobs:
 
       - name: Check pods
         run: |
+          for i in `seq 10`
+          do
           kubectl get pods -n chaos-testing
-          sleep 5
           kubectl get pods
+          sleep 5
+          done
 
       - name: Chaos Mesh
         uses: chaos-mesh/chaos-mesh-action@v0.4
