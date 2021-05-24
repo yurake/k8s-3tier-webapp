@@ -59,9 +59,21 @@ jobs:
 
       - name: Check pods
         run: |
-          for i in `seq 60`
+          for i in `seq 10`
           do
           kubectl get pods -n chaos-testing
           kubectl get pods
           sleep 1
           done
+
+      - name: check log jaxrs-mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+
+      - name: check log mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) -c mysql
