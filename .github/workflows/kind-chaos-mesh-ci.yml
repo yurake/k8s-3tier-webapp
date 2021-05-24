@@ -46,7 +46,7 @@ jobs:
           kubectl get pods
 
       - name: Setup Chaos Mesh Config File
-        run: echo "CFG_BASE64=`base64 kubernetes/test/chaos-mesh/experiments/container-kill.yaml`" >> $GITHUB_ENV
+        run: echo "CFG_BASE64=$(base64 kubernetes/test/chaos-mesh/experiments/container-kill.yaml)" >> $GITHUB_ENV
 
       - name: Chaos Mesh
         uses: chaos-mesh/chaos-mesh-action@v0.4
