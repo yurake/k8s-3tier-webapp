@@ -31,13 +31,19 @@ jobs:
 
       - name: Deploy an application
         run: |
-          kubectl apply -f kubernetes/activemq/activemq-ingress.yaml
+          kubectl apply -f kubernetes/mysql/mysql-pv.yaml
+          kubectl apply -f kubernetes/mysql/mysql-pvc.yaml
           kubectl apply -f kubernetes/mysql/mysql-configmap.yaml
           kubectl apply -f kubernetes/mysql/mysql-secret.yaml
           kubectl apply -f kubernetes/mysql/mysql-deployment.yaml
           kubectl apply -f kubernetes/mysql/mysql-service.yaml
           kubectl apply -f kubernetes/jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-service.yaml
           kubectl apply -f kubernetes/jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-deployment.yaml
+
+      - name: Wait pod status to running
+        run: |
+          kubectl wait --all-namespaces=true --for=condition=ready pod -l component=quarkus --timeout=3m
+          kubectl wait --all-namespaces=true --for=condition=ready pod -l app=mysql --timeout=3m
 
       - name: Check pods
         run: |
