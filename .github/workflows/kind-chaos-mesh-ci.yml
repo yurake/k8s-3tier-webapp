@@ -1,0 +1,79 @@
+name: Kind Chaos Mesh CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.yaml"
+      - ".github/workflows/kind-chaos-mesh-ci.yml"
+  pull_request:
+    paths:
+      - "**.yaml"
+      - ".github/workflows/kind-chaos-mesh-ci.yml"
+
+jobs:
+  chaos-mesh-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kind Cluster
+        uses: helm/kind-action@v1.1.0
+
+      - name: Print cluster information
+        run: |
+          kubectl config view
+          kubectl cluster-info
+          kubectl get nodes
+          kubectl get pods -n kube-system
+          helm version
+          kubectl version
+      - uses: actions/checkout@v2
+
+      - name: Deploy an application
+        run: |
+          kubectl apply -f kubernetes/mysql/mysql-pv.yaml
+          kubectl apply -f kubernetes/mysql/mysql-pvc.yaml
+          kubectl apply -f kubernetes/mysql/mysql-configmap.yaml
+          kubectl apply -f kubernetes/mysql/mysql-secret.yaml
+          kubectl apply -f kubernetes/mysql/mysql-deployment.yaml
+          kubectl apply -f kubernetes/mysql/mysql-service.yaml
+          kubectl apply -f kubernetes/jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-service.yaml
+          kubectl apply -f kubernetes/jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-deployment.yaml
+
+      - name: Wait pod status to running
+        run: |
+          kubectl wait --all-namespaces=true --for=condition=ready pod -l component=quarkus --timeout=3m
+          kubectl wait --all-namespaces=true --for=condition=ready pod -l app=mysql --timeout=3m
+
+      - name: Check pods
+        run: |
+          kubectl get pods -n chaos-testing
+          kubectl get pods
+
+      - name: Chaos Mesh
+        uses: chaos-mesh/chaos-mesh-action@v0.4
+        env:
+          # base64 container-kill.yaml
+          CFG_BASE64: YXBpVmVyc2lvbjogY2hhb3MtbWVzaC5vcmcvdjFhbHBoYTENCmtpbmQ6IFBvZENoYW9zDQptZXRhZGF0YToNCiAgbmFtZTogY29udGFpbmVyLWtpbGwNCiAgbmFtZXNwYWNlOiBjaGFvcy10ZXN0aW5nDQpzcGVjOg0KICBhY3Rpb246IGNvbnRhaW5lci1raWxsDQogIG1vZGU6IG9uZQ0KICBjb250YWluZXJOYW1lOiAibXlzcWwiDQogIHNlbGVjdG9yOg0KICAgIG5hbWVzcGFjZXM6DQogICAgICAtIGRlZmF1bHQNCiAgICBsYWJlbFNlbGVjdG9yczoNCiAgICAgICJhcHAiOiAibXlzcWwiDQogIHNjaGVkdWxlcjoNCiAgICBjcm9uOiAiQGV2ZXJ5IDEwbSINCg==
+          CHAOS_MESH_VERSION: v1.0.0
+
+      - name: Check pods
+        run: |
+          for i in `seq 10`
+          do
+          kubectl get pods -n chaos-testing
+          kubectl get pods
+          sleep 1
+          done
+
+      - name: check log jaxrs-mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+
+      - name: check log mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) -c mysql
