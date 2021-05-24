@@ -1,0 +1,61 @@
+name: Kind Chaos Mesh CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.yaml"
+      - ".github/workflows/kind-chaos-mesh-ci.yml"
+  pull_request:
+    paths:
+      - "**.yaml"
+      - ".github/workflows/kind-chaos-mesh-ci.yml"
+
+jobs:
+  chaos-mesh-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kind Cluster
+        uses: helm/kind-action@v1.1.0
+
+      - name: Print cluster information
+        run: |
+          kubectl config view
+          kubectl cluster-info
+          kubectl get nodes
+          kubectl get pods -n kube-system
+          helm version
+          kubectl version
+      - uses: actions/checkout@v2
+
+      - name: Deploy an application
+        run: |
+          kubectl apply -f kubernetes/activemq/activemq-ingress.yaml
+          kubectl apply -f kubernetes/mysql/mysql-configmap.yaml
+          kubectl apply -f kubernetes/mysql/mysql-secret.yaml
+          kubectl apply -f kubernetes/mysql/mysql-deployment.yaml
+          kubectl apply -f kubernetes/mysql/mysql-service.yaml
+          kubectl apply -f kubernetes/jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-service.yaml
+          kubectl apply -f kubernetes/jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-deployment.yaml
+
+      - name: Check pods
+        run: |
+          kubectl get pods -n chaos-testing
+          sleep 5
+          kubectl get pods
+
+      - name: Setup Chaos Mesh Config File
+        run: echo "CFG_BASE64=`base64 kubernetes/test/chaos-mesh/experiments/container-kill.yaml`" >> $GITHUB_ENV
+
+      - name: Chaos Mesh
+        uses: chaos-mesh/chaos-mesh-action@v0.4
+        env:
+          CFG_BASE64: ${CFG_BASE64}
+          CHAOS_MESH_VERSION: v1.0.0
+
+      - name: Check pods
+        run: |
+          kubectl get pods -n chaos-testing
+          sleep 5
+          kubectl get pods

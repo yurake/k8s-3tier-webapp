@@ -1,15 +1,19 @@
 apiVersion: chaos-mesh.org/v1alpha1
-kind: PodChaos
+kind: NetworkChaos
 metadata:
-  name: pod-kill
+  name: network-loss
   namespace: chaos-testing
 spec:
-  action: pod-kill
+  action: loss
   mode: one
   selector:
     namespaces:
       - default
     labelSelectors:
       "component": "quarkus"
+  loss:
+    loss: "25"
+    correlation: "25"
+  duration: "10s"
   scheduler:
     cron: "@every 2m"

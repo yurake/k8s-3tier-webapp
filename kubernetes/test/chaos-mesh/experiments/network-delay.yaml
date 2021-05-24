@@ -1,15 +1,20 @@
 apiVersion: chaos-mesh.org/v1alpha1
-kind: PodChaos
+kind: NetworkChaos
 metadata:
-  name: pod-kill
+  name: network-delay
   namespace: chaos-testing
 spec:
-  action: pod-kill
+  action: delay
   mode: one
   selector:
     namespaces:
       - default
     labelSelectors:
       "component": "quarkus"
+  delay:
+    latency: "90ms"
+    correlation: "25"
+    jitter: "90ms"
+  duration: "10s"
   scheduler:
     cron: "@every 2m"
