@@ -52,7 +52,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: "http://k8s.3tier.webapp/"
-      - name: check minikube status
+      - name: check status
         if: always()
         run: |
           kubectl get po --all-namespaces=true

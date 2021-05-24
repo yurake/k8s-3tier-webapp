@@ -57,7 +57,7 @@ jobs:
           CFG_BASE64: YXBpVmVyc2lvbjogY2hhb3MtbWVzaC5vcmcvdjFhbHBoYTENCmtpbmQ6IFBvZENoYW9zDQptZXRhZGF0YToNCiAgbmFtZTogY29udGFpbmVyLWtpbGwNCiAgbmFtZXNwYWNlOiBjaGFvcy10ZXN0aW5nDQpzcGVjOg0KICBhY3Rpb246IGNvbnRhaW5lci1raWxsDQogIG1vZGU6IG9uZQ0KICBjb250YWluZXJOYW1lOiAibXlzcWwiDQogIHNlbGVjdG9yOg0KICAgIG5hbWVzcGFjZXM6DQogICAgICAtIGRlZmF1bHQNCiAgICBsYWJlbFNlbGVjdG9yczoNCiAgICAgICJhcHAiOiAibXlzcWwiDQogIHNjaGVkdWxlcjoNCiAgICBjcm9uOiAiQGV2ZXJ5IDEwbSINCg==
           CHAOS_MESH_VERSION: v1.0.0
 
-      - name: Check pods
+      - name: Check status
         run: |
           for i in `seq 10`
           do

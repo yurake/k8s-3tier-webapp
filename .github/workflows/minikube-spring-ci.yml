@@ -68,7 +68,7 @@ jobs:
         run: |
           kubectl describe po $(kubectl get pods | awk '{print $1}' | grep spring)
           kubectl logs $(kubectl get pods | awk '{print $1}' | grep spring)
-      - name: check minikube status
+      - name: check status
         if: always()
         run: |
           kubectl get po --all-namespaces=true
@@ -84,14 +84,3 @@ jobs:
         run: |
           kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-spring)
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-spring)
-      - name: check minikube status
-        if: always()
-        run: |
-          kubectl get po --all-namespaces=true
-          kubectl get nodes
-          kubectl get pv
-          kubectl get pvc
-          kubectl get all
-          kubectl get all -n monitoring
-          kubectl get ingress
-          df -h /
