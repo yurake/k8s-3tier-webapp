@@ -52,7 +52,7 @@ jobs:
       - name: Chaos Mesh
         uses: chaos-mesh/chaos-mesh-action@master
         env:
-          CFG_FILE: ./kubernetes/test/chaos-mesh/experiments/container-kill.yaml
+          CFG_FILE: ${GITHUB_WORKSPACE}/kubernetes/test/chaos-mesh/experiments/container-kill.yaml
           CHAOS_MESH_VERSION: v1.0.0
 
       - name: Check pods
