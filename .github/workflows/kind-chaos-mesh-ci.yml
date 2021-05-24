@@ -45,6 +45,10 @@ jobs:
           sleep 5
           kubectl get pods
 
+      - name: debug
+        run: |
+          ls -lR
+
       - name: Chaos Mesh
         uses: chaos-mesh/chaos-mesh-action@master
         env:
