@@ -59,9 +59,9 @@ jobs:
 
       - name: Check pods
         run: |
-          for i in `seq 10`
+          for i in `seq 60`
           do
           kubectl get pods -n chaos-testing
           kubectl get pods
-          sleep 5
+          sleep 1
           done
