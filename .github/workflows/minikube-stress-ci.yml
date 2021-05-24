@@ -105,7 +105,7 @@ jobs:
         run: |
           kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep ab-${{ matrix.app }})
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep ab-${{ matrix.app }})
-      - name: check minikube status
+      - name: check status
         if: always()
         run: |
           kubectl get po --all-namespaces=true
