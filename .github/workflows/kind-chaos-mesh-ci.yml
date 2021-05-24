@@ -45,10 +45,13 @@ jobs:
           sleep 5
           kubectl get pods
 
+      - name: Setup Chaos Mesh Config File
+        run: echo "CFG_BASE64=$(base64 kubernetes/test/chaos-mesh/experiments/container-kill.yaml)" >> $GITHUB_ENV
+
       - name: Chaos Mesh
         uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
-          CFG_BASE64: ${secrets.CHAOS_MESH_CFG_FILE}
+          CFG_BASE64: ${CFG_BASE64}
           CHAOS_MESH_VERSION: v1.0.0
 
       - name: Check pods
