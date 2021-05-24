@@ -1,4 +1,4 @@
-name: Kind Chaos Mesh CI
+name: kind Chaos Mesh CI
 
 on:
   push:
