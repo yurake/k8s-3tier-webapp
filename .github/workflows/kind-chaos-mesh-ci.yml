@@ -46,7 +46,7 @@ jobs:
           kubectl get pods
 
       - name: Chaos Mesh
-        uses: chaos-mesh/chaos-mesh-action@master
+        uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
           CFG_FILE: kubernetes/test/chaos-mesh/experiments/container-kill.yaml
           CHAOS_MESH_VERSION: v1.0.0
