@@ -51,7 +51,7 @@ jobs:
           kubectl get pods
 
       - name: Chaos Mesh
-        uses: chaos-mesh/chaos-mesh-action@v0.4
+        uses: chaos-mesh/chaos-mesh-action@v0.5
         env:
           # base64 container-kill.yaml
           CFG_BASE64: YXBpVmVyc2lvbjogY2hhb3MtbWVzaC5vcmcvdjFhbHBoYTENCmtpbmQ6IFBvZENoYW9zDQptZXRhZGF0YToNCiAgbmFtZTogY29udGFpbmVyLWtpbGwNCiAgbmFtZXNwYWNlOiBjaGFvcy10ZXN0aW5nDQpzcGVjOg0KICBhY3Rpb246IGNvbnRhaW5lci1raWxsDQogIG1vZGU6IG9uZQ0KICBjb250YWluZXJOYW1lOiAibXlzcWwiDQogIHNlbGVjdG9yOg0KICAgIG5hbWVzcGFjZXM6DQogICAgICAtIGRlZmF1bHQNCiAgICBsYWJlbFNlbGVjdG9yczoNCiAgICAgICJhcHAiOiAibXlzcWwiDQogIHNjaGVkdWxlcjoNCiAgICBjcm9uOiAiQGV2ZXJ5IDEwbSINCg==
