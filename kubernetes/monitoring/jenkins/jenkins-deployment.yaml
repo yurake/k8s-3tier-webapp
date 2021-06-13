@@ -30,6 +30,7 @@ spec:
       containers:
         - name: jenkins
           image: yurak/jenkins:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           volumeMounts:
