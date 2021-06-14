@@ -20,5 +20,9 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-mongodb-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-mongo-common</artifactId>
+		</dependency>
 	</dependencies>
 </project>
