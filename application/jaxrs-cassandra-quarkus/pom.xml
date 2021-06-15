@@ -16,6 +16,7 @@
 		<datastax-java-driver.version>4.11.1</datastax-java-driver.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<opentracing-cassandra-driver-4.version>0.1.9</opentracing-cassandra-driver-4.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -70,6 +71,11 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy-mutiny</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-cassandra-driver-4</artifactId>
+			<version>${opentracing-cassandra-driver-4.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
