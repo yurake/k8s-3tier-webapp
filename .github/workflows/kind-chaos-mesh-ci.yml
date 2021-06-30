@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Kind Cluster
-        uses: helm/kind-action@v1.1.0
+        uses: helm/kind-action@v1.2.0
 
       - name: Print cluster information
         run: |
