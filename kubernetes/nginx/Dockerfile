@@ -1,4 +1,4 @@
-FROM opentracing/nginx-opentracing:0.18.0
+FROM opentracing/nginx-opentracing:0.20.0
 ENV TZ Asia/Tokyo
 ARG BUILD_DATE
 ARG VCS_REF
