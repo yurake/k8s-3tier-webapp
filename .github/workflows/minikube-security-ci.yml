@@ -48,7 +48,7 @@ jobs:
           kubectl apply -f kubernetes/nginx/nginx-service.yaml
           sleep 10
       - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.4.0
+        uses: zaproxy/action-baseline@v0.6.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: "http://k8s.3tier.webapp/"
