@@ -21,7 +21,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2.3.4
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -86,7 +86,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -152,7 +152,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -218,7 +218,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -288,7 +288,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -354,7 +354,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -420,7 +420,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -486,7 +486,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -552,7 +552,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -618,7 +618,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -684,7 +684,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -750,7 +750,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -816,7 +816,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -882,7 +882,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -948,7 +948,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -1013,7 +1013,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -1079,7 +1079,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -1145,7 +1145,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -1211,7 +1211,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -1277,7 +1277,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -1327,7 +1327,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -1392,7 +1392,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
@@ -1460,7 +1460,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
           graalvm: "21.0.0.2"
           java: "java11"
