@@ -3,9 +3,9 @@ https://github.com/grafana/loki/tree/master/production/helm
 ## Install
 
 ```bash
-helm repo add loki https://grafana.github.io/loki/charts
+helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
-helm upgrade --install loki --namespace=monitoring loki/loki-stack
+helm upgrade --install loki --namespace=monitoring grafana/loki
 ```
 
 ## Grafana dashboard settings
