@@ -14,7 +14,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<slf4j-log4j12.version>1.7.32</slf4j-log4j12.version>
-		<hazelcast.version>4.2.2</hazelcast.version>
+		<hazelcast.version>5.0</hazelcast.version>
 		<jedis.version>3.7.0</jedis.version>
 		<amqp-client.version>5.13.1</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
@@ -33,7 +33,7 @@
 			<dependency>
 				<groupId>org.testcontainers</groupId>
 				<artifactId>testcontainers-bom</artifactId>
-				<version>1.16.0</version>
+				<version>1.16.1</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -145,7 +145,7 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>3.12.4</version>
+			<version>4.0.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
