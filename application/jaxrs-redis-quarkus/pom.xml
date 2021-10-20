@@ -12,8 +12,8 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-redis-quarkus</artifactId>
 	<properties>
-		<jedis.version>3.6.1</jedis.version>
-		<jedis-mock.version>0.1.20</jedis-mock.version>
+		<jedis.version>3.7.0</jedis.version>
+		<jedis-mock.version>0.1.22</jedis-mock.version>
 	</properties>
 	<dependencies>
 		<dependency>
