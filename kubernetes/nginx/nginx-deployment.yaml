@@ -24,7 +24,7 @@ spec:
           ports:
             - containerPort: 80
         - name: nginx-exporter
-          image: nginx/nginx-prometheus-exporter:0.9.0
+          image: nginx/nginx-prometheus-exporter:0.10.0
           ports:
             - containerPort: 9113
           env:
