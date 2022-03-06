@@ -46,7 +46,7 @@ spec:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
         - name: mysql-exporter
-          image: prom/mysqld-exporter:v0.13.0
+          image: prom/mysqld-exporter:v0.14.0
           ports:
             - containerPort: 9104
           env:
