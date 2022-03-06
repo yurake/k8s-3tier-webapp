@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: setup minikube
         uses: opsgang/ga-setup-minikube@v0.1.2
         env:
