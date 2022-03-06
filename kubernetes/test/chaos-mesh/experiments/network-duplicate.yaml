@@ -1,0 +1,19 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-duplicate
+  namespace: chaos-testing
+spec:
+  action: duplicate
+  mode: one
+  selector:
+    namespaces:
+      - default
+    labelSelectors:
+      "component": "quarkus"
+  duplicate:
+    duplicate: "40"
+    correlation: "25"
+  duration: "10s"
+  scheduler:
+    cron: "@every 2m"

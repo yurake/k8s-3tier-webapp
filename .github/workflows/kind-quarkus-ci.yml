@@ -1,0 +1,95 @@
+name: kind Quarkus CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "application/**"
+      - "kubernetes/**"
+      - ".github/workflows/kind-quarkus-ci.yml"
+  issues:
+    types: [closed]
+
+jobs:
+  quarkus-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Kind Cluster
+        uses: helm/kind-action@v1.2.0
+      - name: apply minimal service
+        run: |
+          sh ./kubernetes/bin/apply-default-quarkus.sh
+          sleep 10
+      - name: Setup bats
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.2.1
+      - name: Run bats
+        run: bats -r kubernetes/test/bats
+      - name: run e2e test
+        run: |
+          kubectl apply -f kubernetes/monitoring/test/postmannewman/quarkus/postmannewman-quarkus.yaml
+      - name: wait for complete e2e job
+        run: |
+          kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-quarkus
+          kubectl -n monitoring describe job postmannewman-quarkus
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
+      - name: check log jaxrs-mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+      - name: check log jaxrs-postgres
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
+      - name: check log jaxrs-mongodb
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
+      - name: check log jaxrs-redis
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
+      - name: check log jaxrs-memcached
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
+      - name: check log jaxrs-activemq
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
+      - name: check log mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) -c mysql
+      - name: check log ingress
+        if: always()
+        run: |
+          kubectl get ingress
+          kubectl describe ingress nginx
+      - name: check after test postmannewman-quarkus
+        if: always()
+        run: |
+          kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
+      - name: check status
+        if: always()
+        run: |
+          kubectl get po --all-namespaces=true
+          kubectl get nodes
+          kubectl get pv
+          kubectl get pvc
+          kubectl get all
+          kubectl get all -n monitoring
+          kubectl get ingress
+          df -h /

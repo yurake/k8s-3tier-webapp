@@ -10,6 +10,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: frontend
+        component: web
         app: nginx
       annotations:
         prometheus.io/scrape: "true"
@@ -22,7 +24,7 @@ spec:
           ports:
             - containerPort: 80
         - name: nginx-exporter
-          image: nginx/nginx-prometheus-exporter:0.9.0
+          image: nginx/nginx-prometheus-exporter:0.10.0
           ports:
             - containerPort: 9113
           env:

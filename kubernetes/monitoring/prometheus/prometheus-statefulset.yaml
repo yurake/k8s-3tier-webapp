@@ -20,6 +20,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: management
+        component: monitoring
         app: prometheus
     spec:
       serviceAccountName: prometheus
@@ -34,7 +36,7 @@ spec:
               subPath: ""
       containers:
         - name: prometheus-server
-          image: prom/prometheus:v2.27.0
+          image: prom/prometheus:v2.32.1
           imagePullPolicy: Always
           args:
             - --config.file=/etc/config/prometheus.yml

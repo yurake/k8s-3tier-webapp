@@ -13,7 +13,7 @@ on:
       - ".github/workflows/minikube-yaml-ci.yml"
 
 jobs:
-  security-ci:
+  yaml-ci:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -23,8 +23,8 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: 1.20.0
-          k8s-version: 1.21.1
+          minikube-version: 1.25.2
+          k8s-version: 1.23.4
       - name: minikube settings
         run: |
           sudo apt install conntrack

@@ -12,12 +12,12 @@ on:
     types: [closed]
 
 jobs:
-  minikube-k8s:
+  quarkus-ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        minikube: [1.19.0, 1.20.0]
-        kubernetes: [1.21.0, 1.21.1]
+        minikube: [1.25.1, 1.25.2]
+        kubernetes: [1.23.3, 1.23.4]
       fail-fast: false
     steps:
       - name: checkout
@@ -74,17 +74,6 @@ jobs:
           kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-quarkus
           kubectl -n monitoring describe job postmannewman-quarkus
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
-      - name: check minikube status
-        if: always()
-        run: |
-          kubectl get po --all-namespaces=true
-          kubectl get nodes
-          kubectl get pv
-          kubectl get pvc
-          kubectl get all
-          kubectl get all -n monitoring
-          kubectl get ingress
-          df -h /
       - name: check log jaxrs-mysql
         if: always()
         run: |
@@ -135,7 +124,7 @@ jobs:
         run: |
           kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
-      - name: check minikube status
+      - name: check status
         if: always()
         run: |
           kubectl get po --all-namespaces=true

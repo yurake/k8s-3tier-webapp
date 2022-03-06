@@ -13,11 +13,13 @@ spec:
   template:
     metadata:
       labels:
+        tier: backend
+        component: cache
         app: hazelcast
     spec:
       containers:
         - name: hazelcast
-          image: hazelcast/hazelcast:4.1.3
+          image: hazelcast/hazelcast:4.2.4
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

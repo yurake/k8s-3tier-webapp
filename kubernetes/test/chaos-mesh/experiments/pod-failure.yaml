@@ -1,0 +1,17 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: pod-failure
+  namespace: chaos-testing
+spec:
+  action: pod-failure
+  mode: one
+  value: ""
+  duration: "10s"
+  selector:
+    namespaces:
+      - default
+    labelSelectors:
+      "component": "quarkus"
+  scheduler:
+    cron: "@every 2m"

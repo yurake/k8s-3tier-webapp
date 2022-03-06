@@ -13,11 +13,13 @@ spec:
   template:
     metadata:
       labels:
+        tier: management
+        component: monitoring
         app: grafana
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:7.5.6
+          image: grafana/grafana:8.4.3
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

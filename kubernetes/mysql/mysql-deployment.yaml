@@ -12,6 +12,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: backend
+        component: database
         app: mysql
       annotations:
         prometheus.io/scrape: "true"
@@ -44,7 +46,7 @@ spec:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
         - name: mysql-exporter
-          image: prom/mysqld-exporter:v0.12.1
+          image: prom/mysqld-exporter:v0.14.0
           ports:
             - containerPort: 9104
           env:

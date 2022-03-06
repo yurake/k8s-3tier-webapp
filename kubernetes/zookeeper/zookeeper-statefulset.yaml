@@ -12,6 +12,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: backend
+        component: cache
         app: zookeeper
       annotations:
         prometheus.io/scrape: "true"

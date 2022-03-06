@@ -29,6 +29,7 @@
 [![Support Quarkus Version](https://img.shields.io/badge/Quarkus-1.10-yellow.svg?style=flat&logo=Quarkus)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
 [![Support Kubernetes Version](https://img.shields.io/badge/Kubernetes-v1.21-yellow.svg?style=flat&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
 [![Support Minikube Version](https://img.shields.io/badge/Minikube-v1.19-yellow.svg?style=flat&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
+[![Support kind Version](https://img.shields.io/badge/kind-v0.9.0-yellow.svg?style=flat&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22kind+CI%22)
 [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-blue?style=flat&logo=cypress)](https://dashboard.cypress.io/projects/7rgxn6/runs)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready-blue?logo=gitpod)](https://gitpod.io/#https://github.com/yurake/k8s-3tier-webapp)
 [![MDDocs ready](https://img.shields.io/badge/mddocs-ready-blue.svg?style=flat)](https://yurake.mddocs.io/)
@@ -151,6 +152,12 @@ Yaml based kubernetes manifests for [kubernetes](kubernetes/README.md)
 
 Set up [monitoring](kubernetes/monitoring/README.md) for Tier 3
 
+## License
+
+k8s-3tier-webapp is licensed under the MIT License. See [LICENSE](./LICENSE) for the full license text.
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_large)
+
 ## Contribution
 
 1. [Fork](https://github.com/yurake/k8s-3tier-webapp/fork) this repo
@@ -160,7 +167,3 @@ Set up [monitoring](kubernetes/monitoring/README.md) for Tier 3
 1. Rebase your local changes against the
    [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
 1. Create new Pull Request
-
-
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_large)

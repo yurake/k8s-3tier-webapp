@@ -24,8 +24,8 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: 1.20.0
-          k8s-version: 1.21.1
+          minikube-version: 1.25.2
+          k8s-version: 1.23.4
       - name: minikube settings
         run: |
           sudo apt install conntrack
@@ -105,7 +105,7 @@ jobs:
         run: |
           kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep ab-${{ matrix.app }})
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep ab-${{ matrix.app }})
-      - name: check minikube status
+      - name: check status
         if: always()
         run: |
           kubectl get po --all-namespaces=true
