@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -150,7 +150,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -216,7 +216,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -286,7 +286,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -352,7 +352,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -418,7 +418,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -484,7 +484,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -550,7 +550,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -616,7 +616,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -682,7 +682,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -748,7 +748,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -814,7 +814,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -880,7 +880,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -946,7 +946,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1011,7 +1011,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1077,7 +1077,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1143,7 +1143,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1209,7 +1209,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1275,7 +1275,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1325,7 +1325,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1390,7 +1390,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1458,7 +1458,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
