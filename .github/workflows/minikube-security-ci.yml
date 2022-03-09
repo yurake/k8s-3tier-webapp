@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: setup minikube
         uses: opsgang/ga-setup-minikube@v0.1.2
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: 1.23.2
-          k8s-version: 1.22.2
+          minikube-version: 1.25.2
+          k8s-version: 1.23.4
       - name: minikube settings
         run: |
           sudo apt install conntrack

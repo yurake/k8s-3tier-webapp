@@ -16,12 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        minikube: [1.23.1, 1.23.2]
-        kubernetes: [1.22.1, 1.22.2]
+        minikube: [1.25.1, 1.25.2]
+        kubernetes: [1.23.3, 1.23.4]
       fail-fast: false
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: delete installed software not use
         run: |
           df -h /
