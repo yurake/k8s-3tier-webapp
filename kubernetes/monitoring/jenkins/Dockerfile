@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.343-alpine
+FROM jenkins/jenkins:2.348-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 
@@ -7,7 +7,7 @@ ENV TZDATA_VERSION="2022a-r0"
 # renovate: datasource=repology depName=alpine_3_12/gcc versioning=loose
 ENV GCC_VERSION="10.3.1_git20211027-r0"
 # renovate: datasource=repology depName=alpine_3_12/docker versioning=loose
-ENV DOCKER_VERSION="20.10.14-r0"
+ENV DOCKER_VERSION="20.10.16-r0"
 # renovate: datasource=repology depName=alpine_3_12/python3 versioning=loose
 ENV PYTHON3_VERSION="3.9.7-r4"
 # renovate: datasource=repology depName=alpine_3_12/gnuplot versioning=loose
