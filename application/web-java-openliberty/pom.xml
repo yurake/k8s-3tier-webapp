@@ -15,7 +15,7 @@
 
 		<slf4j-log4j12.version>1.7.36</slf4j-log4j12.version>
 		<hazelcast.version>5.1.1</hazelcast.version>
-		<jedis.version>4.2.2</jedis.version>
+		<jedis.version>4.2.3</jedis.version>
 		<amqp-client.version>5.14.2</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<rabbitmq-jms.version>2.4.0</rabbitmq-jms.version>
