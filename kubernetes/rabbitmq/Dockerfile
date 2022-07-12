@@ -1,4 +1,4 @@
-FROM rabbitmq:3.10.2-management-alpine
+FROM rabbitmq:3.10.6-management-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 
