@@ -40,7 +40,7 @@ ENV JAVA_OPTS -Duser.timezone=Asia/Tokyo
 
 # Install default plugins
 COPY init/plugins.txt /usr/share/jenkins/ref/plugins.txt
-RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
 # Install default jobs
 COPY init/jobs /usr/share/jenkins/ref/jobs
