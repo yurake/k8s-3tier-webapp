@@ -28,7 +28,7 @@ jobs:
           arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
 
@@ -76,7 +76,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-activemq-quarkus:
@@ -96,7 +96,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -142,7 +142,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   consumer-activemq-quarkus:
@@ -162,7 +162,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -208,7 +208,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-cassandra-quarkus:
@@ -228,7 +228,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -278,7 +278,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   consumer-hazelcast-quarkus:
@@ -298,7 +298,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -344,7 +344,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   consumer-kafka-quarkus:
@@ -364,7 +364,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -410,7 +410,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   scheduled-quarkus:
@@ -430,7 +430,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -476,7 +476,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-hazelcast-quarkus:
@@ -496,7 +496,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -542,7 +542,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-kafka-quarkus:
@@ -562,7 +562,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -608,7 +608,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-memcached-quarkus:
@@ -628,7 +628,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -674,7 +674,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-mongodb-quarkus:
@@ -694,7 +694,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -740,7 +740,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-mysql-quarkus:
@@ -760,7 +760,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -806,7 +806,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-postgres-quarkus:
@@ -826,7 +826,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -872,7 +872,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-rabbitmq-quarkus:
@@ -892,7 +892,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -938,7 +938,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   jaxrs-redis-quarkus:
@@ -958,7 +958,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -1003,7 +1003,7 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   consumer-rabbitmq-quarkus:
@@ -1023,7 +1023,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -1069,7 +1069,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   producer-kafka-quarkus:
@@ -1089,7 +1089,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -1135,7 +1135,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   randompublish-quarkus:
@@ -1155,7 +1155,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -1201,7 +1201,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   implementer-grpc-quarkus:
@@ -1221,7 +1221,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -1267,7 +1267,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   redis-mysql-helidon:
@@ -1284,7 +1284,7 @@ jobs:
           arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Cache local Maven repository
@@ -1317,7 +1317,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   consumer-redis-quarkus:
@@ -1337,7 +1337,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -1383,7 +1383,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   web-java-spring:
@@ -1402,7 +1402,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -1451,7 +1451,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
 
   web-java-openliberty:
@@ -1470,7 +1470,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -1519,5 +1519,5 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         continue-on-error: true
