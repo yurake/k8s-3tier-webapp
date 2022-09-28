@@ -55,3 +55,5 @@ ignore-failures:
 rules-config:
   no-recent-package-release:
     fail-at-months: 48
+  no-recent-commit:
+    fail-at-months: 48
