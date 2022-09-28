@@ -1,95 +1,49 @@
 additional-dependency-files:
   - type: maven-pom-xml
-    path: application/jaxrs-activemq-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-activemq-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/jaxrs-activemq-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/implementer-grpc-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/implementer-grpc-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/implementer-grpc-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/redis-mysql-helidon/target/classes/META-INF/maven/webapp.3tier.k8s/redis-mysql-helidon/pom.xml
-  - type: maven-pom-xml
     path: application/redis-mysql-helidon/pom.xml
-  - type: maven-pom-xml
-    path: application/web-java-spring/target/classes/META-INF/maven/webapp.3tier.k8s/web-java-spring/pom.xml
   - type: maven-pom-xml
     path: application/web-java-spring/pom.xml
   - type: maven-pom-xml
-    path: application/consumer-redis-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/consumer-redis-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/consumer-redis-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/jaxrs-cassandra-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-cassandra-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/jaxrs-cassandra-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/jaxrs-memcached-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-memcached-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/jaxrs-memcached-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/jaxrs-mongodb-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-mongodb-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/jaxrs-mongodb-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/jaxrs-hazelcast-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-hazelcast-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/jaxrs-hazelcast-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/consumer-kafka-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/consumer-kafka-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/consumer-kafka-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/jaxrs-rabbitmq-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-rabbitmq-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/jaxrs-rabbitmq-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/randompublish-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/randompublish-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/randompublish-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/consumer-hazelcast-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/consumer-hazelcast-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/consumer-hazelcast-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/jaxrs-mysql-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-mysql-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/jaxrs-mysql-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/parent-pom/pom.xml
   - type: maven-pom-xml
-    path: application/scheduled-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/scheduled-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/scheduled-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/web-java-openliberty/target/m2e-wtp/web-resources/META-INF/maven/webapp.3tier.k8s/web-java-openliberty/pom.xml
   - type: maven-pom-xml
     path: application/web-java-openliberty/pom.xml
   - type: maven-pom-xml
-    path: application/consumer-activemq-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/consumer-activemq-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/consumer-activemq-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/jaxrs-redis-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-redis-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/jaxrs-redis-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/consumer-rabbitmq-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/consumer-rabbitmq-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/consumer-rabbitmq-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/producer-kafka-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/producer-kafka-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/producer-kafka-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/jaxrs-postgres-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-postgres-quarkus/pom.xml
-  - type: maven-pom-xml
     path: application/jaxrs-postgres-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/webapp-service/target/classes/META-INF/maven/webapp.3tier.k8s/webapp-service/pom.xml
-  - type: maven-pom-xml
     path: application/webapp-service/pom.xml
-  - type: maven-pom-xml
-    path: application/jaxrs-kafka-quarkus/target/classes/META-INF/maven/webapp.3tier.k8s/jaxrs-kafka-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/jaxrs-kafka-quarkus/pom.xml
