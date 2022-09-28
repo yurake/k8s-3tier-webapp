@@ -52,6 +52,8 @@ ignore-failures:
     - com.whalin/Memcached-Java-Client
     - org.glassfish/javax.json
     - org.hamcrest/hamcrest-all
+    - com.github.h-thurow/simple-jndi
+    - javax.servlet/javax.servlet-api
 rules-config:
   no-recent-package-release:
     fail-at-months: 48
