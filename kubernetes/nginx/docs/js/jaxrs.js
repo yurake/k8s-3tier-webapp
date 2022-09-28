@@ -86,7 +86,7 @@ $(function () {
     }).always(function (data, status, xhr) {
       var resparray = "";
       for (i = 0; i < data.length; i++) {
-        if (data[i] != null) {
+        if (data[i] !== null) {
           resparray += data[i].fullmsg + "\n";
         }
       }
