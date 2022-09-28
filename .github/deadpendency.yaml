@@ -47,3 +47,11 @@ additional-dependency-files:
     path: application/webapp-service/pom.xml
   - type: maven-pom-xml
     path: application/jaxrs-kafka-quarkus/pom.xml
+ignore-failures:
+  java:
+    - com.whalin/Memcached-Java-Client
+    - org.glassfish/javax.json
+    - org.hamcrest/hamcrest-all
+rules-config:
+  no-recent-package-release:
+    fail-at-months: 48
