@@ -100,6 +100,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -166,6 +167,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -232,6 +234,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -302,6 +305,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -368,6 +372,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -434,6 +439,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -500,6 +506,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -566,6 +573,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -632,6 +640,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -698,6 +707,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -764,6 +774,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -830,6 +841,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -896,6 +908,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -962,6 +975,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -1027,6 +1041,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -1093,6 +1108,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -1159,6 +1175,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -1225,6 +1242,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -1341,6 +1359,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -1406,6 +1425,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -1474,6 +1494,7 @@ jobs:
         with:
           languages: java
       - name: Login to Docker Hub
+        if: github.event_name == 'push'
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
