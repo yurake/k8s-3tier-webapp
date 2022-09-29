@@ -78,12 +78,14 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
+      - name: pwd
+        run: pwd
       - name: find
         run: find . -name "jacoco*.xml"
       - name: Report results to DeepSource
         run: |
           curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./build/reports/jacoco/jacocoTestReport.xml
+          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/webapp-service/target/site/jacoco/jacoco.xml
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
