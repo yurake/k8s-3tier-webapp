@@ -54,6 +54,9 @@ ignore-failures:
     - org.hamcrest/hamcrest-all
     - com.github.h-thurow/simple-jndi
     - javax.servlet/javax.servlet-api
+    - io.quarkus/quarkus-artemis-jms
+    - io.quarkus/quarkus-test-artemis
+    - org.slf4j/slf4j-log4j12
 rules-config:
   no-recent-package-release:
     fail-at-months: 48
