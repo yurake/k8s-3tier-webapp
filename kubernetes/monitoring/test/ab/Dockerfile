@@ -1,9 +1,9 @@
-FROM alpine:3.15.0
+FROM alpine:3.16.2
 ARG BUILD_DATE
 ARG VCS_REF
 
 # renovate: datasource=repology depName=alpine_3_12/apache2-utils versioning=loose
-ENV APACHE2_UTILS_VERSION="2.4.53-r0"
+ENV APACHE2_UTILS_VERSION="2.4.54-r0"
 
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.vcs-url="https://github.com/yurake/k8s-3tier-webapp"

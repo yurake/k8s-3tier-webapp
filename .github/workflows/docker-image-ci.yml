@@ -29,6 +29,7 @@ jobs:
           echo "VCS_REF=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
 
       - name: docker login
+        if: github.event_name == 'push'
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
