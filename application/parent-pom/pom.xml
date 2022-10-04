@@ -14,8 +14,8 @@
 		<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
 		<quarkus.platform.version>1.13.7.Final</quarkus.platform.version>
-		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-		<jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+		<surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
+		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
 	</properties>
 	<distributionManagement>
 		<repository>
