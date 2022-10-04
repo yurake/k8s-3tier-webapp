@@ -19,7 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx, openliberty, spring]
+        dockerfile_default:
+          [mysql, postgres, mongodb, rabbitmq, nginx, openliberty, spring]
     steps:
       - uses: actions/checkout@v3
       - name: lint ${{ matrix.dockerfile_default }}
@@ -31,8 +32,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile_application: [jaxrs-memcached-quarkus, jaxrs-rabbitmq-quarkus, consumer-rabbitmq-quarkus, jaxrs-mongodb-quarkus, consumer-activemq-quarkus, jaxrs-mysql-quarkus, randompublish-quarkus,
-jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelcast-quarkus, consumer-hazelcast-quarkus, jaxrs-redis-quarkus, consumer-redis-quarkus]
+        dockerfile_application:
+          [
+            jaxrs-memcached-quarkus,
+            jaxrs-rabbitmq-quarkus,
+            consumer-rabbitmq-quarkus,
+            jaxrs-mongodb-quarkus,
+            consumer-activemq-quarkus,
+            jaxrs-mysql-quarkus,
+            randompublish-quarkus,
+            jaxrs-activemq-quarkus,
+            scheduled-quarkus,
+            jaxrs-postgres-quarkus,
+            jaxrs-hazelcast-quarkus,
+            consumer-hazelcast-quarkus,
+            jaxrs-redis-quarkus,
+            consumer-redis-quarkus,
+          ]
     steps:
       - uses: actions/checkout@v3
       - name: lint ${{ matrix.dockerfile_application }}

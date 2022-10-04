@@ -41,7 +41,7 @@ jobs:
             ${{ runner.os }}-maven-parent-pom
       - name: Maven Deploy POM to Github Package Registry
         working-directory: ./application/parent-pom/
-        continue-on-error: true
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
@@ -77,7 +77,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-activemq-quarkus:
     needs: init-build
@@ -144,7 +143,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   consumer-activemq-quarkus:
     needs: [init-build, jaxrs-activemq-quarkus]
@@ -211,7 +209,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-cassandra-quarkus:
     needs: init-build
@@ -282,7 +279,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   consumer-hazelcast-quarkus:
     needs: [init-build, jaxrs-hazelcast-quarkus]
@@ -349,7 +345,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   consumer-kafka-quarkus:
     needs: [init-build]
@@ -416,7 +411,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   scheduled-quarkus:
     needs: init-build
@@ -483,7 +477,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-hazelcast-quarkus:
     needs: init-build
@@ -550,7 +543,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-kafka-quarkus:
     needs: init-build
@@ -617,7 +609,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-memcached-quarkus:
     needs: init-build
@@ -684,7 +675,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-mongodb-quarkus:
     needs: init-build
@@ -751,7 +741,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-mysql-quarkus:
     needs: init-build
@@ -818,7 +807,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-postgres-quarkus:
     needs: init-build
@@ -885,7 +873,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-rabbitmq-quarkus:
     needs: init-build
@@ -952,7 +939,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   jaxrs-redis-quarkus:
     needs: init-build
@@ -1018,7 +1004,6 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   consumer-rabbitmq-quarkus:
     needs: [init-build, jaxrs-rabbitmq-quarkus]
@@ -1085,7 +1070,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   producer-kafka-quarkus:
     needs: [init-build]
@@ -1152,7 +1136,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   randompublish-quarkus:
     needs: init-build
@@ -1219,7 +1202,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   implementer-grpc-quarkus:
     needs: init-build
@@ -1286,7 +1268,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   redis-mysql-helidon:
     needs: init-build
@@ -1336,7 +1317,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   consumer-redis-quarkus:
     needs: [init-build, jaxrs-redis-quarkus]
@@ -1403,7 +1383,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   web-java-spring:
     runs-on: ubuntu-latest
@@ -1472,7 +1451,6 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
 
   web-java-openliberty:
     runs-on: ubuntu-latest
@@ -1541,4 +1519,3 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        continue-on-error: true
