@@ -1,8 +1,9 @@
 # :deer: k8s-3tier-webapp
 
-[![Java CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Java%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
-[![Docker Image CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Docker+Image+CI%22)
-[![Docker Vulnerability Scan](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Vulnerability%20Scan/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Docker+Vulnerability+Scan%22)
+[![Java CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Java%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/java-ci.yml)
+[![Docker Image CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/docker-image-ci.yml)
+[![CodeQL](https://github.com/yurake/k8s-3tier-webapp/workflows/CodeQL/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codeql.yml)
+[![Dependency Review](https://github.com/yurake/k8s-3tier-webapp/workflows/Dependency%20Review/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dependency-review.yml)
 [![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/workflows/Yaml%20Validator/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Yaml+Validator%22)
 [![Minikube Quarkus CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-quarkus-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-quarkus-ci.yml)
 [![Minikube Open Liberty CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-openliberty-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-openliberty-ci.yml)
