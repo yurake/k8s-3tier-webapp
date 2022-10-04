@@ -20,10 +20,10 @@ spec:
     spec:
       containers:
         - name: redis-master
-          image: redis:6.2.6
+          image: redis:7.0.5
           ports:
             - containerPort: 6379
         - name: redis-exporter
-          image: oliver006/redis_exporter:v1.35.1-alpine
+          image: oliver006/redis_exporter:v1.37.0-alpine
           ports:
             - containerPort: 9121
