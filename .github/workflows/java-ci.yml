@@ -78,12 +78,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/webapp-service/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-activemq-quarkus:
     needs: init-build
@@ -151,12 +145,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-activemq-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   consumer-activemq-quarkus:
     needs: [init-build, jaxrs-activemq-quarkus]
@@ -224,12 +212,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/consumer-activemq-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-cassandra-quarkus:
     needs: init-build
@@ -301,12 +283,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-cassandra-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   consumer-hazelcast-quarkus:
     needs: [init-build, jaxrs-hazelcast-quarkus]
@@ -374,12 +350,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/consumer-hazelcast-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   consumer-kafka-quarkus:
     needs: [init-build]
@@ -447,12 +417,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/consumer-kafka-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   scheduled-quarkus:
     needs: init-build
@@ -520,12 +484,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/scheduled-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-hazelcast-quarkus:
     needs: init-build
@@ -593,12 +551,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-hazelcast-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-kafka-quarkus:
     needs: init-build
@@ -666,12 +618,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-kafka-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-memcached-quarkus:
     needs: init-build
@@ -739,12 +685,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-memcached-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-mongodb-quarkus:
     needs: init-build
@@ -812,12 +752,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-mongodb-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-mysql-quarkus:
     needs: init-build
@@ -885,12 +819,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-mysql-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-postgres-quarkus:
     needs: init-build
@@ -958,12 +886,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-postgres-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-rabbitmq-quarkus:
     needs: init-build
@@ -1031,12 +953,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-rabbitmq-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   jaxrs-redis-quarkus:
     needs: init-build
@@ -1103,12 +1019,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/jaxrs-redis-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   consumer-rabbitmq-quarkus:
     needs: [init-build, jaxrs-rabbitmq-quarkus]
@@ -1176,12 +1086,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/consumer-rabbitmq-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   producer-kafka-quarkus:
     needs: [init-build]
@@ -1249,12 +1153,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/producer-kafka-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   randompublish-quarkus:
     needs: init-build
@@ -1322,12 +1220,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/randompublish-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   implementer-grpc-quarkus:
     needs: init-build
@@ -1395,12 +1287,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/implementer-grpc-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   redis-mysql-helidon:
     needs: init-build
@@ -1451,12 +1337,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/redis-mysql-helidon/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   consumer-redis-quarkus:
     needs: [init-build, jaxrs-redis-quarkus]
@@ -1524,12 +1404,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/consumer-redis-quarkus/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   web-java-spring:
     runs-on: ubuntu-latest
@@ -1599,12 +1473,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/web-java-spring/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
 
   web-java-openliberty:
     runs-on: ubuntu-latest
@@ -1674,9 +1542,3 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         continue-on-error: true
-      - name: Report results to DeepSource
-        run: |
-          curl https://deepsource.io/cli | sh
-          ./bin/deepsource report --analyzer test-coverage --key java --value-file ./application/web-java-openliberty/target/site/jacoco/jacoco.xml
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
