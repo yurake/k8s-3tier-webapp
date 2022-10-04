@@ -39,5 +39,3 @@ jobs:
         with:
           path: "kubernetes/**/*.yaml"
           cliArguments: --only-k8s-files
-          isHelmChart: false
-          isKustomization: false
