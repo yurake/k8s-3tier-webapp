@@ -36,7 +36,6 @@
 [![Support kind Version](https://img.shields.io/badge/kind-v0.9.0-yellow.svg?style=flat&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22kind+CI%22)
 [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-blue?style=flat&logo=cypress)](https://dashboard.cypress.io/projects/7rgxn6/runs)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready-blue?logo=gitpod)](https://gitpod.io/#https://github.com/yurake/k8s-3tier-webapp)
-[![MDDocs ready](https://img.shields.io/badge/mddocs-ready-blue.svg?style=flat)](https://yurake.mddocs.io/)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_shield)
 
