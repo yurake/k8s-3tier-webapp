@@ -37,6 +37,7 @@ jobs:
       - name: Datree validate config files
         uses: datreeio/action-datree@main # For more info about this Actions visit 👉 https://github.com/datreeio/action-datree
         with:
+          path: "kubernetes/**/*.yaml"
           cliArguments: --only-k8s-files
           isHelmChart: false
           isKustomization: false
