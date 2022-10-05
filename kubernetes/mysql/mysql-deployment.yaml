@@ -46,11 +46,8 @@ spec:
             tcpSocket:
               port: 3306
           readinessProbe:
-            exec:
-              command:
-                - sh
-                - -c
-                - mysql --password=$MYSQL_ROOT_PASSWORD -e "SELECT 1;"
+            tcpSocket:
+              port: 3306
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
