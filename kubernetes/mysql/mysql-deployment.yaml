@@ -42,6 +42,15 @@ spec:
                 configMapKeyRef:
                   name: mysql-configmap
                   key: tz
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - mysql --password=$MYSQL_ROOT_PASSWORD -e "SELECT 1;"
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
@@ -55,6 +64,12 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: mysql-exporter-password
+          livenessProbe:
+            tcpSocket:
+              port: 9104
+          readinessProbe:
+            tcpSocket:
+              port: 9104
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:

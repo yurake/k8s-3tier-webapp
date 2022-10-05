@@ -23,7 +23,19 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 11211
+          livenessProbe:
+            tcpSocket:
+              port: 11211
+          readinessProbe:
+            tcpSocket:
+              port: 11211
         - name: memcached-exporter
           image: prom/memcached-exporter:v0.9.0
           ports:
             - containerPort: 9150
+          livenessProbe:
+            tcpSocket:
+              port: 9150
+          readinessProbe:
+            tcpSocket:
+              port: 9150

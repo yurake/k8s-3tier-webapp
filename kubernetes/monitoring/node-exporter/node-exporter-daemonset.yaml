@@ -31,6 +31,12 @@ spec:
             - name: metrics
               containerPort: 9100
               hostPort: 9100
+          livenessProbe:
+            tcpSocket:
+              port: 9100
+          readinessProbe:
+            tcpSocket:
+              port: 9100
           volumeMounts:
             - name: node-exporter-persistent-storage-proc
               mountPath: /host/proc

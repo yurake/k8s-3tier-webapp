@@ -30,3 +30,9 @@ spec:
               value: "yes"
             - name: ZOO_ENABLE_PROMETHEUS_METRICS
               value: "yes"
+          livenessProbe:
+            tcpSocket:
+              port: 2181
+          readinessProbe:
+            tcpSocket:
+              port: 2181

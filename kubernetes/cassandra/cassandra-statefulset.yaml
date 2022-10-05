@@ -55,6 +55,9 @@ spec:
               value: "GossipingPropertyFileSnitch"
             - name: CASSANDRA_KEYSPACE
               value: "webapp"
+          livenessProbe:
+            tcpSocket:
+              port: 9042
           readinessProbe:
             exec:
               command:

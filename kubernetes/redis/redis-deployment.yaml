@@ -23,7 +23,21 @@ spec:
           image: redis:7.0.5
           ports:
             - containerPort: 6379
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+          readinessProbe:
+            exec:
+              command:
+                - redis-cli
+                - ping
         - name: redis-exporter
           image: oliver006/redis_exporter:v1.37.0-alpine
           ports:
             - containerPort: 9121
+          livenessProbe:
+            tcpSocket:
+              port: 9121
+          readinessProbe:
+            tcpSocket:
+              port: 9121
