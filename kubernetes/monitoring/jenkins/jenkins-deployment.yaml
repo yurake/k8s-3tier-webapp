@@ -41,6 +41,13 @@ spec:
           env:
             - name: PROMETHEUS_NAMESPACE
               value: "monitoring"
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: 8080
       volumes:
         - name: jenkins-persistent-storage
           persistentVolumeClaim:

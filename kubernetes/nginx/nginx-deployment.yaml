@@ -23,6 +23,12 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+          livenessProbe:
+            tcpSocket:
+              port: 80
+          readinessProbe:
+            httpGet:
+              port: 9113
         - name: nginx-exporter
           image: nginx/nginx-prometheus-exporter:0.10.0
           ports:
@@ -30,3 +36,9 @@ spec:
           env:
             - name: SCRAPE_URI
               value: "http://localhost:80/stub_status"
+          livenessProbe:
+            tcpSocket:
+              port: 9113
+          readinessProbe:
+            tcpSocket:
+              port: 9113

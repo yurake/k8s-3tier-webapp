@@ -29,6 +29,13 @@ spec:
                 configMapKeyRef:
                   name: jupyter-configmap
                   key: jupyter-lab
+          livenessProbe:
+            tcpSocket:
+              port: 8888
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8888
           volumeMounts:
             - name: jupyter-persistent-storage
               mountPath: /home/jovyan/work

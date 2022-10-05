@@ -1,5 +1,5 @@
 ### Download at
-https://raw.githubusercontent.com/argoproj/argo/master/manifests/install.yaml
+https://github.com/argoproj/argo-workflows/releases/download/v3.4.1/install.yaml
 
 ### Add resource
 Change namespace to monitoring
