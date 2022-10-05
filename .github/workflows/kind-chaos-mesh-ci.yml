@@ -28,7 +28,6 @@ jobs:
           helm version
           kubectl version
       - uses: actions/checkout@v3
-
       - name: Deploy an application
         run: |
           kubectl apply -f kubernetes/mysql/mysql-pv.yaml
@@ -42,8 +41,8 @@ jobs:
 
       - name: Wait pod status to running
         run: |
-          kubectl wait --all-namespaces=true --for=condition=ready pod -l component=quarkus --timeout=3m
-          kubectl wait --all-namespaces=true --for=condition=ready pod -l app=mysql --timeout=3m
+          kubectl wait --all-namespaces=true --for=condition=ready pod -l component=quarkus --timeout=15m
+          kubectl wait --all-namespaces=true --for=condition=ready pod -l app=mysql --timeout=5m
 
       - name: Check pods
         run: |
