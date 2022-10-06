@@ -49,12 +49,36 @@ jobs:
           kubectl get pods -n chaos-testing
           kubectl get pods
 
-      - name: base64 encode manifests
+      - name: base64 encode manifests1
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          echo "CFG_BASE64_CONTAINER_KILL=$(cat container-kill.yaml | base64)" >> $GITHUB_ENV
+          echo ${CFG_BASE64_CONTAINER_KILL}
+        continue-on-error: true
+
+      - name: base64 encode manifests2
         working-directory: ./kubernetes/test/chaos-mesh/experiments
         run: |
           echo "CFG_BASE64_BURN_CPU=`base64 burn-cpu.yaml`" >> $GITHUB_ENV
-          echo "CFG_BASE64_CONTAINER_KILL=$(base64 container-kill.yaml)" >> $GITHUB_ENV
-          echo "CFG_BASE64_IO_DEPLOY=$(base64 io-delay.yaml)" >> $GITHUB_ENV
+          echo ${CFG_BASE64_BURN_CPU}
+        continue-on-error: true
+
+      - name: base64 encode manifests3
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          echo "CFG_BASE64_IO_DEPLOY=base64 io-delay.yaml" >> $GITHUB_ENV
+          echo ${CFG_BASE64_IO_DEPLOY}
+        continue-on-error: true
+
+      - name: base64 encode manifests4
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          echo "CFG_BASE64_NETWORK_DELAY='base64 network-delay.yaml' >> $GITHUB_ENV
+          echo ${CFG_BASE64_NETWORK_DELAY}
+
+      - name: base64 encode manifests
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
           echo "CFG_BASE64_NETWORK_DELAY=$(base64 network-delay.yaml)" >> $GITHUB_ENV
           echo "CFG_BASE64_NETWORK_LOSS=$(base64 network-loss.yaml)" >> $GITHUB_ENV
           echo "CFG_BASE64_NETWORK_FAILURE=$(base64 pod-failure.yaml)" >> $GITHUB_ENV
