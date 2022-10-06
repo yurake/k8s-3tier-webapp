@@ -26,7 +26,7 @@ class ActiveMqSocketTestForQuarkus {
 	private static final LinkedBlockingDeque<String> MESSAGES = new LinkedBlockingDeque<>();
 
 	@TestHTTPResource("/quarkus/activemq/subscribe")
-	private URI uri;
+	URI uri;
 
 	@Test
 	public void testOnMessage() throws Exception {

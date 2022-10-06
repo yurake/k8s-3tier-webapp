@@ -1,18 +1,21 @@
 apiVersion: chaos-mesh.org/v1alpha1
-kind: TimeChaos
+kind: Schedule
 metadata:
   name: time-shift-example
   namespace: chaos-testing
 spec:
-  mode: one
-  selector:
-    namespaces:
-      - default
-    labelSelectors:
-      "component": "quarkus"
-  timeOffset: "-1.5h"
-  clockIds:
-    - CLOCK_REALTIME
-  duration: "30s"
-  scheduler:
-    cron: "@every 2m"
+  schedule: "0 * * * *"
+  historyLimit: 2
+  concurrencyPolicy: "Allow"
+  type: "TimeChaos"
+  timeChaos:
+    mode: one
+    selector:
+      namespaces:
+        - default
+      labelSelectors:
+        "component": "quarkus"
+    timeOffset: "-5.5h"
+    clockIds:
+      - CLOCK_REALTIME
+    duration: "10s"
