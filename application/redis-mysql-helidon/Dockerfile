@@ -32,7 +32,7 @@ RUN mvn package -DskipTests
 RUN echo "done!"
 
 # 2nd stage, build the runtime image
-FROM openjdk:11-jre-slim
+FROM openjdk:11.0.16-jre-slim
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
