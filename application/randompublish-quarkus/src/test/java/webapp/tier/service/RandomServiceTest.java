@@ -59,7 +59,7 @@ class RandomServiceTest {
 
 	@Test
 	void testGetNum() {
-		Integer i = svc.getNum(6);
+		int i = svc.getNum(6);
 		assertThat(i, greaterThanOrEqualTo(0));
 		assertThat(i, lessThanOrEqualTo(5));
 	}
