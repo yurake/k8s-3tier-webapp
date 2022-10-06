@@ -65,7 +65,7 @@ jobs:
       - name: Chaos Mesh burn-cpu
         uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
-          CFG_BASE64: ${env.CFG_BASE64_BURN_CPU}
+          CFG_FILE: https://raw.githubusercontent.com/yurake/k8s-3tier-webapp/renovate/helm-kind-action-1.x/kubernetes/test/chaos-mesh/experiments/burn-cpu.yaml
           CHAOS_MESH_VERSION: v1.0.0
 
       - name: Check status burn-cpu
