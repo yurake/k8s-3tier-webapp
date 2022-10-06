@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>webapp.3tier.k8s.parent</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.4.3</version>
+		<version>0.4.4-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>

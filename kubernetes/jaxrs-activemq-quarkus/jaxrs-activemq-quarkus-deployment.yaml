@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: jaxrs-activemq-quarkus
-          image: yurak/jaxrs-activemq-quarkus:v0.4.3
+          image: yurak/jaxrs-activemq-quarkus:latest
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

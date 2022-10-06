@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: ab-redis
-          image: yurak/ab:v0.4.3
+          image: yurak/ab:latest
           command: ["/bin/sh", "-c"]
           args:
             [

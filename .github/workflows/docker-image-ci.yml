@@ -39,99 +39,99 @@ jobs:
 
       - name: Build image - nginx
         working-directory: ./kubernetes/nginx
-        run: docker build -t yurak/nginx:v0.4.3
+        run: docker build -t yurak/nginx:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - nginx
         if: github.event_name == 'push'
-        run: docker push yurak/nginx:v0.4.3
+        run: docker push yurak/nginx:latest
 
       - name: Build image - mysql
         working-directory: ./kubernetes/mysql
-        run: docker build -t yurak/mysql:v0.4.3
+        run: docker build -t yurak/mysql:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - mysql
         if: github.event_name == 'push'
-        run: docker push yurak/mysql:v0.4.3
+        run: docker push yurak/mysql:latest
 
       - name: Build image - postgres
         working-directory: ./kubernetes/postgres
-        run: docker build -t yurak/postgres:v0.4.3
+        run: docker build -t yurak/postgres:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postgres
         if: github.event_name == 'push'
-        run: docker push yurak/postgres:v0.4.3
+        run: docker push yurak/postgres:latest
 
       - name: Build image - mongodb
         working-directory: ./kubernetes/mongodb
-        run: docker build -t yurak/mongodb:v0.4.3
+        run: docker build -t yurak/mongodb:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - mongodb
         if: github.event_name == 'push'
-        run: docker push yurak/mongodb:v0.4.3
+        run: docker push yurak/mongodb:latest
 
       - name: Build image - cassandra
         working-directory: ./kubernetes/cassandra
-        run: docker build -t yurak/cassandra:v0.4.3
+        run: docker build -t yurak/cassandra:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - cassandra
         if: github.event_name == 'push'
-        run: docker push yurak/cassandra:v0.4.3
+        run: docker push yurak/cassandra:latest
 
       - name: Build image - rabbitmq
         working-directory: ./kubernetes/rabbitmq
-        run: docker build -t yurak/rabbitmq:v0.4.3
+        run: docker build -t yurak/rabbitmq:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - rabbitmq
         if: github.event_name == 'push'
-        run: docker push yurak/rabbitmq:v0.4.3
+        run: docker push yurak/rabbitmq:latest
 
       - name: Build image - jenkins
         working-directory: ./kubernetes/monitoring/jenkins
-        run: docker build -t yurak/jenkins:v0.4.3
+        run: docker build -t yurak/jenkins:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - jenkins
         if: github.event_name == 'push'
-        run: docker push yurak/jenkins:v0.4.3
+        run: docker push yurak/jenkins:latest
 
       - name: Build image - ab
         working-directory: ./kubernetes/monitoring/test/ab
-        run: docker build -t yurak/ab:v0.4.3
+        run: docker build -t yurak/ab:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - ab
         if: github.event_name == 'push'
-        run: docker push yurak/ab:v0.4.3
+        run: docker push yurak/ab:latest
 
       - name: Build image - postmannewman-quarkus
         working-directory: ./kubernetes/monitoring/test/postmannewman/quarkus
-        run: docker build -t yurak/postmannewman-quarkus:v0.4.3
+        run: docker build -t yurak/postmannewman-quarkus:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postmannewman-quarkus
         if: github.event_name == 'push'
-        run: docker push yurak/postmannewman-quarkus:v0.4.3
+        run: docker push yurak/postmannewman-quarkus:latest
 
       - name: Build image - postmannewman-openliberty
         working-directory: ./kubernetes/monitoring/test/postmannewman/openliberty
-        run: docker build -t yurak/postmannewman-openliberty:v0.4.3
+        run: docker build -t yurak/postmannewman-openliberty:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postmannewman-openliberty
         if: github.event_name == 'push'
-        run: docker push yurak/postmannewman-openliberty:v0.4.3
+        run: docker push yurak/postmannewman-openliberty:latest
 
       - name: Build image - postmannewman-spring
         working-directory: ./kubernetes/monitoring/test/postmannewman/spring
-        run: docker build -t yurak/postmannewman-spring:v0.4.3
+        run: docker build -t yurak/postmannewman-spring:latest
           --build-arg VCS_REF=${VCS_REF}
           --build-arg BUILD_DATE=${BUILD_DATE} .
       - name: Push Image - postmannewman-spring
         if: github.event_name == 'push'
-        run: docker push yurak/postmannewman-spring:v0.4.3
+        run: docker push yurak/postmannewman-spring:latest

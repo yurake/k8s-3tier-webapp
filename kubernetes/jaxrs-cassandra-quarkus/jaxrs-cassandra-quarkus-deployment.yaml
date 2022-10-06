@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: jaxrs-cassandra-quarkus
-          image: yurak/jaxrs-cassandra-quarkus:v0.4.3
+          image: yurak/jaxrs-cassandra-quarkus:latest
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
