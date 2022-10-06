@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s.parent</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.4.3-SNAPSHOT</version>
+	<version>0.4.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<compiler-plugin.version>3.10.1</compiler-plugin.version>
@@ -13,7 +13,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-		<quarkus.platform.version>1.13.7.Final</quarkus.platform.version>
+		<quarkus.platform.version>2.13.1.Final</quarkus.platform.version>
 		<surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
 		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
 	</properties>

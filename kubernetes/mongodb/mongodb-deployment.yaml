@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   name: mongodb
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: mongodb
+  replicas: 1
   strategy:
     type: Recreate
   template:
@@ -50,6 +50,15 @@ spec:
           volumeMounts:
             - name: mongodb-persistent-storage
               mountPath: /data/db
+          livenessProbe:
+            tcpSocket:
+              port: 27017
+          readinessProbe:
+            exec:
+              command:
+                - mongo
+                - --eval
+                - db.adminCommand('ping')
         - name: mongodb-exporter
           image: ssheehy/mongodb-exporter:0.11.0
           ports:
@@ -60,6 +69,12 @@ spec:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongodb-exporter-uri
+          livenessProbe:
+            tcpSocket:
+              port: 9216
+          readinessProbe:
+            tcpSocket:
+              port: 9216
       volumes:
         - name: mongodb-persistent-storage
           persistentVolumeClaim:

@@ -2,7 +2,6 @@ FROM rabbitmq:3.11.0-management-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 
-# renovate: datasource=repology depName=alpine_3_12/tzdata versioning=loose
 ENV TZDATA_VERSION="2022c-r0"
 
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \

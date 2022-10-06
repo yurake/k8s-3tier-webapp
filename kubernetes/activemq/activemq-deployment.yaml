@@ -31,6 +31,12 @@ spec:
           env:
             - name: ENABLE_JMX_EXPORTER
               value: "true"
+          livenessProbe:
+            tcpSocket:
+              port: 61616
+          readinessProbe:
+            tcpSocket:
+              port: 61616
           volumeMounts:
             - name: activemq-persistent-storage
               mountPath: /var/lib/artemis/data

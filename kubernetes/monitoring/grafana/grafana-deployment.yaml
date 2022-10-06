@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:8.5.13
+          image: grafana/grafana:9.1.7
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
@@ -31,6 +31,13 @@ spec:
           env:
             - name: GF_INSTALL_PLUGINS
               value: "grafana-kubernetes-app,jdbranham-diagram-panel"
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
       volumes:
         - name: grafana-persistent-storage
           persistentVolumeClaim:

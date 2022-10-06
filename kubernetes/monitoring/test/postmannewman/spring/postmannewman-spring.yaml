@@ -17,4 +17,12 @@ spec:
             [
               "newman run -e hostname-spring.postman_environment.json jaxrs-spring.postman_collection.json",
             ]
+          livenessProbe:
+            exec:
+              command:
+                - /usr/bin/ab
+          readinessProbe:
+            exec:
+              command:
+                - /usr/bin/ab
       restartPolicy: OnFailure
