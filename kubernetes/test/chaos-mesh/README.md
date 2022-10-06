@@ -5,14 +5,9 @@ See installaion guide on Minikube
 https://chaos-mesh.org/docs/quick-start/
 
 ## Installation
-minikube
 ```bash
 curl -sSL https://mirrors.chaos-mesh.org/v2.4.1/install.sh | bash
 kubectl get pod -n chaos-testing
-```
-kind
-```bash
-curl -sSL https://mirrors.chaos-mesh.org/v2.4.1/install.sh | bash -s -- --local kind
 ```
 
 ## Expose Chaos Dashboard

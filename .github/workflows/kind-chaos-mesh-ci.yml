@@ -54,7 +54,7 @@ jobs:
 
       - name: install chaos mesh
         run: |
-          curl -sSL https://mirrors.chaos-mesh.org/v${CHAOS_MESH_VERSION}/install.sh | bash -s -- --local kind
+          curl -sSL https://mirrors.chaos-mesh.org/v2.4.1/install.sh | bash
           kubectl apply -f ./kubernetes/test/chaos-mesh/chaos-mesh-namespace.yaml
 
       - name: Chaos Mesh burn-cpu
