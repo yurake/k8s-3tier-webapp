@@ -37,6 +37,15 @@ spec:
                 configMapKeyRef:
                   name: postgres-configmap
                   key: tz
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - psql -U postgres -c "SELECT 1;"
           volumeMounts:
             - name: postgres-persistent-storage
               mountPath: /var/lib/postgresql/data
@@ -50,6 +59,12 @@ spec:
                 secretKeyRef:
                   name: postgres-secret
                   key: postgres-exporter-password
+          livenessProbe:
+            tcpSocket:
+              port: 9187
+          readinessProbe:
+            tcpSocket:
+              port: 9187
       volumes:
         - name: postgres-persistent-storage
           persistentVolumeClaim:

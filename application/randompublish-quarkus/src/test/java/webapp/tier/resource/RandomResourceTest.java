@@ -17,11 +17,11 @@ import webapp.tier.service.RandomService;
 class RandomResourceTest {
 
 	@InjectMock
-	private RandomService svc;
+	RandomService svc;
 
 	@Test
 	void testrandom() throws Exception {
-        when(svc.deliverrandom(ArgumentMatchers.any())).thenReturn("Test");
+        when(svc.deliverrandom(ArgumentMatchers.anyInt())).thenReturn("Test");
 		given()
 				.when().get("/random")
 				.then()
@@ -32,7 +32,7 @@ class RandomResourceTest {
 
 	@Test
 	void testrandomError() throws Exception {
-        when(svc.deliverrandom(ArgumentMatchers.any())).thenThrow(new IllegalArgumentException("Test Error"));
+        when(svc.deliverrandom(ArgumentMatchers.anyInt())).thenThrow(new IllegalArgumentException("Test Error"));
 		given()
 				.when().get("/random")
 				.then()

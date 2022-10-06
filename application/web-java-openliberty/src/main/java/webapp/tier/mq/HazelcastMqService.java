@@ -55,8 +55,7 @@ public class HazelcastMqService {
 				return fullmsg;
 			}
 
-			String jmsbody = resp.toString();
-			String[] body = jmsbody.split(splitkey, 0);
+			String[] body = resp.split(splitkey, 0);
 			fullmsg = "Received id: " + body[0] + ", msg: " + body[1];
 			logger.info(fullmsg);
 

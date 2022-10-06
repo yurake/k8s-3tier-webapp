@@ -18,7 +18,7 @@ class CallRandomPublshScheduleTest {
 	void testCallRandomPublsh() {
 		try {
 			rps.callRandomPublsh();
-		} catch (NullPointerException expected) {
+		} catch (Exception expected) {
 			expected.printStackTrace();
 			fail();
 		}
@@ -28,7 +28,7 @@ class CallRandomPublshScheduleTest {
 	void testCallDeleteDbsError() {
 		try {
 			rps.callDeleteDbs();
-		} catch (NullPointerException expected) {
+		} catch (Exception expected) {
 			expected.printStackTrace();
 			fail();
 		}
