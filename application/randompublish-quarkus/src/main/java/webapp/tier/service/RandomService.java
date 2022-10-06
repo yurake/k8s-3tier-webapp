@@ -73,8 +73,8 @@ public class RandomService {
 		return response;
 	}
 
-	public int getNum(int i) {
-		return (int) (Math.random() * i);
+	public int getNum(int num) {
+		return (int) (Math.random() * num);
 	}
 
 	public String stringBuild(String subject, String response) {
