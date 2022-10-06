@@ -52,7 +52,7 @@ jobs:
       - name: base64 encode manifests1
         working-directory: ./kubernetes/test/chaos-mesh/experiments
         run: |
-          echo "CFG_BASE64_BURN_CPU=$(base64 burn-cpu.yaml)" >> $GITHUB_ENV
+          echo "CFG_BASE64_BURN_CPU=$(cat burn-cpu.yaml | base64)" >> $GITHUB_ENV
           echo "CFG_BASE64_CONTAINER_KILL=$(base64 container-kill.yaml)" >> $GITHUB_ENV
           echo "CFG_BASE64_IO_DEPLOY=$(base64 io-delay.yaml)" >> $GITHUB_ENV
           echo "CFG_BASE64_NETWORK_DELAY=$(base64 network-delay.yaml)" >> $GITHUB_ENV
@@ -63,9 +63,9 @@ jobs:
         continue-on-error: true
 
       - name: Chaos Mesh burn-cpu
-        uses: chaos-mesh/chaos-mesh-action@v0.5
+        uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
-          CFG_FILE: https://raw.githubusercontent.com/yurake/k8s-3tier-webapp/renovate/helm-kind-action-1.x/kubernetes/test/chaos-mesh/experiments/burn-cpu.yaml
+          CFG_BASE64: ${env.CFG_BASE64_BURN_CPU}
           CHAOS_MESH_VERSION: v1.0.0
 
       - name: Check status burn-cpu
@@ -78,7 +78,7 @@ jobs:
           done
 
       - name: Chaos Mesh container-kill
-        uses: chaos-mesh/chaos-mesh-action@v0.5
+        uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
           CFG_BASE64: ${env.CFG_BASE64_CONTAINER_KILL}
           CHAOS_MESH_VERSION: v1.0.0
@@ -93,7 +93,7 @@ jobs:
           done
 
       - name: Chaos Mesh io-delay
-        uses: chaos-mesh/chaos-mesh-action@v0.5
+        uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
           CFG_BASE64: ${env.CFG_BASE64_IO_DEPLOY}
           CHAOS_MESH_VERSION: v1.0.0
@@ -108,7 +108,7 @@ jobs:
           done
 
       - name: Chaos Mesh network-delay
-        uses: chaos-mesh/chaos-mesh-action@v0.5
+        uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
           CFG_BASE64: ${env.CFG_BASE64_NETWORK_DELAY}
           CHAOS_MESH_VERSION: v1.0.0
@@ -123,7 +123,7 @@ jobs:
           done
 
       - name: Chaos Mesh network-loss
-        uses: chaos-mesh/chaos-mesh-action@v0.5
+        uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
           CFG_BASE64: ${env.CFG_BASE64_NETWORK_LOSS}
           CHAOS_MESH_VERSION: v1.0.0
@@ -138,7 +138,7 @@ jobs:
           done
 
       - name: Chaos Mesh pod-failure
-        uses: chaos-mesh/chaos-mesh-action@v0.5
+        uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
           CFG_BASE64: ${env.CFG_BASE64_NETWORK_FAILURE}
           CHAOS_MESH_VERSION: v1.0.0
@@ -153,7 +153,7 @@ jobs:
           done
 
       - name: Chaos Mesh pod-kill.yaml
-        uses: chaos-mesh/chaos-mesh-action@v0.5
+        uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
           CFG_BASE64: ${env.CFG_BASE64_POD_KILL}
           CHAOS_MESH_VERSION: v1.0.0
@@ -168,7 +168,7 @@ jobs:
           done
 
       - name: Chaos Mesh time-shift.yaml
-        uses: chaos-mesh/chaos-mesh-action@v0.5
+        uses: chaos-mesh/chaos-mesh-action@v0.4
         env:
           CFG_BASE64: ${env.CFG_BASE64_TIME_SHIFT}
           CHAOS_MESH_VERSION: v1.0.0
