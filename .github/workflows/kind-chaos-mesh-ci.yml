@@ -62,117 +62,22 @@ jobs:
           curl -sSL https://mirrors.chaos-mesh.org/v2.4.1/install.sh | bash
           kubectl apply -f ./kubernetes/test/chaos-mesh/chaos-mesh-namespace.yaml
 
-      - name: Chaos Mesh burn-cpu
+      - name: Chaos Mesh apply experiments
         working-directory: ./kubernetes/test/chaos-mesh/experiments
         run: |
           kubectl apply -f burn-cpu.yaml
-
-      - name: Check status burn-cpu
-        run: |
-          for i in `seq 15`
-          do
-          kubectl get pods -n chaos-testing
-          kubectl get pods
-          sleep 1
-          done
-
-      - name: Chaos Mesh container-kill
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
           kubectl apply -f container-kill.yaml
-
-      - name: Check status container-kill
-        run: |
-          for i in `seq 15`
-          do
-          kubectl get pods -n chaos-testing
-          kubectl get pods
-          sleep 1
-          done
-
-      - name: Chaos Mesh io-delay
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
           kubectl apply -f io-delay.yaml
-
-      - name: Check status io-delay
-        run: |
-          for i in `seq 15`
-          do
-          kubectl get pods -n chaos-testing
-          kubectl get pods
-          sleep 1
-          done
-
-      - name: Chaos Mesh network-delay
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
           kubectl apply -f network-delay.yaml
-
-      - name: Check status network-delay
-        run: |
-          for i in `seq 15`
-          do
-          kubectl get pods -n chaos-testing
-          kubectl get pods
-          sleep 1
-          done
-
-      - name: Chaos Mesh network-loss
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
           kubectl apply -f network-loss.yaml
-
-      - name: Check status network-loss
-        run: |
-          for i in `seq 15`
-          do
-          kubectl get pods -n chaos-testing
-          kubectl get pods
-          sleep 1
-          done
-
-      - name: Chaos Mesh pod-failure
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
           kubectl apply -f pod-failure.yaml
-
-      - name: Check status pod-failure
-        run: |
-          for i in `seq 15`
-          do
-          kubectl get pods -n chaos-testing
-          kubectl get pods
-          sleep 1
-          done
-
-      - name: Chaos Mesh pod-kill
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
           kubectl apply -f pod-kill.yaml
-
-      - name: Check status pod-kill
-        run: |
-          for i in `seq 15`
-          do
-          kubectl get pods -n chaos-testing
-          kubectl get pods
-          sleep 1
-          done
-
-      - name: Chaos Mesh time-shift
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
           kubectl apply -f time-shift.yaml
 
-      - name: Check status time-shift
+      - name: Check status Chaos Mesh
         run: |
-          for i in `seq 15`
-          do
-          kubectl get pods -n chaos-testing
-          kubectl get pods
-          sleep 1
-          done
+          kubectl get pods -n chaos-mesh
+          kubectl get schedule -n chaos-testing
 
       - name: check log jaxrs-mysql
         if: always()
