@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: randompublish-quarkus
-          image: yurak/randompublish-quarkus:latest
+          image: yurak/randompublish-quarkus:v0.4.3
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

@@ -20,7 +20,7 @@ spec:
       terminationGracePeriodSeconds: 1800
       containers:
         - name: cassandra
-          image: yurak/cassandra:latest
+          image: yurak/cassandra:v0.4.3
           imagePullPolicy: Always
           ports:
             - containerPort: 7000

@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: implementer-grpc-quarkus
-          image: yurak/implementer-grpc-quarkus:latest
+          image: yurak/implementer-grpc-quarkus:v0.4.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

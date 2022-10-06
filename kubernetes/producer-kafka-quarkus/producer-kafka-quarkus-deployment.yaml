@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: producer-kafka-quarkus
-          image: yurak/producer-kafka-quarkus:latest
+          image: yurak/producer-kafka-quarkus:v0.4.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

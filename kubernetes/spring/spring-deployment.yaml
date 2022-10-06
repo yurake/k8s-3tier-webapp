@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: spring
-          image: yurak/spring:latest
+          image: yurak/spring:v0.4.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

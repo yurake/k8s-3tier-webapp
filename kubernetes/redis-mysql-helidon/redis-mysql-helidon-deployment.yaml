@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: redis-mysql-helidon
-          image: yurak/redis-mysql-helidon:latest
+          image: yurak/redis-mysql-helidon:v0.4.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
