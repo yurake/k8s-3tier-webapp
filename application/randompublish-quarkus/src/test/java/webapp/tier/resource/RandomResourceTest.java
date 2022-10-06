@@ -17,7 +17,7 @@ import webapp.tier.service.RandomService;
 class RandomResourceTest {
 
 	@InjectMock
-	private RandomService svc;
+	RandomService svc;
 
 	@Test
 	void testrandom() throws Exception {
