@@ -1,19 +1,22 @@
 apiVersion: chaos-mesh.org/v1alpha1
-kind: NetworkChaos
+kind: Schedule
 metadata:
   name: network-loss
   namespace: chaos-testing
 spec:
-  action: loss
-  mode: one
-  selector:
-    namespaces:
-      - default
-    labelSelectors:
-      "component": "quarkus"
-  loss:
-    loss: "25"
-    correlation: "25"
-  duration: "10s"
-  scheduler:
-    cron: "@every 2m"
+  schedule: "0 * * * *"
+  historyLimit: 2
+  concurrencyPolicy: "Allow"
+  type: "NetworkChaos"
+  networkChaos:
+    action: loss
+    mode: one
+    selector:
+      namespaces:
+        - default
+      labelSelectors:
+        "component": "quarkus"
+    loss:
+      loss: "25"
+      correlation: "25"
+    duration: "10s"

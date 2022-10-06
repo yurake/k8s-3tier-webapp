@@ -12,12 +12,20 @@ on:
       - "**.yaml"
       - ".github/workflows/kind-chaos-mesh-ci.yml"
 
+env:
+  CHAOS_MESH_VERSION: 2.4.1
+
 jobs:
   chaos-mesh-ci:
     runs-on: ubuntu-latest
     steps:
       - name: Kind Cluster
-        uses: helm/kind-action@v1.2.0
+        uses: helm/kind-action@v1.4.0
+
+      - uses: azure/setup-kubectl@v3
+        with:
+          version: "latest"
+        id: install
 
       - name: Print cluster information
         run: |
@@ -49,21 +57,27 @@ jobs:
           kubectl get pods -n chaos-testing
           kubectl get pods
 
-      - name: Chaos Mesh
-        uses: chaos-mesh/chaos-mesh-action@v0.5
-        env:
-          # base64 container-kill.yaml
-          CFG_BASE64: YXBpVmVyc2lvbjogY2hhb3MtbWVzaC5vcmcvdjFhbHBoYTENCmtpbmQ6IFBvZENoYW9zDQptZXRhZGF0YToNCiAgbmFtZTogY29udGFpbmVyLWtpbGwNCiAgbmFtZXNwYWNlOiBjaGFvcy10ZXN0aW5nDQpzcGVjOg0KICBhY3Rpb246IGNvbnRhaW5lci1raWxsDQogIG1vZGU6IG9uZQ0KICBjb250YWluZXJOYW1lOiAibXlzcWwiDQogIHNlbGVjdG9yOg0KICAgIG5hbWVzcGFjZXM6DQogICAgICAtIGRlZmF1bHQNCiAgICBsYWJlbFNlbGVjdG9yczoNCiAgICAgICJhcHAiOiAibXlzcWwiDQogIHNjaGVkdWxlcjoNCiAgICBjcm9uOiAiQGV2ZXJ5IDEwbSINCg==
-          CHAOS_MESH_VERSION: v1.0.0
-
-      - name: Check status
+      - name: install chaos mesh
         run: |
-          for i in `seq 10`
-          do
-          kubectl get pods -n chaos-testing
-          kubectl get pods
-          sleep 1
-          done
+          curl -sSL https://mirrors.chaos-mesh.org/v2.4.1/install.sh | bash
+          kubectl apply -f ./kubernetes/test/chaos-mesh/chaos-mesh-namespace.yaml
+
+      - name: Chaos Mesh apply experiments
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f burn-cpu.yaml
+          kubectl apply -f container-kill.yaml
+          kubectl apply -f io-delay.yaml
+          kubectl apply -f network-delay.yaml
+          kubectl apply -f network-loss.yaml
+          kubectl apply -f pod-failure.yaml
+          kubectl apply -f pod-kill.yaml
+          kubectl apply -f time-shift.yaml
+
+      - name: Check status Chaos Mesh
+        run: |
+          kubectl get pods -n chaos-mesh
+          kubectl get schedule -n chaos-testing
 
       - name: check log jaxrs-mysql
         if: always()
