@@ -52,46 +52,15 @@ jobs:
       - name: base64 encode manifests1
         working-directory: ./kubernetes/test/chaos-mesh/experiments
         run: |
+          echo "CFG_BASE64_BURN_CPU=$(base64 burn-cpu.yaml)" >> $GITHUB_ENV
           echo "CFG_BASE64_CONTAINER_KILL=$(base64 container-kill.yaml)" >> $GITHUB_ENV
-        continue-on-error: true
-
-      - name: base64 encode manifests2
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
-          echo "CFG_BASE64_BURN_CPU=`base64 burn-cpu.yaml`" >> $GITHUB_ENV
-        continue-on-error: true
-
-      - name: base64 encode manifests3
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
-          echo "CFG_BASE64_IO_DEPLOY=base64 io-delay.yaml" >> $GITHUB_ENV
-        continue-on-error: true
-
-      - name: base64 encode manifests4
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
-          echo "CFG_BASE64_NETWORK_DELAY='base64 network-delay.yaml'" >> $GITHUB_ENV
-        continue-on-error: true
-
-      - name: base64 encode manifests5
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
-          CFG_BASE64_TMP=`base64 network-loss.yaml`
-          echo "CFG_BASE64_NETWORK_LOSS=${CFG_BASE64_TMP}" >> $GITHUB_ENV
-        continue-on-error: true
-
-      - name: base64 encode manifests
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
-        run: |
-          echo ${CFG_BASE64_CONTAINER_KILL}
-          echo ${CFG_BASE64_BURN_CPU}
-          echo ${CFG_BASE64_IO_DEPLOY}
-          echo ${CFG_BASE64_NETWORK_DELAY}
-          echo ${CFG_BASE64_NETWORK_LOSS}
-
+          echo "CFG_BASE64_IO_DEPLOY=$(base64 io-delay.yaml)" >> $GITHUB_ENV
+          echo "CFG_BASE64_NETWORK_DELAY=$(base64 network-delay.yaml)" >> $GITHUB_ENV
+          echo "CFG_BASE64_NETWORK_LOSS=$(base64 network-loss.yaml)" >> $GITHUB_ENV
           echo "CFG_BASE64_NETWORK_FAILURE=$(base64 pod-failure.yaml)" >> $GITHUB_ENV
           echo "CFG_BASE64_POD_KILL=$(base64 pod-kill.yaml)" >> $GITHUB_ENV
           echo "CFG_BASE64_TIME_SHIFT=$(base64 time-shift.yaml)" >> $GITHUB_ENV
+        continue-on-error: true
 
       - name: Chaos Mesh burn-cpu
         uses: chaos-mesh/chaos-mesh-action@v0.5
