@@ -67,7 +67,7 @@ public class MemcachedService {
 
 		try {
 			getid = (String) mcc.get("id");
-			if (Objects.isNull(getid) || getid.toString().isEmpty()) {
+			if (Objects.isNull(getid) || getid.isEmpty()) {
 				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
 				msgbean = new MsgBean(MsgUtils.stringToInt(getid), (String) mcc.get("msg"), "Get");

@@ -23,8 +23,8 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: 1.25.2
-          k8s-version: 1.23.4
+          minikube-version: 1.27.0
+          k8s-version: 1.25.2
       - name: minikube settings
         run: |
           sudo apt install conntrack
@@ -46,5 +46,4 @@ jobs:
         run: echo `minikube ip` k8s.3tier.webapp | sudo tee -a /etc/hosts
       - name: apply all service
         run: |
-          ls -ltr
           sh ./kubernetes/bin/apply.sh

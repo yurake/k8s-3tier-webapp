@@ -15,8 +15,8 @@
 	<parent>
 		<groupId>io.helidon.applications</groupId>
 		<artifactId>helidon-mp</artifactId>
-		<version>2.4.2</version>
-		<relativePath />
+		<version>2.5.3</version>
+		<relativePath/>
 	</parent>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>redis-mysql-helidon</artifactId>
@@ -24,11 +24,11 @@
 
 	<properties>
 		<mainClass>webapp.tier.events.TaskServiceMain</mainClass>
-		<jedis.version>4.1.1</jedis.version>
-		<mysql.version>8.0.28</mysql.version>
-		<jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+		<jedis.version>4.2.3</jedis.version>
+		<mysql.version>8.0.30</mysql.version>
+		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
 		<jedis-mock.version>0.1.23</jedis-mock.version>
-		<mockito.junit.jupiter>4.4.0</mockito.junit.jupiter>
+		<mockito.junit.jupiter>4.8.0</mockito.junit.jupiter>
 	</properties>
 
 	<dependencies>

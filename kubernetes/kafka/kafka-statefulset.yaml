@@ -27,3 +27,9 @@ spec:
               value: "yes"
             - name: KAFKA_CFG_ZOOKEEPER_CONNECT
               value: "zookeeper:2181"
+          livenessProbe:
+            tcpSocket:
+              port: 9092
+          readinessProbe:
+            tcpSocket:
+              port: 9092
