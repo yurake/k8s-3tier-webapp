@@ -1,0 +1,25 @@
+name: kind Yaml CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.yaml"
+      - ".github/workflows/kind-yaml-ci.yml"
+  pull_request:
+    paths:
+      - "**.yaml"
+      - ".github/workflows/kind-yaml-ci.yml"
+
+jobs:
+  spring-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Kind Cluster
+        uses: helm/kind-action@v1.2.0
+      - name: apply all service
+        run: |
+          sh ./kubernetes/bin/apply.sh

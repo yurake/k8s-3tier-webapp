@@ -7,11 +7,13 @@ on:
     paths:
       - "kubernetes/**"
       - "!kubernetes/bin/**"
+      - "!kubernetes/**/*.md"
       - ".github/workflows/docker-image-ci.yml"
   pull_request:
     paths:
       - "kubernetes/**"
       - "!kubernetes/bin/**"
+      - "!kubernetes/**/*.md"
       - ".github/workflows/docker-image-ci.yml"
 
 jobs:

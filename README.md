@@ -12,6 +12,7 @@
 [![kind Open Liberty CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-openliberty-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-openliberty-ci.yml)
 [![kind Quarkus CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-quarkus-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-quarkus-ci.yml)
 [![kind Spring CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-spring-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-spring-ci.yml)
+[![kind Yaml CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-yaml-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-yaml-ci.yml)
 [![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/workflows/Yaml%20Validator/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Yaml+Validator%22)
 [![Shell Validator](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/shell-validator.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/shell-validator.yml)
 [![Dockerfile Lint](https://github.com/yurake/k8s-3tier-webapp/workflows/Dockerfile%20Lint/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Dockerfile+Lint%22)
