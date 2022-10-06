@@ -26,6 +26,11 @@ kubectl apply -f chaos-mesh-ingress.yaml
 kubectl apply -f experiments/network-delay.yaml
 ```
 
+## Check status
+```bash
+kubectl get schedule -n chaos-testing
+```
+
 ## Delete experiment file (sample)
 ```bash
 kubectl delete -f experiments/network-delay.yaml
