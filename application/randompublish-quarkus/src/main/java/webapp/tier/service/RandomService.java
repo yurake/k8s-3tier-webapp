@@ -44,7 +44,7 @@ public class RandomService {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	public String deliverrandom(Integer id) {
+	public String deliverrandom(int id) {
 		String response;
 		switch (id) {
 		case 0:
@@ -73,7 +73,7 @@ public class RandomService {
 		return response;
 	}
 
-	public int getNum(Integer i) {
+	public int getNum(int i) {
 		return (int) (Math.random() * i);
 	}
 
