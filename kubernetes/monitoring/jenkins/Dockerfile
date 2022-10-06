@@ -2,15 +2,10 @@ FROM jenkins/jenkins:2.372-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 
-# renovate: datasource=repology depName=alpine_3_12/tzdata versioning=loose
 ENV TZDATA_VERSION="2022c-r0"
-# renovate: datasource=repology depName=alpine_3_12/gcc versioning=loose
 ENV GCC_VERSION="11.2.1_git20220219-r2"
-# renovate: datasource=repology depName=alpine_3_12/docker versioning=loose
 ENV DOCKER_VERSION="20.10.18-r0"
-# renovate: datasource=repology depName=alpine_3_12/python3 versioning=loose
 ENV PYTHON3_VERSION="3.10.5-r0"
-# renovate: datasource=repology depName=alpine_3_12/gnuplot versioning=loose
 ENV GUNPLOT_VERSION="5.4.3-r0"
 
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
