@@ -77,10 +77,9 @@ jobs:
           done
 
       - name: Chaos Mesh container-kill
-        uses: chaos-mesh/chaos-mesh-action@v0.4
-        env:
-          CFG_BASE64: ${env.CFG_BASE64_CONTAINER_KILL}
-          CHAOS_MESH_VERSION: v1.0.0
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f container-kill.yaml
 
       - name: Check status container-kill
         run: |
@@ -92,10 +91,9 @@ jobs:
           done
 
       - name: Chaos Mesh io-delay
-        uses: chaos-mesh/chaos-mesh-action@v0.4
-        env:
-          CFG_BASE64: ${env.CFG_BASE64_IO_DEPLOY}
-          CHAOS_MESH_VERSION: v1.0.0
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f io-delay.yaml
 
       - name: Check status io-delay
         run: |
@@ -107,10 +105,9 @@ jobs:
           done
 
       - name: Chaos Mesh network-delay
-        uses: chaos-mesh/chaos-mesh-action@v0.4
-        env:
-          CFG_BASE64: ${env.CFG_BASE64_NETWORK_DELAY}
-          CHAOS_MESH_VERSION: v1.0.0
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f network-delay.yaml
 
       - name: Check status network-delay
         run: |
@@ -122,10 +119,9 @@ jobs:
           done
 
       - name: Chaos Mesh network-loss
-        uses: chaos-mesh/chaos-mesh-action@v0.4
-        env:
-          CFG_BASE64: ${env.CFG_BASE64_NETWORK_LOSS}
-          CHAOS_MESH_VERSION: v1.0.0
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f network-loss.yaml
 
       - name: Check status network-loss
         run: |
@@ -137,10 +133,9 @@ jobs:
           done
 
       - name: Chaos Mesh pod-failure
-        uses: chaos-mesh/chaos-mesh-action@v0.4
-        env:
-          CFG_BASE64: ${env.CFG_BASE64_NETWORK_FAILURE}
-          CHAOS_MESH_VERSION: v1.0.0
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f pod-failure.yaml
 
       - name: Check status pod-failure
         run: |
@@ -151,13 +146,12 @@ jobs:
           sleep 1
           done
 
-      - name: Chaos Mesh pod-kill.yaml
-        uses: chaos-mesh/chaos-mesh-action@v0.4
-        env:
-          CFG_BASE64: ${env.CFG_BASE64_POD_KILL}
-          CHAOS_MESH_VERSION: v1.0.0
+      - name: Chaos Mesh pod-kill
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f pod-kill.yaml
 
-      - name: Check status pod-kill.yaml
+      - name: Check status pod-kill
         run: |
           for i in `seq 15`
           do
@@ -166,13 +160,12 @@ jobs:
           sleep 1
           done
 
-      - name: Chaos Mesh time-shift.yaml
-        uses: chaos-mesh/chaos-mesh-action@v0.4
-        env:
-          CFG_BASE64: ${env.CFG_BASE64_TIME_SHIFT}
-          CHAOS_MESH_VERSION: v1.0.0
+      - name: Chaos Mesh time-shift
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f time-shift.yaml
 
-      - name: Check status time-shift.yaml
+      - name: Check status time-shift
         run: |
           for i in `seq 15`
           do
