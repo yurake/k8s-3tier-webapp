@@ -12,6 +12,9 @@ on:
       - "**.yaml"
       - ".github/workflows/kind-chaos-mesh-ci.yml"
 
+env:
+  CHAOS_MESH_VERSION: 2.4.1
+
 jobs:
   chaos-mesh-ci:
     runs-on: ubuntu-latest
@@ -49,24 +52,15 @@ jobs:
           kubectl get pods -n chaos-testing
           kubectl get pods
 
-      - name: base64 encode manifests1
-        working-directory: ./kubernetes/test/chaos-mesh/experiments
+      - name: install chaos mesh
         run: |
-          echo "CFG_BASE64_BURN_CPU=$(cat burn-cpu.yaml | base64)" >> $GITHUB_ENV
-          echo "CFG_BASE64_CONTAINER_KILL=$(base64 container-kill.yaml)" >> $GITHUB_ENV
-          echo "CFG_BASE64_IO_DEPLOY=$(base64 io-delay.yaml)" >> $GITHUB_ENV
-          echo "CFG_BASE64_NETWORK_DELAY=$(base64 network-delay.yaml)" >> $GITHUB_ENV
-          echo "CFG_BASE64_NETWORK_LOSS=$(base64 network-loss.yaml)" >> $GITHUB_ENV
-          echo "CFG_BASE64_NETWORK_FAILURE=$(base64 pod-failure.yaml)" >> $GITHUB_ENV
-          echo "CFG_BASE64_POD_KILL=$(base64 pod-kill.yaml)" >> $GITHUB_ENV
-          echo "CFG_BASE64_TIME_SHIFT=$(base64 time-shift.yaml)" >> $GITHUB_ENV
-        continue-on-error: true
+          curl -sSL https://mirrors.chaos-mesh.org/v${CHAOS_MESH_VERSION}/install.sh | bash -s -- --local kind
+          kubectl apply -f ./kubernetes/test/chaos-mesh/chaos-mesh-namespace.yaml
 
       - name: Chaos Mesh burn-cpu
-        uses: chaos-mesh/chaos-mesh-action@v0.4
-        env:
-          CFG_BASE64: ${env.CFG_BASE64_BURN_CPU}
-          CHAOS_MESH_VERSION: v1.0.0
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f burn-cpu.yaml
 
       - name: Check status burn-cpu
         run: |
