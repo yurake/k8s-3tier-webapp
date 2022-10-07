@@ -4,6 +4,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public final class CreateId {
+	
+	private CreateId() {
+	}
 
 	/**
 	 * 5桁の正の整数を返す.
