@@ -1,14 +1,16 @@
 package webapp.tier.service.generator;
 
-import java.util.concurrent.TimeUnit;
+import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.jboss.logging.Logger;
+import org.jboss.logging.Logger.Level;
 
-import io.reactivex.Flowable;
+import io.smallrye.mutiny.Multi;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
@@ -30,14 +32,23 @@ public class MessageGenerator {
 
 	@Outgoing("message")
 	@Broadcast
-	public Flowable<String> generate() {
-
-		return Flowable.interval(period, TimeUnit.SECONDS)
-				.onBackpressureDrop()
+	public Multi<String> generate() {
+		
+		return Multi.createFrom().ticks().every(Duration.ofSeconds(period))
 				.map(tick -> {
-					MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Generate");
-					logger.info(msgbean.getFullmsg());
-					return MsgUtils.createBody(msgbean, splitkey);
-				});
+					return generateMessgae();
+				})
+				.onFailure().recoverWithCompletion();
+	}
+	
+	private String generateMessgae() {
+		MsgBean msgbean = null;
+		try {
+			msgbean = new MsgBean(CreateId.createid(), message, "Generate");
+		} catch (NoSuchAlgorithmException e) {
+			logger.log(Level.FATAL, "Create Id Error.", e);
+		}
+		logger.info(msgbean.getFullmsg());
+		return MsgUtils.createBody(msgbean, splitkey);
 	}
 }
