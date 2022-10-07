@@ -1,13 +1,13 @@
 package webapp.tier.healthcheck;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import org.eclipse.microprofile.health.HealthCheckResponse.State;
+import org.eclipse.microprofile.health.HealthCheckResponse.Status;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -20,7 +20,7 @@ class ReadinessHealthCheckHazelcastTest {
 	@Test
 	void testCallDown() {
 		ReadinessHealthCheckHazelcast hc = new ReadinessHealthCheckHazelcast();
-		assertThat(hc.call().getState(), is(State.DOWN));
+		assertThat(hc.call().getStatus(), is(Status.DOWN));
 	}
 
 	@Test
