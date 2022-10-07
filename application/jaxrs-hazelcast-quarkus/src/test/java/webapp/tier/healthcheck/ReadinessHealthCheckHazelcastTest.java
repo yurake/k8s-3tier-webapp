@@ -32,6 +32,6 @@ class ReadinessHealthCheckHazelcastTest {
 				return mock;
 			}
 		};
-		assertEquals(State.UP, hc.call().getState(), "Unexpected status");
+		assertEquals(Status.UP, hc.call().getStatus(), "Unexpected status");
 	}
 }

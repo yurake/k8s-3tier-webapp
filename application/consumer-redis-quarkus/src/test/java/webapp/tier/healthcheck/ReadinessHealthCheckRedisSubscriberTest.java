@@ -1,11 +1,11 @@
 package webapp.tier.healthcheck;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import org.eclipse.microprofile.health.HealthCheckResponse.State;
+import org.eclipse.microprofile.health.HealthCheckResponse.Status;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -24,7 +24,7 @@ class ReadinessHealthCheckRedisSubscriberTest {
 				return mock;
 			}
 		};
-		assertEquals(State.DOWN, hc.call().getState(), "Unexpected status");
+		assertEquals(Status.DOWN, hc.call().getStatus(), "Unexpected status");
 	}
 
 	@Test
@@ -36,7 +36,7 @@ class ReadinessHealthCheckRedisSubscriberTest {
 				return mock;
 			}
 		};
-		assertEquals(State.UP, hc.call().getState(), "Unexpected status");
+		assertEquals(Status.UP, hc.call().getStatus(), "Unexpected status");
 	}
 
 }

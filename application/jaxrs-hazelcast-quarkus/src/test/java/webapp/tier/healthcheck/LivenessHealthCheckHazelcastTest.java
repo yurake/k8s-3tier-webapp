@@ -13,7 +13,7 @@ class LivenessHealthCheckHazelcastTest {
 	@Test
 	void testCallError() {
 		LivenessHealthCheckHazelcast hc = new LivenessHealthCheckHazelcast();
-		assertEquals(State.UP, hc.call().getState(), "Unexpected status");
+		assertEquals(Status.UP, hc.call().getStatus(), "Unexpected status");
 	}
 
 }
