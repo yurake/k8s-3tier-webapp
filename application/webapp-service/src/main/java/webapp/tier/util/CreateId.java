@@ -11,7 +11,7 @@ public final class CreateId {
 	 * @throws NoSuchAlgorithmException This exception is thrown when a particular cryptographic algorithm is requested but is not available in the environment.
 	 */
 	public static int createid() throws NoSuchAlgorithmException {
-		SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+		SecureRandom sr = SecureRandom.getInstanceStrong();
 		int id = 0;
 		while (id < 10000) {
 			id = sr.nextInt(99999);
