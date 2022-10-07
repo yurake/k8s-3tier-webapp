@@ -18,7 +18,7 @@ public class WebappClientService {
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Inject
-	@io.quarkus.grpc.GrpcService
+	@GrpcService
 	IdGrpc.IdBlockingStub idService;
 
 	@Inject
