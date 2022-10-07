@@ -2,13 +2,13 @@ package webapp.tier.service.generator;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
-import org.jboss.logging.Logger;
-import org.jboss.logging.Logger.Level;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
@@ -46,7 +46,7 @@ public class MessageGenerator {
 		try {
 			msgbean = new MsgBean(CreateId.createid(), message, "Generate");
 		} catch (NoSuchAlgorithmException e) {
-			logger.log(Level.FATAL, "Create Id Error.", e);
+			logger.log(Level.SEVERE, "Create Id Error.", e);
 		}
 		logger.info(msgbean.getFullmsg());
 		return MsgUtils.createBody(msgbean, splitkey);
