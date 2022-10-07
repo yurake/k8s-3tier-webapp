@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.google.protobuf.Empty;
 
-import io.quarkus.grpc.runtime.annotations.GrpcService;
+import io.quarkus.grpc.GrpcService;
 
 @ApplicationScoped
 @Path("/grpc")
@@ -19,11 +19,11 @@ import io.quarkus.grpc.runtime.annotations.GrpcService;
 public class MockWebappResource {
 
 	@Inject
-	@GrpcService("webapp")
+	@GrpcService
 	IdGrpc.IdBlockingStub idService;
 
 	@Inject
-	@GrpcService("webapp")
+	@GrpcService
 	MsgGrpc.MsgBlockingStub msgclient;
 
 	@GET

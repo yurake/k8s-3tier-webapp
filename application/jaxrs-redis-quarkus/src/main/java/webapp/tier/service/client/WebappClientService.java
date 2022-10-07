@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 
 import com.google.protobuf.Empty;
 
-import io.quarkus.grpc.runtime.annotations.GrpcService;
+import io.quarkus.grpc.GrpcService;
 import webapp.tier.grpc.IdGrpc;
 import webapp.tier.grpc.MsgGrpc;
 
@@ -18,11 +18,11 @@ public class WebappClientService {
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Inject
-	@GrpcService("webapp")
+	@io.quarkus.grpc.GrpcService
 	IdGrpc.IdBlockingStub idService;
 
 	@Inject
-	@GrpcService("webapp")
+	@GrpcService
 	MsgGrpc.MsgBlockingStub msgclient;
 
 	public int getId() {
