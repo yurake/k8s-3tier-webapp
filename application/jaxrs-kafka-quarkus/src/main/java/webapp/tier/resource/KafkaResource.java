@@ -10,14 +10,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.sse.Sse;
 
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.jboss.resteasy.annotations.SseElementType;
+import org.jboss.resteasy.reactive.RestStreamElementType;
 import org.reactivestreams.Publisher;
 
 import webapp.tier.bean.LatestMessage;
@@ -36,20 +34,17 @@ public class KafkaResource {
 	@Inject
 	KafkaService svc;
 
-	@Context
-	Sse sse;
-
 	@GET
 	@Path("/subscribe")
-	@Produces(MediaType.SERVER_SENT_EVENTS)
-	@SseElementType("text/plain")
+	@RestStreamElementType(MediaType.TEXT_PLAIN)
 	public Publisher<String> subscribe() {
+		logger.log(Level.INFO, "Subscribe received.");
 		return inmemmsg;
 	}
 
 	@GET
 	@Path("/get")
-    @Retry(maxRetries = 3)
+	@Retry(maxRetries = 3)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() {
 		return Response.ok(LatestMessage.getLatestMsg()).build();
