@@ -14,6 +14,6 @@ public class MockDeliverService {
 
 	@GET
 	public String random() {
-			return "Test";
+			return "Test Success Response";
 	}
 }
