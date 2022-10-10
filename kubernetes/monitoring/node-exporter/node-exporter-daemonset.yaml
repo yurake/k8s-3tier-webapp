@@ -16,12 +16,14 @@ spec:
   template:
     metadata:
       labels:
+        tier: management
+        component: monitoring
         app: node-exporter
     spec:
       containers:
         - name: prometheus-node-exporter
-          image: "prom/node-exporter:v0.18.1"
-          imagePullPolicy: "IfNotPresent"
+          image: prom/node-exporter:v1.4.0
+          imagePullPolicy: Always
           args:
             - --path.procfs=/proc
             - --path.sysfs=/sys
@@ -29,6 +31,12 @@ spec:
             - name: metrics
               containerPort: 9100
               hostPort: 9100
+          livenessProbe:
+            tcpSocket:
+              port: 9100
+          readinessProbe:
+            tcpSocket:
+              port: 9100
           volumeMounts:
             - name: node-exporter-persistent-storage-proc
               mountPath: /host/proc

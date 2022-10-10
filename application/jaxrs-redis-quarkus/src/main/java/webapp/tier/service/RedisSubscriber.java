@@ -15,15 +15,15 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class RedisSubscriber extends JedisPubSub {
 
-	private static final Logger LOG = Logger.getLogger(RedisSubscriber.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
 	RedisSocket redissock = new RedisSocket();
 
 	@Override
 	public void onMessage(String channel, String message) {
-			MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
-			msgbean.setFullmsg("Subscribe");
-			LOG.log(Level.INFO, msgbean.getFullmsg());
-			redissock.onMessage(MsgUtils.createBody(msgbean, splitkey));
+		MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
+		msgbean.setFullmsg("Subscribe");
+		logger.log(Level.INFO, msgbean.getFullmsg());
+		redissock.onMessage(MsgUtils.createBody(msgbean, splitkey));
 	}
 }

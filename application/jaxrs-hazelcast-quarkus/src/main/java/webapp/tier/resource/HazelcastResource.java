@@ -1,5 +1,8 @@
 package webapp.tier.resource;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -23,6 +26,8 @@ import webapp.tier.service.HazelcastService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class HazelcastResource {
 
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
 	@Inject
 	HazelcastCacheService cachesvc;
 
@@ -37,6 +42,7 @@ public class HazelcastResource {
 		try {
 			return Response.ok().entity(cachesvc.setMsg(HazelcastService.getInstance())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Set Cache Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -50,6 +56,7 @@ public class HazelcastResource {
 		try {
 			return Response.ok().entity(cachesvc.getMsgList(HazelcastService.getInstance())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Get Cache Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -62,6 +69,7 @@ public class HazelcastResource {
 		try {
 			return Response.ok().entity(mqsvc.putMsg(HazelcastService.getInstance())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Put Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -75,6 +83,7 @@ public class HazelcastResource {
 		try {
 			return Response.ok().entity(mqsvc.getMsg(HazelcastService.getInstance())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Get Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
@@ -87,6 +96,7 @@ public class HazelcastResource {
 		try {
 			return Response.ok().entity(mqsvc.publishMsg(HazelcastService.getInstance())).build();
 		} catch (Exception e) {
+			logger.log(Level.WARNING, "Publish Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}

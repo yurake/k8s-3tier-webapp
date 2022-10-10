@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.topic.ITopic;
@@ -25,23 +25,30 @@ import webapp.tier.util.MsgUtils;
 @ApplicationScoped
 public class HazelcastMqService implements Runnable {
 
-	private static final Logger LOG = Logger.getLogger(HazelcastMqService.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
 
-	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
-	private static String queuename = ConfigProvider.getConfig().getValue("hazelcast.queue.name", String.class);
-	private static String topicname = ConfigProvider.getConfig().getValue("hazelcast.topic.name", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("hazelcast.split.key", String.class);
+	@ConfigProperty(name = "common.message")
+	String message;
 
-	void onStart(@Observes StartupEvent ev) {
+	@ConfigProperty(name = "hazelcast.queue.name")
+	String queuename;
+
+	@ConfigProperty(name = "hazelcast.topic.name")
+	String topicname;
+
+	@ConfigProperty(name = "hazelcast.split.key")
+	String splitkey;
+
+		void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
-		LOG.info("Subscribe is starting...");
+		logger.info("Subscribe is starting...");
 	}
 
 	void onStop(@Observes ShutdownEvent ev) {
 		scheduler.shutdown();
-		LOG.info("Subscribe is stopping...");
+		logger.info("Subscribe is stopping...");
 	}
 
 	protected HazelcastMessageListener createHazelcastMessageListener() {
@@ -56,7 +63,7 @@ public class HazelcastMqService implements Runnable {
 			BlockingQueue<Object> queue = client.getQueue(queuename);
 			queue.put(body);
 		} catch (IllegalStateException | InterruptedException | NoSuchAlgorithmException e) {
-			LOG.log(Level.SEVERE, "Put Error.", e);
+			logger.log(Level.SEVERE, "Put Error.", e);
 			e.printStackTrace();
 		    Thread.currentThread().interrupt();
 		} finally {
@@ -64,7 +71,7 @@ public class HazelcastMqService implements Runnable {
 				client.shutdown();
 			}
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -81,14 +88,14 @@ public class HazelcastMqService implements Runnable {
 				msgbean.setFullmsg("Get");
 			}
 		} catch (IllegalStateException e) {
-			LOG.log(Level.SEVERE, "Get Error.", e);
+			logger.log(Level.SEVERE, "Get Error.", e);
 			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -101,14 +108,14 @@ public class HazelcastMqService implements Runnable {
 			ITopic<Object> topic = client.getTopic(topicname);
 			topic.publish(body);
 		} catch (IllegalStateException | NoSuchAlgorithmException e) {
-			LOG.log(Level.SEVERE, "Publish Error.", e);
+			logger.log(Level.SEVERE, "Publish Error.", e);
 			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
 			}
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 

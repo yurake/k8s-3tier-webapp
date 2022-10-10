@@ -21,18 +21,18 @@ public class ActiveMqConsumer {
 	@ConfigProperty(name = "activemq.split.key")
 	String splitkey;
 
-	protected static final Logger LOG = Logger.getLogger(ActiveMqConsumer.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	ActiveMqSocket amqsock = new ActiveMqSocket();
 
 	public void consume(JMSConsumer consumer) throws JMSException {
-		LOG.log(Level.INFO, "Ready for receive message...");
+		logger.log(Level.INFO, "Ready for receive message...");
 		Message message = consumer.receive();
 		TextMessage textMessage = (TextMessage) message;
 		MsgBean msgbean = MsgUtils.splitBody(textMessage.getText(), splitkey);
 		msgbean.setFullmsg("Received");
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		amqsock.onMessage(MsgUtils.createBody(msgbean, splitkey));
 		msgbean.setFullmsg("Broadcast");
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 	}
 }

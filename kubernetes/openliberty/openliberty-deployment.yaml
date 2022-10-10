@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openliberty
+spec:
+  selector:
+    matchLabels:
+      app: openliberty
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        component: web
+        app: openliberty
+    spec:
+      containers:
+        - name: openliberty
+          image: yurak/openliberty:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9080
+          resources:
+            limits:
+              memory: 600Mi
+              cpu: 500m
+            requests:
+              memory: 100Mi
+              cpu: 100m
+          livenessProbe:
+            httpGet:
+              port: 9080
+              path: /health/live
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 10
+            timeoutSeconds: 60
+          readinessProbe:
+            httpGet:
+              port: 9080
+              path: /health/ready
+            initialDelaySeconds: 60
+            periodSeconds: 30
+          env:
+            - name: MYSQL_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: mysql-databaseName
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: mysql-user
+            - name: MYSQL_PORTNUM
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: mysql-portNumber
+            - name: MYSQL_SERVERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: mysql-serverName
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: openliberty-secret
+                  key: mysql-password
+            - name: PG_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: pg-databaseName
+            - name: PG_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: pg-user
+            - name: PG_PORTNUM
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: pg-portNumber
+            - name: PG_SERVERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: pg-serverName
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: openliberty-secret
+                  key: pg-password
+            - name: AMQ_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: amq-user
+            - name: AMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: openliberty-secret
+                  key: amq-password
+            - name: AMQ_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: openliberty-configmap
+                  key: amq-url
+          volumeMounts:
+            - name: openliberty-config-volume
+              mountPath: /config/jvm.options
+              subPath: jvm-options
+      volumes:
+        - name: openliberty-config-volume
+          configMap:
+            name: openliberty-configmap

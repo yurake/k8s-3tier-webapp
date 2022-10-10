@@ -3,7 +3,8 @@
 
 # Java
 *.class
-application/**/*.jar
+application/**/maven-wrapper.jar
+kubernetes/**/*.jar
 *.war
 *.ear
 
@@ -32,7 +33,6 @@ target
 # Build
 out
 build
-bin
 
 # Other
 *.log
@@ -46,3 +46,4 @@ kubernetes/monitoring/test/cypress/cypress/videos
 kubernetes/monitoring/test/cypress/cypress/plugins
 kubernetes/monitoring/test/cypress/cypress/support
 kubernetes/monitoring/test/cypress/cypress/fixtures
+kubernetes/monitoring/test/cypress/node_modules

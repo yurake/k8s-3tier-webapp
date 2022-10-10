@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.hazelcast.core.HazelcastInstance;
 
@@ -20,9 +20,13 @@ import webapp.tier.util.CreateId;
 public class HazelcastCacheService {
 
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
-	private static Logger LOG = Logger.getLogger(HazelcastCacheService.class.getSimpleName());
-	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
-	private static String cachename = ConfigProvider.getConfig().getValue("hazelcast.cache.name", String.class);
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
+	@ConfigProperty(name = "common.message")
+	String message;
+
+	@ConfigProperty(name = "hazelcast.cache.name")
+	String cachename;
 
 	public MsgBean setMsg(HazelcastInstance client) throws NoSuchAlgorithmException {
 		MsgBean msgbean = errormsg;
@@ -36,7 +40,7 @@ public class HazelcastCacheService {
 				client.shutdown();
 			}
 		}
-		LOG.info(msgbean.getFullmsg());
+		logger.info(msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -54,7 +58,7 @@ public class HazelcastCacheService {
 
 			for (Entry<Integer, String> entry : map.entrySet()) {
 				MsgBean msgbean = new MsgBean(entry.getKey(), entry.getValue(), "Get");
-				LOG.info(msgbean.getFullmsg());
+				logger.info(msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}
 			if (msglist.isEmpty()) {

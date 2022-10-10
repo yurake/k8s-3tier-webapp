@@ -1,0 +1,54 @@
+name: kind Open Liberty CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "application/**"
+      - "kubernetes/**"
+      - ".github/workflows/kind-openliberty-ci.yml"
+  issues:
+    types: [closed]
+
+jobs:
+  openliberty-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Kind Cluster
+        uses: helm/kind-action@v1.4.0
+      - name: apply minimal service
+        run: |
+          sh ./kubernetes/bin/apply-default-openliberty.sh
+          sleep 10
+      - name: run e2e test
+        run: |
+          kubectl apply -f kubernetes/monitoring/test/postmannewman/openliberty/postmannewman-openliberty.yaml
+      - name: wait for complete e2e job
+        run: |
+          kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-openliberty
+          kubectl -n monitoring describe job postmannewman-openliberty
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-openliberty)
+      - name: check log openliberty
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep openliberty)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep openliberty)
+      - name: check status
+        if: always()
+        run: |
+          kubectl get po --all-namespaces=true
+          kubectl get nodes
+          kubectl get pv
+          kubectl get pvc
+          kubectl get all
+          kubectl get all -n monitoring
+          kubectl get ingress
+          df -h /
+      - name: check after test postmannewman-openliberty
+        if: always()
+        run: |
+          kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-openliberty)
+          kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-openliberty)

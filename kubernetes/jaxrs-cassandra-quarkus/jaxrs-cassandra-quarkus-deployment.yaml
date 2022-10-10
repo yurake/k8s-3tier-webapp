@@ -10,6 +10,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: frontend
+        component: quarkus
         app: jaxrs-cassandra-quarkus
       annotations:
         prometheus.io/scrape: "true"
@@ -18,7 +20,7 @@ spec:
       containers:
         - name: jaxrs-cassandra-quarkus
           image: yurak/jaxrs-cassandra-quarkus:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           livenessProbe:
             httpGet:
               port: 8080

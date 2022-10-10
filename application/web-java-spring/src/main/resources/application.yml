@@ -1,0 +1,52 @@
+server.servlet.context-path: /
+management.endpoint.health.show-details: always
+common.message: Hello k8s-3tier-webapp!
+
+spring.jpa:
+  hibernate.ddl-auto: update
+  open-in-view: false
+
+spring.datasource:
+  mysql:
+    url: jdbc:mysql://mysql:3306/webapp?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    username: webapp
+    password: ${MYSQL_PASSWORD}
+    driverClassName: com.mysql.cj.jdbc.Driver
+  postgres:
+    url: jdbc:postgresql://postgres:5432/webapp?user=webapp&password=${PG_PASSWORD}
+    username: webapp
+    password: ${PG_PASSWORD}
+    driverClassName: org.postgresql.Driver
+
+spring.redis:
+  host: redis
+  port: 6379
+  set.expire: 3600
+  channel.name: pubsub
+  split.key: ","
+
+spring.artemis:
+  mode: native
+  broker-url: tcp://activemq:61616
+  user: artemis
+  password: ${ARTEMIS_PASSWORD}
+  queue.name: ActiveMQueue
+  topic.name: ActiveMQTopic
+  split.key: ","
+
+rabbitmq:
+  queue.name: queue1
+  queue.batch.name: queue2
+  username: ossapl
+  password: ${RABBITMQ_PASSWORD}
+  host: rabbitmq
+  vhost: vhost1
+  split.key: ","
+
+hazelcast:
+  group.name: dev
+  service.name: hazelcast.default.svc.cluster.local
+  cache.name: hazcache
+  queue.name: hazqueue
+  topic.name: haztopic
+  split.key: ","

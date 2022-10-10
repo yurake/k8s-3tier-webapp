@@ -10,7 +10,7 @@ import com.hazelcast.core.HazelcastInstance;
 @ApplicationScoped
 public class HazelcastServiceStatus {
 
-	private static final Logger LOG = Logger.getLogger(HazelcastServiceStatus.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	public boolean isActive() {
 		boolean status = false;
@@ -19,7 +19,7 @@ public class HazelcastServiceStatus {
 			client = createHazelcastInstance();
 			status = client.getLifecycleService().isRunning();
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "Connect Error.", e);
+			logger.log(Level.SEVERE, "Connect Error.", e);
 			e.printStackTrace();
 		} finally {
 			if (client != null) {

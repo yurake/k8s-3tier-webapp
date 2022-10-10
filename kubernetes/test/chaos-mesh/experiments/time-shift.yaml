@@ -1,0 +1,21 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: Schedule
+metadata:
+  name: time-shift-example
+  namespace: chaos-testing
+spec:
+  schedule: "0 * * * *"
+  historyLimit: 2
+  concurrencyPolicy: "Allow"
+  type: "TimeChaos"
+  timeChaos:
+    mode: one
+    selector:
+      namespaces:
+        - default
+      labelSelectors:
+        "component": "quarkus"
+    timeOffset: "-5.5h"
+    clockIds:
+      - CLOCK_REALTIME
+    duration: "10s"

@@ -12,7 +12,7 @@ jobs:
   java:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: get the current number of java pcojects
         working-directory: ./application
         run: echo "SOURCE_PROJECT=$(find . -name "pom.xml" | grep -v -e target -e src | wc -l | tr -d ' ')" >> $GITHUB_ENV

@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>webapp.3tier.k8s.parent</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.4.2-SNAPSHOT</version>
+		<version>0.4.4-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>consumer-redis-quarkus</artifactId>
 	<properties>
-		<jedis-mock.version>0.1.16</jedis-mock.version>
+		<jedis-mock.version>0.1.23</jedis-mock.version>
 	</properties>
 	<dependencies>
 		<dependency>

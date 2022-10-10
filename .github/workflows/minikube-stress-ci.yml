@@ -18,14 +18,14 @@ jobs:
       fail-fast: false
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: setup minikube
-        uses: opsgang/ga-setup-minikube@master
+        uses: opsgang/ga-setup-minikube@v0.1.2
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: 1.17.0
-          k8s-version: 1.20.2
+          minikube-version: 1.27.0
+          k8s-version: 1.25.2
       - name: minikube settings
         run: |
           sudo apt install conntrack
@@ -39,6 +39,7 @@ jobs:
           # https://minikube.sigs.k8s.io/docs/drivers/docker/#troubleshooting
           sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
           sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+          kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
       - name: wait for set up ingress
         run: |
           kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
@@ -104,7 +105,7 @@ jobs:
         run: |
           kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep ab-${{ matrix.app }})
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep ab-${{ matrix.app }})
-      - name: check minikube status
+      - name: check status
         if: always()
         run: |
           kubectl get po --all-namespaces=true

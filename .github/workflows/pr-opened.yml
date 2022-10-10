@@ -11,4 +11,4 @@ jobs:
         uses: technote-space/create-project-card-action@v1
         with:
           PROJECT: Feature request
-          COLUMN: To do
+          COLUMN: In progress

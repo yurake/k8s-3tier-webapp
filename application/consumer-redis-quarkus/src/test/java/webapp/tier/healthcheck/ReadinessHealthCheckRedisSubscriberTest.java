@@ -17,7 +17,13 @@ class ReadinessHealthCheckRedisSubscriberTest {
 
 	@Test
 	void testCallDown() {
-		ReadinessHealthCheckRedisSubscriber hc = new ReadinessHealthCheckRedisSubscriber();
+		ReadinessHealthCheckRedisSubscriber hc = new ReadinessHealthCheckRedisSubscriber() {
+			protected RedisSubscribeService createRedisSubscribeService() {
+				RedisSubscribeService mock = Mockito.mock(RedisSubscribeService.class);
+				Mockito.when(mock.ping()).thenReturn(false);
+				return mock;
+			}
+		};
 		assertEquals(State.DOWN, hc.call().getState(), "Unexpected status");
 	}
 

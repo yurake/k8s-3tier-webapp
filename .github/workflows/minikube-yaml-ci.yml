@@ -1,0 +1,49 @@
+name: Minikube Yaml CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.yaml"
+      - ".github/workflows/minikube-yaml-ci.yml"
+  pull_request:
+    paths:
+      - "**.yaml"
+      - ".github/workflows/minikube-yaml-ci.yml"
+
+jobs:
+  yaml-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: setup minikube
+        uses: opsgang/ga-setup-minikube@v0.1.2
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+        with:
+          minikube-version: 1.27.0
+          k8s-version: 1.25.2
+      - name: minikube settings
+        run: |
+          sudo apt install conntrack
+          minikube config set vm-driver docker
+          minikube config set cpus 2
+          minikube config set memory 6144
+          minikube start
+          minikube update-context
+          minikube addons enable ingress
+          minikube addons list
+          # https://minikube.sigs.k8s.io/docs/drivers/docker/#troubleshooting
+          sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+          sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+          kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+      - name: wait for set up ingress
+        run: |
+          kubectl wait --all-namespaces=true --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=10m
+      - name: add hosts
+        run: echo `minikube ip` k8s.3tier.webapp | sudo tee -a /etc/hosts
+      - name: apply all service
+        run: |
+          sh ./kubernetes/bin/apply.sh

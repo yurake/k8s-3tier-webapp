@@ -1,0 +1,44 @@
+/target/
+
+# Java
+*.class
+*.war
+*.ear
+
+# Eclipse
+.project
+.classpath
+.settings
+
+# Idea
+.idea
+*.iml
+*.iws
+*.ipr
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Gradle
+.gradle
+!gradle-wrapper.jar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# Build
+out
+build
+bin
+
+# Other
+*.log
+*.swp
+*.bak
+/.factorypath
+/.apt_generated_tests/

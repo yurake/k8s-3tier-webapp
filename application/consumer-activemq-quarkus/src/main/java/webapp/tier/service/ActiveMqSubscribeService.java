@@ -24,7 +24,7 @@ public class ActiveMqSubscribeService extends ActiveMqService {
 	@ConfigProperty(name = "activemq.topic.name")
 	String topicname;
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqSubscribeService.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
 	public void run() {
@@ -33,7 +33,7 @@ public class ActiveMqSubscribeService extends ActiveMqService {
 					JMSConsumer consumer = context.createConsumer(context.createTopic(topicname))) {
 				amqdelconsumer.consume(consumer);
 			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "Subscribe Error.", e);
+				logger.log(Level.SEVERE, "Subscribe Error.", e);
 				stopReceived();
 			}
 		}

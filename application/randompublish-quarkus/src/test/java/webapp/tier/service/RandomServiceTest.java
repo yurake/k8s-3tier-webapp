@@ -20,32 +20,32 @@ class RandomServiceTest {
 
 	@Test
 	void testDeliverrandomCase0Error() throws Exception {
-		assertThat(svc.deliverrandom(0), is("Test"));
+		assertThat(svc.deliverrandom(0), is("Call: ActiveMQ Publish: Test"));
 	}
 
 	@Test
 	void testDeliverrandomCase1Error() throws Exception {
-		assertThat(svc.deliverrandom(1), is("Test"));
+		assertThat(svc.deliverrandom(1), is("Call: RabbitMQ Publish: Test"));
 	}
 
 	@Test
 	void testDeliverrandomCase2Error() throws Exception {
-		assertThat(svc.deliverrandom(2), is("Test"));
+		assertThat(svc.deliverrandom(2), is("Call: Redis Publish: Test"));
 	}
 
 	@Test
 	void testDeliverrandomCase3Error() throws Exception {
-		assertThat(svc.deliverrandom(3), is("Test"));
+		assertThat(svc.deliverrandom(3), is("Call: Postgres Publish: Test"));
 	}
 
 	@Test
 	void testDeliverrandomCase4Error() throws Exception {
-		assertThat(svc.deliverrandom(4), is("Test"));
+		assertThat(svc.deliverrandom(4), is("Call: Hazelcast Publish: Test"));
 	}
 
 	@Test
 	void testDeliverrandomCase5Error() throws Exception {
-		assertThat(svc.deliverrandom(5), is("Test"));
+		assertThat(svc.deliverrandom(5), is("Call: Mongodb Publish: Test"));
 	}
 
 	@Test
@@ -59,7 +59,7 @@ class RandomServiceTest {
 
 	@Test
 	void testGetNum() {
-		Integer i = svc.getNum(6);
+		int i = svc.getNum(6);
 		assertThat(i, greaterThanOrEqualTo(0));
 		assertThat(i, lessThanOrEqualTo(5));
 	}

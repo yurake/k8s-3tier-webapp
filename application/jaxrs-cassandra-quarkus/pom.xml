@@ -6,17 +6,16 @@
 	<parent>
 		<groupId>webapp.3tier.k8s.parent</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.4.2-SNAPSHOT</version>
+		<version>0.4.4-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-cassandra-quarkus</artifactId>
 	<properties>
-		<quarkus.platform.version>1.8.3.Final</quarkus.platform.version>
-		<cassandra.version>1.0.0-alpha3</cassandra.version>
-		<datastax-java-driver.version>4.10.0</datastax-java-driver.version>
+		<cassandra.version>1.1.2</cassandra.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<opentracing-cassandra-driver-4.version>0.1.9</opentracing-cassandra-driver-4.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -54,12 +53,21 @@
 			<artifactId>java-driver-mapper-runtime</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.datastax.oss</groupId>
+			<artifactId>java-driver-metrics-microprofile</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy-mutiny</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-cassandra-driver-4</artifactId>
+			<version>${opentracing-cassandra-driver-4.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
@@ -80,9 +88,9 @@
 				<configuration>
 					<annotationProcessorPaths>
 						<path>
-							<groupId>com.datastax.oss</groupId>
-							<artifactId>java-driver-mapper-processor</artifactId>
-							<version>${datastax-java-driver.version}</version>
+							<groupId>com.datastax.oss.quarkus</groupId>
+							<artifactId>cassandra-quarkus-mapper-processor</artifactId>
+							<version>1.0.3</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
