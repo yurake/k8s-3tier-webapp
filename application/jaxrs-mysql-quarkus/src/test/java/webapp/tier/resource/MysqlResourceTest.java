@@ -1,7 +1,7 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsString;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,7 +36,7 @@ class MysqlResourceTest {
 	}
 
 	@AfterEach
-	private void dropTable() {
+	public void dropTable() {
 		String createsql = "DROP TABLE msg";
 		try (Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
 				Statement stmt = con.createStatement()) {
