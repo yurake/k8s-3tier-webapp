@@ -1,8 +1,8 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
@@ -25,9 +25,6 @@ class ActiveMqSubscribeServiceTest {
 
 	@Inject
 	ActiveMqSubscribeService subsvc;
-
-	@Inject
-	ActiveMqService svc;
 
 	@Inject
 	ConnectionFactory connectionFactory;
