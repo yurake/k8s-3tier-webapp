@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -28,33 +27,10 @@ import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
 @QuarkusTestResource(KafkaCompanionResource.class)
 class KafkaResourceTest {
 
-	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-
 	@InjectKafkaCompanion
 	KafkaCompanion companion;
 
 	String testBody = "Test Message";
-
-	/**
-	@Test
-	void testSubscreibe() {
-		companion.produceStrings()
-				.usingGenerator(i -> new ProducerRecord<>("message", testBody));
-
-		ConsumerTask<String, String> consumer = companion.consumeStrings().fromTopics("message", 10);
-		consumer.awaitCompletion();
-		assertEquals(10, consumer.count());
-
-		logger.log(Level.INFO, "Generate messeage is OK.");
-
-		given()
-				.when()
-				.get("/quarkus/kafka/subscribe")
-				.then()
-				.statusCode(200)
-				.body(containsString(testBody));
-	}
-	**/
 
 	@Test
 	public void testSubscreibe() {
