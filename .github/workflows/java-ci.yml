@@ -145,7 +145,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-activemq-quarkus:
-    needs: [init-build, jaxrs-activemq-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -281,7 +281,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-hazelcast-quarkus:
-    needs: [init-build, jaxrs-hazelcast-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -347,7 +347,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-kafka-quarkus:
-    needs: [init-build]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1006,7 +1006,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-rabbitmq-quarkus:
-    needs: [init-build, jaxrs-rabbitmq-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1072,7 +1072,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   producer-kafka-quarkus:
-    needs: [init-build]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1319,7 +1319,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-redis-quarkus:
-    needs: [init-build, jaxrs-redis-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
