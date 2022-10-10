@@ -1,4 +1,5 @@
 package webapp.tier.service;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,6 +15,6 @@ public class MockDeliverService {
 
 	@GET
 	public String random() {
-			return "Test Success Response";
+		return "Test Success Response";
 	}
 }
