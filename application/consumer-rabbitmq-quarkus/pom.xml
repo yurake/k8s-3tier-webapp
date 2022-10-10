@@ -18,10 +18,6 @@
 			<artifactId>webapp-service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>webapp.3tier.k8s</groupId>
-			<artifactId>jaxrs-rabbitmq-quarkus</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-rest-client</artifactId>
 		</dependency>

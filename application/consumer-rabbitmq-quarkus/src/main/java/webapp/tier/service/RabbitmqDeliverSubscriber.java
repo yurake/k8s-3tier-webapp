@@ -12,12 +12,13 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
-public class RabbitmqDeliverSubscriber extends RabbitmqConsumer {
+public class RabbitmqDeliverSubscriber extends DefaultConsumer {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);

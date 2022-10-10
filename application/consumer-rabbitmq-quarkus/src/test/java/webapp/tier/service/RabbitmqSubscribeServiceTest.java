@@ -1,8 +1,7 @@
 package webapp.tier.service;
 
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
@@ -73,7 +72,7 @@ class RabbitmqSubscribeServiceTest {
 					return conn;
 				}
 
-				protected void subscribeRabbitmq(Connection conn, Channel channel, RabbitmqConsumer consumer) {
+				protected void subscribeRabbitmq(Connection conn, Channel channel, RabbitmqDeliverSubscriber subscriber) {
 				}
 			};
 			rsvc.run();
