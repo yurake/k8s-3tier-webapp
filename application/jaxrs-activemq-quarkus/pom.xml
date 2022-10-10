@@ -8,18 +8,23 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-activemq-quarkus</artifactId>
+	<properties>
+		<quarkus-artemis.version>1.0.3</quarkus-artemis.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>webapp.3tier.k8s</groupId>
 			<artifactId>webapp-service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.quarkus</groupId>
+			<groupId>io.quarkiverse.artemis</groupId>
 			<artifactId>quarkus-artemis-jms</artifactId>
+			<version>${quarkus-artemis.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>io.quarkus</groupId>
+			<groupId>io.quarkiverse.artemis</groupId>
 			<artifactId>quarkus-test-artemis</artifactId>
+			<version>${quarkus-artemis.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
