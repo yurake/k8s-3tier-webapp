@@ -24,9 +24,9 @@ public class KafkaResource {
 	Multi<String> pubmsg;
 
 	@GET
-    @Produces(MediaType.SERVER_SENT_EVENTS)
+	@Produces(MediaType.SERVER_SENT_EVENTS)
 	@Path("/subscribe")
-    @RestStreamElementType(MediaType.APPLICATION_JSON)
+	@RestStreamElementType(MediaType.APPLICATION_JSON)
 	public Multi<String> subscribe() {
 		logger.log(Level.INFO, "Subscribe received.");
 		return pubmsg;
