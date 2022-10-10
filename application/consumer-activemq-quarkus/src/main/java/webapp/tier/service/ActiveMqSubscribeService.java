@@ -44,14 +44,9 @@ public class ActiveMqSubscribeService implements Runnable {
 		logger.log(Level.INFO, "Subscribe is stopping...");
 	}
 
-	public static void startReceived() {
-		ActiveMqSubscribeService.isEnableReceived = true;
-	}
-
 	public static void stopReceived() {
 		ActiveMqSubscribeService.isEnableReceived = false;
 	}
-
 
 	public void run() {
 		while (isEnableReceived) {
