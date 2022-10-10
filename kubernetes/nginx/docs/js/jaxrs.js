@@ -198,14 +198,6 @@ $(function () {
     }
   }
 
-  $("#getkafka").click(function () {
-    dispMsgFromString(get, kafkaurl + get, respkafka);
-  });
-
-  $("#publishkafka").click(function () {
-    dispMsgFromJson(post, kafkaurl + publish, respkafka);
-  });
-
   $("#subscribekafka").click(function () {
     if (isopenkafka) {
       console.log("Already connected.");
