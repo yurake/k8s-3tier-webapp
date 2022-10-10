@@ -10,7 +10,7 @@
 	<artifactId>jaxrs-hazelcast-quarkus</artifactId>
 	<properties>
 		<hazelcast.version>5.1.3</hazelcast.version>
-		<slf4j-log4j12.version>2.0.3</slf4j-log4j12.version>
+		<slf4j-reload4j.version>2.0.3</slf4j-reload4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -24,8 +24,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j-log4j12.version}</version>
+			<artifactId>slf4j-reload4j</artifactId>
+			<version>${slf4j-reload4j.version}</version>
 		</dependency>
 	</dependencies>
 </project>
