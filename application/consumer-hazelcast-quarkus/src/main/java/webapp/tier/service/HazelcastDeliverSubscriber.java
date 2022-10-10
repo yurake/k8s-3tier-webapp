@@ -10,12 +10,13 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import com.hazelcast.topic.Message;
+import com.hazelcast.topic.MessageListener;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class HazelcastDeliverSubscriber extends HazelcastMessageListener {
+public class HazelcastDeliverSubscriber implements MessageListener<Object> {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 

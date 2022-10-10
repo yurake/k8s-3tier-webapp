@@ -10,6 +10,8 @@
 	<artifactId>consumer-hazelcast-quarkus</artifactId>
 	<properties>
 		<hazelcast-client.version>3.12.8</hazelcast-client.version>
+		<hazelcast.version>5.1.3</hazelcast.version>
+		<slf4j-reload4j.version>2.0.3</slf4j-reload4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -17,12 +19,18 @@
 			<artifactId>webapp-service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>webapp.3tier.k8s</groupId>
-			<artifactId>jaxrs-hazelcast-quarkus</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-rest-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
+			<version>${hazelcast.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-reload4j</artifactId>
+			<version>${slf4j-reload4j.version}</version>
 		</dependency>
 	</dependencies>
 </project>
