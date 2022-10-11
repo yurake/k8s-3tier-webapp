@@ -8,29 +8,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-grpc-quarkus</artifactId>
-	<properties>
-		<jedis.version>4.2.3</jedis.version>
-		<jedis-mock.version>0.1.23</jedis-mock.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>webapp.3tier.k8s</groupId>
 			<artifactId>webapp-service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>${jedis.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-grpc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.github.fppt</groupId>
-			<artifactId>jedis-mock</artifactId>
-			<version>${jedis-mock.version}</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

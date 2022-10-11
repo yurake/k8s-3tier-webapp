@@ -4,29 +4,25 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.inject.Singleton;
-
 import com.google.protobuf.Empty;
 
-import io.grpc.stub.StreamObserver;
+import io.quarkus.grpc.GrpcService;
+import io.smallrye.mutiny.Uni;
 import webapp.tier.util.CreateId;
-import webapp.tier.util.MsgUtils;
 
-@Singleton
-public class IdService extends IdGrpc.IdImplBase {
+@GrpcService
+public class IdService implements Id {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+	int id;
 
 	@Override
-	public void getId(Empty request, StreamObserver<IdReply> responseObserver) {
+	public Uni<IdReply> getId(Empty request) {
 		try {
-			int id = CreateId.createid();
-			logger.log(Level.INFO, "Return id: " + MsgUtils.intToString(id));
-			responseObserver.onNext(IdReply.newBuilder().setId(id).build());
-			responseObserver.onCompleted();
+			id = CreateId.createid();
 		} catch (NoSuchAlgorithmException e) {
-			logger.log(Level.SEVERE, "Create Id Error.", e);
-			responseObserver.onError(e);
+			logger.log(Level.SEVERE, "Create ID Error.", e);
 		}
+		return Uni.createFrom().item(() -> IdReply.newBuilder().setId(id).build());
 	}
 }

@@ -1,4 +1,4 @@
-package webapp.tier.service.client;
+package webapp.tier.resource;
 
 import com.google.protobuf.Empty;
 
@@ -10,16 +10,16 @@ import webapp.tier.grpc.Msg;
 import webapp.tier.grpc.MsgReply;
 
 @GrpcService
-public class MessageClientService implements Id, Msg {
+public class MockWebappService implements Id, Msg{
 
 	@Override
 	public Uni<MsgReply> getMsg(Empty request) {
-		return Uni.createFrom().item(() -> MsgReply.newBuilder().build());
+		return Uni.createFrom().item(() -> MsgReply.newBuilder().setMessage("test").build());
 	}
 
 	@Override
 	public Uni<IdReply> getId(Empty request) {
-		return Uni.createFrom().item(() -> IdReply.newBuilder().build());
+		return Uni.createFrom().item(() -> IdReply.newBuilder().setId(11111).build());
 	}
 
 }

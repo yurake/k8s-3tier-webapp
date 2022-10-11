@@ -1,30 +1,23 @@
-package webapp.tier.grpc;
+package webapp.tier.resource;
 
+import static io.restassured.RestAssured.*;
 import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
 
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.google.protobuf.Empty;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class MsgServiceTest {
+class GrpcResourceTest {
 
-	@ConfigProperty(name = "common.message")
-	String message;
-	
 	private ManagedChannel channel;
-
+	
 	@BeforeEach
 	public void init() {
 		channel = ManagedChannelBuilder.forAddress("localhost", 9001).usePlaintext().build();
@@ -37,11 +30,25 @@ class MsgServiceTest {
 	}
 
 	@Test
-	public void testGetMsg() {
-		MsgReply reply = MutinyMsgGrpc.newMutinyStub(channel)
-				.getMsg(Empty.newBuilder().build())
-				.await().atMost(Duration.ofSeconds(5));
-		assertThat(reply.getMessage(), is(message));
+	void testGetId() {
+		given()
+				.when()
+				.contentType("application/json")
+				.get("/quarkus/grpc/getid")
+				.then()
+				.statusCode(200)
+                .body(is("11111"));
 	}
 
+	@Test
+	void testGetMsg() {
+		given()
+				.when()
+				.contentType("application/json")
+				.get("/quarkus/grpc/getmsg")
+				.then()
+				.statusCode(200)
+                .body(containsString("test"));
+	}
 }
+
