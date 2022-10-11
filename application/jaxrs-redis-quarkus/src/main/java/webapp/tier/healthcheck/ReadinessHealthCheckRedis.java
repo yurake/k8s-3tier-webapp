@@ -15,10 +15,10 @@ public class ReadinessHealthCheckRedis implements HealthCheck {
 	@Override
 	public HealthCheckResponse call() {
 		RedisService svc = this.createRedisService();
-		return checkRabbitmqService(svc);
+		return checkRedisService(svc);
 	}
 
-	protected HealthCheckResponse checkRabbitmqService(RedisService svc) {
+	protected HealthCheckResponse checkRedisService(RedisService svc) {
 		String msg = "Redis Server connection health check";
 		return HealthCheckUtils.respHealthCheckStatus(svc.ping(), msg);
 	}

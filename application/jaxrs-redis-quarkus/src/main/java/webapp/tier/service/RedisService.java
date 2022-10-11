@@ -33,7 +33,7 @@ public class RedisService implements Runnable {
 	private static String servername = ConfigProvider.getConfig().getValue("redis.server", String.class);
 	private static int serverport = ConfigProvider.getConfig().getValue("redis.port.num", Integer.class);
 	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue("redis.split.key", String.class);
 	private static int setexpire = ConfigProvider.getConfig().getValue("redis.set.expire", Integer.class);
 
 	void onStart(@Observes StartupEvent ev) {
@@ -49,6 +49,7 @@ public class RedisService implements Runnable {
 	public Jedis createJedis() {
 		return new Jedis(servername, serverport);
 	}
+	
 
 	protected RedisSubscriber createRedisSubscriber() {
 		return new RedisSubscriber();
