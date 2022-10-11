@@ -23,10 +23,6 @@
 			<version>${jedis.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-grpc</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.github.fppt</groupId>
 			<artifactId>jedis-mock</artifactId>
 			<version>${jedis-mock.version}</version>

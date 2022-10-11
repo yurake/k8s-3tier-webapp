@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 
@@ -21,7 +20,6 @@ import io.quarkus.runtime.StartupEvent;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.service.client.WebappClientServiceMegBean;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
@@ -37,9 +35,6 @@ public class RedisService implements Runnable {
 	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
 	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
 	private static int setexpire = ConfigProvider.getConfig().getValue("redis.set.expire", Integer.class);
-
-	@Inject
-	WebappClientServiceMegBean svcmsgbean;
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
@@ -78,10 +73,9 @@ public class RedisService implements Runnable {
 		return status;
 	}
 
-	@SuppressWarnings("deprecation")
 	public MsgBean putMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
 
-		MsgBean msgbean = svcmsgbean.getMegBean("Put");
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		try {
 			String id = MsgUtils.intToString(msgbean.getId());
 			jedis.set(id, msgbean.getMessage());
@@ -124,7 +118,6 @@ public class RedisService implements Runnable {
 		return msglist;
 	}
 
-	@SuppressWarnings("deprecation")
 	public MsgBean publishMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
