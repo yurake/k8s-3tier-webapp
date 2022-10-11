@@ -13,6 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<opentracing-cassandra-driver-4.version>0.1.9</opentracing-cassandra-driver-4.version>
+		<cassandra-quarkus-mapper-processor.version>1.1.2</cassandra-quarkus-mapper-processor.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -54,14 +55,6 @@
 			<artifactId>java-driver-metrics-microprofile</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-resteasy-jsonb</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-resteasy-mutiny</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>io.opentracing.contrib</groupId>
 			<artifactId>opentracing-cassandra-driver-4</artifactId>
 			<version>${opentracing-cassandra-driver-4.version}</version>
@@ -82,7 +75,7 @@
 						<path>
 							<groupId>com.datastax.oss.quarkus</groupId>
 							<artifactId>cassandra-quarkus-mapper-processor</artifactId>
-							<version>1.0.3</version>
+							<version>${cassandra-quarkus-mapper-processor.version}</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
