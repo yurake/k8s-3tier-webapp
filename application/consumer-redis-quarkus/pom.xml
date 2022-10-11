@@ -9,6 +9,7 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>consumer-redis-quarkus</artifactId>
 	<properties>
+		<jedis.version>4.2.3</jedis.version>
 		<jedis-mock.version>0.1.23</jedis-mock.version>
 	</properties>
 	<dependencies>
@@ -17,8 +18,9 @@
 			<artifactId>webapp-service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>webapp.3tier.k8s</groupId>
-			<artifactId>jaxrs-redis-quarkus</artifactId>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.fppt</groupId>

@@ -9,11 +9,12 @@ import javax.enterprise.inject.spi.CDI;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import redis.clients.jedis.JedisPubSub;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class RedisDeliverSubscriber extends RedisSubscriber {
+public class RedisDeliverSubscriber extends JedisPubSub {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 

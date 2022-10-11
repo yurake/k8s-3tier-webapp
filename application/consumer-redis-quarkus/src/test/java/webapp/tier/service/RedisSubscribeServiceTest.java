@@ -1,14 +1,18 @@
 package webapp.tier.service;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
 import javax.inject.Inject;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import com.github.fppt.jedismock.RedisServer;
 
@@ -22,15 +26,15 @@ class RedisSubscribeServiceTest {
 	RedisSubscribeService svc;
 
 	private static RedisServer server = null;
-
-	@BeforeAll
-	public static void setup() throws IOException {
+	
+	@BeforeEach
+	public void setup() throws IOException {
 		server = RedisServer.newRedisServer();
 		server.start();
 	}
 
-	@AfterAll
-	public static void after() {
+	@AfterEach
+	public void after() {
 		server.stop();
 		server = null;
 	}
@@ -40,34 +44,43 @@ class RedisSubscribeServiceTest {
 	}
 
 	@Test
-	void testSubscribeError() {
+	void testSubscribe() {
 		try {
 			RedisSubscribeService svc = new RedisSubscribeService();
 			svc.run();
-			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
+			fail();
 		}
 	}
-
-	@Test
-	void testSubscribe() {
-		try {
-			RedisSubscribeService rsvc = new RedisSubscribeService() {
+	
+		@Test
+		void testPingTrue() {
+			RedisSubscribeService svc = new RedisSubscribeService() {
 				public Jedis createJedis() {
 					Jedis jedis = createJedisMock();
 					return jedis;
 				}
 			};
-			MockPublisher th = new MockPublisher();
-			th.start();
-
-			Thread thread = new Thread(rsvc);
-			thread.start();
-			thread.join(3000);
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
+			assertThat(svc.ping(), is(true));
 		}
-	}
+
+		@Test
+		void testPingFalse() {
+			RedisSubscribeService svc = new RedisSubscribeService() {
+				public Jedis createJedis() {
+					Jedis jedis = Mockito.mock(Jedis.class);
+					when(jedis.ping()).thenReturn("NG");
+					return jedis;
+				}
+			};
+			assertThat(svc.ping(), is(false));
+		}
+
+		@Test
+		void testPingFalseException() {
+			RedisSubscribeService svc = new RedisSubscribeService();
+			assertThat(svc.ping(), is(false));
+		}
+
 }
