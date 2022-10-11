@@ -95,6 +95,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: client-grpc-quarkus
+                name: jaxrs-grpc-quarkus
                 port:
                   number: 8080
