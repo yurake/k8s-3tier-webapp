@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: implementer-grpc-quarkus
+  name: server-grpc-quarkus
 spec:
   selector:
     matchLabels:
-      app: implementer-grpc-quarkus
+      app: server-grpc-quarkus
   replicas: 1
   template:
     metadata:
       labels:
         tier: frontend
         component: quarkus
-        app: implementer-grpc-quarkus
+        app: server-grpc-quarkus
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
     spec:
       containers:
-        - name: implementer-grpc-quarkus
-          image: yurak/implementer-grpc-quarkus:latest
+        - name: server-grpc-quarkus
+          image: yurak/server-grpc-quarkus:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

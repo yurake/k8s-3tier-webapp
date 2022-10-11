@@ -91,3 +91,10 @@ spec:
                 name: jaxrs-cassandra-quarkus
                 port:
                   number: 8080
+          - path: /quarkus/grpc
+            pathType: Prefix
+            backend:
+              service:
+                name: client-grpc-quarkus
+                port:
+                  number: 8080

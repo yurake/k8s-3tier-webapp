@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: implementer-grpc-quarkus
+  name: server-grpc-quarkus
 spec:
   type: ClusterIP
   selector:
-    app: implementer-grpc-quarkus
+    app: server-grpc-quarkus
   ports:
     - name: http
       protocol: TCP

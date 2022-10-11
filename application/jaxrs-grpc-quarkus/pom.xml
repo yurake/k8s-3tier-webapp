@@ -7,7 +7,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
-	<artifactId>client-grpc-quarkus</artifactId>
+	<artifactId>jaxrs-grpc-quarkus</artifactId>
 	<properties>
 		<jedis.version>4.2.3</jedis.version>
 		<jedis-mock.version>0.1.23</jedis-mock.version>

@@ -1269,7 +1269,7 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
-  client-grpc-quarkus:
+  jaxrs-grpc-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
@@ -1300,20 +1300,20 @@ jobs:
         uses: actions/cache@v3.0.10
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/client-grpc-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-grpc-quarkus/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven-client-grpc-quarkus
+            ${{ runner.os }}-maven-jaxrs-grpc-quarkus
       - name: Maven Build
-        working-directory: ./application/client-grpc-quarkus
+        working-directory: ./application/jaxrs-grpc-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
-        working-directory: ./application/client-grpc-quarkus
-        run: docker build -t yurak/client-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
+        working-directory: ./application/jaxrs-grpc-quarkus
+        run: docker build -t yurak/jaxrs-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
-        run: docker push yurak/client-grpc-quarkus:latest
+        run: docker push yurak/jaxrs-grpc-quarkus:latest
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1324,11 +1324,11 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
-        working-directory: ./application/client-grpc-quarkus
+        working-directory: ./application/jaxrs-grpc-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw sonar:sonar
-          -Dsonar.projectKey=yurake_client-grpc-quarkus
+          -Dsonar.projectKey=yurake_jaxrs-grpc-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
