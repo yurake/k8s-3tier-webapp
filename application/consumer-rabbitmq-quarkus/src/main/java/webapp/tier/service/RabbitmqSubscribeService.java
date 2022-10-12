@@ -76,7 +76,7 @@ public class RabbitmqSubscribeService implements Runnable {
 		return connectionFactory.newConnection();
 	}
 
-	protected void subscribeRabbitmq(Connection conn, Channel channel,
+	protected void subscribeRabbitmq(Channel channel,
 			RabbitmqDeliverSubscriber subscriber)
 			throws IOException, TimeoutException, InterruptedException {
 		channel.exchangeDeclare(exchangename, "direct", true);
@@ -93,7 +93,7 @@ public class RabbitmqSubscribeService implements Runnable {
 	public void run() {
 		try (Connection conn = getConnection();
 				Channel channel = conn.createChannel()) {
-			subscribeRabbitmq(conn, channel, createRabbitmqDeliverSubscriber(channel));
+			subscribeRabbitmq(channel, createRabbitmqDeliverSubscriber(channel));
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Subscribe Errorr.", e);
 		}
