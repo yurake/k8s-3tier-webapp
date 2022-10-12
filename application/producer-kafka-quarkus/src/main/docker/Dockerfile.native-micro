@@ -7,17 +7,17 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native-distroless -t quarkus/getting-started .
+# docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/getting-started .
 #
 # Then run the container using:
 #
 # docker run -i --rm -p 8080:8080 quarkus/getting-started
 #
 ###
-FROM quay.io/quarkus/quarkus-distroless-image:2.0
+FROM quay.io/quarkus/quarkus-micro-image:1.0
 COPY target/*-runner /application
 
 EXPOSE 8080
-USER nonroot
+USER 1001
 
 CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
