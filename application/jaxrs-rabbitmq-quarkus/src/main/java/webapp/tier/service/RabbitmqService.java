@@ -112,7 +112,8 @@ public class RabbitmqService implements Runnable {
 			if (resp == null) {
 				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
-				msgbean = MsgUtils.splitBody(new String(resp.getBody(), StandardCharsets.UTF_8),
+				msgbean = MsgUtils.splitBody(
+						new String(resp.getBody(), StandardCharsets.UTF_8),
 						splitkey);
 				msgbean.setFullmsg("Get");
 			}
@@ -150,14 +151,13 @@ public class RabbitmqService implements Runnable {
 	public void run() {
 		try (Connection conn = getConnection();
 				Channel channel = conn.createChannel()) {
-			subscribeRabbitmq(conn, channel, createRabbitmqConsumer(channel));
+			subscribeRabbitmq(channel, createRabbitmqConsumer(channel));
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Subscribe Errorr.", e);
 		}
 	}
 
-	protected void subscribeRabbitmq(Connection conn, Channel channel,
-			RabbitmqConsumer consumer)
+	protected void subscribeRabbitmq(Channel channel, RabbitmqConsumer consumer)
 			throws IOException, TimeoutException, InterruptedException {
 		channel.exchangeDeclare(exchangename, "direct", true);
 		String queueName = channel.queueDeclare().getQueue();
