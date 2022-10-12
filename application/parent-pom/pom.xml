@@ -79,11 +79,6 @@
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-jacoco</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-arc</artifactId>
 		</dependency>
 		<dependency>
@@ -139,11 +134,28 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
 				<configuration>
+					<excludedGroups>integration</excludedGroups>
 					<systemPropertyVariables>
 						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
 						<maven.home>${maven.home}</maven.home>
 					</systemPropertyVariables>
 				</configuration>
+				<executions>
+					<execution>
+						<id>integration-tests</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<excludedGroups>!integration</excludedGroups>
+							<groups>integration</groups>
+							<systemPropertyVariables>
+								<jacoco-agent.destfile>${project.build.directory}/jacoco-quarkus.exec</jacoco-agent.destfile>
+							</systemPropertyVariables>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -151,16 +163,53 @@
 				<version>${jacoco-maven-plugin.version}</version>
 				<executions>
 					<execution>
+						<id>default-prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
+						<configuration>
+							<exclClassLoaders>*QuarkusClassLoader</exclClassLoaders>
+							<destFile>${project.build.directory}/jacoco-quarkus.exec</destFile>
+							<append>true</append>
+						</configuration>
 					</execution>
 					<execution>
 						<id>report</id>
-						<phase>verify</phase>
+						<phase>post-integration-test</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
+						<configuration>
+							<dataFile>${project.build.directory}/jacoco-quarkus.exec</dataFile>
+							<outputDirectory>${project.build.directory}/jacoco-report</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jacoco-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>post-integration-test</phase>
+						<configuration>
+							<dataFile>${project.build.directory}/jacoco-quarkus.exec</dataFile>
+							<rules>
+								<rule>
+									<element>BUNDLE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.8</minimum>
+										</limit>
+										<limit>
+											<counter>BRANCH</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.72</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
