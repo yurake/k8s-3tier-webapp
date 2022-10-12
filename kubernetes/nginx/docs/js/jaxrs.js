@@ -50,7 +50,7 @@ $(function () {
   $(resppostgres).html(initialvalue);
   $(respmongodb).html(initialvalue);
   $(respcassandra).html(initialvalue);
-  $(gespgrpc).html(initialvalue);
+  $(respgrpc).html(initialvalue);
 
   var sse;
 
