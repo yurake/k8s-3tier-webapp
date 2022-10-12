@@ -71,9 +71,6 @@ class RabbitmqSubscribeServiceTest {
 				public Connection getConnection() {
 					return conn;
 				}
-
-				protected void subscribeRabbitmq(Connection conn, Channel channel, RabbitmqDeliverSubscriber subscriber) {
-				}
 			};
 			rsvc.run();
 		} catch (Exception e) {
