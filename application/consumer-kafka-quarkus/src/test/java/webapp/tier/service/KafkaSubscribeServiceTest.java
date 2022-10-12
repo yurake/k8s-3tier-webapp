@@ -41,15 +41,8 @@ class KafkaSubscribeServiceTest {
 
 		ConsumerTask<String, String> consumer = companion.consumeStrings().fromTopics("message",
 				10);
-		try {
-			Thread.sleep(1000);
-			producer.close();
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			fail();
-		}
 		consumer.awaitCompletion();
+		producer.close();
 		assertEquals(10, consumer.count());
 	}
 }
