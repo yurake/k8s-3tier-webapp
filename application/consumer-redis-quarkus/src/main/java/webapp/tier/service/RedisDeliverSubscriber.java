@@ -44,8 +44,8 @@ public class RedisDeliverSubscriber implements Consumer<Notification> {
 	}
 
 	@Override
-	public void accept(Notification t) {
-		MsgBean msgbean = t.msgbean;
+	public void accept(Notification notification) {
+		MsgBean msgbean = notification.msgbean;
 		msgbean.setFullmsg("Received");
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		Multi<String> response = deliversvc.random();
