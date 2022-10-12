@@ -6,7 +6,7 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Readiness;
 
-import webapp.tier.service.HazelcastServiceStatus;
+import webapp.tier.service.HazelcastSubscribeServiceStatus;
 
 @Readiness
 @ApplicationScoped
@@ -14,16 +14,16 @@ public class ReadinessHealthCheckHazelcastSubscriber implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		HazelcastServiceStatus svc = this.createHazelcastStatus();
+		HazelcastSubscribeServiceStatus svc = this.createHazelcastStatus();
 		return checkHazelcastService(svc);
 	}
 
-	protected HealthCheckResponse checkHazelcastService(HazelcastServiceStatus svc) {
+	protected HealthCheckResponse checkHazelcastService(HazelcastSubscribeServiceStatus svc) {
 		String msg = "Hazelcast Server connection health check";
 		return HealthCheckUtils.respHealthCheckStatus(svc.isActive(), msg);
 	}
 
-	protected HazelcastServiceStatus createHazelcastStatus() {
-		return new HazelcastServiceStatus();
+	protected HazelcastSubscribeServiceStatus createHazelcastStatus() {
+		return new HazelcastSubscribeServiceStatus();
 	}
 }

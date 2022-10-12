@@ -8,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 import com.hazelcast.core.HazelcastInstance;
 
 @ApplicationScoped
-public class HazelcastServiceStatus {
+public class HazelcastSubscribeServiceStatus {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
@@ -18,9 +18,9 @@ public class HazelcastServiceStatus {
 		try {
 			client = createHazelcastInstance();
 			status = client.getLifecycleService().isRunning();
-		} catch (Exception e) {
+			return status;
+		} catch (IllegalStateException e) {
 			logger.log(Level.SEVERE, "Connect Error.", e);
-			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
