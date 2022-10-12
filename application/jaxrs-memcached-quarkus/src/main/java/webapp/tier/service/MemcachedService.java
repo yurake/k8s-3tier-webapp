@@ -39,12 +39,13 @@ public class MemcachedService {
 		return new MemCachedClient();
 	}
 
-	public MsgBean setMsg(MemCachedClient mcc)
-			throws RuntimeException, NoSuchAlgorithmException {
-		MsgBean msgbean = new MsgBean(CreateId.createid(), message);
-		String errormsg = "Set Error.";
+	public MsgBean setMsg(MemCachedClient mcc) {
 
+		MsgBean msgbean = null;
+		String errormsg = "Set Error.";
 		try {
+			msgbean = new MsgBean(CreateId.createid(), message);
+			Objects.requireNonNull(msgbean);
 			boolean resultsetid = mcc.set("id", String.valueOf(msgbean.getId()));
 			boolean resultsetmsg = mcc.set("msg", msgbean.getMessage());
 
@@ -55,7 +56,7 @@ public class MemcachedService {
 				throw new WebappServiceException(errormsg);
 			}
 
-		} catch (Exception e) {
+		} catch (RuntimeException | NoSuchAlgorithmException e) {
 			logger.log(Level.SEVERE, errormsg, e);
 			throw new WebappServiceException(errormsg, e);
 		}

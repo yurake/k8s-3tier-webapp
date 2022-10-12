@@ -1,10 +1,8 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.fail;
+import static io.restassured.RestAssured.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-
-import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -23,7 +21,7 @@ class MemcachedResourceErrorTest {
 	void testSetError() {
 		try {
 			when(svc.setMsg(ArgumentMatchers.any())).thenThrow(new RuntimeException());
-		} catch (NoSuchAlgorithmException | RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			fail();
 		}
