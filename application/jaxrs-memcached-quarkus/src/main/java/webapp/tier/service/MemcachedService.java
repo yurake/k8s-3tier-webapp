@@ -1,6 +1,5 @@
 package webapp.tier.service;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +55,7 @@ public class MemcachedService {
 				throw new WebappServiceException(errormsg);
 			}
 
-		} catch (RuntimeException | NoSuchAlgorithmException e) {
+		} catch (Exception e) {
 			logger.log(Level.SEVERE, errormsg, e);
 			throw new WebappServiceException(errormsg, e);
 		}
