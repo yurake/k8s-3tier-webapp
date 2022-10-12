@@ -1,5 +1,7 @@
 package webapp.tier.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +17,12 @@ class RedisSubscribeServiceTest {
 
 	@Test
 	void testSubscribe() {
-		MsgBean msgbean = new MsgBean(0, "Test Message", "Test");
-		mockpub.set("testId", msgbean);
+		try {
+			MsgBean msgbean = new MsgBean(0, "Test Message", "Test");
+			mockpub.set("testId", msgbean);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 }
