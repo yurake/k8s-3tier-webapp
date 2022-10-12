@@ -11,7 +11,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.topic.ITopic;
 
 @ApplicationScoped
-public class HazelcastSubscribeService implements Runnable {
+public final class HazelcastSubscribeService implements Runnable {
 	
 	@ConfigProperty(name = "hazelcast.topic.name")
 	String topicname;
