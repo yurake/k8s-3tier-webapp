@@ -28,8 +28,8 @@ public class RedisService {
 	@ConfigProperty(name = "common.message")
 	String message;
 
-	private KeyCommands<String> keys;
-	private ValueCommands<String, String> msgs;
+	private final KeyCommands<String> keys;
+	private final ValueCommands<String, String> msgs;
 
 	public RedisService(RedisDataSource ds) { 
 		keys = ds.key();  
