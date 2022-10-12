@@ -2,6 +2,7 @@ package webapp.tier.service.generator;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,6 +46,7 @@ public class MessageGenerator {
 		MsgBean msgbean = null;
 		try {
 			msgbean = new MsgBean(CreateId.createid(), message, "Generate");
+			Objects.requireNonNull(msgbean);
 		} catch (NoSuchAlgorithmException e) {
 			logger.log(Level.SEVERE, "Create Id Error.", e);
 		}
