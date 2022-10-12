@@ -112,7 +112,7 @@ public class RabbitmqService implements Runnable {
 			if (resp == null) {
 				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
-				msgbean = MsgUtils.splitBody(new String(resp.getBody(), "UTF-8"),
+				msgbean = MsgUtils.splitBody(new String(resp.getBody(), StandardCharsets.UTF_8),
 						splitkey);
 				msgbean.setFullmsg("Get");
 			}
