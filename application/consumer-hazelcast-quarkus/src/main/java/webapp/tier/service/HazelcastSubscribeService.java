@@ -16,6 +16,8 @@ public class HazelcastSubscribeService implements Runnable {
 	@ConfigProperty(name = "hazelcast.topic.name")
 	String topicname;
 
+	private static String address = ConfigProvider.getConfig().getValue("hazelcast.address", String.class);
+
 	private HazelcastSubscribeService() {
 	}
 
@@ -23,8 +25,6 @@ public class HazelcastSubscribeService implements Runnable {
 		return new HazelcastDeliverSubscriber();
 	}
 	
-	private static String address = ConfigProvider.getConfig().getValue("hazelcast.address", String.class);
-
 	public static HazelcastInstance getInstance() throws RuntimeException {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getNetworkConfig().addAddress(address);
