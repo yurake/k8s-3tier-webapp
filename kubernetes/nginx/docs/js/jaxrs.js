@@ -370,10 +370,10 @@ $(function () {
   });
 
   $("#getidgrcp").click(function () {
-    dispMsgFromJsonArray(get, grpcaurl + "getid", respgrpc);
+    dispMsgFromString(get, grpcaurl + "getid", respgrpc);
   });
 
   $("#getmsggrpc").click(function () {
-    dispMsgFromString(post, grpcaurl + "getmsg", respgrpc);
+    dispMsgFromString(get, grpcaurl + "getmsg", respgrpc);
   });
 })
