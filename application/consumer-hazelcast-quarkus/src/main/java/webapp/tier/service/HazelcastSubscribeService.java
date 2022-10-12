@@ -25,7 +25,7 @@ public final class HazelcastSubscribeService implements Runnable {
 		return new HazelcastDeliverSubscriber();
 	}
 	
-	public static HazelcastInstance getInstance() throws RuntimeException {
+	public static HazelcastInstance getInstance() {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getNetworkConfig().addAddress(address);
 		clientConfig.getConnectionStrategyConfig().getConnectionRetryConfig()
