@@ -6,6 +6,10 @@ import java.util.logging.Logger;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
 public class HealthCheckUtils {
+	
+	// Hide constructor
+	private HealthCheckUtils() {
+	}
 
 	private static final Logger logger = Logger
 			.getLogger(HealthCheckUtils.class.getSimpleName());

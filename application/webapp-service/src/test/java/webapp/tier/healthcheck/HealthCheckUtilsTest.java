@@ -22,5 +22,4 @@ class HealthCheckUtilsTest {
 		assertThat(HealthCheckUtils.respHealthCheckStatus(true, "Test").getStatus(),
 				is(Status.UP));
 	}
-
 }
