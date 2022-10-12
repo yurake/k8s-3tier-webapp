@@ -34,7 +34,7 @@ public final class HazelcastSubscribeService implements Runnable {
 		return HazelcastClient.newHazelcastClient(clientConfig);
 	}
 	
-	protected void subscribeHazelcast(HazelcastInstance client, HazelcastDeliverSubscriber subscriber) {
+	void subscribeHazelcast(HazelcastInstance client, HazelcastDeliverSubscriber subscriber) {
 		ITopic<Object> topic = client.getTopic(topicname);
 		topic.addMessageListener(subscriber);
 	}
