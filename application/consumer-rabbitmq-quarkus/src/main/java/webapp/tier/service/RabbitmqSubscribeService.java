@@ -78,7 +78,7 @@ public class RabbitmqSubscribeService implements Runnable {
 
 	protected void subscribeRabbitmq(Channel channel,
 			RabbitmqDeliverSubscriber subscriber)
-			throws IOException, TimeoutException, InterruptedException {
+			throws IOException, InterruptedException {
 		channel.exchangeDeclare(exchangename, "direct", true);
 		String queueName = channel.queueDeclare().getQueue();
 		channel.queueBind(queueName, exchangename, routingkey);
