@@ -11,12 +11,12 @@ import com.hazelcast.core.HazelcastInstance;
 @ApplicationScoped
 public class HazelcastService {
 
-	private HazelcastService() {
-	}
-
 	private static String address = ConfigProvider.getConfig().getValue(
 			"hazelcast.address",
 			String.class);
+
+	private HazelcastService() {
+	}
 
 	public static HazelcastInstance getInstance() throws RuntimeException {
 		ClientConfig clientConfig = new ClientConfig();
