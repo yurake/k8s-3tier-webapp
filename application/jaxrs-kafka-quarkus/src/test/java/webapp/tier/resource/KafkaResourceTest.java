@@ -33,7 +33,7 @@ class KafkaResourceTest {
 	String testBody = "Test Message";
 
 	@Test
-	public void testSubscreibe() {
+	void testSubscreibe() {
 		companion.produceStrings()
 				.usingGenerator(i -> new ProducerRecord<>("message", testBody));
 
