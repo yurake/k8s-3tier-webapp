@@ -11,10 +11,9 @@ import io.restassured.http.ContentType;
 
 @QuarkusTest
 class RedisResourceTest {
-	
+
 	@ConfigProperty(name = "common.message")
 	String message;
-
 
 	@Test
 	void testPut() {
@@ -25,7 +24,7 @@ class RedisResourceTest {
 				.post("/quarkus/redis/put")
 				.then()
 				.statusCode(200)
-                .body(containsString(message));
+				.body(containsString(message));
 	}
 
 	@Test
@@ -36,9 +35,9 @@ class RedisResourceTest {
 				.get("/quarkus/redis/get")
 				.then()
 				.statusCode(200)
-                .body(containsString("No Data."));
+				.body(containsString("No Data."));
 	}
-	
+
 	@Test
 	void testDelete() {
 		given()
@@ -47,6 +46,6 @@ class RedisResourceTest {
 				.delete("/quarkus/redis/delete")
 				.then()
 				.statusCode(200)
-                .body(containsString("Delete"));
+				.body(containsString("Delete"));
 	}
 }

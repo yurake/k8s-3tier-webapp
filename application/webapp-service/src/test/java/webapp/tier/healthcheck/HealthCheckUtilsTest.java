@@ -13,7 +13,8 @@ class HealthCheckUtilsTest {
 
 	@Test
 	void respHealthCheckStatusDown() {
-		assertThat(HealthCheckUtils.respHealthCheckStatus(false, "Test").getStatus(), is(Status.DOWN));
+		assertThat(HealthCheckUtils.respHealthCheckStatus(false, "Test").getStatus(),
+				is(Status.DOWN));
 	}
 
 	@Test

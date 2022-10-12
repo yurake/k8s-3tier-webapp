@@ -5,5 +5,5 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/quarkus/rabbitmq/subscribe")
 @ApplicationScoped
-public class RabbitmqSocket extends ServiceSocket{
+public class RabbitmqSocket extends ServiceSocket {
 }

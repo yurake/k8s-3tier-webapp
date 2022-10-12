@@ -17,7 +17,7 @@ import io.quarkus.test.junit.QuarkusTest;
 class GrpcResourceTest {
 
 	private ManagedChannel channel;
-	
+
 	@BeforeEach
 	public void init() {
 		channel = ManagedChannelBuilder.forAddress("localhost", 9001).usePlaintext().build();
@@ -37,7 +37,7 @@ class GrpcResourceTest {
 				.get("/quarkus/grpc/getid")
 				.then()
 				.statusCode(200)
-                .body(is("11111"));
+				.body(is("11111"));
 	}
 
 	@Test
@@ -48,7 +48,6 @@ class GrpcResourceTest {
 				.get("/quarkus/grpc/getmsg")
 				.then()
 				.statusCode(200)
-                .body(containsString("test"));
+				.body(containsString("test"));
 	}
 }
-

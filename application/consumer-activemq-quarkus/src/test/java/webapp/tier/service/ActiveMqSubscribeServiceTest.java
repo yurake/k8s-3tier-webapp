@@ -44,7 +44,8 @@ class ActiveMqSubscribeServiceTest {
 			MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 			String body = MsgUtils.createBody(msgbean, splitkey);
 			try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-				context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
+				context.createProducer().send(context.createTopic(topicname),
+						context.createTextMessage(body));
 			}
 			Thread.sleep(1000);
 			assertThat(msgbean.getFullmsg(), containsString(respbody));

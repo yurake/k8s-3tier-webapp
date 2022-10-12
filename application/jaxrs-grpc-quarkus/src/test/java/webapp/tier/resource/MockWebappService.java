@@ -10,7 +10,7 @@ import webapp.tier.grpc.Msg;
 import webapp.tier.grpc.MsgReply;
 
 @GrpcService
-public class MockWebappService implements Id, Msg{
+public class MockWebappService implements Id, Msg {
 
 	@Override
 	public Uni<MsgReply> getMsg(Empty request) {

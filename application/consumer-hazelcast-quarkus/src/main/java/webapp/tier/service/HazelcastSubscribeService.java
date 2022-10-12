@@ -12,11 +12,12 @@ import com.hazelcast.topic.ITopic;
 
 @ApplicationScoped
 public final class HazelcastSubscribeService implements Runnable {
-	
+
 	@ConfigProperty(name = "hazelcast.topic.name")
 	String topicname;
 
-	private static String address = ConfigProvider.getConfig().getValue("hazelcast.address", String.class);
+	private static String address = ConfigProvider.getConfig().getValue("hazelcast.address",
+			String.class);
 
 	private HazelcastSubscribeService() {
 	}
@@ -24,7 +25,7 @@ public final class HazelcastSubscribeService implements Runnable {
 	protected HazelcastDeliverSubscriber createHazelcastDeliverSubscriber() {
 		return new HazelcastDeliverSubscriber();
 	}
-	
+
 	public static HazelcastInstance getInstance() {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getNetworkConfig().addAddress(address);
@@ -33,13 +34,14 @@ public final class HazelcastSubscribeService implements Runnable {
 				.setMaxBackoffMillis(10000);
 		return HazelcastClient.newHazelcastClient(clientConfig);
 	}
-	
+
 	void subscribeHazelcast(HazelcastInstance client, HazelcastDeliverSubscriber subscriber) {
 		ITopic<Object> topic = client.getTopic(topicname);
 		topic.addMessageListener(subscriber);
 	}
 
 	public void run() {
-		subscribeHazelcast(HazelcastSubscribeService.getInstance(), createHazelcastDeliverSubscriber());
+		subscribeHazelcast(HazelcastSubscribeService.getInstance(),
+				createHazelcastDeliverSubscriber());
 	}
 }

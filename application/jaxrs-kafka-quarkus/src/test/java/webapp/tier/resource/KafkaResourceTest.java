@@ -38,24 +38,26 @@ class KafkaResourceTest {
 				.usingGenerator(i -> new ProducerRecord<>("message", testBody));
 
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target("http://localhost:" + RestAssured.port + "/quarkus/kafka/subscribe");
+		WebTarget target = client
+				.target("http://localhost:" + RestAssured.port + "/quarkus/kafka/subscribe");
 		try (SseEventSource eventSource = SseEventSource.target(target).build()) {
-			Uni<List<String>> petList = Uni.createFrom().emitter(new Consumer<UniEmitter<? super List<String>>>() {
-				@Override
-				public void accept(UniEmitter<? super List<String>> uniEmitter) {
-					List<String> messageList = new CopyOnWriteArrayList<>();
-					eventSource.register(event -> {
-						messageList.add(testBody);
-						if (messageList.size() == 5) {
-							uniEmitter.complete(messageList);
-						}
-					}, ex -> {
-						uniEmitter.fail(new IllegalStateException("SSE failure", ex));
-					});
-					eventSource.open();
+			Uni<List<String>> petList = Uni.createFrom()
+					.emitter(new Consumer<UniEmitter<? super List<String>>>() {
+						@Override
+						public void accept(UniEmitter<? super List<String>> uniEmitter) {
+							List<String> messageList = new CopyOnWriteArrayList<>();
+							eventSource.register(event -> {
+								messageList.add(testBody);
+								if (messageList.size() == 5) {
+									uniEmitter.complete(messageList);
+								}
+							}, ex -> {
+								uniEmitter.fail(new IllegalStateException("SSE failure", ex));
+							});
+							eventSource.open();
 
-				}
-			});
+						}
+					});
 			List<String> messages = petList.await().atMost(Duration.ofMinutes(1));
 			Assertions.assertEquals(5, messages.size());
 			Assertions.assertEquals(testBody, messages.get(0));

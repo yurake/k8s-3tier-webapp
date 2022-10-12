@@ -14,7 +14,7 @@ import webapp.tier.bean.MsgBean;
 
 @ApplicationScoped
 class MockPublisher {
-	
+
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	private final ValueCommands<String, MsgBean> commands;

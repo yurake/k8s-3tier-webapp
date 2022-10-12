@@ -22,7 +22,8 @@ import webapp.tier.util.MsgUtils;
 public class MemcachedService {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static String serverconf = ConfigProvider.getConfig().getValue("memcached.server.conf", String.class);
+	private static String serverconf = ConfigProvider.getConfig().getValue("memcached.server.conf",
+			String.class);
 
 	@ConfigProperty(name = "common.message")
 	String message;

@@ -49,12 +49,13 @@ public class HazelcastResource {
 
 	@GET
 	@Path("/getcache")
-    @Retry(maxRetries = 3)
+	@Retry(maxRetries = 3)
 	@Counted(name = "performedChecks_getcache", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_getcache", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response getcache() {
 		try {
-			return Response.ok().entity(cachesvc.getMsgList(HazelcastService.getInstance())).build();
+			return Response.ok().entity(cachesvc.getMsgList(HazelcastService.getInstance()))
+					.build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Get Cache Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
@@ -76,7 +77,7 @@ public class HazelcastResource {
 
 	@GET
 	@Path("/getqueue")
-    @Retry(maxRetries = 3)
+	@Retry(maxRetries = 3)
 	@Counted(name = "performedChecks_getqueue", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_getqueue", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response getqueue() {

@@ -14,7 +14,7 @@ public class HealthCheckUtils {
 			logger.log(Level.FINE, "Liveness: UP");
 			return HealthCheckResponse.up(msg);
 		} else {
-			logger.log(Level.WARNING,"Liveness: DOWN");
+			logger.log(Level.WARNING, "Liveness: DOWN");
 			return HealthCheckResponse.down(msg);
 		}
 	}

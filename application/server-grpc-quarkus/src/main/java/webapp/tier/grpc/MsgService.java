@@ -9,7 +9,7 @@ import io.smallrye.mutiny.Uni;
 
 @GrpcService
 public class MsgService implements Msg {
-	
+
 	@ConfigProperty(name = "common.message")
 	String message;
 

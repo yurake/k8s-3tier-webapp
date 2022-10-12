@@ -27,18 +27,23 @@ public class RabbitmqSubscribeService implements Runnable {
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	static boolean isEnableReceived = true;
 
-	private static String exchangename = ConfigProvider.getConfig().getValue("rabbitmq.exchange.name", String.class);
-	private static String routingkey = ConfigProvider.getConfig().getValue("rabbitmq.exchange.routingkey",
+	private static String exchangename = ConfigProvider.getConfig()
+			.getValue("rabbitmq.exchange.name", String.class);
+	private static String routingkey = ConfigProvider.getConfig().getValue(
+			"rabbitmq.exchange.routingkey",
 			String.class);
-	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username", String.class);
-	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password", String.class);
+	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username",
+			String.class);
+	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password",
+			String.class);
 	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
-	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost", String.class);
+	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost",
+			String.class);
 
 	protected RabbitmqDeliverSubscriber createRabbitmqDeliverSubscriber(Channel channel) {
 		return new RabbitmqDeliverSubscriber(channel);
 	}
-	
+
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
 		logger.log(Level.INFO, "Subscribe is starting...");
@@ -58,7 +63,7 @@ public class RabbitmqSubscribeService implements Runnable {
 		}
 		return status;
 	}
-	
+
 	public Connection getConnection() throws IOException, TimeoutException {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setUsername(username);
@@ -67,8 +72,9 @@ public class RabbitmqSubscribeService implements Runnable {
 		connectionFactory.setVirtualHost(vhost);
 		return connectionFactory.newConnection();
 	}
-	
-	protected void subscribeRabbitmq(Connection conn, Channel channel, RabbitmqDeliverSubscriber subscriber)
+
+	protected void subscribeRabbitmq(Connection conn, Channel channel,
+			RabbitmqDeliverSubscriber subscriber)
 			throws IOException, TimeoutException, InterruptedException {
 		channel.exchangeDeclare(exchangename, "direct", true);
 		String queueName = channel.queueDeclare().getQueue();
@@ -79,7 +85,7 @@ public class RabbitmqSubscribeService implements Runnable {
 			TimeUnit.MINUTES.sleep(10L);
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		try (Connection conn = getConnection();

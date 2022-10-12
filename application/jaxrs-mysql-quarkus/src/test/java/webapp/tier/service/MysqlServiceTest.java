@@ -32,7 +32,8 @@ class MysqlServiceTest {
 	@BeforeEach
 	public void createTable() {
 		String createsql = "CREATE TABLE msg (id SERIAL PRIMARY KEY, msg TEXT NOT NULL)";
-		try (Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
+		try (Connection con = DriverManager
+				.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
 				Statement stmt = con.createStatement()) {
 			stmt.executeUpdate(createsql);
 		} catch (SQLException e) {
@@ -44,7 +45,8 @@ class MysqlServiceTest {
 	@AfterEach
 	public void dropTable() {
 		String createsql = "DROP TABLE msg";
-		try (Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
+		try (Connection con = DriverManager
+				.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
 				Statement stmt = con.createStatement()) {
 			stmt.executeUpdate(createsql);
 		} catch (SQLException e) {

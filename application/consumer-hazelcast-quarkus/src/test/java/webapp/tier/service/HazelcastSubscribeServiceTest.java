@@ -30,7 +30,7 @@ class HazelcastSubscribeServiceTest {
 
 	@Inject
 	HazelcastSubscribeService svc;
-	
+
 	@ConfigProperty(name = "hazelcast.topic.name")
 	String topicname;
 

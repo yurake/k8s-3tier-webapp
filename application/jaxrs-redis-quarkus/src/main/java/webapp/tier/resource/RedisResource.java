@@ -41,7 +41,7 @@ public class RedisResource {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
-	
+
 	@DELETE
 	@Path("/delete")
 	public Response delete() {
@@ -51,6 +51,6 @@ public class RedisResource {
 			logger.log(Level.WARNING, "Delete Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
 		}
-		
+
 	}
 }

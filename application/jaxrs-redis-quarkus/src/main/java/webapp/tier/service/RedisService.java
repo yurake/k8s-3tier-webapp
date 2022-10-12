@@ -31,11 +31,11 @@ public class RedisService {
 	private final KeyCommands<String> keys;
 	private final ValueCommands<String, String> msgs;
 
-	public RedisService(RedisDataSource ds) { 
-		keys = ds.key();  
-        msgs = ds.value(String.class); 
+	public RedisService(RedisDataSource ds) {
+		keys = ds.key();
+		msgs = ds.value(String.class);
 
-    }
+	}
 
 	public MsgBean putMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
@@ -58,7 +58,7 @@ public class RedisService {
 		}
 		return msglist;
 	}
-	
+
 	public List<MsgBean> delete() {
 		logger.log(Level.INFO, "Delete message all.");
 		List<MsgBean> msglist = new ArrayList<>();

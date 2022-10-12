@@ -22,7 +22,7 @@ class MsgServiceTest {
 
 	@ConfigProperty(name = "common.message")
 	String message;
-	
+
 	private ManagedChannel channel;
 
 	@BeforeEach

@@ -24,7 +24,8 @@ public class RedisDeliverSubscriber implements Consumer<Notification> {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
+	private static String channel = ConfigProvider.getConfig().getValue("redis.channel",
+			String.class);
 
 	private final PubSubCommands<Notification> pub;
 	private final PubSubCommands.RedisSubscriber subscriber;
@@ -50,7 +51,8 @@ public class RedisDeliverSubscriber implements Consumer<Notification> {
 		Multi<String> response = deliversvc.random();
 		response.subscribe().with(
 				result -> logger.log(Level.INFO, "Call Random Publish: {0}", result),
-				failure -> logger.log(Level.SEVERE, "Call Random Publish Error: {0}", failure.getMessage()));
+				failure -> logger.log(Level.SEVERE, "Call Random Publish Error: {0}",
+						failure.getMessage()));
 	}
 
 	@PreDestroy

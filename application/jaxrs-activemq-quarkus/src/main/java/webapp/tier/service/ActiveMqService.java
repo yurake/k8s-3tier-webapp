@@ -69,7 +69,8 @@ public class ActiveMqService implements Messaging, Runnable {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			context.createProducer().send(context.createQueue(queuename), context.createTextMessage(body));
+			context.createProducer().send(context.createQueue(queuename),
+					context.createTextMessage(body));
 		}
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
@@ -98,7 +99,8 @@ public class ActiveMqService implements Messaging, Runnable {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
+			context.createProducer().send(context.createTopic(topicname),
+					context.createTextMessage(body));
 		}
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;

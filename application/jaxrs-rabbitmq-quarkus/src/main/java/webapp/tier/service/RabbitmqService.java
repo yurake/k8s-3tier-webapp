@@ -33,16 +33,24 @@ public class RabbitmqService implements Runnable {
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	static boolean isEnableReceived = true;
 
-	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
-	private static String queuename = ConfigProvider.getConfig().getValue("rabbitmq.queue.name", String.class);
-	private static String exchangename = ConfigProvider.getConfig().getValue("rabbitmq.exchange.name", String.class);
-	private static String routingkey = ConfigProvider.getConfig().getValue("rabbitmq.exchange.routingkey",
+	private static String message = ConfigProvider.getConfig().getValue("common.message",
 			String.class);
-	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username", String.class);
-	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password", String.class);
+	private static String queuename = ConfigProvider.getConfig().getValue("rabbitmq.queue.name",
+			String.class);
+	private static String exchangename = ConfigProvider.getConfig()
+			.getValue("rabbitmq.exchange.name", String.class);
+	private static String routingkey = ConfigProvider.getConfig().getValue(
+			"rabbitmq.exchange.routingkey",
+			String.class);
+	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username",
+			String.class);
+	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password",
+			String.class);
 	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
-	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
+	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost",
+			String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key",
+			String.class);
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
@@ -75,7 +83,8 @@ public class RabbitmqService implements Runnable {
 		return new RabbitmqConsumer(channel);
 	}
 
-	public MsgBean putMsg(Connection conn) throws NoSuchAlgorithmException, IOException, TimeoutException {
+	public MsgBean putMsg(Connection conn)
+			throws NoSuchAlgorithmException, IOException, TimeoutException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
@@ -106,13 +115,15 @@ public class RabbitmqService implements Runnable {
 		return msgbean;
 	}
 
-	public MsgBean publishMsg(Connection conn) throws NoSuchAlgorithmException, IOException, TimeoutException {
+	public MsgBean publishMsg(Connection conn)
+			throws NoSuchAlgorithmException, IOException, TimeoutException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
 
 		try (Channel channel = conn.createChannel()) {
 			channel.exchangeDeclare(exchangename, "direct", true);
-			channel.basicPublish(exchangename, routingkey, null, body.getBytes(StandardCharsets.UTF_8));
+			channel.basicPublish(exchangename, routingkey, null,
+					body.getBytes(StandardCharsets.UTF_8));
 		}
 
 		logger.log(Level.INFO, msgbean.getFullmsg());

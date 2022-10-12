@@ -15,13 +15,12 @@ import webapp.tier.service.RedisService;
 
 @QuarkusTest
 class RedisResourceErrorTest {
-	
+
 	@ConfigProperty(name = "common.message")
 	String message;
 
 	@InjectMock
 	RedisService svc;
-
 
 	@Test
 	void testPutError() throws NoSuchAlgorithmException {
@@ -45,7 +44,7 @@ class RedisResourceErrorTest {
 				.then()
 				.statusCode(500);
 	}
-	
+
 	@Test
 	void testDeleteError() {
 		when(svc.delete()).thenThrow(new RuntimeException());

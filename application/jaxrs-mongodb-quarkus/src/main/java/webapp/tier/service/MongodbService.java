@@ -50,7 +50,8 @@ public class MongodbService {
 		try (MongoCursor<Document> cursor = collection.find().iterator()) {
 			while (cursor.hasNext()) {
 				Document document = cursor.next();
-				MsgBean msgbean = new MsgBean(document.getInteger("id"), document.getString("msg"), "Select");
+				MsgBean msgbean = new MsgBean(document.getInteger("id"), document.getString("msg"),
+						"Select");
 				logger.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}
