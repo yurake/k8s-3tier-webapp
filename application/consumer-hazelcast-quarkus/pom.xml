@@ -9,8 +9,8 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>consumer-hazelcast-quarkus</artifactId>
 	<properties>
-		<hazelcast-client.version>3.12.8</hazelcast-client.version>
 		<hazelcast.version>5.1.3</hazelcast.version>
+		<test-hazelcast.version>3.0.0</test-hazelcast.version>
 		<slf4j-reload4j.version>2.0.3</slf4j-reload4j.version>
 	</properties>
 	<dependencies>
@@ -26,6 +26,12 @@
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
 			<version>${hazelcast.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>quarkus-test-hazelcast</artifactId>
+			<version>${test-hazelcast.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
