@@ -4,8 +4,8 @@ import webapp.tier.bean.MsgBean;
 
 public final class Notification {
 
-	public String key;
-	public MsgBean msgbean;
+	public final String key;
+	public final MsgBean msgbean;
 
 	public Notification(String key, MsgBean msgbean) {
 		this.key = key;
