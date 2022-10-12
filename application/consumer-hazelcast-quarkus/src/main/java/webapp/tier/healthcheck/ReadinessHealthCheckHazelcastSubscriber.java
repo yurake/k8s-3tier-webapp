@@ -18,7 +18,8 @@ public class ReadinessHealthCheckHazelcastSubscriber implements HealthCheck {
 		return checkHazelcastService(svc);
 	}
 
-	protected HealthCheckResponse checkHazelcastService(HazelcastSubscribeServiceStatus svc) {
+	protected HealthCheckResponse checkHazelcastService(
+			HazelcastSubscribeServiceStatus svc) {
 		String msg = "Hazelcast Server connection health check";
 		return HealthCheckUtils.respHealthCheckStatus(svc.isActive(), msg);
 	}

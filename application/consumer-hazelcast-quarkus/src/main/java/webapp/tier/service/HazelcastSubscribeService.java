@@ -16,7 +16,8 @@ public final class HazelcastSubscribeService implements Runnable {
 	@ConfigProperty(name = "hazelcast.topic.name")
 	String topicname;
 
-	private static String address = ConfigProvider.getConfig().getValue("hazelcast.address",
+	private static String address = ConfigProvider.getConfig().getValue(
+			"hazelcast.address",
 			String.class);
 
 	private HazelcastSubscribeService() {
@@ -35,7 +36,8 @@ public final class HazelcastSubscribeService implements Runnable {
 		return HazelcastClient.newHazelcastClient(clientConfig);
 	}
 
-	void subscribeHazelcast(HazelcastInstance client, HazelcastDeliverSubscriber subscriber) {
+	void subscribeHazelcast(HazelcastInstance client,
+			HazelcastDeliverSubscriber subscriber) {
 		ITopic<Object> topic = client.getTopic(topicname);
 		topic.addMessageListener(subscriber);
 	}

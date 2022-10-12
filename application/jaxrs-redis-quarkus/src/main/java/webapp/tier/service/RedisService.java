@@ -49,7 +49,8 @@ public class RedisService {
 		List<MsgBean> msglist = new ArrayList<>();
 		List<String> keyList = keys.keys("*");
 		for (String key : keyList) {
-			MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(key), msgs.get(key), "Get");
+			MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(key), msgs.get(key),
+					"Get");
 			logger.log(Level.INFO, msgbean.getFullmsg());
 			msglist.add(msgbean);
 		}
@@ -64,7 +65,8 @@ public class RedisService {
 		List<MsgBean> msglist = new ArrayList<>();
 		List<String> keyList = keys.keys("*");
 		for (String key : keyList) {
-			MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(key), msgs.get(key), "Delete");
+			MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(key), msgs.get(key),
+					"Delete");
 			keys.del(key);
 			logger.log(Level.INFO, msgbean.getFullmsg());
 			msglist.add(msgbean);

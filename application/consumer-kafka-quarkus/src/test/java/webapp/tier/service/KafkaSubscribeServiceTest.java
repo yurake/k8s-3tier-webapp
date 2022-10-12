@@ -39,7 +39,8 @@ class KafkaSubscribeServiceTest {
 		ProducerTask producer = companion.produceStrings()
 				.usingGenerator(i -> new ProducerRecord<>("message", "Test Message"));
 
-		ConsumerTask<String, String> consumer = companion.consumeStrings().fromTopics("message",
+		ConsumerTask<String, String> consumer = companion.consumeStrings().fromTopics(
+				"message",
 				10);
 		consumer.awaitCompletion();
 		producer.close();

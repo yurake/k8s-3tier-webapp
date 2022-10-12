@@ -61,7 +61,8 @@ class ActiveMqServiceTest {
 
 	@Test
 	void testGetMsgNoData() throws Exception {
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
+		try (JMSContext context = connectionFactory
+				.createContext(Session.AUTO_ACKNOWLEDGE)) {
 			context.createProducer().send(context.createQueue(queuename),
 					context.createTextMessage(null));
 		}

@@ -34,7 +34,8 @@ public class MongodbService {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	public MsgBean insertMsg(MongoCollection<Document> collection) throws NoSuchAlgorithmException {
+	public MsgBean insertMsg(MongoCollection<Document> collection)
+			throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
 		Document document = new Document()
 				.append("id", msgbean.getId())
@@ -50,8 +51,8 @@ public class MongodbService {
 		try (MongoCursor<Document> cursor = collection.find().iterator()) {
 			while (cursor.hasNext()) {
 				Document document = cursor.next();
-				MsgBean msgbean = new MsgBean(document.getInteger("id"), document.getString("msg"),
-						"Select");
+				MsgBean msgbean = new MsgBean(document.getInteger("id"),
+						document.getString("msg"), "Select");
 				logger.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}

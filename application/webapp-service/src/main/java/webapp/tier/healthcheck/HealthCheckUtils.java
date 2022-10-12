@@ -7,7 +7,8 @@ import org.eclipse.microprofile.health.HealthCheckResponse;
 
 public class HealthCheckUtils {
 
-	private static final Logger logger = Logger.getLogger(HealthCheckUtils.class.getSimpleName());
+	private static final Logger logger = Logger
+			.getLogger(HealthCheckUtils.class.getSimpleName());
 
 	public static HealthCheckResponse respHealthCheckStatus(boolean status, String msg) {
 		if (status) {

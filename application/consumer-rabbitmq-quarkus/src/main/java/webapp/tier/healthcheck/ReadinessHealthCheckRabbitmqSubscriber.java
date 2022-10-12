@@ -18,7 +18,8 @@ public class ReadinessHealthCheckRabbitmqSubscriber implements HealthCheck {
 		return checkRabbitmqSubscribeService(svc);
 	}
 
-	protected HealthCheckResponse checkRabbitmqSubscribeService(RabbitmqSubscribeService svc) {
+	protected HealthCheckResponse checkRabbitmqSubscribeService(
+			RabbitmqSubscribeService svc) {
 		String msg = "Rabbitmq Server connection health check";
 		return HealthCheckUtils.respHealthCheckStatus(svc.isActive(), msg);
 	}

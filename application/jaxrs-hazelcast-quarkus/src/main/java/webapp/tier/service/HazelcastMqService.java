@@ -62,7 +62,8 @@ public class HazelcastMqService implements Runnable {
 			String body = MsgUtils.createBody(msgbean, splitkey);
 			BlockingQueue<Object> queue = client.getQueue(queuename);
 			queue.put(body);
-		} catch (IllegalStateException | InterruptedException | NoSuchAlgorithmException e) {
+		} catch (IllegalStateException | InterruptedException
+				| NoSuchAlgorithmException e) {
 			logger.log(Level.SEVERE, "Put Error.", e);
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
@@ -121,10 +122,12 @@ public class HazelcastMqService implements Runnable {
 
 	@Override
 	public void run() {
-		subscribeHazelcast(HazelcastService.getInstance(), createHazelcastMessageListener());
+		subscribeHazelcast(HazelcastService.getInstance(),
+				createHazelcastMessageListener());
 	}
 
-	protected void subscribeHazelcast(HazelcastInstance client, HazelcastMessageListener listener) {
+	protected void subscribeHazelcast(HazelcastInstance client,
+			HazelcastMessageListener listener) {
 		ITopic<Object> topic = client.getTopic(topicname);
 		topic.addMessageListener(listener);
 	}

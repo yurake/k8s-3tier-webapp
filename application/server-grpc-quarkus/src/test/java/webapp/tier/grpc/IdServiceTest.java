@@ -23,7 +23,8 @@ class IdServiceTest {
 
 	@BeforeEach
 	public void init() {
-		channel = ManagedChannelBuilder.forAddress("localhost", 9001).usePlaintext().build();
+		channel = ManagedChannelBuilder.forAddress("localhost", 9001).usePlaintext()
+				.build();
 	}
 
 	@AfterEach

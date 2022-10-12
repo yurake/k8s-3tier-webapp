@@ -15,7 +15,8 @@ public class MsgService implements Msg {
 
 	@Override
 	public Uni<MsgReply> getMsg(Empty request) {
-		return Uni.createFrom().item(() -> MsgReply.newBuilder().setMessage(message).build());
+		return Uni.createFrom()
+				.item(() -> MsgReply.newBuilder().setMessage(message).build());
 	}
 
 }

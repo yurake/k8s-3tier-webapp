@@ -145,7 +145,8 @@ class HazelcastMqServiceTest {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
 		when(mockInstanceError.getTopic(ArgumentMatchers.any()))
 				.thenThrow(new IllegalStateException());
-		assertThat(svc.publishMsg(mockInstanceError).getFullmsg(), containsString(respbody));
+		assertThat(svc.publishMsg(mockInstanceError).getFullmsg(),
+				containsString(respbody));
 	}
 
 	@Test

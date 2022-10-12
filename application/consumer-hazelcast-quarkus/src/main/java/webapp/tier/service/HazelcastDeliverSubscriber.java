@@ -25,10 +25,12 @@ public class HazelcastDeliverSubscriber implements MessageListener<Object> {
 
 	@Override
 	public void onMessage(Message<Object> message) {
-		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject().toString(), splitkey);
+		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject().toString(),
+				splitkey);
 		msgbean.setFullmsg("Received");
 		logger.log(Level.INFO, msgbean.getFullmsg());
-		DeliverService deliversvc = CDI.current().select(DeliverService.class, RestClient.LITERAL)
+		DeliverService deliversvc = CDI.current()
+				.select(DeliverService.class, RestClient.LITERAL)
 				.get();
 		String response = deliversvc.random();
 		logger.log(Level.INFO, "Call Random Publish: {0}", response);

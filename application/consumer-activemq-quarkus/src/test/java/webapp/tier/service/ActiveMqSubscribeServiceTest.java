@@ -43,7 +43,8 @@ class ActiveMqSubscribeServiceTest {
 		try {
 			MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 			String body = MsgUtils.createBody(msgbean, splitkey);
-			try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			try (JMSContext context = connectionFactory
+					.createContext(Session.AUTO_ACKNOWLEDGE)) {
 				context.createProducer().send(context.createTopic(topicname),
 						context.createTextMessage(body));
 			}

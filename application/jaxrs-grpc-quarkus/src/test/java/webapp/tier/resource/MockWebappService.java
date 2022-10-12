@@ -14,7 +14,8 @@ public class MockWebappService implements Id, Msg {
 
 	@Override
 	public Uni<MsgReply> getMsg(Empty request) {
-		return Uni.createFrom().item(() -> MsgReply.newBuilder().setMessage("test").build());
+		return Uni.createFrom()
+				.item(() -> MsgReply.newBuilder().setMessage("test").build());
 	}
 
 	@Override

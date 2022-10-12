@@ -35,21 +35,26 @@ public class RabbitmqService implements Runnable {
 
 	private static String message = ConfigProvider.getConfig().getValue("common.message",
 			String.class);
-	private static String queuename = ConfigProvider.getConfig().getValue("rabbitmq.queue.name",
+	private static String queuename = ConfigProvider.getConfig().getValue(
+			"rabbitmq.queue.name",
 			String.class);
 	private static String exchangename = ConfigProvider.getConfig()
 			.getValue("rabbitmq.exchange.name", String.class);
 	private static String routingkey = ConfigProvider.getConfig().getValue(
 			"rabbitmq.exchange.routingkey",
 			String.class);
-	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username",
+	private static String username = ConfigProvider.getConfig().getValue(
+			"rabbitmq.username",
 			String.class);
-	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password",
+	private static String password = ConfigProvider.getConfig().getValue(
+			"rabbitmq.password",
 			String.class);
-	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
+	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host",
+			String.class);
 	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost",
 			String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key",
+	private static String splitkey = ConfigProvider.getConfig().getValue(
+			"rabbitmq.split.key",
 			String.class);
 
 	void onStart(@Observes StartupEvent ev) {
@@ -107,7 +112,8 @@ public class RabbitmqService implements Runnable {
 			if (resp == null) {
 				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
-				msgbean = MsgUtils.splitBody(new String(resp.getBody(), "UTF-8"), splitkey);
+				msgbean = MsgUtils.splitBody(new String(resp.getBody(), "UTF-8"),
+						splitkey);
 				msgbean.setFullmsg("Get");
 			}
 		}
@@ -150,7 +156,8 @@ public class RabbitmqService implements Runnable {
 		}
 	}
 
-	protected void subscribeRabbitmq(Connection conn, Channel channel, RabbitmqConsumer consumer)
+	protected void subscribeRabbitmq(Connection conn, Channel channel,
+			RabbitmqConsumer consumer)
 			throws IOException, TimeoutException, InterruptedException {
 		channel.exchangeDeclare(exchangename, "direct", true);
 		String queueName = channel.queueDeclare().getQueue();

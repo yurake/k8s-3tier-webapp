@@ -32,11 +32,14 @@ public class RabbitmqSubscribeService implements Runnable {
 	private static String routingkey = ConfigProvider.getConfig().getValue(
 			"rabbitmq.exchange.routingkey",
 			String.class);
-	private static String username = ConfigProvider.getConfig().getValue("rabbitmq.username",
+	private static String username = ConfigProvider.getConfig().getValue(
+			"rabbitmq.username",
 			String.class);
-	private static String password = ConfigProvider.getConfig().getValue("rabbitmq.password",
+	private static String password = ConfigProvider.getConfig().getValue(
+			"rabbitmq.password",
 			String.class);
-	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host", String.class);
+	private static String host = ConfigProvider.getConfig().getValue("rabbitmq.host",
+			String.class);
 	private static String vhost = ConfigProvider.getConfig().getValue("rabbitmq.vhost",
 			String.class);
 

@@ -22,7 +22,8 @@ import webapp.tier.util.MsgUtils;
 public class MemcachedService {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static String serverconf = ConfigProvider.getConfig().getValue("memcached.server.conf",
+	private static String serverconf = ConfigProvider.getConfig().getValue(
+			"memcached.server.conf",
 			String.class);
 
 	@ConfigProperty(name = "common.message")
@@ -38,7 +39,8 @@ public class MemcachedService {
 		return new MemCachedClient();
 	}
 
-	public MsgBean setMsg(MemCachedClient mcc) throws RuntimeException, NoSuchAlgorithmException {
+	public MsgBean setMsg(MemCachedClient mcc)
+			throws RuntimeException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message);
 		String errormsg = "Set Error.";
 
@@ -71,7 +73,8 @@ public class MemcachedService {
 			if (Objects.isNull(getid) || getid.isEmpty()) {
 				msgbean = new MsgBean(0, "No Data.", "Get");
 			} else {
-				msgbean = new MsgBean(MsgUtils.stringToInt(getid), (String) mcc.get("msg"), "Get");
+				msgbean = new MsgBean(MsgUtils.stringToInt(getid),
+						(String) mcc.get("msg"), "Get");
 			}
 
 		} catch (Exception e) {

@@ -39,7 +39,8 @@ class KafkaResourceTest {
 
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client
-				.target("http://localhost:" + RestAssured.port + "/quarkus/kafka/subscribe");
+				.target("http://localhost:" + RestAssured.port
+						+ "/quarkus/kafka/subscribe");
 		try (SseEventSource eventSource = SseEventSource.target(target).build()) {
 			Uni<List<String>> petList = Uni.createFrom()
 					.emitter(new Consumer<UniEmitter<? super List<String>>>() {
@@ -52,7 +53,8 @@ class KafkaResourceTest {
 									uniEmitter.complete(messageList);
 								}
 							}, ex -> {
-								uniEmitter.fail(new IllegalStateException("SSE failure", ex));
+								uniEmitter.fail(
+										new IllegalStateException("SSE failure", ex));
 							});
 							eventSource.open();
 

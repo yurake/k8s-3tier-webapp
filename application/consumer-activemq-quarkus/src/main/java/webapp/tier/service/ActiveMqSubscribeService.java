@@ -50,8 +50,10 @@ public class ActiveMqSubscribeService implements Runnable {
 
 	public void run() {
 		while (isEnableReceived) {
-			try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
-					JMSConsumer consumer = context.createConsumer(context.createTopic(topicname))) {
+			try (JMSContext context = connectionFactory
+					.createContext(Session.AUTO_ACKNOWLEDGE);
+					JMSConsumer consumer = context
+							.createConsumer(context.createTopic(topicname))) {
 				amqdelconsumer.consume(consumer);
 			} catch (Exception e) {
 				logger.log(Level.SEVERE, "Subscribe Error.", e);
