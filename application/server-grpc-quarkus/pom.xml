@@ -18,4 +18,27 @@
 			<artifactId>quarkus-grpc</artifactId>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<configuration>
+					<excludes>
+						<exclude>**/*Reply*</exclude>
+						<exclude>**/*Builder.class</exclude>
+						<exclude>**/*Proto.class</exclude>
+						<exclude>**/*MethodHandlers.class</exclude>
+						<exclude>**/*Stub.class</exclude>
+						<exclude>**/*ImplBase.class</exclude>
+						<exclude>**/*Client.class</exclude>
+						<exclude>**/*Grpc*</exclude>
+						<exclude>**/*Bean.class</exclude>
+						<exclude>**/*Supplier.class</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
