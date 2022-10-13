@@ -47,7 +47,7 @@ public class MessageGenerator {
 		try {
 			msgbean = new MsgBean(CreateId.createid(), message, "Generate");
 			Objects.requireNonNull(msgbean);
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException | NullPointerException e) {
 			logger.log(Level.SEVERE, "Create Id Error.", e);
 		}
 		logger.info(msgbean.getFullmsg());
