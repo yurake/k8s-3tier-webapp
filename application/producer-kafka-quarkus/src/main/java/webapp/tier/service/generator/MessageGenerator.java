@@ -2,7 +2,6 @@ package webapp.tier.service.generator;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +20,8 @@ import webapp.tier.util.MsgUtils;
 public class MessageGenerator {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-
+	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
+	
 	@ConfigProperty(name = "common.message")
 	String message;
 
@@ -40,13 +40,13 @@ public class MessageGenerator {
 	}
 
 	private String generateMessgae() {
-		MsgBean msgbean = null;
+		MsgBean msgbean = errormsg;
 		try {
 			msgbean = new MsgBean(CreateId.createid(), message, "Generate");
 		} catch (NoSuchAlgorithmException e) {
 			logger.log(Level.SEVERE, "Create Id Error.", e);
 		}
-		logger.log(Level.INFO, Objects.requireNonNull(msgbean.getFullmsg()));
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return MsgUtils.createBody(msgbean, splitkey);
 	}
 }
