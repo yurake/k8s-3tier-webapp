@@ -27,24 +27,26 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 	@RestClient
 	HazelcastDeliverService deliversvc;
 
-	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static HazelcastInstance hazelcastInstance;
+	private static final Logger logger = Logger.getLogger(HazelcastSubscribeService.class.getSimpleName());
 	private static ClientConfig clientConfig = new ClientConfig();
-
 	private static String topicname = ConfigProvider.getConfig()
 			.getValue("hazelcast.topic.name", String.class);
 	private static String address = ConfigProvider.getConfig()
 			.getValue("hazelcast.address", String.class);
 	private static String splitkey = ConfigProvider.getConfig()
 			.getValue("hazelcast.split.key", String.class);
+	
+	private static HazelcastInstance hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
+
+	//Hide Constractor
+	private HazelcastSubscribeService(){
+	}
 
 	void onStart(@Observes StartupEvent ev) {
 		clientConfig.getNetworkConfig().addAddress(address);
 		clientConfig.getConnectionStrategyConfig().getConnectionRetryConfig()
 				.setClusterConnectTimeoutMillis(5000)
 				.setMaxBackoffMillis(10000);
-		HazelcastSubscribeService.hazelcastInstance = HazelcastClient
-				.newHazelcastClient(clientConfig);
 		ITopic<String> topic = hazelcastInstance.getTopic(topicname);
 		topic.addMessageListener(this);
 		logger.log(Level.INFO, "Subscribing...");
@@ -56,7 +58,7 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 		hazelcastInstance.shutdown();
 	}
 
-	public boolean isActive() {
+	public static boolean isActive() {
 		boolean status = false;
 		try {
 			status = hazelcastInstance.getLifecycleService().isRunning();

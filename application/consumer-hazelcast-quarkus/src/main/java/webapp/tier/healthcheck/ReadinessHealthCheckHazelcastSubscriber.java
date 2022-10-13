@@ -14,8 +14,7 @@ public class ReadinessHealthCheckHazelcastSubscriber implements HealthCheck {
 
 	@Override
 	public HealthCheckResponse call() {
-		HazelcastSubscribeService svc = new HazelcastSubscribeService();
 		String msg = "Hazelcast Server connection health check";
-		return HealthCheckUtils.respHealthCheckStatus(svc.isActive(), msg);
+		return HealthCheckUtils.respHealthCheckStatus(HazelcastSubscribeService.isActive(), msg);
 	}
 }
