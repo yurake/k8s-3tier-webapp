@@ -43,11 +43,10 @@ public class MessageGenerator {
 		MsgBean msgbean = null;
 		try {
 			msgbean = new MsgBean(CreateId.createid(), message, "Generate");
-			Objects.requireNonNull(msgbean);
-		} catch (NoSuchAlgorithmException | NullPointerException e) {
+		} catch (NoSuchAlgorithmException e) {
 			logger.log(Level.SEVERE, "Create Id Error.", e);
 		}
-		logger.info(msgbean.getFullmsg());
+		logger.log(Level.INFO, Objects.requireNonNull(msgbean.getFullmsg()));
 		return MsgUtils.createBody(msgbean, splitkey);
 	}
 }
