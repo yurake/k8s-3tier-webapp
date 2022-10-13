@@ -73,6 +73,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_webapp-service
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 

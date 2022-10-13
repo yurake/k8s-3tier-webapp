@@ -8,10 +8,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>webapp-service</artifactId>
-	<properties>
-		<sonar.organization>yurak</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-	</properties>
 	<distributionManagement>
 		<repository>
 			<id>github</id>
