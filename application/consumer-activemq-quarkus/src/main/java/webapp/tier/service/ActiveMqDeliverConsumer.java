@@ -24,7 +24,7 @@ public class ActiveMqDeliverConsumer {
 
 	@Inject
 	@RestClient
-	DeliverService deliversvc;
+	ActiveMqDeliverService deliversvc;
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 

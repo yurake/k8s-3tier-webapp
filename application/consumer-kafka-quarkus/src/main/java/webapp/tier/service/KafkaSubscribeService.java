@@ -14,7 +14,7 @@ public class KafkaSubscribeService {
 
 	@Inject
 	@RestClient
-	DeliverService deliversvc;
+	KafkaDeliverService deliversvc;
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 

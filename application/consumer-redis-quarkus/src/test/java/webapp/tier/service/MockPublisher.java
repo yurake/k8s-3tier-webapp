@@ -18,14 +18,14 @@ class MockPublisher {
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	private final ValueCommands<String, MsgBean> commands;
-	private final PubSubCommands<Notification> pub;
+	private final PubSubCommands<DeliverNotification> pub;
 
 	@ConfigProperty(name = "redis.channel")
 	String channel;
 
 	public MockPublisher(RedisDataSource ds) {
 		commands = ds.value(MsgBean.class);
-		pub = ds.pubsub(Notification.class);
+		pub = ds.pubsub(DeliverNotification.class);
 	}
 
 	public MsgBean get(String key) {
@@ -34,7 +34,7 @@ class MockPublisher {
 
 	public void set(String key, MsgBean msgbean) {
 		commands.set(key, msgbean);
-		pub.publish(channel, new Notification(key, msgbean));
+		pub.publish(channel, new DeliverNotification(key, msgbean));
 		logger.log(Level.INFO, msgbean.getFullmsg());
 	}
 }

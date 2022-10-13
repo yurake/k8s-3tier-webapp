@@ -6,14 +6,12 @@ import javax.ws.rs.Produces;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import io.smallrye.mutiny.Multi;
-
 @Path("/random")
 @RegisterRestClient(configKey = "random")
-public interface DeliverService {
+public interface ActiveMqDeliverService {
 
 	@GET
 	@Produces("application/json")
-	Multi<String> random();
+	String random();
 
 }

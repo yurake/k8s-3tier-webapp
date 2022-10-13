@@ -38,8 +38,8 @@ public class RabbitmqDeliverSubscriber extends DefaultConsumer {
 				splitkey);
 		msgbean.setFullmsg("Received");
 		logger.log(Level.INFO, msgbean.getFullmsg());
-		DeliverService deliversvc = CDI.current()
-				.select(DeliverService.class, RestClient.LITERAL)
+		RabbitmqDeliverService deliversvc = CDI.current()
+				.select(RabbitmqDeliverService.class, RestClient.LITERAL)
 				.get();
 		String response = deliversvc.random();
 		logger.log(Level.INFO, "Call Random Publish: {0}", response);

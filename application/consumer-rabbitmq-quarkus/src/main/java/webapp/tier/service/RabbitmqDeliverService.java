@@ -8,7 +8,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @Path("/random")
 @RegisterRestClient(configKey = "random")
-public interface DeliverService {
+public interface RabbitmqDeliverService {
 
 	@GET
 	@Produces("application/json")

@@ -20,31 +20,31 @@ import webapp.tier.bean.MsgBean;
 
 @ApplicationScoped
 @Startup
-public class RedisDeliverSubscriber implements Consumer<Notification> {
+public class RedisDeliverSubscriber implements Consumer<DeliverNotification> {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	private static String channel = ConfigProvider.getConfig().getValue("redis.channel",
 			String.class);
 
-	private final PubSubCommands<Notification> pub;
+	private final PubSubCommands<DeliverNotification> pub;
 	private final PubSubCommands.RedisSubscriber subscriber;
 
 	@RestClient
-	DeliverService deliversvc;
+	RedisDeliverService deliversvc;
 
 	public RedisDeliverSubscriber(RedisDataSource ds) {
-		pub = ds.pubsub(Notification.class);
+		pub = ds.pubsub(DeliverNotification.class);
 		subscriber = pub.subscribe(channel, this);
 
 		deliversvc = RestClientBuilder.newBuilder()
 				.baseUri(URI.create("https://stage.code.quarkus.io/api"))
-				.build(DeliverService.class);
+				.build(RedisDeliverService.class);
 		logger.log(Level.INFO, "Subscribing...");
 	}
 
 	@Override
-	public void accept(Notification notification) {
+	public void accept(DeliverNotification notification) {
 		MsgBean msgbean = notification.msgbean;
 		msgbean.setFullmsg("Received");
 		logger.log(Level.INFO, msgbean.getFullmsg());
