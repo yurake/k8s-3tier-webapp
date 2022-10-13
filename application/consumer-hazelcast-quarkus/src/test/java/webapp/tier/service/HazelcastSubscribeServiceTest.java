@@ -1,5 +1,7 @@
 package webapp.tier.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,6 +10,7 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.hazelcast.client.HazelcastClient;
@@ -43,40 +46,14 @@ class HazelcastSubscribeServiceTest {
 	private String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
 
-	public HazelcastSubscribeServiceTest() {
+	@BeforeAll
+	public static void init() {
 		ClientConfig clientConfig = new ClientConfig();
 		clientConfig.getNetworkConfig().addAddress(address);
 		clientConfig.getConnectionStrategyConfig().getConnectionRetryConfig()
 				.setClusterConnectTimeoutMillis(5000)
 				.setMaxBackoffMillis(10000);
 		mockInstance = HazelcastClient.newHazelcastClient(clientConfig);
-	}
-	
-	/**
-	@BeforeEach
-	public void setup() throws IOException {
-		mockInstance = Hazelcast.newHazelcastInstance();
-	}
-
-	@AfterEach
-	public void after() {
-		mockInstance.shutdown();
-	}
-	**/
-
-	/**
-	@Test
-	void testSubscribeHazelcast() {
-		svc.subscribeHazelcast(mockInstance, svc.createHazelcastDeliverSubscriber());
-		assertThat(publishMsg(mockInstance).getFullmsg(), containsString(respbody));
-	}
-	**/
-	
-	@Test
-	void testSubscribeHazelcast() {
-		//HazelcastSubscribeService svc = new HazelcastSubscribeService(mockInstance);
-		publishMsg();
-		svc.terminate();
 	}
 
 	private MsgBean publishMsg() {
@@ -85,7 +62,7 @@ class HazelcastSubscribeServiceTest {
 		try {
 			msgbean = new MsgBean(CreateId.createid(), respbody, "Publish");
 			String body = MsgUtils.createBody(msgbean, splitkey);
-			logger.log(Level.INFO, "Body is: "+ body);
+			logger.log(Level.INFO, "Body is: " + body);
 			ITopic<Object> topic = mockInstance.getTopic(topicname);
 			topic.publish(body);
 		} catch (IllegalStateException | NoSuchAlgorithmException e) {
@@ -99,4 +76,22 @@ class HazelcastSubscribeServiceTest {
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
+	
+	@Test
+	void testSubscribeHazelcast() {
+		try {
+			publishMsg();
+			Thread.sleep(1000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	void testIsActive() {
+		svc.isActive();
+	}
+
+
 }
