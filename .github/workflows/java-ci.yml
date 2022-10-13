@@ -70,11 +70,9 @@ jobs:
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_webapp-service
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -136,11 +134,9 @@ jobs:
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-activemq-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -202,11 +198,9 @@ jobs:
         working-directory: ./application/consumer-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-activemq-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -272,11 +266,9 @@ jobs:
         working-directory: ./application/jaxrs-cassandra-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-cassandra-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -338,11 +330,9 @@ jobs:
         working-directory: ./application/consumer-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-hazelcast-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -404,11 +394,9 @@ jobs:
         working-directory: ./application/consumer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-kafka-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -470,11 +458,9 @@ jobs:
         working-directory: ./application/scheduled-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_scheduled-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -536,11 +522,9 @@ jobs:
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-hazelcast-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -602,11 +586,9 @@ jobs:
         working-directory: ./application/jaxrs-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-kafka-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -668,11 +650,9 @@ jobs:
         working-directory: ./application/jaxrs-memcached-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-memcached-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -734,11 +714,9 @@ jobs:
         working-directory: ./application/jaxrs-mongodb-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-mongodb-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -800,11 +778,9 @@ jobs:
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-mysql-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -866,11 +842,9 @@ jobs:
         working-directory: ./application/jaxrs-postgres-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -932,11 +906,9 @@ jobs:
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -998,10 +970,9 @@ jobs:
         working-directory: ./application/jaxrs-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -1063,11 +1034,9 @@ jobs:
         working-directory: ./application/consumer-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-rabbitmq-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -1129,11 +1098,9 @@ jobs:
         working-directory: ./application/producer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_producer-kafka-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -1195,11 +1162,9 @@ jobs:
         working-directory: ./application/randompublish-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_randompublish-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -1261,11 +1226,9 @@ jobs:
         working-directory: ./application/server-grpc-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_server-grpc-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -1327,11 +1290,9 @@ jobs:
         working-directory: ./application/jaxrs-grpc-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-grpc-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -1376,11 +1337,9 @@ jobs:
         working-directory: ./application/redis-mysql-helidon
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_redis-mysql-helidon
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -1442,11 +1401,9 @@ jobs:
         working-directory: ./application/consumer-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-redis-quarkus
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -1510,11 +1467,9 @@ jobs:
         working-directory: ./application/web-java-spring
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_web-java-spring
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -1578,10 +1533,8 @@ jobs:
         working-directory: ./application/web-java-openliberty
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_web-java-openliberty
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
