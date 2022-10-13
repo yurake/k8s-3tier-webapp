@@ -22,12 +22,12 @@ public class RabbitmqSubscribeService {
 	@Inject
 	@RestClient
 	RabbitmqDeliverService deliversvc;
-	
+
 	@ConfigProperty(name = "rabbitmq.split.key")
 	String splitkey;
 
 	@Incoming("message")
-    @Blocking
+	@Blocking
 	public void consume(String message) {
 		MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
 		msgbean.setFullmsg("Received");

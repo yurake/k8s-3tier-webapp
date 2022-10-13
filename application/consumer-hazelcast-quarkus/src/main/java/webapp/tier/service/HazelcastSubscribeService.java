@@ -27,7 +27,8 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 	@RestClient
 	HazelcastDeliverService deliversvc;
 
-	private static final Logger logger = Logger.getLogger(HazelcastSubscribeService.class.getSimpleName());
+	private static final Logger logger = Logger
+			.getLogger(HazelcastSubscribeService.class.getSimpleName());
 	private static ClientConfig clientConfig = new ClientConfig();
 	private static String topicname = ConfigProvider.getConfig()
 			.getValue("hazelcast.topic.name", String.class);
@@ -35,11 +36,12 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 			.getValue("hazelcast.address", String.class);
 	private static String splitkey = ConfigProvider.getConfig()
 			.getValue("hazelcast.split.key", String.class);
-	
-	private static HazelcastInstance hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
+
+	private static HazelcastInstance hazelcastInstance = HazelcastClient
+			.newHazelcastClient(clientConfig);
 
 	//Hide Constractor
-	private HazelcastSubscribeService(){
+	private HazelcastSubscribeService() {
 	}
 
 	void onStart(@Observes StartupEvent ev) {
@@ -65,7 +67,7 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 			return status;
 		} catch (IllegalStateException e) {
 			logger.log(Level.SEVERE, "Connect Error.", e);
-		} 
+		}
 		return status;
 	}
 
