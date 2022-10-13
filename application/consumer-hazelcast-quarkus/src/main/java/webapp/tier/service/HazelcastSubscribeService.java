@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Singleton;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -20,7 +20,7 @@ import io.quarkus.runtime.Startup;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
-@ApplicationScoped
+@Singleton
 @Startup
 public final class HazelcastSubscribeService implements MessageListener<String> {
 
@@ -28,7 +28,7 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 	HazelcastDeliverService deliversvc;
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static HazelcastInstance hazelcastInstance;
+	private static HazelcastInstance hazelcastInstance = null;
 
 	private static String topicname = ConfigProvider.getConfig()
 			.getValue("hazelcast.topic.name", String.class);
@@ -64,6 +64,10 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 			return status;
 		} catch (IllegalStateException e) {
 			logger.log(Level.SEVERE, "Connect Error.", e);
+		} finally {
+			if (hazelcastInstance != null) {
+				hazelcastInstance.shutdown();
+			}
 		}
 		return status;
 	}
