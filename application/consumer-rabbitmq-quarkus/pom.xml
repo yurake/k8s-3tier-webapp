@@ -8,10 +8,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>consumer-rabbitmq-quarkus</artifactId>
-	<properties>
-		<amqp-client.version>5.16.0</amqp-client.version>
-		<rabbitmq-mock.version>1.1.1</rabbitmq-mock.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>webapp.3tier.k8s</groupId>
@@ -22,14 +18,12 @@
 			<artifactId>quarkus-rest-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.rabbitmq</groupId>
-			<artifactId>amqp-client</artifactId>
-			<version>${amqp-client.version}</version>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-reactive-messaging-rabbitmq</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.github.fridujo</groupId>
-			<artifactId>rabbitmq-mock</artifactId>
-			<version>${rabbitmq-mock.version}</version>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
