@@ -34,11 +34,8 @@ public class MessageGenerator {
 	@Outgoing("message")
 	@Broadcast
 	public Multi<String> generate() {
-
 		return Multi.createFrom().ticks().every(Duration.ofSeconds(period))
-				.map(tick -> {
-					return generateMessgae();
-				})
+				.map(tick -> generateMessgae())
 				.onFailure().recoverWithCompletion();
 	}
 
