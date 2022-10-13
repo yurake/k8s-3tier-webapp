@@ -17,6 +17,8 @@
 		<surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
 		<maven.compiler.parameters>true</maven.compiler.parameters>
 		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+		<sonar.organization>yurak</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<distributionManagement>
 		<repository>
