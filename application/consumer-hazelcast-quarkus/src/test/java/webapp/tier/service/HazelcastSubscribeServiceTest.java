@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.health.HealthCheckResponse.Status;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +23,7 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.hazelcast.HazelcastServerTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import webapp.tier.bean.MsgBean;
+import webapp.tier.healthcheck.ReadinessHealthCheckHazelcastSubscriber;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
@@ -76,7 +78,7 @@ class HazelcastSubscribeServiceTest {
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
-	
+
 	@Test
 	void testSubscribeHazelcast() {
 		try {
@@ -87,11 +89,19 @@ class HazelcastSubscribeServiceTest {
 			fail();
 		}
 	}
-	
-	@Test
-	void testIsActive() {
-		svc.isActive();
-	}
 
+	@Test
+	void testSubscribeAndReadinessHealthCheck() {
+		ReadinessHealthCheckHazelcastSubscriber hc = new ReadinessHealthCheckHazelcastSubscriber();
+		assertEquals(Status.UP, hc.call().getStatus(), "Unexpected status");
+
+		try {
+			publishMsg();
+			Thread.sleep(1000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
 }

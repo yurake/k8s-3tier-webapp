@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PreDestroy;
+import javax.enterprise.event.Observes;
 import javax.inject.Singleton;
 
 import org.eclipse.microprofile.config.ConfigProvider;
@@ -16,19 +17,19 @@ import com.hazelcast.topic.ITopic;
 import com.hazelcast.topic.Message;
 import com.hazelcast.topic.MessageListener;
 
-import io.quarkus.runtime.Startup;
+import io.quarkus.runtime.StartupEvent;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @Singleton
-@Startup
 public final class HazelcastSubscribeService implements MessageListener<String> {
 
 	@RestClient
 	HazelcastDeliverService deliversvc;
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static HazelcastInstance hazelcastInstance = null;
+	private static HazelcastInstance hazelcastInstance;
+	private static ClientConfig clientConfig = new ClientConfig();
 
 	private static String topicname = ConfigProvider.getConfig()
 			.getValue("hazelcast.topic.name", String.class);
@@ -37,18 +38,16 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 	private static String splitkey = ConfigProvider.getConfig()
 			.getValue("hazelcast.split.key", String.class);
 
-	public HazelcastSubscribeService() {
-		if (hazelcastInstance == null) {
-			ClientConfig clientConfig = new ClientConfig();
-			clientConfig.getNetworkConfig().addAddress(address);
-			clientConfig.getConnectionStrategyConfig().getConnectionRetryConfig()
-					.setClusterConnectTimeoutMillis(5000)
-					.setMaxBackoffMillis(10000);
-			hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
-			ITopic<String> topic = hazelcastInstance.getTopic(topicname);
-			topic.addMessageListener(this);
-			logger.log(Level.INFO, "Subscribing...");
-		}
+	void onStart(@Observes StartupEvent ev) {
+		clientConfig.getNetworkConfig().addAddress(address);
+		clientConfig.getConnectionStrategyConfig().getConnectionRetryConfig()
+				.setClusterConnectTimeoutMillis(5000)
+				.setMaxBackoffMillis(10000);
+		HazelcastSubscribeService.hazelcastInstance = HazelcastClient
+				.newHazelcastClient(clientConfig);
+		ITopic<String> topic = hazelcastInstance.getTopic(topicname);
+		topic.addMessageListener(this);
+		logger.log(Level.INFO, "Subscribing...");
 	}
 
 	@PreDestroy
@@ -64,11 +63,7 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 			return status;
 		} catch (IllegalStateException e) {
 			logger.log(Level.SEVERE, "Connect Error.", e);
-		} finally {
-			if (hazelcastInstance != null) {
-				hazelcastInstance.shutdown();
-			}
-		}
+		} 
 		return status;
 	}
 
@@ -79,7 +74,7 @@ public final class HazelcastSubscribeService implements MessageListener<String> 
 		msgbean.setFullmsg("Received");
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		String response = deliversvc.random();
-		logger.log(Level.INFO, "Call Random Publish: {0}", response);
+		logger.log(Level.INFO, "Called Random Publish: {0}", response);
 	}
 
 }
