@@ -23,8 +23,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
@@ -70,7 +70,7 @@ jobs:
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_webapp-service
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -87,8 +87,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -116,7 +116,7 @@ jobs:
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-activemq-quarkus
         run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -136,7 +136,7 @@ jobs:
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-activemq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -145,7 +145,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-activemq-quarkus:
-    needs: [init-build, jaxrs-activemq-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -153,8 +153,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -202,7 +202,7 @@ jobs:
         working-directory: ./application/consumer-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-activemq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -219,8 +219,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -272,7 +272,7 @@ jobs:
         working-directory: ./application/jaxrs-cassandra-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-cassandra-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -281,7 +281,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-hazelcast-quarkus:
-    needs: [init-build, jaxrs-hazelcast-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -289,8 +289,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -338,7 +338,7 @@ jobs:
         working-directory: ./application/consumer-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-hazelcast-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -347,7 +347,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-kafka-quarkus:
-    needs: [init-build]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -355,8 +355,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -404,7 +404,7 @@ jobs:
         working-directory: ./application/consumer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-kafka-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -421,8 +421,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -470,7 +470,7 @@ jobs:
         working-directory: ./application/scheduled-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_scheduled-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -487,8 +487,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -516,7 +516,7 @@ jobs:
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-hazelcast-quarkus
         run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -536,7 +536,7 @@ jobs:
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-hazelcast-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -553,8 +553,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -602,7 +602,7 @@ jobs:
         working-directory: ./application/jaxrs-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-kafka-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -619,8 +619,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -668,7 +668,7 @@ jobs:
         working-directory: ./application/jaxrs-memcached-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-memcached-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -685,8 +685,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -734,7 +734,7 @@ jobs:
         working-directory: ./application/jaxrs-mongodb-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-mongodb-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -751,8 +751,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -800,7 +800,7 @@ jobs:
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-mysql-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -817,8 +817,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -866,7 +866,7 @@ jobs:
         working-directory: ./application/jaxrs-postgres-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -883,8 +883,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -912,7 +912,7 @@ jobs:
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -932,7 +932,7 @@ jobs:
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -949,8 +949,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -978,7 +978,7 @@ jobs:
         working-directory: ./application/jaxrs-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-redis-quarkus
         run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -998,7 +998,7 @@ jobs:
         working-directory: ./application/jaxrs-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1006,7 +1006,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-rabbitmq-quarkus:
-    needs: [init-build, jaxrs-rabbitmq-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1014,8 +1014,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -1063,7 +1063,7 @@ jobs:
         working-directory: ./application/consumer-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-rabbitmq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1072,7 +1072,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   producer-kafka-quarkus:
-    needs: [init-build]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1080,8 +1080,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -1129,7 +1129,7 @@ jobs:
         working-directory: ./application/producer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_producer-kafka-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1146,8 +1146,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -1195,7 +1195,7 @@ jobs:
         working-directory: ./application/randompublish-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_randompublish-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1203,7 +1203,7 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
-  implementer-grpc-quarkus:
+  server-grpc-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
@@ -1212,8 +1212,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -1234,20 +1234,20 @@ jobs:
         uses: actions/cache@v3.0.10
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/implementer-grpc-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/server-grpc-quarkus/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven-implementer-grpc-quarkus
+            ${{ runner.os }}-maven-server-grpc-quarkus
       - name: Maven Build
-        working-directory: ./application/implementer-grpc-quarkus
+        working-directory: ./application/server-grpc-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
       - name: Build Image
-        working-directory: ./application/implementer-grpc-quarkus
-        run: docker build -t yurak/implementer-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
+        working-directory: ./application/server-grpc-quarkus
+        run: docker build -t yurak/server-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
       - name: Push Image
         if: github.event_name == 'push'
-        run: docker push yurak/implementer-grpc-quarkus:latest
+        run: docker push yurak/server-grpc-quarkus:latest
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1258,11 +1258,77 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
-        working-directory: ./application/implementer-grpc-quarkus
+        working-directory: ./application/server-grpc-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
-          -Dsonar.projectKey=yurake_implementer-grpc-quarkus
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -Dsonar.projectKey=yurake_server-grpc-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+  jaxrs-grpc-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.0.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-grpc-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-grpc-quarkus
+      - name: Maven Build
+        working-directory: ./application/jaxrs-grpc-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
+      - name: Build Image
+        working-directory: ./application/jaxrs-grpc-quarkus
+        run: docker build -t yurak/jaxrs-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        if: github.event_name == 'push'
+        run: docker push yurak/jaxrs-grpc-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-grpc-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -Dsonar.projectKey=yurake_jaxrs-grpc-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
@@ -1278,8 +1344,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
@@ -1310,7 +1376,7 @@ jobs:
         working-directory: ./application/redis-mysql-helidon
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_redis-mysql-helidon
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1319,7 +1385,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-redis-quarkus:
-    needs: [init-build, jaxrs-redis-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1327,8 +1393,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -1376,7 +1442,7 @@ jobs:
         working-directory: ./application/consumer-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-redis-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1392,8 +1458,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -1444,7 +1510,7 @@ jobs:
         working-directory: ./application/web-java-spring
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_web-java-spring
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
@@ -1460,8 +1526,8 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "21.0.0.2"
-          java: "java11"
+          graalvm: "22.1.0"
+          java: "java17"
           arch: "amd64"
       - run: java -version
       - name: setup-native-image
@@ -1512,7 +1578,7 @@ jobs:
         working-directory: ./application/web-java-openliberty
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_web-java-openliberty
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/

@@ -29,6 +29,13 @@ class MsgBeanTest {
 		assertThat(bean.getMessage(), is("Test"));
 		assertThat(bean.getFullmsg(), containsString("TEST"));
 	}
+	
+	@Test
+	void testFullMsg() {
+		MsgBean bean = new MsgBean(1111, "Test");
+		bean.setFullmsg("TEST");
+		assertThat(bean.getFullmsg(), is("TEST : id: 1111, message: Test"));
+	}
 
 	@Test
 	void testId() {

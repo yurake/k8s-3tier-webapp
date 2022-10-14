@@ -64,7 +64,8 @@ class HazelcastMqServiceTest {
 	@Test
 	void testPutQueueHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
-		when(mockInstanceError.getQueue(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
+		when(mockInstanceError.getQueue(ArgumentMatchers.any()))
+				.thenThrow(new IllegalStateException());
 		assertThat(svc.putMsg(mockInstanceError).getFullmsg(), containsString(respbody));
 	}
 
@@ -85,9 +86,9 @@ class HazelcastMqServiceTest {
 	void testGetQueueHazelcast() throws NoSuchAlgorithmException, InterruptedException {
 
 		MsgBean expected = new MsgBean(CreateId.createid(), respbody, "Put");
-			String body = MsgUtils.createBody(expected, ",");
-			BlockingQueue<Object> queue = mockInstance.getQueue(queuename);
-			queue.put(body);
+		String body = MsgUtils.createBody(expected, ",");
+		BlockingQueue<Object> queue = mockInstance.getQueue(queuename);
+		queue.put(body);
 		MsgBean msgbean = svc.getMsg(mockInstance);
 		assertThat(msgbean.getFullmsg(), containsString(respbody));
 		assertThat(msgbean.getId(), is(expected.getId()));
@@ -96,7 +97,8 @@ class HazelcastMqServiceTest {
 	@Test
 	void testGetQueueHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
-		when(mockInstanceError.getQueue(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
+		when(mockInstanceError.getQueue(ArgumentMatchers.any()))
+				.thenThrow(new IllegalStateException());
 		assertThat(svc.getMsg(mockInstanceError).getMessage(), is("Unexpected Error"));
 	}
 
@@ -141,8 +143,10 @@ class HazelcastMqServiceTest {
 	@Test
 	void testPublishHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
-		when(mockInstanceError.getTopic(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
-		assertThat(svc.publishMsg(mockInstanceError).getFullmsg(), containsString(respbody));
+		when(mockInstanceError.getTopic(ArgumentMatchers.any()))
+				.thenThrow(new IllegalStateException());
+		assertThat(svc.publishMsg(mockInstanceError).getFullmsg(),
+				containsString(respbody));
 	}
 
 	@Test

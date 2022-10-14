@@ -65,7 +65,7 @@ public class MsgBean {
 	}
 
 	private void setFullmsgIncImpl(String type) {
-	this.fullmsg = type + " : id: " + this.id + ", message: " + this.message;
+		this.fullmsg = type + " : id: " + this.id + ", message: " + this.message;
 	}
 
 	public String getFullmsg() {
