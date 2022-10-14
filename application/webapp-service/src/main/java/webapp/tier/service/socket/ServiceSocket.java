@@ -37,7 +37,8 @@ public class ServiceSocket {
 	@OnError
 	public void onError(Session session, Throwable throwable) {
 		sessions.remove(session.getId());
-		logger.logp(Level.SEVERE, "error : {0}{1}", session.getId(), throwable.getMessage());
+		logger.logp(Level.SEVERE, "error : {0}{1}", session.getId(),
+				throwable.getMessage());
 	}
 
 	@OnMessage

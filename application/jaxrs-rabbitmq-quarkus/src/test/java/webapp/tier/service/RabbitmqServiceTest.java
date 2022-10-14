@@ -151,11 +151,14 @@ class RabbitmqServiceTest {
 			channel.queueBind(queueName, exchangename, routingkey);
 
 			channel.exchangeDeclare(exchangename, "direct", true);
-			channel.basicPublish(exchangename, routingkey, null, "0000,Test".getBytes(StandardCharsets.UTF_8));
+			channel.basicPublish(exchangename, routingkey, null,
+					"0000,Test".getBytes(StandardCharsets.UTF_8));
 			TimeUnit.MILLISECONDS.sleep(200L);
-			channel.basicPublish(exchangename, routingkey, null, "1111,Test".getBytes(StandardCharsets.UTF_8));
+			channel.basicPublish(exchangename, routingkey, null,
+					"1111,Test".getBytes(StandardCharsets.UTF_8));
 			TimeUnit.MILLISECONDS.sleep(200L);
-			channel.basicPublish(exchangename, routingkey, null, "2222,Test".getBytes(StandardCharsets.UTF_8));
+			channel.basicPublish(exchangename, routingkey, null,
+					"2222,Test".getBytes(StandardCharsets.UTF_8));
 			TimeUnit.MILLISECONDS.sleep(200L);
 
 		} catch (Exception e) {
@@ -184,7 +187,8 @@ class RabbitmqServiceTest {
 			channel.queueBind(queueName, exchangename, routingkey);
 
 			channel.exchangeDeclare(exchangename, "direct", true);
-			channel.basicPublish(exchangename, routingkey, null, "0000,Test".getBytes(StandardCharsets.UTF_8));
+			channel.basicPublish(exchangename, routingkey, null,
+					"0000,Test".getBytes(StandardCharsets.UTF_8));
 
 		} catch (Exception e) {
 			e.printStackTrace();
