@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-grpc-quarkus
+spec:
+  type: ClusterIP
+  selector:
+    app: server-grpc-quarkus
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+    - name: grpc-server
+      protocol: TCP
+      port: 9000

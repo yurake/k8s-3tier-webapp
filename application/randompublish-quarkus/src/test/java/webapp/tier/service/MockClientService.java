@@ -1,4 +1,5 @@
 package webapp.tier.service;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -16,14 +17,14 @@ public class MockClientService {
 	@Path("/activemq/publish")
 	@Produces("application/json")
 	public String activemq() {
-			return "Test";
+		return "Test";
 	}
 
 	@POST
 	@Path("/hazelcast/publish")
 	@Produces("application/json")
 	public String hazelcast() {
-			return "Test";
+		return "Test";
 	}
 
 	@POST

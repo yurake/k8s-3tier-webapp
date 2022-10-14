@@ -1,14 +1,16 @@
 package webapp.tier.service.generator;
 
-import java.util.concurrent.TimeUnit;
+import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
-import org.jboss.logging.Logger;
 
-import io.reactivex.Flowable;
+import io.smallrye.mutiny.Multi;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
@@ -18,7 +20,8 @@ import webapp.tier.util.MsgUtils;
 public class MessageGenerator {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-
+	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
+	
 	@ConfigProperty(name = "common.message")
 	String message;
 
@@ -30,14 +33,20 @@ public class MessageGenerator {
 
 	@Outgoing("message")
 	@Broadcast
-	public Flowable<String> generate() {
+	public Multi<String> generate() {
+		return Multi.createFrom().ticks().every(Duration.ofSeconds(period))
+				.map(tick -> generateMessgae())
+				.onFailure().recoverWithCompletion();
+	}
 
-		return Flowable.interval(period, TimeUnit.SECONDS)
-				.onBackpressureDrop()
-				.map(tick -> {
-					MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Generate");
-					logger.info(msgbean.getFullmsg());
-					return MsgUtils.createBody(msgbean, splitkey);
-				});
+	private String generateMessgae() {
+		MsgBean msgbean = errormsg;
+		try {
+			msgbean = new MsgBean(CreateId.createid(), message, "Generate");
+		} catch (NoSuchAlgorithmException e) {
+			logger.log(Level.SEVERE, "Create Id Error.", e);
+		}
+		logger.log(Level.INFO, msgbean.getFullmsg());
+		return MsgUtils.createBody(msgbean, splitkey);
 	}
 }

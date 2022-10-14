@@ -39,7 +39,8 @@ public class ActiveMqSocket {
 	@OnError
 	public void onError(Session session, Throwable throwable) {
 		sessions.remove(session.getId());
-		logger.logp(Level.SEVERE, "error : {0}{1}", session.getId(), throwable.getMessage());
+		logger.logp(Level.SEVERE, "error : {0}{1}", session.getId(),
+				throwable.getMessage());
 	}
 
 	@OnMessage
@@ -51,7 +52,8 @@ public class ActiveMqSocket {
 				logger.log(Level.INFO, "Send : {0}", s.getId());
 				s.getAsyncRemote().sendObject(message, result -> {
 					if (result.getException() != null) {
-						logger.log(Level.SEVERE, "Unable to send message", result.getException());
+						logger.log(Level.SEVERE, "Unable to send message",
+								result.getException());
 					}
 				});
 			});

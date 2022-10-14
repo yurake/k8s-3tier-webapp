@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import org.eclipse.microprofile.health.HealthCheckResponse.State;
+import org.eclipse.microprofile.health.HealthCheckResponse.Status;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -18,7 +18,7 @@ class ReadinessHealthCheckRabbitmqTest {
 	@Test
 	void testCallDown() {
 		ReadinessHealthCheckRabbitmq hc = new ReadinessHealthCheckRabbitmq();
-		assertEquals(State.DOWN, hc.call().getState(), "Unexpected status");
+		assertEquals(Status.DOWN, hc.call().getStatus(), "Unexpected status");
 	}
 
 	@Test
@@ -30,6 +30,6 @@ class ReadinessHealthCheckRabbitmqTest {
 				return mock;
 			}
 		};
-		assertEquals(State.UP, hc.call().getState(), "Unexpected status");
+		assertEquals(Status.UP, hc.call().getStatus(), "Unexpected status");
 	}
 }

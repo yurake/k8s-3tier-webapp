@@ -2,7 +2,9 @@ additional-dependency-files:
   - type: maven-pom-xml
     path: application/jaxrs-activemq-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/implementer-grpc-quarkus/pom.xml
+    path: application/jaxrs-grpc-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/server-grpc-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/redis-mysql-helidon/pom.xml
   - type: maven-pom-xml

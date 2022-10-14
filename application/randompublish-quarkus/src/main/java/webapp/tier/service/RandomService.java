@@ -60,7 +60,8 @@ public class RandomService {
 			response = stringBuild("Call: Postgres Publish", postgresresource.insert());
 			break;
 		case 4:
-			response = stringBuild("Call: Hazelcast Publish", hazelcastresource.publish());
+			response = stringBuild("Call: Hazelcast Publish",
+					hazelcastresource.publish());
 			break;
 		case 5:
 			response = stringBuild("Call: Mongodb Publish", mongodbResource.insert());

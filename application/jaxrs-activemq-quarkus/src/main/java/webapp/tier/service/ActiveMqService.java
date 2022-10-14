@@ -68,8 +68,10 @@ public class ActiveMqService implements Messaging, Runnable {
 	public MsgBean putMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			context.createProducer().send(context.createQueue(queuename), context.createTextMessage(body));
+		try (JMSContext context = connectionFactory
+				.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			context.createProducer().send(context.createQueue(queuename),
+					context.createTextMessage(body));
 		}
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
@@ -78,8 +80,10 @@ public class ActiveMqService implements Messaging, Runnable {
 	@Override
 	public MsgBean getMsg() throws RuntimeException {
 		MsgBean msgbean = null;
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
-				JMSConsumer consumer = context.createConsumer(context.createQueue(queuename))) {
+		try (JMSContext context = connectionFactory
+				.createContext(Session.AUTO_ACKNOWLEDGE);
+				JMSConsumer consumer = context
+						.createConsumer(context.createQueue(queuename))) {
 			String resp = consumer.receiveBody(String.class);
 
 			if (Objects.isNull(resp)) {
@@ -97,8 +101,10 @@ public class ActiveMqService implements Messaging, Runnable {
 	public MsgBean publishMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
+		try (JMSContext context = connectionFactory
+				.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			context.createProducer().send(context.createTopic(topicname),
+					context.createTextMessage(body));
 		}
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
@@ -107,8 +113,10 @@ public class ActiveMqService implements Messaging, Runnable {
 	@Override
 	public void run() {
 		while (isEnableReceived) {
-			try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
-					JMSConsumer consumer = context.createConsumer(context.createTopic(topicname))) {
+			try (JMSContext context = connectionFactory
+					.createContext(Session.AUTO_ACKNOWLEDGE);
+					JMSConsumer consumer = context
+							.createConsumer(context.createTopic(topicname))) {
 				amqconsumer.consume(consumer);
 			} catch (Exception e) {
 				logger.log(Level.SEVERE, "Subscribe Error.", e);
