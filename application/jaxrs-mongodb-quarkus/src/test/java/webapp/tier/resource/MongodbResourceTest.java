@@ -26,27 +26,27 @@ class MongodbResourceTest {
 	@Test
 	void testInsert() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(svc.insertMsg(ArgumentMatchers.any())).thenReturn(msgbean);
+		when(svc.insertMsg(ArgumentMatchers.any())).thenReturn(msgbean);
 		given()
 				.when()
 				.contentType("application/json")
 				.post("/quarkus/mongodb/insert")
 				.then()
 				.statusCode(200)
-                .body(containsString("test"));
+				.body(containsString("test"));
 	}
 
 	@Test
 	void testSelect() throws NoSuchAlgorithmException {
 		List<MsgBean> msglist = new ArrayList<>();
 		msglist.add(new MsgBean(CreateId.createid(), "test", "Test"));
-        when(svc.selectMsg(ArgumentMatchers.any())).thenReturn(msglist);
+		when(svc.selectMsg(ArgumentMatchers.any())).thenReturn(msglist);
 		given()
 				.when()
 				.get("/quarkus/mongodb/select")
 				.then()
 				.statusCode(200)
-                .body(containsString("test"));
+				.body(containsString("test"));
 	}
 
 	@Test
@@ -62,4 +62,3 @@ class MongodbResourceTest {
 	}
 
 }
-

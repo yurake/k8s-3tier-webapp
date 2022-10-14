@@ -104,10 +104,10 @@ public class MysqlService implements Database {
 		return msglist;
 	}
 
-    @CacheInvalidate(cacheName = "mysql_select_msg")
-    public void invalidateCache() {
+	@CacheInvalidate(cacheName = "mysql_select_msg")
+	public void invalidateCache() {
 		logger.log(Level.INFO, "Invalidate Cache: mysql_select_msg");
-    }
+	}
 
 	@Override
 	public String deleteMsg() throws SQLException {

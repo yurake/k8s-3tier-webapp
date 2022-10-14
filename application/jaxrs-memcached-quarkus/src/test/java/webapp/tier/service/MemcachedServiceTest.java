@@ -64,7 +64,8 @@ class MemcachedServiceTest {
 	void testGetMemcachedNoData() {
 		MemcachedService svc = new MemcachedService();
 		try {
-			assertEquals("No Data.", svc.getMsg(svc.createMemCachedClient()).getMessage());
+			assertEquals("No Data.",
+					svc.getMsg(svc.createMemCachedClient()).getMessage());
 		} catch (Exception expected) {
 			fail();
 		}

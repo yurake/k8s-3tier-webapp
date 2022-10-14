@@ -84,7 +84,7 @@ class MongodbServiceTest {
 	@Test
 	void testGetCollection() {
 		try {
-		mongosvc.getCollection();
+			mongosvc.getCollection();
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
