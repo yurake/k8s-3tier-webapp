@@ -22,7 +22,7 @@ import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class HazelcastSubscribeService implements MessageListener<String> {
+public final class HazelcastSubscribeService implements MessageListener<String> {
 
 	@RestClient
 	HazelcastDeliverService deliversvc;
