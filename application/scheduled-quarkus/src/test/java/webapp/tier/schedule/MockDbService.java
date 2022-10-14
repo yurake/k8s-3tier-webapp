@@ -1,4 +1,5 @@
 package webapp.tier.schedule;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -15,18 +16,18 @@ public class MockDbService {
 	@POST
 	@Path("/postgres/delete")
 	public String deletePostgres() {
-			return "Test";
+		return "Test";
 	}
 
 	@POST
 	@Path("/mysql/delete")
 	public String deleteMysql() {
-			return "Test";
+		return "Test";
 	}
 
 	@POST
 	@Path("/mongodb/delete")
 	public String deleteMongodb() {
-			return "Test";
+		return "Test";
 	}
 }

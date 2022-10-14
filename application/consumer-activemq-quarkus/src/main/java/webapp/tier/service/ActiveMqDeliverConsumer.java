@@ -10,21 +10,24 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class ActiveMqDeliverConsumer extends ActiveMqConsumer {
+public class ActiveMqDeliverConsumer {
+
+	@ConfigProperty(name = "activemq.split.key")
+	String splitkey;
 
 	@Inject
 	@RestClient
-	DeliverService deliversvc;
+	ActiveMqDeliverService deliversvc;
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	@Override
 	public void consume(JMSConsumer consumer) throws JMSException {
 		logger.log(Level.INFO, "Ready for receive message...");
 		Message message = consumer.receive();

@@ -1,85 +1,82 @@
 package webapp.tier.service;
 
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static com.rabbitmq.client.BuiltinExchangeType.*;
+import static java.nio.charset.StandardCharsets.*;
+import static java.util.concurrent.TimeUnit.*;
 
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
 
-import javax.inject.Inject;
-
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.junit.jupiter.api.Test;
 
-import com.github.fridujo.rabbitmq.mock.MockConnection;
-import com.github.fridujo.rabbitmq.mock.MockConnectionFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.bean.MsgBean;
+import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgUtils;
 
 @QuarkusTest
 class RabbitmqSubscribeServiceTest {
 
-	@Inject
-	RabbitmqSubscribeService svc;
+	private static String message = ConfigProvider.getConfig().getValue("common.message",
+			String.class);
+	private static String splitkey = ConfigProvider.getConfig()
+			.getValue("rabbitmq.split.key", String.class);
+	private static String queueName = ConfigProvider.getConfig()
+			.getValue("mp.messaging.incoming.message.queue.name", String.class);
+	private static String routingkey = ConfigProvider.getConfig()
+			.getValue("mp.messaging.incoming.message.routing-keys", String.class);
+	private static String hostname = "localhost";
+	private static String exchangeName = "exchangemsg";
 
-	private static final String exchangename = "exchangemsg";
-	private static final String routingkey = "routingkeymsg";
-
-	private static MockConnection createRabbitmqMock() {
-		MockConnection conn = new MockConnectionFactory().newConnection();
-		return conn;
-	}
-
-	@Test
-	void testSubscribe() {
-		try (MockConnection conn = createRabbitmqMock();
-				Channel channel = conn.createChannel()) {
-			RabbitmqSubscribeService rsvc = new RabbitmqSubscribeService() {
-				public Connection getConnection() {
-					return conn;
-				}
-			};
-			Thread thread = new Thread(rsvc);
-			thread.start();
-
-			channel.exchangeDeclare(exchangename, "direct", true);
-			String queueName = channel.queueDeclare().getQueue();
-			channel.queueBind(queueName, exchangename, routingkey);
-
-			channel.exchangeDeclare(exchangename, "direct", true);
-			channel.basicPublish(exchangename, routingkey, null, "0000,Test".getBytes(StandardCharsets.UTF_8));
-			TimeUnit.MILLISECONDS.sleep(200L);
-			channel.basicPublish(exchangename, routingkey, null, "1111,Test".getBytes(StandardCharsets.UTF_8));
-			TimeUnit.MILLISECONDS.sleep(200L);
-			channel.basicPublish(exchangename, routingkey, null, "2222,Test".getBytes(StandardCharsets.UTF_8));
-			TimeUnit.MILLISECONDS.sleep(200L);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
+	ObjectMapper objectMapper = new ObjectMapper();
 
 	@Test
-	void testSubscribeNoError() {
-		Connection conn = mock(Connection.class);
-		Channel chan = mock(Channel.class);
-		try {
-			when(conn.createChannel()).thenReturn(chan);
-			RabbitmqSubscribeService rsvc = new RabbitmqSubscribeService() {
-				public Connection getConnection() {
-					return conn;
-				}
+	void testSubscribe() throws Exception {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
+		String body = MsgUtils.createBody(msgbean, splitkey);
 
-				protected void subscribeRabbitmq(Connection conn, Channel channel, RabbitmqConsumer consumer) {
-				}
-			};
-			rsvc.run();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
+		Channel channel = getChannel();
+
+		channel.exchangeDeclare(exchangeName, TOPIC, true, false, Map.of());
+		channel.queueDeclare(queueName, true, false, false, Map.of());
+		channel.queueBind(queueName, exchangeName, routingkey);
+		/**
+		AtomicReference<String> receivedMessage = new AtomicReference<>(null);
+		DeliverCallback deliverCallback = (consumerTag, message) -> {
+			String subscribedbody = objectMapper.readValue(message.getBody(),
+					String.class);
+			if (!Objects.equals(subscribedbody, body)) {
+				return;
+			}
+			receivedMessage.set(subscribedbody);
+		};
+		String consumerTag = channel.basicConsume(queueName, true, deliverCallback, tag -> {
+		});
+		
+		DefaultConsumer consumer = new DefaultConsumer(channel);
+		String consumerTag = channel.basicConsume(queueName, true, "myConsumerTag", consumer);
+		**/
+
+		AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
+				.contentType("text/plain")
+				.build();
+		channel.basicPublish(exchangeName, routingkey, props, body.getBytes(UTF_8));
+
+		/**
+		await().atMost(3, SECONDS).untilAtomic(receivedMessage, notNullValue());
+		channel.basicCancel(consumerTag);
+		**/
+	}
+
+	Channel getChannel() throws Exception {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		connectionFactory.setHost(hostname);
+		connectionFactory.setChannelRpcTimeout((int) SECONDS.toMillis(3));
+		return connectionFactory.newConnection().createChannel();
 	}
 }

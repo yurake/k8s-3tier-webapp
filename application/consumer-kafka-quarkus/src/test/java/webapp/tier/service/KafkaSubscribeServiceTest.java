@@ -1,26 +1,28 @@
 package webapp.tier.service;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.inject.Inject;
 
-import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.Test;
 
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
-import io.smallrye.reactive.messaging.annotations.Merge;
+import io.quarkus.test.kafka.InjectKafkaCompanion;
+import io.quarkus.test.kafka.KafkaCompanionResource;
+import io.smallrye.reactive.messaging.kafka.companion.ConsumerTask;
+import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
+import io.smallrye.reactive.messaging.kafka.companion.ProducerTask;
 
 @QuarkusTest
+@QuarkusTestResource(KafkaCompanionResource.class)
 class KafkaSubscribeServiceTest {
-
 	@Inject
-	private KafkaSubscribeService svc;
+	KafkaSubscribeService svc;
 
-	@Inject
-	@Channel("message")
-	@Merge(Merge.Mode.MERGE)
-	private Emitter<String> emitmsg;
+	@InjectKafkaCompanion
+	KafkaCompanion companion;
 
 	@Test
 	void testProcess() {
@@ -33,8 +35,15 @@ class KafkaSubscribeServiceTest {
 	}
 
 	@Test
-	void testProcessEmitter() {
-		emitmsg.send("Test");
-	}
+	void testProcessKafkaCompanion() {
+		ProducerTask producer = companion.produceStrings()
+				.usingGenerator(i -> new ProducerRecord<>("message", "Test Message"));
 
+		ConsumerTask<String, String> consumer = companion.consumeStrings().fromTopics(
+				"message",
+				10);
+		consumer.awaitCompletion();
+		producer.close();
+		assertEquals(10, consumer.count());
+	}
 }

@@ -19,7 +19,9 @@ import webapp.tier.util.MsgUtils;
 public class RabbitmqConsumer extends DefaultConsumer {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private static String splitkey = ConfigProvider.getConfig().getValue("rabbitmq.split.key", String.class);
+	private static String splitkey = ConfigProvider.getConfig().getValue(
+			"rabbitmq.split.key",
+			String.class);
 	RabbitmqSocket rmqsock = new RabbitmqSocket();
 
 	public RabbitmqConsumer(Channel channel) {
@@ -27,10 +29,12 @@ public class RabbitmqConsumer extends DefaultConsumer {
 	}
 
 	@Override
-	public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
+	public void handleDelivery(String consumerTag, Envelope envelope,
+			AMQP.BasicProperties properties, byte[] body)
 			throws IOException {
 		long deliveryTag = envelope.getDeliveryTag();
-		MsgBean msgbean2 = MsgUtils.splitBody(new String(body, StandardCharsets.UTF_8), splitkey);
+		MsgBean msgbean2 = MsgUtils.splitBody(new String(body, StandardCharsets.UTF_8),
+				splitkey);
 		msgbean2.setFullmsg("Received");
 		logger.log(Level.INFO, msgbean2.getFullmsg());
 		rmqsock.onMessage(MsgUtils.createBody(msgbean2, splitkey));

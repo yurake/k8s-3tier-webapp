@@ -165,10 +165,17 @@ kubectl apply -f ./jaeger-service-externalname.yaml
 echo "###"
 echo ""
 
-echo "### implementer-grpc-quarkus"
-cd "$ROOT_DIR"/implementer-grpc-quarkus
-kubectl apply -f ./implementer-grpc-quarkus-deployment.yaml
-kubectl apply -f ./implementer-grpc-quarkus-service.yaml
+echo "### server-grpc-quarkus"
+cd "$ROOT_DIR"/server-grpc-quarkus
+kubectl apply -f ./server-grpc-quarkus-deployment.yaml
+kubectl apply -f ./server-grpc-quarkus-service.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-grpc-quarkus"
+cd "$ROOT_DIR"/jaxrs-grpc-quarkus
+kubectl apply -f ./jaxrs-grpc-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-grpc-quarkus-service.yaml
 echo "###"
 echo ""
 

@@ -20,7 +20,8 @@ class PostgresResourceTest {
 	@BeforeEach
 	public void createTable() {
 		String createsql = "CREATE TABLE msg (id SERIAL PRIMARY KEY, msg TEXT NOT NULL)";
-		try (Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
+		try (Connection con = DriverManager
+				.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
 				Statement stmt = con.createStatement()) {
 			stmt.executeUpdate(createsql);
 		} catch (SQLException e) {
@@ -30,9 +31,10 @@ class PostgresResourceTest {
 	}
 
 	@AfterEach
-	private void dropTable() {
+	public void dropTable() {
 		String createsql = "DROP TABLE msg";
-		try (Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
+		try (Connection con = DriverManager
+				.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
 				Statement stmt = con.createStatement()) {
 			stmt.executeUpdate(createsql);
 		} catch (SQLException e) {
@@ -49,7 +51,7 @@ class PostgresResourceTest {
 				.post("/quarkus/postgres/insert")
 				.then()
 				.statusCode(200)
-                .body(containsString("Hello k8s-3tier-webapp with quarkus"));
+				.body(containsString("Hello k8s-3tier-webapp with quarkus"));
 	}
 
 	@Test
@@ -59,7 +61,7 @@ class PostgresResourceTest {
 				.get("/quarkus/postgres/select")
 				.then()
 				.statusCode(200)
-                .body(containsString("No Data."));
+				.body(containsString("No Data."));
 	}
 
 	@Test
@@ -70,8 +72,7 @@ class PostgresResourceTest {
 				.post("/quarkus/postgres/delete")
 				.then()
 				.statusCode(200)
-                .body(containsString("Delete Msg Records"));
+				.body(containsString("Delete Msg Records"));
 	}
 
 }
-
