@@ -10,6 +10,7 @@ var mysqlurl = url + "/mysql/";
 var postgresurl = url + "/postgres/";
 var mongodburl = url + "/mongodb/";
 var cassandraurl = url + "/cassandra/";
+var grpcaurl = url + "/grpc/";
 var initialvalue = "Response Values";
 var set = "set";
 var put = "put";
@@ -30,6 +31,7 @@ var respmysql = "#respmysql";
 var resppostgres = "#resppostgres";
 var respmongodb = "#respmongodb";
 var respcassandra = "#respcassandra";
+var respgrpc = "#respgrpc";
 let isopenkafka = false;
 let isopenredis = false;
 let isopenrabbitmq = false;
@@ -48,6 +50,7 @@ $(function () {
   $(resppostgres).html(initialvalue);
   $(respmongodb).html(initialvalue);
   $(respcassandra).html(initialvalue);
+  $(respgrpc).html(initialvalue);
 
   var sse;
 
@@ -197,14 +200,6 @@ $(function () {
       console.log("Already closed.");
     }
   }
-
-  $("#getkafka").click(function () {
-    dispMsgFromString(get, kafkaurl + get, respkafka);
-  });
-
-  $("#publishkafka").click(function () {
-    dispMsgFromJson(post, kafkaurl + publish, respkafka);
-  });
 
   $("#subscribekafka").click(function () {
     if (isopenkafka) {
@@ -372,5 +367,13 @@ $(function () {
 
   $("#deletecassandra").click(function () {
     dispMsgFromString(post, cassandraurl + delt, respcassandra);
+  });
+
+  $("#getidgrcp").click(function () {
+    dispMsgFromString(get, grpcaurl + "getid", respgrpc);
+  });
+
+  $("#getmsggrpc").click(function () {
+    dispMsgFromString(get, grpcaurl + "getmsg", respgrpc);
   });
 })

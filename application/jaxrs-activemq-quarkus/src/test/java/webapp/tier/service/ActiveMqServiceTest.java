@@ -61,8 +61,10 @@ class ActiveMqServiceTest {
 
 	@Test
 	void testGetMsgNoData() throws Exception {
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			context.createProducer().send(context.createQueue(queuename), context.createTextMessage(null));
+		try (JMSContext context = connectionFactory
+				.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			context.createProducer().send(context.createQueue(queuename),
+					context.createTextMessage(null));
 		}
 		MsgBean msgbeanactual = svc.getMsg();
 		assertThat(msgbeanactual.getFullmsg(), containsString("No Data."));

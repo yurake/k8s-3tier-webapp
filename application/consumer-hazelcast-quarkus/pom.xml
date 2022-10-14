@@ -1,18 +1,16 @@
 <?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<parent>
 		<groupId>webapp.3tier.k8s.parent</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.4.4-SNAPSHOT</version>
+		<version>5.0.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>consumer-hazelcast-quarkus</artifactId>
 	<properties>
-		<hazelcast-client.version>3.12.8</hazelcast-client.version>
+		<hazelcast.version>5.1.3</hazelcast.version>
+		<test-hazelcast.version>3.0.0</test-hazelcast.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -20,12 +18,19 @@
 			<artifactId>webapp-service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>webapp.3tier.k8s</groupId>
-			<artifactId>jaxrs-hazelcast-quarkus</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-rest-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
+			<version>${hazelcast.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>quarkus-test-hazelcast</artifactId>
+			<version>${test-hazelcast.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

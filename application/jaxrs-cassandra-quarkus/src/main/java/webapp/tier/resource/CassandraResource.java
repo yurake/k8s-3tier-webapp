@@ -38,7 +38,7 @@ public class CassandraResource {
 
 	@GET
 	@Path("/select")
-    @Retry(maxRetries = 3)
+	@Retry(maxRetries = 3)
 	@Counted(name = "performedChecks_select", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response select() {

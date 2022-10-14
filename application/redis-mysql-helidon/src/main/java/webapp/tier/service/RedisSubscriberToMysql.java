@@ -23,7 +23,8 @@ public class RedisSubscriberToMysql extends JedisPubSub {
 	public void onMessage(String channel, String message) {
 		String fullmsg = null;
 		String[] body = message.split(splitkey, 0);
-		fullmsg = "Received channel:" + channel + ", id: " + body[0] + ", msg: " + body[1];
+		fullmsg = "Received channel:" + channel + ", id: " + body[0] + ", msg: "
+				+ body[1];
 		logger.info(fullmsg);
 		try {
 			mysqlsvc.insert(body);
