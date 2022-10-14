@@ -25,15 +25,15 @@ class RabbitmqResourceTest {
 	void testPut() throws Exception {
 		Connection conn = new MockConnectionFactory().newConnection();
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(svc.getConnection()).thenReturn(conn);
-        when(svc.putMsg(conn)).thenReturn(msgbean);
+		when(svc.getConnection()).thenReturn(conn);
+		when(svc.putMsg(conn)).thenReturn(msgbean);
 		given()
 				.when()
 				.contentType("application/json")
 				.post("/quarkus/rabbitmq/put")
 				.then()
 				.statusCode(200)
-                .body(containsString("test"));
+				.body(containsString("test"));
 		conn.close();
 	}
 
@@ -41,14 +41,14 @@ class RabbitmqResourceTest {
 	void testGet() throws Exception {
 		Connection conn = new MockConnectionFactory().newConnection();
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(svc.getConnection()).thenReturn(conn);
-        when(svc.getMsg(conn)).thenReturn(msgbean);
+		when(svc.getConnection()).thenReturn(conn);
+		when(svc.getMsg(conn)).thenReturn(msgbean);
 		given()
 				.when()
 				.get("/quarkus/rabbitmq/get")
 				.then()
 				.statusCode(200)
-                .body(containsString("test"));
+				.body(containsString("test"));
 		conn.close();
 	}
 
@@ -56,15 +56,15 @@ class RabbitmqResourceTest {
 	void testPublish() throws Exception {
 		Connection conn = new MockConnectionFactory().newConnection();
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(svc.getConnection()).thenReturn(conn);
-        when(svc.publishMsg(conn)).thenReturn(msgbean);
+		when(svc.getConnection()).thenReturn(conn);
+		when(svc.publishMsg(conn)).thenReturn(msgbean);
 		given()
 				.when()
 				.contentType("application/json")
 				.post("/quarkus/rabbitmq/publish")
 				.then()
 				.statusCode(200)
-                .body(containsString("test"));
+				.body(containsString("test"));
 		conn.close();
 	}
 

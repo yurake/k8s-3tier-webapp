@@ -6,7 +6,7 @@ import webapp.tier.bean.MsgBean;
 
 public class MsgUtils {
 
-	MsgUtils() {
+	private MsgUtils() {
 	}
 
 	public static int stringToInt(String id) {

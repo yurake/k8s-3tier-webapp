@@ -13,7 +13,8 @@ public class RedisSubscribeServiceToMysql implements Runnable {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static String servername = GetConfig.getResourceBundle("redis.server");
-	private static int serverport = Integer.parseInt(GetConfig.getResourceBundle("redis.port"));
+	private static int serverport = Integer
+			.parseInt(GetConfig.getResourceBundle("redis.port"));
 	private static String channel = GetConfig.getResourceBundle("redis.channel");
 
 	public Jedis createJedis() {

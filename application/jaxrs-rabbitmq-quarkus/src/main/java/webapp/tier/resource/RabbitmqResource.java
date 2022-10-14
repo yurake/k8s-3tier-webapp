@@ -36,7 +36,7 @@ public class RabbitmqResource {
 	@Counted(name = "performedChecks_put", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_put", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response put() {
-		try (Connection conn = svc.getConnection()){
+		try (Connection conn = svc.getConnection()) {
 			return Response.ok().entity(svc.putMsg(conn)).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Put Error.", e);
@@ -50,7 +50,7 @@ public class RabbitmqResource {
 	@Counted(name = "performedChecks_get", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response get() {
-		try (Connection conn = svc.getConnection()){
+		try (Connection conn = svc.getConnection()) {
 			return Response.ok().entity(svc.getMsg(conn)).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Get Error.", e);
@@ -63,7 +63,7 @@ public class RabbitmqResource {
 	@Counted(name = "performedChecks_publish", description = "How many primality checks have been performed.")
 	@Timed(name = "checksTimer_publish", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response publish() {
-		try (Connection conn = svc.getConnection()){
+		try (Connection conn = svc.getConnection()) {
 			return Response.ok().entity(svc.publishMsg(conn)).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Publish Error.", e);

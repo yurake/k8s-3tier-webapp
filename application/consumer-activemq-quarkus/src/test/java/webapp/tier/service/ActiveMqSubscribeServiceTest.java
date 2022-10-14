@@ -1,8 +1,8 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
@@ -27,9 +27,6 @@ class ActiveMqSubscribeServiceTest {
 	ActiveMqSubscribeService subsvc;
 
 	@Inject
-	ActiveMqService svc;
-
-	@Inject
 	ConnectionFactory connectionFactory;
 
 	@ConfigProperty(name = "common.message")
@@ -46,8 +43,10 @@ class ActiveMqSubscribeServiceTest {
 		try {
 			MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 			String body = MsgUtils.createBody(msgbean, splitkey);
-			try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-				context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
+			try (JMSContext context = connectionFactory
+					.createContext(Session.AUTO_ACKNOWLEDGE)) {
+				context.createProducer().send(context.createTopic(topicname),
+						context.createTextMessage(body));
 			}
 			Thread.sleep(1000);
 			assertThat(msgbean.getFullmsg(), containsString(respbody));
