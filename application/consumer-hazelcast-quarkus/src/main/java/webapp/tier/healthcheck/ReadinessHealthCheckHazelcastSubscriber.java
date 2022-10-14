@@ -16,6 +16,6 @@ public class ReadinessHealthCheckHazelcastSubscriber implements HealthCheck {
 	public HealthCheckResponse call() {
 		String msg = "Hazelcast Server connection health check";
 		return HealthCheckUtils
-				.respHealthCheckStatus(HazelcastSubscribeService.isActive(), msg);
+				.respHealthCheckStatus(HazelcastSubscribeService.getInstance().isActive(), msg);
 	}
 }
