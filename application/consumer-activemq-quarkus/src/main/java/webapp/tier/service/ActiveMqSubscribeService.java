@@ -32,26 +32,35 @@ public class ActiveMqSubscribeService implements Runnable {
 	String topicname;
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-
+	private final ScheduledExecutorService scheduler = Executors
+			.newSingleThreadScheduledExecutor();
+	private static boolean isEnableReceived = true;
+	
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.scheduleWithFixedDelay(this, 0L, 5L, TimeUnit.SECONDS);
 		logger.log(Level.INFO, "Subscribe is starting...");
 	}
 
 	void onStop(@Observes ShutdownEvent ev) {
+		stopReceived();
 		scheduler.shutdown();
 		logger.log(Level.INFO, "Subscribe is stopping...");
 	}
+	
+	public static void stopReceived() {
+		ActiveMqSubscribeService.isEnableReceived = false;
+	}
 
 	public void run() {
-		try (JMSContext context = connectionFactory
-				.createContext(Session.AUTO_ACKNOWLEDGE);
-				JMSConsumer consumer = context
-						.createConsumer(context.createTopic(topicname))) {
-			amqdelconsumer.consume(consumer);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Subscribe Error.", e);
+		while (isEnableReceived) {
+			try (JMSContext context = connectionFactory
+					.createContext(Session.AUTO_ACKNOWLEDGE);
+					JMSConsumer consumer = context
+							.createConsumer(context.createTopic(topicname))) {
+				amqdelconsumer.consume(consumer);
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "Subscribe Error.", e);
+			}
 		}
 	}
 }
