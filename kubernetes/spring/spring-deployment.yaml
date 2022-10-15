@@ -32,7 +32,7 @@ spec:
           livenessProbe:
             httpGet:
               port: 8080
-              path: /actuator/q/health/liveness
+              path: /actuator/health/liveness
             initialDelaySeconds: 30
             periodSeconds: 10
             failureThreshold: 5
