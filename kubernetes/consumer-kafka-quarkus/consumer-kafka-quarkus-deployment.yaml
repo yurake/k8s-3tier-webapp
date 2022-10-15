@@ -7,6 +7,8 @@ spec:
     matchLabels:
       app: consumer-kafka-quarkus
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
