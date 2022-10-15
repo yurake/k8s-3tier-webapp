@@ -9,7 +9,7 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>consumer-activemq-quarkus</artifactId>
 	<properties>
-		<quarkus-artemis.version>1.0.3</quarkus-artemis.version>
+		<quarkus-artemis.version>1.3.0</quarkus-artemis.version>
 	</properties>
 	<dependencies>
 		<dependency>
