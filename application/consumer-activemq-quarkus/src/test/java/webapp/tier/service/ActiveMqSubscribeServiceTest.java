@@ -24,9 +24,6 @@ import webapp.tier.util.MsgUtils;
 class ActiveMqSubscribeServiceTest {
 
 	@Inject
-	ActiveMqSubscribeService subsvc;
-
-	@Inject
 	ConnectionFactory connectionFactory;
 
 	@ConfigProperty(name = "common.message")
