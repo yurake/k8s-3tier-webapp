@@ -30,7 +30,7 @@ spec:
           livenessProbe:
             httpGet:
               port: 9080
-              path: /q/health/live
+              path: /health/live
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 10
@@ -38,7 +38,7 @@ spec:
           readinessProbe:
             httpGet:
               port: 9080
-              path: /q/health/ready
+              path: /health/ready
             initialDelaySeconds: 60
             periodSeconds: 30
           env:
