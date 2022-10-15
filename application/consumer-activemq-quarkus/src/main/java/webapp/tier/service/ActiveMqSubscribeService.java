@@ -1,7 +1,8 @@
 package webapp.tier.service;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,19 +32,21 @@ public class ActiveMqSubscribeService implements Runnable {
 	String topicname;
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
-	static boolean isEnableReceived = true;
-
+	private final ScheduledExecutorService scheduler = Executors
+			.newSingleThreadScheduledExecutor();
+	private static boolean isEnableReceived = true;
+	
 	void onStart(@Observes StartupEvent ev) {
-		scheduler.submit(this);
+		scheduler.scheduleWithFixedDelay(this, 0L, 5L, TimeUnit.SECONDS);
 		logger.log(Level.INFO, "Subscribe is starting...");
 	}
 
 	void onStop(@Observes ShutdownEvent ev) {
+		stopReceived();
 		scheduler.shutdown();
 		logger.log(Level.INFO, "Subscribe is stopping...");
 	}
-
+	
 	public static void stopReceived() {
 		ActiveMqSubscribeService.isEnableReceived = false;
 	}
@@ -57,7 +60,6 @@ public class ActiveMqSubscribeService implements Runnable {
 				amqdelconsumer.consume(consumer);
 			} catch (Exception e) {
 				logger.log(Level.SEVERE, "Subscribe Error.", e);
-				stopReceived();
 			}
 		}
 	}
