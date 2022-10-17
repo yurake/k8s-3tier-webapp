@@ -16,20 +16,20 @@
 	],
 	"vhosts": [
 		{
-			"name": "/"
+			"name": "vhost1"
 		}
 	],
 	"permissions": [
 		{
 			"user": "rabbitmq",
-			"vhost": "/",
+			"vhost": "vhost1",
 			"configure": ".*",
 			"write": ".*",
 			"read": ".*"
 		},
 		{
 			"user": "ossapl",
-			"vhost": "/",
+			"vhost": "vhost1",
 			"configure": ".*",
 			"write": ".*",
 			"read": ".*"
@@ -42,14 +42,14 @@
 	"queues": [
 		{
 			"name": "queue1",
-			"vhost": "/",
+			"vhost": "vhost1",
 			"durable": true,
 			"auto_delete": false,
 			"arguments": {}
 		},
 		{
 			"name": "queue2",
-			"vhost": "/",
+			"vhost": "vhost1",
 			"durable": true,
 			"auto_delete": false,
 			"arguments": {}
@@ -58,7 +58,7 @@
 	"exchanges": [
 		{
 			"name": "exchange2",
-			"vhost": "/",
+			"vhost": "vhost1",
 			"type": "direct",
 			"durable": true,
 			"auto_delete": false,
@@ -67,7 +67,7 @@
 		},
 		{
 			"name": "exchange1",
-			"vhost": "/",
+			"vhost": "vhost1",
 			"type": "direct",
 			"durable": true,
 			"auto_delete": false,
@@ -78,7 +78,7 @@
 	"bindings": [
 		{
 			"source": "exchange1",
-			"vhost": "/",
+			"vhost": "vhost1",
 			"destination": "queue1",
 			"destination_type": "queue",
 			"routing_key": "",
@@ -86,7 +86,7 @@
 		},
 		{
 			"source": "exchange2",
-			"vhost": "/",
+			"vhost": "vhost1",
 			"destination": "queue2",
 			"destination_type": "queue",
 			"routing_key": "",
