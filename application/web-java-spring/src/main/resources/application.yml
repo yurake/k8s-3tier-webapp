@@ -40,7 +40,7 @@ rabbitmq:
   username: ossapl
   password: ${RABBITMQ_PASSWORD}
   host: rabbitmq
-  vhost: vhost1
+  vhost: /
   split.key: ","
 
 hazelcast:
