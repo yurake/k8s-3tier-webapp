@@ -3,35 +3,34 @@ package webapp.tier.service;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
 
 import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
 
-import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.GetResponse;
 
-import io.quarkus.runtime.ShutdownEvent;
-import io.quarkus.runtime.StartupEvent;
+import io.smallrye.reactive.messaging.annotations.Blocking;
 import webapp.tier.bean.MsgBean;
+import webapp.tier.service.socket.RabbitmqSocket;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class RabbitmqService implements Runnable {
+public class RabbitmqService {
+	
+	@Channel("message") 
+	Emitter<String> messageEmitter; 
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
-	static boolean isEnableReceived = true;
 
 	private static String message = ConfigProvider.getConfig().getValue("common.message",
 			String.class);
@@ -56,24 +55,8 @@ public class RabbitmqService implements Runnable {
 	private static String splitkey = ConfigProvider.getConfig().getValue(
 			"rabbitmq.split.key",
 			String.class);
-
-	void onStart(@Observes StartupEvent ev) {
-		scheduler.submit(this);
-		logger.log(Level.INFO, "Subscribe is starting...");
-	}
-
-	void onStop(@Observes ShutdownEvent ev) {
-		scheduler.shutdown();
-		logger.log(Level.INFO, "Subscribe is stopping...");
-	}
-
-	public static void startReceived() {
-		RabbitmqService.isEnableReceived = true;
-	}
-
-	public static void stopReceived() {
-		RabbitmqService.isEnableReceived = false;
-	}
+	
+	RabbitmqSocket rmqsock = new RabbitmqSocket();
 
 	public Connection getConnection() throws IOException, TimeoutException {
 		ConnectionFactory connectionFactory = new ConnectionFactory();
@@ -82,10 +65,6 @@ public class RabbitmqService implements Runnable {
 		connectionFactory.setHost(host);
 		connectionFactory.setVirtualHost(vhost);
 		return connectionFactory.newConnection();
-	}
-
-	protected RabbitmqConsumer createRabbitmqConsumer(Channel channel) {
-		return new RabbitmqConsumer(channel);
 	}
 
 	public MsgBean putMsg(Connection conn)
@@ -121,51 +100,23 @@ public class RabbitmqService implements Runnable {
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
-
-	public MsgBean publishMsg(Connection conn)
-			throws NoSuchAlgorithmException, IOException, TimeoutException {
+	
+	public MsgBean publishMsg(Connection conn) throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
-		String body = MsgUtils.createBody(msgbean, splitkey);
-
-		try (Channel channel = conn.createChannel()) {
-			channel.exchangeDeclare(exchangename, "direct", true);
-			channel.basicPublish(exchangename, routingkey, null,
-					body.getBytes(StandardCharsets.UTF_8));
-		}
-
+		messageEmitter.send(MsgUtils.createBody(msgbean, splitkey));
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
-	public boolean isActive() {
-		boolean status = false;
-		try (Connection connection = getConnection()) {
-			status = true;
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Connect Error.", e);
-		}
-		return status;
-	}
-
-	@Override
-	public void run() {
-		try (Connection conn = getConnection();
-				Channel channel = conn.createChannel()) {
-			subscribeRabbitmq(channel, createRabbitmqConsumer(channel));
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Subscribe Errorr.", e);
-		}
-	}
-
-	protected void subscribeRabbitmq(Channel channel, RabbitmqConsumer consumer)
-			throws IOException, TimeoutException, InterruptedException {
-		channel.exchangeDeclare(exchangename, "direct", true);
-		String queueName = channel.queueDeclare().getQueue();
-		channel.queueBind(queueName, exchangename, routingkey);
-		channel.basicConsume(queueName, false, "myConsumerTag", consumer);
-
-		while (isEnableReceived) {
-			TimeUnit.MINUTES.sleep(10L);
-		}
+	@Incoming("message")
+	@Blocking
+	public void consume(String message) {
+		MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
+		msgbean.setFullmsg("Received");
+		logger.log(Level.INFO, msgbean.getFullmsg());
+		
+		rmqsock.onMessage(MsgUtils.createBody(msgbean, splitkey));
+		msgbean.setFullmsg("Broadcasted");
+		logger.log(Level.INFO, msgbean.getFullmsg());
 	}
 }
