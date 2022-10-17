@@ -23,7 +23,7 @@
 	<properties>
 		<mainClass>webapp.tier.events.TaskServiceMain</mainClass>
 		<jedis.version>4.3.0</jedis.version>
-		<mysql.version>8.0.30</mysql.version>
+		<mysql.version>8.0.31</mysql.version>
 		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
 		<jedis-mock.version>0.1.23</jedis-mock.version>
 		<mockito.junit.jupiter>4.8.0</mockito.junit.jupiter>
@@ -64,8 +64,8 @@
 			<artifactId>jedis</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.github.fppt</groupId>
@@ -86,8 +86,8 @@
 				<version>${jedis.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
+				<groupId>com.mysql</groupId>
+				<artifactId>mysql-connector-j</artifactId>
 				<version>${mysql.version}</version>
 			</dependency>
 			<dependency>
