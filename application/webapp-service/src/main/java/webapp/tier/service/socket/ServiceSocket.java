@@ -44,7 +44,7 @@ public class ServiceSocket {
 	@OnMessage
 	public void onMessage(String message) {
 		if (sessions.isEmpty()) {
-			logger.log(Level.INFO, "No Subscriber");
+			logger.log(Level.INFO, "No Subscribe Browser");
 		} else {
 			sessions.values().forEach(s -> {
 				logger.log(Level.INFO, "Send : {0}", s.getId());

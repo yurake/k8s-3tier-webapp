@@ -18,14 +18,12 @@
 			<artifactId>webapp-service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.rabbitmq</groupId>
-			<artifactId>amqp-client</artifactId>
-			<version>${amqp-client.version}</version>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-reactive-messaging-rabbitmq</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.github.fridujo</groupId>
-			<artifactId>rabbitmq-mock</artifactId>
-			<version>${rabbitmq-mock.version}</version>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
