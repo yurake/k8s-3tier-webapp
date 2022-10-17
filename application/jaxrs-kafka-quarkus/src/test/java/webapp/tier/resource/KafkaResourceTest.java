@@ -1,5 +1,6 @@
 package webapp.tier.resource;
 
+import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,6 +16,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.sse.SseEventSource;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.QuarkusTestResource;
@@ -34,6 +36,21 @@ class KafkaResourceTest {
 	KafkaCompanion companion;
 
 	String testBody = "Test Message";
+
+	@ConfigProperty(name = "common.message")
+	String message;
+
+	@Test
+	void testPublish() {
+		String body = given()
+				.when()
+				.post("/quarkus/kafka/publish")
+				.then()
+				.statusCode(200)
+				.extract().body()
+				.asString();
+		assertThat(body, containsString(message));
+	}
 
 	@Test
 	void testSubscreibe() {
