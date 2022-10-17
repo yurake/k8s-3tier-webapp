@@ -8,8 +8,6 @@ on:
       - "application/**"
       - "kubernetes/**"
       - ".github/workflows/kind-spring-ci.yml"
-  issues:
-    types: [closed]
 
 jobs:
   spring-ci:
