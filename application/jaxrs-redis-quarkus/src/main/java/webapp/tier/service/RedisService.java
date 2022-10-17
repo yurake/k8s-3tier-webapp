@@ -83,21 +83,22 @@ public class RedisService implements Consumer<RedisNotification> {
 		}
 		return msglist;
 	}
-	
+
 	public MsgBean publish() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		logger.log(Level.INFO, msgbean.getFullmsg());
-		pub.publish(channel, new RedisNotification(MsgUtils.intToString(msgbean.getId()), msgbean));
+		pub.publish(channel,
+				new RedisNotification(MsgUtils.intToString(msgbean.getId()), msgbean));
 		return msgbean;
 	}
-	
+
 	@Override
 	public void accept(RedisNotification notification) {
 		MsgBean msgbean = notification.msgbean;
 		msgbean.setFullmsg("Received");
 		logger.log(Level.INFO, msgbean.getFullmsg());
 	}
-	
+
 	@PreDestroy
 	public void terminate() {
 		logger.log(Level.INFO, "Unsubscibed.");
