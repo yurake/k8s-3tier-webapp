@@ -53,6 +53,7 @@ public class RedisResource {
 		}
 
 	}
+
 	@POST
 	@Path("/publish")
 	public Response publish() {

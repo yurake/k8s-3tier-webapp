@@ -87,8 +87,8 @@ public class RedisService implements Consumer<RedisNotification> {
 	public MsgBean publish() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		logger.log(Level.INFO, msgbean.getFullmsg());
-		pub.publish(channel,
-				new RedisNotification(MsgUtils.intToString(msgbean.getId()), msgbean));
+		pub.publish(channel, new RedisNotification(
+				MsgUtils.intToString(msgbean.getId()), msgbean));
 		return msgbean;
 	}
 
