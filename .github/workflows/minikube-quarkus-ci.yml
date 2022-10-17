@@ -8,8 +8,6 @@ on:
       - "application/**"
       - "kubernetes/**"
       - ".github/workflows/minikube-quarkus-ci.yml"
-  issues:
-    types: [closed]
 
 jobs:
   quarkus-ci:
