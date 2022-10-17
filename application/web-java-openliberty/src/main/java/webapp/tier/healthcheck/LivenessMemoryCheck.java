@@ -3,11 +3,11 @@ package webapp.tier.healthcheck;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
+
+import jakarta.enterprise.context.ApplicationScoped;
 
 @Liveness
 @ApplicationScoped
@@ -23,6 +23,6 @@ public class LivenessMemoryCheck implements HealthCheck {
             this.getClass().getSimpleName() + " Memory Check")
                                   .withData("memory used", memUsed)
                                   .withData("memory max", memMax)
-                                  .state(memUsed < memMax * 0.9).build();
+                                  .status(memUsed < memMax * 0.9).build();
     }
 }
