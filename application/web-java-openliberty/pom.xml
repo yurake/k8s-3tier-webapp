@@ -15,7 +15,7 @@
 
 		<slf4j-log4j12.version>2.0.3</slf4j-log4j12.version>
 		<hazelcast.version>5.1.4</hazelcast.version>
-		<jedis.version>4.2.3</jedis.version>
+		<jedis.version>4.3.0</jedis.version>
 		<amqp-client.version>5.16.0</amqp-client.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<rabbitmq-jms.version>2.6.0</rabbitmq-jms.version>
@@ -109,7 +109,7 @@
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-rs-extension-providers</artifactId>
-			<version>3.5.3</version>
+			<version>3.5.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

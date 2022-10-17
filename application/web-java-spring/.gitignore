@@ -10,6 +10,7 @@
 .project
 .classpath
 .settings
+.factorypath
 
 # Idea
 .idea
