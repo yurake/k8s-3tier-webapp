@@ -7,6 +7,8 @@ spec:
     matchLabels:
       app: openliberty
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
