@@ -65,4 +65,16 @@ class RedisServiceTest {
 			fail();
 		}
 	}
+
+	@Test
+	void testPublish() {
+		try {
+			MsgBean msgbean = svc.publish();
+			assertThat(msgbean.getFullmsg(), containsString(message));
+			assertThat(msgbean.getFullmsg(), containsString("Publish"));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 }

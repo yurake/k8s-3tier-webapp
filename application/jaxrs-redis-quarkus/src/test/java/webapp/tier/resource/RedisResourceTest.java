@@ -48,4 +48,16 @@ class RedisResourceTest {
 				.statusCode(200)
 				.body(containsString("Delete"));
 	}
+	
+	@Test
+	void testPublish() {
+		given()
+				.accept(ContentType.JSON)
+				.when()
+				.contentType("application/json")
+				.post("/quarkus/redis/publish")
+				.then()
+				.statusCode(200)
+				.body(containsString(message));
+	}
 }
