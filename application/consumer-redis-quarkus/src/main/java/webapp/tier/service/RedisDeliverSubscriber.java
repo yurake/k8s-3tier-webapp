@@ -20,21 +20,21 @@ import webapp.tier.bean.MsgBean;
 
 @ApplicationScoped
 @Startup
-public class RedisDeliverSubscriber implements Consumer<DeliverNotification> {
+public class RedisDeliverSubscriber implements Consumer<RedisDeliverNotification> {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	private static String channel = ConfigProvider.getConfig().getValue("redis.channel",
 			String.class);
 
-	private final PubSubCommands<DeliverNotification> pub;
+	private final PubSubCommands<RedisDeliverNotification> pub;
 	private final PubSubCommands.RedisSubscriber subscriber;
 
 	@RestClient
 	RedisDeliverService deliversvc;
 
 	public RedisDeliverSubscriber(RedisDataSource ds) {
-		pub = ds.pubsub(DeliverNotification.class);
+		pub = ds.pubsub(RedisDeliverNotification.class);
 		subscriber = pub.subscribe(channel, this);
 
 		deliversvc = RestClientBuilder.newBuilder()
@@ -44,7 +44,7 @@ public class RedisDeliverSubscriber implements Consumer<DeliverNotification> {
 	}
 
 	@Override
-	public void accept(DeliverNotification notification) {
+	public void accept(RedisDeliverNotification notification) {
 		MsgBean msgbean = notification.msgbean;
 		msgbean.setFullmsg("Received");
 		logger.log(Level.INFO, msgbean.getFullmsg());

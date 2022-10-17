@@ -7,6 +7,8 @@ spec:
     matchLabels:
       app: jaxrs-mongodb-quarkus
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -24,7 +26,7 @@ spec:
           livenessProbe:
             httpGet:
               port: 8080
-              path: /health/live
+              path: /q/health/live
             initialDelaySeconds: 10
             periodSeconds: 5
             failureThreshold: 5
@@ -32,6 +34,6 @@ spec:
           readinessProbe:
             httpGet:
               port: 8080
-              path: /health/ready
+              path: /q/health/ready
             initialDelaySeconds: 10
             periodSeconds: 30

@@ -53,4 +53,15 @@ public class RedisResource {
 		}
 
 	}
+
+	@POST
+	@Path("/publish")
+	public Response publish() {
+		try {
+			return Response.ok().entity(svc.publish()).build();
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "Publish Error.", e);
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+	}
 }

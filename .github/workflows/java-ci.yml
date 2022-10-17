@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -32,6 +34,12 @@ jobs:
         with:
           languages: java
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -41,10 +49,16 @@ jobs:
             ${{ runner.os }}-maven-parent-pom
       - name: Maven Deploy POM to Github Package Registry
         working-directory: ./application/parent-pom/
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -84,6 +98,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -105,6 +121,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -150,6 +172,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -171,6 +195,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -216,6 +246,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -237,6 +269,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -286,6 +324,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -307,6 +347,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -352,6 +398,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -373,6 +421,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -418,6 +472,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -439,6 +495,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -484,6 +546,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -505,6 +569,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -550,6 +620,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -571,6 +643,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -616,6 +694,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -637,6 +717,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -682,6 +768,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -703,6 +791,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -748,6 +842,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -769,6 +865,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -814,6 +916,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -835,6 +939,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -880,6 +990,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -901,6 +1013,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -946,6 +1064,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -967,6 +1087,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -1011,6 +1137,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1032,6 +1160,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -1077,6 +1211,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1098,6 +1234,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -1143,6 +1285,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1164,6 +1308,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -1209,6 +1359,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1230,6 +1382,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -1275,6 +1433,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1296,6 +1456,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -1341,6 +1507,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1352,6 +1520,12 @@ jobs:
         uses: github/codeql-action/init@v2
         with:
           languages: java
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -1390,6 +1564,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1411,6 +1587,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -1455,6 +1637,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1476,6 +1660,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:
@@ -1523,6 +1713,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
@@ -1544,6 +1736,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.10
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
         uses: actions/cache@v3.0.11
         with:

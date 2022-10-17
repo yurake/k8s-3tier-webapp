@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "7898a613-3edc-4941-b974-30e4cc7777fb",
+		"_postman_id": "98ac7763-c87b-425f-9c99-c32cd200734d",
 		"name": "jaxrs-quarkus",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9860369"
 	},
 	"item": [
 		{
@@ -11,7 +12,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "48260878-98dd-4010-9b43-96be16928eee",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -60,7 +60,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e1d84e98-ce3a-4fae-8ae5-bf485127d2d2",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -109,7 +108,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "11f8be90-29f3-4b84-840f-af8fd5d06282",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -158,7 +156,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a947cef1-b75d-4bcf-a78b-606ba0f2c47b",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -207,7 +204,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a6e5df42-fd6d-4d5c-9b11-7c0e388e52e8",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -251,12 +247,251 @@
 			"response": []
 		},
 		{
+			"name": "grpc/getid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_GRPC}}/quarkus/grpc/getid",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_GRPC}}"
+					],
+					"path": [
+						"quarkus",
+						"grpc",
+						"getid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "grpc/getmsg",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_GRPC}}/quarkus/grpc/getmsg",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_GRPC}}"
+					],
+					"path": [
+						"quarkus",
+						"grpc",
+						"getmsg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rabbitmq/put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Put\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_RABBIT}}/quarkus/rabbitmq/put",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_RABBIT}}"
+					],
+					"path": [
+						"quarkus",
+						"rabbitmq",
+						"put"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rabbitmq/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_RABBIT}}/quarkus/rabbitmq/get",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_RABBIT}}"
+					],
+					"path": [
+						"quarkus",
+						"rabbitmq",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rabbitmq/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_RABBIT}}/quarkus/rabbitmq/publish",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_RABBIT}}"
+					],
+					"path": [
+						"quarkus",
+						"rabbitmq",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "activemq/put",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "b8b064ef-41e2-4018-b5ab-ac0674443854",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -304,7 +539,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "2b9e886a-9cec-4b91-9806-c28260341f96",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -352,7 +586,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0a3c52fd-1e8c-4e18-a74b-35a1a835645b",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -404,7 +637,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1d1e1796-7d59-48d0-9fd0-29a3434e6b7e",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -453,7 +685,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e2fa0066-d40e-409e-9a03-eb134b6f4553",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -502,7 +733,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "89501a49-a52f-4d57-a07e-5924aabdfb62",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -551,7 +781,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "10558396-b985-419b-a56f-30e0291ce9a8",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -599,7 +828,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "54d6c61a-afaf-4f3a-8cac-bf672a6b1eee",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -647,7 +875,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4a31e6e6-3c44-415d-ad28-cfc5fd244b61",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -695,7 +922,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d6dd3684-19b1-4bcf-bba0-37a3e2382a6b",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -743,7 +969,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3d084648-d125-4818-8e79-3724ee112168",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -787,7 +1012,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3bf277af-8916-4a54-abb0-4a7c4dabd6ea",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -835,7 +1059,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "29237794-ab42-4b7a-a3d6-abe3b1759c3d",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -883,7 +1106,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9c91f1d6-4388-47e0-9ec4-53398ed44de2",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -927,7 +1149,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "2c9b1116-4015-4da1-9a99-c0bbd62a9a85",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -975,7 +1196,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8e8876c4-c3c6-4ae9-9ea9-e10388487f05",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1023,7 +1243,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "deb5bed1-9d0e-418c-8044-b635b49f39f7",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1067,7 +1286,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "2c9b1116-4015-4da1-9a99-c0bbd62a9a85",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1115,7 +1333,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8e8876c4-c3c6-4ae9-9ea9-e10388487f05",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1163,7 +1380,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "deb5bed1-9d0e-418c-8044-b635b49f39f7",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1201,6 +1417,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

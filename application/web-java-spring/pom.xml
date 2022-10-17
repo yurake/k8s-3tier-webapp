@@ -14,8 +14,9 @@
 		<java.version>11</java.version>
 		<memcached-Java-Client.version>3.0.2</memcached-Java-Client.version>
 		<rabbitmq-jms.version>2.6.0</rabbitmq-jms.version>
+		<mysql-connector-j.version>8.0.31</mysql-connector-j.version>
 
-		<jedis-mock.version>1.0.1</jedis-mock.version>
+		<jedis-mock.version>0.1.23</jedis-mock.version>
 		<rabbitmq-mock.verison>1.1.1</rabbitmq-mock.verison>
 		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
 	</properties>
@@ -102,8 +103,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>${mysql-connector-j.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
