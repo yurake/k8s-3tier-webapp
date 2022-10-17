@@ -26,7 +26,7 @@ import webapp.tier.util.MsgUtils;
 
 @QuarkusTest
 @QuarkusTestResource(ArtemisTestResource.class)
-class ActiveMqSubscribeServiceTest {
+class ActiveMqSubscribeServiceErrorTest {
 
 	@Inject
 	ConnectionFactory connectionFactory;
@@ -58,8 +58,8 @@ class ActiveMqSubscribeServiceTest {
 	}
 
 	@Test
-	void testSubscribe() {
-		when(mock.random()).thenReturn(respbody);
+	void testSubscribeError() {
+		when(mock.random()).thenThrow(new RuntimeException("Rest response error"));
 		QuarkusMock.installMockForType(mock, MockDeliverService.class);
 
 		try {
