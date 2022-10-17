@@ -1,5 +1,9 @@
 package webapp.tier.resource;
 
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -11,7 +15,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.sse.SseEventSource;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.QuarkusTestResource;
@@ -61,12 +64,12 @@ class KafkaResourceTest {
 						}
 					});
 			List<String> messages = petList.await().atMost(Duration.ofMinutes(1));
-			Assertions.assertEquals(5, messages.size());
-			Assertions.assertEquals(testBody, messages.get(0));
-			Assertions.assertEquals(testBody, messages.get(1));
-			Assertions.assertEquals(testBody, messages.get(2));
-			Assertions.assertEquals(testBody, messages.get(3));
-			Assertions.assertEquals(testBody, messages.get(4));
+			assertThat(messages.size(), greaterThanOrEqualTo(5));
+			assertEquals(testBody, messages.get(0));
+			assertEquals(testBody, messages.get(1));
+			assertEquals(testBody, messages.get(2));
+			assertEquals(testBody, messages.get(3));
+			assertEquals(testBody, messages.get(4));
 		}
 	}
 }
