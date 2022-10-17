@@ -1,27 +1,28 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static com.rabbitmq.client.BuiltinExchangeType.*;
+import static java.nio.charset.StandardCharsets.*;
+import static java.util.concurrent.TimeUnit.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.junit.jupiter.api.Test;
 
-import com.github.fridujo.rabbitmq.mock.MockConnection;
-import com.github.fridujo.rabbitmq.mock.MockConnectionFactory;
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 
 import io.quarkus.test.junit.QuarkusTest;
 import webapp.tier.bean.MsgBean;
+import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgUtils;
 
 @QuarkusTest
 class RabbitmqServiceTest {
@@ -29,138 +30,23 @@ class RabbitmqServiceTest {
 	@Inject
 	RabbitmqService svc;
 
-	private static final String respbody = "message: Hello k8s-3tier-webapp with quarkus";
-	private static final String errormsg = "channel is already closed due to clean channel shutdown";
-	private static final String exchangename = "exchangemsg";
-	private static final String routingkey = "routingkeymsg";
+	private static String message = ConfigProvider.getConfig().getValue("common.message",
+			String.class);
+	private static String splitkey = ConfigProvider.getConfig()
+			.getValue("rabbitmq.split.key", String.class);
+	private static String queueName = ConfigProvider.getConfig()
+			.getValue("mp.messaging.incoming.message.queue.name", String.class);
+	private static String routingkey = ConfigProvider.getConfig()
+			.getValue("mp.messaging.incoming.message.routing-keys", String.class);
 
-	private static MockConnection createRabbitmqMock() {
-		MockConnection conn = new MockConnectionFactory().newConnection();
-		return conn;
-	}
-
-	@Test
-	void testPutMsg() throws Exception {
-		try (Connection conn = createRabbitmqMock()) {
-			MsgBean msgbean = svc.putMsg(conn);
-			assertThat(msgbean.getFullmsg(), containsString(respbody));
-			svc.getMsg(conn);
-			conn.close();
-		}
-	}
-
-	@Test
-	void testPutMsgError() throws IOException {
-		try (Connection conn = createRabbitmqMock()) {
-			conn.close();
-			svc.putMsg(conn);
-			fail();
-			svc.getMsg(conn);
-		} catch (Exception e) {
-			e.printStackTrace();
-			assertEquals(errormsg, e.getMessage());
-		}
-	}
-
-	@Test
-	void testGetMsgNoData() throws Exception {
-		try (Connection conn = createRabbitmqMock()) {
-			MsgBean msgbean = svc.getMsg(conn);
-			assertThat(msgbean.getFullmsg(), containsString("No Data."));
-		}
-	}
-
-	@Test
-	void testGetMsgWithData() throws Exception {
-		try (Connection conn = createRabbitmqMock()) {
-			svc.getMsg(conn);
-			svc.putMsg(conn);
-			MsgBean msgbean = svc.getMsg(conn);
-			assertThat(msgbean.getFullmsg(), containsString(respbody));
-		}
-	}
-
-	@Test
-	void testGetMsgError() {
-		try {
-			Connection conn = createRabbitmqMock();
-			conn.close();
-			svc.getMsg(conn);
-			fail();
-		} catch (Exception e) {
-			e.printStackTrace();
-			assertEquals(errormsg, e.getMessage());
-		}
-	}
+	private static String hostname = "localhost";
+	private static String exchangeName = "message";
 
 	@Test
 	void testPublishMsg() throws IOException {
-		try (Connection conn = createRabbitmqMock()) {
-			svc.publishMsg(conn);
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
-
-	@Test
-	void testPublishMsgError() throws IOException {
 		try {
-			Connection conn = createRabbitmqMock();
-			conn.close();
-			svc.publishMsg(conn);
-			fail();
-		} catch (Exception e) {
-			e.printStackTrace();
-			assertEquals(errormsg, e.getMessage());
-		}
-	}
-
-	@Test
-	void testIsActiveFalse() {
-		assertThat(svc.isActive(), is(false));
-	}
-
-	@Test
-	void testIsActiveTrue() throws IOException, TimeoutException {
-		try (MockConnection conn = createRabbitmqMock()) {
-			RabbitmqService rsvc = new RabbitmqService() {
-				public Connection getConnection() {
-					return conn;
-				}
-			};
-			assertThat(rsvc.isActive(), is(true));
-		}
-	}
-
-	@Test
-	void testSubscribe() {
-
-		try (MockConnection conn = createRabbitmqMock();
-				Channel channel = conn.createChannel()) {
-			RabbitmqService rsvc = new RabbitmqService() {
-				public Connection getConnection() {
-					return conn;
-				}
-			};
-			Thread thread = new Thread(rsvc);
-			thread.start();
-
-			channel.exchangeDeclare(exchangename, "direct", true);
-			String queueName = channel.queueDeclare().getQueue();
-			channel.queueBind(queueName, exchangename, routingkey);
-
-			channel.exchangeDeclare(exchangename, "direct", true);
-			channel.basicPublish(exchangename, routingkey, null,
-					"0000,Test".getBytes(StandardCharsets.UTF_8));
-			TimeUnit.MILLISECONDS.sleep(200L);
-			channel.basicPublish(exchangename, routingkey, null,
-					"1111,Test".getBytes(StandardCharsets.UTF_8));
-			TimeUnit.MILLISECONDS.sleep(200L);
-			channel.basicPublish(exchangename, routingkey, null,
-					"2222,Test".getBytes(StandardCharsets.UTF_8));
-			TimeUnit.MILLISECONDS.sleep(200L);
-
+			MsgBean msgbean = svc.publishMsg();
+			assertThat(msgbean.getFullmsg(), containsString(message));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -168,31 +54,27 @@ class RabbitmqServiceTest {
 	}
 
 	@Test
-	void testIsEnableReceived() {
+	void testConsume() throws Exception {
 
-		try (MockConnection conn = createRabbitmqMock();
-				Channel channel = conn.createChannel()) {
-			RabbitmqService rsvc = new RabbitmqService() {
-				public Connection getConnection() {
-					return conn;
-				}
-			};
-			Thread thread = new Thread(rsvc);
-			RabbitmqService.stopReceived();
-			thread.start();
-			RabbitmqService.startReceived();
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
+		String body = MsgUtils.createBody(msgbean, splitkey);
 
-			channel.exchangeDeclare(exchangename, "direct", true);
-			String queueName = channel.queueDeclare().getQueue();
-			channel.queueBind(queueName, exchangename, routingkey);
+		Channel channel = getChannel();
 
-			channel.exchangeDeclare(exchangename, "direct", true);
-			channel.basicPublish(exchangename, routingkey, null,
-					"0000,Test".getBytes(StandardCharsets.UTF_8));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
+		channel.exchangeDeclare(exchangeName, TOPIC, true, false, Map.of());
+		channel.queueDeclare(queueName, true, false, false, Map.of());
+		channel.queueBind(queueName, exchangeName, routingkey);
+		AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
+				.contentType("text/plain")
+				.build();
+		channel.basicPublish(exchangeName, routingkey, props, body.getBytes(UTF_8));
 	}
+
+	Channel getChannel() throws Exception {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		connectionFactory.setHost(hostname);
+		connectionFactory.setChannelRpcTimeout((int) SECONDS.toMillis(3));
+		return connectionFactory.newConnection().createChannel();
+	}
+
 }
