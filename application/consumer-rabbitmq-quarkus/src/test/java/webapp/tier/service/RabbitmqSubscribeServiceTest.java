@@ -45,32 +45,10 @@ class RabbitmqSubscribeServiceTest {
 		channel.exchangeDeclare(exchangeName, TOPIC, true, false, Map.of());
 		channel.queueDeclare(queueName, true, false, false, Map.of());
 		channel.queueBind(queueName, exchangeName, routingkey);
-		/**
-		AtomicReference<String> receivedMessage = new AtomicReference<>(null);
-		DeliverCallback deliverCallback = (consumerTag, message) -> {
-			String subscribedbody = objectMapper.readValue(message.getBody(),
-					String.class);
-			if (!Objects.equals(subscribedbody, body)) {
-				return;
-			}
-			receivedMessage.set(subscribedbody);
-		};
-		String consumerTag = channel.basicConsume(queueName, true, deliverCallback, tag -> {
-		});
-		
-		DefaultConsumer consumer = new DefaultConsumer(channel);
-		String consumerTag = channel.basicConsume(queueName, true, "myConsumerTag", consumer);
-		**/
-
 		AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
 				.contentType("text/plain")
 				.build();
 		channel.basicPublish(exchangeName, routingkey, props, body.getBytes(UTF_8));
-
-		/**
-		await().atMost(3, SECONDS).untilAtomic(receivedMessage, notNullValue());
-		channel.basicCancel(consumerTag);
-		**/
 	}
 
 	Channel getChannel() throws Exception {
