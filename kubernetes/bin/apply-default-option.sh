@@ -53,6 +53,12 @@ kubectl apply -f ./consumer-rabbitmq-quarkus-deployment.yaml
 echo "###"
 echo ""
 
+echo "### converter-rabbitmq-quarkus"
+cd "$ROOT_DIR"/converter-rabbitmq-quarkus
+kubectl apply -f ./converter-rabbitmq-quarkus-deployment.yaml
+echo "###"
+echo ""
+
 echo "### consumer-redis-quarkus"
 cd "$ROOT_DIR"/consumer-redis-quarkus
 kubectl apply -f ./consumer-redis-quarkus-deployment.yaml
