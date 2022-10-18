@@ -4,36 +4,37 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
-import io.smallrye.reactive.messaging.annotations.Blocking;
-import webapp.tier.bean.MsgBean;
-import webapp.tier.util.MsgUtils;
+import io.smallrye.mutiny.Multi;
 
 @ApplicationScoped
 public class RabbitmqConverter {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	@Inject
-	@RestClient
-	RabbitmqDeliverService deliversvc;
-
 	@ConfigProperty(name = "rabbitmq.split.key")
 	String splitkey;
 
-	@Incoming("message")
-	@Blocking
-	public void consume(String message) {
-		MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
-		msgbean.setFullmsg("Received");
-		logger.log(Level.INFO, msgbean.getFullmsg());
-		String response = deliversvc.random();
-		logger.log(Level.INFO, "Called Random Publish: {0}", response);
+	@Incoming("converter")
+	@Outgoing("message")
+	public Multi<String> convert(String message) {
+		logger.log(Level.INFO, "Received: {0}", message);
+		return Multi.createFrom().items(message)
+				.onCompletion()
+				.invoke(() -> logger.log(Level.INFO, "Completed transfer messages."))
+				.onFailure()
+				.retry().atMost(3)
+				.invoke(() -> logger.log(Level.WARNING,
+						"Retried send messages."))
+				.onFailure()
+				.recoverWithCompletion()
+				.invoke(() -> logger.log(Level.WARNING,
+						"Recovered and completed send messages."));
+
 	}
 
 }
