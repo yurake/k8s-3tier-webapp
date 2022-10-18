@@ -13,7 +13,7 @@ on:
       - ".github/workflows/kind-yaml-ci.yml"
 
 jobs:
-  spring-ci:
+  yaml-ci:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
