@@ -35,6 +35,12 @@ kubectl apply -f ./jaxrs-kafka-quarkus-service-externalname.yaml
 echo "###"
 echo ""
 
+echo "### converter-kafka-quarkus"
+cd "$ROOT_DIR"/converter-kafka-quarkus
+kubectl apply -f ./converter-kafka-quarkus-deployment.yaml
+echo "###"
+echo ""
+
 echo "### consumer-kafka-quarkus"
 cd "$ROOT_DIR"/consumer-kafka-quarkus
 kubectl apply -f ./consumer-kafka-quarkus-deployment.yaml
