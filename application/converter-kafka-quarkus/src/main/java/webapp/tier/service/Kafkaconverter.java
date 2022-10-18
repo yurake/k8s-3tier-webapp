@@ -18,7 +18,7 @@ public class Kafkaconverter {
 	@Incoming("converter")
 	@Outgoing("message")
 	public Multi<String> convert(String message) {
-		logger.log(Level.INFO, "Received: " + message);
+		logger.log(Level.INFO, "Received: {0}", message);
 		return Multi.createFrom().items(message)
 				.onFailure().recoverWithCompletion()
 				.onCompletion()
