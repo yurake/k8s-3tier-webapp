@@ -49,6 +49,8 @@ additional-dependency-files:
     path: application/webapp-service/pom.xml
   - type: maven-pom-xml
     path: application/jaxrs-kafka-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/consumer-kafka-quarkus/pom.xml
 ignore-failures:
   java:
     - com.whalin/Memcached-Java-Client
