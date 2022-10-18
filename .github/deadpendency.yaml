@@ -36,6 +36,8 @@ additional-dependency-files:
   - type: maven-pom-xml
     path: application/consumer-rabbitmq-quarkus/pom.xml
   - type: maven-pom-xml
+    path: application/converter-rabbitmq-quarkus/pom.xml
+  - type: maven-pom-xml
     path: application/producer-kafka-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/jaxrs-postgres-quarkus/pom.xml
