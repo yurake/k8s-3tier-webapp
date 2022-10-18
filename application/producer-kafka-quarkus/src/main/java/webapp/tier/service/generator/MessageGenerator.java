@@ -21,7 +21,7 @@ public class MessageGenerator {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
-	
+
 	@ConfigProperty(name = "common.message")
 	String message;
 
@@ -36,7 +36,16 @@ public class MessageGenerator {
 	public Multi<String> generate() {
 		return Multi.createFrom().ticks().every(Duration.ofSeconds(period))
 				.map(tick -> generateMessgae())
-				.onFailure().recoverWithCompletion();
+				.onCompletion()
+				.invoke(() -> logger.log(Level.INFO, "Completed send messages."))
+				.onFailure()
+				.retry().atMost(3)
+				.invoke(() -> logger.log(Level.WARNING,
+						"Retried send messages."))
+				.onFailure()
+				.recoverWithCompletion()
+				.invoke(() -> logger.log(Level.WARNING,
+						"Recovered and completed send messages."));
 	}
 
 	private String generateMessgae() {
