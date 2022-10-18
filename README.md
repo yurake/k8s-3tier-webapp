@@ -3,15 +3,11 @@
 [![Java CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Java%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/java-ci.yml)
 [![Docker Image CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/docker-image-ci.yml)
 [![Minikube Quarkus CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-quarkus-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-quarkus-ci.yml)
-[![Minikube Open Liberty CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-openliberty-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-openliberty-ci.yml)
-[![Minikube Spring CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-spring-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-spring-ci.yml)
 [![Minikube Yaml CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-yaml-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/minikube-yaml-ci.yml)
 [![Minikube Stress CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Minikube%20Stress%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+Stress+CI%22)
 [![Minikube Security CI](https://github.com/yurake/k8s-3tier-webapp/workflows/Minikube%20Security%20CI/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+Security+CI%22)
 [![kind Chaos Mesh CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-chaos-mesh-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-chaos-mesh-ci.yml)
-[![kind Open Liberty CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-openliberty-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-openliberty-ci.yml)
 [![kind Quarkus CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-quarkus-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-quarkus-ci.yml)
-[![kind Spring CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-spring-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-spring-ci.yml)
 [![kind Yaml CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-yaml-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-yaml-ci.yml)
 [![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/workflows/Yaml%20Validator/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Yaml+Validator%22)
 [![Shell Validator](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/shell-validator.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/shell-validator.yml)
@@ -133,7 +129,7 @@ minikube docker-env --shell powershell | Invoke-Expression
 Add IP, domain in /etc/hosts
 
 ```
-echo `minikube ip` k8s.3tier.webapp openliberty.minikube spring.minikube api.server.minikube \
+echo `minikube ip` k8s.3tier.webapp api.server.minikube \
 rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube \
 grafana.minikube jupyter.minikube hazelcast.manager.minikube activemq.management.minikube \
 jaeger.minikube argo.minikube >> /etc/hosts
@@ -144,8 +140,6 @@ jaeger.minikube argo.minikube >> /etc/hosts
 | Service                     | URL                                   |
 | :-------------------------- | :------------------------------------ |
 | Top Page                    | <http://k8s.3tier.webapp/>            |
-| Open Liberty                | <http://openliberty.minikube>         |
-| Spring Boot                 | <http://spring.minikube>              |
 | Rabbitmq Management Console | <http://rabbitmq.management.minikube> |
 | Activemq Management Console | <http://activemq.management.minikube> |
 

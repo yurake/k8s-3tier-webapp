@@ -19,8 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile_default:
-          [mysql, postgres, mongodb, rabbitmq, nginx, openliberty, spring]
+        dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx]
     steps:
       - uses: actions/checkout@v3
       - name: lint ${{ matrix.dockerfile_default }}
@@ -82,12 +81,9 @@ jobs:
 
   dockerfile_postmannewman:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dockerfile_postmannewman: [quarkus, openliberty]
     steps:
       - uses: actions/checkout@v3
       - name: lint ${{ matrix.dockerfile_postmannewman }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
-          dockerfile: kubernetes/monitoring/test/postmannewman/${{ matrix.dockerfile_postmannewman }}/Dockerfile
+          dockerfile: kubernetes/monitoring/test/postmannewman/quarkus/Dockerfile

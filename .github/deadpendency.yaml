@@ -6,10 +6,6 @@ additional-dependency-files:
   - type: maven-pom-xml
     path: application/server-grpc-quarkus/pom.xml
   - type: maven-pom-xml
-    path: application/redis-mysql-helidon/pom.xml
-  - type: maven-pom-xml
-    path: application/web-java-spring/pom.xml
-  - type: maven-pom-xml
     path: application/consumer-redis-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/jaxrs-cassandra-quarkus/pom.xml
@@ -33,8 +29,6 @@ additional-dependency-files:
     path: application/parent-pom/pom.xml
   - type: maven-pom-xml
     path: application/scheduled-quarkus/pom.xml
-  - type: maven-pom-xml
-    path: application/web-java-openliberty/pom.xml
   - type: maven-pom-xml
     path: application/consumer-activemq-quarkus/pom.xml
   - type: maven-pom-xml

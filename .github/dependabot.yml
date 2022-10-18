@@ -43,12 +43,6 @@ updates:
     assignees:
       - yurake
   - package-ecosystem: docker
-    directory: "/kubernetes/wlp"
-    schedule:
-      interval: daily
-    assignees:
-      - yurake
-  - package-ecosystem: docker
     directory: "/kubernetes/rabbitmq"
     schedule:
       interval: daily

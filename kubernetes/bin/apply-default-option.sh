@@ -53,12 +53,6 @@ kubectl apply -f ./consumer-redis-quarkus-deployment.yaml
 echo "###"
 echo ""
 
-echo "### redis-mysql-helidon"
-cd "$ROOT_DIR"/redis-mysql-helidon
-kubectl apply -f ./redis-mysql-helidon-deployment.yaml
-echo "###"
-echo ""
-
 echo "### consumer-hazelcast-quarkus"
 cd "$ROOT_DIR"/consumer-hazelcast-quarkus
 kubectl apply -f ./consumer-hazelcast-quarkus-deployment.yaml

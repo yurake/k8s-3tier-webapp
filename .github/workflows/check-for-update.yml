@@ -21,22 +21,6 @@ jobs:
           echo CURRENT: ${SOURCE_VERSION}
           echo TARGET: ${TARGET_VERSION}
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube openliberty version
-        working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-openliberty-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff openliberty
-        run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube spring version
-        working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-spring-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff spring
-        run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
       - name: check current minikube yaml version
         working-directory: ./.github/workflows
         run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-yaml-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
@@ -71,22 +55,6 @@ jobs:
       - name: check latest tag kubernetes version
         run: echo "TARGET_VERSION=$(curl -s https://api.github.com/repos/kubernetes/kubernetes/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
       - name: check diff kubernetes
-        run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube openliberty version
-        working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-openliberty-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff openliberty
-        run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube spring version
-        working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-spring-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff spring
         run: |
           echo CURRENT: ${SOURCE_VERSION}
           echo TARGET: ${TARGET_VERSION}
