@@ -19,7 +19,6 @@
 [![Cypress CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cypress-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cypress-ci.yml)
 [![Datree Workflow](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/datree-validation.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/datree-validation.yml)
 [![K8S Security Config Watch](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/k8s-security-config-watch.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/k8s-security-config-watch.yml)
-[![OSSAR](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/ossar-analysis.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/ossar-analysis.yml)
 [![Semgrep](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/semgrep.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/semgrep.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2844382aa110487e94bba8369267476e)](https://www.codacy.com/gh/yurake/k8s-3tier-webapp/dashboard?utm_source=github.com&utm_medium=referral&utm_content=yurake/k8s-3tier-webapp&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/2844382aa110487e94bba8369267476e)](https://www.codacy.com/gh/yurake/k8s-3tier-webapp/dashboard?utm_source=github.com&utm_medium=referral&utm_content=yurake/k8s-3tier-webapp&utm_campaign=Badge_Coverage)
