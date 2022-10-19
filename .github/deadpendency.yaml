@@ -47,6 +47,9 @@ additional-dependency-files:
     path: application/jaxrs-kafka-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/consumer-kafka-quarkus/pom.xml
+ignore-failures:
+  java:
+    - com.whalin/Memcached-Java-Client
 rules-config:
   no-recent-package-release:
     fail-at-months: 48
