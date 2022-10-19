@@ -1,6 +1,5 @@
 package webapp.tier.grpc;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,6 +7,7 @@ import com.google.protobuf.Empty;
 
 import io.quarkus.grpc.GrpcService;
 import io.smallrye.mutiny.Uni;
+import io.smallrye.mutiny.unchecked.Unchecked;
 import webapp.tier.util.CreateId;
 
 @GrpcService
@@ -17,12 +17,13 @@ public class IdService implements Id {
 	int id;
 
 	@Override
+
 	public Uni<IdReply> getId(Empty request) {
-		try {
-			id = CreateId.createid();
-		} catch (NoSuchAlgorithmException e) {
-			logger.log(Level.SEVERE, "Create ID Error.", e);
-		}
-		return Uni.createFrom().item(() -> IdReply.newBuilder().setId(id).build());
+		return Uni.createFrom().item(1).onItem()
+				.transform(Unchecked.function(i -> {
+					return IdReply.newBuilder().setId(CreateId.createid()).build();
+				}))
+				.invoke(i -> logger.log(Level.INFO, "Return id"))
+				.log();
 	}
 }
