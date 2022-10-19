@@ -47,16 +47,6 @@ additional-dependency-files:
     path: application/jaxrs-kafka-quarkus/pom.xml
   - type: maven-pom-xml
     path: application/consumer-kafka-quarkus/pom.xml
-ignore-failures:
-  java:
-    - com.whalin/Memcached-Java-Client
-    - org.glassfish/javax.json
-    - org.hamcrest/hamcrest-all
-    - com.github.h-thurow/simple-jndi
-    - javax.servlet/javax.servlet-api
-    - io.quarkus/quarkus-artemis-jms
-    - io.quarkus/quarkus-test-artemis
-    - org.slf4j/slf4j-log4j12
 rules-config:
   no-recent-package-release:
     fail-at-months: 48
