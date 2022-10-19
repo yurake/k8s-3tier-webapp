@@ -45,7 +45,8 @@ public class MessageGenerator {
 				.onFailure()
 				.recoverWithCompletion()
 				.invoke(() -> logger.log(Level.WARNING,
-						"Recovered and completed send messages."));
+						"Recovered and completed send messages."))
+				.log();
 	}
 
 	private String generateMessgae() {

@@ -20,7 +20,7 @@ spec:
       containers:
         - name: rabbitmq
           image: yurak/rabbitmq:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5672
             - containerPort: 15672

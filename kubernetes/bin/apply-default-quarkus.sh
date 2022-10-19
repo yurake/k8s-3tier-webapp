@@ -164,6 +164,19 @@ kubectl apply -f ./jaeger-all-in-one-template.yml
 kubectl apply -f ./jaeger-service-externalname.yaml
 echo "###"
 echo ""
+echo "### zookeeper"
+cd "$ROOT_DIR"/zookeeper
+kubectl apply -f ./zookeeper-statefulset.yaml
+kubectl apply -f ./zookeeper-service.yaml
+echo "###"
+echo ""
+
+echo "### kafka"
+cd "$ROOT_DIR"/kafka
+kubectl apply -f ./kafka-statefulset.yaml
+kubectl apply -f ./kafka-service.yaml
+echo "###"
+echo ""
 
 echo "### server-grpc-quarkus"
 cd "$ROOT_DIR"/server-grpc-quarkus
@@ -248,5 +261,13 @@ cd "$ROOT_DIR"/jaxrs-redis-quarkus
 kubectl apply -f ./jaxrs-redis-quarkus-deployment.yaml
 kubectl apply -f ./jaxrs-redis-quarkus-service.yaml
 kubectl apply -f ./jaxrs-redis-quarkus-service-externalname.yaml
+echo "###"
+echo ""
+
+echo "### jaxrs-kafka-quarkus"
+cd "$ROOT_DIR"/jaxrs-kafka-quarkus
+kubectl apply -f ./jaxrs-kafka-quarkus-deployment.yaml
+kubectl apply -f ./jaxrs-kafka-quarkus-service.yaml
+kubectl apply -f ./jaxrs-kafka-quarkus-service-externalname.yaml
 echo "###"
 echo ""
