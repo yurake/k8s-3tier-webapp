@@ -22,7 +22,8 @@ public class MsgService implements Msg {
 	public Uni<MsgReply> getMsg(Empty request) {
 		return Uni.createFrom()
 				.item(() -> MsgReply.newBuilder().setMessage(message).build())
-				.invoke(i -> logger.log(Level.INFO, "Return message"));
+				.invoke(i -> logger.log(Level.INFO, "Return message"))
+				.log();
 				}
 
 }

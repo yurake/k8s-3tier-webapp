@@ -43,7 +43,8 @@ public class KafkaResource {
 	@Path("/publish")
 	public Multi<String> publish() {
 		return Multi.createFrom().items(generateMessgae())
-				.onFailure().recoverWithCompletion();
+				.onFailure().recoverWithCompletion()
+				.log();
 	}
 
 	@GET
@@ -52,7 +53,7 @@ public class KafkaResource {
 	@RestStreamElementType(MediaType.APPLICATION_JSON)
 	public Multi<String> subscribe() {
 		logger.log(Level.INFO, "Subscribe received.");
-		return pubmsg;
+		return pubmsg.log();
 	}
 
 	private String generateMessgae() {

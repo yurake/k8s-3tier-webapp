@@ -23,6 +23,7 @@ public class IdService implements Id {
 				.transform(Unchecked.function(i -> {
 					return IdReply.newBuilder().setId(CreateId.createid()).build();
 				}))
-				.invoke(i -> logger.log(Level.INFO, "Return id"));
+				.invoke(i -> logger.log(Level.INFO, "Return id"))
+				.log();
 	}
 }

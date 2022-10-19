@@ -34,8 +34,8 @@ public class GrpcResource {
 	public Uni<Integer> getId() {
 		return id.getId(Empty.newBuilder().build())
 				.onItem().transform(idReply -> idReply.getId())
-				.invoke(i -> logger.log(Level.INFO, "Return id"))
-			    .onFailure().invoke(f -> logger.log(Level.SEVERE, "Failed with {0}", f));
+			    .onFailure().invoke(f -> logger.log(Level.SEVERE, "Failed with {0}", f))
+		        .log();
 	}
 
 	@GET
@@ -43,7 +43,7 @@ public class GrpcResource {
 	public Uni<String> getMsg() {
 		return msg.getMsg(Empty.newBuilder().build())
 				.onItem().transform(msgReply -> msgReply.getMessage())
-				.invoke(i -> logger.log(Level.INFO, "Return message"))
-			    .onFailure().invoke(f -> logger.log(Level.SEVERE, "Failed with {0}", f));
+			    .onFailure().invoke(f -> logger.log(Level.SEVERE, "Failed with {0}", f))
+		        .log();
 	}
 }
