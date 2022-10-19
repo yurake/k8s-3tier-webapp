@@ -1,5 +1,5 @@
 {
-	"rabbit_version": "3.8.2",
+	"rabbit_version": "3.11.1",
 	"users": [
 		{
 			"name": "ossapl",
@@ -39,58 +39,7 @@
 	"parameters": [],
 	"global_parameters": [],
 	"policies": [],
-	"queues": [
-		{
-			"name": "queue1",
-			"vhost": "vhost1",
-			"durable": true,
-			"auto_delete": false,
-			"arguments": {}
-		},
-		{
-			"name": "queue2",
-			"vhost": "vhost1",
-			"durable": true,
-			"auto_delete": false,
-			"arguments": {}
-		}
-	],
-	"exchanges": [
-		{
-			"name": "exchange2",
-			"vhost": "vhost1",
-			"type": "direct",
-			"durable": true,
-			"auto_delete": false,
-			"internal": false,
-			"arguments": {}
-		},
-		{
-			"name": "exchange1",
-			"vhost": "vhost1",
-			"type": "direct",
-			"durable": true,
-			"auto_delete": false,
-			"internal": false,
-			"arguments": {}
-		}
-	],
-	"bindings": [
-		{
-			"source": "exchange1",
-			"vhost": "vhost1",
-			"destination": "queue1",
-			"destination_type": "queue",
-			"routing_key": "",
-			"arguments": {}
-		},
-		{
-			"source": "exchange2",
-			"vhost": "vhost1",
-			"destination": "queue2",
-			"destination_type": "queue",
-			"routing_key": "",
-			"arguments": {}
-		}
-	]
+	"queues": [],
+	"exchanges": [],
+	"bindings": []
 }

@@ -34,8 +34,9 @@ class RabbitmqConverterTest {
 	private static String message = ConfigProvider.getConfig().getValue("common.message",
 			String.class);
 	private static String splitkey = ",";
-	private static String queueName = "queuemsg";
-	private static String routingkey = "routingkeymsg";
+	private static String queueName = "testqueue";
+	private static String converterRoutingKey = "converterkey";
+	private static String messageRoutingKey = "messagekey";
 	private static String hostname = "localhost";
 	private static String convertExchangeName = "converter";
 	private static String messageExchangeName = "message";
@@ -47,8 +48,13 @@ class RabbitmqConverterTest {
 		Channel channel = getChannel();
 
 		channel.exchangeDeclare(messageExchangeName, TOPIC, true, false, Map.of());
-		channel.queueDeclare(queueName, true, false, false, Map.of());
-		channel.queueBind(queueName, messageExchangeName, routingkey);
+		String queue = channel.queueDeclare(queueName, true, false, false, Map.of()).getQueue();
+		logger.log(Level.INFO, "Test queue: {0}", queue);
+//		channel.queueBind(queue, messageExchangeName, messageRoutingKey);
+		channel.queueBind(queue, messageExchangeName, messageRoutingKey);
+//		channel.exchangeDeclare(messageExchangeName, TOPIC, true);
+//		String queueName = channel.queueDeclare().getQueue();
+//		channel.queueBind(queueName, messageExchangeName, messageRoutingKey);
 
 		AtomicReference<MsgBean> receivedMsg = new AtomicReference<>(null);
 
@@ -76,9 +82,11 @@ class RabbitmqConverterTest {
 		AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
 				.contentType("text/plain")
 				.build();
-		channel.basicPublish(convertExchangeName, routingkey, props,
+		channel.basicPublish(convertExchangeName, converterRoutingKey, props,
 				body.getBytes(UTF_8));
-		channel.basicPublish(convertExchangeName, routingkey, props,
+		channel.basicPublish(convertExchangeName, converterRoutingKey, props,
+				body.getBytes(UTF_8));
+		channel.basicPublish(convertExchangeName, converterRoutingKey, props,
 				body.getBytes(UTF_8));
 
 		await().atMost(10, SECONDS).untilAtomic(receivedMsg, notNullValue());
