@@ -1,5 +1,8 @@
 package webapp.tier.resource;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +21,8 @@ import webapp.tier.grpc.Msg;
 @Consumes(MediaType.APPLICATION_JSON)
 public class GrpcResource {
 
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
 	@GrpcClient
 	Id id;
 
@@ -26,15 +31,19 @@ public class GrpcResource {
 
 	@GET
 	@Path("/getid")
-	public Uni<Object> getId() {
+	public Uni<Integer> getId() {
 		return id.getId(Empty.newBuilder().build())
-				.onItem().transform(idReply -> idReply.getId());
+				.onItem().transform(idReply -> idReply.getId())
+				.invoke(i -> logger.log(Level.INFO, "Return id"))
+			    .onFailure().invoke(f -> logger.log(Level.SEVERE, "Failed with {0}", f));
 	}
 
 	@GET
 	@Path("/getmsg")
 	public Uni<String> getMsg() {
 		return msg.getMsg(Empty.newBuilder().build())
-				.onItem().transform(msgReply -> msgReply.getMessage());
+				.onItem().transform(msgReply -> msgReply.getMessage())
+				.invoke(i -> logger.log(Level.INFO, "Return message"))
+			    .onFailure().invoke(f -> logger.log(Level.SEVERE, "Failed with {0}", f));
 	}
 }
