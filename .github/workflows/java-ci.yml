@@ -35,7 +35,7 @@ jobs:
           languages: java
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -54,7 +54,7 @@ jobs:
         run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -122,7 +122,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -196,7 +196,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -270,7 +270,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -348,7 +348,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -422,7 +422,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -496,7 +496,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -570,7 +570,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -644,7 +644,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -718,7 +718,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -792,7 +792,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -866,7 +866,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -940,7 +940,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1014,7 +1014,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1088,7 +1088,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1162,7 +1162,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1235,7 +1235,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1309,7 +1309,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1383,7 +1383,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1457,7 +1457,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1531,7 +1531,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1605,7 +1605,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -1679,7 +1679,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.10
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
