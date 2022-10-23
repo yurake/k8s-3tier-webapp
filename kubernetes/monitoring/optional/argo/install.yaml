@@ -1257,7 +1257,7 @@ spec:
             - server
             - --tls-certificate-secret-name=argo-server-tls
           env: []
-          image: quay.io/argoproj/argocli:v3.4.1
+          image: quay.io/argoproj/argocli:v3.4.2
           name: argo-server
           ports:
             - containerPort: 2746
