@@ -189,6 +189,7 @@ echo "### jaxrs-grpc-quarkus"
 cd "$ROOT_DIR"/jaxrs-grpc-quarkus
 kubectl apply -f ./jaxrs-grpc-quarkus-deployment.yaml
 kubectl apply -f ./jaxrs-grpc-quarkus-service.yaml
+kubectl apply -f ./jaxrs-grpc-quarkus-service-externalname.yaml
 echo "###"
 echo ""
 
