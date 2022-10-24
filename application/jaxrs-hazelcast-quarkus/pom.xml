@@ -9,7 +9,7 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-hazelcast-quarkus</artifactId>
 	<properties>
-		<hazelcast.version>5.1.4</hazelcast.version>
+		<hazelcast.version>5.2.0</hazelcast.version>
 		<slf4j-reload4j.version>2.0.3</slf4j-reload4j.version>
 	</properties>
 	<dependencies>
