@@ -64,44 +64,19 @@ jobs:
           kubectl apply -f kubernetes/monitoring/test/postmannewman/quarkus/postmannewman-quarkus.yaml
       - name: wait for complete e2e job
         run: |
-          kubectl -n monitoring wait --for=condition=complete --timeout=15m job/postmannewman-quarkus
+          kubectl -n monitoring wait --for=condition=complete --timeout=30m job/postmannewman-quarkus
           kubectl -n monitoring describe job postmannewman-quarkus
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
-      - name: check log jaxrs-mysql
+      - name: check log jaxrs-cassandra
         if: always()
         run: |
-          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
-          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
-      - name: check log jaxrs-postgres
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-cassandra)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-cassandra)
+      - name: check log cassandra
         if: always()
         run: |
-          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
-          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-postgres)
-      - name: check log jaxrs-mongodb
-        if: always()
-        run: |
-          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
-          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mongodb)
-      - name: check log jaxrs-redis
-        if: always()
-        run: |
-          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
-          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-redis)
-      - name: check log jaxrs-memcached
-        if: always()
-        run: |
-          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
-          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
-      - name: check log jaxrs-activemq
-        if: always()
-        run: |
-          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
-          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-activemq)
-      - name: check log mysql
-        if: always()
-        run: |
-          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
-          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) -c mysql
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^cassandra)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^cassandra)
       - name: check log ingress
         if: always()
         run: |
