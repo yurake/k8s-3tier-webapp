@@ -12,11 +12,6 @@ on:
 jobs:
   quarkus-ci:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        minikube: [1.27.0, 1.27.1]
-        kubernetes: [1.25.2, 1.25.3]
-      fail-fast: false
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -35,8 +30,8 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: ${{ matrix.minikube }}
-          k8s-version: ${{ matrix.kubernetes }}
+          minikube-version: 1.27.1
+          k8s-version: 1.25.3
       - name: minikube settings
         run: |
           sudo apt install conntrack
