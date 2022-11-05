@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx, openliberty, spring]
+        dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: lint ${{ matrix.dockerfile_default }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
@@ -31,10 +31,25 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile_application: [jaxrs-memcached-quarkus, jaxrs-rabbitmq-quarkus, consumer-rabbitmq-quarkus, jaxrs-mongodb-quarkus, consumer-activemq-quarkus, jaxrs-mysql-quarkus, randompublish-quarkus,
-jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelcast-quarkus, consumer-hazelcast-quarkus, jaxrs-redis-quarkus, consumer-redis-quarkus]
+        dockerfile_application:
+          [
+            jaxrs-memcached-quarkus,
+            jaxrs-rabbitmq-quarkus,
+            consumer-rabbitmq-quarkus,
+            jaxrs-mongodb-quarkus,
+            consumer-activemq-quarkus,
+            jaxrs-mysql-quarkus,
+            randompublish-quarkus,
+            jaxrs-activemq-quarkus,
+            scheduled-quarkus,
+            jaxrs-postgres-quarkus,
+            jaxrs-hazelcast-quarkus,
+            consumer-hazelcast-quarkus,
+            jaxrs-redis-quarkus,
+            consumer-redis-quarkus,
+          ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: lint ${{ matrix.dockerfile_application }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
@@ -46,7 +61,7 @@ jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelca
       matrix:
         dockerfile_monitoring: [jenkins]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: lint ${{ matrix.dockerfile_monitoring }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
@@ -58,7 +73,7 @@ jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelca
       matrix:
         dockerfile_ab: [ab]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: lint ${{ matrix.dockerfile_ab }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
@@ -66,12 +81,9 @@ jaxrs-activemq-quarkus, scheduled-quarkus, jaxrs-postgres-quarkus, jaxrs-hazelca
 
   dockerfile_postmannewman:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dockerfile_postmannewman: [quarkus, openliberty]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: lint ${{ matrix.dockerfile_postmannewman }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
-          dockerfile: kubernetes/monitoring/test/postmannewman/${{ matrix.dockerfile_postmannewman }}/Dockerfile
+          dockerfile: kubernetes/monitoring/test/postmannewman/quarkus/Dockerfile

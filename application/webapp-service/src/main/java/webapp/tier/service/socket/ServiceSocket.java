@@ -37,13 +37,14 @@ public class ServiceSocket {
 	@OnError
 	public void onError(Session session, Throwable throwable) {
 		sessions.remove(session.getId());
-		logger.logp(Level.SEVERE, "error : {0}{1}", session.getId(), throwable.getMessage());
+		logger.logp(Level.SEVERE, "error : {0}{1}", session.getId(),
+				throwable.getMessage());
 	}
 
 	@OnMessage
 	public void onMessage(String message) {
 		if (sessions.isEmpty()) {
-			logger.log(Level.INFO, "No Subscriber");
+			logger.log(Level.INFO, "No Subscribe Browser");
 		} else {
 			sessions.values().forEach(s -> {
 				logger.log(Level.INFO, "Send : {0}", s.getId());

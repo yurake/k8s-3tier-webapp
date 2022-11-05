@@ -42,11 +42,17 @@ spec:
                 configMapKeyRef:
                   name: mysql-configmap
                   key: tz
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+          readinessProbe:
+            tcpSocket:
+              port: 3306
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
         - name: mysql-exporter
-          image: prom/mysqld-exporter:v0.13.0
+          image: prom/mysqld-exporter:v0.14.0
           ports:
             - containerPort: 9104
           env:
@@ -55,6 +61,12 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: mysql-exporter-password
+          livenessProbe:
+            tcpSocket:
+              port: 9104
+          readinessProbe:
+            tcpSocket:
+              port: 9104
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:

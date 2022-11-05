@@ -29,7 +29,8 @@ public class RandomResource {
 	@Timed(name = "checksTimer", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response random() {
 		try {
-			return Response.ok().entity(randomsvc.deliverrandom(randomsvc.getNum(6))).build();
+			return Response.ok().entity(randomsvc.deliverrandom(randomsvc.getNum(6)))
+					.build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}

@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: setup minikube
         uses: opsgang/ga-setup-minikube@v0.1.2
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: 1.23.2
-          k8s-version: 1.22.2
+          minikube-version: 1.27.1
+          k8s-version: 1.25.3
       - name: minikube settings
         run: |
           sudo apt install conntrack
@@ -48,7 +48,7 @@ jobs:
           kubectl apply -f kubernetes/nginx/nginx-service.yaml
           sleep 10
       - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.6.1
+        uses: zaproxy/action-baseline@v0.7.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: "http://k8s.3tier.webapp/"

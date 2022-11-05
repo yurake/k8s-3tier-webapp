@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: openliberty-monitoring
-  namespace: monitoring
-spec:
-  type: ExternalName
-  externalName: openliberty.default.svc.cluster.local

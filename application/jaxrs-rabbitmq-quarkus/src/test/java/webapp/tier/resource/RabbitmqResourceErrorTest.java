@@ -1,35 +1,25 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
+import static org.mockito.Mockito.when;
+
+import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.mockito.InjectMock;
+import webapp.tier.service.RabbitmqService;
 
 @QuarkusTest
 class RabbitmqResourceErrorTest {
 
-	@Test
-	void testPutError() {
-		given()
-				.when()
-				.contentType("application/json")
-				.post("/quarkus/rabbitmq/put")
-				.then()
-				.statusCode(500);
-	}
+	@InjectMock
+	RabbitmqService svc;
 
 	@Test
-	void testGetError() {
-		given()
-				.when()
-				.get("/quarkus/rabbitmq/get")
-				.then()
-				.statusCode(500);
-	}
-
-	@Test
-	void testPublishError() {
+	void testPublishError() throws NoSuchAlgorithmException {
+		when(svc.publishMsg()).thenThrow(new NoSuchAlgorithmException());
 		given()
 				.when()
 				.contentType("application/json")

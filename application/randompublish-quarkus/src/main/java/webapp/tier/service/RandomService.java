@@ -44,7 +44,7 @@ public class RandomService {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	public String deliverrandom(Integer id) {
+	public String deliverrandom(int id) {
 		String response;
 		switch (id) {
 		case 0:
@@ -60,7 +60,8 @@ public class RandomService {
 			response = stringBuild("Call: Postgres Publish", postgresresource.insert());
 			break;
 		case 4:
-			response = stringBuild("Call: Hazelcast Publish", hazelcastresource.publish());
+			response = stringBuild("Call: Hazelcast Publish",
+					hazelcastresource.publish());
 			break;
 		case 5:
 			response = stringBuild("Call: Mongodb Publish", mongodbResource.insert());
@@ -73,8 +74,8 @@ public class RandomService {
 		return response;
 	}
 
-	public int getNum(Integer i) {
-		return (int) (Math.random() * i);
+	public int getNum(int num) {
+		return (int) (Math.random() * num);
 	}
 
 	public String stringBuild(String subject, String response) {

@@ -1,18 +1,21 @@
 apiVersion: chaos-mesh.org/v1alpha1
-kind: StressChaos
+kind: Schedule
 metadata:
   name: burn-cpu
   namespace: chaos-testing
 spec:
-  mode: one
-  selector:
-    namespaces:
-      - default
-    labelSelectors:
-      "component": "quarkus"
-  stressors:
-    cpu:
-      workers: 1
-  duration: "30s"
-  scheduler:
-    cron: "@every 2m"
+  schedule: "0 * * * *"
+  historyLimit: 2
+  concurrencyPolicy: "Allow"
+  type: "StressChaos"
+  stressChaos:
+    mode: one
+    selector:
+      namespaces:
+        - default
+      labelSelectors:
+        "component": "quarkus"
+    stressors:
+      cpu:
+        workers: 1
+    duration: "10s"

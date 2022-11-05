@@ -4,26 +4,36 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+
+import io.smallrye.reactive.messaging.annotations.Blocking;
+import webapp.tier.bean.MsgBean;
+import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class RabbitmqSubscribeService extends RabbitmqService {
+public class RabbitmqSubscribeService {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	protected RabbitmqDeliverSubscriber createRabbitmqDeliverSubscriber(Channel channel) {
-		return new RabbitmqDeliverSubscriber(channel);
+	@Inject
+	@RestClient
+	RabbitmqDeliverService deliversvc;
+
+	@ConfigProperty(name = "rabbitmq.split.key")
+	String splitkey;
+
+	@Incoming("message")
+	@Blocking
+	public void consume(String message) {
+		MsgBean msgbean = MsgUtils.splitBody(message, splitkey);
+		msgbean.setFullmsg("Received");
+		logger.log(Level.INFO, msgbean.getFullmsg());
+		String response = deliversvc.random();
+		logger.log(Level.INFO, "Called Random Publish: {0}", response);
 	}
 
-	@Override
-	public void run() {
-		try (Connection conn = getConnection();
-				Channel channel = conn.createChannel()) {
-			subscribeRabbitmq(conn, channel, createRabbitmqDeliverSubscriber(channel));
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Subscribe Errorr.", e);
-		}
-	}
 }

@@ -1,70 +1,69 @@
 package webapp.tier.resource;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.sse.Sse;
 
-import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.jboss.resteasy.annotations.SseElementType;
-import org.reactivestreams.Publisher;
+import org.eclipse.microprofile.reactive.messaging.Outgoing;
+import org.jboss.resteasy.reactive.RestStreamElementType;
 
-import webapp.tier.bean.LatestMessage;
-import webapp.tier.service.KafkaService;
+import io.smallrye.mutiny.Multi;
+import webapp.tier.bean.MsgBean;
+import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgUtils;
 
-@ApplicationScoped
 @Path("/quarkus/kafka")
 public class KafkaResource {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	@Inject
-	@Channel("in-memory-message")
-	Publisher<String> inmemmsg;
+	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
+
+	@ConfigProperty(name = "common.message")
+	String message;
+
+	@ConfigProperty(name = "kafka.splitkey")
+	String splitkey;
 
 	@Inject
-	KafkaService svc;
+	@Channel("message")
+	Multi<String> pubmsg;
 
-	@Context
-	Sse sse;
-
-	@GET
-	@Path("/subscribe")
-	@Produces(MediaType.SERVER_SENT_EVENTS)
-	@SseElementType("text/plain")
-	public Publisher<String> subscribe() {
-		return inmemmsg;
-	}
-
-	@GET
-	@Path("/get")
-    @Retry(maxRetries = 3)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response get() {
-		return Response.ok(LatestMessage.getLatestMsg()).build();
-	}
-
+	@Outgoing("converter")
 	@POST
 	@Path("/publish")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response publish() {
+	public Multi<String> publish() {
+		return Multi.createFrom().items(generateMessgae())
+				.onFailure().recoverWithCompletion()
+				.log();
+	}
+
+	@GET
+	@Produces(MediaType.SERVER_SENT_EVENTS)
+	@Path("/subscribe")
+	@RestStreamElementType(MediaType.APPLICATION_JSON)
+	public Multi<String> subscribe() {
+		logger.log(Level.INFO, "Subscribe received.");
+		return pubmsg.log();
+	}
+
+	private String generateMessgae() {
+		MsgBean msgbean = errormsg;
 		try {
-			return Response.ok().entity(svc.publishMsg()).build();
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "Publish Error.", e);
-			return Response.status(500).entity(e.getMessage()).build();
+			msgbean = new MsgBean(CreateId.createid(), message, "Generate");
+		} catch (NoSuchAlgorithmException e) {
+			logger.log(Level.SEVERE, "Create Id Error.", e);
 		}
+		logger.log(Level.INFO, msgbean.getFullmsg());
+		return MsgUtils.createBody(msgbean, splitkey);
 	}
 }

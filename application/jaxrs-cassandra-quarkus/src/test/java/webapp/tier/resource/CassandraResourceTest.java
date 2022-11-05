@@ -23,10 +23,10 @@ class CassandraResourceTest {
 	@Inject
 	CassandraService svc;
 
-    @AfterEach
-    void afterEach() {
-    	svc.deleteMsg();
-    }
+	@AfterEach
+	void afterEach() {
+		svc.deleteMsg();
+	}
 
 	@Test
 	void testInsert() {

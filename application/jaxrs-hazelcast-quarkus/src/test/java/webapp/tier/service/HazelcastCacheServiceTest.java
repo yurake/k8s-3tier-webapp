@@ -59,7 +59,8 @@ class HazelcastCacheServiceTest {
 	@Test
 	void testPutMsgHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
-		when(mockInstanceError.getMap(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
+		when(mockInstanceError.getMap(ArgumentMatchers.any()))
+				.thenThrow(new IllegalStateException());
 		try {
 			svc.setMsg(mockInstanceError);
 			fail();
@@ -85,7 +86,8 @@ class HazelcastCacheServiceTest {
 	@Test
 	void testGetMsgHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
-		when(mockInstanceError.getMap(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
+		when(mockInstanceError.getMap(ArgumentMatchers.any()))
+				.thenThrow(new IllegalStateException());
 		try {
 			svc.getMsg(mockInstanceError);
 			fail();
@@ -117,7 +119,7 @@ class HazelcastCacheServiceTest {
 		List<Integer> expecteds = new ArrayList<>();
 		Map<Integer, String> map = mockInstance.getMap(cachename);
 		for (int i = 0; i < 2; i++) {
-			MsgBean msgbean = new MsgBean(CreateId.createid(),respbody , "Set");
+			MsgBean msgbean = new MsgBean(CreateId.createid(), respbody, "Set");
 			map.put(msgbean.getId(), msgbean.getMessage());
 			expecteds.add(msgbean.getId());
 		}

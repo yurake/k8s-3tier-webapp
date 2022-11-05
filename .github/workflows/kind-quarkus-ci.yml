@@ -8,17 +8,15 @@ on:
       - "application/**"
       - "kubernetes/**"
       - ".github/workflows/kind-quarkus-ci.yml"
-  issues:
-    types: [closed]
 
 jobs:
   quarkus-ci:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Kind Cluster
-        uses: helm/kind-action@v1.2.0
+        uses: helm/kind-action@v1.4.0
       - name: apply minimal service
         run: |
           sh ./kubernetes/bin/apply-default-quarkus.sh

@@ -28,7 +28,8 @@ public class HazelcastMessageListener implements MessageListener<Object> {
 
 	@Override
 	public void onMessage(Message<Object> message) {
-		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject().toString(), splitkey);
+		MsgBean msgbean = MsgUtils.splitBody(message.getMessageObject().toString(),
+				splitkey);
 		msgbean.setFullmsg("Received");
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		hazsock.onMessage(MsgUtils.createBody(msgbean, splitkey));

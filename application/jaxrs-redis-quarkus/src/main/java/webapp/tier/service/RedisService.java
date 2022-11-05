@@ -3,164 +3,105 @@ package webapp.tier.service;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import io.quarkus.runtime.ShutdownEvent;
-import io.quarkus.runtime.StartupEvent;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.exceptions.JedisConnectionException;
+import io.quarkus.redis.datasource.RedisDataSource;
+import io.quarkus.redis.datasource.keys.KeyCommands;
+import io.quarkus.redis.datasource.pubsub.PubSubCommands;
+import io.quarkus.redis.datasource.value.ValueCommands;
 import webapp.tier.bean.MsgBean;
-import webapp.tier.service.client.WebappClientServiceMegBean;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class RedisService implements Runnable {
+public class RedisService implements Consumer<RedisNotification> {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
-	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 
-	private static String message = ConfigProvider.getConfig().getValue("common.message", String.class);
-	private static String servername = ConfigProvider.getConfig().getValue("redis.server", String.class);
-	private static int serverport = ConfigProvider.getConfig().getValue("redis.port.num", Integer.class);
-	private static String channel = ConfigProvider.getConfig().getValue("redis.channel", String.class);
-	private static String splitkey = ConfigProvider.getConfig().getValue("redis.splitkey", String.class);
-	private static int setexpire = ConfigProvider.getConfig().getValue("redis.set.expire", Integer.class);
+	@ConfigProperty(name = "redis.split.key")
+	String splitkey;
 
-	@Inject
-	WebappClientServiceMegBean svcmsgbean;
+	private static String channel = ConfigProvider.getConfig().getValue("redis.channel",
+			String.class);
 
-	void onStart(@Observes StartupEvent ev) {
-		scheduler.submit(this);
-		logger.log(Level.INFO, "Subscribe is starting...");
+	@ConfigProperty(name = "common.message")
+	String message;
+
+	private final KeyCommands<String> keys;
+	private final ValueCommands<String, String> msgs;
+	private final PubSubCommands<RedisNotification> pub;
+	private final PubSubCommands.RedisSubscriber subscriber;
+
+	public RedisService(RedisDataSource ds) {
+		keys = ds.key();
+		msgs = ds.value(String.class);
+		pub = ds.pubsub(RedisNotification.class);
+		subscriber = pub.subscribe(channel, this);
 	}
 
-	void onStop(@Observes ShutdownEvent ev) {
-		scheduler.shutdown();
-		logger.log(Level.INFO, "Subscribe is stopping...");
-	}
-
-	public Jedis createJedis() {
-		return new Jedis(servername, serverport);
-	}
-
-	protected RedisSubscriber createRedisSubscriber() {
-		return new RedisSubscriber();
-	}
-
-	public boolean ping() {
-		Jedis jedis = createJedis();
-		boolean status = false;
-
-		if (Objects.nonNull(jedis)) {
-			try {
-				if (jedis.ping().equalsIgnoreCase("PONG")) {
-					status = true;
-				}
-			} catch (JedisConnectionException e) {
-				logger.log(Level.SEVERE, "Status Check Error.", e);
-				throw e;
-			} finally {
-				jedis.close();
-			}
-		}
-		return status;
-	}
-
-	@SuppressWarnings("deprecation")
-	public MsgBean putMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
-
-		MsgBean msgbean = svcmsgbean.getMegBean("Put");
-		try {
-			String id = MsgUtils.intToString(msgbean.getId());
-			jedis.set(id, msgbean.getMessage());
-			jedis.expire(id, setexpire);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Put Error. ", e);
-			throw e;
-		} finally {
-			jedis.close();
-		}
+	public MsgBean putMsg() throws NoSuchAlgorithmException {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		logger.log(Level.INFO, msgbean.getFullmsg());
+		msgs.set(MsgUtils.intToString(msgbean.getId()), msgbean.getMessage());
 		return msgbean;
 	}
 
-	public MsgBean getMsg(Jedis jedis) throws RuntimeException {
-		List<MsgBean> msglist = getMsgList(jedis);
-		return msglist.get(msglist.size() - 1);
-	}
-
-	public List<MsgBean> getMsgList(Jedis jedis) throws RuntimeException {
+	public List<MsgBean> getMsgList() {
+		logger.log(Level.INFO, "Get message list.");
 		List<MsgBean> msglist = new ArrayList<>();
-
-		try {
-			Set<String> keys = jedis.keys("*");
-			for (String key : keys) {
-				MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(key), jedis.get(key), "Get");
-				logger.log(Level.INFO, msgbean.getFullmsg());
-				msglist.add(msgbean);
-			}
-
-			if (msglist.isEmpty()) {
-				msglist.add(new MsgBean(0, "No Data."));
-			}
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Get Error. ", e);
-			throw e;
-		} finally {
-			jedis.close();
+		List<String> keyList = keys.keys("*");
+		for (String key : keyList) {
+			MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(key), msgs.get(key),
+					"Get");
+			logger.log(Level.INFO, msgbean.getFullmsg());
+			msglist.add(msgbean);
+		}
+		if (msglist.isEmpty()) {
+			msglist.add(new MsgBean(0, "No Data."));
 		}
 		return msglist;
 	}
 
-	@SuppressWarnings("deprecation")
-	public MsgBean publishMsg(Jedis jedis) throws RuntimeException, NoSuchAlgorithmException {
-		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
-		String body = MsgUtils.createBody(msgbean, splitkey);
-
-		try {
-			jedis.publish(channel, body);
-			jedis.expire(MsgUtils.intToString(msgbean.getId()), setexpire);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Publish Error. ", e);
-			throw e;
-		} finally {
-			jedis.close();
+	public List<MsgBean> delete() {
+		logger.log(Level.INFO, "Delete message all.");
+		List<MsgBean> msglist = new ArrayList<>();
+		List<String> keyList = keys.keys("*");
+		for (String key : keyList) {
+			MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(key), msgs.get(key),
+					"Delete");
+			keys.del(key);
+			logger.log(Level.INFO, msgbean.getFullmsg());
+			msglist.add(msgbean);
 		}
+		return msglist;
+	}
+
+	public MsgBean publish() throws NoSuchAlgorithmException {
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		logger.log(Level.INFO, msgbean.getFullmsg());
+		pub.publish(channel, new RedisNotification(
+				MsgUtils.intToString(msgbean.getId()), msgbean));
 		return msgbean;
 	}
 
 	@Override
-	public void run() {
-		subscribeRedis(createRedisSubscriber());
+	public void accept(RedisNotification notification) {
+		MsgBean msgbean = notification.msgbean;
+		msgbean.setFullmsg("Received");
+		logger.log(Level.INFO, msgbean.getFullmsg());
 	}
 
-	protected void subscribeRedis(RedisSubscriber redissubsc) {
-		Jedis jedis = createJedis();
-
-		try {
-			jedis.subscribe(redissubsc, channel);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Subscribe Error.", e);
-			throw e;
-		} finally {
-			jedis.close();
-		}
-	}
-
-	protected void flushAll(Jedis jedis) {
-		jedis.flushAll();
+	@PreDestroy
+	public void terminate() {
+		logger.log(Level.INFO, "Unsubscibed.");
+		subscriber.unsubscribe();
 	}
 }
