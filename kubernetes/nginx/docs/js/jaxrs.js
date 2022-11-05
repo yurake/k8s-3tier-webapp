@@ -10,6 +10,7 @@ var mysqlurl = url + "/mysql/";
 var postgresurl = url + "/postgres/";
 var mongodburl = url + "/mongodb/";
 var cassandraurl = url + "/cassandra/";
+var grpcaurl = url + "/grpc/";
 var initialvalue = "Response Values";
 var set = "set";
 var put = "put";
@@ -30,7 +31,12 @@ var respmysql = "#respmysql";
 var resppostgres = "#resppostgres";
 var respmongodb = "#respmongodb";
 var respcassandra = "#respcassandra";
-var isopenkafka = false;
+var respgrpc = "#respgrpc";
+let isopenkafka = false;
+let isopenredis = false;
+let isopenrabbitmq = false;
+let isopenactivemq = false;
+let isopenhazelcast = false;
 
 $(function () {
   $(respkafka).html(initialvalue);
@@ -44,8 +50,10 @@ $(function () {
   $(resppostgres).html(initialvalue);
   $(respmongodb).html(initialvalue);
   $(respcassandra).html(initialvalue);
+  $(respgrpc).html(initialvalue);
 
   var sse;
+
 
   function dispMsgFromString(type, url, respid) {
     $.ajax({
@@ -66,9 +74,9 @@ $(function () {
       url: url,
       cache: false,
       timeout: 10000,
-    }).always(function (data, jqXHR) {
+    }).always(function (data, status, xhr) {
       console.log(data);
-      $(respid).html(data.fullmsg + "\nstatus: " + jqXHR.status);
+      $(respid).html(data.fullmsg + "\nstatus: " + xhr.status);
     });
   }
 
@@ -78,56 +86,120 @@ $(function () {
       url: url,
       cache: false,
       timeout: 10000,
-    }).always(function (data, jqXHR) {
+    }).always(function (data, status, xhr) {
       var resparray = "";
       for (i = 0; i < data.length; i++) {
-        if (data[i] != null) {
+        if (data[i] !== null) {
           resparray += data[i].fullmsg + "\n";
         }
       }
-      $(respid).html(resparray + jqXHR.status);
+      $(respid).html(resparray + "\nstatus: " + xhr.status);
     });
   }
 
-  function subscribeWebSocket(svc) {
-    isopen = "isopen" + svc;
-    ws = "ws" + svc;
-    resp = "resp" + svc;
-    if (isopen) {
+  function subscribeWebSocketRedis(svc) {
+    if (isopenredis) {
       console.log("Already connected.");
     } else {
       ws = new WebSocket("ws://k8s.3tier.webapp/quarkus/" + svc + "/subscribe");
-      isopen = true;
+      isopenredis = true;
       console.log("Connection to server opened.");
       ws.onopen = function () {
         ws.onmessage = function (receive) {
-          $(resp).text(receive.data);
+          $(respredis).text(receive.data);
         };
       };
     }
   }
 
-  function stopSweSocket(svc) {
-    isopen = "isopen" + svc;
-    ws = "ws" + svc;
-    resp = "resp" + svc;
-    if (isopen) {
+  function subscribeWebSocketRabbitmq(svc) {
+    if (isopenrabbitmq) {
+      console.log("Already connected.");
+    } else {
+      ws = new WebSocket("ws://k8s.3tier.webapp/quarkus/" + svc + "/subscribe");
+      isopenrabbitmq = true;
+      console.log("Connection to server opened.");
+      ws.onopen = function () {
+        ws.onmessage = function (receive) {
+          $(resprabbitmq).text(receive.data);
+        };
+      };
+    }
+  }
+
+  function subscribeWebSocketActivemq(svc) {
+    if (isopenactivemq) {
+      console.log("Already connected.");
+    } else {
+      ws = new WebSocket("ws://k8s.3tier.webapp/quarkus/" + svc + "/subscribe");
+      isopenactivemq = true;
+      console.log("Connection to server opened.");
+      ws.onopen = function () {
+        ws.onmessage = function (receive) {
+          $(respactivemq).text(receive.data);
+        };
+      };
+    }
+  }
+
+  function subscribeWebSocketHazelcast(svc) {
+    if (isopenhazelcast) {
+      console.log("Already connected.");
+    } else {
+      ws = new WebSocket("ws://k8s.3tier.webapp/quarkus/" + svc + "/subscribe");
+      isopenhazelcast = true;
+      console.log("Connection to server opened.");
+      ws.onopen = function () {
+        ws.onmessage = function (receive) {
+          $(respcachehazelcast).text(receive.data);
+        };
+      };
+    }
+  }
+
+  function stopSweSocketRedis() {
+    if (isopenredis) {
       ws.close();
       console.log("Connection to server closed.");
-      isopen = false;
-      $(resp).html(initialvalue);
+      isopenredis = false;
+      $(respredis).html(initialvalue);
     } else {
       console.log("Already closed.");
     }
   }
 
-  $("#getkafka").click(function () {
-    dispMsgFromString(get, kafkaurl + get, respkafka);
-  });
+  function stopSweSocketRabbitmq() {
+    if (isopenrabbitmq) {
+      ws.close();
+      console.log("Connection to server closed.");
+      isopenrabbitmq = false;
+      $(resprabbitmq).html(initialvalue);
+    } else {
+      console.log("Already closed.");
+    }
+  }
 
-  $("#publishkafka").click(function () {
-    dispMsgFromJson(post, kafkaurl + publish, respkafka);
-  });
+  function stopSweSocketActivemq() {
+    if (isopenactivemq) {
+      ws.close();
+      console.log("Connection to server closed.");
+      isopenactivemq = false;
+      $(respactivemq).html(initialvalue);
+    } else {
+      console.log("Already closed.");
+    }
+  }
+
+  function stopSweSocketHazelcast() {
+    if (isopenhazelcast) {
+      ws.close();
+      console.log("Connection to server closed.");
+      isopenhazelcast = false;
+      $(respcachehazelcast).html(initialvalue);
+    } else {
+      console.log("Already closed.");
+    }
+  }
 
   $("#subscribekafka").click(function () {
     if (isopenkafka) {
@@ -170,11 +242,11 @@ $(function () {
   });
 
   $("#subscriberedis").click(function () {
-    subscribeWebSocket("redis");
+    subscribeWebSocketRedis("redis");
   });
 
   $("#stopredis").click(function () {
-    stopSweSocket("redis");
+    stopSweSocketRedis();
   });
 
   $("#publishredis").click(function () {
@@ -194,11 +266,11 @@ $(function () {
   });
 
   $("#subscriberabbitmq").click(function () {
-    subscribeWebSocket("rabbitmq");
+    subscribeWebSocketRabbitmq("rabbitmq");
   });
 
   $("#stoprabbitmq").click(function () {
-    stopSweSocket("rabbitmq");
+    stopSweSocketRabbitmq();
   });
 
   $("#putactivemq").click(function () {
@@ -214,11 +286,11 @@ $(function () {
   });
 
   $("#subscribeactivemq").click(function () {
-    subscribeWebSocket("activemq");
+    subscribeWebSocketActivemq("activemq");
   });
 
   $("#stopactivemq").click(function () {
-    stopSweSocket("activemq");
+    stopSweSocketActivemq();
   });
 
   $("#setcachehazelcast").click(function () {
@@ -234,11 +306,11 @@ $(function () {
   });
 
   $("#subscribehazelcast").click(function () {
-    subscribeWebSocket("hazelcast");
+    subscribeWebSocketHazelcast("hazelcast");
   });
 
   $("#stophazelcast").click(function () {
-    stopSweSocket("hazelcast");
+    stopSweSocketHazelcast();
   });
 
   $("#putqueuehazelcast").click(function () {
@@ -295,5 +367,13 @@ $(function () {
 
   $("#deletecassandra").click(function () {
     dispMsgFromString(post, cassandraurl + delt, respcassandra);
+  });
+
+  $("#getidgrcp").click(function () {
+    dispMsgFromString(get, grpcaurl + "getid", respgrpc);
+  });
+
+  $("#getmsggrpc").click(function () {
+    dispMsgFromString(get, grpcaurl + "getmsg", respgrpc);
   });
 })

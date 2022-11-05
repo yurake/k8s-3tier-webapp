@@ -15,9 +15,7 @@ application/jaxrs-redis-quarkus/.mvn
 application/parent-pom/.mvn
 application/producer-kafka-quarkus/.mvn
 application/randompublish-quarkus/.mvn
-application/redis-mysql-helidon/.mvn
 application/scheduled-quarkus/.mvn
 application/webapp-service/.mvn
-application/wlp-web-java-spring/.mvn
 .gitpod.yml
 .github

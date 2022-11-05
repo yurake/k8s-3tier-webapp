@@ -1,10 +1,8 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -29,12 +27,13 @@ class MysqlServiceTest {
 	@Inject
 	MysqlService svc;
 
-	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
+	String respbody = "Hello k8s-3tier-webapp with quarkus";
 
 	@BeforeEach
 	public void createTable() {
 		String createsql = "CREATE TABLE msg (id SERIAL PRIMARY KEY, msg TEXT NOT NULL)";
-		try (Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
+		try (Connection con = DriverManager
+				.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
 				Statement stmt = con.createStatement()) {
 			stmt.executeUpdate(createsql);
 		} catch (SQLException e) {
@@ -44,9 +43,10 @@ class MysqlServiceTest {
 	}
 
 	@AfterEach
-	private void dropTable() {
+	public void dropTable() {
 		String createsql = "DROP TABLE msg";
-		try (Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
+		try (Connection con = DriverManager
+				.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
 				Statement stmt = con.createStatement()) {
 			stmt.executeUpdate(createsql);
 		} catch (SQLException e) {
@@ -86,11 +86,13 @@ class MysqlServiceTest {
 	@Test
 	void testSelectMsgList10() {
 		try {
+			svc.invalidateCache();
 			List<Integer> expecteds = new ArrayList<>();
 			for (int i = 0; i < 10; i++) {
 				expecteds.add(svc.insertMsg().getId());
 			}
 			List<MsgBean> msgbeans = svc.selectMsg();
+			assertThat(msgbeans.size(), is(10));
 			msgbeans.forEach(s -> {
 				assertThat(s.getFullmsg(), containsString(respbody));
 				assertThat(expecteds.contains(s.getId()), is(true));
@@ -102,8 +104,43 @@ class MysqlServiceTest {
 	}
 
 	@Test
+	void testSelectMsgCache() {
+		try {
+			svc.invalidateCache();
+			int id = svc.insertMsg().getId();
+			svc.selectMsg();
+			dropTable();
+			List<MsgBean> msgbeans = svc.selectMsg();
+			msgbeans.forEach(s -> {
+				assertThat(s.getMessage(), containsString(respbody));
+				assertThat(s.getId(), is(id));
+			});
+		} catch (SQLException | NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	void testSelectMsgInvalidateCache() {
+		try {
+			int id = svc.insertMsg().getId();
+			svc.invalidateCache();
+			List<MsgBean> msgbeans = svc.selectMsg();
+			msgbeans.forEach(s -> {
+				assertThat(s.getMessage(), containsString(respbody));
+				assertThat(s.getId(), is(id));
+			});
+		} catch (SQLException | NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
 	void testSelectMsgNoData() {
 		try {
+			svc.invalidateCache();
 			List<MsgBean> msgbeans = svc.selectMsg();
 			msgbeans.forEach(s -> {
 				assertThat(s.getMessage(), is("No Data."));
@@ -118,6 +155,7 @@ class MysqlServiceTest {
 	@Test
 	void testSelectMsgError() {
 		try {
+			svc.invalidateCache();
 			dropTable();
 			svc.selectMsg();
 			fail();

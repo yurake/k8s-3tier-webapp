@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: converter-kafka-quarkus
+spec:
+  selector:
+    matchLabels:
+      app: converter-kafka-quarkus
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        component: quarkus
+        app: converter-kafka-quarkus
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+        - name: converter-kafka-quarkus
+          image: yurak/converter-kafka-quarkus:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /q/health/live
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 5
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /q/health/ready
+            initialDelaySeconds: 10
+            periodSeconds: 30

@@ -42,18 +42,18 @@ public class ActiveMqService implements Messaging, Runnable {
 	@ConfigProperty(name = "activemq.topic.name")
 	String topicname;
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqService.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 	private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
 	static boolean isEnableReceived = true;
 
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.submit(this);
-		LOG.log(Level.INFO, "Subscribe is starting...");
+		logger.log(Level.INFO, "Subscribe is starting...");
 	}
 
 	void onStop(@Observes ShutdownEvent ev) {
 		scheduler.shutdown();
-		LOG.log(Level.INFO, "Subscribe is stopping...");
+		logger.log(Level.INFO, "Subscribe is stopping...");
 	}
 
 	public static void startReceived() {
@@ -68,18 +68,22 @@ public class ActiveMqService implements Messaging, Runnable {
 	public MsgBean putMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			context.createProducer().send(context.createQueue(queuename), context.createTextMessage(body));
+		try (JMSContext context = connectionFactory
+				.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			context.createProducer().send(context.createQueue(queuename),
+					context.createTextMessage(body));
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
 	@Override
 	public MsgBean getMsg() throws RuntimeException {
 		MsgBean msgbean = null;
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
-				JMSConsumer consumer = context.createConsumer(context.createQueue(queuename))) {
+		try (JMSContext context = connectionFactory
+				.createContext(Session.AUTO_ACKNOWLEDGE);
+				JMSConsumer consumer = context
+						.createConsumer(context.createQueue(queuename))) {
 			String resp = consumer.receiveBody(String.class);
 
 			if (Objects.isNull(resp)) {
@@ -89,7 +93,7 @@ public class ActiveMqService implements Messaging, Runnable {
 				msgbean.setFullmsg("Get");
 			}
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -97,21 +101,25 @@ public class ActiveMqService implements Messaging, Runnable {
 	public MsgBean publishMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
-		try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-			context.createProducer().send(context.createTopic(topicname), context.createTextMessage(body));
+		try (JMSContext context = connectionFactory
+				.createContext(Session.AUTO_ACKNOWLEDGE)) {
+			context.createProducer().send(context.createTopic(topicname),
+					context.createTextMessage(body));
 		}
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
 	@Override
 	public void run() {
 		while (isEnableReceived) {
-			try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
-					JMSConsumer consumer = context.createConsumer(context.createTopic(topicname))) {
+			try (JMSContext context = connectionFactory
+					.createContext(Session.AUTO_ACKNOWLEDGE);
+					JMSConsumer consumer = context
+							.createConsumer(context.createTopic(topicname))) {
 				amqconsumer.consume(consumer);
 			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "Subscribe Error.", e);
+				logger.log(Level.SEVERE, "Subscribe Error.", e);
 				stopReceived();
 			}
 		}

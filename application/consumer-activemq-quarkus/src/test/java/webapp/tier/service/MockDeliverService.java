@@ -1,4 +1,8 @@
 package webapp.tier.service;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -12,8 +16,11 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MockDeliverService {
 
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
+
 	@GET
 	public String random() {
-			return "Test";
+		logger.log(Level.INFO, "Received rest request form consumer");
+		return "Test";
 	}
 }

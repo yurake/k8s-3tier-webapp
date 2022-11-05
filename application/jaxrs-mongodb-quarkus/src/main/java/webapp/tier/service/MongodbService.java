@@ -32,15 +32,16 @@ public class MongodbService {
 	@ConfigProperty(name = "mongodb.collection.name")
 	String collectionname;
 
-	private static final Logger LOG = Logger.getLogger(MongodbService.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	public MsgBean insertMsg(MongoCollection<Document> collection) throws NoSuchAlgorithmException {
+	public MsgBean insertMsg(MongoCollection<Document> collection)
+			throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
 		Document document = new Document()
 				.append("id", msgbean.getId())
 				.append("msg", msgbean.getMessage());
 		collection.insertOne(document);
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
 
@@ -50,8 +51,9 @@ public class MongodbService {
 		try (MongoCursor<Document> cursor = collection.find().iterator()) {
 			while (cursor.hasNext()) {
 				Document document = cursor.next();
-				MsgBean msgbean = new MsgBean(document.getInteger("id"), document.getString("msg"), "Select");
-				LOG.log(Level.INFO, msgbean.getFullmsg());
+				MsgBean msgbean = new MsgBean(document.getInteger("id"),
+						document.getString("msg"), "Select");
+				logger.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}
 		} finally {
@@ -65,7 +67,7 @@ public class MongodbService {
 	public String deleteMsg(MongoCollection<Document> collection) {
 		String msg = "Delete Msg Collection";
 		collection.drop();
-		LOG.log(Level.INFO, msg);
+		logger.log(Level.INFO, msg);
 		return msg;
 	}
 

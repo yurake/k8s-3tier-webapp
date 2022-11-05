@@ -17,4 +17,12 @@ spec:
             [
               "/usr/bin/ab -n 100 -c 10 -p /home/sample.json -T application/json -g out.data http://jaxrs-rabbitmq-quarkus-monitoring:8080/quarkus/rabbitmq/publish; echo '---'; cat out.data",
             ]
+          livenessProbe:
+            exec:
+              command:
+                - /usr/bin/ab
+          readinessProbe:
+            exec:
+              command:
+                - /usr/bin/ab
       restartPolicy: OnFailure

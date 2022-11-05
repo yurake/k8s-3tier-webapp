@@ -10,29 +10,32 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.MsgUtils;
 
 @ApplicationScoped
-public class ActiveMqDeliverConsumer extends ActiveMqConsumer {
+public class ActiveMqDeliverConsumer {
+
+	@ConfigProperty(name = "activemq.split.key")
+	String splitkey;
 
 	@Inject
 	@RestClient
-	DeliverService deliversvc;
+	ActiveMqDeliverService deliversvc;
 
-	private static final Logger LOG = Logger.getLogger(ActiveMqDeliverConsumer.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	@Override
 	public void consume(JMSConsumer consumer) throws JMSException {
-		LOG.log(Level.INFO, "Ready for receive message...");
+		logger.log(Level.INFO, "Ready for receive message...");
 		Message message = consumer.receive();
 		TextMessage textMessage = (TextMessage) message;
 		MsgBean msgbean = MsgUtils.splitBody(textMessage.getText(), splitkey);
 		msgbean.setFullmsg("Received");
-		LOG.log(Level.INFO, msgbean.getFullmsg());
+		logger.log(Level.INFO, msgbean.getFullmsg());
 		String response = deliversvc.random();
-		LOG.log(Level.INFO, "Call Random Publish: {0}", response);
+		logger.log(Level.INFO, "Call Random Publish: {0}", response);
 	}
 }

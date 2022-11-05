@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postmannewman-quarkus
+  namespace: monitoring
+spec:
+  completions: 1
+  parallelism: 1
+  backoffLimit: 10
+  template:
+    spec:
+      containers:
+        - name: postmannewman-quarkus
+          image: yurak/postmannewman-quarkus:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            [
+              "newman run -e hostname-quarkus.postman_environment.json jaxrs-quarkus.postman_collection.json",
+            ]
+          livenessProbe:
+            exec:
+              command:
+                - /usr/bin/ab
+          readinessProbe:
+            exec:
+              command:
+                - /usr/bin/ab
+      restartPolicy: OnFailure

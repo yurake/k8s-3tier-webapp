@@ -1,0 +1,23 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: Schedule
+metadata:
+  name: io-delay
+  namespace: chaos-testing
+spec:
+  schedule: "0 * * * *"
+  historyLimit: 2
+  concurrencyPolicy: "Allow"
+  type: "IOChaos"
+  ioChaos:
+    action: latency
+    mode: one
+    selector:
+      namespaces:
+        - default
+      labelSelectors:
+        "component": "quarkus"
+    volumePath: /
+    path: /
+    delay: "10ms"
+    percent: 50
+    duration: "10s"

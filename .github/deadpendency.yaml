@@ -1,0 +1,57 @@
+additional-dependency-files:
+  - type: maven-pom-xml
+    path: application/jaxrs-activemq-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-grpc-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/server-grpc-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/consumer-redis-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-cassandra-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-memcached-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-mongodb-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-hazelcast-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/consumer-kafka-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-rabbitmq-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/randompublish-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/consumer-hazelcast-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-mysql-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/parent-pom/pom.xml
+  - type: maven-pom-xml
+    path: application/scheduled-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/consumer-activemq-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-redis-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/consumer-rabbitmq-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/converter-rabbitmq-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/producer-kafka-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-postgres-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/webapp-service/pom.xml
+  - type: maven-pom-xml
+    path: application/jaxrs-kafka-quarkus/pom.xml
+  - type: maven-pom-xml
+    path: application/consumer-kafka-quarkus/pom.xml
+ignore-failures:
+  java:
+    - com.whalin/Memcached-Java-Client
+rules-config:
+  no-recent-package-release:
+    fail-at-months: 48
+  no-recent-commit:
+    fail-at-months: 48

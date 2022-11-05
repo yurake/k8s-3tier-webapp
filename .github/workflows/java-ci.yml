@@ -5,28 +5,43 @@ on:
     branches:
       - master
     paths:
+      - "**.java"
       - "application/**"
       - ".github/workflows/java-ci.yml"
   pull_request:
+    paths:
+      - "**.java"
+      - "application/**"
+      - ".github/workflows/java-ci.yml"
 
 jobs:
   init-build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/parent-pom/pom.xml') }}
@@ -34,12 +49,18 @@ jobs:
             ${{ runner.os }}-maven-parent-pom
       - name: Maven Deploy POM to Github Package Registry
         working-directory: ./application/parent-pom/
-        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/webapp-service/pom.xml') }}
@@ -52,61 +73,72 @@ jobs:
         run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-      - name: Upload coverage to coday
-        uses: codacy/codacy-coverage-reporter-action@master
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_webapp-service
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-activemq-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-activemq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-activemq-quarkus
-
       - name: Maven Build
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-activemq-quarkus
         run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -115,51 +147,62 @@ jobs:
         run: docker push yurak/jaxrs-activemq-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-activemq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   consumer-activemq-quarkus:
-    needs: [init-build, jaxrs-activemq-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-activemq-quarkus/pom.xml') }}
@@ -178,56 +221,71 @@ jobs:
         run: docker push yurak/consumer-activemq-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/consumer-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-activemq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-cassandra-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-cassandra-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-cassandra-quarkus
-
+      - name: docker pull for maven build
+        run: |
+          docker pull quay.io/testcontainers/ryuk:0.2.3
+          docker images
       - name: Maven Build
         working-directory: ./application/jaxrs-cassandra-quarkus
         env:
@@ -241,51 +299,62 @@ jobs:
         run: docker push yurak/jaxrs-cassandra-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-cassandra-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-cassandra-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   consumer-hazelcast-quarkus:
-    needs: [init-build, jaxrs-hazelcast-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-hazelcast-quarkus/pom.xml') }}
@@ -304,51 +373,62 @@ jobs:
         run: docker push yurak/consumer-hazelcast-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/consumer-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-hazelcast-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   consumer-kafka-quarkus:
-    needs: [init-build, jaxrs-kafka-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-kafka-quarkus/pom.xml') }}
@@ -367,51 +447,136 @@ jobs:
         run: docker push yurak/consumer-kafka-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/consumer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-kafka-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
+
+  converter-kafka-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache local Maven repository
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/converter-kafka-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-converter-kafka-quarkus
+      - name: Maven Build
+        working-directory: ./application/converter-kafka-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
+      - name: Build Image
+        working-directory: ./application/converter-kafka-quarkus
+        run: docker build -t yurak/converter-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        if: github.event_name == 'push'
+        run: docker push yurak/converter-kafka-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/converter-kafka-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -Dsonar.projectKey=yurake_converter-kafka-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
 
   scheduled-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/scheduled-quarkus/pom.xml') }}
@@ -430,51 +595,62 @@ jobs:
         run: docker push yurak/scheduled-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/scheduled-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_scheduled-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-hazelcast-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-hazelcast-quarkus/pom.xml') }}
@@ -493,51 +669,62 @@ jobs:
         run: docker push yurak/jaxrs-hazelcast-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-hazelcast-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-kafka-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-kafka-quarkus/pom.xml') }}
@@ -556,51 +743,62 @@ jobs:
         run: docker push yurak/jaxrs-kafka-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-kafka-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-memcached-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-memcached-quarkus/pom.xml') }}
@@ -619,51 +817,62 @@ jobs:
         run: docker push yurak/jaxrs-memcached-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-memcached-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-memcached-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-mongodb-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mongodb-quarkus/pom.xml') }}
@@ -682,51 +891,62 @@ jobs:
         run: docker push yurak/jaxrs-mongodb-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-mongodb-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-mongodb-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-mysql-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mysql-quarkus/pom.xml') }}
@@ -745,51 +965,62 @@ jobs:
         run: docker push yurak/jaxrs-mysql-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-mysql-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-postgres-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-postgres-quarkus/pom.xml') }}
@@ -808,51 +1039,62 @@ jobs:
         run: docker push yurak/jaxrs-postgres-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-postgres-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-postgres-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-rabbitmq-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-rabbitmq-quarkus/pom.xml') }}
@@ -862,7 +1104,7 @@ jobs:
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -871,51 +1113,62 @@ jobs:
         run: docker push yurak/jaxrs-rabbitmq-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-rabbitmq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   jaxrs-redis-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-redis-quarkus/pom.xml') }}
@@ -925,7 +1178,7 @@ jobs:
         working-directory: ./application/jaxrs-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
       - name: Build Image
         working-directory: ./application/jaxrs-redis-quarkus
         run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
@@ -934,50 +1187,61 @@ jobs:
         run: docker push yurak/jaxrs-redis-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/jaxrs-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_jaxrs-redis-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   consumer-rabbitmq-quarkus:
-    needs: [init-build, jaxrs-rabbitmq-quarkus]
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-rabbitmq-quarkus/pom.xml') }}
@@ -996,51 +1260,136 @@ jobs:
         run: docker push yurak/consumer-rabbitmq-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/consumer-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-rabbitmq-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
-  producer-kafka-quarkus:
-    needs: [init-build, jaxrs-kafka-quarkus]
+  converter-rabbitmq-quarkus:
+    needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/converter-rabbitmq-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-converter-rabbitmq-quarkus
+      - name: Maven Build
+        working-directory: ./application/converter-rabbitmq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml
+      - name: Build Image
+        working-directory: ./application/converter-rabbitmq-quarkus
+        run: docker build -t yurak/converter-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
+      - name: Push Image
+        if: github.event_name == 'push'
+        run: docker push yurak/converter-rabbitmq-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/converter-rabbitmq-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -Dsonar.projectKey=yurake_converter-rabbitmq-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+  producer-kafka-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache local Maven repository
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/producer-kafka-quarkus/pom.xml') }}
@@ -1059,51 +1408,62 @@ jobs:
         run: docker push yurak/producer-kafka-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/producer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_producer-kafka-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
   randompublish-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: actions/checkout@v3
         with:
-          graalvm-version: 20.2.0.java11
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/randompublish-quarkus/pom.xml') }}
@@ -1122,98 +1482,210 @@ jobs:
         run: docker push yurak/randompublish-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/randompublish-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_randompublish-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
-  redis-mysql-helidon:
+  server-grpc-quarkus:
     needs: init-build
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
+        uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm-version: 20.2.0.java11
-      - run: java -version
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
-        with:
-          languages: java
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/redis-mysql-helidon/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-redis-mysql-helidon
-
-      - name: Maven Build - redis-mysql-helidon
-        working-directory: ./application/redis-mysql-helidon
-        run: mvn -B verify package
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-      - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-      - name: Upload coverage to SonarCloud
-        working-directory: ./application/redis-mysql-helidon
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
-          -Dsonar.projectKey=yurake_redis-mysql-helidon
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
-
-  consumer-redis-quarkus:
-    needs: [init-build, jaxrs-redis-quarkus]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
-        with:
-          graalvm-version: 20.2.0.java11
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
       - run: java -version
       - name: setup-native-image
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/server-grpc-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-server-grpc-quarkus
+      - name: Maven Build
+        working-directory: ./application/server-grpc-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
+      - name: Build Image
+        working-directory: ./application/server-grpc-quarkus
+        run: docker build -t yurak/server-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        if: github.event_name == 'push'
+        run: docker push yurak/server-grpc-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/server-grpc-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -Dsonar.projectKey=yurake_server-grpc-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+  jaxrs-grpc-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache local Maven repository
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-grpc-quarkus/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-jaxrs-grpc-quarkus
+      - name: Maven Build
+        working-directory: ./application/jaxrs-grpc-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
+      - name: Build Image
+        working-directory: ./application/jaxrs-grpc-quarkus
+        run: docker build -t yurak/jaxrs-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
+      - name: Push Image
+        if: github.event_name == 'push'
+        run: docker push yurak/jaxrs-grpc-quarkus:latest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Upload coverage to SonarCloud
+        working-directory: ./application/jaxrs-grpc-quarkus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -Dsonar.projectKey=yurake_jaxrs-grpc-quarkus
+          -Dsonar.organization=yurak
+          -Dsonar.host.url=https://sonarcloud.io/
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+  consumer-redis-quarkus:
+    needs: init-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup GraalVM
+        uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: "22.1.0"
+          java: "java17"
+          arch: "amd64"
+      - run: java -version
+      - name: setup-native-image
+        run: |
+          gu install native-image
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache local Maven repository
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-redis-quarkus/pom.xml') }}
@@ -1232,86 +1704,21 @@ jobs:
         run: docker push yurak/consumer-redis-quarkus:latest
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
         working-directory: ./application/consumer-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw sonar:sonar
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=yurake_consumer-redis-quarkus
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
-
-  wlp-web-java-spring:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@8bbfe44ef9c6f5c07e5af036a1bffd561c037d18
-        with:
-          graalvm-version: 20.2.0.java11
-      - run: java -version
-      - name: setup-native-image
-        run: |
-          gu install native-image
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
-        with:
-          languages: java
-      - name: docker login
-        env:
-          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
-
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/wlp-web-java-spring/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-wlp-web-java-spring
-      - name: Maven Build
-        working-directory: ./application/wlp-web-java-spring
-        run: mvn -B verify package --settings ../.m2/settings.xml
-      - name: Copy war file
-        uses: canastro/copy-file-action@master
-        with:
-          source: "application/wlp-web-java-spring/target/spring.war"
-          target: "kubernetes/wlp/spring.war"
-      - name: Build image
-        working-directory: ./kubernetes/wlp
-        run: docker build -t yurak/wlp:latest .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/wlp:latest
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-      - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-      - name: Upload coverage to SonarCloud
-        working-directory: ./application/wlp-web-java-spring
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn sonar:sonar
-          -Dsonar.projectKey=yurake_wlp-web-java-spring
-          -Dsonar.organization=yurak
-          -Dsonar.host.url=https://sonarcloud.io/
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2

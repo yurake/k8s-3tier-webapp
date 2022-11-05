@@ -8,9 +8,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.BlockingQueue;
 
 import javax.inject.Inject;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,12 +26,17 @@ import com.hazelcast.core.HazelcastInstance;
 
 import io.quarkus.test.junit.QuarkusTest;
 import webapp.tier.bean.MsgBean;
+import webapp.tier.util.CreateId;
+import webapp.tier.util.MsgUtils;
 
 @QuarkusTest
 class HazelcastMqServiceTest {
 
 	@Inject
-	private HazelcastMqService svc;
+	HazelcastMqService svc;
+
+	@ConfigProperty(name = "hazelcast.queue.name")
+	String queuename;
 
 	private static HazelcastInstance mockInstance;
 	String respbody = "message: Hello k8s-3tier-webapp with quarkus";
@@ -56,7 +64,8 @@ class HazelcastMqServiceTest {
 	@Test
 	void testPutQueueHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
-		when(mockInstanceError.getQueue(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
+		when(mockInstanceError.getQueue(ArgumentMatchers.any()))
+				.thenThrow(new IllegalStateException());
 		assertThat(svc.putMsg(mockInstanceError).getFullmsg(), containsString(respbody));
 	}
 
@@ -74,8 +83,12 @@ class HazelcastMqServiceTest {
 	}
 
 	@Test
-	void testGetQueueHazelcast() {
-		MsgBean expected = svc.putMsg(Hazelcast.newHazelcastInstance());
+	void testGetQueueHazelcast() throws NoSuchAlgorithmException, InterruptedException {
+
+		MsgBean expected = new MsgBean(CreateId.createid(), respbody, "Put");
+		String body = MsgUtils.createBody(expected, ",");
+		BlockingQueue<Object> queue = mockInstance.getQueue(queuename);
+		queue.put(body);
 		MsgBean msgbean = svc.getMsg(mockInstance);
 		assertThat(msgbean.getFullmsg(), containsString(respbody));
 		assertThat(msgbean.getId(), is(expected.getId()));
@@ -84,7 +97,8 @@ class HazelcastMqServiceTest {
 	@Test
 	void testGetQueueHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
-		when(mockInstanceError.getQueue(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
+		when(mockInstanceError.getQueue(ArgumentMatchers.any()))
+				.thenThrow(new IllegalStateException());
 		assertThat(svc.getMsg(mockInstanceError).getMessage(), is("Unexpected Error"));
 	}
 
@@ -129,8 +143,10 @@ class HazelcastMqServiceTest {
 	@Test
 	void testPublishHazelcastError() {
 		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
-		when(mockInstanceError.getTopic(ArgumentMatchers.any())).thenThrow(new IllegalStateException());
-		assertThat(svc.publishMsg(mockInstanceError).getFullmsg(), containsString(respbody));
+		when(mockInstanceError.getTopic(ArgumentMatchers.any()))
+				.thenThrow(new IllegalStateException());
+		assertThat(svc.publishMsg(mockInstanceError).getFullmsg(),
+				containsString(respbody));
 	}
 
 	@Test

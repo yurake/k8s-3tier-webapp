@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaxrs-grpc-quarkus
+spec:
+  selector:
+    matchLabels:
+      app: jaxrs-grpc-quarkus
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        component: quarkus
+        app: jaxrs-grpc-quarkus
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+        - name: jaxrs-grpc-quarkus
+          image: yurak/jaxrs-grpc-quarkus:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+            - containerPort: 9000
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /q/health/live
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 5
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /q/health/ready
+            initialDelaySeconds: 10
+            periodSeconds: 30

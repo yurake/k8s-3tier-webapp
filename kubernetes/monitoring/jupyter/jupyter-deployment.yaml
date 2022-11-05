@@ -13,12 +13,14 @@ spec:
   template:
     metadata:
       labels:
+        tier: management
+        component: cicd
         app: jupyter
     spec:
       containers:
         - name: jupyter
-          image: jupyter/datascience-notebook:ad3574d3c5c7
-          imagePullPolicy: IfNotPresent
+          image: jupyter/datascience-notebook:notebook-6.3.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8888
           env:
@@ -27,6 +29,13 @@ spec:
                 configMapKeyRef:
                   name: jupyter-configmap
                   key: jupyter-lab
+          livenessProbe:
+            tcpSocket:
+              port: 8888
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8888
           volumeMounts:
             - name: jupyter-persistent-storage
               mountPath: /home/jovyan/work

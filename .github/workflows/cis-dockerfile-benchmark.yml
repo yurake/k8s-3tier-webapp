@@ -1,0 +1,19 @@
+name: CIS Dockerfile benchmark
+
+on:
+  pull_request:
+    paths:
+      - "kubernetes/**"
+      - "!kubernetes/bin/**"
+      - ".github/workflows/cis-dockerfile-benchmark.yml"
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Sysdig CIS Dockerfile Benchmark
+        uses: sysdiglabs/benchmark-dockerfile@v1.0.0
+        with:
+          directory: "kubernetes"
+          dockerfilePattern: "Dockerfile"

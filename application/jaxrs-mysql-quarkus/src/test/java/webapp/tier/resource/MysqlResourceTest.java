@@ -1,26 +1,33 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsString;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.inject.Inject;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
+import webapp.tier.service.MysqlService;
 
 @QuarkusTest
 class MysqlResourceTest {
 
+	@Inject
+	MysqlService svc;
+
 	@BeforeEach
 	public void createTable() {
 		String createsql = "CREATE TABLE msg (id SERIAL PRIMARY KEY, msg TEXT NOT NULL)";
-		try (Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
+		try (Connection con = DriverManager
+				.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
 				Statement stmt = con.createStatement()) {
 			stmt.executeUpdate(createsql);
 		} catch (SQLException e) {
@@ -30,9 +37,10 @@ class MysqlResourceTest {
 	}
 
 	@AfterEach
-	private void dropTable() {
+	public void dropTable() {
 		String createsql = "DROP TABLE msg";
-		try (Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
+		try (Connection con = DriverManager
+				.getConnection("jdbc:h2:tcp://localhost/mem:webapp;DB_CLOSE_DELAY=-1");
 				Statement stmt = con.createStatement()) {
 			stmt.executeUpdate(createsql);
 		} catch (SQLException e) {
@@ -54,6 +62,7 @@ class MysqlResourceTest {
 
 	@Test
 	void testSelect() {
+		svc.invalidateCache();
 		given()
 				.when()
 				.get("/quarkus/mysql/select")

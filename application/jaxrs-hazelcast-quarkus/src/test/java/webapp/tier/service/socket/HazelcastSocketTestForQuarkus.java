@@ -26,11 +26,12 @@ class HazelcastSocketTestForQuarkus {
 	private static final LinkedBlockingDeque<String> MESSAGES = new LinkedBlockingDeque<>();
 
 	@TestHTTPResource("/quarkus/hazelcast/subscribe")
-	private URI uri;
+	URI uri;
 
 	@Test
 	public void testOmMessage() throws Exception {
-		try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(Client.class, uri)) {
+		try (Session session = ContainerProvider.getWebSocketContainer()
+				.connectToServer(Client.class, uri)) {
 			assertThat(MESSAGES.poll(10, TimeUnit.SECONDS), is("CONNECT"));
 
 			SendHandler sendHandler = new SendHandler() {

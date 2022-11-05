@@ -1,0 +1,1352 @@
+{
+	"info": {
+		"_postman_id": "98ac7763-c87b-425f-9c99-c32cd200734d",
+		"name": "jaxrs-quarkus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9860369"
+	},
+	"item": [
+		{
+			"name": "memcached/set",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Set\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MEM}}/quarkus/memcached/set",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MEM}}"
+					],
+					"path": [
+						"quarkus",
+						"memcached",
+						"set"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "memcached/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MEM}}/quarkus/memcached/get",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MEM}}"
+					],
+					"path": [
+						"quarkus",
+						"memcached",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redis/put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Put\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_REDIS}}/quarkus/redis/put",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_REDIS}}"
+					],
+					"path": [
+						"quarkus",
+						"redis",
+						"put"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redis/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_REDIS}}/quarkus/redis/get",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_REDIS}}"
+					],
+					"path": [
+						"quarkus",
+						"redis",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redis/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_REDIS}}/quarkus/redis/publish",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_REDIS}}"
+					],
+					"path": [
+						"quarkus",
+						"redis",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "grpc/getid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_GRPC}}/quarkus/grpc/getid",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_GRPC}}"
+					],
+					"path": [
+						"quarkus",
+						"grpc",
+						"getid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "grpc/getmsg",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_GRPC}}/quarkus/grpc/getmsg",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_GRPC}}"
+					],
+					"path": [
+						"quarkus",
+						"grpc",
+						"getmsg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rabbitmq/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_RABBIT}}/quarkus/rabbitmq/publish",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_RABBIT}}"
+					],
+					"path": [
+						"quarkus",
+						"rabbitmq",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "kafka/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_KAFKA}}/quarkus/kafka/publish",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_KAFKA}}"
+					],
+					"path": [
+						"quarkus",
+						"kafka",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activemq/put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Put\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_ACT}}/quarkus/activemq/put",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_ACT}}"
+					],
+					"path": [
+						"quarkus",
+						"activemq",
+						"put"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activemq/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_ACT}}/quarkus/activemq/get",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_ACT}}"
+					],
+					"path": [
+						"quarkus",
+						"activemq",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activemq/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Response time is less than 600ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_ACT}}/quarkus/activemq/publish",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_ACT}}"
+					],
+					"path": [
+						"quarkus",
+						"activemq",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/setcache",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Set\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/setcache",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"setcache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/getcache",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/getcache",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"getcache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/publish",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Publish\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/publish",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/putqueue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Put\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/putqueue",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"putqueue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hazelcast/getqueue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Get\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_HAZ}}/quarkus/hazelcast/getqueue",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_HAZ}}"
+					],
+					"path": [
+						"quarkus",
+						"hazelcast",
+						"getqueue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cassandra/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Insert\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_CASS}}/quarkus/cassandra/insert",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_CASS}}"
+					],
+					"path": [
+						"quarkus",
+						"cassandra",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cassandra/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Select\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_CASS}}/quarkus/cassandra/select",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_CASS}}"
+					],
+					"path": [
+						"quarkus",
+						"cassandra",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cassandra/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Delete Msg Records\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_CASS}}/quarkus/cassandra/delete",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_CASS}}"
+					],
+					"path": [
+						"quarkus",
+						"cassandra",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mysql/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Insert\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MYSQL}}/quarkus/mysql/insert",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MYSQL}}"
+					],
+					"path": [
+						"quarkus",
+						"mysql",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mysql/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Select\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MYSQL}}/quarkus/mysql/select",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MYSQL}}"
+					],
+					"path": [
+						"quarkus",
+						"mysql",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mysql/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Delete Msg Records\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MYSQL}}/quarkus/mysql/delete",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MYSQL}}"
+					],
+					"path": [
+						"quarkus",
+						"mysql",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postgres/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Insert\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_PG}}/quarkus/postgres/insert",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_PG}}"
+					],
+					"path": [
+						"quarkus",
+						"postgres",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postgres/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Select\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_PG}}/quarkus/postgres/select",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_PG}}"
+					],
+					"path": [
+						"quarkus",
+						"postgres",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postgres/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Delete Msg Records\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_PG}}/quarkus/postgres/delete",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_PG}}"
+					],
+					"path": [
+						"quarkus",
+						"postgres",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mongodb/insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Insert\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MONGO}}/quarkus/mongodb/insert",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MONGO}}"
+					],
+					"path": [
+						"quarkus",
+						"mongodb",
+						"insert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mongodb/select",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    var resp = pm.response.text()",
+							"    pm.expect(resp).to.include(\"Select\");",
+							"    pm.expect(resp).to.include(\"fullmsg\");",
+							"    pm.expect(resp).to.include(\"id\");",
+							"    pm.expect(resp).to.include(\"message\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MONGO}}/quarkus/mongodb/select",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MONGO}}"
+					],
+					"path": [
+						"quarkus",
+						"mongodb",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mongodb/delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Delete Msg Collection\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{HOST_NAME_MONGO}}/quarkus/mongodb/delete",
+					"protocol": "http",
+					"host": [
+						"{{HOST_NAME_MONGO}}"
+					],
+					"path": [
+						"quarkus",
+						"mongodb",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

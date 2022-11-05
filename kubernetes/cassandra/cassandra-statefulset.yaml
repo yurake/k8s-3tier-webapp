@@ -13,13 +13,15 @@ spec:
   template:
     metadata:
       labels:
+        tier: backend
+        component: database
         app: cassandra
     spec:
       terminationGracePeriodSeconds: 1800
       containers:
         - name: cassandra
           image: yurak/cassandra:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 7000
               name: intra-node
@@ -53,6 +55,9 @@ spec:
               value: "GossipingPropertyFileSnitch"
             - name: CASSANDRA_KEYSPACE
               value: "webapp"
+          livenessProbe:
+            tcpSocket:
+              port: 9042
           readinessProbe:
             exec:
               command:
@@ -65,3 +70,10 @@ spec:
                 - describe keyspace webapp
             initialDelaySeconds: 15
             timeoutSeconds: 5
+          volumeMounts:
+            - name: cassandra-persistent-storage
+              mountPath: /var/lib/cassandra
+      volumes:
+        - name: cassandra-persistent-storage
+          persistentVolumeClaim:
+            claimName: cassandra-pvc

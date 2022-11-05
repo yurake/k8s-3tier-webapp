@@ -10,6 +10,8 @@ spec:
   template:
     metadata:
       labels:
+        tier: backend
+        component: messaging
         app: rabbitmq
       annotations:
         prometheus.io/scrape: "true"
@@ -18,7 +20,7 @@ spec:
       containers:
         - name: rabbitmq
           image: yurak/rabbitmq:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5672
             - containerPort: 15672
@@ -39,3 +41,15 @@ spec:
                 secretKeyRef:
                   name: rabbitmq-secret
                   key: rabbitmq-default-pass
+          livenessProbe:
+            exec:
+              command:
+                - bash
+                - -ec
+                - rabbitmq-diagnostics -q check_running
+          readinessProbe:
+            exec:
+              command:
+                - bash
+                - -ec
+                - rabbitmq-diagnostics -q ping

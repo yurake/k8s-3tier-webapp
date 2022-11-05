@@ -61,8 +61,6 @@
 [![Dockerhub](https://img.shields.io/docker/pulls/yurak/randompublish-quarkus.svg)](https://hub.docker.com/r/yurak/randompublish-quarkus)  
 ![Sequence Diagram](../docs/uml/randompublish-quarkus.png)
 
-## redis-mysql-helidon
-
 ## scheduled-quarkus
 
 [![Dockerhub](https://img.shields.io/docker/pulls/yurak/scheduled-quarkus.svg)](https://hub.docker.com/r/yurak/scheduled-quarkus)  
@@ -70,4 +68,3 @@
 
 ## webapp-service
 
-## wlp-web-java-spring

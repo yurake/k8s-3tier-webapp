@@ -27,29 +27,28 @@ class MemcachedResourceTest {
 	void testSet() throws NoSuchAlgorithmException, RuntimeException {
 		MemCachedClient mcc = Mockito.mock(MemCachedClient.class);
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(svc.createMemCachedClient()).thenReturn(mcc);
-        when(svc.setMsg(mcc)).thenReturn(msgbean);
+		when(svc.createMemCachedClient()).thenReturn(mcc);
+		when(svc.setMsg(mcc)).thenReturn(msgbean);
 		given()
 				.when()
 				.contentType("application/json")
 				.post("/quarkus/memcached/set")
 				.then()
 				.statusCode(200)
-                .body(containsString("test"));
+				.body(containsString("test"));
 	}
 
 	@Test
 	void testGet() throws NoSuchAlgorithmException {
 		MemCachedClient mcc = Mockito.mock(MemCachedClient.class);
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
-        when(svc.createMemCachedClient()).thenReturn(mcc);
-        when(svc.getMsg(mcc)).thenReturn(msgbean);
+		when(svc.createMemCachedClient()).thenReturn(mcc);
+		when(svc.getMsg(mcc)).thenReturn(msgbean);
 		given()
 				.when()
 				.get("/quarkus/memcached/get")
 				.then()
 				.statusCode(200)
-                .body(containsString("test"));
+				.body(containsString("test"));
 	}
 }
-

@@ -1,0 +1,23 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: Schedule
+metadata:
+  name: network-delay
+  namespace: chaos-testing
+spec:
+  schedule: "0 * * * *"
+  historyLimit: 2
+  concurrencyPolicy: "Allow"
+  type: "NetworkChaos"
+  networkChaos:
+    action: delay
+    mode: one
+    selector:
+      namespaces:
+        - default
+      labelSelectors:
+        "component": "quarkus"
+    delay:
+      latency: "90ms"
+      correlation: "25"
+      jitter: "90ms"
+    duration: "10s"

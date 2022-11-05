@@ -1,0 +1,92 @@
+name: kind Chaos Mesh CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.yaml"
+      - ".github/workflows/kind-chaos-mesh-ci.yml"
+  pull_request:
+    paths:
+      - "**.yaml"
+      - ".github/workflows/kind-chaos-mesh-ci.yml"
+
+env:
+  CHAOS_MESH_VERSION: 2.4.1
+
+jobs:
+  chaos-mesh-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kind Cluster
+        uses: helm/kind-action@v1.4.0
+
+      - uses: azure/setup-kubectl@v3
+        with:
+          version: "latest"
+        id: install
+
+      - name: Print cluster information
+        run: |
+          kubectl config view
+          kubectl cluster-info
+          kubectl get nodes
+          kubectl get pods -n kube-system
+          helm version
+          kubectl version
+      - uses: actions/checkout@v3
+      - name: Deploy an application
+        run: |
+          kubectl apply -f kubernetes/mysql/mysql-pv.yaml
+          kubectl apply -f kubernetes/mysql/mysql-pvc.yaml
+          kubectl apply -f kubernetes/mysql/mysql-configmap.yaml
+          kubectl apply -f kubernetes/mysql/mysql-secret.yaml
+          kubectl apply -f kubernetes/mysql/mysql-deployment.yaml
+          kubectl apply -f kubernetes/mysql/mysql-service.yaml
+          kubectl apply -f kubernetes/jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-service.yaml
+          kubectl apply -f kubernetes/jaxrs-mysql-quarkus/jaxrs-mysql-quarkus-deployment.yaml
+
+      - name: Wait pod status to running
+        run: |
+          kubectl wait --all-namespaces=true --for=condition=ready pod -l component=quarkus --timeout=15m
+          kubectl wait --all-namespaces=true --for=condition=ready pod -l app=mysql --timeout=5m
+
+      - name: Check pods
+        run: |
+          kubectl get pods -n chaos-testing
+          kubectl get pods
+
+      - name: install chaos mesh
+        run: |
+          curl -sSL https://mirrors.chaos-mesh.org/v2.4.1/install.sh | bash
+          kubectl apply -f ./kubernetes/test/chaos-mesh/chaos-mesh-namespace.yaml
+
+      - name: Chaos Mesh apply experiments
+        working-directory: ./kubernetes/test/chaos-mesh/experiments
+        run: |
+          kubectl apply -f burn-cpu.yaml
+          kubectl apply -f container-kill.yaml
+          kubectl apply -f io-delay.yaml
+          kubectl apply -f network-delay.yaml
+          kubectl apply -f network-loss.yaml
+          kubectl apply -f pod-failure.yaml
+          kubectl apply -f pod-kill.yaml
+          kubectl apply -f time-shift.yaml
+
+      - name: Check status Chaos Mesh
+        run: |
+          kubectl get pods -n chaos-mesh
+          kubectl get schedule -n chaos-testing
+
+      - name: check log jaxrs-mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-mysql)
+
+      - name: check log mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) -c mysql

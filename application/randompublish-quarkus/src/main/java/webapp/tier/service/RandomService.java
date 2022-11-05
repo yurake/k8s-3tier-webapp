@@ -42,44 +42,48 @@ public class RandomService {
 	@RestClient
 	MongodbClientService mongodbResource;
 
-	private static final Logger LOG = Logger.getLogger(RandomService.class.getSimpleName());
+	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	public String deliverrandom(Integer id) throws Exception {
+	public String deliverrandom(int id) {
 		String response;
 		switch (id) {
 		case 0:
-			LOG.log(Level.INFO, "Call: ActiveMQ Publish");
-			response = activemqresource.publish();
+			response = stringBuild("Call: ActiveMQ Publish", activemqresource.publish());
 			break;
 		case 1:
-			LOG.log(Level.INFO, "Call: RabbitMQ Publish");
-			response = rabbitmqresource.publish();
+			response = stringBuild("Call: RabbitMQ Publish", rabbitmqresource.publish());
 			break;
 		case 2:
-			LOG.log(Level.INFO, "Call: Redis Publish");
-			response = redisresource.publish();
+			response = stringBuild("Call: Redis Publish", redisresource.publish());
 			break;
 		case 3:
-			LOG.log(Level.INFO, "Call: Postgres Insert");
-			response = postgresresource.insert();
+			response = stringBuild("Call: Postgres Publish", postgresresource.insert());
 			break;
 		case 4:
-			LOG.log(Level.INFO, "Call: Hazelcast Publish");
-			response = hazelcastresource.publish();
+			response = stringBuild("Call: Hazelcast Publish",
+					hazelcastresource.publish());
 			break;
 		case 5:
-			LOG.log(Level.INFO, "Call: Mongodb Insert");
-			response = mongodbResource.insert();
+			response = stringBuild("Call: Mongodb Publish", mongodbResource.insert());
 			break;
 		default:
-			LOG.log(Level.SEVERE, "random Error.");
+			logger.log(Level.SEVERE, "random Error.");
 			throw new IllegalArgumentException("random error");
 		}
-		LOG.info(response);
+		logger.log(Level.INFO, response);
 		return response;
 	}
 
-	public int getNum(Integer i) {
-		 return (int) (Math.random() * i);
+	public int getNum(int num) {
+		return (int) (Math.random() * num);
+	}
+
+	public String stringBuild(String subject, String response) {
+		logger.log(Level.INFO, subject);
+		StringBuilder buf = new StringBuilder();
+		buf.append(subject);
+		buf.append(": ");
+		buf.append(response);
+		return buf.toString();
 	}
 }

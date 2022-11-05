@@ -7,9 +7,13 @@ spec:
     matchLabels:
       app: activemq
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
+        tier: backend
+        component: messaging
         app: activemq
       annotations:
         prometheus.io/scrape: "true"
@@ -20,7 +24,7 @@ spec:
         runAsUser: 0
       containers:
         - name: activemq
-          image: vromero/activemq-artemis:2.12.0-alpine
+          image: vromero/activemq-artemis:2.16.0-alpine
           imagePullPolicy: Always
           ports:
             - containerPort: 8161
@@ -29,6 +33,12 @@ spec:
           env:
             - name: ENABLE_JMX_EXPORTER
               value: "true"
+          livenessProbe:
+            tcpSocket:
+              port: 61616
+          readinessProbe:
+            tcpSocket:
+              port: 61616
           volumeMounts:
             - name: activemq-persistent-storage
               mountPath: /var/lib/artemis/data

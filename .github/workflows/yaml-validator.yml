@@ -5,15 +5,18 @@ on:
     branches:
       - master
     paths:
-      - "kubernetes/**"
+      - "**.yaml"
       - ".github/workflows/yaml-validator.yml"
   pull_request:
+    paths:
+      - "**.yaml"
+      - ".github/workflows/yaml-validator.yml"
 
 jobs:
   validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: validate yaml manifests
         uses: instrumenta/kubeval-action@master
         with:
