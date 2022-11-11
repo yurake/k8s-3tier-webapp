@@ -13,7 +13,7 @@ on:
       - ".github/workflows/kind-chaos-mesh-ci.yml"
 
 env:
-  CHAOS_MESH_VERSION: 2.4.1
+  CHAOS_MESH_VERSION: 2.4.2
 
 jobs:
   chaos-mesh-ci:
@@ -59,7 +59,7 @@ jobs:
 
       - name: install chaos mesh
         run: |
-          curl -sSL https://mirrors.chaos-mesh.org/v2.4.1/install.sh | bash
+          curl -sSL https://mirrors.chaos-mesh.org/v2.4.2/install.sh | bash
           kubectl apply -f ./kubernetes/test/chaos-mesh/chaos-mesh-namespace.yaml
 
       - name: Chaos Mesh apply experiments
