@@ -25,7 +25,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -103,7 +103,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -177,7 +177,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -251,7 +251,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -329,7 +329,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -403,7 +403,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -477,7 +477,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -551,7 +551,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -625,7 +625,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -699,7 +699,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -773,7 +773,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -847,7 +847,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -921,7 +921,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -995,7 +995,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -1069,7 +1069,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -1143,7 +1143,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -1216,7 +1216,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -1290,7 +1290,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -1364,7 +1364,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -1438,7 +1438,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -1512,7 +1512,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -1586,7 +1586,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
@@ -1660,7 +1660,7 @@ jobs:
       - name: Setup GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
         with:
-          graalvm: "22.1.0"
+          graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version

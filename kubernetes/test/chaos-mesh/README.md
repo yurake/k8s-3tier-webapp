@@ -6,7 +6,7 @@ https://chaos-mesh.org/docs/quick-start/
 
 ## Installation
 ```bash
-curl -sSL https://mirrors.chaos-mesh.org/v2.4.1/install.sh | bash
+curl -sSL https://mirrors.chaos-mesh.org/v2.4.2/install.sh | bash
 kubectl get pod -n chaos-testing
 ```
 
