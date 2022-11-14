@@ -1,8 +1,8 @@
-FROM rabbitmq:management-alpine
+FROM rabbitmq:3.11.3-management-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 
-ENV TZDATA_VERSION="2022c-r0"
+ENV TZDATA_VERSION="2022f-r1"
 
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.vcs-url="https://github.com/yurake/k8s-3tier-webapp"
