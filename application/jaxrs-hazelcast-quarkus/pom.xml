@@ -10,7 +10,7 @@
 	<artifactId>jaxrs-hazelcast-quarkus</artifactId>
 	<properties>
 		<hazelcast.version>5.2.0</hazelcast.version>
-		<slf4j-reload4j.version>2.0.3</slf4j-reload4j.version>
+		<slf4j-reload4j.version>2.0.4</slf4j-reload4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
