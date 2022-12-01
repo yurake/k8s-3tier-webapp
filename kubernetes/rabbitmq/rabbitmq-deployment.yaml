@@ -42,11 +42,8 @@ spec:
                   name: rabbitmq-secret
                   key: rabbitmq-default-pass
           livenessProbe:
-            exec:
-              command:
-                - bash
-                - -ec
-                - rabbitmq-diagnostics -q check_running
+            tcpSocket:
+              port: 5672
           readinessProbe:
             exec:
               command:
