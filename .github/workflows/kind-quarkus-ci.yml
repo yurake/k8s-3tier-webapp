@@ -60,6 +60,11 @@ jobs:
         run: |
           kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
           kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-memcached)
+      - name: check log jaxrs-rabbitmq
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep jaxrs-rabbitmq)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep jaxrs-rabbitmq)
       - name: check log jaxrs-activemq
         if: always()
         run: |
