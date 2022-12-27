@@ -35,13 +35,13 @@ jobs:
           languages: java
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/parent-pom/pom.xml') }}
@@ -54,13 +54,13 @@ jobs:
         run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/webapp-service/pom.xml') }}
@@ -122,13 +122,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-activemq-quarkus/pom.xml') }}
@@ -196,13 +196,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-activemq-quarkus/pom.xml') }}
@@ -270,13 +270,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-cassandra-quarkus/pom.xml') }}
@@ -348,13 +348,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-hazelcast-quarkus/pom.xml') }}
@@ -422,13 +422,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-kafka-quarkus/pom.xml') }}
@@ -496,13 +496,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/converter-kafka-quarkus/pom.xml') }}
@@ -570,13 +570,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/scheduled-quarkus/pom.xml') }}
@@ -644,13 +644,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-hazelcast-quarkus/pom.xml') }}
@@ -718,13 +718,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-kafka-quarkus/pom.xml') }}
@@ -792,13 +792,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-memcached-quarkus/pom.xml') }}
@@ -866,13 +866,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mongodb-quarkus/pom.xml') }}
@@ -940,13 +940,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mysql-quarkus/pom.xml') }}
@@ -1014,13 +1014,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-postgres-quarkus/pom.xml') }}
@@ -1088,13 +1088,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-rabbitmq-quarkus/pom.xml') }}
@@ -1162,13 +1162,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-redis-quarkus/pom.xml') }}
@@ -1235,13 +1235,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-rabbitmq-quarkus/pom.xml') }}
@@ -1309,13 +1309,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/converter-rabbitmq-quarkus/pom.xml') }}
@@ -1383,13 +1383,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/producer-kafka-quarkus/pom.xml') }}
@@ -1457,13 +1457,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/randompublish-quarkus/pom.xml') }}
@@ -1531,13 +1531,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/server-grpc-quarkus/pom.xml') }}
@@ -1605,13 +1605,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-grpc-quarkus/pom.xml') }}
@@ -1679,13 +1679,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.1
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-redis-quarkus/pom.xml') }}
