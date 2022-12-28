@@ -10,7 +10,7 @@ jobs:
   minikube-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.2.0
       - name: check current minikube quarkus version
         working-directory: ./.github/workflows
         run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
@@ -48,7 +48,7 @@ jobs:
   kubernetes-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.2.0
       - name: check current kubernetes quarkus version
         working-directory: ./.github/workflows
         run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
@@ -86,7 +86,7 @@ jobs:
   chaos-mesh-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.2.0
       - name: check current chaos mesh version
         working-directory: ./.github/workflows
         run: echo "SOURCE_VERSION=$(grep CHAOS_MESH_VERSION kind-chaos-mesh-ci.yml | awk '{print $2}')" >> $GITHUB_ENV

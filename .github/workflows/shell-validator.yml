@@ -14,7 +14,7 @@ jobs:
   validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.2.0
       - name: Run shellcheck
         uses: ludeeus/action-shellcheck@1.1.0
       - name: Run sh-checker
