@@ -21,7 +21,7 @@ jobs:
       matrix:
         dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_default }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
@@ -49,7 +49,7 @@ jobs:
             consumer-redis-quarkus,
           ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_application }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
@@ -61,7 +61,7 @@ jobs:
       matrix:
         dockerfile_monitoring: [jenkins]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_monitoring }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
@@ -73,7 +73,7 @@ jobs:
       matrix:
         dockerfile_ab: [ab]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_ab }}
         uses: brpaz/hadolint-action@v1.5.0
         with:
@@ -82,7 +82,7 @@ jobs:
   dockerfile_postmannewman:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_postmannewman }}
         uses: brpaz/hadolint-action@v1.5.0
         with:

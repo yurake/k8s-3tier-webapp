@@ -9,11 +9,11 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-cassandra-quarkus</artifactId>
 	<properties>
-		<cassandra.version>1.1.2</cassandra.version>
+		<cassandra.version>1.1.3</cassandra.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<opentracing-cassandra-driver-4.version>0.1.9</opentracing-cassandra-driver-4.version>
-		<cassandra-quarkus-mapper-processor.version>1.1.2</cassandra-quarkus-mapper-processor.version>
+		<cassandra-quarkus-mapper-processor.version>1.1.3</cassandra-quarkus-mapper-processor.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
