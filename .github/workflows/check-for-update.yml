@@ -53,11 +53,15 @@ jobs:
           echo TARGET: ${TARGET_VERSION}
           test ${SOURCE_VERSION_UPDATED} = ${TARGET_VERSION}
       - name: Add, commit, push, and create PR
-        # if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
+        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-minikube
+          title: check-for-update-minikube automated change
+          commit-message: check-for-update-minikube automated change
+          labels: cicd
+          delete-branch: true
 
   kubernetes-version:
     runs-on: ubuntu-latest
