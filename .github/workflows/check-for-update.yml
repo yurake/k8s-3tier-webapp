@@ -51,6 +51,8 @@ jobs:
           git push -u origin actions/check-for-update-minikube
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
+        with:
+          branch: actions/check-for-update-minikube
 
   kubernetes-version:
     runs-on: ubuntu-latest
