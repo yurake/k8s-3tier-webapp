@@ -33,7 +33,7 @@ jobs:
           git pull origin master
           git status
           git fetch
-          git merge origin/master
+          git merge actions/check-for-update-minikube
           git push -u origin actions/check-for-update-minikube
           sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" minikube-quarkus-ci.yml
           echo "SOURCE_VERSION_UPDATED=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
