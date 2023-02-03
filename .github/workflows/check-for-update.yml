@@ -30,16 +30,11 @@ jobs:
       - name: Set whether minikube branch is already existing to GITHUB_ENV
         run: |
           branch_is_existing=$(
-            git fetch origin ${actions/check-for-update-minikube} &&
+            git fetch origin actions/check-for-update-minikube &&
             echo true ||
             echo false
           )
           echo "BRANCH_IS_EXISTING=${branch_is_existing}" >> $GITHUB_ENV
-
-      - name: check env
-        run: |
-          echo UNMATCH_VERSION: ${UNMATCH_VERSION}
-          echo BRANCH_IS_EXISTING: ${BRANCH_IS_EXISTING}
 
       - name: update minikube quarkus version
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
