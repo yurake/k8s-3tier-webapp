@@ -11,40 +11,47 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.3.0
-      - name: check current minikube quarkus version
+      - name: check minikube quarkus version
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check latest tag minikube version
-        run: echo "TARGET_VERSION=$(curl -s https://api.github.com/repos/kubernetes/minikube/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
-      - name: check diff minikube
+        run: |
+          echo "SOURCE_VERSION=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "TARGET_VERSION=$(curl -s https://api.github.com/repos/kubernetes/minikube/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
+      - name: check current diff
         run: |
           echo CURRENT: ${SOURCE_VERSION}
           echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube yaml version
+          test "${TARGET_VERSION}" != ""
+          if [[ ${SOURCE_VERSION} != ${TARGET_VERSION} ]]; then
+            echo "UNMATCH_VERSION=true" >> $GITHUB_ENV
+            echo "Unmatched."
+          fi
+      - name: create branch
+        uses: peterjgrainger/action-create-branch@v2.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: "actions/check-for-update-minikube"
+          sha: "${{ github.event.pull_request.head.sha }}"
+      - name: update minikube quarkus version
+        if: env.UNMATCH_VERSION == 'true'
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-yaml-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff yaml
         run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube stress version
+          git switch -c actions/check-for-update-minikube
+          sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" minikube-quarkus-ci.yml
+          echo "SOURCE_VERSION_UPDATED=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+      - name: check updated diff
+        if: env.UNMATCH_VERSION == 'true'
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff stress
         run: |
-          echo CURRENT: ${SOURCE_VERSION}
+          echo CURRENT_UPDATED: ${SOURCE_VERSION_UPDATED}
           echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube security version
-        working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "minikube-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff security
-        run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
+          test ${SOURCE_VERSION_UPDATED} = ${TARGET_VERSION}
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply actions/check-for-update-minikube
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+
   kubernetes-version:
     runs-on: ubuntu-latest
     steps:
@@ -83,6 +90,7 @@ jobs:
           echo CURRENT: ${SOURCE_VERSION}
           echo TARGET: ${TARGET_VERSION}
           test ${SOURCE_VERSION} = ${TARGET_VERSION}
+
   chaos-mesh-version:
     runs-on: ubuntu-latest
     steps:
