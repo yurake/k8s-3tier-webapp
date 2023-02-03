@@ -35,7 +35,11 @@ jobs:
             echo false
           )
           echo "BRANCH_IS_EXISTING=${branch_is_existing}" >> $GITHUB_ENV
-          echo "Branch not exits."
+
+      - name: check env
+        run: |
+          echo UNMATCH_VERSION: ${UNMATCH_VERSION}
+          echo BRANCH_IS_EXISTING: ${BRANCH_IS_EXISTING}
 
       - name: update minikube quarkus version
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
