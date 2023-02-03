@@ -19,17 +19,17 @@ jobs:
           echo "SOURCE_QUARKUS_VERSION=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
           echo "SOURCE_YAML_VERSION=$(grep "minikube-version" minikube-yaml-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
           echo "SOURCE_STRESS_VERSION=$(grep "minikube-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-          echo "SOURCE_SECURITYVERSION=$(grep "minikube-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_SECURITY_VERSION=$(grep "minikube-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
           echo "TARGET_MINIKUBE_VERSION=$(curl -s https://api.github.com/repos/kubernetes/minikube/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
       - name: check current diff
         run: |
           echo SOURCE_QUARKUS_VERSION: ${SOURCE_QUARKUS_VERSION}
           echo SOURCE_YAML_VERSION: ${SOURCE_YAML_VERSION}
           echo SOURCE_STRESS_VERSION: ${SOURCE_STRESS_VERSION}
-          echo SOURCE_SECURITYVERSION: ${SOURCE_SECURITYVERSION}
+          echo SOURCE_SECURITY_VERSION: ${SOURCE_SECURITY_VERSION}
           echo TARGET_MINIKUBE_VERSION: ${TARGET_MINIKUBE_VERSION}
           test "${TARGET_MINIKUBE_VERSION}" != ""
-          if [[ ${SOURCE_QUARKUS_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_YAML_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_STRESS_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_SECURITYVERSION} != ${TARGET_MINIKUBE_VERSION} ]]; then
+          if [[ ${SOURCE_QUARKUS_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_YAML_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_STRESS_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_SECURITY_VERSION} != ${TARGET_MINIKUBE_VERSION} ]]; then
             echo "UNMATCH_VERSION=true" >> $GITHUB_ENV
             echo "Unmatched."
           fi
@@ -41,10 +41,6 @@ jobs:
             echo false
           )
           echo "BRANCH_IS_EXISTING=${branch_is_existing}" >> $GITHUB_ENV
-          echo UNMATCH_VERSION: ${UNMATCH_VERSION}
-          echo UNMATCH_VERSION: env.UNMATCH_VERSION
-          echo BRANCH_IS_EXISTING: ${BRANCH_IS_EXISTING}
-          echo BRANCH_IS_EXISTING: env.BRANCH_IS_EXISTING
       - name: check env
         run: |
           echo UNMATCH_VERSION: ${UNMATCH_VERSION}
@@ -53,11 +49,10 @@ jobs:
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         working-directory: ./.github/workflows
         run: |
-          sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" minikube-quarkus-ci.yml
-          sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" minikube-yaml-ci.yml
-          sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" minikube-stress-ci.yml
-          sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" minikube-security-ci.yml
-          echo "SOURCE_VERSION_UPDATED=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          sed -i -e "s/$SOURCE_QUARKUS_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-quarkus-ci.yml
+          sed -i -e "s/$SOURCE_YAML_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-yaml-ci.yml
+          sed -i -e "s/$SOURCE_STRESS_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-stress-ci.yml
+          sed -i -e "s/$SOURCE_SECURITY_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-security-ci.yml
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         uses: peter-evans/create-pull-request@v4
