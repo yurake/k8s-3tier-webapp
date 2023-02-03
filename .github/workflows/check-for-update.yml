@@ -40,9 +40,13 @@ jobs:
           echo CURRENT_UPDATED: ${SOURCE_VERSION_UPDATED}
           echo TARGET: ${TARGET_VERSION}
           test ${SOURCE_VERSION_UPDATED} = ${TARGET_VERSION}
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply actions/check-for-update-minikube
+      - name: git add and commit
+        if: env.UNMATCH_VERSION == 'true'
+        uses: EndBug/add-and-commit@v9
+      - name: git push
+        if: env.UNMATCH_VERSION == 'true'
+        run: |
+          git push -u origin actions/check-for-update-minikube
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
 
