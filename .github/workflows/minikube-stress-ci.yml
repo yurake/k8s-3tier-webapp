@@ -24,7 +24,7 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
         with:
-          minikube-version: 1.28.0
+          minikube-version: 1.29.0
           k8s-version: 1.26.0
       - name: minikube settings
         run: |
