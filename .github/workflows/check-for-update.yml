@@ -30,7 +30,7 @@ jobs:
         working-directory: ./.github/workflows
         run: |
           git switch -c actions/check-for-update-minikube
-          git pull origin master
+          git pull origin actions/check-for-update-minikube
           git status
           git fetch
           git merge actions/check-for-update-minikube
