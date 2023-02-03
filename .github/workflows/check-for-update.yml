@@ -43,8 +43,6 @@ jobs:
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         working-directory: ./.github/workflows
         run: |
-          git switch -c actions/check-for-update-minikube
-          git push -u origin actions/check-for-update-minikube
           sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" minikube-quarkus-ci.yml
           echo "SOURCE_VERSION_UPDATED=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
       - name: check updated diff
@@ -54,15 +52,7 @@ jobs:
           echo CURRENT_UPDATED: ${SOURCE_VERSION_UPDATED}
           echo TARGET: ${TARGET_VERSION}
           test ${SOURCE_VERSION_UPDATED} = ${TARGET_VERSION}
-      - name: git add and commit
-        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        uses: EndBug/add-and-commit@v9
-      - name: git push
-        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        run: |
-          git push -u origin actions/check-for-update-minikube
-          git switch origin/master
-      - name: Create Pull Request
+      - name: Add, commit, push, and create PR
         # if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         uses: peter-evans/create-pull-request@v4
         with:
