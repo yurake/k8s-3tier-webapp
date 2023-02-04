@@ -11,3 +11,6 @@ LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF 
 RUN apk --no-cache add apache2-utils
 WORKDIR /home
 COPY sample.json /home/.
+
+RUN adduser -D apatchbench
+USER apatchbench
