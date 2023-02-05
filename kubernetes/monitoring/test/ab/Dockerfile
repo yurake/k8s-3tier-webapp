@@ -13,5 +13,5 @@ RUN apk --no-cache add apache2-utils
 RUN addgroup -S apatchbench && adduser -S apatchbench -G apatchbench
 USER apatchbench
 
-WORKDIR /home
-COPY sample.json /home/.
+WORKDIR /home/apatchbench
+COPY sample.json /home/apatchbench/.
