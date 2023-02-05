@@ -19,13 +19,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx]
+        dockerfile_default:
+          [mysql, postgres, mongodb, rabbitmq, nginx, cassandra]
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_default }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: kubernetes/${{ matrix.dockerfile_default }}/Dockerfile
+          verbose: true
 
   dockerfile_application:
     runs-on: ubuntu-latest
@@ -33,27 +35,37 @@ jobs:
       matrix:
         dockerfile_application:
           [
-            jaxrs-memcached-quarkus,
-            jaxrs-rabbitmq-quarkus,
-            consumer-rabbitmq-quarkus,
-            jaxrs-mongodb-quarkus,
             consumer-activemq-quarkus,
-            jaxrs-mysql-quarkus,
-            randompublish-quarkus,
-            jaxrs-activemq-quarkus,
-            scheduled-quarkus,
-            jaxrs-postgres-quarkus,
-            jaxrs-hazelcast-quarkus,
             consumer-hazelcast-quarkus,
-            jaxrs-redis-quarkus,
+            consumer-kafka-quarkus,
+            consumer-rabbitmq-quarkus,
             consumer-redis-quarkus,
+            converter-kafka-quarkus,
+            converter-rabbitmq-quarkus,
+            jaxrs-activemq-quarkus,
+            jaxrs-cassandra-quarkus,
+            jaxrs-grpc-quarkus,
+            jaxrs-hazelcast-quarkus,
+            jaxrs-kafka-quarkus,
+            jaxrs-memcached-quarkus,
+            jaxrs-mongodb-quarkus,
+            jaxrs-mysql-quarkus,
+            jaxrs-postgres-quarkus,
+            jaxrs-rabbitmq-quarkus,
+            jaxrs-redis-quarkus,
+            producer-kafka-quarkus,
+            randompublish-quarkus,
+            scheduled-quarkus,
+            server-grpc-quarkus,
           ]
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_application }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: application/${{ matrix.dockerfile_application }}/src/main/docker/Dockerfile.jvm
+          verbose: true
+          ignore: DL3038,DL3041
 
   dockerfile_monitoring:
     runs-on: ubuntu-latest
@@ -63,9 +75,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_monitoring }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: kubernetes/monitoring/${{ matrix.dockerfile_monitoring }}/Dockerfile
+          verbose: true
 
   dockerfile_ab:
     runs-on: ubuntu-latest
@@ -75,15 +88,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_ab }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: kubernetes/monitoring/test/${{ matrix.dockerfile_ab }}/Dockerfile
+          verbose: true
 
   dockerfile_postmannewman:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_postmannewman }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: kubernetes/monitoring/test/postmannewman/quarkus/Dockerfile
+          verbose: true

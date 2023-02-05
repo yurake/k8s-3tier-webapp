@@ -1,0 +1,14 @@
+cicd:
+  - .github/**/*
+docs:
+  - docs/**/*
+github-action:
+  - .github/**/*
+java:
+  - application/**/*
+javascript:
+  - application/**/*.js
+kubernetes:
+  - kubernetes/**/*
+quarkus:
+  - application/*-quarkus/*
