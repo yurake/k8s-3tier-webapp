@@ -40,8 +40,11 @@ jobs:
         uses: pmd/pmd-github-action@v1
         with:
           rulesets: "rulesets/java/quickstart.xml"
-          sourcePath: "src/main/java"
+          sourcePath: "application/consumer-activemq-quarkus/src/main/java"
           analyzeModifiedFilesOnly: false
+      - name: Fail build if there are violations
+        if: steps.pmd.outputs.violations != 0
+        run: exit 1
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
