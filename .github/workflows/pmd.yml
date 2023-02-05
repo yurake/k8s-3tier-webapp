@@ -42,10 +42,10 @@ jobs:
           rulesets: "rulesets/java/quickstart.xml"
           sourcePath: "application/consumer-activemq-quarkus/src/main/java"
           analyzeModifiedFilesOnly: false
-      - name: Fail build if there are violations
-        if: steps.pmd.outputs.violations != 0
-        run: exit 1
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: pmd-report.sarif
+      - name: Fail build if there are violations
+        if: steps.pmd.outputs.violations != 0
+        run: exit 1
