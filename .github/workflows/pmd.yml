@@ -23,6 +23,33 @@ jobs:
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        quarkus_application:
+          [
+            consumer-activemq-quarkus,
+            consumer-hazelcast-quarkus,
+            consumer-kafka-quarkus,
+            consumer-rabbitmq-quarkus,
+            consumer-redis-quarkus,
+            converter-kafka-quarkus,
+            converter-rabbitmq-quarkus,
+            jaxrs-activemq-quarkus,
+            jaxrs-cassandra-quarkus,
+            jaxrs-grpc-quarkus,
+            jaxrs-hazelcast-quarkus,
+            jaxrs-kafka-quarkus,
+            jaxrs-memcached-quarkus,
+            jaxrs-mongodb-quarkus,
+            jaxrs-mysql-quarkus,
+            jaxrs-postgres-quarkus,
+            jaxrs-rabbitmq-quarkus,
+            jaxrs-redis-quarkus,
+            producer-kafka-quarkus,
+            randompublish-quarkus,
+            scheduled-quarkus,
+            server-grpc-quarkus,
+          ]
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK
@@ -35,7 +62,7 @@ jobs:
         uses: pmd/pmd-github-action@v1
         with:
           rulesets: "rulesets/java/quickstart.xml"
-          sourcePath: "application/consumer-activemq-quarkus/src/main/java"
+          sourcePath: "application/${{ matrix.quarkus_application }}/src/main/java"
           analyzeModifiedFilesOnly: false
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
