@@ -12,5 +12,5 @@ RUN apk update && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     apk del tzdata
 COPY custom_definitions.json /etc/rabbitmq/
-RUN printf 'management.load_definitions = /etc/rabbitmq/custom_definitions.json\n' >> /etc/rabbitmq/rabbitmq.conf
-RUN rabbitmq-plugins enable rabbitmq_prometheus
+RUN printf 'management.load_definitions = /etc/rabbitmq/custom_definitions.json\n' >> /etc/rabbitmq/rabbitmq.conf && \
+    rabbitmq-plugins enable rabbitmq_prometheus
