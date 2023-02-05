@@ -7,7 +7,7 @@ ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.vcs-url="https://github.com/yurake/k8s-3tier-webapp"
 
-RUN adduser -D apatchbench
+RUN addgroup -S apatchbench && adduser -S apatchbench -G apatchbench
 USER apatchbench
 
 # RUN apk --no-cache add apache2-utils=${APACHE2_UTILS_VERSION}
