@@ -12,11 +12,6 @@ on:
       - "**.java"
       - "application/**"
       - ".github/workflows/pmd.yml"
-  pull_request:
-    paths:
-      - "**.java"
-      - "application/**"
-      - ".github/workflows/pmd.yml"
 
 permissions:
   contents: read
