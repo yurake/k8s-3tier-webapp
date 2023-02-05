@@ -17,13 +17,15 @@ on:
 jobs:
   dockerfile_default:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile_default: [mysql, postgres, mongodb, rabbitmq, nginx]
     steps:
       - uses: actions/checkout@v3.3.0
-      - name: lint
+      - name: lint ${{ matrix.dockerfile_default }}
         uses: hadolint/hadolint-action@v3.0.0
         with:
-          dockerfile: Dockerfile
-          recursive: true
+          dockerfile: kubernetes/${{ matrix.dockerfile_default }}/Dockerfile
           verbose: true
 
   dockerfile_application:
@@ -63,3 +65,39 @@ jobs:
           dockerfile: application/${{ matrix.dockerfile_application }}/src/main/docker/Dockerfile.jvm
           verbose: true
           ignore: DL3038,DL3041
+
+  dockerfile_monitoring:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile_monitoring: [jenkins]
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - name: lint ${{ matrix.dockerfile_monitoring }}
+        uses: hadolint/hadolint-action@v3.0.0
+        with:
+          dockerfile: kubernetes/monitoring/${{ matrix.dockerfile_monitoring }}/Dockerfile
+          verbose: true
+
+  dockerfile_ab:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile_ab: [ab]
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - name: lint ${{ matrix.dockerfile_ab }}
+        uses: hadolint/hadolint-action@v3.0.0
+        with:
+          dockerfile: kubernetes/monitoring/test/${{ matrix.dockerfile_ab }}/Dockerfile
+          verbose: true
+
+  dockerfile_postmannewman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - name: lint ${{ matrix.dockerfile_postmannewman }}
+        uses: hadolint/hadolint-action@v3.0.0
+        with:
+          dockerfile: kubernetes/monitoring/test/postmannewman/quarkus/Dockerfile
+          verbose: true
