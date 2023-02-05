@@ -11,4 +11,4 @@ javascript:
 kubernetes:
   - kubernetes/**/*
 quarkus:
-  - **/*-quarkus/*
+  - application/*-quarkus/*
