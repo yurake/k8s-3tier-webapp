@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_default }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: kubernetes/${{ matrix.dockerfile_default }}/Dockerfile
 
@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_application }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: application/${{ matrix.dockerfile_application }}/src/main/docker/Dockerfile.jvm
 
@@ -63,7 +63,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_monitoring }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: kubernetes/monitoring/${{ matrix.dockerfile_monitoring }}/Dockerfile
 
@@ -75,7 +75,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_ab }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: kubernetes/monitoring/test/${{ matrix.dockerfile_ab }}/Dockerfile
 
@@ -84,6 +84,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
       - name: lint ${{ matrix.dockerfile_postmannewman }}
-        uses: brpaz/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v3.0.0
         with:
           dockerfile: kubernetes/monitoring/test/postmannewman/quarkus/Dockerfile
