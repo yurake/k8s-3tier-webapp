@@ -62,7 +62,7 @@ jobs:
         id: pmd
         uses: pmd/pmd-github-action@v1
         with:
-          rulesets: "rulesets/java/quickstart.xml,${{ github.workspace }}/.github/pmdrule.xml"
+          rulesets: "${{ github.workspace }}/.github/pmdrule.xml"
           sourcePath: "application/${{ matrix.quarkus_application }}/src/main/java"
           analyzeModifiedFilesOnly: false
       - name: Upload SARIF file
