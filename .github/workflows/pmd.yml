@@ -12,6 +12,7 @@ on:
       - "**.java"
       - "application/**"
       - ".github/workflows/pmd.yml"
+      - ".github/pmdrule.yml"
 
 permissions:
   contents: read
