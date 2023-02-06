@@ -63,7 +63,7 @@ jobs:
         with:
           context: ./kubernetes/nginx
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/nginx:latest
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
