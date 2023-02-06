@@ -15,7 +15,7 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             [
-              "/usr/bin/ab -n 100 -c 10 -p /home/sample.json -T application/json -g out.data http://jaxrs-kafka-quarkus-monitoring:8080/quarkus/kafka/publish; echo '---'; cat out.data",
+              "/usr/bin/ab -n 100 -c 10 -p /home/apatchbench/sample.json -T application/json -g out.data http://jaxrs-kafka-quarkus-monitoring:8080/quarkus/kafka/publish; echo '---'; cat out.data",
             ]
           livenessProbe:
             exec:
