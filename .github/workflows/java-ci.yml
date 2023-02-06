@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/parent-pom/pom.xml') }}
+          key: ${{ runner.os }}-maven-parent-pom-${{ hashFiles('**/parent-pom/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-parent-pom
       - name: Maven Deploy POM to Github Package Registry
