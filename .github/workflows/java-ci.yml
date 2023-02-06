@@ -92,6 +92,7 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
       - name: Upload test results to Datadog
+        working-directory: ./application/webapp-service
         if: always()
         run: |
           npm install -g @datadog/datadog-ci
