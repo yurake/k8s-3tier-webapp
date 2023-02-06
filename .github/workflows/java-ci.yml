@@ -91,6 +91,9 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
+      - name: Upload test results to Datadog
+        if: always()
+        run: DD_ENV=ci DATADOG_API_KEY=${{ secrets.DATADOG_APIKEY }} DATADOG_SITE=datadoghq.com datadog-ci junit upload --service webapp-service target/surefire-reports
 
   jaxrs-activemq-quarkus:
     needs: init-build
