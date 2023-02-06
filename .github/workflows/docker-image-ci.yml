@@ -61,6 +61,7 @@ jobs:
       - name: Build and push - nginx
         uses: docker/build-push-action@v4
         with:
+          file: src/main/docker/Dockerfile.jvm
           context: ./kubernetes/nginx
           push: ${{ env.PUSH }}
           tags: ${{ secrets.DOCKERHUB_USER }}/nginx:latest

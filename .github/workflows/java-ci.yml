@@ -120,6 +120,24 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
@@ -139,12 +157,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-activemq-quarkus
-        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-activemq-quarkus:latest
+      - name: Build and push - nginx
+        uses: docker/build-push-action@v4
+        with:
+          file: src/main/docker/Dockerfile.jvm
+          context: ./application/jaxrs-activemq-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/nginx:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
