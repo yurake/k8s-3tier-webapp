@@ -38,8 +38,8 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-parent-pom
+          restore-keys: ${{ runner.os }}-sonar-parent-pom
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
@@ -57,13 +57,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-webapp-service
+          restore-keys: ${{ runner.os }}-sonar-webapp-service
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/webapp-service/pom.xml') }}
+          key: ${{ runner.os }}-maven-webapp-service-${{ hashFiles('**/webapp-service/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-webapp-service
       - name: Maven Deploy to Github Package Registry
@@ -125,13 +125,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-activemq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-activemq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-activemq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-activemq-quarkus-${{ hashFiles('**/jaxrs-activemq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-activemq-quarkus
       - name: Maven Build
@@ -199,13 +199,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-activemq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-activemq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-activemq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-activemq-quarkus-${{ hashFiles('**/consumer-activemq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-activemq-quarkus
       - name: Maven Build
@@ -273,13 +273,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-cassandra-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-cassandra-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-cassandra-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-cassandra-quarkus-${{ hashFiles('**/jaxrs-cassandra-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-cassandra-quarkus
       - name: docker pull for maven build
@@ -351,13 +351,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-hazelcast-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-hazelcast-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-hazelcast-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-hazelcast-quarkus-${{ hashFiles('**/consumer-hazelcast-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-hazelcast-quarkus
       - name: Maven Build
@@ -425,13 +425,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-kafka-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-kafka-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-kafka-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-kafka-quarkus-${{ hashFiles('**/consumer-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-kafka-quarkus
       - name: Maven Build
@@ -499,13 +499,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-converter-kafka-quarkus
+          restore-keys: ${{ runner.os }}-sonar-converter-kafka-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/converter-kafka-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-converter-kafka-quarkus-${{ hashFiles('**/converter-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-converter-kafka-quarkus
       - name: Maven Build
@@ -573,13 +573,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-scheduled-quarkus
+          restore-keys: ${{ runner.os }}-sonar-scheduled-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/scheduled-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-scheduled-quarkus-${{ hashFiles('**/scheduled-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-scheduled-quarkus
       - name: Maven Build
@@ -647,13 +647,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-hazelcast-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-hazelcast-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-hazelcast-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-hazelcast-quarkus-${{ hashFiles('**/jaxrs-hazelcast-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-hazelcast-quarkus
       - name: Maven Build
@@ -721,13 +721,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-kafka-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-kafka-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-kafka-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-kafka-quarkus-${{ hashFiles('**/jaxrs-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-kafka-quarkus
       - name: Maven Build
@@ -795,13 +795,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-memcached-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-memcached-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-memcached-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-memcached-quarkus-${{ hashFiles('**/jaxrs-memcached-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-memcached-quarkus
       - name: Maven Build
@@ -869,13 +869,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-mongodb-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-mongodb-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mongodb-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-mongodb-quarkus-${{ hashFiles('**/jaxrs-mongodb-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-mongodb-quarkus
       - name: Maven Build
@@ -943,13 +943,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-mysql-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-mysql-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mysql-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-mysql-quarkus-${{ hashFiles('**/jaxrs-mysql-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-mysql-quarkus
       - name: Maven Build
@@ -1017,13 +1017,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-postgres-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-postgres-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-postgres-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-postgres-quarkus-${{ hashFiles('**/jaxrs-postgres-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-postgres-quarkus
       - name: Maven Build
@@ -1091,13 +1091,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-rabbitmq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-rabbitmq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-rabbitmq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-rabbitmq-quarkus-${{ hashFiles('**/jaxrs-rabbitmq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-rabbitmq-quarkus
       - name: Maven Build
@@ -1165,13 +1165,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-redis-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-redis-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-redis-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-redis-quarkus-${{ hashFiles('**/jaxrs-redis-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-redis-quarkus
       - name: Maven Build
@@ -1238,13 +1238,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-rabbitmq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-rabbitmq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-rabbitmq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-rabbitmq-quarkus-${{ hashFiles('**/consumer-rabbitmq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-rabbitmq-quarkus
       - name: Maven Build
@@ -1312,13 +1312,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-converter-rabbitmq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-converter-rabbitmq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/converter-rabbitmq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-converter-rabbitmq-quarkus-${{ hashFiles('**/converter-rabbitmq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-converter-rabbitmq-quarkus
       - name: Maven Build
@@ -1386,13 +1386,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-producer-kafka-quarkus
+          restore-keys: ${{ runner.os }}-sonar-producer-kafka-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/producer-kafka-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-producer-kafka-quarkus-${{ hashFiles('**/producer-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-producer-kafka-quarkus
       - name: Maven Build
@@ -1460,13 +1460,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-randompublish-quarkus
+          restore-keys: ${{ runner.os }}-sonar-randompublish-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/randompublish-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-randompublish-quarkus-${{ hashFiles('**/randompublish-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-randompublish-quarkus
       - name: Maven Build
@@ -1534,13 +1534,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-server-grpc-quarkus
+          restore-keys: ${{ runner.os }}-sonar-server-grpc-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/server-grpc-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-server-grpc-quarkus-${{ hashFiles('**/server-grpc-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-server-grpc-quarkus
       - name: Maven Build
@@ -1608,13 +1608,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-grpc-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-grpc-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-grpc-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-grpc-quarkus-${{ hashFiles('**/jaxrs-grpc-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-grpc-quarkus
       - name: Maven Build
@@ -1682,13 +1682,13 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-redis-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-redis-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-redis-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-redis-quarkus-${{ hashFiles('**/consumer-redis-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-redis-quarkus
       - name: Maven Build
