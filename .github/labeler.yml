@@ -2,6 +2,7 @@ cicd:
   - .github/**/*
 docs:
   - docs/**/*
+  - "**/*.md"
 github-action:
   - .github/**/*
 java:
