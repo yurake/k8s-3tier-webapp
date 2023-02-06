@@ -70,74 +70,98 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Build image - mysql
-        working-directory: ./kubernetes/mysql
-        run: docker build -t yurak/mysql:latest
-          --build-arg VCS_REF=${VCS_REF}
-          --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - mysql
-        if: github.event_name == 'push'
-        run: docker push yurak/mysql:latest
+      - name: Build and push - mysql
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/mysql
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/mysql:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Build image - postgres
-        working-directory: ./kubernetes/postgres
-        run: docker build -t yurak/postgres:latest
-          --build-arg VCS_REF=${VCS_REF}
-          --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - postgres
-        if: github.event_name == 'push'
-        run: docker push yurak/postgres:latest
+      - name: Build and push - postgres
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/postgres
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/postgres:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Build image - mongodb
-        working-directory: ./kubernetes/mongodb
-        run: docker build -t yurak/mongodb:latest
-          --build-arg VCS_REF=${VCS_REF}
-          --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - mongodb
-        if: github.event_name == 'push'
-        run: docker push yurak/mongodb:latest
+      - name: Build and push - mongodb
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/mongodb
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/mongodb:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Build image - cassandra
-        working-directory: ./kubernetes/cassandra
-        run: docker build -t yurak/cassandra:latest
-          --build-arg VCS_REF=${VCS_REF}
-          --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - cassandra
-        if: github.event_name == 'push'
-        run: docker push yurak/cassandra:latest
+      - name: Build and push - cassandra
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/cassandra
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/cassandra:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Build image - rabbitmq
-        working-directory: ./kubernetes/rabbitmq
-        run: docker build -t yurak/rabbitmq:latest
-          --build-arg VCS_REF=${VCS_REF}
-          --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - rabbitmq
-        if: github.event_name == 'push'
-        run: docker push yurak/rabbitmq:latest
+      - name: Build and push - rabbitmq
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/rabbitmq
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/rabbitmq:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Build image - jenkins
-        working-directory: ./kubernetes/monitoring/jenkins
-        run: docker build -t yurak/jenkins:latest
-          --build-arg VCS_REF=${VCS_REF}
-          --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - jenkins
-        if: github.event_name == 'push'
-        run: docker push yurak/jenkins:latest
+      - name: Build and push - jenkins
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/monitoring/jenkins
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jenkins:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Build image - ab
-        working-directory: ./kubernetes/monitoring/test/ab
-        run: docker build -t yurak/ab:latest
-          --build-arg VCS_REF=${VCS_REF}
-          --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - ab
-        if: github.event_name == 'push'
-        run: docker push yurak/ab:latest
+      - name: Build and push - ab
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/monitoring/test/ab
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/ab:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Build image - postmannewman-quarkus
-        working-directory: ./kubernetes/monitoring/test/postmannewman/quarkus
-        run: docker build -t yurak/postmannewman-quarkus:latest
-          --build-arg VCS_REF=${VCS_REF}
-          --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - postmannewman-quarkus
-        if: github.event_name == 'push'
-        run: docker push yurak/postmannewman-quarkus:latest
+      - name: Build and push - postmannewman-quarkus
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/monitoring/test/postmannewman/quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/postmannewman-quarkus:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
