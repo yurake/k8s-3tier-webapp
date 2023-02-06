@@ -99,7 +99,7 @@ jobs:
           DD_ENV=ci DATADOG_API_KEY=${{ secrets.DATADOG_APIKEY }} DATADOG_SITE=datadoghq.com datadog-ci junit upload --service webapp-service target/surefire-reports
 
   build-jvm:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -203,7 +203,7 @@ jobs:
           DD_ENV=ci DATADOG_API_KEY=${{ secrets.DATADOG_APIKEY }} DATADOG_SITE=datadoghq.com datadog-ci junit upload --service ${{ matrix.application }} target/surefire-reports
 
   jaxrs-cassandra-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -302,7 +302,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-hazelcast-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -397,7 +397,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-kafka-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -492,7 +492,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   converter-kafka-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -587,7 +587,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   scheduled-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -682,7 +682,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   jaxrs-hazelcast-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -777,7 +777,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   jaxrs-kafka-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -872,7 +872,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   jaxrs-memcached-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -967,7 +967,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   jaxrs-mongodb-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1062,7 +1062,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   jaxrs-mysql-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1157,7 +1157,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   jaxrs-postgres-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1252,7 +1252,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   jaxrs-rabbitmq-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1347,7 +1347,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   jaxrs-redis-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1441,7 +1441,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-rabbitmq-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1536,7 +1536,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   converter-rabbitmq-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1631,7 +1631,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   producer-kafka-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1726,7 +1726,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   randompublish-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1821,7 +1821,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   server-grpc-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -1916,7 +1916,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   jaxrs-grpc-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -2011,7 +2011,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   consumer-redis-quarkus:
-    needs: init-build
+    needs: build-init
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
