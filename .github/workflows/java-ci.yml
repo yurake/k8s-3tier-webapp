@@ -51,7 +51,7 @@ jobs:
         working-directory: ./application/parent-pom/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
@@ -70,7 +70,7 @@ jobs:
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
