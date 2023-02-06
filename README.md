@@ -16,7 +16,6 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Dockerfile Lint](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dockerfile-lint.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dockerfile-lint.yml) 
 [![CodeQL](https://github.com/yurake/k8s-3tier-webapp/workflows/CodeQL/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codeql.yml) [![Dependency Review](https://github.com/yurake/k8s-3tier-webapp/workflows/Dependency%20Review/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dependency-review.yml) 
 [![Check for Update](https://github.com/yurake/k8s-3tier-webapp/workflows/Check%20for%20Update/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Check+for+Update%22) 
-[![Check for CI Target](https://github.com/yurake/k8s-3tier-webapp/workflows/Check%20for%20CI%20Target/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Check+for+CI+Target%22) 
 [![CIS Dockerfile benchmark](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cis-dockerfile-benchmark.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cis-dockerfile-benchmark.yml) 
 [![Cypress CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cypress-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cypress-ci.yml) 
 [![K8S Security Config Watch](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/k8s-security-config-watch.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/k8s-security-config-watch.yml) 
@@ -42,7 +41,6 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Support kind Version](https://img.shields.io/badge/kind-v0.16-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22kind+CI%22) 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE/) 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge\_shield)  
-
 [![AccessLint](https://img.shields.io/badge/AccessLint-enabled-blue?style=flat)](https://accesslint.com/accounts/yurake/projects/k8s-3tier-webapp)
 [![Datadog](https://img.shields.io/badge/Datadog-enabled-blue?style=flat\&logo=datadog)](https://app.datadoghq.com/ci/test-services)
 [![Debricked](https://img.shields.io/badge/Debricked-enabled-blue?style=flat)](https://debricked.com/app/en/repository/40176)
@@ -55,7 +53,6 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Socket](https://img.shields.io/badge/Socket-enabled-blue?style=flat\&logo=socketdotio)](https://socket.dev/dashboard/org/gh/yurake/repo/k8s-3tier-webapp)
 [![Sonatype Lift](https://img.shields.io/badge/Sonatype%20Lift-enabled-blue?style=flat)](https://lift.sonatype.com/results/github.com/yurake/k8s-3tier-webapp)
 [![What The Diff](https://img.shields.io/badge/What%20The%20Diff-enabled-blue?style=flat)](https://app.whatthediff.ai/repository/181164153)
-
 [![sonarcloud](https://img.shields.io/badge/sonarcloud-enabled-orange?style=flat\&logo=sonarcloud)](https://sonarcloud.io/projects)   
 More details at [sonarcloud](SONARCLOUD.md)
 ***
