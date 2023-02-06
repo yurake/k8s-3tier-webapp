@@ -1,0 +1,2 @@
+# jaxrs-cassandra-quarkus
+
