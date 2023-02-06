@@ -38,39 +38,39 @@ jobs:
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-parent-pom
+          restore-keys: ${{ runner.os }}-sonar-parent-pom
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/parent-pom/pom.xml') }}
+          key: ${{ runner.os }}-maven-parent-pom-${{ hashFiles('**/parent-pom/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-parent-pom
       - name: Maven Deploy POM to Github Package Registry
         working-directory: ./application/parent-pom/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-webapp-service
+          restore-keys: ${{ runner.os }}-sonar-webapp-service
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/webapp-service/pom.xml') }}
+          key: ${{ runner.os }}-maven-webapp-service-${{ hashFiles('**/webapp-service/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-webapp-service
       - name: Maven Deploy to Github Package Registry
         working-directory: ./application/webapp-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify deploy --settings ../.m2/settings.xml
+        run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -120,31 +120,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-activemq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-activemq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-activemq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-activemq-quarkus-${{ hashFiles('**/jaxrs-activemq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-activemq-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-activemq-quarkus
-        run: docker build -t yurak/jaxrs-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-activemq-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-activemq-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-activemq-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-activemq-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -194,31 +215,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-activemq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-activemq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-activemq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-activemq-quarkus-${{ hashFiles('**/consumer-activemq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-activemq-quarkus
       - name: Maven Build
         working-directory: ./application/consumer-activemq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/consumer-activemq-quarkus
-        run: docker build -t yurak/consumer-activemq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/consumer-activemq-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/consumer-activemq-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/consumer-activemq-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/consumer-activemq-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -268,18 +310,36 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-cassandra-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-cassandra-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-cassandra-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-cassandra-quarkus-${{ hashFiles('**/jaxrs-cassandra-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-cassandra-quarkus
       - name: docker pull for maven build
@@ -290,13 +350,16 @@ jobs:
         working-directory: ./application/jaxrs-cassandra-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-cassandra-quarkus
-        run: docker build -t yurak/jaxrs-cassandra-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-cassandra-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-cassandra-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-cassandra-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-cassandra-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -346,31 +409,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-hazelcast-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-hazelcast-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-hazelcast-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-hazelcast-quarkus-${{ hashFiles('**/consumer-hazelcast-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-hazelcast-quarkus
       - name: Maven Build
         working-directory: ./application/consumer-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/consumer-hazelcast-quarkus
-        run: docker build -t yurak/consumer-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/consumer-hazelcast-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/consumer-hazelcast-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/consumer-hazelcast-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/consumer-hazelcast-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -420,31 +504,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-kafka-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-kafka-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-kafka-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-kafka-quarkus-${{ hashFiles('**/consumer-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-kafka-quarkus
       - name: Maven Build
         working-directory: ./application/consumer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
-      - name: Build Image
-        working-directory: ./application/consumer-kafka-quarkus
-        run: docker build -t yurak/consumer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/consumer-kafka-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml -Pnative
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/consumer-kafka-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/consumer-kafka-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/consumer-kafka-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -494,31 +599,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-converter-kafka-quarkus
+          restore-keys: ${{ runner.os }}-sonar-converter-kafka-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/converter-kafka-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-converter-kafka-quarkus-${{ hashFiles('**/converter-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-converter-kafka-quarkus
       - name: Maven Build
         working-directory: ./application/converter-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
-      - name: Build Image
-        working-directory: ./application/converter-kafka-quarkus
-        run: docker build -t yurak/converter-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/converter-kafka-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml -Pnative
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/converter-kafka-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/converter-kafka-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/converter-kafka-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -568,31 +694,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-scheduled-quarkus
+          restore-keys: ${{ runner.os }}-sonar-scheduled-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/scheduled-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-scheduled-quarkus-${{ hashFiles('**/scheduled-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-scheduled-quarkus
       - name: Maven Build
         working-directory: ./application/scheduled-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
-      - name: Build Image
-        working-directory: ./application/scheduled-quarkus
-        run: docker build -t yurak/scheduled-quarkus:latest -f src/main/docker/Dockerfile.native .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/scheduled-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml -Pnative
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/scheduled-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/scheduled-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/scheduled-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -642,31 +789,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-hazelcast-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-hazelcast-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-hazelcast-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-hazelcast-quarkus-${{ hashFiles('**/jaxrs-hazelcast-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-hazelcast-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-hazelcast-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-hazelcast-quarkus
-        run: docker build -t yurak/jaxrs-hazelcast-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-hazelcast-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-hazelcast-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-hazelcast-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-hazelcast-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -716,31 +884,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-kafka-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-kafka-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-kafka-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-kafka-quarkus-${{ hashFiles('**/jaxrs-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-kafka-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
-      - name: Build Image
-        working-directory: ./application/jaxrs-kafka-quarkus
-        run: docker build -t yurak/jaxrs-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-kafka-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml -Pnative
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-kafka-quarkus/src/main/docker/Dockerfile.native
+          context: application/jaxrs-kafka-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-kafka-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -790,31 +979,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-memcached-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-memcached-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-memcached-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-memcached-quarkus-${{ hashFiles('**/jaxrs-memcached-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-memcached-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-memcached-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-memcached-quarkus
-        run: docker build -t yurak/jaxrs-memcached-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-memcached-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-memcached-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-memcached-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-memcached-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -864,31 +1074,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-mongodb-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-mongodb-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mongodb-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-mongodb-quarkus-${{ hashFiles('**/jaxrs-mongodb-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-mongodb-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-mongodb-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-mongodb-quarkus
-        run: docker build -t yurak/jaxrs-mongodb-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-mongodb-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-mongodb-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-mongodb-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-mongodb-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -938,31 +1169,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-mysql-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-mysql-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-mysql-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-mysql-quarkus-${{ hashFiles('**/jaxrs-mysql-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-mysql-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-mysql-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-mysql-quarkus
-        run: docker build -t yurak/jaxrs-mysql-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-mysql-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-mysql-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-mysql-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-mysql-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1012,31 +1264,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-postgres-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-postgres-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-postgres-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-postgres-quarkus-${{ hashFiles('**/jaxrs-postgres-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-postgres-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-postgres-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-postgres-quarkus
-        run: docker build -t yurak/jaxrs-postgres-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-postgres-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-postgres-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-postgres-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-postgres-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1086,31 +1359,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-rabbitmq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-rabbitmq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-rabbitmq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-rabbitmq-quarkus-${{ hashFiles('**/jaxrs-rabbitmq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-rabbitmq-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-rabbitmq-quarkus
-        run: docker build -t yurak/jaxrs-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-rabbitmq-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-rabbitmq-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-rabbitmq-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-rabbitmq-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1160,31 +1454,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-redis-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-redis-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-redis-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-redis-quarkus-${{ hashFiles('**/jaxrs-redis-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-redis-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/jaxrs-redis-quarkus
-        run: docker build -t yurak/jaxrs-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-redis-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-redis-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-redis-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-redis-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1233,31 +1548,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-rabbitmq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-rabbitmq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-rabbitmq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-rabbitmq-quarkus-${{ hashFiles('**/consumer-rabbitmq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-rabbitmq-quarkus
       - name: Maven Build
         working-directory: ./application/consumer-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/consumer-rabbitmq-quarkus
-        run: docker build -t yurak/consumer-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/consumer-rabbitmq-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/consumer-rabbitmq-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/consumer-rabbitmq-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/consumer-rabbitmq-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1307,31 +1643,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-converter-rabbitmq-quarkus
+          restore-keys: ${{ runner.os }}-sonar-converter-rabbitmq-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/converter-rabbitmq-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-converter-rabbitmq-quarkus-${{ hashFiles('**/converter-rabbitmq-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-converter-rabbitmq-quarkus
       - name: Maven Build
         working-directory: ./application/converter-rabbitmq-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/converter-rabbitmq-quarkus
-        run: docker build -t yurak/converter-rabbitmq-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/converter-rabbitmq-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/converter-rabbitmq-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/converter-rabbitmq-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/converter-rabbitmq-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1381,31 +1738,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-producer-kafka-quarkus
+          restore-keys: ${{ runner.os }}-sonar-producer-kafka-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/producer-kafka-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-producer-kafka-quarkus-${{ hashFiles('**/producer-kafka-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-producer-kafka-quarkus
       - name: Maven Build
         working-directory: ./application/producer-kafka-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
-      - name: Build Image
-        working-directory: ./application/producer-kafka-quarkus
-        run: docker build -t yurak/producer-kafka-quarkus:latest -f src/main/docker/Dockerfile.native .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/producer-kafka-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml -Pnative
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/producer-kafka-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/producer-kafka-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/producer-kafka-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1455,31 +1833,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-randompublish-quarkus
+          restore-keys: ${{ runner.os }}-sonar-randompublish-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/randompublish-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-randompublish-quarkus-${{ hashFiles('**/randompublish-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-randompublish-quarkus
       - name: Maven Build
         working-directory: ./application/randompublish-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
-      - name: Build Image
-        working-directory: ./application/randompublish-quarkus
-        run: docker build -t yurak/randompublish-quarkus:latest -f src/main/docker/Dockerfile.native .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/randompublish-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml -Pnative
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/randompublish-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/randompublish-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/randompublish-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1529,31 +1928,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-server-grpc-quarkus
+          restore-keys: ${{ runner.os }}-sonar-server-grpc-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/server-grpc-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-server-grpc-quarkus-${{ hashFiles('**/server-grpc-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-server-grpc-quarkus
       - name: Maven Build
         working-directory: ./application/server-grpc-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
-      - name: Build Image
-        working-directory: ./application/server-grpc-quarkus
-        run: docker build -t yurak/server-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/server-grpc-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml -Pnative
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/server-grpc-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/server-grpc-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/server-grpc-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1603,31 +2023,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-jaxrs-grpc-quarkus
+          restore-keys: ${{ runner.os }}-sonar-jaxrs-grpc-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/jaxrs-grpc-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-jaxrs-grpc-quarkus-${{ hashFiles('**/jaxrs-grpc-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-jaxrs-grpc-quarkus
       - name: Maven Build
         working-directory: ./application/jaxrs-grpc-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml -Pnative
-      - name: Build Image
-        working-directory: ./application/jaxrs-grpc-quarkus
-        run: docker build -t yurak/jaxrs-grpc-quarkus:latest -f src/main/docker/Dockerfile.native .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/jaxrs-grpc-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml -Pnative
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/jaxrs-grpc-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-grpc-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-grpc-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -1677,31 +2118,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3.2.4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: ${{ runner.os }}-sonar-consumer-redis-quarkus
+          restore-keys: ${{ runner.os }}-sonar-consumer-redis-quarkus
       - name: Cache local Maven repository
         uses: actions/cache@v3.2.4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/consumer-redis-quarkus/pom.xml') }}
+          key: ${{ runner.os }}-maven-consumer-redis-quarkus-${{ hashFiles('**/consumer-redis-quarkus/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-consumer-redis-quarkus
       - name: Maven Build
         working-directory: ./application/consumer-redis-quarkus
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify package --settings ../.m2/settings.xml
-      - name: Build Image
-        working-directory: ./application/consumer-redis-quarkus
-        run: docker build -t yurak/consumer-redis-quarkus:latest -f src/main/docker/Dockerfile.jvm .
-      - name: Push Image
-        if: github.event_name == 'push'
-        run: docker push yurak/consumer-redis-quarkus:latest
+        run: ./mvnw -B package --settings ../.m2/settings.xml
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: application/consumer-redis-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/consumer-redis-quarkus
+          push: ${{ env.PUSH }}
+          tags: ${{ secrets.DOCKERHUB_USER }}/consumer-redis-quarkus:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
