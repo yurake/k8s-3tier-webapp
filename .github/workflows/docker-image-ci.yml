@@ -23,12 +23,33 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v3.3.0
 
-      - name: setup docker actions
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/main
+
+      - name: setup docker args
         env:
           TZ: "Asia/Tokyo"
         run: |
           echo "BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
           echo "VCS_REF=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
+
+      - name: setup docker push actions
+        run: |
+          if [[ github.event_name == 'push' ]]; then
+            echo "PUSH=true" >> $GITHUB_ENV
+          else
+            echo "PUSH=false" >> $GITHUB_ENV
+          fi
 
       - name: docker login
         if: github.event_name == 'push'
@@ -37,14 +58,15 @@ jobs:
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
-      - name: Build image - nginx
-        working-directory: ./kubernetes/nginx
-        run: docker build -t yurak/nginx:latest
-          --build-arg VCS_REF=${VCS_REF}
-          --build-arg BUILD_DATE=${BUILD_DATE} .
-      - name: Push Image - nginx
-        if: github.event_name == 'push'
-        run: docker push yurak/nginx:latest
+      - name: Build and push - nginx
+        uses: docker/build-push-action@v4
+        with:
+          context: ./kubernetes/nginx
+          push: ${PUSH}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest
+          build-args: |
+            VCS_REF=${VCS_REF}
+            BUILD_DATE=${BUILD_DATE}
 
       - name: Build image - mysql
         working-directory: ./kubernetes/mysql
