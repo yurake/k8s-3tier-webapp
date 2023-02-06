@@ -44,7 +44,7 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE/) 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge\_shield)  
 
-[![Quality Gate Status](https://sonarcloud.io/api/project\_badges/measure?project=yurake\_k8s-3tier-webapp\&metric=alert\_status)](https://sonarcloud.io/organizations/yurak/projects) 
+See also [sonarcloud](SONARCLOUD.md)
 ***
 
 | Tier |    Name    |                Description               |
@@ -166,3 +166,7 @@ k8s-3tier-webapp is licensed under the MIT License. See [LICENSE](LICENSE/) for 
 3. Commit your changes
 4. Rebase your local changes against the [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
 5. Create new Pull Request
+
+## Security
+
+[Security](SECURITY.md)
