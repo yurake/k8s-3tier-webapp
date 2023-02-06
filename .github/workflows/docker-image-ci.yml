@@ -67,6 +67,8 @@ jobs:
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Build image - mysql
         working-directory: ./kubernetes/mysql
