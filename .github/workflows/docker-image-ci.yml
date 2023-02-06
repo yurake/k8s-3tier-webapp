@@ -46,9 +46,9 @@ jobs:
       - name: setup docker push actions
         run: |
           if [[ github.event_name == 'push' ]]; then
-            echo "PUSH='true'" >> $GITHUB_ENV
+            echo "PUSH=true" >> $GITHUB_ENV
           else
-            echo "PUSH='false'" >> $GITHUB_ENV
+            echo "PUSH=false" >> $GITHUB_ENV
           fi
 
       - name: docker login
