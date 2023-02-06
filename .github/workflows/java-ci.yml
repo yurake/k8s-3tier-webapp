@@ -160,8 +160,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          file: src/main/docker/Dockerfile.jvm
-          context: ./application/jaxrs-activemq-quarkus
+          file: application/jaxrs-activemq-quarkus/src/main/docker/Dockerfile.jvm
+          context: application/jaxrs-activemq-quarkus
           push: ${{ env.PUSH }}
           tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-activemq-quarkus:latest
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -777,8 +777,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          file: src/main/docker/Dockerfile.native
-          context: ./application/jaxrs-kafka-quarkus
+          file: application/jaxrs-kafka-quarkus/src/main/docker/Dockerfile.native
+          context: application/jaxrs-kafka-quarkus
           push: ${{ env.PUSH }}
           tags: ${{ secrets.DOCKERHUB_USER }}/jaxrs-kafka-quarkus:latest
           cache-from: type=local,src=/tmp/.buildx-cache
