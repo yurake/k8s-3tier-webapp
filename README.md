@@ -44,6 +44,7 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge\_shield)  
 
 [![AccessLint](https://img.shields.io/badge/AccessLint-enabled-blue?style=flat)](https://accesslint.com/accounts/yurake/projects/k8s-3tier-webapp)
+[![Datadog](https://img.shields.io/badge/Datadog-enabled-blue?style=flat\&logo=datadog)](https://app.datadoghq.com/ci/test-services)
 [![Debricked](https://img.shields.io/badge/Debricked-enabled-blue?style=flat)](https://debricked.com/app/en/repository/40176)
 [![GitBook](https://img.shields.io/badge/GitBook-enabled-blue?style=flat\&logo=gitbook)](https://www.gitbook.com)
 [![Gitpod](https://img.shields.io/badge/Gitpod-ready-blue?style=flat\&logo=gitpod)](https://gitpod.io/#https://github.com/yurake/k8s-3tier-webapp) 
