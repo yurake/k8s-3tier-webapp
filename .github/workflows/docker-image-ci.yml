@@ -62,7 +62,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./kubernetes/nginx
-          push: ${PUSH}
+          push: ${{ env.PUSH }}
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest
           build-args: |
             VCS_REF=${VCS_REF}
