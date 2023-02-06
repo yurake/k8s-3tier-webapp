@@ -16,7 +16,7 @@ jobs:
         run: echo "SOURCE_PROJECT=$(find . -name "pom.xml" | grep -v -e target -e src | wc -l | tr -d ' ')" >> $GITHUB_ENV
       - name: get java-ci.yml
         working-directory: ./.github/workflows
-        run: echo "JAVACI_PROJECT=$(grep verify java-ci.yml | wc -l | tr -d ' ')" >> $GITHUB_ENV
+        run: echo "JAVACI_PROJECT=$(grep "mvnw -B" java-ci.yml | wc -l | tr -d ' ')" >> $GITHUB_ENV
       - name: check java-ci.yml
         run: |
           echo CURRENT: ${SOURCE_PROJECT}

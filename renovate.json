@@ -20,7 +20,7 @@
         "actions/upload-artifact",
         "actions/download-artifact",
         "actions/setup-node",
-        "brpaz/hadolint-action"
+        "hadolint/hadolint-action"
       ],
       "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?"
     }
