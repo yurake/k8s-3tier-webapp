@@ -89,7 +89,6 @@ public class HazelcastMqService implements Runnable {
 			}
 		} catch (IllegalStateException e) {
 			logger.log(Level.SEVERE, "Get Error.", e);
-			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();

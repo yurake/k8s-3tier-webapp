@@ -1,5 +1,6 @@
 package webapp.tier.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,12 +39,11 @@ public class MemcachedService {
 		return new MemCachedClient();
 	}
 
-	public MsgBean setMsg(MemCachedClient mcc) {
+	public MsgBean setMsg(MemCachedClient mcc) throws NoSuchAlgorithmException {
 
-		MsgBean msgbean = null;
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message);
 		String errormsg = "Set Error.";
 		try {
-			msgbean = new MsgBean(CreateId.createid(), message);
 			Objects.requireNonNull(msgbean);
 			boolean resultsetid = mcc.set("id", String.valueOf(msgbean.getId()));
 			boolean resultsetmsg = mcc.set("msg", msgbean.getMessage());
