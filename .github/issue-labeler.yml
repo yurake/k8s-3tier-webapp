@@ -5,7 +5,7 @@ docs:
 github-action:
   - "(github action|github-action)"
 java:
-  - "java"
+  - "(java|quarkus)"
 javascript:
   - "(javascript|js)"
 kind:
