@@ -5,7 +5,7 @@ docker:
 docs:
   - "docs"
 github-action:
-  - "github action"
+  - "(github action|github-action)"
 java:
   - "java"
 javascript:
