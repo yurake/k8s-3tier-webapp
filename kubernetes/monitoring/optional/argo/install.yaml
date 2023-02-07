@@ -1319,7 +1319,7 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.name
-          image: quay.io/argoproj/workflow-controller:v3.4.4
+          image: quay.io/argoproj/workflow-controller:v3.4.5
           livenessProbe:
             failureThreshold: 3
             httpGet:
