@@ -12,6 +12,7 @@ on:
       - "**.java"
       - "application/**"
       - ".github/workflows/pmd.yml"
+      - ".github/pmdrule.yml"
 
 permissions:
   contents: read
@@ -24,6 +25,7 @@ jobs:
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         quarkus_application:
           [
@@ -51,7 +53,7 @@ jobs:
             server-grpc-quarkus,
           ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -61,7 +63,7 @@ jobs:
         id: pmd
         uses: pmd/pmd-github-action@v1
         with:
-          rulesets: "rulesets/java/quickstart.xml"
+          rulesets: "${{ github.workspace }}/.github/pmdrule.xml"
           sourcePath: "application/${{ matrix.quarkus_application }}/src/main/java"
           analyzeModifiedFilesOnly: false
       - name: Upload SARIF file
