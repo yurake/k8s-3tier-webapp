@@ -73,7 +73,7 @@ public class MysqlService implements Database {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Insert Error.", e);
-			throw new SQLException("Insert Error.");
+			throw new SQLException("Insert Error.", e);
 		}
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
@@ -99,7 +99,7 @@ public class MysqlService implements Database {
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Select Errorr.", e);
-			throw new SQLException("Select Error.");
+			throw new SQLException("Select Error.", e);
 		}
 		return msglist;
 	}
@@ -118,7 +118,7 @@ public class MysqlService implements Database {
 			stmt.executeUpdate(deletesql);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Delete Errorr.", e);
-			throw new SQLException("Delete Error.");
+			throw new SQLException("Delete Error.", e);
 		}
 		return "Delete Msg Records";
 	}
