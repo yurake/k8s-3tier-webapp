@@ -76,7 +76,7 @@ public class MemcachedService {
 
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, errormsg, e);
-			throw new WebappServiceException(errormsg);
+			throw new WebappServiceException(errormsg, e);
 		}
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
