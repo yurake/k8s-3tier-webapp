@@ -50,7 +50,7 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Repo Ranger](https://img.shields.io/badge/Repo%20Ranger-enabled-blue?style=flat)](https://reporanger.com/)
 [![Socket](https://img.shields.io/badge/Socket-enabled-blue?style=flat\&logo=socketdotio)](https://socket.dev/dashboard/org/gh/yurake/repo/k8s-3tier-webapp)
 [![Sonatype Lift](https://img.shields.io/badge/Sonatype%20Lift-enabled-blue?style=flat)](https://lift.sonatype.com/results/github.com/yurake/k8s-3tier-webapp)
-[![What The Diff](https://img.shields.io/badge/What%20The%20Diff-enabled-blue?style=flat)](https://app.whatthediff.ai/repository/181164153)
+[![What The Diff](https://img.shields.io/badge/What%20The%20Diff-enabled-blue?style=flat)](https://app.whatthediff.ai/repository/181164153)  
 [![sonarcloud](https://img.shields.io/badge/sonarcloud-enabled-orange?style=flat\&logo=sonarcloud)](https://sonarcloud.io/projects)   
 More details at [sonarcloud](SONARCLOUD.md)
 ***
