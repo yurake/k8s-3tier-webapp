@@ -205,7 +205,7 @@ jobs:
       - name: update quarkus version
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         run: |
-          sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_VERSION/g" README.md
+          sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         uses: peter-evans/create-pull-request@v4
