@@ -130,13 +130,14 @@ jobs:
         working-directory: ./.github/workflows
         run: |
           echo "SOURCE_VERSION=$(grep CHAOS_MESH_VERSION kind-chaos-mesh-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-          echo "SOURCE_DDOC_VERSION=$(grep "kind Version" ../../README.md | cut -d '-' -f 2)" >> $GITHUB_ENV
+          echo "SOURCE_DOC_VERSION=$(grep "kind Version" ../../README.md | cut -d '-' -f 2)" >> $GITHUB_ENV
       - name: check latest tag chaos mesh version
         run: echo "TARGET_VERSION=$(curl -s https://api.github.com/repos/chaos-mesh/chaos-mesh/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
       - name: check diff chaos mesh
         run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
+          echo SOURCE_VERSION: ${SOURCE_VERSION}
+          echo SOURCE_DOC_VERSION: ${SOURCE_DOC_VERSION}
+          echo TARGET_VERSION: ${TARGET_VERSION}
           test "${TARGET_VERSION}" != ""
           if [[ ${SOURCE_VERSION} != ${TARGET_VERSION} ]] || [[ ${SOURCE_DOC_VERSION} != ${TARGET_VERSION} ]]; then
             echo "UNMATCH_VERSION=true" >> $GITHUB_ENV
