@@ -1,0 +1,22 @@
+cicd:
+  - "(cicd|ci/cd)"
+docker:
+  - "(docker|Dockerfile)"
+docs:
+  - "docs"
+github-action:
+  - "github action"
+java:
+  - "java"
+javascript:
+  - "(javascript|js)"
+kind:
+  - "kind"
+kubernetes:
+  - "kubernetes"
+minikube:
+  - "minikube"
+openshift:
+  - "openshift"
+quarkus:
+  - "quarkus"
