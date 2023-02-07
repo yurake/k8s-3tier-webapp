@@ -4,26 +4,31 @@ on:
   push:
     branches:
       - master
-  pull_request:
 
 jobs:
   minikube-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.3.0
-        with:
-          token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
-      - name: check minikube quarkus version
+      - name: check minikube version
         working-directory: ./.github/workflows
         run: |
-          echo "SOURCE_VERSION=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-          echo "TARGET_VERSION=$(curl -s https://api.github.com/repos/kubernetes/minikube/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
+          echo "SOURCE_QUARKUS_VERSION=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_YAML_VERSION=$(grep "minikube-version" minikube-yaml-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_STRESS_VERSION=$(grep "minikube-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_SECURITY_VERSION=$(grep "minikube-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_DOC_VERSION=$(grep "Minikube Version" ../../README.md | cut -d '-' -f 2)" >> $GITHUB_ENV
+          echo "TARGET_MINIKUBE_VERSION=$(curl -s https://api.github.com/repos/kubernetes/minikube/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
       - name: check current diff
         run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test "${TARGET_VERSION}" != ""
-          if [[ ${SOURCE_VERSION} != ${TARGET_VERSION} ]]; then
+          echo SOURCE_QUARKUS_VERSION: ${SOURCE_QUARKUS_VERSION}
+          echo SOURCE_YAML_VERSION: ${SOURCE_YAML_VERSION}
+          echo SOURCE_STRESS_VERSION: ${SOURCE_STRESS_VERSION}
+          echo SOURCE_SECURITY_VERSION: ${SOURCE_SECURITY_VERSION}
+          echo SOURCE_DOC_VERSION: ${SOURCE_DOC_VERSION}
+          echo TARGET_MINIKUBE_VERSION: ${TARGET_MINIKUBE_VERSION}
+          test "${TARGET_MINIKUBE_VERSION}" != ""
+          if [[ ${SOURCE_QUARKUS_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_YAML_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_STRESS_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_SECURITY_VERSION} != ${TARGET_MINIKUBE_VERSION} ]] || [[ ${SOURCE_DOC_VERSION} != ${TARGET_MINIKUBE_VERSION} ]]; then
             echo "UNMATCH_VERSION=true" >> $GITHUB_ENV
             echo "Unmatched."
           fi
@@ -43,72 +48,170 @@ jobs:
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         working-directory: ./.github/workflows
         run: |
-          sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" minikube-quarkus-ci.yml
-          echo "SOURCE_VERSION_UPDATED=$(grep "minikube-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check updated diff
-        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        working-directory: ./.github/workflows
-        run: |
-          echo CURRENT_UPDATED: ${SOURCE_VERSION_UPDATED}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION_UPDATED} = ${TARGET_VERSION}
+          sed -i -e "s/$SOURCE_QUARKUS_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-quarkus-ci.yml
+          sed -i -e "s/$SOURCE_YAML_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-yaml-ci.yml
+          sed -i -e "s/$SOURCE_STRESS_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-stress-ci.yml
+          sed -i -e "s/$SOURCE_SECURITY_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-security-ci.yml
+          sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_MINIKUBE_VERSION/g" ../../README.md
       - name: Add, commit, push, and create PR
-        # if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
+        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-minikube
+          title: check-for-update-minikube automated change
+          commit-message: check-for-update-minikube automated change
+          labels: cicd
+          delete-branch: true
 
   kubernetes-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.3.0
-      - name: check current kubernetes quarkus version
+      - name: check kubernetes version
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check latest tag kubernetes version
-        run: echo "TARGET_VERSION=$(curl -s https://api.github.com/repos/kubernetes/kubernetes/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
-      - name: check diff kubernetes
         run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube yaml version
+          echo "SOURCE_QUARKUS_VERSION=$(grep "k8s-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_YAML_VERSION=$(grep "k8s-version" minikube-yaml-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_STRESS_VERSION=$(grep "k8s-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_SECURITY_VERSION=$(grep "k8s-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_DOC_VERSION=$(grep "Kubernetes Version" ../../README.md | cut -d '-' -f 2)" >> $GITHUB_ENV
+          echo "TARGET_KUBERNETES_VERSION=$(curl -s https://api.github.com/repos/kubernetes/kubernetes/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
+      - name: check current diff
+        run: |
+          echo SOURCE_QUARKUS_VERSION: ${SOURCE_QUARKUS_VERSION}
+          echo SOURCE_YAML_VERSION: ${SOURCE_YAML_VERSION}
+          echo SOURCE_STRESS_VERSION: ${SOURCE_STRESS_VERSION}
+          echo SOURCE_SECURITY_VERSION: ${SOURCE_SECURITY_VERSION}
+          echo SOURCE_DOC_VERSION: ${SOURCE_DOC_VERSION}
+          echo TARGET_KUBERNETES_VERSION: ${TARGET_KUBERNETES_VERSION}
+          test "${TARGET_KUBERNETES_VERSION}" != ""
+          if [[ ${SOURCE_QUARKUS_VERSION} != ${TARGET_KUBERNETES_VERSION} ]] || [[ ${SOURCE_YAML_VERSION} != ${TARGET_KUBERNETES_VERSION} ]] || [[ ${SOURCE_STRESS_VERSION} != ${TARGET_KUBERNETES_VERSION} ]] || [[ ${SOURCE_SECURITY_VERSION} != ${TARGET_KUBERNETES_VERSION} ]] || [[ ${SOURCE_DOC_VERSION} != ${TARGET_KUBERNETES_VERSION} ]]; then
+            echo "UNMATCH_VERSION=true" >> $GITHUB_ENV
+            echo "Unmatched."
+          fi
+      - name: Set whether kubernetes branch is already existing to GITHUB_ENV
+        run: |
+          branch_is_existing=$(
+            git fetch origin actions/check-for-update-kubernetes &&
+            echo true ||
+            echo false
+          )
+          echo "BRANCH_IS_EXISTING=${branch_is_existing}" >> $GITHUB_ENV
+      - name: check env
+        run: |
+          echo UNMATCH_VERSION: ${UNMATCH_VERSION}
+          echo BRANCH_IS_EXISTING: ${BRANCH_IS_EXISTING}
+      - name: update kubernetes version
+        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-yaml-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff yaml
         run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube stress version
-        working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff stress
-        run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
-      - name: check current minikube security version
-        working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep "k8s-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-      - name: check diff security
-        run: |
-          echo CURRENT: ${SOURCE_VERSION}
-          echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
+          sed -i -e "s/$SOURCE_QUARKUS_VERSION/$TARGET_KUBERNETES_VERSION/g" minikube-quarkus-ci.yml
+          sed -i -e "s/$SOURCE_YAML_VERSION/$TARGET_KUBERNETES_VERSION/g" minikube-yaml-ci.yml
+          sed -i -e "s/$SOURCE_STRESS_VERSION/$TARGET_KUBERNETES_VERSION/g" minikube-stress-ci.yml
+          sed -i -e "s/$SOURCE_SECURITY_VERSION/$TARGET_KUBERNETES_VERSION/g" minikube-security-ci.yml
+          sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_KUBERNETES_VERSION/g" ../../README.md
+      - name: Add, commit, push, and create PR
+        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
+          branch: actions/check-for-update-kubernetes
+          title: check-for-update-kubernetes automated change
+          commit-message: check-for-update-kubernetes automated change
+          labels: cicd
+          delete-branch: true
 
   chaos-mesh-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.3.0
-      - name: check current chaos mesh version
+      - name: check current chaos-mesh version
         working-directory: ./.github/workflows
-        run: echo "SOURCE_VERSION=$(grep CHAOS_MESH_VERSION kind-chaos-mesh-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+        run: |
+          echo "SOURCE_VERSION=$(grep CHAOS_MESH_VERSION kind-chaos-mesh-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_DDOC_VERSION=$(grep "kind Version" ../../README.md | cut -d '-' -f 2)" >> $GITHUB_ENV
       - name: check latest tag chaos mesh version
         run: echo "TARGET_VERSION=$(curl -s https://api.github.com/repos/chaos-mesh/chaos-mesh/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
       - name: check diff chaos mesh
         run: |
           echo CURRENT: ${SOURCE_VERSION}
           echo TARGET: ${TARGET_VERSION}
-          test ${SOURCE_VERSION} = ${TARGET_VERSION}
+          test "${TARGET_VERSION}" != ""
+          if [[ ${SOURCE_VERSION} != ${TARGET_VERSION} ]] || [[ ${SOURCE_DOC_VERSION} != ${TARGET_VERSION} ]]; then
+            echo "UNMATCH_VERSION=true" >> $GITHUB_ENV
+            echo "Unmatched."
+          fi
+      - name: Set whether chaos-mesh branch is already existing to GITHUB_ENV
+        run: |
+          branch_is_existing=$(
+            git fetch origin actions/check-for-update-chaos-mesh &&
+            echo true ||
+            echo false
+          )
+          echo "BRANCH_IS_EXISTING=${branch_is_existing}" >> $GITHUB_ENV
+      - name: check env
+        run: |
+          echo UNMATCH_VERSION: ${UNMATCH_VERSION}
+          echo BRANCH_IS_EXISTING: ${BRANCH_IS_EXISTING}
+      - name: update chaos-mesh version
+        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
+        working-directory: ./.github/workflows
+        run: |
+          sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" kind-chaos-mesh-ci.yml
+          sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_VERSION/g" ../../README.md
+      - name: Add, commit, push, and create PR
+        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
+          branch: actions/check-for-update-chaos-mesh
+          title: check-for-update-chaos-mesh automated change
+          commit-message: check-for-update-chaos-mesh automated change
+          labels: cicd
+          delete-branch: true
+
+  quarkus-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - name: check current quarkus version
+        run: |
+          echo "SOURCE_VERSION=$(grep "Quarkus Version" ../../README.md | cut -d '-' -f 2)" >> $GITHUB_ENV
+      - name: check latest tag quarkus version
+        run: echo "TARGET_VERSION=$(grep /quarkus.platform.version application/parent-pom/pom.xml | cut -d '>' -f 2 | cut -d '.' -f 1-3)" >> $GITHUB_ENV
+      - name: check diff quarkus mesh
+        run: |
+          echo SOURCE_VERSION: ${SOURCE_VERSION}
+          echo TARGET_VERSION: ${TARGET_VERSION}
+          test "${TARGET_VERSION}" != ""
+          if [[ ${SOURCE_VERSION} != ${TARGET_VERSION} ]]; then
+            echo "UNMATCH_VERSION=true" >> $GITHUB_ENV
+            echo "Unmatched."
+          fi
+      - name: Set whether quarkus branch is already existing to GITHUB_ENV
+        run: |
+          branch_is_existing=$(
+            git fetch origin actions/check-for-update-quarkus &&
+            echo true ||
+            echo false
+          )
+          echo "BRANCH_IS_EXISTING=${branch_is_existing}" >> $GITHUB_ENV
+      - name: check env
+        run: |
+          echo UNMATCH_VERSION: ${UNMATCH_VERSION}
+          echo BRANCH_IS_EXISTING: ${BRANCH_IS_EXISTING}
+      - name: update quarkus version
+        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
+        run: |
+          sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_VERSION/g" README.md
+      - name: Add, commit, push, and create PR
+        if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
+          branch: actions/check-for-update-quarkus
+          title: check-for-update-quarkus automated change
+          commit-message: check-for-update-quarkus automated change
+          labels: cicd
+          delete-branch: true

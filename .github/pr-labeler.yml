@@ -1,0 +1,23 @@
+cicd:
+  - .github/**/*
+docs:
+  - docs/**/*
+  - "**/*.md"
+github-action:
+  - .github/**/*
+java:
+  - application/**/*
+  - "**/*.java"
+javascript:
+  - application/**/*.js
+  - "**/*.js"
+kubernetes:
+  - kubernetes/**/*
+quarkus:
+  - application/*-quarkus/*
+docker:
+  - "**/Dockerfile"
+kind:
+  - "**/kind-*"
+minikube:
+  - "**/minikube-*"
