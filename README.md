@@ -24,7 +24,7 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Snyk](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/snyk-infrastructure.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/snyk-infrastructure.yml) 
 [![Sysdig](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/sysdig-scan.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/sysdig-scan.yml) 
 [![Kubesec](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kubesec.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kubesec.yml) 
-[![Codacy Security Scan](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml) 
+[![Codacy](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml) 
 [![pmd](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pmd.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pmd.yml) 
 [![pages-build-deployment](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pages/pages-build-deployment)  
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2844382aa110487e94bba8369267476e)](https://www.codacy.com/gh/yurake/k8s-3tier-webapp/dashboard?utm\_source=github.com\&utm\_medium=referral\&utm\_content=yurake/k8s-3tier-webapp\&utm\_campaign=Badge\_Grade) 
