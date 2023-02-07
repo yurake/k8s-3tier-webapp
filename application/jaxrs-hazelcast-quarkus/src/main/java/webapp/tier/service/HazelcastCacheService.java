@@ -19,7 +19,6 @@ import webapp.tier.util.CreateId;
 @ApplicationScoped
 public class HazelcastCacheService {
 
-	private static MsgBean errormsg = new MsgBean(0, "Unexpected Error");
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	@ConfigProperty(name = "common.message")
@@ -29,10 +28,8 @@ public class HazelcastCacheService {
 	String cachename;
 
 	public MsgBean setMsg(HazelcastInstance client) throws NoSuchAlgorithmException {
-		MsgBean msgbean = errormsg;
-
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Set");
 		try {
-			msgbean = new MsgBean(CreateId.createid(), message, "Set");
 			Map<Integer, String> map = client.getMap(cachename);
 			map.put(msgbean.getId(), msgbean.getMessage());
 		} finally {

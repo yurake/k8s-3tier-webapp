@@ -79,16 +79,14 @@ public class ActiveMqService implements Messaging, Runnable {
 
 	@Override
 	public MsgBean getMsg() throws RuntimeException {
-		MsgBean msgbean = null;
+		MsgBean msgbean = new MsgBean(0, "No Data.", "Get");
 		try (JMSContext context = connectionFactory
 				.createContext(Session.AUTO_ACKNOWLEDGE);
 				JMSConsumer consumer = context
 						.createConsumer(context.createQueue(queuename))) {
 			String resp = consumer.receiveBody(String.class);
 
-			if (Objects.isNull(resp)) {
-				msgbean = new MsgBean(0, "No Data.", "Get");
-			} else {
+			if (!Objects.isNull(resp)) {
 				msgbean = MsgUtils.splitBody(resp, splitkey);
 				msgbean.setFullmsg("Get");
 			}

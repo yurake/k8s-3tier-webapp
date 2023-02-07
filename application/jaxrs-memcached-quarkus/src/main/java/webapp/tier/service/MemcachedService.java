@@ -64,15 +64,12 @@ public class MemcachedService {
 	}
 
 	public MsgBean getMsg(MemCachedClient mcc) throws RuntimeException {
-		MsgBean msgbean = null;
-		String getid = null;
+		MsgBean msgbean = new MsgBean(0, "No Data.", "Get");
 		String errormsg = "Get Error.";
 
 		try {
-			getid = (String) mcc.get("id");
-			if (Objects.isNull(getid) || getid.isEmpty()) {
-				msgbean = new MsgBean(0, "No Data.", "Get");
-			} else {
+			String getid = (String) mcc.get("id");
+			if (!Objects.isNull(getid) && !getid.isEmpty()) {
 				msgbean = new MsgBean(MsgUtils.stringToInt(getid),
 						(String) mcc.get("msg"), "Get");
 			}
