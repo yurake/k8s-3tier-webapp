@@ -1,5 +1,3 @@
-cicd:
-  - "(cicd|ci/cd)"
 docker:
   - "(docker|Dockerfile)"
 docs:
