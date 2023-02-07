@@ -27,7 +27,7 @@ public class RedisResource {
 			return Response.ok().entity(svc.putMsg()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Put Error.", e);
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity("Put Error.").build();
 		}
 	}
 
@@ -38,7 +38,7 @@ public class RedisResource {
 			return Response.ok().entity(svc.getMsgList()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Get Error.", e);
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity("Get Error.").build();
 		}
 	}
 
@@ -49,7 +49,7 @@ public class RedisResource {
 			return Response.ok().entity(svc.delete()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Delete Error.", e);
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity("Delete Error.").build();
 		}
 
 	}
@@ -61,7 +61,7 @@ public class RedisResource {
 			return Response.ok().entity(svc.publish()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Publish Error.", e);
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity("Publish Error.").build();
 		}
 	}
 }
