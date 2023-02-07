@@ -4,6 +4,8 @@ import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+import java.security.NoSuchAlgorithmException;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 
@@ -18,7 +20,7 @@ class MemcachedResourceErrorTest {
 	MemcachedService svc;
 
 	@Test
-	void testSetError() {
+	void testSetError() throws NoSuchAlgorithmException {
 		try {
 			when(svc.setMsg(ArgumentMatchers.any())).thenThrow(new RuntimeException());
 		} catch (RuntimeException e) {
