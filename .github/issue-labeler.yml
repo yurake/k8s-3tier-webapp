@@ -20,3 +20,7 @@ openshift:
   - "openshift"
 quarkus:
   - "quarkus"
+security vulnerability:
+  - "vulnerability"
+bug:
+  - "(bug|error|Exception)"

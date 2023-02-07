@@ -2,6 +2,10 @@ name: K8S Security Config Watch
 
 on:
   pull_request:
+    paths:
+      - "kubernetes/**"
+      - "!kubernetes/bin/**"
+      - ".github/workflows/k8s-security-config-watch.yml"
 
 jobs:
   validation:
