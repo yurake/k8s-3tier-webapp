@@ -70,6 +70,18 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
+      - name: Run Snyk to check Docker image for vulnerabilities - nginx
+        continue-on-error: true
+        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ secrets.DOCKERHUB_USER }}/nginx
+      - name: Upload result to GitHub Code Scanning - nginx
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+
       - name: Build and push - mysql
         uses: docker/build-push-action@v4
         with:
@@ -81,6 +93,18 @@ jobs:
             BUILD_DATE=${BUILD_DATE}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Run Snyk to check Docker image for vulnerabilities - mysql
+        continue-on-error: true
+        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ secrets.DOCKERHUB_USER }}/mysql
+      - name: Upload result to GitHub Code Scanning - mysql
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
 
       - name: Build and push - postgres
         uses: docker/build-push-action@v4
@@ -94,6 +118,18 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
+      - name: Run Snyk to check Docker image for vulnerabilities - postgres
+        continue-on-error: true
+        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ secrets.DOCKERHUB_USER }}/postgres
+      - name: Upload result to GitHub Code Scanning - postgres
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+
       - name: Build and push - mongodb
         uses: docker/build-push-action@v4
         with:
@@ -105,6 +141,18 @@ jobs:
             BUILD_DATE=${BUILD_DATE}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Run Snyk to check Docker image for vulnerabilities - mongodb
+        continue-on-error: true
+        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ secrets.DOCKERHUB_USER }}/mongodb
+      - name: Upload result to GitHub Code Scanning - mongodb
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
 
       - name: Build and push - cassandra
         uses: docker/build-push-action@v4
@@ -118,6 +166,18 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
+      - name: Run Snyk to check Docker image for vulnerabilities - cassandra
+        continue-on-error: true
+        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ secrets.DOCKERHUB_USER }}/cassandra
+      - name: Upload result to GitHub Code Scanning - cassandra
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+
       - name: Build and push - rabbitmq
         uses: docker/build-push-action@v4
         with:
@@ -129,6 +189,18 @@ jobs:
             BUILD_DATE=${BUILD_DATE}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Run Snyk to check Docker image for vulnerabilities - rabbitmq
+        continue-on-error: true
+        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ secrets.DOCKERHUB_USER }}/rabbitmq
+      - name: Upload result to GitHub Code Scanning - rabbitmq
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
 
       - name: Build and push - jenkins
         uses: docker/build-push-action@v4
@@ -142,6 +214,18 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
+      - name: Run Snyk to check Docker image for vulnerabilities - jenkins
+        continue-on-error: true
+        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ secrets.DOCKERHUB_USER }}/jenkins
+      - name: Upload result to GitHub Code Scanning - jenkins
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+
       - name: Build and push - ab
         uses: docker/build-push-action@v4
         with:
@@ -154,6 +238,18 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
+      - name: Run Snyk to check Docker image for vulnerabilities - ab
+        continue-on-error: true
+        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ secrets.DOCKERHUB_USER }}/ab
+      - name: Upload result to GitHub Code Scanning - ab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+
       - name: Build and push - postmannewman-quarkus
         uses: docker/build-push-action@v4
         with:
@@ -165,3 +261,15 @@ jobs:
             BUILD_DATE=${BUILD_DATE}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Run Snyk to check Docker image for vulnerabilities - postmannewman-quarkus
+        continue-on-error: true
+        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ secrets.DOCKERHUB_USER }}/postmannewman-quarkus
+      - name: Upload result to GitHub Code Scanning - postmannewman-quarkus
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
