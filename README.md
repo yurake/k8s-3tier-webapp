@@ -22,7 +22,6 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Dependency Review](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dependency-review.yml) 
 [![DevSkim](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/devskim.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/devskim.yml) 
 [![Snyk](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/snyk-infrastructure.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/snyk-infrastructure.yml) 
-[![Sysdig](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/sysdig-scan.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/sysdig-scan.yml) 
 [![Kubesec](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kubesec.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kubesec.yml) 
 [![Codacy](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml) 
 [![pmd](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pmd.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pmd.yml) 
