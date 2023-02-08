@@ -102,7 +102,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKERHUB_USER }}/mysql
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high --file=kubernetes/mysql/Dockerfile
       - name: Upload result to GitHub Code Scanning - mysql
         uses: github/codeql-action/upload-sarif@v2
         with:
@@ -127,7 +127,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKERHUB_USER }}/postgres
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high --file=kubernetes/postgres/Dockerfile
       - name: Upload result to GitHub Code Scanning - postgres
         uses: github/codeql-action/upload-sarif@v2
         with:
@@ -152,7 +152,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKERHUB_USER }}/mongodb
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high --file=kubernetes/mongodb/Dockerfile
       - name: Upload result to GitHub Code Scanning - mongodb
         uses: github/codeql-action/upload-sarif@v2
         with:
@@ -177,7 +177,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKERHUB_USER }}/cassandra
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high --file=kubernetes/cassandra/Dockerfile
       - name: Upload result to GitHub Code Scanning - cassandra
         uses: github/codeql-action/upload-sarif@v2
         with:
@@ -202,7 +202,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKERHUB_USER }}/rabbitmq
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high --file=kubernetes/rabbitmq/Dockerfile
       - name: Upload result to GitHub Code Scanning - rabbitmq
         uses: github/codeql-action/upload-sarif@v2
         with:
@@ -227,7 +227,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKERHUB_USER }}/jenkins
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high --file=kubernetes/monitoring/jenkins/Dockerfile
       - name: Upload result to GitHub Code Scanning - jenkins
         uses: github/codeql-action/upload-sarif@v2
         with:
@@ -252,7 +252,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKERHUB_USER }}/ab
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high --file=kubernetes/monitoring/test/ab/Dockerfile
       - name: Upload result to GitHub Code Scanning - ab
         uses: github/codeql-action/upload-sarif@v2
         with:
@@ -277,7 +277,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKERHUB_USER }}/postmannewman-quarkus
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high --file=kubernetes/monitoring/test/postmannewman/quarkus/Dockerfile
       - name: Upload result to GitHub Code Scanning - postmannewman-quarkus
         uses: github/codeql-action/upload-sarif@v2
         with:
