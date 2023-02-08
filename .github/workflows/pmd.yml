@@ -13,6 +13,14 @@ on:
       - "application/**"
       - ".github/workflows/pmd.yml"
       - ".github/pmdrule.yml"
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["master"]
+    paths:
+      - "**.java"
+      - "application/**"
+      - ".github/workflows/pmd.yml"
+      - ".github/pmdrule.yml"
 
 permissions:
   contents: read
