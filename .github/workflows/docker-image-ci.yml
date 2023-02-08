@@ -267,3 +267,5 @@ jobs:
 
       - name: Upload result to GitHub Code Scanning - postmannewman-quarkus
         uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ./
