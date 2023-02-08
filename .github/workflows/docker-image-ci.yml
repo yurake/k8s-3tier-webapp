@@ -77,7 +77,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKERHUB_USER }}/nginx
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high --file=Dockerfile
       - name: Upload result to GitHub Code Scanning - nginx
         uses: github/codeql-action/upload-sarif@v2
         with:
