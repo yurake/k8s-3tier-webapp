@@ -36,7 +36,7 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![DeepSource Resluved Issues](https://deepsource.io/gh/yurake/k8s-3tier-webapp.svg/?label=resolved+issues\&show\_trend=true\&token=Y64jIS9a54isgV4hi4\_uuerZ)](https://deepsource.io/gh/yurake/k8s-3tier-webapp/?ref=repository-badge) 
 [![Cypress](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/detailed/7rgxn6/master\&style=flat\&logo=cypress)](https://dashboard.cypress.io/projects/7rgxn6/runs)   
 [![Support JVM Version](https://img.shields.io/badge/JVM-17-yellow.svg?style=flat\&logo=Java)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22) 
-[![Support Quarkus Version](https://img.shields.io/badge/Quarkus-2.16.1-yellow.svg?style=flat\&logo=Quarkus)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22) 
+[![Support Quarkus Version](https://img.shields.io/badge/Quarkus-2.16.2-yellow.svg?style=flat\&logo=Quarkus)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22) 
 [![Support Kubernetes Version](https://img.shields.io/badge/Kubernetes-1.26.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22) 
 [![Support Minikube Version](https://img.shields.io/badge/Minikube-1.29.0-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22) 
 [![Support kind Version](https://img.shields.io/badge/kind-2.5.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22kind+CI%22) 
