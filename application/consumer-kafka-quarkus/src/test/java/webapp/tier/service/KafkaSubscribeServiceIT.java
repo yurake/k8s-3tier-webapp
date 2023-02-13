@@ -6,7 +6,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
-import io.quarkus.test.junit.mockito.InjectMock;
 import io.quarkus.test.kafka.InjectKafkaCompanion;
 import io.smallrye.reactive.messaging.kafka.companion.ConsumerTask;
 import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
@@ -15,9 +14,6 @@ import io.smallrye.reactive.messaging.kafka.companion.ProducerTask;
 @QuarkusIntegrationTest
 class KafkaSubscribeServiceIT extends KafkaSubscribeBase {
 	
-	@InjectMock
-	KafkaSubscribeService svc;
-
 	@InjectKafkaCompanion
 	KafkaCompanion companion;
 
@@ -48,6 +44,6 @@ class KafkaSubscribeServiceIT extends KafkaSubscribeBase {
 	
 	@Override
 	KafkaSubscribeService getSvc() {
-		return this.svc;
+		return new KafkaSubscribeService();
 	}
 }
