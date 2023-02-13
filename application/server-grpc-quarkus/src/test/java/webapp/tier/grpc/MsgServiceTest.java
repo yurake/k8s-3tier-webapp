@@ -36,7 +36,7 @@ class MsgServiceTest {
 	}
 
 	@Test
-	public void testGetMsg() {
+	void testGetMsg() {
 		MsgReply reply = MutinyMsgGrpc.newMutinyStub(channel)
 				.getMsg(Empty.newBuilder().build())
 				.await().atMost(Duration.ofSeconds(5));
