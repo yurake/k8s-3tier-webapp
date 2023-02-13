@@ -30,7 +30,7 @@ jobs:
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/iac@806182742461562b67788a64410098c9d9b96adb
         continue-on-error: true
