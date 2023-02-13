@@ -65,7 +65,6 @@ public class HazelcastMqService implements Runnable {
 		} catch (IllegalStateException | InterruptedException
 				| NoSuchAlgorithmException e) {
 			logger.log(Level.SEVERE, "Put Error.", e);
-			e.printStackTrace();
 			Thread.currentThread().interrupt();
 		} finally {
 			if (client != null) {
@@ -90,7 +89,6 @@ public class HazelcastMqService implements Runnable {
 			}
 		} catch (IllegalStateException e) {
 			logger.log(Level.SEVERE, "Get Error.", e);
-			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();
@@ -110,7 +108,6 @@ public class HazelcastMqService implements Runnable {
 			topic.publish(body);
 		} catch (IllegalStateException | NoSuchAlgorithmException e) {
 			logger.log(Level.SEVERE, "Publish Error.", e);
-			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();

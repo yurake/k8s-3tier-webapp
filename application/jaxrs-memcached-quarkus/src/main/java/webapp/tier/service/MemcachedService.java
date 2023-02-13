@@ -1,5 +1,6 @@
 package webapp.tier.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,12 +39,11 @@ public class MemcachedService {
 		return new MemCachedClient();
 	}
 
-	public MsgBean setMsg(MemCachedClient mcc) {
+	public MsgBean setMsg(MemCachedClient mcc) throws NoSuchAlgorithmException {
 
-		MsgBean msgbean = null;
+		MsgBean msgbean = new MsgBean(CreateId.createid(), message);
 		String errormsg = "Set Error.";
 		try {
-			msgbean = new MsgBean(CreateId.createid(), message);
 			Objects.requireNonNull(msgbean);
 			boolean resultsetid = mcc.set("id", String.valueOf(msgbean.getId()));
 			boolean resultsetmsg = mcc.set("msg", msgbean.getMessage());
@@ -64,22 +64,19 @@ public class MemcachedService {
 	}
 
 	public MsgBean getMsg(MemCachedClient mcc) throws RuntimeException {
-		MsgBean msgbean = null;
-		String getid = null;
+		MsgBean msgbean = new MsgBean(0, "No Data.", "Get");
 		String errormsg = "Get Error.";
 
 		try {
-			getid = (String) mcc.get("id");
-			if (Objects.isNull(getid) || getid.isEmpty()) {
-				msgbean = new MsgBean(0, "No Data.", "Get");
-			} else {
+			String getid = (String) mcc.get("id");
+			if (!Objects.isNull(getid) && !getid.isEmpty()) {
 				msgbean = new MsgBean(MsgUtils.stringToInt(getid),
 						(String) mcc.get("msg"), "Get");
 			}
 
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, errormsg, e);
-			throw new WebappServiceException(errormsg);
+			throw new WebappServiceException(errormsg, e);
 		}
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
