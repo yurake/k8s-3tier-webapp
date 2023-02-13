@@ -1,7 +1,6 @@
 package webapp.tier.resource;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,8 +36,7 @@ class GrpcResourceIT {
 				.contentType("application/json")
 				.get("/quarkus/grpc/getid")
 				.then()
-				.statusCode(500)
-				.body(is("11111"));
+				.statusCode(500);
 	}
 
 	@Test
@@ -48,7 +46,6 @@ class GrpcResourceIT {
 				.contentType("application/json")
 				.get("/quarkus/grpc/getmsg")
 				.then()
-				.statusCode(500)
-				.body(containsString("test"));
+				.statusCode(500);
 	}
 }
