@@ -297,7 +297,7 @@ jobs:
         working-directory: ./application/${{ matrix.application }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw -B verify --settings ../.m2/settings.xml -Pnative -Dquarkus-profile=test -Dquarkus.test.native-image-profile=test -Dquarkus.test.integration-test-profile=test
+        run: ./mvnw -B verify --settings ../.m2/settings.xml -Pnative
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
