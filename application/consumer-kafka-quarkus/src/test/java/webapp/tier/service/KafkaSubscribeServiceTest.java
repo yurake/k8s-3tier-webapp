@@ -1,8 +1,7 @@
+
 package webapp.tier.service;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import javax.inject.Inject;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.Test;
@@ -17,17 +16,16 @@ import io.smallrye.reactive.messaging.kafka.companion.ProducerTask;
 
 @QuarkusTest
 @QuarkusTestResource(KafkaCompanionResource.class)
-class KafkaSubscribeServiceTest {
-	@Inject
-	KafkaSubscribeService svc;
+class KafkaSubscribeServiceTest extends KafkaSubscribeBase {
 
 	@InjectKafkaCompanion
 	KafkaCompanion companion;
 
 	@Test
+	@Override
 	void testProcess() {
 		try {
-			svc.process("Test");
+			getSvc().process("Test");
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -35,6 +33,7 @@ class KafkaSubscribeServiceTest {
 	}
 
 	@Test
+	@Override
 	void testProcessKafkaCompanion() {
 		ProducerTask producer = companion.produceStrings()
 				.usingGenerator(i -> new ProducerRecord<>("message", "Test Message"));
@@ -45,5 +44,10 @@ class KafkaSubscribeServiceTest {
 		consumer.awaitCompletion();
 		producer.close();
 		assertEquals(10, consumer.count());
+	}
+
+	@Override
+	KafkaSubscribeService getSvc() {
+		return super.svc;
 	}
 }
