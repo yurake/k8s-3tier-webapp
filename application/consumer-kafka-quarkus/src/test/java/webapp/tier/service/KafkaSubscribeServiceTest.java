@@ -3,6 +3,8 @@ package webapp.tier.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import javax.inject.Inject;
+
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +19,9 @@ import io.smallrye.reactive.messaging.kafka.companion.ProducerTask;
 @QuarkusTest
 @QuarkusTestResource(KafkaCompanionResource.class)
 class KafkaSubscribeServiceTest extends KafkaSubscribeBase {
+
+	@Inject
+	KafkaSubscribeService svc;
 
 	@InjectKafkaCompanion
 	KafkaCompanion companion;
@@ -48,6 +53,6 @@ class KafkaSubscribeServiceTest extends KafkaSubscribeBase {
 
 	@Override
 	KafkaSubscribeService getSvc() {
-		return super.svc;
+		return this.svc;
 	}
 }
