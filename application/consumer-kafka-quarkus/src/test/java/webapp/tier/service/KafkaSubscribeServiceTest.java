@@ -18,7 +18,7 @@ import io.smallrye.reactive.messaging.kafka.companion.ProducerTask;
 
 @QuarkusTest
 @QuarkusTestResource(KafkaCompanionResource.class)
-class KafkaSubscribeServiceTest extends KafkaSubscribeBase {
+class KafkaSubscribeServiceTest {
 
 	@Inject
 	KafkaSubscribeService svc;
@@ -27,10 +27,9 @@ class KafkaSubscribeServiceTest extends KafkaSubscribeBase {
 	KafkaCompanion companion;
 
 	@Test
-	@Override
 	void testProcess() {
 		try {
-			getSvc().process("Test");
+			svc.process("Test");
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -38,7 +37,6 @@ class KafkaSubscribeServiceTest extends KafkaSubscribeBase {
 	}
 
 	@Test
-	@Override
 	void testProcessKafkaCompanion() {
 		ProducerTask producer = companion.produceStrings()
 				.usingGenerator(i -> new ProducerRecord<>("message", "Test Message"));
@@ -49,10 +47,5 @@ class KafkaSubscribeServiceTest extends KafkaSubscribeBase {
 		consumer.awaitCompletion();
 		producer.close();
 		assertEquals(10, consumer.count());
-	}
-
-	@Override
-	KafkaSubscribeService getSvc() {
-		return this.svc;
 	}
 }
