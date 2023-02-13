@@ -8,6 +8,9 @@ on:
       - "application/**"
       - "kubernetes/**"
       - ".github/workflows/minikube-security-ci.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/minikube-security-ci.yml"
 
 jobs:
   security-ci:
