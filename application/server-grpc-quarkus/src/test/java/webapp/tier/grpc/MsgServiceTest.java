@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.*;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +19,7 @@ import io.quarkus.test.junit.QuarkusTest;
 @QuarkusTest
 class MsgServiceTest {
 
-	@ConfigProperty(name = "common.message")
-	String message;
+	String message = "Hello k8s-3tier-webapp with quarkus";
 
 	private ManagedChannel channel;
 
