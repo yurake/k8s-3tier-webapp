@@ -1,2 +1,1 @@
 # converter-rabbitmq-quarkus
-

@@ -1,2 +1,1 @@
 # consumer-hazelcast-quarkus
-

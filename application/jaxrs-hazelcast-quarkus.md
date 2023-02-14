@@ -1,2 +1,1 @@
 # jaxrs-hazelcast-quarkus
-

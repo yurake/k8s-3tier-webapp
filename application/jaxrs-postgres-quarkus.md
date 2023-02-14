@@ -1,2 +1,1 @@
 # jaxrs-postgres-quarkus
-

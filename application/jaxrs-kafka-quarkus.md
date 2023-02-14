@@ -1,2 +1,1 @@
 # jaxrs-kafka-quarkus
-
