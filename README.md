@@ -124,7 +124,9 @@ minikube docker-env --shell powershell | Invoke-Expression
 
 `apply.sh` supports `kubectl apply` to k8s clusters.
 
-    ./kubernetes/bin/apply.sh
+```bash
+./kubernetes/bin/apply.sh
+```
 
 ## Web Console Access
 
@@ -132,10 +134,12 @@ minikube docker-env --shell powershell | Invoke-Expression
 
 Add IP, domain in /etc/hosts
 
-    echo `minikube ip` k8s.3tier.webapp api.server.minikube \
-    rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube \
-    grafana.minikube jupyter.minikube hazelcast.manager.minikube activemq.management.minikube \
-    jaeger.minikube argo.minikube >> /etc/hosts
+```bash
+echo `minikube ip` k8s.3tier.webapp api.server.minikube \
+rabbitmq.management.minikube jenkins.minikube alertmanager.minikube prometheus.minikube \
+grafana.minikube jupyter.minikube hazelcast.manager.minikube activemq.management.minikube \
+jaeger.minikube argo.minikube >> /etc/hosts
+```
 
 ### Web Console list
 
@@ -169,11 +173,11 @@ k8s-3tier-webapp is licensed under the MIT License. See [LICENSE](LICENSE/) for 
 
 ## Contribution
 
-1.  [Fork](https://github.com/yurake/k8s-3tier-webapp/fork) this repo
-2.  Create a feature branch named like feature/enhancement from [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
-3.  Commit your changes
-4.  Rebase your local changes against the [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch
-5.  Create new Pull Request
+1.  [Fork](https://github.com/yurake/k8s-3tier-webapp/fork) this repo  
+2.  Create a feature branch named like feature/enhancement from [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch  
+3.  Commit your changes  
+4.  Rebase your local changes against the [master](https://github.com/yurake/k8s-3tier-webapp/tree/master) branch  
+5.  Create new Pull Request  
 
 ## Security
 
