@@ -46,25 +46,17 @@ class RabbitmqConverterTest {
 	@Test
 	void testConvert() throws Exception {
 		Channel channel = getChannel();
-
 		channel.exchangeDeclare(messageExchangeName, TOPIC, true, false, Map.of());
-		String queue = channel.queueDeclare(queueName, true, false, false, Map.of()).getQueue();
+		String queue = channel.queueDeclare(queueName, true, false, false, Map.of())
+				.getQueue();
 		logger.log(Level.INFO, "Test queue: {0}", queue);
-//		channel.queueBind(queue, messageExchangeName, messageRoutingKey);
 		channel.queueBind(queue, messageExchangeName, messageRoutingKey);
-//		channel.exchangeDeclare(messageExchangeName, TOPIC, true);
-//		String queueName = channel.queueDeclare().getQueue();
-//		channel.queueBind(queueName, messageExchangeName, messageRoutingKey);
-
 		AtomicReference<MsgBean> receivedMsg = new AtomicReference<>(null);
-
 		String consumerTag = channel.basicConsume(queueName, false, "myConsumerTag",
 				new DefaultConsumer(channel) {
 					@Override
-					public void handleDelivery(String consumerTag,
-							Envelope envelope,
-							AMQP.BasicProperties properties,
-							byte[] body)
+					public void handleDelivery(String consumerTag, Envelope envelope,
+							AMQP.BasicProperties properties, byte[] body)
 							throws IOException {
 						long deliveryTag = envelope.getDeliveryTag();
 						MsgBean msgbean = MsgUtils.splitBody(new String(body, UTF_8),
@@ -78,19 +70,15 @@ class RabbitmqConverterTest {
 
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
-
 		AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
-				.contentType("text/plain")
-				.build();
+				.contentType("text/plain").build();
 		channel.basicPublish(convertExchangeName, converterRoutingKey, props,
 				body.getBytes(UTF_8));
 		channel.basicPublish(convertExchangeName, converterRoutingKey, props,
 				body.getBytes(UTF_8));
 		channel.basicPublish(convertExchangeName, converterRoutingKey, props,
 				body.getBytes(UTF_8));
-
 		await().atMost(10, SECONDS).untilAtomic(receivedMsg, notNullValue());
-
 		channel.basicCancel(consumerTag);
 	}
 
