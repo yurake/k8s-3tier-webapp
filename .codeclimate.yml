@@ -1,0 +1,6 @@
+engines:
+  markdownlint:
+    enabled: true
+    checks:
+      MD007:
+        enabled: false
