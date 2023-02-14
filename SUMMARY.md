@@ -1,8 +1,8 @@
 # Table of contents
 
--   [🦌 k8s-3tier-webapp](README.md)
+-   [🦌 k8s-3tier-webapp](README.md)  
 
--   [🦌 Security Policy](SECURITY.md)
+-   [🦌 Security Policy](SECURITY.md)  
 
 -   [🦌 application](application/README.md)
     -   [consumer-activemq-quarkus](application/consumer-activemq-quarkus.md)
