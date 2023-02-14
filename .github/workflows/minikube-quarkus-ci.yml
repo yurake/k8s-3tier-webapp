@@ -33,10 +33,17 @@ jobs:
         with:
           minikube-version: 1.29.0
           kubernetes-version: 1.26.1
+          driver: docker
+          container-runtime: docker
+          cpus: 2
+          memory: 6144
+          addons: ingress
       - name: minikube settings
         run: |
-          minikube addons enable ingress
           minikube addons list
+          # https://minikube.sigs.k8s.io/docs/drivers/docker/#troubleshooting
+          sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+          sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
           kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
       - name: wait for set up ingress
         run: |
