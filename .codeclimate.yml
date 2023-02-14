@@ -6,3 +6,5 @@ engines:
         enabled: false
       MD009:
         enabled: false
+      MD013:
+        enabled: false
