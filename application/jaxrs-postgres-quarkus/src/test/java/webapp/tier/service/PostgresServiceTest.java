@@ -39,7 +39,6 @@ class PostgresServiceTest {
 		} catch (SQLException e) {
 			e.fillInStackTrace();
 		}
-		return;
 	}
 
 	@AfterEach
@@ -52,7 +51,6 @@ class PostgresServiceTest {
 		} catch (SQLException e) {
 			e.fillInStackTrace();
 		}
-		return;
 	}
 
 	@Test

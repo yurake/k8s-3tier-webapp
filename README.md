@@ -24,7 +24,8 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Snyk](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/snyk-infrastructure.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/snyk-infrastructure.yml)
 [![Codacy](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml)
 [![pmd](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pmd.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pmd.yml)
-[![pages-build-deployment](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pages/pages-build-deployment)
+[![pages-build-deployment](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pages/pages-build-deployment)  
+
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2844382aa110487e94bba8369267476e)](https://www.codacy.com/gh/yurake/k8s-3tier-webapp/dashboard?utm_source=github.com\&utm_medium=referral\&utm_content=yurake/k8s-3tier-webapp\&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/2844382aa110487e94bba8369267476e)](https://www.codacy.com/gh/yurake/k8s-3tier-webapp/dashboard?utm_source=github.com\&utm_medium=referral\&utm_content=yurake/k8s-3tier-webapp\&utm_campaign=Badge_Coverage)
 [![CodeFactor](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp/badge)](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp) [![Maintainability](https://api.codeclimate.com/v1/badges/64a1de96c5eb777b9db1/maintainability)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/maintainability)
@@ -34,14 +35,16 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Codiga Code Grade](https://api.codiga.io/project/34687/status/svg)](https://app.codiga.io)
 [![DeepSource Active Issues](https://deepsource.io/gh/yurake/k8s-3tier-webapp.svg/?label=active+issues\&show_trend=true\&token=Y64jIS9a54isgV4hi4_uuerZ)](https://deepsource.io/gh/yurake/k8s-3tier-webapp/?ref=repository-badge)
 [![DeepSource Resluved Issues](https://deepsource.io/gh/yurake/k8s-3tier-webapp.svg/?label=resolved+issues\&show_trend=true\&token=Y64jIS9a54isgV4hi4_uuerZ)](https://deepsource.io/gh/yurake/k8s-3tier-webapp/?ref=repository-badge)
-[![Cypress](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/detailed/7rgxn6/master\&style=flat\&logo=cypress)](https://dashboard.cypress.io/projects/7rgxn6/runs)
+[![Cypress](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/detailed/7rgxn6/master\&style=flat\&logo=cypress)](https://dashboard.cypress.io/projects/7rgxn6/runs)  
+
 [![Support JVM Version](https://img.shields.io/badge/JVM-17-yellow.svg?style=flat\&logo=Java)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
 [![Support Quarkus Version](https://img.shields.io/badge/Quarkus-2.16.2-yellow.svg?style=flat\&logo=Quarkus)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
 [![Support Kubernetes Version](https://img.shields.io/badge/Kubernetes-1.26.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
 [![Support Minikube Version](https://img.shields.io/badge/Minikube-1.29.0-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
 [![Support kind Version](https://img.shields.io/badge/kind-2.5.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22kind+CI%22)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE/)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_shield)  
+
 [![AccessLint](https://img.shields.io/badge/AccessLint-enabled-blue?style=flat)](https://accesslint.com/accounts/yurake/projects/k8s-3tier-webapp)
 [![Datadog](https://img.shields.io/badge/Datadog-enabled-blue?style=flat\&logo=datadog)](https://app.datadoghq.com/ci/test-services)
 [![Debricked](https://img.shields.io/badge/Debricked-enabled-blue?style=flat)](https://debricked.com/app/en/repository/40176)
@@ -53,7 +56,8 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Repo Ranger](https://img.shields.io/badge/Repo%20Ranger-enabled-blue?style=flat)](https://reporanger.com/)
 [![Socket](https://img.shields.io/badge/Socket-enabled-blue?style=flat\&logo=socketdotio)](https://socket.dev/dashboard/org/gh/yurake/repo/k8s-3tier-webapp)
 [![Sonatype Lift](https://img.shields.io/badge/Sonatype%20Lift-enabled-blue?style=flat)](https://lift.sonatype.com/results/github.com/yurake/k8s-3tier-webapp)
-[![What The Diff](https://img.shields.io/badge/What%20The%20Diff-enabled-blue?style=flat)](https://app.whatthediff.ai/repository/181164153)
+[![What The Diff](https://img.shields.io/badge/What%20The%20Diff-enabled-blue?style=flat)](https://app.whatthediff.ai/repository/181164153)  
+
 [![sonarcloud](https://img.shields.io/badge/sonarcloud-enabled-orange?style=flat\&logo=sonarcloud)](https://sonarcloud.io/projects)
 More details at [sonarcloud](SONARCLOUD.md)
 

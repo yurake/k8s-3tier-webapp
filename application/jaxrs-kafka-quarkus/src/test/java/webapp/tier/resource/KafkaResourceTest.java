@@ -22,7 +22,6 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.kafka.InjectKafkaCompanion;
 import io.quarkus.test.kafka.KafkaCompanionResource;
-import io.restassured.RestAssured;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.subscription.UniEmitter;
 import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
@@ -56,8 +55,7 @@ class KafkaResourceTest {
 
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client
-				.target("http://localhost:" + RestAssured.port
-						+ "/quarkus/kafka/subscribe");
+				.target("http://localhost:" + port + "/quarkus/kafka/subscribe");
 		try (SseEventSource eventSource = SseEventSource.target(target).build()) {
 			Uni<List<String>> petList = Uni.createFrom()
 					.emitter(new Consumer<UniEmitter<? super List<String>>>() {
