@@ -10,5 +10,7 @@ engines:
         enabled: false
       MD013:
         enabled: false
+      MD029:
+        enabled: false
       MD030:
         enabled: false
