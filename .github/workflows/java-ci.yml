@@ -7,11 +7,13 @@ on:
     paths:
       - "**.java"
       - "application/**"
+      - "!application/**/*.md"
       - ".github/workflows/java-ci.yml"
   pull_request:
     paths:
       - "**.java"
       - "application/**"
+      - "!application/**/*.md"
       - ".github/workflows/java-ci.yml"
 
 jobs:
