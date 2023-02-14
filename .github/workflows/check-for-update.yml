@@ -72,9 +72,9 @@ jobs:
         working-directory: ./.github/workflows
         run: |
           echo "SOURCE_QUARKUS_VERSION=$(grep "kubernetes-version" minikube-quarkus-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-          echo "SOURCE_YAML_VERSION=$(grep "k8s-version" minikube-yaml-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-          echo "SOURCE_STRESS_VERSION=$(grep "k8s-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
-          echo "SOURCE_SECURITY_VERSION=$(grep "k8s-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_YAML_VERSION=$(grep "kubernetes-version" minikube-yaml-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_STRESS_VERSION=$(grep "kubernetes-version" minikube-stress-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SOURCE_SECURITY_VERSION=$(grep "kubernetes-version" minikube-security-ci.yml | awk '{print $2}')" >> $GITHUB_ENV
           echo "SOURCE_DOC_VERSION=$(grep "Kubernetes Version" ../../README.md | cut -d '-' -f 2)" >> $GITHUB_ENV
           echo "TARGET_KUBERNETES_VERSION=$(curl -s https://api.github.com/repos/kubernetes/kubernetes/releases | jq -r '.[].tag_name' | grep -v '-' | sort -t'.' -k2,2n | tail -n 1 | tr -d 'v')" >> $GITHUB_ENV
       - name: check current diff
