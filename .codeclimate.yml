@@ -2,9 +2,13 @@ engines:
   markdownlint:
     enabled: true
     checks:
+      MD002:
+        enabled: false
       MD007:
         enabled: false
       MD009:
         enabled: false
       MD013:
+        enabled: false
+      MD030:
         enabled: false
