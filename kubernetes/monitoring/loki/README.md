@@ -1,6 +1,6 @@
-https://github.com/grafana/loki/tree/master/production/helm
+# Install
 
-## Install
+<https://github.com/grafana/loki/tree/master/production/helm>
 
 ```bash
 helm repo add grafana https://grafana.github.io/helm-charts
