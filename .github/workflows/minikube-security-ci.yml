@@ -8,6 +8,9 @@ on:
       - "application/**"
       - "kubernetes/**"
       - ".github/workflows/minikube-security-ci.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/minikube-security-ci.yml"
 
 jobs:
   security-ci:
@@ -15,22 +18,18 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3.3.0
-      - name: setup minikube
-        uses: opsgang/ga-setup-minikube@v0.1.2
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+      - name: start minikube
+        uses: medyagh/setup-minikube@v0.0.11
         with:
           minikube-version: 1.29.0
-          k8s-version: 1.26.1
+          kubernetes-version: 1.26.1
+          driver: docker
+          container-runtime: docker
+          cpus: 2
+          memory: 6144
+          addons: ingress
       - name: minikube settings
         run: |
-          sudo apt install conntrack
-          minikube config set vm-driver docker
-          minikube config set cpus 2
-          minikube config set memory 6144
-          minikube start
-          minikube update-context
-          minikube addons enable ingress
           minikube addons list
           # https://minikube.sigs.k8s.io/docs/drivers/docker/#troubleshooting
           sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/

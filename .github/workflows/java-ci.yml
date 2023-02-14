@@ -35,13 +35,13 @@ jobs:
           languages: java
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-parent-pom
           restore-keys: ${{ runner.os }}-sonar-parent-pom
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-parent-pom-${{ hashFiles('**/parent-pom/pom.xml') }}
@@ -54,13 +54,13 @@ jobs:
         run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-webapp-service
           restore-keys: ${{ runner.os }}-sonar-webapp-service
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-webapp-service-${{ hashFiles('**/webapp-service/pom.xml') }}
@@ -120,6 +120,7 @@ jobs:
             converter-rabbitmq-quarkus,
             consumer-redis-quarkus,
           ]
+      fail-fast: false
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3.3.0
@@ -148,7 +149,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Cache Docker layers
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: /tmp/.buildx-cache
           key: ${{ github.ref }}-${{ github.sha }}
@@ -165,13 +166,13 @@ jobs:
           fi
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-${{ matrix.application }}
           restore-keys: ${{ runner.os }}-sonar-${{ matrix.application }}
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ matrix.application }}-${{ hashFiles('**/${{ matrix.application }}/pom.xml') }}
@@ -234,6 +235,7 @@ jobs:
             server-grpc-quarkus,
             jaxrs-grpc-quarkus,
           ]
+      fail-fast: false
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3.3.0
@@ -262,7 +264,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Cache Docker layers
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: /tmp/.buildx-cache
           key: ${{ github.ref }}-${{ github.sha }}
@@ -279,13 +281,13 @@ jobs:
           fi
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-${{ matrix.application }}
           restore-keys: ${{ runner.os }}-sonar-${{ matrix.application }}
       - name: Cache local Maven repository
-        uses: actions/cache@v3.2.4
+        uses: actions/cache@v3.2.5
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ matrix.application }}-${{ hashFiles('**/${{ matrix.application }}/pom.xml') }}

@@ -1,25 +1,19 @@
-package webapp.tier.grpc;
+package webapp.tier.resource;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static io.restassured.RestAssured.*;
 
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.google.protobuf.Empty;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.QuarkusIntegrationTest;
 
-@QuarkusTest
-class MsgServiceTest {
-
-	String message = "Hello k8s-3tier-webapp with quarkus";
+@QuarkusIntegrationTest
+class GrpcResourceIT {
 
 	private ManagedChannel channel;
 
@@ -36,11 +30,22 @@ class MsgServiceTest {
 	}
 
 	@Test
-	void testGetMsg() {
-		MsgReply reply = MutinyMsgGrpc.newMutinyStub(channel)
-				.getMsg(Empty.newBuilder().build())
-				.await().atMost(Duration.ofSeconds(5));
-		assertThat(reply.getMessage(), is(message));
+	void testGetId() {
+		given()
+				.when()
+				.contentType("application/json")
+				.get("/quarkus/grpc/getid")
+				.then()
+				.statusCode(500);
 	}
 
+	@Test
+	void testGetMsg() {
+		given()
+				.when()
+				.contentType("application/json")
+				.get("/quarkus/grpc/getmsg")
+				.then()
+				.statusCode(500);
+	}
 }
