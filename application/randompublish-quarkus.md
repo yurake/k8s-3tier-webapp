@@ -1,2 +1,1 @@
 # randompublish-quarkus
-

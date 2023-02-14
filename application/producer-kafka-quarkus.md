@@ -1,2 +1,1 @@
 # producer-kafka-quarkus
-
