@@ -41,12 +41,6 @@ public class PostgresService implements Database {
 	@ConfigProperty(name = "postgres.delete.msg")
 	String deletesql;
 
-	@ConfigProperty(name = "postgres.id")
-	String sqlkey;
-
-	@ConfigProperty(name = "postgres.body")
-	String sqlbody;
-
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	public boolean connectionStatus() {
@@ -62,8 +56,8 @@ public class PostgresService implements Database {
 	@Override
 	public MsgBean insertMsg() throws SQLException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
-		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId()))
-				.replace(sqlbody, msgbean.getMessage());
+		String sql = insertsql.replace("msgid", MsgUtils.intToString(msgbean.getId()))
+				.replace("msgbody", msgbean.getMessage());
 
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {
