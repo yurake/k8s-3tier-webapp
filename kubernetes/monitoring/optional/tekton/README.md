@@ -1,5 +1,6 @@
-### Installing Tekton Pipelines
-https://github.com/tektoncd/pipeline/blob/master/docs/install.md
+# Installing Tekton Pipelines
+
+<https://github.com/tektoncd/pipeline/blob/master/docs/install.md>
 
 ```sh
 $ kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
@@ -34,10 +35,11 @@ tekton-pipelines-controller-8954886cc-h8gfd   1/1     Running   0          15s
 tekton-pipelines-webhook-6c9bccbd6c-9cscr     1/1     Running   0          15s
 ```
 
-### Hello World Tutorial
-https://github.com/tektoncd/pipeline/blob/master/docs/tutorial.md
+## Hello World Tutorial
 
-```sh
+<https://github.com/tektoncd/pipeline/blob/master/docs/tutorial.md>
+
+```bash
 $ kubectl apply -f echo-hello-world.yaml
 task.tekton.dev/echo-hello-world created
 
