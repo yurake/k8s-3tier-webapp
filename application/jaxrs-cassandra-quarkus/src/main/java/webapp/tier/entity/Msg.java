@@ -10,8 +10,8 @@ public class Msg {
 	private int id;
 	private String msg;
 
-	// Constructor
 	public Msg() {
+		// This constructor is intentionally empty. Nothing special is needed here.
 	}
 
 	public Msg(int id, String msg) {
