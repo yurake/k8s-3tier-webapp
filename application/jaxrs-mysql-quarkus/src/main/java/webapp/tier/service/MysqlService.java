@@ -61,9 +61,13 @@ public class MysqlService implements Database {
 		String sql = insertsql.replace("msgid", MsgUtils.intToString(msgbean.getId()))
 				.replace("msgbody", msgbean.getMessage());
 
-		try (Statement stmt = ds.getConnection().createStatement()) {
+		try (Connection con = ds.getConnection();
+				Statement stmt = con.createStatement()) {
 			logger.log(Level.INFO, "Insert SQL: {0}", sql);
 			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, "Insert Error.", e);
+			throw new SQLException("Insert Error.", e);
 		}
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
@@ -74,18 +78,22 @@ public class MysqlService implements Database {
 	public List<MsgBean> selectMsg() throws SQLException {
 		List<MsgBean> msglist = new ArrayList<>();
 
-		try (ResultSet rs = ds.getConnection().createStatement()
-				.executeQuery(selectsql)) {
+		try (Connection con = ds.getConnection();
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(selectsql)) {
 			logger.log(Level.INFO, "Select SQL: {0}", selectsql);
 			while (rs.next()) {
-				MsgBean msgbean = new MsgBean(rs.getString("id"), rs.getString("msg"),
-						"Select");
+				MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(rs.getString("id")),
+						rs.getString("msg"), "Select");
 				logger.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean);
 			}
 			if (msglist.isEmpty()) {
 				msglist.add(new MsgBean(0, "No Data.", "Select"));
 			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, "Select Errorr.", e);
+			throw new SQLException("Select Error.", e);
 		}
 		return msglist;
 	}
@@ -98,9 +106,13 @@ public class MysqlService implements Database {
 	@Override
 	public String deleteMsg() throws SQLException {
 
-		try (Statement stmt = ds.getConnection().createStatement()) {
+		try (Connection con = ds.getConnection();
+				Statement stmt = con.createStatement()) {
 			logger.log(Level.INFO, "Delete SQL: {0}", deletesql);
 			stmt.executeUpdate(deletesql);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, "Delete Errorr.", e);
+			throw new SQLException("Delete Error.", e);
 		}
 		return "Delete Msg Records";
 	}
