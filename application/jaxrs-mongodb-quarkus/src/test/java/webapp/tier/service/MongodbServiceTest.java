@@ -1,10 +1,9 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
@@ -29,7 +28,7 @@ import webapp.tier.bean.MsgBean;
 class MongodbServiceTest {
 
 	@Inject
-	private MongodbService mongosvc;
+	MongodbService mongosvc;
 
 	private String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 

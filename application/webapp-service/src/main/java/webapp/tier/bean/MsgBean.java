@@ -8,6 +8,7 @@ public class MsgBean {
 	String message;
 	String fullmsg = "MsgBean init error";
 
+	// Constructor
 	public MsgBean() {
 	}
 

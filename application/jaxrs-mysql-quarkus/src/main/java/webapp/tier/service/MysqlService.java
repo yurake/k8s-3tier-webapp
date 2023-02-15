@@ -43,12 +43,6 @@ public class MysqlService implements Database {
 	@ConfigProperty(name = "mysql.delete.msg")
 	String deletesql;
 
-	@ConfigProperty(name = "mysql.id")
-	String sqlkey;
-
-	@ConfigProperty(name = "mysql.body")
-	String sqlbody;
-
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	public boolean connectionStatus() {
@@ -64,8 +58,8 @@ public class MysqlService implements Database {
 	@Override
 	public MsgBean insertMsg() throws SQLException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
-		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId()))
-				.replace(sqlbody, msgbean.getMessage());
+		String sql = insertsql.replace("msgid", MsgUtils.intToString(msgbean.getId()))
+				.replace("msgbody", msgbean.getMessage());
 
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {
@@ -89,7 +83,7 @@ public class MysqlService implements Database {
 				ResultSet rs = stmt.executeQuery(selectsql)) {
 			logger.log(Level.INFO, "Select SQL: {0}", selectsql);
 			while (rs.next()) {
-				MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(rs.getString("id")),
+				MsgBean msgbean = new MsgBean(rs.getString("id"),
 						rs.getString("msg"), "Select");
 				logger.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean);

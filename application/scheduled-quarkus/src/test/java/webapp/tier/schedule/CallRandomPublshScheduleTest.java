@@ -1,6 +1,6 @@
 package webapp.tier.schedule;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.inject.Inject;
 
@@ -12,7 +12,7 @@ import io.quarkus.test.junit.QuarkusTest;
 class CallRandomPublshScheduleTest {
 
 	@Inject
-	private CallRandomPublshSchedule rps;
+	CallRandomPublshSchedule rps;
 
 	@Test
 	void testCallRandomPublsh() {
