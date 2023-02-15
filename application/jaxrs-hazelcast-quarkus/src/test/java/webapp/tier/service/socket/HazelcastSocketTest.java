@@ -27,7 +27,7 @@ class HazelcastSocketTest {
 	void testOnOpen() {
 		Session session = mock(Session.class);
 		try {
-			Mockito.when(session.getId()).thenReturn(id);
+			when(session.getId()).thenReturn(id);
 			socket.onOpen(session);
 			assertThat(socket.getSessions().containsKey(id), is(true));
 		} finally {
@@ -39,7 +39,7 @@ class HazelcastSocketTest {
 	void testOnClose() {
 		Session session = mock(Session.class);
 		try {
-			Mockito.when(session.getId()).thenReturn(id);
+			when(session.getId()).thenReturn(id);
 			socket.onOpen(session);
 			socket.onClose(session);
 			assertThat(socket.getSessions().containsKey(id), is(false));
@@ -52,7 +52,7 @@ class HazelcastSocketTest {
 	void testOnError() {
 		Session session = mock(Session.class);
 		try {
-			Mockito.when(session.getId()).thenReturn(id);
+			when(session.getId()).thenReturn(id);
 			socket.onOpen(session);
 			socket.onError(session, new Throwable("testOnError"));
 			assertThat(socket.getSessions().containsKey(id), is(false));
@@ -66,8 +66,8 @@ class HazelcastSocketTest {
 		Session session = mock(Session.class);
 		try {
 			RemoteEndpoint.Async async = mock(RemoteEndpoint.Async.class);
-			Mockito.when(session.getId()).thenReturn(id);
-			Mockito.when(session.getAsyncRemote()).thenReturn(async);
+			when(session.getId()).thenReturn(id);
+			when(session.getAsyncRemote()).thenReturn(async);
 			socket.onOpen(session);
 			socket.onMessage(message);
 		} catch (Exception e) {

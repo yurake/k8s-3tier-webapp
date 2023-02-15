@@ -29,7 +29,7 @@ class ReadinessHealthCheckHazelcastTest {
 		ReadinessHealthCheckHazelcast hc = new ReadinessHealthCheckHazelcast() {
 			protected HazelcastServiceStatus createHazelcastStatus() {
 				HazelcastServiceStatus mock = mock(HazelcastServiceStatus.class);
-				Mockito.when(mock.isActive()).thenReturn(true);
+				when(mock.isActive()).thenReturn(true);
 				return mock;
 			}
 		};

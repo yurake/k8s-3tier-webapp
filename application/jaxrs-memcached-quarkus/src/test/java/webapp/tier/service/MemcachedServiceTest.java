@@ -27,7 +27,7 @@ class MemcachedServiceTest {
 	@Test
 	void testSetMemcached() {
 		MemCachedClient mcc = mock(MemCachedClient.class);
-		Mockito.when(mcc.set(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+		when(mcc.set(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
 		try {
 			MsgBean msgbean = svcMock.setMsg(mcc);
 			assertThat(msgbean.getFullmsg(), containsString(respbody));
@@ -53,8 +53,8 @@ class MemcachedServiceTest {
 		Object obj = "11111111";
 		String msg = "Hello k8s-3tier-webapp with quarkus";
 		MemCachedClient mcc = mock(MemCachedClient.class);
-		Mockito.when(mcc.get("id")).thenReturn(obj.toString());
-		Mockito.when(mcc.get("msg")).thenReturn(msg);
+		when(mcc.get("id")).thenReturn(obj.toString());
+		when(mcc.get("msg")).thenReturn(msg);
 
 		MsgBean bean = svcMock.getMsg(mcc);
 		assertThat(bean.getId(), is(Integer.valueOf(obj.toString())));
