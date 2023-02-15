@@ -10,6 +10,7 @@ public class Msg {
 	private int id;
 	private String msg;
 
+	// Constructor
 	public Msg() {
 	}
 
