@@ -1,10 +1,9 @@
 package webapp.tier.service;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.inject.Inject;
 
@@ -16,7 +15,7 @@ import io.quarkus.test.junit.QuarkusTest;
 class RandomServiceTest {
 
 	@Inject
-	private RandomService svc;
+	RandomService svc;
 
 	@Test
 	void testDeliverrandomCase0Error() throws Exception {
