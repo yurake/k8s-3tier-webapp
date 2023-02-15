@@ -10,7 +10,6 @@ import java.util.concurrent.TimeoutException;
 
 import org.eclipse.microprofile.health.HealthCheckResponse.Status;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import io.quarkus.test.junit.QuarkusTest;
 import webapp.tier.service.HazelcastServiceStatus;
@@ -27,6 +26,7 @@ class ReadinessHealthCheckHazelcastTest {
 	@Test
 	void testCallUp() throws IOException, TimeoutException {
 		ReadinessHealthCheckHazelcast hc = new ReadinessHealthCheckHazelcast() {
+			@Override
 			protected HazelcastServiceStatus createHazelcastStatus() {
 				HazelcastServiceStatus mock = mock(HazelcastServiceStatus.class);
 				when(mock.isActive()).thenReturn(true);
