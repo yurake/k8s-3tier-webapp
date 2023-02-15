@@ -1,11 +1,9 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -20,7 +18,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
@@ -58,7 +55,7 @@ class HazelcastCacheServiceTest {
 
 	@Test
 	void testPutMsgHazelcastError() {
-		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
+		HazelcastInstance mockInstanceError = mock(HazelcastInstance.class);
 		when(mockInstanceError.getMap(ArgumentMatchers.any()))
 				.thenThrow(new IllegalStateException());
 		try {
@@ -85,7 +82,7 @@ class HazelcastCacheServiceTest {
 
 	@Test
 	void testGetMsgHazelcastError() {
-		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
+		HazelcastInstance mockInstanceError = mock(HazelcastInstance.class);
 		when(mockInstanceError.getMap(ArgumentMatchers.any()))
 				.thenThrow(new IllegalStateException());
 		try {

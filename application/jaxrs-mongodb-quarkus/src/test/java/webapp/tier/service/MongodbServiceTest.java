@@ -35,7 +35,7 @@ class MongodbServiceTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	void testInsertMysql() throws NoSuchAlgorithmException {
-		MongoCollection<Document> col = Mockito.mock(MongoCollection.class);
+		MongoCollection<Document> col = mock(MongoCollection.class);
 		when(col.insertOne(ArgumentMatchers.any())).thenReturn(null);
 		assertThat(mongosvc.insertMsg(col).getFullmsg(), containsString(respbody));
 	}
@@ -43,9 +43,9 @@ class MongodbServiceTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	void testSelectMsgIsEmpty() {
-		MongoCursor<Document> cursor = Mockito.mock(MongoCursor.class);
-		FindIterable<Document> ite = Mockito.mock(FindIterable.class);
-		MongoCollection<Document> col = Mockito.mock(MongoCollection.class);
+		MongoCursor<Document> cursor = mock(MongoCursor.class);
+		FindIterable<Document> ite = mock(FindIterable.class);
+		MongoCollection<Document> col = mock(MongoCollection.class);
 		when(col.find()).thenReturn(ite);
 		when(ite.iterator()).thenReturn(cursor);
 		mongosvc.selectMsg(col);
@@ -58,9 +58,9 @@ class MongodbServiceTest {
 		map.put("id", 1111);
 		map.put("msg", "Test");
 		Document document = new Document(map);
-		MongoCursor<Document> cursor = Mockito.mock(MongoCursor.class);
-		FindIterable<Document> ite = Mockito.mock(FindIterable.class);
-		MongoCollection<Document> col = Mockito.mock(MongoCollection.class);
+		MongoCursor<Document> cursor = mock(MongoCursor.class);
+		FindIterable<Document> ite = mock(FindIterable.class);
+		MongoCollection<Document> col = mock(MongoCollection.class);
 		when(cursor.hasNext()).thenReturn(true).thenReturn(false);
 		when(cursor.next()).thenReturn(document);
 		when(ite.iterator()).thenReturn(cursor);
@@ -75,7 +75,7 @@ class MongodbServiceTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	void testDeleteMsg() {
-		MongoCollection<Document> col = Mockito.mock(MongoCollection.class);
+		MongoCollection<Document> col = mock(MongoCollection.class);
 		when(col.insertOne(ArgumentMatchers.any())).thenReturn(null);
 		assertThat(mongosvc.deleteMsg(col), is("Delete Msg Collection"));
 	}

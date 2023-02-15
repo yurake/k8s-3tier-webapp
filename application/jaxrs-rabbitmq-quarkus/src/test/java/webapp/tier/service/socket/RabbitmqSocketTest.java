@@ -1,8 +1,9 @@
 package webapp.tier.service.socket;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import javax.inject.Inject;
 import javax.websocket.RemoteEndpoint;
@@ -24,7 +25,7 @@ class RabbitmqSocketTest {
 
 	@Test
 	void testOnOpen() {
-		Session session = Mockito.mock(Session.class);
+		Session session = mock(Session.class);
 		try {
 			Mockito.when(session.getId()).thenReturn(id);
 			socket.onOpen(session);
@@ -36,7 +37,7 @@ class RabbitmqSocketTest {
 
 	@Test
 	void testOnClose() {
-		Session session = Mockito.mock(Session.class);
+		Session session = mock(Session.class);
 		try {
 			Mockito.when(session.getId()).thenReturn(id);
 			socket.onOpen(session);
@@ -49,7 +50,7 @@ class RabbitmqSocketTest {
 
 	@Test
 	void testOnError() {
-		Session session = Mockito.mock(Session.class);
+		Session session = mock(Session.class);
 		try {
 			Mockito.when(session.getId()).thenReturn(id);
 			socket.onOpen(session);
@@ -62,9 +63,9 @@ class RabbitmqSocketTest {
 
 	@Test
 	void testOnMessage() {
-		Session session = Mockito.mock(Session.class);
+		Session session = mock(Session.class);
 		try {
-			RemoteEndpoint.Async async = Mockito.mock(RemoteEndpoint.Async.class);
+			RemoteEndpoint.Async async = mock(RemoteEndpoint.Async.class);
 			Mockito.when(session.getId()).thenReturn(id);
 			Mockito.when(session.getAsyncRemote()).thenReturn(async);
 			socket.onOpen(session);

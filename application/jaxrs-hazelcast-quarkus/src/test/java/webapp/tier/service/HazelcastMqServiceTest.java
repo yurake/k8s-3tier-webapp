@@ -1,11 +1,9 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -18,7 +16,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 
 import com.hazelcast.collection.IQueue;
 import com.hazelcast.core.Hazelcast;
@@ -63,7 +60,7 @@ class HazelcastMqServiceTest {
 
 	@Test
 	void testPutQueueHazelcastError() {
-		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
+		HazelcastInstance mockInstanceError = mock(HazelcastInstance.class);
 		when(mockInstanceError.getQueue(ArgumentMatchers.any()))
 				.thenThrow(new IllegalStateException());
 		assertThat(svc.putMsg(mockInstanceError).getFullmsg(), containsString(respbody));
@@ -96,7 +93,7 @@ class HazelcastMqServiceTest {
 
 	@Test
 	void testGetQueueHazelcastError() {
-		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
+		HazelcastInstance mockInstanceError = mock(HazelcastInstance.class);
 		when(mockInstanceError.getQueue(ArgumentMatchers.any()))
 				.thenThrow(new IllegalStateException());
 		assertThat(svc.getMsg(mockInstanceError).getMessage(), is("Unexpected Error"));
@@ -105,8 +102,8 @@ class HazelcastMqServiceTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	void testGetQueueHazelcastObjectNullError() {
-		HazelcastInstance mocknull = Mockito.mock(HazelcastInstance.class);
-		IQueue<Object> mockqueue = Mockito.mock(IQueue.class);
+		HazelcastInstance mocknull = mock(HazelcastInstance.class);
+		IQueue<Object> mockqueue = mock(IQueue.class);
 		when(mocknull.getQueue(ArgumentMatchers.any())).thenReturn(mockqueue);
 		when(mockqueue.poll()).thenReturn(null);
 		assertThat(svc.getMsg(mocknull).getFullmsg(), containsString("No Data."));
@@ -115,8 +112,8 @@ class HazelcastMqServiceTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	void testGetQueueHazelcastObjectEmptyError() {
-		HazelcastInstance mocknull = Mockito.mock(HazelcastInstance.class);
-		IQueue<Object> mockqueue = Mockito.mock(IQueue.class);
+		HazelcastInstance mocknull = mock(HazelcastInstance.class);
+		IQueue<Object> mockqueue = mock(IQueue.class);
 		when(mocknull.getQueue(ArgumentMatchers.any())).thenReturn(mockqueue);
 		when(mockqueue.poll()).thenReturn("");
 		assertThat(svc.getMsg(mocknull).getFullmsg(), containsString("No Data."));
@@ -142,7 +139,7 @@ class HazelcastMqServiceTest {
 
 	@Test
 	void testPublishHazelcastError() {
-		HazelcastInstance mockInstanceError = Mockito.mock(HazelcastInstance.class);
+		HazelcastInstance mockInstanceError = mock(HazelcastInstance.class);
 		when(mockInstanceError.getTopic(ArgumentMatchers.any()))
 				.thenThrow(new IllegalStateException());
 		assertThat(svc.publishMsg(mockInstanceError).getFullmsg(),
