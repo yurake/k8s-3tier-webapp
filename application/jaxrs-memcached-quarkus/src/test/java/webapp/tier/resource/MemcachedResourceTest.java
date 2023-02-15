@@ -1,13 +1,13 @@
 package webapp.tier.resource;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsString;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
 import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import com.whalin.MemCached.MemCachedClient;
 
@@ -25,7 +25,7 @@ class MemcachedResourceTest {
 
 	@Test
 	void testSet() throws NoSuchAlgorithmException, RuntimeException {
-		MemCachedClient mcc = Mockito.mock(MemCachedClient.class);
+		MemCachedClient mcc = mock(MemCachedClient.class);
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
 		when(svc.createMemCachedClient()).thenReturn(mcc);
 		when(svc.setMsg(mcc)).thenReturn(msgbean);
@@ -40,7 +40,7 @@ class MemcachedResourceTest {
 
 	@Test
 	void testGet() throws NoSuchAlgorithmException {
-		MemCachedClient mcc = Mockito.mock(MemCachedClient.class);
+		MemCachedClient mcc = mock(MemCachedClient.class);
 		MsgBean msgbean = new MsgBean(CreateId.createid(), "test", "Test");
 		when(svc.createMemCachedClient()).thenReturn(mcc);
 		when(svc.getMsg(mcc)).thenReturn(msgbean);
