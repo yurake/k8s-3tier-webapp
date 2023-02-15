@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
