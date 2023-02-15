@@ -86,7 +86,7 @@ public class PostgresService implements Database {
 				ResultSet rs = stmt.executeQuery(selectsql)) {
 			logger.log(Level.INFO, "Select SQL: {0}", selectsql);
 			while (rs.next()) {
-				MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(rs.getString("id")),
+				MsgBean msgbean = new MsgBean(rs.getString("id"),
 						rs.getString("msg"), "Select");
 				logger.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean);
