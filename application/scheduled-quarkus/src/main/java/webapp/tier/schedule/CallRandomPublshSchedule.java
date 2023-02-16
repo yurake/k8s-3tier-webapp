@@ -1,5 +1,6 @@
 package webapp.tier.schedule;
 
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,11 +47,20 @@ public class CallRandomPublshSchedule {
 	@Scheduled(every = "10m")
 	void callDeleteDbs() {
 		logger.log(Level.INFO, "Call: Delete Postgres");
-		logger.log(Level.INFO, postgressvc.delete());
+		String pstgresp = postgressvc.delete();
+		if(!Objects.isNull(pstgresp)) {
+			logger.log(Level.INFO, pstgresp);			
+		}
 		logger.log(Level.INFO, "Call: Delete Mysql");
-		logger.log(Level.INFO, mysqlsvc.delete());
+		String mysqlresp = mysqlsvc.delete();
+		if(!Objects.isNull(mysqlresp)) {
+			logger.log(Level.INFO, mysqlresp);			
+		}
 		logger.log(Level.INFO, "Call: Delete Mongodb");
-		logger.log(Level.INFO, mongodbsvc.delete());
+		String mongoresp = mongodbsvc.delete();
+		if(!Objects.isNull(mongoresp)) {
+			logger.log(Level.INFO, mongoresp);			
+		}
 	}
 
 }
