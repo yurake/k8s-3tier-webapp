@@ -26,12 +26,11 @@ public class RedisService implements Consumer<RedisNotification> {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-	@ConfigProperty(name = "redis.split.key")
-	String splitkey;
-
 	private static String channel = ConfigProvider.getConfig().getValue("redis.channel",
 			String.class);
 
+	@ConfigProperty(name = "redis.split.key")
+	String splitkey;
 	@ConfigProperty(name = "common.message")
 	String message;
 

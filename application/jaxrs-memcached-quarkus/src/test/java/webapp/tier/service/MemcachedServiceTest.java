@@ -3,6 +3,7 @@ package webapp.tier.service;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import javax.inject.Inject;
 
@@ -25,8 +26,8 @@ class MemcachedServiceTest {
 
 	@Test
 	void testSetMemcached() {
-		MemCachedClient mcc = Mockito.mock(MemCachedClient.class);
-		Mockito.when(mcc.set(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
+		MemCachedClient mcc = mock(MemCachedClient.class);
+		when(mcc.set(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(true);
 		try {
 			MsgBean msgbean = svcMock.setMsg(mcc);
 			assertThat(msgbean.getFullmsg(), containsString(respbody));
@@ -51,9 +52,9 @@ class MemcachedServiceTest {
 	void testGetMemcached() {
 		Object obj = "11111111";
 		String msg = "Hello k8s-3tier-webapp with quarkus";
-		MemCachedClient mcc = Mockito.mock(MemCachedClient.class);
-		Mockito.when(mcc.get("id")).thenReturn(obj.toString());
-		Mockito.when(mcc.get("msg")).thenReturn(msg);
+		MemCachedClient mcc = mock(MemCachedClient.class);
+		when(mcc.get("id")).thenReturn(obj.toString());
+		when(mcc.get("msg")).thenReturn(msg);
 
 		MsgBean bean = svcMock.getMsg(mcc);
 		assertThat(bean.getId(), is(Integer.valueOf(obj.toString())));

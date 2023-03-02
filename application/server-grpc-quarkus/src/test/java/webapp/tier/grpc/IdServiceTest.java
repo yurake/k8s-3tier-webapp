@@ -34,7 +34,7 @@ class IdServiceTest {
 	}
 
 	@Test
-	public void testGetId() {
+	void testGetId() {
 		IdReply reply = MutinyIdGrpc.newMutinyStub(channel)
 				.getId(Empty.newBuilder().build())
 				.await().atMost(Duration.ofSeconds(5));

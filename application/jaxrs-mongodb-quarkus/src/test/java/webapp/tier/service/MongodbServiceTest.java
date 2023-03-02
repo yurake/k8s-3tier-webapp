@@ -1,10 +1,9 @@
 package webapp.tier.service;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
@@ -16,7 +15,6 @@ import javax.inject.Inject;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -29,14 +27,14 @@ import webapp.tier.bean.MsgBean;
 class MongodbServiceTest {
 
 	@Inject
-	private MongodbService mongosvc;
+	MongodbService mongosvc;
 
 	private String respbody = "message: Hello k8s-3tier-webapp with quarkus";
 
 	@Test
 	@SuppressWarnings("unchecked")
 	void testInsertMysql() throws NoSuchAlgorithmException {
-		MongoCollection<Document> col = Mockito.mock(MongoCollection.class);
+		MongoCollection<Document> col = mock(MongoCollection.class);
 		when(col.insertOne(ArgumentMatchers.any())).thenReturn(null);
 		assertThat(mongosvc.insertMsg(col).getFullmsg(), containsString(respbody));
 	}
@@ -44,9 +42,9 @@ class MongodbServiceTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	void testSelectMsgIsEmpty() {
-		MongoCursor<Document> cursor = Mockito.mock(MongoCursor.class);
-		FindIterable<Document> ite = Mockito.mock(FindIterable.class);
-		MongoCollection<Document> col = Mockito.mock(MongoCollection.class);
+		MongoCursor<Document> cursor = mock(MongoCursor.class);
+		FindIterable<Document> ite = mock(FindIterable.class);
+		MongoCollection<Document> col = mock(MongoCollection.class);
 		when(col.find()).thenReturn(ite);
 		when(ite.iterator()).thenReturn(cursor);
 		mongosvc.selectMsg(col);
@@ -59,9 +57,9 @@ class MongodbServiceTest {
 		map.put("id", 1111);
 		map.put("msg", "Test");
 		Document document = new Document(map);
-		MongoCursor<Document> cursor = Mockito.mock(MongoCursor.class);
-		FindIterable<Document> ite = Mockito.mock(FindIterable.class);
-		MongoCollection<Document> col = Mockito.mock(MongoCollection.class);
+		MongoCursor<Document> cursor = mock(MongoCursor.class);
+		FindIterable<Document> ite = mock(FindIterable.class);
+		MongoCollection<Document> col = mock(MongoCollection.class);
 		when(cursor.hasNext()).thenReturn(true).thenReturn(false);
 		when(cursor.next()).thenReturn(document);
 		when(ite.iterator()).thenReturn(cursor);
@@ -76,7 +74,7 @@ class MongodbServiceTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	void testDeleteMsg() {
-		MongoCollection<Document> col = Mockito.mock(MongoCollection.class);
+		MongoCollection<Document> col = mock(MongoCollection.class);
 		when(col.insertOne(ArgumentMatchers.any())).thenReturn(null);
 		assertThat(mongosvc.deleteMsg(col), is("Delete Msg Collection"));
 	}

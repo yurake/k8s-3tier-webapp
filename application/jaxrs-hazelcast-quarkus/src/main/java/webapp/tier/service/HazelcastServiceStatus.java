@@ -20,7 +20,6 @@ public class HazelcastServiceStatus {
 			status = client.getLifecycleService().isRunning();
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Connect Error.", e);
-			e.printStackTrace();
 		} finally {
 			if (client != null) {
 				client.shutdown();

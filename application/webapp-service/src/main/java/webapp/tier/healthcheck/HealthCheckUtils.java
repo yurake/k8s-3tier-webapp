@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
-public class HealthCheckUtils {
+public final class HealthCheckUtils {
 	
 	private static final Logger logger = Logger
 			.getLogger(HealthCheckUtils.class.getSimpleName());

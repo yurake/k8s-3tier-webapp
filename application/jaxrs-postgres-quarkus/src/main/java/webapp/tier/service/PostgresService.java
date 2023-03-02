@@ -41,12 +41,6 @@ public class PostgresService implements Database {
 	@ConfigProperty(name = "postgres.delete.msg")
 	String deletesql;
 
-	@ConfigProperty(name = "postgres.id")
-	String sqlkey;
-
-	@ConfigProperty(name = "postgres.body")
-	String sqlbody;
-
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
 	public boolean connectionStatus() {
@@ -62,8 +56,8 @@ public class PostgresService implements Database {
 	@Override
 	public MsgBean insertMsg() throws SQLException, NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Insert");
-		String sql = insertsql.replace(sqlkey, MsgUtils.intToString(msgbean.getId()))
-				.replace(sqlbody, msgbean.getMessage());
+		String sql = insertsql.replace("msgid", MsgUtils.intToString(msgbean.getId()))
+				.replace("msgbody", msgbean.getMessage());
 
 		try (Connection con = ds.getConnection();
 				Statement stmt = con.createStatement()) {
@@ -71,7 +65,7 @@ public class PostgresService implements Database {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Insert Error.", e);
-			throw new SQLException("Insert Error.");
+			throw new SQLException("Insert Error.", e);
 		}
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
@@ -86,7 +80,7 @@ public class PostgresService implements Database {
 				ResultSet rs = stmt.executeQuery(selectsql)) {
 			logger.log(Level.INFO, "Select SQL: {0}", selectsql);
 			while (rs.next()) {
-				MsgBean msgbean = new MsgBean(MsgUtils.stringToInt(rs.getString("id")),
+				MsgBean msgbean = new MsgBean(rs.getString("id"),
 						rs.getString("msg"), "Select");
 				logger.log(Level.INFO, msgbean.getFullmsg());
 				msglist.add(msgbean);
@@ -96,7 +90,7 @@ public class PostgresService implements Database {
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Select Errorr.", e);
-			throw new SQLException("Select Error.");
+			throw new SQLException("Select Error.", e);
 		}
 		return msglist;
 	}
@@ -110,7 +104,7 @@ public class PostgresService implements Database {
 			stmt.executeUpdate(deletesql);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Delete Errorr.", e);
-			throw new SQLException("Delete Error.");
+			throw new SQLException("Delete Error.", e);
 		}
 		return "Delete Msg Records";
 	}

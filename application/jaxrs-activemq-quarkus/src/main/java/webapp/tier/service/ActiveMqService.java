@@ -68,8 +68,7 @@ public class ActiveMqService implements Messaging, Runnable {
 	public MsgBean putMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Put");
 		String body = MsgUtils.createBody(msgbean, splitkey);
-		try (JMSContext context = connectionFactory
-				.createContext(Session.AUTO_ACKNOWLEDGE)) {
+		try (JMSContext context = createContext()) {
 			context.createProducer().send(context.createQueue(queuename),
 					context.createTextMessage(body));
 		}
@@ -79,16 +78,11 @@ public class ActiveMqService implements Messaging, Runnable {
 
 	@Override
 	public MsgBean getMsg() throws RuntimeException {
-		MsgBean msgbean = null;
-		try (JMSContext context = connectionFactory
-				.createContext(Session.AUTO_ACKNOWLEDGE);
-				JMSConsumer consumer = context
-						.createConsumer(context.createQueue(queuename))) {
+		MsgBean msgbean = new MsgBean(0, "No Data.", "Get");
+		try (JMSConsumer consumer = createConsumerQueue(createContext())) {
 			String resp = consumer.receiveBody(String.class);
 
-			if (Objects.isNull(resp)) {
-				msgbean = new MsgBean(0, "No Data.", "Get");
-			} else {
+			if (!Objects.isNull(resp)) {
 				msgbean = MsgUtils.splitBody(resp, splitkey);
 				msgbean.setFullmsg("Get");
 			}
@@ -101,11 +95,10 @@ public class ActiveMqService implements Messaging, Runnable {
 	public MsgBean publishMsg() throws NoSuchAlgorithmException {
 		MsgBean msgbean = new MsgBean(CreateId.createid(), message, "Publish");
 		String body = MsgUtils.createBody(msgbean, splitkey);
-		try (JMSContext context = connectionFactory
-				.createContext(Session.AUTO_ACKNOWLEDGE)) {
+		try (JMSContext context = createContext()) {
 			context.createProducer().send(context.createTopic(topicname),
 					context.createTextMessage(body));
-		}
+		} 
 		logger.log(Level.INFO, msgbean.getFullmsg());
 		return msgbean;
 	}
@@ -113,15 +106,24 @@ public class ActiveMqService implements Messaging, Runnable {
 	@Override
 	public void run() {
 		while (isEnableReceived) {
-			try (JMSContext context = connectionFactory
-					.createContext(Session.AUTO_ACKNOWLEDGE);
-					JMSConsumer consumer = context
-							.createConsumer(context.createTopic(topicname))) {
+			try (JMSConsumer consumer = createConsumerTopic(createContext())) {
 				amqconsumer.consume(consumer);
 			} catch (Exception e) {
 				logger.log(Level.SEVERE, "Subscribe Error.", e);
 				stopReceived();
 			}
 		}
+	}
+
+	private JMSContext createContext() {
+		return connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
+	}
+
+	private JMSConsumer createConsumerTopic(JMSContext context) {
+		return context.createConsumer(context.createTopic(topicname));
+	}
+	
+	private JMSConsumer createConsumerQueue(JMSContext context) {
+		return context.createConsumer(context.createQueue(queuename));
 	}
 }

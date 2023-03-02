@@ -3,7 +3,6 @@ package webapp.tier.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.QuarkusTestResource;
@@ -22,9 +21,7 @@ class KafkaConverterTest {
 	KafkaCompanion companion;
 
 	String testBody = "Test,Message";
-
-	@ConfigProperty(name = "common.message")
-	String message;
+	String message = "Hello k8s-3tier-webapp with quarkus";
 
 	@Test
 	void testConvert() throws InterruptedException {

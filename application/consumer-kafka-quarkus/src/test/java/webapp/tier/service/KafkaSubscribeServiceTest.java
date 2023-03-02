@@ -1,3 +1,4 @@
+
 package webapp.tier.service;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +19,7 @@ import io.smallrye.reactive.messaging.kafka.companion.ProducerTask;
 @QuarkusTest
 @QuarkusTestResource(KafkaCompanionResource.class)
 class KafkaSubscribeServiceTest {
+
 	@Inject
 	KafkaSubscribeService svc;
 

@@ -16,14 +16,12 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.sse.SseEventSource;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.kafka.InjectKafkaCompanion;
 import io.quarkus.test.kafka.KafkaCompanionResource;
-import io.restassured.RestAssured;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.subscription.UniEmitter;
 import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
@@ -36,9 +34,7 @@ class KafkaResourceTest {
 	KafkaCompanion companion;
 
 	String testBody = "Test Message";
-
-	@ConfigProperty(name = "common.message")
-	String message;
+	String message = "Hello k8s-3tier-webapp with quarkus";
 
 	@Test
 	void testPublish() {
@@ -59,8 +55,7 @@ class KafkaResourceTest {
 
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client
-				.target("http://localhost:" + RestAssured.port
-						+ "/quarkus/kafka/subscribe");
+				.target("http://localhost:" + port + "/quarkus/kafka/subscribe");
 		try (SseEventSource eventSource = SseEventSource.target(target).build()) {
 			Uni<List<String>> petList = Uni.createFrom()
 					.emitter(new Consumer<UniEmitter<? super List<String>>>() {

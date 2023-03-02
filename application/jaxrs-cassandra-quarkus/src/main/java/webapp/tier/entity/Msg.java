@@ -11,6 +11,7 @@ public class Msg {
 	private String msg;
 
 	public Msg() {
+		// This constructor is intentionally empty. Nothing special is needed here.
 	}
 
 	public Msg(int id, String msg) {

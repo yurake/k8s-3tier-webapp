@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import webapp.tier.bean.MsgBean;
 
-public class MsgUtils {
+public final class MsgUtils {
 
 	private MsgUtils() {
 	}

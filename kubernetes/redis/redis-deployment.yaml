@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: redis-master
-          image: redis:7.0.7
+          image: redis:7.0.9
           ports:
             - containerPort: 6379
           livenessProbe:
@@ -32,7 +32,7 @@ spec:
                 - redis-cli
                 - ping
         - name: redis-exporter
-          image: oliver006/redis_exporter:v1.45.0-alpine
+          image: oliver006/redis_exporter:v1.47.0-alpine
           ports:
             - containerPort: 9121
           livenessProbe:

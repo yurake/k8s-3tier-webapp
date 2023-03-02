@@ -8,6 +8,9 @@ on:
       - "application/**"
       - "kubernetes/**"
       - ".github/workflows/kind-quarkus-ci.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/kind-quarkus-ci.yml"
 
 jobs:
   quarkus-ci:

@@ -3,6 +3,7 @@ package webapp.tier.healthcheck;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -27,8 +28,8 @@ class ReadinessHealthCheckHazelcastTest {
 	void testCallUp() throws IOException, TimeoutException {
 		ReadinessHealthCheckHazelcast hc = new ReadinessHealthCheckHazelcast() {
 			protected HazelcastServiceStatus createHazelcastStatus() {
-				HazelcastServiceStatus mock = Mockito.mock(HazelcastServiceStatus.class);
-				Mockito.when(mock.isActive()).thenReturn(true);
+				HazelcastServiceStatus mock = mock(HazelcastServiceStatus.class);
+				when(mock.isActive()).thenReturn(true);
 				return mock;
 			}
 		};

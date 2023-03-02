@@ -33,7 +33,6 @@ class MysqlResourceTest {
 		} catch (SQLException e) {
 			e.fillInStackTrace();
 		}
-		return;
 	}
 
 	@AfterEach
@@ -46,7 +45,6 @@ class MysqlResourceTest {
 		} catch (SQLException e) {
 			e.fillInStackTrace();
 		}
-		return;
 	}
 
 	@Test
