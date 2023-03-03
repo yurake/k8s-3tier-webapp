@@ -32,7 +32,7 @@ spec:
                 - redis-cli
                 - ping
         - name: redis-exporter
-          image: oliver006/redis_exporter:v1.47.0-alpine
+          image: oliver006/redis_exporter:v1.48.0-alpine
           ports:
             - containerPort: 9121
           livenessProbe:
