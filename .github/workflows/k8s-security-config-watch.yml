@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # checkout Master branch
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
         with:
           ref: master
           path: master
       # checkout PR branch
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
         with:
           path: candidate
           ref: ${{ github.event.pull_request.head.sha }}

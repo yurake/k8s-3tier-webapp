@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.4.0
         with:
           fetch-depth: 0
       - name: Setup GraalVM
@@ -125,7 +125,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.4.0
         with:
           fetch-depth: 0
       - name: Setup GraalVM
@@ -240,7 +240,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.4.0
         with:
           fetch-depth: 0
       - name: Setup GraalVM

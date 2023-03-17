@@ -9,7 +9,7 @@ jobs:
   minikube-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
       - name: check minikube version
         working-directory: ./.github/workflows
         run: |
@@ -67,7 +67,7 @@ jobs:
   kubernetes-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
       - name: check kubernetes version
         working-directory: ./.github/workflows
         run: |
@@ -125,7 +125,7 @@ jobs:
   chaos-mesh-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
       - name: check current chaos-mesh version
         working-directory: ./.github/workflows
         run: |
@@ -175,7 +175,7 @@ jobs:
   quarkus-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
       - name: check current quarkus version
         run: |
           echo "SOURCE_VERSION=$(grep "Quarkus Version" README.md | cut -d '-' -f 2)" >> $GITHUB_ENV
