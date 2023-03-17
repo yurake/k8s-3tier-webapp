@@ -22,7 +22,7 @@ jobs:
         dockerfile_default:
           [mysql, postgres, mongodb, rabbitmq, nginx, cassandra]
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
       - name: lint ${{ matrix.dockerfile_default }}
         uses: hadolint/hadolint-action@v3.1.0
         with:
@@ -59,7 +59,7 @@ jobs:
             server-grpc-quarkus,
           ]
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
       - name: lint ${{ matrix.dockerfile_application }}
         uses: hadolint/hadolint-action@v3.1.0
         with:
@@ -73,7 +73,7 @@ jobs:
       matrix:
         dockerfile_monitoring: [jenkins]
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
       - name: lint ${{ matrix.dockerfile_monitoring }}
         uses: hadolint/hadolint-action@v3.1.0
         with:
@@ -86,7 +86,7 @@ jobs:
       matrix:
         dockerfile_ab: [ab]
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
       - name: lint ${{ matrix.dockerfile_ab }}
         uses: hadolint/hadolint-action@v3.1.0
         with:
@@ -96,7 +96,7 @@ jobs:
   dockerfile_postmannewman:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.4.0
       - name: lint ${{ matrix.dockerfile_postmannewman }}
         uses: hadolint/hadolint-action@v3.1.0
         with:
