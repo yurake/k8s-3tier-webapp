@@ -70,17 +70,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Run Snyk to check Docker image for vulnerabilities - nginx
-        continue-on-error: true
-        uses: snyk/actions/docker@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ secrets.DOCKERHUB_USER }}/nginx
-          args: --severity-threshold=high --file=kubernetes/nginx/Dockerfile
-      - name: rename sarif file
-        run: mv snyk.sarif nginx.sarif
-
       - name: Build and push - mysql
         uses: docker/build-push-action@v4
         with:
@@ -116,17 +105,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Run Snyk to check Docker image for vulnerabilities - postgres
-        continue-on-error: true
-        uses: snyk/actions/docker@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ secrets.DOCKERHUB_USER }}/postgres
-          args: --severity-threshold=high --file=kubernetes/postgres/Dockerfile
-      - name: rename sarif file
-        run: mv snyk.sarif postgres.sarif
-
       - name: Build and push - mongodb
         uses: docker/build-push-action@v4
         with:
@@ -138,17 +116,6 @@ jobs:
             BUILD_DATE=${BUILD_DATE}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Run Snyk to check Docker image for vulnerabilities - mongodb
-        continue-on-error: true
-        uses: snyk/actions/docker@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ secrets.DOCKERHUB_USER }}/mongodb
-          args: --severity-threshold=high --file=kubernetes/mongodb/Dockerfile
-      - name: rename sarif file
-        run: mv snyk.sarif mongodb.sarif
 
       - name: Build and push - cassandra
         uses: docker/build-push-action@v4
@@ -162,17 +129,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Run Snyk to check Docker image for vulnerabilities - cassandra
-        continue-on-error: true
-        uses: snyk/actions/docker@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ secrets.DOCKERHUB_USER }}/cassandra
-          args: --severity-threshold=high --file=kubernetes/cassandra/Dockerfile
-      - name: rename sarif file
-        run: mv snyk.sarif cassandra.sarif
-
       - name: Build and push - rabbitmq
         uses: docker/build-push-action@v4
         with:
@@ -184,17 +140,6 @@ jobs:
             BUILD_DATE=${BUILD_DATE}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Run Snyk to check Docker image for vulnerabilities - rabbitmq
-        continue-on-error: true
-        uses: snyk/actions/docker@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ secrets.DOCKERHUB_USER }}/rabbitmq
-          args: --severity-threshold=high --file=kubernetes/rabbitmq/Dockerfile
-      - name: rename sarif file
-        run: mv snyk.sarif rabbitmq.sarif
 
       - name: Build and push - jenkins
         uses: docker/build-push-action@v4
@@ -208,17 +153,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Run Snyk to check Docker image for vulnerabilities - jenkins
-        continue-on-error: true
-        uses: snyk/actions/docker@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ secrets.DOCKERHUB_USER }}/jenkins
-          args: --severity-threshold=high --file=kubernetes/monitoring/jenkins/Dockerfile
-      - name: rename sarif file
-        run: mv snyk.sarif jenkins.sarif
-
       - name: Build and push - ab
         uses: docker/build-push-action@v4
         with:
@@ -231,17 +165,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Run Snyk to check Docker image for vulnerabilities - ab
-        continue-on-error: true
-        uses: snyk/actions/docker@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ secrets.DOCKERHUB_USER }}/ab
-          args: --severity-threshold=high --file=kubernetes/monitoring/test/ab/Dockerfile
-      - name: rename sarif file
-        run: mv snyk.sarif ab.sarif
-
       - name: Build and push - postmannewman-quarkus
         uses: docker/build-push-action@v4
         with:
@@ -253,19 +176,3 @@ jobs:
             BUILD_DATE=${BUILD_DATE}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Run Snyk to check Docker image for vulnerabilities - postmannewman-quarkus
-        continue-on-error: true
-        uses: snyk/actions/docker@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ secrets.DOCKERHUB_USER }}/postmannewman-quarkus
-          args: --severity-threshold=high --file=kubernetes/monitoring/test/postmannewman/quarkus/Dockerfile
-      - name: rename sarif file
-        run: mv snyk.sarif postmannewman-quarkus.sarif
-
-      - name: Upload result to GitHub Code Scanning - postmannewman-quarkus
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: ./
