@@ -22,7 +22,7 @@ jobs:
         uses: medyagh/setup-minikube@v0.0.11
         with:
           minikube-version: 1.29.0
-          kubernetes-version: 1.26.2
+          kubernetes-version: 1.26.3
           driver: docker
           container-runtime: docker
           cpus: 2
