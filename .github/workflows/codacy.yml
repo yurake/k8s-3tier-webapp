@@ -34,11 +34,11 @@ jobs:
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout code
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.5.0
 
       # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
       - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@ef422f6103f5a35816d8c07e880caad40e5cb07a
+        uses: codacy/codacy-analysis-cli-action@db33ad5cfab49143adf0db6e890cf4bb9fb37b1c
         with:
           # Check https://github.com/codacy/codacy-analysis-cli#project-token to get your project token from your Codacy repository
           # You can also omit the token and run the tools that support default configurations
