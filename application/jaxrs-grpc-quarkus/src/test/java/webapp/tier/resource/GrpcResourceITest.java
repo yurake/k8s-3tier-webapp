@@ -13,7 +13,7 @@ import io.grpc.ManagedChannelBuilder;
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
 @QuarkusIntegrationTest
-class GrpcResourceIT {
+class GrpcResourceITest {
 
 	private ManagedChannel channel;
 

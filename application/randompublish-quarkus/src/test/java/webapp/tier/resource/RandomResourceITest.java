@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
 @QuarkusIntegrationTest
-class RandomResourceIT {
+class RandomResourceITest {
 	
 	@Test
 	void testrandom() throws Exception {
