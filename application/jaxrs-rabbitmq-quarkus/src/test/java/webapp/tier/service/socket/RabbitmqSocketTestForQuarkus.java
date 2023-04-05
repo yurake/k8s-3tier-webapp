@@ -21,11 +21,11 @@ import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class HazelcastSocketForQuarkusTest {
+class RabbitmqSocketTestForQuarkus {
 
 	private static final LinkedBlockingDeque<String> MESSAGES = new LinkedBlockingDeque<>();
 
-	@TestHTTPResource("/quarkus/hazelcast/subscribe")
+	@TestHTTPResource("/quarkus/rabbitmq/subscribe")
 	URI uri;
 
 	@Test

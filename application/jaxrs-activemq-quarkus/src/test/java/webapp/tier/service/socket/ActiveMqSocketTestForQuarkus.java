@@ -21,7 +21,7 @@ import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-class ActiveMqSocketForQuarkusTest {
+class ActiveMqSocketTestForQuarkus {
 
 	private static final LinkedBlockingDeque<String> MESSAGES = new LinkedBlockingDeque<>();
 

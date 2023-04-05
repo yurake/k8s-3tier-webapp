@@ -12,7 +12,7 @@ import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
 import io.smallrye.reactive.messaging.kafka.companion.ProducerTask;
 
 @QuarkusIntegrationTest
-class KafkaSubscribeServiceITest {
+class KafkaSubscribeServiceIT {
 	
 	@InjectKafkaCompanion
 	KafkaCompanion companion;
