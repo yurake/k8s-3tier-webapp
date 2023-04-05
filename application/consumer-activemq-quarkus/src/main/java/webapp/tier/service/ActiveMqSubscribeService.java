@@ -51,6 +51,7 @@ public class ActiveMqSubscribeService implements Runnable {
 		ActiveMqSubscribeService.isEnableReceived = false;
 	}
 
+	@Override
 	public void run() {
 		while (isEnableReceived) {
 			try (JMSContext context = connectionFactory
