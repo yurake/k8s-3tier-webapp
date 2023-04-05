@@ -1,7 +1,7 @@
 package webapp.tier.service.socket;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 import java.net.URI;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -29,7 +29,7 @@ class ActiveMqSocketForQuarkusTest {
 	URI uri;
 
 	@Test
-	public void testOnMessage() throws Exception {
+	void testOnMessage() throws Exception {
 		try (Session session = ContainerProvider.getWebSocketContainer()
 				.connectToServer(Client.class, uri)) {
 			assertThat(MESSAGES.poll(10, TimeUnit.SECONDS), is("CONNECT"));
