@@ -25,7 +25,7 @@ class CallRandomPublshScheduleTest {
 	}
 
 	@Test
-	void testCallDeleteDbsError() {
+	void testCallDeleteDbs() {
 		try {
 			rps.callDeleteDbs();
 		} catch (Exception expected) {
@@ -33,5 +33,4 @@ class CallRandomPublshScheduleTest {
 			fail();
 		}
 	}
-
 }
