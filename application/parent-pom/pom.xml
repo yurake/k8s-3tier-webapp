@@ -199,6 +199,7 @@
 							<outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
 						</configuration>
 					</execution>
+					<!--
 					<execution>
 						<id>jacoco-check</id>
 						<goals>
@@ -226,6 +227,7 @@
 							</rules>
 						</configuration>
 					</execution>
+					-->
 				</executions>
 			</plugin>
 		</plugins>

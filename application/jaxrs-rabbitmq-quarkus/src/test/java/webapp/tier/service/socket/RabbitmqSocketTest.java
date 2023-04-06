@@ -10,7 +10,6 @@ import javax.websocket.RemoteEndpoint;
 import javax.websocket.Session;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import io.quarkus.test.junit.QuarkusTest;
 
