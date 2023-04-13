@@ -61,7 +61,7 @@ jobs:
       - name: update kubectl version
         uses: azure/setup-kubectl@v3
         with:
-          version: ${SERVER_KUBECTL_VERSION}
+          version: ${{ env.SERVER_KUBECTL_VERSION }}
 
       - name: install chaos mesh
         run: |
