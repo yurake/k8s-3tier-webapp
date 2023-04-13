@@ -57,12 +57,12 @@ jobs:
         run: |
           kubectl version --output=yaml | grep gitVersion | sed 's/.*gitVersion: v\([0-9.]*\).*/\1/g' | sed -n '2p'
           echo "SERVER_KUBECTL_VERSION=$(kubectl version --output=yaml | grep gitVersion | sed 's/.*gitVersion: v\([0-9.]*\).*/\1/g' | sed -n '2p')" >> $GITHUB_ENV
+          echo "SERVER_V_KUBECTL_VERSION=$(echo v${{ env.SERVER_KUBECTL_VERSION }})" >> $GITHUB_ENV
 
       - name: update kubectl version
         uses: azure/setup-kubectl@v3
         with:
-          version: 1.25
-#          version: ${{ env.SERVER_KUBECTL_VERSION }}
+          version: ${{ env.SERVER_V_KUBECTL_VERSION }}
 
       - name: install chaos mesh
         run: |
