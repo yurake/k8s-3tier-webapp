@@ -19,13 +19,10 @@ jobs:
   chaos-mesh-ci:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v3.5.0
       - name: Kind Cluster
         uses: helm/kind-action@v1.5.0
-
-      - uses: azure/setup-kubectl@v3
-        with:
-          version: "latest"
-        id: install
 
       - name: Print cluster information
         run: |
@@ -34,8 +31,21 @@ jobs:
           kubectl get nodes
           kubectl get pods -n kube-system
           helm version
-          kubectl version
-      - uses: actions/checkout@v3.5.0
+          kubectl version --output=yaml
+
+      - name: check server kubectl version
+        run: |
+          echo "SERVER_KUBECTL_VERSION=$(kubectl version --output=yaml | grep gitVersion | sed 's/.*gitVersion: v\([0-9.]*\).*/\1/g' | sed -n '2p')" >> $GITHUB_ENV
+
+      - name: add v to kubectl version
+        run: |
+          echo "SERVER_V_KUBECTL_VERSION=$(echo v${{ env.SERVER_KUBECTL_VERSION }})" >> $GITHUB_ENV
+
+      - name: update kubectl version
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ env.SERVER_V_KUBECTL_VERSION }}
+
       - name: Deploy an application
         run: |
           kubectl apply -f kubernetes/mysql/mysql-pv.yaml
