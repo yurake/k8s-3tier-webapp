@@ -31,7 +31,7 @@ jobs:
           kubectl get nodes
           kubectl get pods -n kube-system
           helm version
-          kubectl version
+          kubectl version --output=yaml 2>&1 1>/dev/null
       - name: Deploy an application
         run: |
           kubectl apply -f kubernetes/mysql/mysql-pv.yaml
