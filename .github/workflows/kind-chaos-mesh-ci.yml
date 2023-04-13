@@ -31,7 +31,7 @@ jobs:
           kubectl get nodes
           kubectl get pods -n kube-system
           helm version
-          kubectl version --output=yaml 2>&1 1>/dev/null
+          kubectl version --output=yaml
       - name: Deploy an application
         run: |
           kubectl apply -f kubernetes/mysql/mysql-pv.yaml
@@ -52,6 +52,16 @@ jobs:
         run: |
           kubectl get pods -n chaos-testing
           kubectl get pods
+
+      - name: check server kubectl version
+        run: |
+          kubectl version --output=yaml | grep gitVersion | sed 's/.*gitVersion: v\([0-9.]*\).*/\1/g' | sed -n '2p'
+          echo "SERVER_KUBECTL_VERSION=$(kubectl version --output=yaml | grep gitVersion | sed 's/.*gitVersion: v\([0-9.]*\).*/\1/g' | sed -n '2p')" >> $GITHUB_ENV
+
+      - name: update kubectl version
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${SERVER_KUBECTL_VERSION}
 
       - name: install chaos mesh
         run: |
