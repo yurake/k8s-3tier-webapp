@@ -19,6 +19,8 @@ jobs:
   chaos-mesh-ci:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v3.5.0
       - name: Kind Cluster
         uses: helm/kind-action@v1.5.0
 
@@ -30,7 +32,6 @@ jobs:
           kubectl get pods -n kube-system
           helm version
           kubectl version
-      - uses: actions/checkout@v3.5.0
       - name: Deploy an application
         run: |
           kubectl apply -f kubernetes/mysql/mysql-pv.yaml
