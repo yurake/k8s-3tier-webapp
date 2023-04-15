@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 
 import com.whalin.MemCached.MemCachedClient;
 

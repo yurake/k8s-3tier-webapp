@@ -45,7 +45,8 @@ public class PostgresService implements Database {
 
 	public boolean connectionStatus() {
 		boolean status = false;
-		try (Connection con = ds.getConnection()) {
+		try {
+			ds.getConnection();
 			status = true;
 		} catch (SQLException | NullPointerException e) {
 			logger.log(Level.SEVERE, "Status Check Error.", e);
