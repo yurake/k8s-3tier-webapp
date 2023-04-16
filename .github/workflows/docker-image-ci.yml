@@ -208,17 +208,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Run Snyk to check Docker image for vulnerabilities - jenkins
-        continue-on-error: true
-        uses: snyk/actions/docker@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ secrets.DOCKERHUB_USER }}/jenkins
-          args: --severity-threshold=critical --file=kubernetes/monitoring/jenkins/Dockerfile
-      - name: rename sarif file
-        run: mv snyk.sarif jenkins.sarif
-
       - name: Build and push - ab
         uses: docker/build-push-action@v4
         with:
