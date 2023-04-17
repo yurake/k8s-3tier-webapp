@@ -29,7 +29,7 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2844382aa110487e94bba8369267476e)](https://www.codacy.com/gh/yurake/k8s-3tier-webapp/dashboard?utm_source=github.com\&utm_medium=referral\&utm_content=yurake/k8s-3tier-webapp\&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/2844382aa110487e94bba8369267476e)](https://www.codacy.com/gh/yurake/k8s-3tier-webapp/dashboard?utm_source=github.com\&utm_medium=referral\&utm_content=yurake/k8s-3tier-webapp\&utm_campaign=Badge_Coverage)
 [![CodeFactor](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp/badge)](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp) [![Maintainability](https://api.codeclimate.com/v1/badges/64a1de96c5eb777b9db1/maintainability)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/maintainability)
-[![codebeat badge](https://codebeat.co/badges/e0bfc464-3370-467d-910f-ade9d832.5.2)](https://codebeat.co/projects/github-com-yurake-k8s-3tier-webapp-master)
+[![codebeat badge](https://codebeat.co/badges/e0bfc464-3370-467d-910f-ade9d83265b1)](https://codebeat.co/projects/github-com-yurake-k8s-3tier-webapp-master)
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
 [![Codiga Code Quality Score](https://api.codiga.io/project/34687/score/svg)](https://app.codiga.io)
 [![Codiga Code Grade](https://api.codiga.io/project/34687/status/svg)](https://app.codiga.io)
