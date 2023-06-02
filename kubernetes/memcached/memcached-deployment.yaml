@@ -30,7 +30,7 @@ spec:
             tcpSocket:
               port: 11211
         - name: memcached-exporter
-          image: prom/memcached-exporter:v0.12.0
+          image: prom/memcached-exporter:v0.13.0
           ports:
             - containerPort: 9150
           livenessProbe:
