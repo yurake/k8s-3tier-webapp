@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
       - name: delete installed software not use
         run: |
           df -h /
@@ -32,7 +32,7 @@ jobs:
         uses: medyagh/setup-minikube@v0.0.13
         with:
           minikube-version: 1.30.1
-          kubernetes-version: 1.27.2
+          kubernetes-version: 1.27.3
           driver: docker
           container-runtime: docker
           cpus: 2
