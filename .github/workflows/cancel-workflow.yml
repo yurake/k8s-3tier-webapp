@@ -16,7 +16,7 @@ jobs:
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: cancel running workflows
-        uses: everphone-gmbh/cancel-previous-workflows@v5
+        uses: everphone-gmbh/cancel-previous-workflows@v5.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: n1hility/cancel-previous-runs@v3
