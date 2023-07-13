@@ -25,7 +25,7 @@ jobs:
           sh ./kubernetes/bin/apply-default-quarkus.sh
           sleep 10
       - name: Setup bats
-        uses: mig4/setup-bats@v1
+        uses: mig4/setup-bats@v1.2.0
         with:
           bats-version: 1.2.1
       - name: Run bats
