@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Assign PullRequest to Project
-        uses: technote-space/create-project-card-action@v1
+        uses: technote-space/create-project-card-action@v1.4.2
         with:
           PROJECT: Feature request
           COLUMN: In progress
