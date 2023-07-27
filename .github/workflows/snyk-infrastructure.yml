@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3.5.3
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/iac@87b58602664ec2c1c4fd286e2dcf71f2c5a331d6
+        uses: snyk/actions/iac@299cde98a08ff8b1c2bfde1e5a067bce67a6d2b8
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/iac@87b58602664ec2c1c4fd286e2dcf71f2c5a331d6
+        uses: snyk/actions/iac@299cde98a08ff8b1c2bfde1e5a067bce67a6d2b8
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
