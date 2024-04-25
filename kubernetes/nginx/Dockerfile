@@ -1,4 +1,4 @@
-FROM nginx:1.25.1
+FROM nginx:1.26
 ENV TZ Asia/Tokyo
 ARG BUILD_DATE
 ARG VCS_REF
