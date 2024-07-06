@@ -19,7 +19,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3.6.0
       - name: Kind Cluster
-        uses: helm/kind-action@v1.8.0
+        uses: helm/kind-action@v1.10.0
       - name: apply minimal service
         run: |
           sh ./kubernetes/bin/apply-default-quarkus.sh
