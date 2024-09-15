@@ -16,7 +16,7 @@ jobs:
   validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.1.7
       - name: validate yaml manifests
         uses: instrumenta/kubeval-action@master
         with:
