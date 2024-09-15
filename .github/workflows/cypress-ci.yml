@@ -10,11 +10,11 @@ on:
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.3
-      - uses: bahmutov/npm-install@v1.8.34
+        uses: actions/checkout@v3.6.0
+      - uses: bahmutov/npm-install@v1.10.2
         with:
           working-directory: kubernetes/monitoring/test/cypress
       - name: Cypress run
