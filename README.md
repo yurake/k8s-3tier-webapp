@@ -31,8 +31,6 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![CodeFactor](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp/badge)](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp) [![Maintainability](https://api.codeclimate.com/v1/badges/64a1de96c5eb777b9db1/maintainability)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/maintainability)
 [![codebeat badge](https://codebeat.co/badges/e0bfc464-3370-467d-910f-ade9d83265b1)](https://codebeat.co/projects/github-com-yurake-k8s-3tier-webapp-master)
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
-[![Codiga Code Quality Score](https://api.codiga.io/project/34687/score/svg)](https://app.codiga.io)
-[![Codiga Code Grade](https://api.codiga.io/project/34687/status/svg)](https://app.codiga.io)
 [![DeepSource Active Issues](https://deepsource.io/gh/yurake/k8s-3tier-webapp.svg/?label=active+issues\&show_trend=true\&token=Y64jIS9a54isgV4hi4_uuerZ)](https://deepsource.io/gh/yurake/k8s-3tier-webapp/?ref=repository-badge)
 [![DeepSource Resluved Issues](https://deepsource.io/gh/yurake/k8s-3tier-webapp.svg/?label=resolved+issues\&show_trend=true\&token=Y64jIS9a54isgV4hi4_uuerZ)](https://deepsource.io/gh/yurake/k8s-3tier-webapp/?ref=repository-badge)
 [![Cypress](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/detailed/7rgxn6/master\&style=flat\&logo=cypress)](https://dashboard.cypress.io/projects/7rgxn6/runs)  
