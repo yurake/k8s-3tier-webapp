@@ -13,16 +13,16 @@ on:
       - ".github/workflows/kind-chaos-mesh-ci.yml"
 
 env:
-  CHAOS_MESH_VERSION: 2.6.1
+  CHAOS_MESH_VERSION: 2.6.4
 
 jobs:
   chaos-mesh-ci:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4.1.7
       - name: Kind Cluster
-        uses: helm/kind-action@v1.8.0
+        uses: helm/kind-action@v1.10.0
 
       - name: Print cluster information
         run: |
