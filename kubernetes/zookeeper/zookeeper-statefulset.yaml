@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: zookeeper
-          image: bitnami/zookeeper:3-debian-10
+          image: bitnami/zookeeper:3.9.2-debian-12-r9
           imagePullPolicy: Always
           ports:
             - containerPort: 2181

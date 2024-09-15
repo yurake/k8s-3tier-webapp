@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.6.0
       - name: start minikube
-        uses: medyagh/setup-minikube@v0.0.13
+        uses: medyagh/setup-minikube@v0.0.18
         with:
           minikube-version: 1.31.0
           kubernetes-version: 1.27.3
@@ -47,7 +47,7 @@ jobs:
           kubectl apply -f kubernetes/nginx/nginx-service.yaml
           sleep 10
       - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.8.2
+        uses: zaproxy/action-baseline@v0.12.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: "http://k8s.3tier.webapp/"
