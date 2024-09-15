@@ -13,7 +13,7 @@ jobs:
     name: Add issue to project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@RELEASE_VERSION
+      - uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/users/yurake/projects/1/views/1
           github-token: ${{ secrets.GITHUB_TOKEN }}
