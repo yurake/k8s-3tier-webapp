@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
+        uses: styfle/cancel-workflow-action@0.12.1
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: cancel running workflows
-        uses: everphone-gmbh/cancel-previous-workflows@v5
+        uses: everphone-gmbh/cancel-previous-workflows@v5.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: n1hility/cancel-previous-runs@v3
