@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4.1.7
         with:
           fetch-depth: 0
       - name: Setup GraalVM
@@ -37,13 +37,13 @@ jobs:
           languages: java
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-parent-pom
           restore-keys: ${{ runner.os }}-sonar-parent-pom
       - name: Cache local Maven repository
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-parent-pom-${{ hashFiles('**/parent-pom/pom.xml') }}
@@ -56,13 +56,13 @@ jobs:
         run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-webapp-service
           restore-keys: ${{ runner.os }}-sonar-webapp-service
       - name: Cache local Maven repository
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-webapp-service-${{ hashFiles('**/webapp-service/pom.xml') }}
@@ -75,7 +75,7 @@ jobs:
         run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3.1.6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
@@ -125,7 +125,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4.1.7
         with:
           fetch-depth: 0
       - name: Setup GraalVM
@@ -149,9 +149,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v2.10.0
       - name: Cache Docker layers
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: /tmp/.buildx-cache
           key: ${{ github.ref }}-${{ github.sha }}
@@ -168,13 +168,13 @@ jobs:
           fi
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-${{ matrix.application }}
           restore-keys: ${{ runner.os }}-sonar-${{ matrix.application }}
       - name: Cache local Maven repository
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ matrix.application }}-${{ hashFiles('**/${{ matrix.application }}/pom.xml') }}
@@ -186,7 +186,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify --settings ../.m2/settings.xml
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v4.2.1
         with:
           file: application/${{ matrix.application }}/src/main/docker/Dockerfile.jvm
           context: application/${{ matrix.application }}
@@ -196,7 +196,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3.1.6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
@@ -240,7 +240,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4.1.7
         with:
           fetch-depth: 0
       - name: Setup GraalVM
@@ -264,9 +264,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v2.10.0
       - name: Cache Docker layers
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: /tmp/.buildx-cache
           key: ${{ github.ref }}-${{ github.sha }}
@@ -283,13 +283,13 @@ jobs:
           fi
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-${{ matrix.application }}
           restore-keys: ${{ runner.os }}-sonar-${{ matrix.application }}
       - name: Cache local Maven repository
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ matrix.application }}-${{ hashFiles('**/${{ matrix.application }}/pom.xml') }}
@@ -301,7 +301,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify --settings ../.m2/settings.xml -Pnative
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v4.2.1
         with:
           file: application/${{ matrix.application }}/src/main/docker/Dockerfile.native
           context: application/${{ matrix.application }}
@@ -311,7 +311,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3.1.6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter

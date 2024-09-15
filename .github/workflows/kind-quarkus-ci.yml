@@ -17,15 +17,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v4.1.7
       - name: Kind Cluster
-        uses: helm/kind-action@v1.7.0
+        uses: helm/kind-action@v1.10.0
       - name: apply minimal service
         run: |
           sh ./kubernetes/bin/apply-default-quarkus.sh
           sleep 10
       - name: Setup bats
-        uses: mig4/setup-bats@v1
+        uses: mig4/setup-bats@v1.2.0
         with:
           bats-version: 1.2.1
       - name: Run bats

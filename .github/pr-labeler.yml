@@ -1,23 +1,37 @@
+# Directory pattern
 cicd:
-  - .github/**/*
+  - changed-files:
+      - any-glob-to-any-file: .github/**/*
 docs:
-  - docs/**/*
-  - "**/*.md"
+  - changed-files:
+      - any-glob-to-any-file: 
+          - docs/**/*
+          - "**/*.md"
 github-action:
-  - .github/**/*
+  - changed-files:
+      - any-glob-to-any-file:  .github/**/*
 java:
-  - application/**/*
-  - "**/*.java"
+  - changed-files:
+      - any-glob-to-any-file:
+          - application/**/*
+          - "**/*.java"
 javascript:
-  - application/**/*.js
-  - "**/*.js"
+  - changed-files:
+      - any-glob-to-any-file: 
+          - application/**/*.js
+          - "**/*.js"
 kubernetes:
-  - kubernetes/**/*
+  - changed-files:
+      - any-glob-to-any-file: kubernetes/**/*
 quarkus:
-  - application/*-quarkus/*
+  - changed-files:
+      - any-glob-to-any-file: application/*-quarkus/*
 docker:
-  - "**/Dockerfile"
+  - changed-files:
+      - any-glob-to-any-file: "**/Dockerfile"
 kind:
-  - "**/kind-*"
+  - changed-files:
+      - any-glob-to-any-file: "**/kind-*"
 minikube:
-  - "**/minikube-*"
+  - changed-files:
+      - any-glob-to-any-file:  "**/minikube-*"
