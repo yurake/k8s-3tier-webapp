@@ -39,7 +39,7 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Support Quarkus Version](https://img.shields.io/badge/Quarkus-2.16.8-yellow.svg?style=flat\&logo=Quarkus)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
 [![Support Kubernetes Version](https://img.shields.io/badge/Kubernetes-1.27.3-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
 [![Support Minikube Version](https://img.shields.io/badge/Minikube-1.30.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
-[![Support kind Version](https://img.shields.io/badge/kind-2.6.2-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22kind+CI%22)
+[![Support kind Version](https://img.shields.io/badge/kind-2.6.4-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22kind+CI%22)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE/)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyurake%2Fk8s-3tier-webapp?ref=badge_shield)  
 
