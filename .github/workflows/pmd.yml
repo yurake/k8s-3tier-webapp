@@ -69,7 +69,7 @@ jobs:
           distribution: "temurin"
       - name: Run PMD
         id: pmd
-        uses: pmd/pmd-github-action@v1.4.1
+        uses: pmd/pmd-github-action@v2.0.0
         with:
           rulesets: "${{ github.workspace }}/.github/pmdrule.xml"
           sourcePath: "application/${{ matrix.quarkus_application }}/src/main/java"
