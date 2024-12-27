@@ -55,7 +55,7 @@ jobs:
           sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_MINIKUBE_VERSION/g" ../../README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        uses: peter-evans/create-pull-request@v5.0.3
+        uses: peter-evans/create-pull-request@v7.0.6
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-minikube
@@ -113,7 +113,7 @@ jobs:
           sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_KUBERNETES_VERSION/g" ../../README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        uses: peter-evans/create-pull-request@v5.0.3
+        uses: peter-evans/create-pull-request@v7.0.6
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-kubernetes
@@ -163,7 +163,7 @@ jobs:
           sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_VERSION/g" ../../README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        uses: peter-evans/create-pull-request@v5.0.3
+        uses: peter-evans/create-pull-request@v7.0.6
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-chaos-mesh
@@ -208,7 +208,7 @@ jobs:
           sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        uses: peter-evans/create-pull-request@v5.0.3
+        uses: peter-evans/create-pull-request@v7.0.6
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-quarkus
