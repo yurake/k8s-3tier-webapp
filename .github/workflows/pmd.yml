@@ -61,7 +61,7 @@ jobs:
             server-grpc-quarkus,
           ]
     steps:
-      - uses: actions/checkout@v4.1.7
+      - uses: actions/checkout@v4.2.2
       - name: Set up JDK
         uses: actions/setup-java@v4.3.0
         with:
