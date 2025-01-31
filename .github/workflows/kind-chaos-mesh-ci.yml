@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
       - name: Kind Cluster
-        uses: helm/kind-action@v1.10.0
+        uses: helm/kind-action@v1.12.0
 
       - name: Print cluster information
         run: |
@@ -42,7 +42,7 @@ jobs:
           echo "SERVER_V_KUBECTL_VERSION=$(echo v${{ env.SERVER_KUBECTL_VERSION }})" >> $GITHUB_ENV
 
       - name: update kubectl version
-        uses: azure/setup-kubectl@v3.2
+        uses: azure/setup-kubectl@v4.0.0
         with:
           version: ${{ env.SERVER_V_KUBECTL_VERSION }}
 
