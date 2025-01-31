@@ -20,7 +20,6 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Cypress CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cypress-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cypress-ci.yml)
 [![K8S Security Config Watch](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/k8s-security-config-watch.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/k8s-security-config-watch.yml)
 [![Dependency Review](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dependency-review.yml)
-[![DevSkim](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/devskim.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/devskim.yml)
 [![Snyk](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/snyk-infrastructure.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/snyk-infrastructure.yml)
 [![Codacy](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codacy.yml)
 [![pmd](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pmd.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/pmd.yml)
