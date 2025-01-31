@@ -1,3 +1,4 @@
 {
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+  "java.compile.nullAnalysis.mode": "automatic"
 }
