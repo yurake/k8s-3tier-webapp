@@ -21,7 +21,7 @@ jobs:
       - name: start minikube
         uses: medyagh/setup-minikube@v0.0.19
         with:
-          minikube-version: 1.31.0
+          minikube-version: 1.34.0
           kubernetes-version: 1.31.1
           driver: docker
           container-runtime: docker
@@ -47,7 +47,7 @@ jobs:
           kubectl apply -f kubernetes/nginx/nginx-service.yaml
           sleep 10
       - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.12.0
+        uses: zaproxy/action-baseline@v0.14.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: "http://k8s.3tier.webapp/"
