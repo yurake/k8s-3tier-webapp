@@ -9,7 +9,7 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-activemq-quarkus</artifactId>
 	<properties>
-		<quarkus-artemis.version>3.5.2</quarkus-artemis.version>
+		<quarkus-artemis.version>3.6.1</quarkus-artemis.version>
 	</properties>
 	<dependencies>
 		<dependency>
