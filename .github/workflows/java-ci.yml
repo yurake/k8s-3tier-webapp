@@ -32,7 +32,7 @@ jobs:
           arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3.28.8
         with:
           languages: java
 
@@ -75,7 +75,7 @@ jobs:
         run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3.1.6
+        uses: codecov/codecov-action@v5.3.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
@@ -92,7 +92,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3.28.8
       - name: Upload test results to Datadog
         working-directory: ./application/webapp-service
         if: always()
@@ -139,7 +139,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3.28.8
         with:
           languages: java
       - name: Login to Docker Hub
@@ -196,7 +196,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3.1.6
+        uses: codecov/codecov-action@v5.3.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
@@ -213,7 +213,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3.28.8
       - name: Upload test results to Datadog
         working-directory: ./application/${{ matrix.application }}
         if: always()
@@ -254,7 +254,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3.28.8
         with:
           languages: java
       - name: Login to Docker Hub
@@ -311,7 +311,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3.1.6
+        uses: codecov/codecov-action@v5.3.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
@@ -328,7 +328,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3.28.8
       - name: Upload test results to Datadog
         working-directory: ./application/${{ matrix.application }}
         if: always()
