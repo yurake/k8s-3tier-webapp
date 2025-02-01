@@ -34,6 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         quarkus_application:
           [
@@ -67,11 +68,6 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-      - name: Wait if SARIF file exists
-        run: |
-          while [ -f pmd-report.sarif ]; do
-            sleep 5
-          done
       - name: Run PMD
         id: pmd
         uses: pmd/pmd-github-action@v2.0.0
