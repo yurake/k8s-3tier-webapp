@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
       - name: delete installed software not use
         run: |
           df -h /
@@ -29,9 +29,9 @@ jobs:
           sudo rm -rf /opt/hostedtoolcache/Ruby
           df -h /
       - name: start minikube
-        uses: medyagh/setup-minikube@v0.0.18
+        uses: medyagh/setup-minikube@v0.0.19
         with:
-          minikube-version: 1.31.0
+          minikube-version: 1.35.0
           kubernetes-version: 1.32.1
           driver: docker
           container-runtime: docker
