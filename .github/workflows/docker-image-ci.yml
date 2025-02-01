@@ -255,6 +255,6 @@ jobs:
         run: mv snyk.sarif postmannewman-quarkus.sarif
 
       - name: Upload result to GitHub Code Scanning - postmannewman-quarkus
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ./
