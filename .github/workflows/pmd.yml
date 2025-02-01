@@ -69,7 +69,7 @@ jobs:
           distribution: "temurin"
       - name: Wait if SARIF file exists
         run: |
-          while [ ! -f pmd-report.sarif ]; do
+          while [ -f pmd-report.sarif ]; do
             sleep 5
           done
       - name: Run PMD
