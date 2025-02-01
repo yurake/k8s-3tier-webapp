@@ -4,10 +4,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.jms.JMSConsumer;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.TextMessage;
+import jakarta.jms.JMSConsumer;
+import jakarta.jms.JMSException;
+import jakarta.jms.Message;
+import jakarta.jms.TextMessage;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 

@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<parent>
 		<groupId>webapp.3tier.k8s.parent</groupId>
 		<artifactId>parent-pom</artifactId>
@@ -9,7 +11,7 @@
 	<groupId>webapp.3tier.k8s</groupId>
 	<artifactId>jaxrs-activemq-quarkus</artifactId>
 	<properties>
-		<quarkus-artemis.version>3.4.2</quarkus-artemis.version>
+		<quarkus-artemis.version>3.6.1</quarkus-artemis.version>
 	</properties>
 	<dependencies>
 		<dependency>
