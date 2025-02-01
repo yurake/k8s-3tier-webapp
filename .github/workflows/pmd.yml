@@ -69,15 +69,12 @@ jobs:
           distribution: "temurin"
       - name: Run PMD
         id: pmd
-        uses: pmd/pmd-github-action@v1.4.1
+        uses: pmd/pmd-github-action@v2.0.0
         with:
           rulesets: "${{ github.workspace }}/.github/pmdrule.xml"
           sourcePath: "application/${{ matrix.quarkus_application }}/src/main/java"
           analyzeModifiedFilesOnly: false
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: pmd-report.sarif
+          uploadSarifReport: false
       - name: Fail build if there are violations
         if: steps.pmd.outputs.violations != 0
         run: exit 1
