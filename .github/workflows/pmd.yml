@@ -75,9 +75,9 @@ jobs:
           sourcePath: "application/${{ matrix.quarkus_application }}/src/main/java"
           analyzeModifiedFilesOnly: false
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: pmd-report.sarif
+          sarif_file: pmd-report-${{ matrix.quarkus_application }}.sarif
       - name: Fail build if there are violations
         if: steps.pmd.outputs.violations != 0
         run: exit 1
