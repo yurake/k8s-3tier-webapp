@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.7
-      - uses: bahmutov/npm-install@v1.10.2
+        uses: actions/checkout@v4.2.2
+      - uses: bahmutov/npm-install@v1.10.5
         with:
           working-directory: kubernetes/monitoring/test/cypress
       - name: Cypress run
-        uses: cypress-io/github-action@v2.11.8
+        uses: cypress-io/github-action@v6.7.10
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
