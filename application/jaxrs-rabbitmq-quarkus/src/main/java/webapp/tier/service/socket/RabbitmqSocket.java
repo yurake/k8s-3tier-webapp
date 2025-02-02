@@ -1,7 +1,7 @@
 package webapp.tier.service.socket;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.websocket.server.ServerEndpoint;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/quarkus/rabbitmq/subscribe")
 @ApplicationScoped
