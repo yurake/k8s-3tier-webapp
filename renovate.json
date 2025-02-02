@@ -10,7 +10,7 @@
     {
       "hostType": "maven",
       "matchHost": "github.com",
-      "token": "{{ secrets.GITHUB_COM_TOKEN }}",
+      "token": "{{ secrets.GITHUB_COM_TOKEN }}"
     }
   ],
   "packageRules": [
