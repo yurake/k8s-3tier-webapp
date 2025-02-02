@@ -5,7 +5,7 @@
   ],
   "hostRules": [
     {
-      "hostType": "maven",
+      "hostType": "github",
       "matchHost": "github.com",
       "token": "{{ secrets.GITHUB_COM_TOKEN }}"
     }
