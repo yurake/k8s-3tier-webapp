@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -20,6 +21,7 @@ import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import webapp.tier.service.MysqlService;
+import webapp.tier.bean.MsgBean;
 
 @Path("/quarkus/mysql")
 @Produces(MediaType.APPLICATION_JSON)
@@ -37,7 +39,7 @@ public class MysqlResource {
 	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response insert() {
 		try {
-			return Response.ok().entity(mysqlsvc.insertMsg()).build();
+			return Response.ok().entity(mysqlsvc.insertMsg().getFullmsg()).build();
 		} catch (NoSuchAlgorithmException | SQLException e) {
 			logger.log(Level.WARNING, "Insert Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
@@ -51,7 +53,10 @@ public class MysqlResource {
 	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response select() {
 		try {
-			return Response.ok().entity(mysqlsvc.selectMsg()).build();
+			String result = mysqlsvc.selectMsg().stream()
+					.map(MsgBean::getFullmsg)
+					.collect(Collectors.joining(","));
+			return Response.ok().entity(result).build();
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, "Select Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();

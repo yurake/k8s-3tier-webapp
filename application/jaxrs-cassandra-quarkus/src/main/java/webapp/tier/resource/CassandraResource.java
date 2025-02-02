@@ -30,7 +30,7 @@ public class CassandraResource {
 	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response insert() {
 		try {
-			return Response.ok().entity(svc.insertMsg()).build();
+			return Response.ok().entity(svc.insertMsg().getFullmsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -43,7 +43,7 @@ public class CassandraResource {
 	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response select() {
 		try {
-			return Response.ok().entity(svc.selectMsg()).build();
+			return Response.ok().entity(svc.selectMsg().getFullmsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -55,7 +55,7 @@ public class CassandraResource {
 	@Timed(name = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response delete() {
 		try {
-			return Response.ok().entity(svc.deleteMsg()).build();
+			return Response.ok().entity(svc.deleteMsg().getFullmsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}

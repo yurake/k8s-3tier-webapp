@@ -30,7 +30,7 @@ public class ActiveMqResource {
 	@Timed(name = "checksTimer_put", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response putcache() {
 		try {
-			return Response.ok().entity(svc.putMsg()).build();
+			return Response.ok().entity(svc.putMsg().getFullmsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -43,7 +43,7 @@ public class ActiveMqResource {
 	@Timed(name = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response getcache() {
 		try {
-			return Response.ok().entity(svc.getMsg()).build();
+			return Response.ok().entity(svc.getMsg().getFullmsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -55,7 +55,7 @@ public class ActiveMqResource {
 	@Timed(name = "checksTimer_publish", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response publish() {
 		try {
-			return Response.ok().entity(svc.publishMsg()).build();
+			return Response.ok().entity(svc.publishMsg().getFullmsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}

@@ -2,6 +2,7 @@ package webapp.tier.resource;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -21,6 +22,7 @@ import org.eclipse.microprofile.metrics.annotation.Timed;
 import com.mongodb.client.MongoCollection;
 
 import webapp.tier.service.MongodbService;
+import webapp.tier.bean.MsgBean;
 
 @Path("/quarkus/mongodb")
 @Produces(MediaType.APPLICATION_JSON)
@@ -39,7 +41,7 @@ public class MongodbResource {
 	public Response insert() {
 		try {
 			MongoCollection<Document> collection = mongosvc.getCollection();
-			return Response.ok().entity(mongosvc.insertMsg(collection)).build();
+			return Response.ok().entity(mongosvc.insertMsg(collection).getFullmsg()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Insert Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
@@ -54,7 +56,10 @@ public class MongodbResource {
 	public Response select() {
 		try {
 			MongoCollection<Document> collection = mongosvc.getCollection();
-			return Response.ok().entity(mongosvc.selectMsg(collection)).build();
+			String result = mongosvc.selectMsg(collection).stream()
+					.map(MsgBean::getFullmsg)
+					.collect(Collectors.joining(","));
+			return Response.ok().entity(result).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Select Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();

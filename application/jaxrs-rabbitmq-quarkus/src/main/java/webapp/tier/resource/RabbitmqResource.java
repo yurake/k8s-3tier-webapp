@@ -33,7 +33,7 @@ public class RabbitmqResource {
 	@Timed(name = "checksTimer_publish", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response publish() {
 		try {
-			return Response.ok().entity(svc.publishMsg()).build();
+			return Response.ok().entity(svc.publishMsg().getFullmsg()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Publish Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();

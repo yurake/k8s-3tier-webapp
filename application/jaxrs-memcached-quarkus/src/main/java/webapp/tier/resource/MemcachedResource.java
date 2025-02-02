@@ -35,7 +35,7 @@ public class MemcachedResource {
 	@Timed(name = "checksTimer_set", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response set() {
 		try {
-			return Response.ok().entity(svc.setMsg(svc.createMemCachedClient())).build();
+			return Response.ok().entity(svc.setMsg(svc.createMemCachedClient()).getFullmsg()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Set Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
@@ -49,7 +49,7 @@ public class MemcachedResource {
 	@Timed(name = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response get() {
 		try {
-			return Response.ok().entity(svc.getMsg(svc.createMemCachedClient())).build();
+			return Response.ok().entity(svc.getMsg(svc.createMemCachedClient()).getFullmsg()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Get Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
