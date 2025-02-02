@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: jaxrs-mongodb-quarkus
-          image: yurak/jaxrs-mongodb-quarkus:v0.5.0
+          image: yurak/jaxrs-mongodb-quarkus:latest
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

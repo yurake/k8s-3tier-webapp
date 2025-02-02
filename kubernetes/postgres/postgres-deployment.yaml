@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: yurak/postgres:v0.5.0
+          image: yurak/postgres:latest
           imagePullPolicy: Always
           ports:
             - name: postgres
