@@ -191,7 +191,7 @@ jobs:
           file: application/${{ matrix.application }}/src/main/docker/Dockerfile.jvm
           context: application/${{ matrix.application }}
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/${{ matrix.application }}:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/${{ matrix.application }}:v0.5.0
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
@@ -306,7 +306,7 @@ jobs:
           file: application/${{ matrix.application }}/src/main/docker/Dockerfile.native
           context: application/${{ matrix.application }}
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/${{ matrix.application }}:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/${{ matrix.application }}:v0.5.0
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 

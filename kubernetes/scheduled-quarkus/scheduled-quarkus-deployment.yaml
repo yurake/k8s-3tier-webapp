@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: scheduled-quarkus
-          image: yurak/scheduled-quarkus:latest
+          image: yurak/scheduled-quarkus:v0.5.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

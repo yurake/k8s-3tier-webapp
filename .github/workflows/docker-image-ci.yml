@@ -63,7 +63,7 @@ jobs:
         with:
           context: ./kubernetes/nginx
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/nginx:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/nginx:v0.5.0
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
@@ -86,7 +86,7 @@ jobs:
         with:
           context: ./kubernetes/mysql
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/mysql:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/mysql:v0.5.0
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
@@ -109,7 +109,7 @@ jobs:
         with:
           context: ./kubernetes/postgres
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/postgres:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/postgres:v0.5.0
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
@@ -132,7 +132,7 @@ jobs:
         with:
           context: ./kubernetes/mongodb
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/mongodb:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/mongodb:v0.5.0
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
@@ -155,7 +155,7 @@ jobs:
         with:
           context: ./kubernetes/cassandra
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/cassandra:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/cassandra:v0.5.0
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
@@ -178,7 +178,7 @@ jobs:
         with:
           context: ./kubernetes/rabbitmq
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/rabbitmq:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/rabbitmq:v0.5.0
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
@@ -201,7 +201,7 @@ jobs:
         with:
           context: ./kubernetes/monitoring/jenkins
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/jenkins:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/jenkins:v0.5.0
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
@@ -213,7 +213,7 @@ jobs:
         with:
           context: ./kubernetes/monitoring/test/ab
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/ab:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/ab:v0.5.0
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}
@@ -236,7 +236,7 @@ jobs:
         with:
           context: ./kubernetes/monitoring/test/postmannewman/quarkus
           push: ${{ env.PUSH }}
-          tags: ${{ secrets.DOCKERHUB_USER }}/postmannewman-quarkus:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/postmannewman-quarkus:v0.5.0
           build-args: |
             VCS_REF=${VCS_REF}
             BUILD_DATE=${BUILD_DATE}

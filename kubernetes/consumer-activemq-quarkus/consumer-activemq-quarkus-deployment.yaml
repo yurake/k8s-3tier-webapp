@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: consumer-activemq-quarkus
-          image: yurak/consumer-activemq-quarkus:latest
+          image: yurak/consumer-activemq-quarkus:v0.5.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: jaxrs-grpc-quarkus
-          image: yurak/jaxrs-grpc-quarkus:latest
+          image: yurak/jaxrs-grpc-quarkus:v0.5.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: converter-rabbitmq-quarkus
-          image: yurak/converter-rabbitmq-quarkus:latest
+          image: yurak/converter-rabbitmq-quarkus:v0.5.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

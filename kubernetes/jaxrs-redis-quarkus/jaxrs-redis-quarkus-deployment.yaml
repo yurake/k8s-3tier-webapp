@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: jaxrs-redis-quarkus
-          image: yurak/jaxrs-redis-quarkus:latest
+          image: yurak/jaxrs-redis-quarkus:v0.5.0
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

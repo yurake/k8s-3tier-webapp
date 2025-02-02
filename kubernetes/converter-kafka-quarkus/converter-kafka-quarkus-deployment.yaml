@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: converter-kafka-quarkus
-          image: yurak/converter-kafka-quarkus:latest
+          image: yurak/converter-kafka-quarkus:v0.5.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
