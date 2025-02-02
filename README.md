@@ -38,9 +38,9 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 
 [![Support Quarkus Version](https://img.shields.io/badge/Quarkus-2.16.12-yellow.svg?style=flat\&logo=Quarkus)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
 
-[![Support Kubernetes Version](https://img.shields.io/badge/Kubernetes-1.35.0-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
+[![Support Kubernetes Version](https://img.shields.io/badge/Kubernetes-1.32.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
 
-[![Support Minikube Version](https://img.shields.io/badge/Minikube-1.35.0-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
+[![Support Minikube Version](https://img.shields.io/badge/Minikube-1.32.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
 
 [![Support kind Version](https://img.shields.io/badge/kind-2.7.0-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22kind+CI%22)
 
