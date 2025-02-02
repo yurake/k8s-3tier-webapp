@@ -3,13 +3,6 @@
     "config:recommended",
     "docker:enableMajor"
   ],
-  "hostRules": [
-    {
-      "hostType": "github",
-      "matchHost": "github.com",
-      "token": "{{ secrets.GITHUB_COM_TOKEN }}"
-    }
-  ],
   "packageRules": [
     {
       "matchUpdateTypes": [
@@ -30,6 +23,10 @@
         "hadolint/hadolint-action"
       ],
       "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?"
+    },
+    {
+      "matchPackageNames": ["webapp.3tier.k8s.parent:parent-pom"],
+      "enabled": false
     }
   ],
   "customManagers": [
