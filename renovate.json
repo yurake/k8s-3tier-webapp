@@ -6,8 +6,8 @@
   "hostRules": [
     {
       "hostType": "maven",
-      "matchHost": "https://github.com",
-      "token": "glpat-token_for_different_git_platform",
+      "matchHost": "github.com",
+      "token": "{{ secrets.GITHUB_COM_TOKEN }}",
       "customEnvVariables": {
         "RENOVATE_X_GITHUB_HOST_RULES": true
       }
