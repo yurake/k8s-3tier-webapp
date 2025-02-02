@@ -8,9 +8,7 @@
       "hostType": "maven",
       "matchHost": "github.com",
       "token": "{{ secrets.GITHUB_COM_TOKEN }}",
-      "customEnvVariables": {
-        "RENOVATE_X_GITHUB_HOST_RULES": true
-      }
+      "RENOVATE_X_GITHUB_HOST_RULES": true
     }
   ],
   "packageRules": [
