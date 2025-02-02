@@ -12,7 +12,6 @@
 	<artifactId>consumer-activemq-quarkus</artifactId>
 	<properties>
 		<quarkus-artemis.version>3.6.1</quarkus-artemis.version>
-		<quarkus-rest.version>3.18.1</quarkus-rest.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -27,11 +26,6 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-rest-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-rest</artifactId>
-			<version>${quarkus-rest.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkiverse.artemis</groupId>
