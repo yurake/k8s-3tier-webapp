@@ -3,9 +3,6 @@
     "config:recommended",
     "docker:enableMajor"
   ],
-  "env": {
-    "RENOVATE_X_GITHUB_HOST_RULES": true
-  },
   "hostRules": [
     {
       "hostType": "maven",
