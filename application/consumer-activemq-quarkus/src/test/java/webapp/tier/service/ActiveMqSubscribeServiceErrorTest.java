@@ -24,6 +24,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.jms.ConnectionFactory;
 import jakarta.jms.JMSContext;
 import jakarta.jms.Session;
+import jakarta.inject.Inject;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
