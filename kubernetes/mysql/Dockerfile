@@ -1,4 +1,4 @@
-FROM mysql:8.4
+FROM mysql:9.1.0
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
