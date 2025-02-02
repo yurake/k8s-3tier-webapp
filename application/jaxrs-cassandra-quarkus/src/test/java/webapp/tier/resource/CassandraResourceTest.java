@@ -36,10 +36,7 @@ class CassandraResourceTest {
 				.post("/quarkus/cassandra/insert")
 				.then()
 				.statusCode(200)
-				.body(containsString("Hello k8s-3tier-webapp with quarkus"))
-				.extract()
-				.body()
-				.as(MsgBean.class);
+				.body(containsString("Hello k8s-3tier-webapp with quarkus"));
 	}
 
 	@Test
@@ -49,10 +46,7 @@ class CassandraResourceTest {
 				.get("/quarkus/cassandra/select")
 				.then()
 				.statusCode(200)
-				.body(containsString("No Data."))
-				.extract()
-				.body()
-				.as(MsgBean[].class);
+				.body(containsString("No Data."));
 	}
 
 	@Test

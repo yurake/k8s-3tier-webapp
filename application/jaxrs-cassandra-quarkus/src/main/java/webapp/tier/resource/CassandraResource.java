@@ -1,5 +1,7 @@
 package webapp.tier.resource;
 
+import java.util.stream.Collectors;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -15,6 +17,7 @@ import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import webapp.tier.service.CassandraService;
+import webapp.tier.bean.MsgBean;
 
 @Path("/quarkus/cassandra")
 @Produces(MediaType.APPLICATION_JSON)
@@ -43,7 +46,10 @@ public class CassandraResource {
 	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response select() {
 		try {
-			return Response.ok().entity(svc.selectMsg().getFullmsg()).build();
+			String result = svc.selectMsg().stream()
+					.map(MsgBean::getFullmsg)
+					.collect(Collectors.joining(","));
+			return Response.ok().entity(result).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -55,7 +61,7 @@ public class CassandraResource {
 	@Timed(name = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response delete() {
 		try {
-			return Response.ok().entity(svc.deleteMsg().getFullmsg()).build();
+			return Response.ok().entity(svc.deleteMsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
