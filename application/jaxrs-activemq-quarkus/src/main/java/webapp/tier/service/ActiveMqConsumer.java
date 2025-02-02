@@ -4,13 +4,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import jakarta.jms.JMSConsumer;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.TextMessage;
-
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import webapp.tier.bean.MsgBean;
 import webapp.tier.service.socket.ActiveMqSocket;
 import webapp.tier.util.MsgUtils;
