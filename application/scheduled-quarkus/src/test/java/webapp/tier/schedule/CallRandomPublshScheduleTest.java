@@ -2,7 +2,7 @@ package webapp.tier.schedule;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 

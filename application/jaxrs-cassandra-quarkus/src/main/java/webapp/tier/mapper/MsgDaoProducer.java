@@ -1,8 +1,8 @@
 package webapp.tier.mapper;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
 
 import com.datastax.oss.quarkus.runtime.api.session.QuarkusCqlSession;
 

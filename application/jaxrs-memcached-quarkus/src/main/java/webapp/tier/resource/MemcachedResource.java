@@ -3,14 +3,14 @@ package webapp.tier.resource;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.metrics.MetricUnits;
@@ -35,7 +35,7 @@ public class MemcachedResource {
 	@Timed(name = "checksTimer_set", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response set() {
 		try {
-			return Response.ok().entity(svc.setMsg(svc.createMemCachedClient())).build();
+			return Response.ok().entity(svc.setMsg(svc.createMemCachedClient()).getFullmsg()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Set Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();
@@ -49,7 +49,7 @@ public class MemcachedResource {
 	@Timed(name = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response get() {
 		try {
-			return Response.ok().entity(svc.getMsg(svc.createMemCachedClient())).build();
+			return Response.ok().entity(svc.getMsg(svc.createMemCachedClient()).getFullmsg()).build();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Get Error.", e);
 			return Response.status(500).entity(e.getMessage()).build();

@@ -55,7 +55,7 @@ class RedisResourceErrorTest {
 				.then()
 				.statusCode(500);
 	}
-	
+
 	@Test
 	void testPublishError() throws NoSuchAlgorithmException {
 		when(svc.publish()).thenThrow(new RuntimeException());

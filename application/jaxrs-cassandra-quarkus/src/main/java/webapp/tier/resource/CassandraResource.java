@@ -1,13 +1,15 @@
 package webapp.tier.resource;
 
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import java.util.stream.Collectors;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.metrics.MetricUnits;
@@ -15,6 +17,7 @@ import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import webapp.tier.service.CassandraService;
+import webapp.tier.bean.MsgBean;
 
 @Path("/quarkus/cassandra")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,7 +33,7 @@ public class CassandraResource {
 	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response insert() {
 		try {
-			return Response.ok().entity(svc.insertMsg()).build();
+			return Response.ok().entity(svc.insertMsg().getFullmsg()).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -43,7 +46,10 @@ public class CassandraResource {
 	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
 	public Response select() {
 		try {
-			return Response.ok().entity(svc.selectMsg()).build();
+			String result = svc.selectMsg().stream()
+					.map(MsgBean::getFullmsg)
+					.collect(Collectors.joining(","));
+			return Response.ok().entity(result).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}

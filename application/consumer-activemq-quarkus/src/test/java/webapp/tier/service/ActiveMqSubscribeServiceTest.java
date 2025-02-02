@@ -11,7 +11,6 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,9 +23,11 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.jms.ConnectionFactory;
 import jakarta.jms.JMSContext;
 import jakarta.jms.Session;
+import jakarta.inject.Inject;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @QuarkusTest
 @QuarkusTestResource(ArtemisTestResource.class)

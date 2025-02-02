@@ -5,9 +5,9 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import javax.inject.Inject;
-import javax.websocket.RemoteEndpoint;
-import javax.websocket.Session;
+import jakarta.inject.Inject;
+import jakarta.websocket.RemoteEndpoint;
+import jakarta.websocket.Session;
 
 import org.junit.jupiter.api.Test;
 
