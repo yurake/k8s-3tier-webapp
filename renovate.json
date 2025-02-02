@@ -3,6 +3,16 @@
     "config:recommended",
     "docker:enableMajor"
   ],
+  "hostRules": [
+    {
+      "hostType": "maven",
+      "matchHost": "https://github.com",
+      "token": "glpat-token_for_different_git_platform",
+      "customEnvVariables": {
+        "RENOVATE_X_GITHUB_HOST_RULES": true
+      }
+    }
+  ],
   "packageRules": [
     {
       "matchUpdateTypes": [
