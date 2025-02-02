@@ -36,8 +36,8 @@
 			<artifactId>quarkus-hibernate-orm</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.opentracing.contrib</groupId>
-			<artifactId>opentracing-jdbc</artifactId>
+			<groupId>io.opentelemetry.instrumentation</groupId>
+			<artifactId>opentelemetry-jdbc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
