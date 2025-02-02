@@ -30,10 +30,6 @@
         "hadolint/hadolint-action"
       ],
       "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?"
-    },
-    {
-      "matchPackageNames": ["webapp.3tier.k8s.parent:parent-pom"],
-      "enabled": false
     }
   ],
   "customManagers": [
