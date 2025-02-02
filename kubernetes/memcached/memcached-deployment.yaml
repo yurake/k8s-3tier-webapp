@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: memcached
-          image: memcached:1.6
+          image: memcached:1.6@sha256:0e49fcdaf62a232b012ae931555a36185409364402611727e7e36b8dfca4400e
           imagePullPolicy: Always
           ports:
             - containerPort: 11211
@@ -30,7 +30,7 @@ spec:
             tcpSocket:
               port: 11211
         - name: memcached-exporter
-          image: prom/memcached-exporter:v0.15.0
+          image: prom/memcached-exporter:v0.15.0@sha256:bb01ad25e9fcf0630cbae9c091a7687bca7fc0c7869912d98d95a6887b9eb599
           ports:
             - containerPort: 9150
           livenessProbe:

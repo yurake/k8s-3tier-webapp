@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: jaxrs-postgres-quarkus
-          image: yurak/jaxrs-postgres-quarkus:latest
+          image: yurak/jaxrs-postgres-quarkus:latest@sha256:573daef720b23a4f5217fd5095b1188737819af7a9e45b3e31140eadccb56a80
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

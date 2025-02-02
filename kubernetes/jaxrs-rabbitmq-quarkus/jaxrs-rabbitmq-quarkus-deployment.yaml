@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: jaxrs-rabbitmq-quarkus
-          image: yurak/jaxrs-rabbitmq-quarkus:latest
+          image: yurak/jaxrs-rabbitmq-quarkus:latest@sha256:58d084d5d28e1601296dc6046d90d48cf09aeabb7719b62620974a6b3f19547c
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

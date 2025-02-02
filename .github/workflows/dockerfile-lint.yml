@@ -22,9 +22,9 @@ jobs:
         dockerfile_default:
           [mysql, postgres, mongodb, rabbitmq, nginx, cassandra]
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: lint ${{ matrix.dockerfile_default }}
-        uses: hadolint/hadolint-action@v3.1.0
+        uses: hadolint/hadolint-action@54c9adbab1582c2ef04b2016b760714a4bfde3cf # v3.1.0
         with:
           dockerfile: kubernetes/${{ matrix.dockerfile_default }}/Dockerfile
           verbose: true
@@ -59,9 +59,9 @@ jobs:
             server-grpc-quarkus,
           ]
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: lint ${{ matrix.dockerfile_application }}
-        uses: hadolint/hadolint-action@v3.1.0
+        uses: hadolint/hadolint-action@54c9adbab1582c2ef04b2016b760714a4bfde3cf # v3.1.0
         with:
           dockerfile: application/${{ matrix.dockerfile_application }}/src/main/docker/Dockerfile.jvm
           verbose: true
@@ -73,9 +73,9 @@ jobs:
       matrix:
         dockerfile_monitoring: [jenkins]
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: lint ${{ matrix.dockerfile_monitoring }}
-        uses: hadolint/hadolint-action@v3.1.0
+        uses: hadolint/hadolint-action@54c9adbab1582c2ef04b2016b760714a4bfde3cf # v3.1.0
         with:
           dockerfile: kubernetes/monitoring/${{ matrix.dockerfile_monitoring }}/Dockerfile
           verbose: true
@@ -86,9 +86,9 @@ jobs:
       matrix:
         dockerfile_ab: [ab]
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: lint ${{ matrix.dockerfile_ab }}
-        uses: hadolint/hadolint-action@v3.1.0
+        uses: hadolint/hadolint-action@54c9adbab1582c2ef04b2016b760714a4bfde3cf # v3.1.0
         with:
           dockerfile: kubernetes/monitoring/test/${{ matrix.dockerfile_ab }}/Dockerfile
           verbose: true
@@ -96,9 +96,9 @@ jobs:
   dockerfile_postmannewman:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: lint ${{ matrix.dockerfile_postmannewman }}
-        uses: hadolint/hadolint-action@v3.1.0
+        uses: hadolint/hadolint-action@54c9adbab1582c2ef04b2016b760714a4bfde3cf # v3.1.0
         with:
           dockerfile: kubernetes/monitoring/test/postmannewman/quarkus/Dockerfile
           verbose: true

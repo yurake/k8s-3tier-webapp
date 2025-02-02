@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: server-grpc-quarkus
-          image: yurak/server-grpc-quarkus:latest
+          image: yurak/server-grpc-quarkus:latest@sha256:b9d8e65edaa0e7fddb312280d3277f096ac07e086355195d643518c35f70d768
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

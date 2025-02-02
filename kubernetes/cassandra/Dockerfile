@@ -1,4 +1,4 @@
-FROM cassandra:5.0
+FROM cassandra:5.0@sha256:6f8f916e83c1e59934874588a35f15c81afa56da9d9c5a10862aa466085f8e29
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \

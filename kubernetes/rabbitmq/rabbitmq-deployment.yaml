@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: rabbitmq
-          image: yurak/rabbitmq:latest
+          image: yurak/rabbitmq:latest@sha256:474cc7dc71e70f412a6ac01b9f5c56970d7c5f10faf28c7106180b5c01a1f59a
           imagePullPolicy: Always
           ports:
             - containerPort: 5672

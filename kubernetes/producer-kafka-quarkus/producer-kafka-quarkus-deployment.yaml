@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: producer-kafka-quarkus
-          image: yurak/producer-kafka-quarkus:latest
+          image: yurak/producer-kafka-quarkus:latest@sha256:92de7eed29032aa368205bc77374b932a1ae3b614e112b1d6e616ac4004bfda8
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

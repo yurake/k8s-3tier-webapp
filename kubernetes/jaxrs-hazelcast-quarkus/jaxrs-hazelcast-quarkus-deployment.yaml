@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: jaxrs-hazelcast-quarkus
-          image: yurak/jaxrs-hazelcast-quarkus:latest
+          image: yurak/jaxrs-hazelcast-quarkus:latest@sha256:c84f2963f7bc8060514acaaa7472e3cca9d2d7eb43b1a655eb0c568a5fa434af
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

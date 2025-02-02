@@ -9,7 +9,7 @@ jobs:
   minikube-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: check minikube version
         working-directory: ./.github/workflows
         run: |
@@ -55,7 +55,7 @@ jobs:
           sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_MINIKUBE_VERSION/g" ../../README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        uses: peter-evans/create-pull-request@v7.0.6
+        uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7.0.6
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-minikube
@@ -67,7 +67,7 @@ jobs:
   kubernetes-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: check kubernetes version
         working-directory: ./.github/workflows
         run: |
@@ -113,7 +113,7 @@ jobs:
           sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_KUBERNETES_VERSION/g" ../../README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        uses: peter-evans/create-pull-request@v7.0.6
+        uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7.0.6
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-kubernetes
@@ -125,7 +125,7 @@ jobs:
   chaos-mesh-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: check current chaos-mesh version
         working-directory: ./.github/workflows
         run: |
@@ -163,7 +163,7 @@ jobs:
           sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_VERSION/g" ../../README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        uses: peter-evans/create-pull-request@v7.0.6
+        uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7.0.6
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-chaos-mesh
@@ -175,7 +175,7 @@ jobs:
   quarkus-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: check current quarkus version
         run: |
           echo "SOURCE_VERSION=$(grep "Quarkus Version" README.md | cut -d '-' -f 2)" >> $GITHUB_ENV
@@ -208,7 +208,7 @@ jobs:
           sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
-        uses: peter-evans/create-pull-request@v7.0.6
+        uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7.0.6
         with:
           token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
           branch: actions/check-for-update-quarkus

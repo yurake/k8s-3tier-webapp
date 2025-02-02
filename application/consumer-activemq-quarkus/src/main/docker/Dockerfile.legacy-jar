@@ -21,7 +21,7 @@
 # docker run -i --rm -p 8080:8080 -p 5005:5005 -e JAVA_ENABLE_DEBUG="true" quarkus/getting-started-legacy-jar
 #
 ###
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.10-1179 
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.10-1179@sha256:d16d4445b1567f29449fba3b6d2bc37db467dc3067d33e940477e55aecdf6e8e 
 
 ARG JAVA_PACKAGE=java-17-openjdk-headless
 ARG RUN_JAVA_VERSION=1.3.8

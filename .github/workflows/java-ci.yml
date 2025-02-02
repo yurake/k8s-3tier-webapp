@@ -21,29 +21,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@5.0
+        uses: DeLaGuardo/setup-graalvm@48f2bf339ab7d35e31029b1822a213681fdfc42e # 5.0
         with:
           graalvm: "22.2.0"
           java: "java17"
           arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.8
+        uses: github/codeql-action/init@dd746615b3b9d728a6a37ca2045b68ca76d4841a # v3.28.8
         with:
           languages: java
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-parent-pom
           restore-keys: ${{ runner.os }}-sonar-parent-pom
       - name: Cache local Maven repository
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-parent-pom-${{ hashFiles('**/parent-pom/pom.xml') }}
@@ -56,13 +56,13 @@ jobs:
         run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-webapp-service
           restore-keys: ${{ runner.os }}-sonar-webapp-service
       - name: Cache local Maven repository
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-webapp-service-${{ hashFiles('**/webapp-service/pom.xml') }}
@@ -75,11 +75,11 @@ jobs:
         run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.3.1
+        uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3 # v5.3.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
@@ -92,7 +92,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.28.8
+        uses: github/codeql-action/analyze@dd746615b3b9d728a6a37ca2045b68ca76d4841a # v3.28.8
       - name: Upload test results to Datadog
         working-directory: ./application/webapp-service
         if: always()
@@ -125,11 +125,11 @@ jobs:
       fail-fast: false
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@5.0
+        uses: DeLaGuardo/setup-graalvm@48f2bf339ab7d35e31029b1822a213681fdfc42e # 5.0
         with:
           graalvm: "22.2.0"
           java: "java17"
@@ -139,19 +139,19 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.8
+        uses: github/codeql-action/init@dd746615b3b9d728a6a37ca2045b68ca76d4841a # v3.28.8
         with:
           languages: java
       - name: Login to Docker Hub
         if: github.event_name == 'push'
-        uses: docker/login-action@v3.3.0
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.8.0
+        uses: docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3.8.0
       - name: Cache Docker layers
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: /tmp/.buildx-cache
           key: ${{ github.ref }}-${{ github.sha }}
@@ -168,13 +168,13 @@ jobs:
           fi
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-${{ matrix.application }}
           restore-keys: ${{ runner.os }}-sonar-${{ matrix.application }}
       - name: Cache local Maven repository
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ matrix.application }}-${{ hashFiles('**/${{ matrix.application }}/pom.xml') }}
@@ -186,7 +186,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify --settings ../.m2/settings.xml
       - name: Build and push
-        uses: docker/build-push-action@v6.13.0
+        uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991 # v6.13.0
         with:
           file: application/${{ matrix.application }}/src/main/docker/Dockerfile.jvm
           context: application/${{ matrix.application }}
@@ -196,11 +196,11 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.3.1
+        uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3 # v5.3.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
@@ -213,7 +213,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.28.8
+        uses: github/codeql-action/analyze@dd746615b3b9d728a6a37ca2045b68ca76d4841a # v3.28.8
       - name: Upload test results to Datadog
         working-directory: ./application/${{ matrix.application }}
         if: always()
@@ -240,11 +240,11 @@ jobs:
       fail-fast: false
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@5.0
+        uses: DeLaGuardo/setup-graalvm@48f2bf339ab7d35e31029b1822a213681fdfc42e # 5.0
         with:
           graalvm: "22.2.0"
           java: "java17"
@@ -254,19 +254,19 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.8
+        uses: github/codeql-action/init@dd746615b3b9d728a6a37ca2045b68ca76d4841a # v3.28.8
         with:
           languages: java
       - name: Login to Docker Hub
         if: github.event_name == 'push'
-        uses: docker/login-action@v3.3.0
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.8.0
+        uses: docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3.8.0
       - name: Cache Docker layers
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: /tmp/.buildx-cache
           key: ${{ github.ref }}-${{ github.sha }}
@@ -283,13 +283,13 @@ jobs:
           fi
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-${{ matrix.application }}
           restore-keys: ${{ runner.os }}-sonar-${{ matrix.application }}
       - name: Cache local Maven repository
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ matrix.application }}-${{ hashFiles('**/${{ matrix.application }}/pom.xml') }}
@@ -301,7 +301,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify --settings ../.m2/settings.xml -Pnative
       - name: Build and push
-        uses: docker/build-push-action@v6.13.0
+        uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991 # v6.13.0
         with:
           file: application/${{ matrix.application }}/src/main/docker/Dockerfile.native
           context: application/${{ matrix.application }}
@@ -311,11 +311,11 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.3.1
+        uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3 # v5.3.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Upload coverage to SonarCloud
@@ -328,7 +328,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.28.8
+        uses: github/codeql-action/analyze@dd746615b3b9d728a6a37ca2045b68ca76d4841a # v3.28.8
       - name: Upload test results to Datadog
         working-directory: ./application/${{ matrix.application }}
         if: always()

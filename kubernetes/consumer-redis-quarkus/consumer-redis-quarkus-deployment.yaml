@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: consumer-redis-quarkus
-          image: yurak/consumer-redis-quarkus:latest
+          image: yurak/consumer-redis-quarkus:latest@sha256:864c57f5c013db9536c1fb33dfc0ee3eeff374e486bfa99328446e5027a5d244
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

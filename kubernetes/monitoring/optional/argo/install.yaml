@@ -1257,7 +1257,7 @@ spec:
             - server
             - --tls-certificate-secret-name=argo-server-tls
           env: []
-          image: quay.io/argoproj/argocli:v3.6.2
+          image: quay.io/argoproj/argocli:v3.6.2@sha256:7b06ffaf2260654cacf5e44982744c26fcc89502cd4592685086aff601073382
           name: argo-server
           ports:
             - containerPort: 2746
@@ -1319,7 +1319,7 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.name
-          image: quay.io/argoproj/workflow-controller:v3.6.2
+          image: quay.io/argoproj/workflow-controller:v3.6.2@sha256:be8bd63ad545442a216a951d4ab568afea1d873e78fd0a596b56d886e3424725
           livenessProbe:
             failureThreshold: 3
             httpGet:

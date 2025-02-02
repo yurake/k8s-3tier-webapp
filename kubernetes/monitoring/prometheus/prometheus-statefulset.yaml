@@ -27,7 +27,7 @@ spec:
       serviceAccountName: prometheus
       initContainers:
         - name: init-chown-data
-          image: busybox:latest
+          image: busybox:latest@sha256:a5d0ce49aa801d475da48f8cb163c354ab95cab073cd3c138bd458fc8257fbf1
           imagePullPolicy: Always
           command: ["chown", "-R", "65534:65534", "/data"]
           volumeMounts:
@@ -36,7 +36,7 @@ spec:
               subPath: ""
       containers:
         - name: prometheus-server
-          image: prom/prometheus:v3.1.0
+          image: prom/prometheus:v3.1.0@sha256:6559acbd5d770b15bb3c954629ce190ac3cbbdb2b7f1c30f0385c4e05104e218
           imagePullPolicy: Always
           args:
             - --config.file=/etc/config/prometheus.yml

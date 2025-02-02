@@ -14,7 +14,7 @@
 # docker run -i --rm -p 8080:8080 quarkus/getting-started
 #
 ###
-FROM quay.io/quarkus/quarkus-micro-image:3.0
+FROM quay.io/quarkus/quarkus-micro-image:3.0@sha256:d3ace8bca73a7fc19eb6b5245f40736512bc7e741a39857589b438cee4e8ee43
 COPY target/*-runner /application
 
 EXPOSE 8080

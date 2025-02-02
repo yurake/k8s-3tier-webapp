@@ -29,7 +29,7 @@ spec:
         runAsUser: 0
       containers:
         - name: jenkins
-          image: yurak/jenkins:latest
+          image: yurak/jenkins:latest@sha256:812f58ccf93f9bbb01d65dd4049bc39a5d7aaa4277b42233728c29d8fd54d085
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

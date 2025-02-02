@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: yurak/mysql:latest
+          image: yurak/mysql:latest@sha256:fe3458cf50636d4256f2b71c672624d66a56bbf8fe9d10cfefb079a53495a7db
           imagePullPolicy: Always
           args:
             - --character-set-server=utf8mb4
@@ -52,7 +52,7 @@ spec:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
         - name: mysql-exporter
-          image: prom/mysqld-exporter:v0.16.0
+          image: prom/mysqld-exporter:v0.16.0@sha256:617b7244a31922c30eeddb0e3b39b4c125e890d46179be4a30561b20f111ca6c
           ports:
             - containerPort: 9104
           env:

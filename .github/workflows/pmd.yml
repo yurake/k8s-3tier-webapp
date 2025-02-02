@@ -61,15 +61,15 @@ jobs:
             server-grpc-quarkus,
           ]
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Set up JDK
-        uses: actions/setup-java@v4.7.0
+        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4.7.0
         with:
           java-version: "17"
           distribution: "temurin"
       - name: Run PMD
         id: pmd
-        uses: pmd/pmd-github-action@v2.0.0
+        uses: pmd/pmd-github-action@d9c1f3c5940cbf5923f1354e83fa858b4496ebaa # v2.0.0
         with:
           rulesets: "${{ github.workspace }}/.github/pmdrule.xml"
           sourcePath: "application/${{ matrix.quarkus_application }}/src/main/java"

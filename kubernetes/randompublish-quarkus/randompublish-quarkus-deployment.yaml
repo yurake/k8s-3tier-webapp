@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: randompublish-quarkus
-          image: yurak/randompublish-quarkus:latest
+          image: yurak/randompublish-quarkus:latest@sha256:88a6006607adee2f9b9dca1df4fe4db598b1ea4ee92f4d6af884329bd0143154
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

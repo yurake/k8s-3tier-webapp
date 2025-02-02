@@ -21,7 +21,7 @@ spec:
           # Any image is permissable as long as:
           # 1. It serves a 404 page at /
           # 2. It serves 200 on a /healthz endpoint
-          image: gcr.io/google_containers/defaultbackend:1.4
+          image: gcr.io/google_containers/defaultbackend:1.4@sha256:865b0c35e6da393b8e80b7e3799f777572399a4cff047eb02a81fa6e7a48ed4b
           livenessProbe:
             httpGet:
               path: /healthz

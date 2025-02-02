@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: yurak/nginx:latest
+          image: yurak/nginx:latest@sha256:c4ac941e66d3089126d371399a352cf50222277c974c57e5b8ee1b4cf80d47df
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -30,7 +30,7 @@ spec:
             httpGet:
               port: 9113
         - name: nginx-exporter
-          image: nginx/nginx-prometheus-exporter:1.4.1
+          image: nginx/nginx-prometheus-exporter:1.4.1@sha256:a146e4e56cedf2bd4858ce0d04cf4da0b7ce1c88b7973f9221934c8651fa3e1c
           ports:
             - containerPort: 9113
           env:

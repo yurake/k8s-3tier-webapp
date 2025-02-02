@@ -14,7 +14,7 @@
 # docker run -i --rm -p 8080:8080 quarkus/getting-started
 #
 ###
-FROM quay.io/quarkus/quarkus-distroless-image:2.0
+FROM quay.io/quarkus/quarkus-distroless-image:2.0@sha256:73beca08bcbf4548fdc905e94bf609c77c87fe5ca75ba108224f2d447c535826
 COPY target/*-runner /application
 
 EXPOSE 8080

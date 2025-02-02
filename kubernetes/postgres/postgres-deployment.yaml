@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: yurak/postgres:latest
+          image: yurak/postgres:latest@sha256:d59748dcc578d70d3d80085114587e987d73a008c3d3237ab22173a3e1afc9bd
           imagePullPolicy: Always
           ports:
             - name: postgres
@@ -50,7 +50,7 @@ spec:
             - name: postgres-persistent-storage
               mountPath: /var/lib/postgresql/data
         - name: postgres-exporter
-          image: wrouesnel/postgres_exporter:v0.8.0
+          image: wrouesnel/postgres_exporter:v0.8.0@sha256:520fcd04d6c8f922d800d89ae96c021f4afd22e376c4b88260a8b780e3375dbe
           ports:
             - containerPort: 9187
           env:

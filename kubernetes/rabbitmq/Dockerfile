@@ -1,4 +1,4 @@
-FROM rabbitmq:4.0.5-management-alpine
+FROM rabbitmq:4.0.5-management-alpine@sha256:cba64af3cf05e886c1e53066270bb56033480d7957f544b77fd00b51e3bffe92
 ARG BUILD_DATE
 ARG VCS_REF
 

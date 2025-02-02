@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: consumer-hazelcast-quarkus
-          image: yurak/consumer-hazelcast-quarkus:latest
+          image: yurak/consumer-hazelcast-quarkus:latest@sha256:54e800e3c1c48925f82477ecbda2ea961656447b4c115a8eaedc1830d111082e
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

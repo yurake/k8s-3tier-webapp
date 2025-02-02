@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.495-alpine
+FROM jenkins/jenkins:2.495-alpine@sha256:3a7798258c6db500a9789a23fba7d1bb8694165fc51ca9db4740bc96196566b7
 ARG BUILD_DATE
 ARG VCS_REF
 

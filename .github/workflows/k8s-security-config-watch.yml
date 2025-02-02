@@ -12,18 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # checkout Master branch
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: master
           path: master
       # checkout PR branch
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           path: candidate
           ref: ${{ github.event.pull_request.head.sha }}
       # pass the yamls directory to k8s-privilege-check git action
       - name: Kubernetes Security Lint
-        uses: sysdiglabs/k8s-security-lint@v1.0.0
+        uses: sysdiglabs/k8s-security-lint@4624537fb93b14477cd5e72f5ba8627dab96be40 # v1.0.0
         with:
           sourceDir: "/master/kubernetes"
           targetDir: "/candidate/kubernetes"

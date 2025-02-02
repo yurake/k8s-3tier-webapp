@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: bahmutov/npm-install@v1.10.5
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: bahmutov/npm-install@ec9e87262db2a1be2ca3ceb2d506c413a220542c # v1.10.5
         with:
           working-directory: kubernetes/monitoring/test/cypress
       - name: Cypress run
-        uses: cypress-io/github-action@v6.7.10
+        uses: cypress-io/github-action@7271bed2a170d73c0b08939cd192db51a1c46c50 # v6.7.10
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

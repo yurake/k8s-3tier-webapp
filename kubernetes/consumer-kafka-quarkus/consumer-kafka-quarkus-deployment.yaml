@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: consumer-kafka-quarkus
-          image: yurak/consumer-kafka-quarkus:latest
+          image: yurak/consumer-kafka-quarkus:latest@sha256:9739a79ccaa84d00844c929dbccc6cb5f4fe1966fec6e7aae33ab5e88aac74b9
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

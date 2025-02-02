@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: consumer-rabbitmq-quarkus
-          image: yurak/consumer-rabbitmq-quarkus:latest
+          image: yurak/consumer-rabbitmq-quarkus:latest@sha256:1f607cee2d8fe75012dbc27ab32356b2d54cdd8dab3eba6c89775799fde6ecb7
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: mongodb
-          image: yurak/mongodb:latest
+          image: yurak/mongodb:latest@sha256:7eb3625a7a887255f45ce9338afc5783694f7785caeed3e90c3abb1dbd299312
           imagePullPolicy: Always
           ports:
             - name: mongodb
@@ -60,7 +60,7 @@ spec:
                 - --eval
                 - db.adminCommand('ping')
         - name: mongodb-exporter
-          image: ssheehy/mongodb-exporter:0.11.0
+          image: ssheehy/mongodb-exporter:0.11.0@sha256:dad182adee26f59214e63cbe1b1b8dc9206a7c125cfb33e39f8688c0a4993a90
           ports:
             - containerPort: 9216
           env:

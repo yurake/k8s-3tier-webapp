@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: jaxrs-mysql-quarkus
-          image: yurak/jaxrs-mysql-quarkus:latest
+          image: yurak/jaxrs-mysql-quarkus:latest@sha256:ac44d785e6b84eb50a40357277cc3537403188fcf7063dc40627cef3d0050561
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
