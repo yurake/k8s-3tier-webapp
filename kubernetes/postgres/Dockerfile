@@ -1,4 +1,4 @@
-FROM postgres:17.2-alpine
+FROM postgres:17.3-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE org.label-schema.vcs-ref=$VCS_REF \
