@@ -25,8 +25,8 @@ jobs:
       - name: start minikube
         uses: medyagh/setup-minikube@v0.0.19
         with:
-          minikube-version: 1.32.1
-          kubernetes-version: 1.32.1
+          minikube-version: 1.32.2
+          kubernetes-version: 1.32.2
           driver: docker
           container-runtime: docker
           cpus: 2
