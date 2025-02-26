@@ -186,7 +186,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify --settings ../.m2/settings.xml
       - name: Build and push
-        uses: docker/build-push-action@v6.14.0
+        uses: docker/build-push-action@v6.15.0
         with:
           file: application/${{ matrix.application }}/src/main/docker/Dockerfile.jvm
           context: application/${{ matrix.application }}
@@ -301,7 +301,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B verify --settings ../.m2/settings.xml -Pnative
       - name: Build and push
-        uses: docker/build-push-action@v6.14.0
+        uses: docker/build-push-action@v6.15.0
         with:
           file: application/${{ matrix.application }}/src/main/docker/Dockerfile.native
           context: application/${{ matrix.application }}
