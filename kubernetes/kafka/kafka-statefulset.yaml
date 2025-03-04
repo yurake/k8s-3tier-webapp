@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: bitnami/kafka:3.9.0-debian-12-r11
+          image: bitnami/kafka:3.9.0-debian-12-r12
           imagePullPolicy: Always
           ports:
             - containerPort: 9092
