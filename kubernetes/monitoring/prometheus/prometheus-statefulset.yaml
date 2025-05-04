@@ -36,7 +36,7 @@ spec:
               subPath: ""
       containers:
         - name: prometheus-server
-          image: prom/prometheus:v3.3.0
+          image: prom/prometheus:v3.3.1
           imagePullPolicy: Always
           args:
             - --config.file=/etc/config/prometheus.yml
