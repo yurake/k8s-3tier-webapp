@@ -18,7 +18,7 @@ jobs:
         with:
           working-directory: kubernetes/monitoring/test/cypress
       - name: Cypress run
-        uses: cypress-io/github-action@v6.9.0
+        uses: cypress-io/github-action@v6.9.2
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
