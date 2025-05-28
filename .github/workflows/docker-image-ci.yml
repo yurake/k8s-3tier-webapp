@@ -59,7 +59,7 @@ jobs:
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
       - name: Build and push - nginx
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./kubernetes/nginx
           push: ${{ env.PUSH }}
@@ -82,7 +82,7 @@ jobs:
         run: mv snyk.sarif nginx.sarif
 
       - name: Build and push - mysql
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./kubernetes/mysql
           push: ${{ env.PUSH }}
@@ -105,7 +105,7 @@ jobs:
         run: mv snyk.sarif mysql.sarif
 
       - name: Build and push - postgres
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./kubernetes/postgres
           push: ${{ env.PUSH }}
@@ -128,7 +128,7 @@ jobs:
         run: mv snyk.sarif postgres.sarif
 
       - name: Build and push - mongodb
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./kubernetes/mongodb
           push: ${{ env.PUSH }}
@@ -151,7 +151,7 @@ jobs:
         run: mv snyk.sarif mongodb.sarif
 
       - name: Build and push - cassandra
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./kubernetes/cassandra
           push: ${{ env.PUSH }}
@@ -174,7 +174,7 @@ jobs:
         run: mv snyk.sarif cassandra.sarif
 
       - name: Build and push - rabbitmq
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./kubernetes/rabbitmq
           push: ${{ env.PUSH }}
@@ -197,7 +197,7 @@ jobs:
         run: mv snyk.sarif rabbitmq.sarif
 
       - name: Build and push - jenkins
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./kubernetes/monitoring/jenkins
           push: ${{ env.PUSH }}
@@ -209,7 +209,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Build and push - ab
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./kubernetes/monitoring/test/ab
           push: ${{ env.PUSH }}
@@ -232,7 +232,7 @@ jobs:
         run: mv snyk.sarif ab.sarif
 
       - name: Build and push - postmannewman-quarkus
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./kubernetes/monitoring/test/postmannewman/quarkus
           push: ${{ env.PUSH }}
