@@ -29,7 +29,7 @@ jobs:
           sudo rm -rf /opt/hostedtoolcache/Ruby
           df -h /
       - name: start minikube
-        uses: medyagh/setup-minikube@v0.0.19
+        uses: medyagh/setup-minikube@v0.0.20
         with:
           minikube-version: 1.32.1
           kubernetes-version: 1.32.1
