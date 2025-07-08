@@ -19,7 +19,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4.2.2
       - name: start minikube
-        uses: medyagh/setup-minikube@v0.0.19
+        uses: medyagh/setup-minikube@v0.0.20
         with:
           minikube-version: 1.32.1
           kubernetes-version: 1.32.1
