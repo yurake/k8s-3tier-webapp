@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - uses: bahmutov/npm-install@v1.10.9
+      - uses: bahmutov/npm-install@v1.10.10
         with:
           working-directory: kubernetes/monitoring/test/cypress
       - name: Cypress run
