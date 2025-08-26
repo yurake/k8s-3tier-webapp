@@ -72,7 +72,7 @@ jobs:
 
       - name: Run Snyk to check Docker image for vulnerabilities - nginx
         continue-on-error: true
-        uses: snyk/actions/docker@2f3c869154a3036de8e53db79251b67d10cfb91f
+        uses: snyk/actions/docker@e2221410bff24446ba09102212d8bc75a567237d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -95,7 +95,7 @@ jobs:
 
       - name: Run Snyk to check Docker image for vulnerabilities - mysql
         continue-on-error: true
-        uses: snyk/actions/docker@2f3c869154a3036de8e53db79251b67d10cfb91f
+        uses: snyk/actions/docker@e2221410bff24446ba09102212d8bc75a567237d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -118,7 +118,7 @@ jobs:
 
       - name: Run Snyk to check Docker image for vulnerabilities - postgres
         continue-on-error: true
-        uses: snyk/actions/docker@2f3c869154a3036de8e53db79251b67d10cfb91f
+        uses: snyk/actions/docker@e2221410bff24446ba09102212d8bc75a567237d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -141,7 +141,7 @@ jobs:
 
       - name: Run Snyk to check Docker image for vulnerabilities - mongodb
         continue-on-error: true
-        uses: snyk/actions/docker@2f3c869154a3036de8e53db79251b67d10cfb91f
+        uses: snyk/actions/docker@e2221410bff24446ba09102212d8bc75a567237d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -164,7 +164,7 @@ jobs:
 
       - name: Run Snyk to check Docker image for vulnerabilities - cassandra
         continue-on-error: true
-        uses: snyk/actions/docker@2f3c869154a3036de8e53db79251b67d10cfb91f
+        uses: snyk/actions/docker@e2221410bff24446ba09102212d8bc75a567237d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -187,7 +187,7 @@ jobs:
 
       - name: Run Snyk to check Docker image for vulnerabilities - rabbitmq
         continue-on-error: true
-        uses: snyk/actions/docker@2f3c869154a3036de8e53db79251b67d10cfb91f
+        uses: snyk/actions/docker@e2221410bff24446ba09102212d8bc75a567237d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -222,7 +222,7 @@ jobs:
 
       - name: Run Snyk to check Docker image for vulnerabilities - ab
         continue-on-error: true
-        uses: snyk/actions/docker@2f3c869154a3036de8e53db79251b67d10cfb91f
+        uses: snyk/actions/docker@e2221410bff24446ba09102212d8bc75a567237d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -245,7 +245,7 @@ jobs:
 
       - name: Run Snyk to check Docker image for vulnerabilities - postmannewman-quarkus
         continue-on-error: true
-        uses: snyk/actions/docker@2f3c869154a3036de8e53db79251b67d10cfb91f
+        uses: snyk/actions/docker@e2221410bff24446ba09102212d8bc75a567237d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
