@@ -12,7 +12,7 @@
 	<artifactId>consumer-hazelcast-quarkus</artifactId>
 	<properties>
 		<hazelcast.version>5.5.0</hazelcast.version>
-		<test-hazelcast.version>4.0.0</test-hazelcast.version>
+		<test-hazelcast.version>4.1.0</test-hazelcast.version>
 	</properties>
 	<dependencies>
 		<dependency>
