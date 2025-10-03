@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: redis-master
-          image: redis:7.4.5
+          image: redis:8.2.2
           ports:
             - containerPort: 6379
           livenessProbe:
