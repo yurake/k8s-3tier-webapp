@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: hazelcast
-          image: hazelcast/hazelcast:5.5.0
+          image: hazelcast/hazelcast:5.6.0
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
