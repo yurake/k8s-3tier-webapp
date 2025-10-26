@@ -30,7 +30,7 @@ spec:
             httpGet:
               port: 9113
         - name: nginx-exporter
-          image: nginx/nginx-prometheus-exporter:1.4.2
+          image: nginx/nginx-prometheus-exporter:1.5.1
           ports:
             - containerPort: 9113
           env:
