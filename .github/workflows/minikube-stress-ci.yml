@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
     steps:
       - name: checkout
-        uses: actions/checkout@v4.3.0
+        uses: actions/checkout@v4.3.1
       - name: start minikube
         uses: medyagh/setup-minikube@v0.0.20
         with:
