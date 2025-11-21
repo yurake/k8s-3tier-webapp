@@ -92,7 +92,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.31.0
+        uses: github/codeql-action/analyze@v3.31.4
       - name: Upload test results to Datadog
         working-directory: ./application/webapp-service
         if: always()
@@ -213,7 +213,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.31.0
+        uses: github/codeql-action/analyze@v3.31.4
       - name: Upload test results to Datadog
         working-directory: ./application/${{ matrix.application }}
         if: always()
@@ -328,7 +328,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.31.0
+        uses: github/codeql-action/analyze@v3.31.4
       - name: Upload test results to Datadog
         working-directory: ./application/${{ matrix.application }}
         if: always()
