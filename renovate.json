@@ -26,15 +26,17 @@
       "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?"
     },
     {
-      "matchPackageNames": ["webapp.3tier.k8s.parent:parent-pom"],
+      "matchPackageNames": [
+        "webapp.3tier.k8s.parent:parent-pom"
+      ],
       "enabled": false
     }
   ],
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "^\\.github/workflows/[^/]+\\.ya?ml$"
+      "managerFilePatterns": [
+        "/^\\.github/workflows/[^/]+\\.ya?ml$/"
       ],
       "matchStrings": [
         "uses: (?<depName>.*?)@(?<currentValue>.*?)\n"
@@ -43,8 +45,8 @@
     }
   ],
   "kubernetes": {
-    "fileMatch": [
-      "(^|/)[^/]*\\.yaml$"
+    "managerFilePatterns": [
+      "/(^|/)[^/]*\\.yaml$/"
     ]
   },
   "assignees": [
