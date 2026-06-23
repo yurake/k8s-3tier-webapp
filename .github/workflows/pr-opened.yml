@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Assign PullRequest to Project
-        uses: technote-space/create-project-card-action@v1.4.2
+        uses: actions/add-to-project@v1.0.2
         with:
-          PROJECT: Feature request
-          COLUMN: In progress
+          project-url: https://github.com/users/yurake/projects/1/views/1
+          github-token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}

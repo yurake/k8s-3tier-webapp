@@ -3,10 +3,6 @@ name: Assign issues to project
 on:
   issues:
     types: [opened]
-  pull_request:
-    types: [opened]
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   add-to-project:
@@ -16,4 +12,4 @@ jobs:
       - uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/users/yurake/projects/1/views/1
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PAT_GITHUB_ACTION_WORKFLOW }}
