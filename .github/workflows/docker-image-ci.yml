@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v4.3.1
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.11.1
+        uses: docker/setup-buildx-action@v3.12.0
 
       - name: Cache Docker layers
         uses: actions/cache@v4.3.0
@@ -59,7 +59,7 @@ jobs:
         run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
 
       - name: Build and push - nginx
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./kubernetes/nginx
           push: ${{ env.PUSH }}
@@ -82,7 +82,7 @@ jobs:
         run: mv snyk.sarif nginx.sarif
 
       - name: Build and push - mysql
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./kubernetes/mysql
           push: ${{ env.PUSH }}
@@ -105,7 +105,7 @@ jobs:
         run: mv snyk.sarif mysql.sarif
 
       - name: Build and push - postgres
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./kubernetes/postgres
           push: ${{ env.PUSH }}
@@ -128,7 +128,7 @@ jobs:
         run: mv snyk.sarif postgres.sarif
 
       - name: Build and push - mongodb
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./kubernetes/mongodb
           push: ${{ env.PUSH }}
@@ -151,7 +151,7 @@ jobs:
         run: mv snyk.sarif mongodb.sarif
 
       - name: Build and push - cassandra
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./kubernetes/cassandra
           push: ${{ env.PUSH }}
@@ -174,7 +174,7 @@ jobs:
         run: mv snyk.sarif cassandra.sarif
 
       - name: Build and push - rabbitmq
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./kubernetes/rabbitmq
           push: ${{ env.PUSH }}
@@ -197,7 +197,7 @@ jobs:
         run: mv snyk.sarif rabbitmq.sarif
 
       - name: Build and push - jenkins
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./kubernetes/monitoring/jenkins
           push: ${{ env.PUSH }}
@@ -209,7 +209,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Build and push - ab
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./kubernetes/monitoring/test/ab
           push: ${{ env.PUSH }}
@@ -232,7 +232,7 @@ jobs:
         run: mv snyk.sarif ab.sarif
 
       - name: Build and push - postmannewman-quarkus
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./kubernetes/monitoring/test/postmannewman/quarkus
           push: ${{ env.PUSH }}
@@ -254,7 +254,34 @@ jobs:
       - name: rename sarif file
         run: mv snyk.sarif postmannewman-quarkus.sarif
 
-      - name: Upload result to GitHub Code Scanning - postmannewman-quarkus
+      # Merge every per-image Snyk SARIF into a single run. Uploading the raw
+      # files separately exceeds GitHub's limit of 20 runs per SARIF upload
+      # (8 files yield 23 runs), so the upload was rejected. Combining the
+      # results.* arrays into one run keeps a single run while preserving all
+      # findings.
+      - name: Merge SARIF files
+        run: |
+          jq -s '
+            ( [ .[].runs[] ] ) as $runs
+            | {
+                "$schema": .[0]["$schema"],
+                version: .[0].version,
+                runs: [
+                  {
+                    tool: {
+                      driver: (
+                        $runs[0].tool.driver
+                        | .rules = ([ $runs[].tool.driver.rules // [] ] | add | unique_by(.id))
+                      )
+                    },
+                    results: [ $runs[].results[] ]
+                  }
+                ]
+              }
+          ' *.sarif > merged.sarif
+
+      - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: ./
+          sarif_file: merged.sarif
+          category: snyk-docker
