@@ -12,7 +12,7 @@ on:
       - "**.java"
       - "application/**"
       - ".github/workflows/pmd.yml"
-      - ".github/pmdrule.yml"
+      - ".github/pmdrule.xml"
   pull_request:
     # The branches below must be a subset of the branches above
     branches: ["master"]
@@ -20,7 +20,7 @@ on:
       - "**.java"
       - "application/**"
       - ".github/workflows/pmd.yml"
-      - ".github/pmdrule.yml"
+      - ".github/pmdrule.xml"
 
 permissions:
   contents: read
