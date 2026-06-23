@@ -32,7 +32,7 @@ jobs:
           arch: "amd64"
       - run: java -version
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.35.3
+        uses: github/codeql-action/init@v4.36.2
         with:
           languages: java
 
@@ -75,7 +75,7 @@ jobs:
         run: ./mvnw -B deploy --settings ../.m2/settings.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.4
+        uses: codecov/codecov-action@v5.5.5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
@@ -139,7 +139,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.35.3
+        uses: github/codeql-action/init@v4.36.2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -196,7 +196,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.4
+        uses: codecov/codecov-action@v5.5.5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
@@ -254,7 +254,7 @@ jobs:
         run: |
           gu install native-image
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.35.3
+        uses: github/codeql-action/init@v4.36.2
         with:
           languages: java
       - name: Login to Docker Hub
@@ -311,7 +311,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.4
+        uses: codecov/codecov-action@v5.5.5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Run codacy-coverage-reporter
