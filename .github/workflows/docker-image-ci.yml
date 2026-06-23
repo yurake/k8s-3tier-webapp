@@ -254,7 +254,34 @@ jobs:
       - name: rename sarif file
         run: mv snyk.sarif postmannewman-quarkus.sarif
 
-      - name: Upload result to GitHub Code Scanning - postmannewman-quarkus
+      # Merge every per-image Snyk SARIF into a single run. Uploading the raw
+      # files separately exceeds GitHub's limit of 20 runs per SARIF upload
+      # (8 files yield 23 runs), so the upload was rejected. Combining the
+      # results.* arrays into one run keeps a single run while preserving all
+      # findings.
+      - name: Merge SARIF files
+        run: |
+          jq -s '
+            ( [ .[].runs[] ] ) as $runs
+            | {
+                "$schema": .[0]["$schema"],
+                version: .[0].version,
+                runs: [
+                  {
+                    tool: {
+                      driver: (
+                        $runs[0].tool.driver
+                        | .rules = ([ $runs[].tool.driver.rules // [] ] | add | unique_by(.id))
+                      )
+                    },
+                    results: [ $runs[].results[] ]
+                  }
+                ]
+              }
+          ' *.sarif > merged.sarif
+
+      - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: ./
+          sarif_file: merged.sarif
+          category: snyk-docker
