@@ -52,6 +52,15 @@ jobs:
           # This will handover control about PR rejection to the GitHub side
           max-allowed-issues: 2147483647
 
+      # Give each SARIF run a distinct automationDetails.id so the upload does not
+      # fail when Codacy emits multiple runs (one per tool) in a single file.
+      # See https://github.blog/changelog/2025-07-21-code-scanning-will-stop-combining-multiple-sarif-runs-uploaded-in-the-same-sarif-file/
+      - name: Disambiguate SARIF runs
+        run: |
+          jq '.runs |= [ to_entries[] | .value.automationDetails.id = "codacy/\(.value.tool.driver.name // "tool")-\(.key)/" | .value ]' \
+            results.sarif > results.disambiguated.sarif
+          mv results.disambiguated.sarif results.sarif
+
       # Upload the SARIF file generated in the previous step
       - name: Upload SARIF results file
         uses: github/codeql-action/upload-sarif@v3
