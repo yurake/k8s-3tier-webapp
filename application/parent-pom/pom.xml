@@ -81,11 +81,15 @@
 			<artifactId>quarkus-junit5-mockito</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-jacoco</artifactId>
-			<scope>test</scope>
-		</dependency>
+		<!--
+			The quarkus-jacoco extension is intentionally NOT used here. With
+			Quarkus 3.29 it only instruments @QuarkusTest classes and, in this
+			project, recorded no coverage at all (0%). It also conflicts with the
+			jacoco-maven-plugin prepare-agent goal (double instrumentation -> test
+			JVM crashes with "Failed to initialize JaCoCo"). Coverage is instead
+			produced by the jacoco-maven-plugin offline agent configured below,
+			which covers both plain JUnit and @QuarkusTest classes.
+		-->
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-arc</artifactId>
@@ -172,6 +176,18 @@
 						<exclude>**/*__MapperGenerated*.class</exclude>
 					</excludes>
 				</configuration>
+				<!--
+					Offline instrumentation via the prepare-agent goal. This is the
+					sole JaCoCo agent for tests; the quarkus-jacoco extension is
+					deliberately not on the classpath (see the dependencies section)
+					to avoid double instrumentation.
+
+					Note: we intentionally do NOT set exclClassLoaders. That option
+					(only needed alongside the quarkus-jacoco extension) excludes the
+					QuarkusClassLoader and, with the standalone agent, would drop all
+					@QuarkusTest coverage to 0%. Without it, both plain JUnit and
+					@QuarkusTest classes are instrumented correctly.
+				-->
 				<executions>
 					<execution>
 						<id>default-prepare-agent</id>
@@ -179,7 +195,6 @@
 							<goal>prepare-agent</goal>
 						</goals>
 						<configuration>
-							<exclClassLoaders>*QuarkusClassLoader</exclClassLoaders>
 							<destFile>${project.build.directory}/jacoco-quarkus.exec</destFile>
 							<append>true</append>
 						</configuration>
