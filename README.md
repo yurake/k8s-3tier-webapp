@@ -27,11 +27,10 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2844382aa110487e94bba8369267476e)](https://www.codacy.com/gh/yurake/k8s-3tier-webapp/dashboard?utm_source=github.com\&utm_medium=referral\&utm_content=yurake/k8s-3tier-webapp\&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/2844382aa110487e94bba8369267476e)](https://www.codacy.com/gh/yurake/k8s-3tier-webapp/dashboard?utm_source=github.com\&utm_medium=referral\&utm_content=yurake/k8s-3tier-webapp\&utm_campaign=Badge_Coverage)
-[![CodeFactor](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp/badge)](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp) [![Maintainability](https://api.codeclimate.com/v1/badges/64a1de96c5eb777b9db1/maintainability)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/maintainability)
-[![codebeat badge](https://codebeat.co/badges/e0bfc464-3370-467d-910f-ade9d83265b1)](https://codebeat.co/projects/github-com-yurake-k8s-3tier-webapp-master)
+[![CodeFactor](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp/badge)](https://www.codefactor.io/repository/github/yurake/k8s-3tier-webapp) [![Maintainability](https://qlty.sh/v1/badges/64a1de96c5eb777b9db1/maintainability)](https://codeclimate.com/github/yurake/k8s-3tier-webapp/maintainability)
 [![codecov](https://codecov.io/gh/yurake/k8s-3tier-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/yurake/k8s-3tier-webapp)
-[![DeepSource Active Issues](https://deepsource.io/gh/yurake/k8s-3tier-webapp.svg/?label=active+issues\&show_trend=true\&token=Y64jIS9a54isgV4hi4_uuerZ)](https://deepsource.io/gh/yurake/k8s-3tier-webapp/?ref=repository-badge)
-[![DeepSource Resluved Issues](https://deepsource.io/gh/yurake/k8s-3tier-webapp.svg/?label=resolved+issues\&show_trend=true\&token=Y64jIS9a54isgV4hi4_uuerZ)](https://deepsource.io/gh/yurake/k8s-3tier-webapp/?ref=repository-badge)
+[![DeepSource Active Issues](https://app.deepsource.com/gh/yurake/k8s-3tier-webapp.svg/?label=active+issues\&show_trend=true\&token=Y64jIS9a54isgV4hi4_uuerZ)](https://app.deepsource.com/gh/yurake/k8s-3tier-webapp/?ref=repository-badge)
+[![DeepSource Resolved Issues](https://app.deepsource.com/gh/yurake/k8s-3tier-webapp.svg/?label=resolved+issues\&show_trend=true\&token=Y64jIS9a54isgV4hi4_uuerZ)](https://app.deepsource.com/gh/yurake/k8s-3tier-webapp/?ref=repository-badge)
 [![Cypress](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/detailed/7rgxn6/master\&style=flat\&logo=cypress)](https://dashboard.cypress.io/projects/7rgxn6/runs)  
 
 [![Support JVM Version](https://img.shields.io/badge/JVM-17-yellow.svg?style=flat\&logo=Java)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
