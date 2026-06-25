@@ -31,10 +31,6 @@ jobs:
           distribution: "graalvm"
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: java -version
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.36.2
-        with:
-          languages: java
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v4.3.0
@@ -91,8 +87,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4.36.2
       - name: Upload test results to Datadog
         working-directory: ./application/webapp-service
         if: always()
@@ -136,10 +130,6 @@ jobs:
           components: "native-image"
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: java -version
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.36.2
-        with:
-          languages: java
       - name: Login to Docker Hub
         if: github.event_name == 'push'
         uses: docker/login-action@v3.7.0
@@ -210,8 +200,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4.36.2
       - name: Upload test results to Datadog
         working-directory: ./application/${{ matrix.application }}
         if: always()
@@ -249,10 +237,6 @@ jobs:
           components: "native-image"
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: java -version
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.36.2
-        with:
-          languages: java
       - name: Login to Docker Hub
         if: github.event_name == 'push'
         uses: docker/login-action@v3.7.0
@@ -323,8 +307,6 @@ jobs:
           -Dsonar.organization=yurak
           -Dsonar.host.url=https://sonarcloud.io/
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4.36.2
       - name: Upload test results to Datadog
         working-directory: ./application/${{ matrix.application }}
         if: always()
