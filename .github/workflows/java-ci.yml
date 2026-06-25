@@ -25,11 +25,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@5.0
+        uses: graalvm/setup-graalvm@v1
         with:
-          graalvm: "22.2.0"
-          java: "java17"
-          arch: "amd64"
+          java-version: "17"
+          distribution: "graalvm"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: java -version
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.36.2
@@ -129,15 +129,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@5.0
+        uses: graalvm/setup-graalvm@v1
         with:
-          graalvm: "22.2.0"
-          java: "java17"
-          arch: "amd64"
+          java-version: "17"
+          distribution: "graalvm"
+          components: "native-image"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: java -version
-      - name: setup-native-image
-        run: |
-          gu install native-image
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.36.2
         with:
@@ -244,15 +242,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup GraalVM
-        uses: DeLaGuardo/setup-graalvm@5.0
+        uses: graalvm/setup-graalvm@v1
         with:
-          graalvm: "22.2.0"
-          java: "java17"
-          arch: "amd64"
+          java-version: "17"
+          distribution: "graalvm"
+          components: "native-image"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: java -version
-      - name: setup-native-image
-        run: |
-          gu install native-image
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.36.2
         with:
