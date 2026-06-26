@@ -42,21 +42,25 @@
 			<groupId>com.datastax.oss.quarkus</groupId>
 			<artifactId>cassandra-quarkus-client</artifactId>
 		</dependency>
+		<!--
+			The DataStax Java Driver was donated to Apache and its groupId
+			changed from com.datastax.oss to org.apache.cassandra. The
+			cassandra-quarkus-bom imported above manages the org.apache.cassandra
+			java-driver-* artifacts (via java-driver-bom), so versions are
+			resolved from there; the old com.datastax.oss coordinates are not
+			managed by any BOM and caused "version is missing" build errors.
+		-->
 		<dependency>
-			<groupId>com.datastax.oss</groupId>
+			<groupId>org.apache.cassandra</groupId>
 			<artifactId>java-driver-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.datastax.oss</groupId>
+			<groupId>org.apache.cassandra</groupId>
 			<artifactId>java-driver-mapper-runtime</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.datastax.oss</groupId>
+			<groupId>org.apache.cassandra</groupId>
 			<artifactId>java-driver-metrics-microprofile</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.datastax.oss</groupId>
-			<artifactId>java-driver-mapper-runtime</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.datastax.oss.quarkus</groupId>
