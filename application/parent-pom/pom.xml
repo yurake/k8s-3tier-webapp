@@ -106,9 +106,16 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-opentelemetry</artifactId>
 		</dependency>
+		<!--
+			SmallRye Metrics (MicroProfile Metrics) was deprecated and removed
+			from the Quarkus platform BOM. Micrometer is the supported metrics
+			stack, so we use quarkus-micrometer; the @Counted/@Timed annotations
+			are migrated from org.eclipse.microprofile.metrics.annotation.* to
+			io.micrometer.core.annotation.*.
+		-->
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-smallrye-metrics</artifactId>
+			<artifactId>quarkus-micrometer</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>

@@ -13,9 +13,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.faulttolerance.Retry;
-import org.eclipse.microprofile.metrics.MetricUnits;
-import org.eclipse.microprofile.metrics.annotation.Counted;
-import org.eclipse.microprofile.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 
 import webapp.tier.service.MemcachedService;
 
@@ -31,8 +30,8 @@ public class MemcachedResource {
 
 	@POST
 	@Path("/set")
-	@Counted(name = "performedChecks_set", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_set", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_set", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_set", description = "A measure of how long it takes to perform the primality test.")
 	public Response set() {
 		try {
 			return Response.ok().entity(svc.setMsg(svc.createMemCachedClient()).getFullmsg()).build();
@@ -45,8 +44,8 @@ public class MemcachedResource {
 	@GET
 	@Path("/get")
 	@Retry(maxRetries = 3)
-	@Counted(name = "performedChecks_get", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_get", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.")
 	public Response get() {
 		try {
 			return Response.ok().entity(svc.getMsg(svc.createMemCachedClient()).getFullmsg()).build();
