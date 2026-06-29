@@ -81,11 +81,15 @@
 			<artifactId>quarkus-junit5-mockito</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-jacoco</artifactId>
-			<scope>test</scope>
-		</dependency>
+		<!--
+			The quarkus-jacoco extension is intentionally NOT used here. With
+			Quarkus 3.29 it only instruments @QuarkusTest classes and, in this
+			project, recorded no coverage at all (0%). It also conflicts with the
+			jacoco-maven-plugin prepare-agent goal (double instrumentation -> test
+			JVM crashes with "Failed to initialize JaCoCo"). Coverage is instead
+			produced by the jacoco-maven-plugin offline agent configured below,
+			which covers both plain JUnit and @QuarkusTest classes.
+		-->
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-arc</artifactId>
@@ -102,9 +106,16 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-opentelemetry</artifactId>
 		</dependency>
+		<!--
+			SmallRye Metrics (MicroProfile Metrics) was deprecated and removed
+			from the Quarkus platform BOM. Micrometer is the supported metrics
+			stack, so we use quarkus-micrometer; the @Counted/@Timed annotations
+			are migrated from org.eclipse.microprofile.metrics.annotation.* to
+			io.micrometer.core.annotation.*.
+		-->
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-smallrye-metrics</artifactId>
+			<artifactId>quarkus-micrometer</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -138,29 +149,20 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
+				<!--
+					No separate integration-test execution is defined. There are no
+					@Tag("integration") tests in this project, and surefire 3.5.6 on
+					the JUnit Platform eagerly resolves every test ClassSelector during
+					discovery for such an execution, failing to load the @QuarkusTest
+					classes ("Could not load class ...") and breaking the build. All
+					tests run in the default test phase.
+				-->
 				<configuration>
-					<excludedGroups>integration</excludedGroups>
 					<systemPropertyVariables>
 						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
 						<maven.home>${maven.home}</maven.home>
 					</systemPropertyVariables>
 				</configuration>
-				<executions>
-					<execution>
-						<id>integration-tests</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<configuration>
-							<excludedGroups>!integration</excludedGroups>
-							<groups>integration</groups>
-							<systemPropertyVariables>
-								<jacoco-agent.destfile>${project.build.directory}/jacoco-quarkus.exec</jacoco-agent.destfile>
-							</systemPropertyVariables>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -172,6 +174,18 @@
 						<exclude>**/*__MapperGenerated*.class</exclude>
 					</excludes>
 				</configuration>
+				<!--
+					Offline instrumentation via the prepare-agent goal. This is the
+					sole JaCoCo agent for tests; the quarkus-jacoco extension is
+					deliberately not on the classpath (see the dependencies section)
+					to avoid double instrumentation.
+
+					Note: we intentionally do NOT set exclClassLoaders. That option
+					(only needed alongside the quarkus-jacoco extension) excludes the
+					QuarkusClassLoader and, with the standalone agent, would drop all
+					@QuarkusTest coverage to 0%. Without it, both plain JUnit and
+					@QuarkusTest classes are instrumented correctly.
+				-->
 				<executions>
 					<execution>
 						<id>default-prepare-agent</id>
@@ -179,14 +193,13 @@
 							<goal>prepare-agent</goal>
 						</goals>
 						<configuration>
-							<exclClassLoaders>*QuarkusClassLoader</exclClassLoaders>
 							<destFile>${project.build.directory}/jacoco-quarkus.exec</destFile>
 							<append>true</append>
 						</configuration>
 					</execution>
 					<execution>
 						<id>report</id>
-						<phase>post-integration-test</phase>
+						<phase>test</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
