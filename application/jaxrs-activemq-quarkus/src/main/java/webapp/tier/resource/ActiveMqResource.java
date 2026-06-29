@@ -10,9 +10,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.faulttolerance.Retry;
-import org.eclipse.microprofile.metrics.MetricUnits;
-import org.eclipse.microprofile.metrics.annotation.Counted;
-import org.eclipse.microprofile.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 
 import webapp.tier.service.ActiveMqService;
 
@@ -26,8 +25,8 @@ public class ActiveMqResource {
 
 	@POST
 	@Path("/put")
-	@Counted(name = "performedChecks_put", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_put", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_put", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_put", description = "A measure of how long it takes to perform the primality test.")
 	public Response putcache() {
 		try {
 			return Response.ok().entity(svc.putMsg().getFullmsg()).build();
@@ -39,8 +38,8 @@ public class ActiveMqResource {
 	@GET
 	@Path("/get")
 	@Retry(maxRetries = 3)
-	@Counted(name = "performedChecks_get", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_get", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_get", description = "A measure of how long it takes to perform the primality test.")
 	public Response getcache() {
 		try {
 			return Response.ok().entity(svc.getMsg().getFullmsg()).build();
@@ -51,8 +50,8 @@ public class ActiveMqResource {
 
 	@POST
 	@Path("/publish")
-	@Counted(name = "performedChecks_publish", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_publish", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_publish", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_publish", description = "A measure of how long it takes to perform the primality test.")
 	public Response publish() {
 		try {
 			return Response.ok().entity(svc.publishMsg().getFullmsg()).build();

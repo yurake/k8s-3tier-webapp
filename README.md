@@ -14,7 +14,6 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/yaml-validator.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/yaml-validator.yml)
 [![Shell Validator](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/shell-validator.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/shell-validator.yml)
 [![Dockerfile Lint](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dockerfile-lint.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dockerfile-lint.yml)
-[![CodeQL](https://github.com/yurake/k8s-3tier-webapp/workflows/CodeQL/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/codeql.yml)
 [![Check for Update](https://github.com/yurake/k8s-3tier-webapp/workflows/Check%20for%20Update/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Check+for+Update%22)
 [![CIS Dockerfile benchmark](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cis-dockerfile-benchmark.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cis-dockerfile-benchmark.yml)
 [![Cypress CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cypress-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cypress-ci.yml)
@@ -34,9 +33,9 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![Cypress](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/detailed/7rgxn6/master\&style=flat\&logo=cypress)](https://dashboard.cypress.io/projects/7rgxn6/runs)  
 
 [![Support JVM Version](https://img.shields.io/badge/JVM-17-yellow.svg?style=flat\&logo=Java)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
-[![Support Quarkus Version](https://img.shields.io/badge/Quarkus-2.16.12-yellow.svg?style=flat\&logo=Quarkus)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
-[![Support Kubernetes Version](https://img.shields.io/badge/Kubernetes-1.37.0-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
-[![Support Minikube Version](https://img.shields.io/badge/Minikube-1.37.0-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
+[![Support Quarkus Version](https://img.shields.io/badge/Quarkus-3.37.0-yellow.svg?style=flat\&logo=Quarkus)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Java+CI%22)
+[![Support Kubernetes Version](https://img.shields.io/badge/Kubernetes-1.38.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
+[![Support Minikube Version](https://img.shields.io/badge/Minikube-1.38.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Minikube+CI%22)
 [![Support kind Version](https://img.shields.io/badge/kind-2.7.1-yellow.svg?style=flat\&logo=Kubernetes)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22kind+CI%22)
 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE/)

@@ -14,7 +14,7 @@ import com.datastax.oss.quarkus.test.CassandraTestResource;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
+import io.quarkus.test.InjectMock;
 import webapp.tier.dao.MsgDao;
 
 @QuarkusTest
