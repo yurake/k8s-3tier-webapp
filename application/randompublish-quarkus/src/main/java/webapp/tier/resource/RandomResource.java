@@ -9,9 +9,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.eclipse.microprofile.metrics.MetricUnits;
-import org.eclipse.microprofile.metrics.annotation.Counted;
-import org.eclipse.microprofile.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 
 import webapp.tier.service.RandomService;
 
@@ -25,8 +24,8 @@ public class RandomResource {
 	RandomService randomsvc;
 
 	@GET
-	@Counted(name = "performedChecks", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer", description = "A measure of how long it takes to perform the primality test.")
 	public Response random() {
 		try {
 			return Response.ok().entity(randomsvc.deliverrandom(randomsvc.getNum(6)))
