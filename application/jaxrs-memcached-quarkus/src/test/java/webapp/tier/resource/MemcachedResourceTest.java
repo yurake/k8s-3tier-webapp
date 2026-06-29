@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.whalin.MemCached.MemCachedClient;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
+import io.quarkus.test.InjectMock;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.service.MemcachedService;
 import webapp.tier.util.CreateId;

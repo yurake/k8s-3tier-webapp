@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
+import io.quarkus.test.InjectMock;
 import webapp.tier.service.RabbitmqService;
 
 @QuarkusTest
