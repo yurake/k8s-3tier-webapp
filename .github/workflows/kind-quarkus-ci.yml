@@ -77,7 +77,7 @@ jobs:
         if: always()
         run: |
           kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
-          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) -c mysql
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) --all-containers=true --prefix=true
       - name: check log rabbitmq
         if: always()
         run: |
