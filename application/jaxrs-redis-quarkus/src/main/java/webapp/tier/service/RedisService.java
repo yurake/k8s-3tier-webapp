@@ -17,10 +17,22 @@ import io.quarkus.redis.datasource.RedisDataSource;
 import io.quarkus.redis.datasource.keys.KeyCommands;
 import io.quarkus.redis.datasource.pubsub.PubSubCommands;
 import io.quarkus.redis.datasource.value.ValueCommands;
+import io.quarkus.runtime.Startup;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.util.CreateId;
 import webapp.tier.util.MsgUtils;
 
+/**
+ * Eagerly initialized at startup via {@link Startup}. The constructor performs
+ * a blocking {@code pub.subscribe(...)}; if the bean is instead created lazily
+ * on the first request (a worker thread), that blocking subscribe can deadlock
+ * against the Redis client event loop and time out
+ * ({@code io.smallrye.mutiny.TimeoutException}), which surfaced as the flaky
+ * RedisResourceTest.testGet failure in CI. Initializing at startup (as the
+ * consumer-redis RedisDeliverSubscriber already does) runs the subscribe before
+ * any request is served and avoids the deadlock.
+ */
+@Startup
 @ApplicationScoped
 public class RedisService implements Consumer<RedisNotification> {
 
