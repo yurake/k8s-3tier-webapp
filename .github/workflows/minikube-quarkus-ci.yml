@@ -91,6 +91,16 @@ jobs:
         run: |
           kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
+      - name: check log mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) --all-containers=true --prefix=true
+      - name: check log nginx
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^nginx)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^nginx) --all-containers=true --prefix=true
       - name: check status
         if: always()
         run: |
