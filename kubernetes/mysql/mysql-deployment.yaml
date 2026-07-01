@@ -53,10 +53,15 @@ spec:
               mountPath: /var/lib/mysql
         - name: mysql-exporter
           image: prom/mysqld-exporter:v0.19.0
+          args:
+            - --mysqld.address=localhost:3306
+            - --mysqld.username=root
           ports:
             - containerPort: 9104
           env:
-            - name: DATA_SOURCE_NAME
+            # DATA_SOURCE_NAME was removed in mysqld-exporter v0.15.0.
+            # Connection is now configured via --mysqld.* flags and this env var.
+            - name: MYSQLD_EXPORTER_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mysql-secret
