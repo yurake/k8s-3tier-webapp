@@ -15,9 +15,8 @@ import jakarta.ws.rs.core.Response;
 
 import org.bson.Document;
 import org.eclipse.microprofile.faulttolerance.Retry;
-import org.eclipse.microprofile.metrics.MetricUnits;
-import org.eclipse.microprofile.metrics.annotation.Counted;
-import org.eclipse.microprofile.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 
 import com.mongodb.client.MongoCollection;
 
@@ -36,8 +35,8 @@ public class MongodbResource {
 
 	@POST
 	@Path("/insert")
-	@Counted(name = "performedChecks_insert", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_insert", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.")
 	public Response insert() {
 		try {
 			MongoCollection<Document> collection = mongosvc.getCollection();
@@ -51,8 +50,8 @@ public class MongodbResource {
 	@GET
 	@Path("/select")
 	@Retry(maxRetries = 3)
-	@Counted(name = "performedChecks_select", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_select", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.")
 	public Response select() {
 		try {
 			MongoCollection<Document> collection = mongosvc.getCollection();
@@ -68,8 +67,8 @@ public class MongodbResource {
 
 	@POST
 	@Path("/delete")
-	@Counted(name = "performedChecks_delete", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_delete", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.")
 	public Response delete() {
 		try {
 			MongoCollection<Document> collection = mongosvc.getCollection();

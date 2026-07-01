@@ -41,7 +41,6 @@ class RedisResourceTest {
 				.body(containsString(message));
 	}
 
-	// TODO fix: MsgBean init error
 	@Test
 	void testGet() {
 		given()
@@ -55,7 +54,7 @@ class RedisResourceTest {
 				.get("/quarkus/redis/get")
 				.then()
 				.statusCode(200)
-				.body(containsString("MsgBean init error"));
+				.body(containsString(message));
 	}
 
 	@Test

@@ -12,9 +12,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.faulttolerance.Retry;
-import org.eclipse.microprofile.metrics.MetricUnits;
-import org.eclipse.microprofile.metrics.annotation.Counted;
-import org.eclipse.microprofile.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 
 import webapp.tier.service.CassandraService;
 import webapp.tier.bean.MsgBean;
@@ -29,8 +28,8 @@ public class CassandraResource {
 
 	@POST
 	@Path("/insert")
-	@Counted(name = "performedChecks_insert", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_insert", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_insert", description = "A measure of how long it takes to perform the primality test.")
 	public Response insert() {
 		try {
 			return Response.ok().entity(svc.insertMsg().getFullmsg()).build();
@@ -42,8 +41,8 @@ public class CassandraResource {
 	@GET
 	@Path("/select")
 	@Retry(maxRetries = 3)
-	@Counted(name = "performedChecks_select", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_select", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_select", description = "A measure of how long it takes to perform the primality test.")
 	public Response select() {
 		try {
 			String result = svc.selectMsg().stream()
@@ -57,8 +56,8 @@ public class CassandraResource {
 
 	@POST
 	@Path("/delete")
-	@Counted(name = "performedChecks_delete", description = "How many primality checks have been performed.")
-	@Timed(name = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
+	@Counted(value = "performedChecks_delete", description = "How many primality checks have been performed.")
+	@Timed(value = "checksTimer_delete", description = "A measure of how long it takes to perform the primality test.")
 	public Response delete() {
 		try {
 			return Response.ok().entity(svc.deleteMsg()).build();

@@ -31,8 +31,8 @@ jobs:
       - name: start minikube
         uses: medyagh/setup-minikube@v0.0.21
         with:
-          minikube-version: 1.37.0
-          kubernetes-version: 1.37.0
+          minikube-version: 1.38.1
+          kubernetes-version: 1.35.1
           driver: docker
           container-runtime: docker
           cpus: 2
@@ -91,6 +91,16 @@ jobs:
         run: |
           kubectl -n monitoring describe po $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
           kubectl -n monitoring logs $(kubectl get pods -n monitoring | awk '{print $1}' | grep postmannewman-quarkus)
+      - name: check log mysql
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mysql)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mysql) --all-containers=true --prefix=true
+      - name: check log nginx
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^nginx)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^nginx) --all-containers=true --prefix=true
       - name: check status
         if: always()
         run: |

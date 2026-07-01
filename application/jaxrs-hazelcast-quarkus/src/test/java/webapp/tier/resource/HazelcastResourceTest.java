@@ -16,7 +16,7 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
+import io.quarkus.test.InjectMock;
 import webapp.tier.bean.MsgBean;
 import webapp.tier.service.HazelcastCacheService;
 import webapp.tier.service.HazelcastMqService;
