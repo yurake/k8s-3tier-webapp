@@ -101,6 +101,26 @@ jobs:
         run: |
           kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^nginx)
           kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^nginx) --all-containers=true --prefix=true
+      - name: check log postgres
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^postgres)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^postgres) --all-containers=true --prefix=true
+      - name: check log mongodb
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^mongodb)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^mongodb) --all-containers=true --prefix=true
+      - name: check log kafka
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^kafka)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^kafka) --all-containers=true --prefix=true
+      - name: check log zookeeper
+        if: always()
+        run: |
+          kubectl describe po $(kubectl get pods | awk '{print $1}' | grep -E ^zookeeper)
+          kubectl logs $(kubectl get pods | awk '{print $1}' | grep -E ^zookeeper) --all-containers=true --prefix=true
       - name: check status
         if: always()
         run: |
