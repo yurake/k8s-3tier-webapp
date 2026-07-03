@@ -12,7 +12,6 @@ Sample web application based on k8s. Focus on connecting components, setting k8s
 [![kind Quarkus CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-quarkus-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-quarkus-ci.yml)
 [![kind Yaml CI](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-yaml-ci.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/kind-yaml-ci.yml)
 [![Yaml Validator](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/yaml-validator.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/yaml-validator.yml)
-[![Shell Validator](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/shell-validator.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/shell-validator.yml)
 [![Dockerfile Lint](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dockerfile-lint.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/dockerfile-lint.yml)
 [![Check for Update](https://github.com/yurake/k8s-3tier-webapp/workflows/Check%20for%20Update/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions?query=workflow%3A%22Check+for+Update%22)
 [![CIS Dockerfile benchmark](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cis-dockerfile-benchmark.yml/badge.svg)](https://github.com/yurake/k8s-3tier-webapp/actions/workflows/cis-dockerfile-benchmark.yml)
