@@ -2,8 +2,7 @@
 
 ## Nginx
 
-[![DockerHub](https://img.shields.io/docker/pulls/yurak/nginx.svg)](https://hub.docker.com/r/yurak/nginx) [![Image Info](https://images.microbadger.com/badges/image/yurak/nginx.svg)](https://microbadger.com/images/yurak/nginx) [![Image Version](https://images.microbadger.com/badges/version/yurak/nginx.svg)](https://microbadger.com/images/yurak/nginx)\\
-![Sequence Diagram](../docs/uml/nginx.png)
+[![DockerHub](https://img.shields.io/docker/pulls/yurak/nginx.svg)](https://hub.docker.com/r/yurak/nginx) [![Image Info](https://images.microbadger.com/badges/image/yurak/nginx.svg)](https://microbadger.com/images/yurak/nginx) [![Image Version](https://images.microbadger.com/badges/version/yurak/nginx.svg)](https://microbadger.com/images/yurak/nginx)\ ![Sequence Diagram](../.gitbook/assets/nginx.png)
 
 ## mysql
 
@@ -31,10 +30,8 @@
 
 ## ab - Apache Bench
 
-[![DockerHub](https://img.shields.io/docker/pulls/yurak/ab.svg)](https://hub.docker.com/r/yurak/ab) [![Image Info](https://images.microbadger.com/badges/image/yurak/ab.svg)](https://microbadger.com/images/yurak/ab) [![Image Version](https://images.microbadger.com/badges/version/yurak/ab.svg)](https://microbadger.com/images/yurak/ab)\\
-![Sequence Diagram](../docs/uml/ab.png)
+[![DockerHub](https://img.shields.io/docker/pulls/yurak/ab.svg)](https://hub.docker.com/r/yurak/ab) [![Image Info](https://images.microbadger.com/badges/image/yurak/ab.svg)](https://microbadger.com/images/yurak/ab) [![Image Version](https://images.microbadger.com/badges/version/yurak/ab.svg)](https://microbadger.com/images/yurak/ab)\ ![Sequence Diagram](../.gitbook/assets/ab.png)
 
 ## postmannewman
 
-[![DockerHub](https://img.shields.io/docker/pulls/yurak/postmannewman.svg)](https://hub.docker.com/r/yurak/postmannewman) [![Image Info](https://images.microbadger.com/badges/image/yurak/postmannewman.svg)](https://microbadger.com/images/yurak/postmannewman) [![Image Version](https://images.microbadger.com/badges/version/yurak/postmannewman.svg)](https://microbadger.com/images/yurak/postmannewman)\\
-![Sequence Diagram](../docs/uml/postmannewman.png)
+[![DockerHub](https://img.shields.io/docker/pulls/yurak/postmannewman.svg)](https://hub.docker.com/r/yurak/postmannewman) [![Image Info](https://images.microbadger.com/badges/image/yurak/postmannewman.svg)](https://microbadger.com/images/yurak/postmannewman) [![Image Version](https://images.microbadger.com/badges/version/yurak/postmannewman.svg)](https://microbadger.com/images/yurak/postmannewman)\ ![Sequence Diagram](../.gitbook/assets/postmannewman.png)
