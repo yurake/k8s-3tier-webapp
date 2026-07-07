@@ -19,6 +19,12 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9104"
     spec:
+      # mysql image runs as the non-root "mysql" user (uid/gid 999).
+      # fsGroup makes kubelet chown the mounted volume to that group so the
+      # data directory /var/lib/mysql is writable (fixes CrashLoop on
+      # "data directory ... is not writable").
+      securityContext:
+        fsGroup: 999
       containers:
         - name: mysql
           image: yurak/mysql:latest
