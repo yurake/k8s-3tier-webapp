@@ -19,6 +19,12 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9216"
     spec:
+      # mongo image runs as the non-root "mongodb" user (uid/gid 999).
+      # fsGroup makes kubelet chown the mounted volume to that group so the
+      # data directory /data/db is writable (fixes CrashLoop on
+      # "Attempted to create a lock file on a read-only directory: /data/db").
+      securityContext:
+        fsGroup: 999
       containers:
         - name: mongodb
           image: yurak/mongodb:latest
