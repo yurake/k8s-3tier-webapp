@@ -47,8 +47,10 @@ spec:
                 - -c
                 - psql -U postgres -c "SELECT 1;"
           volumeMounts:
+            # postgres 18+ requires a single mount at /var/lib/postgresql
+            # (data is placed in a major-version subdirectory beneath it).
             - name: postgres-persistent-storage
-              mountPath: /var/lib/postgresql/data
+              mountPath: /var/lib/postgresql
         - name: postgres-exporter
           image: wrouesnel/postgres_exporter:v0.8.0
           ports:
