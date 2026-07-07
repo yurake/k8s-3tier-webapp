@@ -19,12 +19,18 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9104"
     spec:
-      # mysql image runs as the non-root "mysql" user (uid/gid 999).
-      # fsGroup makes kubelet chown the mounted volume to that group so the
-      # data directory /var/lib/mysql is writable (fixes CrashLoop on
-      # "data directory ... is not writable").
-      securityContext:
-        fsGroup: 999
+      # mysql image runs as the non-root "mysql" user (uid/gid 999), but the
+      # hostPath-backed PV is owned by root and fsGroup does not apply to
+      # hostPath volumes. chown the data directory up front so mysql can
+      # write it (fixes CrashLoop on "data directory ... is not writable").
+      initContainers:
+        - name: init-chown-data
+          image: busybox:latest
+          imagePullPolicy: Always
+          command: ["chown", "-R", "999:999", "/var/lib/mysql"]
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
       containers:
         - name: mysql
           image: yurak/mysql:latest
