@@ -18,6 +18,19 @@ spec:
         app: cassandra
     spec:
       terminationGracePeriodSeconds: 1800
+      # cassandra image runs as the non-root "cassandra" user (uid/gid 999),
+      # but the hostPath-backed PV is owned by root and fsGroup does not apply
+      # to hostPath volumes. chown the data directory up front so cassandra can
+      # write it (fixes CrashLoop on
+      # "AccessDeniedException: /opt/cassandra/data/commitlog").
+      initContainers:
+        - name: init-chown-data
+          image: busybox:latest
+          imagePullPolicy: Always
+          command: ["chown", "-R", "999:999", "/opt/cassandra/data"]
+          volumeMounts:
+            - name: cassandra-persistent-storage
+              mountPath: /opt/cassandra/data
       containers:
         - name: cassandra
           image: yurak/cassandra:latest
@@ -71,8 +84,11 @@ spec:
             initialDelaySeconds: 15
             timeoutSeconds: 5
           volumeMounts:
+            # cassandra 5.0 stores data under $CASSANDRA_HOME/data
+            # (/opt/cassandra/data), not /var/lib/cassandra, so mount the PV
+            # there to persist data and match the chown above.
             - name: cassandra-persistent-storage
-              mountPath: /var/lib/cassandra
+              mountPath: /opt/cassandra/data
       volumes:
         - name: cassandra-persistent-storage
           persistentVolumeClaim:
