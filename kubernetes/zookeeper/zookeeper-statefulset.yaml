@@ -21,7 +21,9 @@ spec:
     spec:
       containers:
         - name: zookeeper
-          image: bitnami/zookeeper:3.9.3-debian-12-r22
+          # Bitnami moved free/legacy image tags to the "bitnamilegacy" repo
+          # on 2025-08-28; bitnami/zookeeper no longer serves versioned tags.
+          image: bitnamilegacy/zookeeper:3.9.3-debian-12-r22
           imagePullPolicy: Always
           ports:
             - containerPort: 2181

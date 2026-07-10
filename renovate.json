@@ -28,6 +28,11 @@
     {
       "matchPackageNames": ["webapp.3tier.k8s.parent:parent-pom"],
       "enabled": false
+    },
+    {
+      "description": "bitnamilegacy is a frozen archive repo (post 2025-08-28 Bitnami migration); no updates are published there.",
+      "matchPackageNames": ["bitnamilegacy/**"],
+      "enabled": false
     }
   ],
   "customManagers": [
