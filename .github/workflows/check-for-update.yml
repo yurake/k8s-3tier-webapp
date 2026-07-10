@@ -52,7 +52,7 @@ jobs:
           sed -i -e "s/$SOURCE_YAML_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-yaml-ci.yml
           sed -i -e "s/$SOURCE_STRESS_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-stress-ci.yml
           sed -i -e "s/$SOURCE_SECURITY_VERSION/$TARGET_MINIKUBE_VERSION/g" minikube-security-ci.yml
-          sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_MINIKUBE_VERSION/g" ../../README.md
+          sed -i -e "s#badge/Minikube-$SOURCE_DOC_VERSION-#badge/Minikube-$TARGET_MINIKUBE_VERSION-#" ../../README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         uses: peter-evans/create-pull-request@v8.1.1
@@ -110,7 +110,7 @@ jobs:
           sed -i -e "s/$SOURCE_YAML_VERSION/$TARGET_KUBERNETES_VERSION/g" minikube-yaml-ci.yml
           sed -i -e "s/$SOURCE_STRESS_VERSION/$TARGET_KUBERNETES_VERSION/g" minikube-stress-ci.yml
           sed -i -e "s/$SOURCE_SECURITY_VERSION/$TARGET_KUBERNETES_VERSION/g" minikube-security-ci.yml
-          sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_KUBERNETES_VERSION/g" ../../README.md
+          sed -i -e "s#badge/Kubernetes-$SOURCE_DOC_VERSION-#badge/Kubernetes-$TARGET_KUBERNETES_VERSION-#" ../../README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         uses: peter-evans/create-pull-request@v8.1.1
@@ -160,7 +160,7 @@ jobs:
         working-directory: ./.github/workflows
         run: |
           sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" kind-chaos-mesh-ci.yml
-          sed -i -e "s/$SOURCE_DOC_VERSION/$TARGET_VERSION/g" ../../README.md
+          sed -i -e "s#badge/kind-$SOURCE_DOC_VERSION-#badge/kind-$TARGET_VERSION-#" ../../README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         uses: peter-evans/create-pull-request@v8.1.1
@@ -205,7 +205,7 @@ jobs:
       - name: update quarkus version
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         run: |
-          sed -i -e "s/$SOURCE_VERSION/$TARGET_VERSION/g" README.md
+          sed -i -e "s#badge/Quarkus-$SOURCE_VERSION-#badge/Quarkus-$TARGET_VERSION-#" README.md
       - name: Add, commit, push, and create PR
         if: env.UNMATCH_VERSION == 'true' && env.BRANCH_IS_EXISTING == 'false'
         uses: peter-evans/create-pull-request@v8.1.1
