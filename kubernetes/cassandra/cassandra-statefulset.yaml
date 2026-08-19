@@ -68,6 +68,15 @@ spec:
               value: "GossipingPropertyFileSnitch"
             - name: CASSANDRA_KEYSPACE
               value: "webapp"
+          # cassandra 5.0 takes ~1-2 min to open the CQL port (9042). Without a
+          # startupProbe the livenessProbe fired during startup and the kubelet
+          # killed the container (drain -> exit 143) in a CrashLoop. The
+          # startupProbe holds liveness off until the port is up (max 5 min).
+          startupProbe:
+            tcpSocket:
+              port: 9042
+            periodSeconds: 10
+            failureThreshold: 30
           livenessProbe:
             tcpSocket:
               port: 9042
@@ -84,9 +93,9 @@ spec:
             initialDelaySeconds: 15
             timeoutSeconds: 5
           volumeMounts:
-            # cassandra 5.0 stores data under $CASSANDRA_HOME/data
-            # (/opt/cassandra/data), not /var/lib/cassandra, so mount the PV
-            # there to persist data and match the chown above.
+            # cassandra 5.0 places the commitlog under storagedir
+            # (/opt/cassandra/data/commitlog), so mount the PV there and chown
+            # it (see initContainer) to fix the startup AccessDeniedException.
             - name: cassandra-persistent-storage
               mountPath: /opt/cassandra/data
       volumes:
