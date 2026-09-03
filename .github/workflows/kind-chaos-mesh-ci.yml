@@ -22,7 +22,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4.4.0
       - name: Kind Cluster
-        uses: helm/kind-action@v1.14.0
+        uses: helm/kind-action@v1.15.0
 
       - name: Print cluster information
         run: |
