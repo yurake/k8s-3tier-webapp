@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.586-alpine
+FROM jenkins/jenkins:2.587-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 
